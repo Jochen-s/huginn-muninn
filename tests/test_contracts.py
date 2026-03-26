@@ -1,0 +1,331 @@
+"""Tests for Method 2 inter-agent contracts."""
+import pytest
+from pydantic import ValidationError
+
+from huginn_muninn.contracts import (
+    SubClaim,
+    SubClaimType,
+    DecomposerOutput,
+    OriginEntry,
+    NarrativeMutation,
+    TracerOutput,
+    Actor,
+    ActorRelation,
+    MapperOutput,
+    TTPMatch,
+    ClassifierOutput,
+    BridgeOutput,
+    AuditFinding,
+    AuditVerdict,
+    AuditorOutput,
+    AnalysisInput,
+    AnalysisReport,
+)
+
+
+class TestPipeSanitizer:
+    """Test that pipe-separated enum values from LLM are handled gracefully."""
+
+    def test_actor_type_pipe_separated(self):
+        actor = Actor(
+            name="Test", type="influencer|bot_network",
+            motivation="test", credibility=0.5,
+        )
+        assert actor.type == "influencer"
+
+    def test_relation_type_pipe_separated(self):
+        rel = ActorRelation(
+            source_actor="A", target_actor="B",
+            relation_type="funds|coordinates", confidence=0.8,
+        )
+        assert rel.relation_type == "funds"
+
+    def test_mutation_type_pipe_separated(self):
+        mut = NarrativeMutation(
+            original="x", mutated="y",
+            mutation_type="distortion|amplification", source="z",
+        )
+        assert mut.mutation_type == "distortion"
+
+    def test_subclaim_type_pipe_separated(self):
+        sc = SubClaim(text="test", type="factual|opinion")
+        assert sc.type == SubClaimType.FACTUAL
+
+    def test_audit_verdict_pipe_separated(self):
+        out = AuditorOutput(
+            verdict="pass_with_warnings|fail",
+            findings=[], confidence_adjustment=0.0,
+            veto=False, summary="test",
+        )
+        assert out.verdict == AuditVerdict.PASS_WITH_WARNINGS
+
+    def test_clean_values_unaffected(self):
+        actor = Actor(
+            name="Test", type="media",
+            motivation="test", credibility=0.5,
+        )
+        assert actor.type == "media"
+
+
+class TestSubClaim:
+    def test_valid_subclaim(self):
+        sc = SubClaim(text="CO2 levels are rising", type=SubClaimType.FACTUAL)
+        assert sc.text == "CO2 levels are rising"
+        assert sc.type == SubClaimType.FACTUAL
+
+    def test_empty_text_rejected(self):
+        with pytest.raises(ValidationError):
+            SubClaim(text="", type=SubClaimType.FACTUAL)
+
+
+class TestDecomposerOutput:
+    def test_valid_output(self):
+        out = DecomposerOutput(
+            sub_claims=[SubClaim(text="X is true", type=SubClaimType.FACTUAL)],
+            original_claim="X is true because Y",
+            complexity="simple",
+        )
+        assert len(out.sub_claims) == 1
+
+    def test_at_least_one_subclaim(self):
+        with pytest.raises(ValidationError):
+            DecomposerOutput(
+                sub_claims=[], original_claim="test", complexity="simple"
+            )
+
+
+class TestTracerOutput:
+    def test_valid_output(self):
+        out = TracerOutput(
+            origins=[
+                OriginEntry(
+                    sub_claim="X", earliest_source="twitter.com/user",
+                    earliest_date="2024-01-15", source_tier=4,
+                )
+            ],
+            mutations=[],
+        )
+        assert out.origins[0].source_tier == 4
+
+    def test_source_tier_out_of_bounds(self):
+        with pytest.raises(ValidationError):
+            OriginEntry(sub_claim="X", earliest_source="y.com", source_tier=5)
+
+
+class TestMapperOutput:
+    def test_valid_output(self):
+        out = MapperOutput(
+            actors=[
+                Actor(
+                    name="News Outlet A", type="media",
+                    motivation="audience capture",
+                    credibility=0.6,
+                )
+            ],
+            relations=[],
+            narrative_summary="A single narrative about X",
+        )
+        assert out.actors[0].credibility == 0.6
+
+    def test_credibility_bounds(self):
+        with pytest.raises(ValidationError):
+            Actor(name="X", type="media", motivation="Y", credibility=1.5)
+
+
+class TestClassifierOutput:
+    def test_valid_output(self):
+        out = ClassifierOutput(
+            ttp_matches=[
+                TTPMatch(
+                    disarm_id="T0049",
+                    technique_name="Flood the information space",
+                    confidence=0.8,
+                    evidence="High volume of posts in 24h window",
+                )
+            ],
+            primary_tactic="Execute",
+        )
+        assert out.ttp_matches[0].disarm_id == "T0049"
+
+    def test_primary_tactic_must_be_valid_literal(self):
+        with pytest.raises(ValidationError):
+            ClassifierOutput(ttp_matches=[], primary_tactic="InvalidTactic")
+
+
+class TestBridgeOutput:
+    def test_valid_output(self):
+        out = BridgeOutput(
+            universal_needs=["safety", "economic security"],
+            issue_overlap="Both groups cite healthcare access as top priority",
+            narrative_deconstruction="Actor A framed X as immigration; Actor B framed X as corporate greed",
+            perception_gap="Supporters estimate 55% of opponents want X; actual rate is 18%",
+            moral_foundations={"side_a": ["care", "fairness"], "side_b": ["loyalty", "authority"]},
+            reframe="Rather than Group A vs Group B, this is about ensuring X for everyone",
+            socratic_dialogue=[
+                "If I understand correctly, the concern is...",
+                "One thing I noticed about that evidence...",
+                "There are actually several groups with different views...",
+            ],
+        )
+        assert len(out.socratic_dialogue) == 3
+
+    def test_max_three_dialogue_rounds(self):
+        with pytest.raises(ValidationError):
+            BridgeOutput(
+                universal_needs=["safety"],
+                issue_overlap="overlap",
+                narrative_deconstruction="deconstruction",
+                perception_gap="gap",
+                moral_foundations={},
+                reframe="reframe",
+                socratic_dialogue=["1", "2", "3", "4"],
+            )
+
+    def test_null_perception_gap_coerced_to_empty(self):
+        out = BridgeOutput(
+            universal_needs=["safety"],
+            issue_overlap="overlap",
+            narrative_deconstruction="deconstruction",
+            perception_gap=None,
+            moral_foundations={},
+            reframe="reframe",
+            socratic_dialogue=["R1"],
+        )
+        assert out.perception_gap == ""
+
+    def test_empty_universal_needs_rejected(self):
+        with pytest.raises(ValidationError):
+            BridgeOutput(
+                universal_needs=[],
+                issue_overlap="overlap",
+                narrative_deconstruction="deconstruction",
+                perception_gap="gap",
+                moral_foundations={},
+                reframe="reframe",
+                socratic_dialogue=["R1"],
+            )
+
+
+class TestAuditorOutput:
+    def test_pass_verdict(self):
+        out = AuditorOutput(
+            verdict=AuditVerdict.PASS,
+            findings=[],
+            confidence_adjustment=0.0,
+            veto=False,
+            summary="Analysis is well-supported",
+        )
+        assert not out.veto
+
+    def test_veto_verdict(self):
+        out = AuditorOutput(
+            verdict=AuditVerdict.FAIL,
+            findings=[
+                AuditFinding(
+                    category="bias", severity="high",
+                    description="Western-centric framing",
+                    recommendation="Add non-Western sources",
+                )
+            ],
+            confidence_adjustment=-0.2,
+            veto=True,
+            summary="Critical bias detected",
+        )
+        assert out.veto
+
+    def test_confidence_adjustment_out_of_bounds(self):
+        with pytest.raises(ValidationError):
+            AuditorOutput(
+                verdict=AuditVerdict.PASS, findings=[], confidence_adjustment=-1.5,
+                veto=False, summary="Test",
+            )
+
+    def test_veto_with_pass_rejected(self):
+        with pytest.raises(ValidationError, match="inconsistent"):
+            AuditorOutput(
+                verdict=AuditVerdict.PASS, findings=[], confidence_adjustment=0.0,
+                veto=True, summary="Contradictory",
+            )
+
+    def test_veto_with_pass_with_warnings_allowed(self):
+        out = AuditorOutput(
+            verdict=AuditVerdict.PASS_WITH_WARNINGS,
+            findings=[
+                AuditFinding(
+                    category="quality", severity="high",
+                    description="Weak sourcing", recommendation="Add sources",
+                )
+            ],
+            confidence_adjustment=-0.1,
+            veto=True,
+            summary="Severe quality issue warrants veto",
+        )
+        assert out.veto
+
+
+class TestAnalysisInput:
+    def test_valid_input(self):
+        inp = AnalysisInput(claim="Test claim", context=None, language="en")
+        assert inp.claim == "Test claim"
+
+    def test_empty_claim_rejected(self):
+        with pytest.raises(ValidationError):
+            AnalysisInput(claim="", context=None, language="en")
+
+
+class TestAnalysisReport:
+    def test_valid_report(self):
+        report = AnalysisReport(
+            claim="Test claim",
+            decomposition=DecomposerOutput(
+                sub_claims=[SubClaim(text="X", type=SubClaimType.FACTUAL)],
+                original_claim="Test claim",
+                complexity="simple",
+            ),
+            origins=TracerOutput(origins=[]),
+            intelligence=MapperOutput(actors=[], relations=[], narrative_summary="N/A"),
+            ttps=ClassifierOutput(ttp_matches=[], primary_tactic="Execute"),
+            bridge=BridgeOutput(
+                universal_needs=["safety"],
+                issue_overlap="overlap",
+                narrative_deconstruction="deconstruction",
+                perception_gap="gap",
+                moral_foundations={},
+                reframe="reframe",
+                socratic_dialogue=["Round 1"],
+            ),
+            audit=AuditorOutput(
+                verdict=AuditVerdict.PASS,
+                findings=[],
+                confidence_adjustment=0.0,
+                veto=False,
+                summary="Good",
+            ),
+            overall_confidence=0.75,
+        )
+        assert report.method == "method_2"
+        assert not report.degraded
+
+    def test_confidence_bounds(self):
+        """overall_confidence must be 0.0-1.0."""
+        with pytest.raises(ValidationError):
+            AnalysisReport(
+                claim="X",
+                decomposition=DecomposerOutput(
+                    sub_claims=[SubClaim(text="X", type=SubClaimType.FACTUAL)],
+                    original_claim="X", complexity="simple",
+                ),
+                origins=TracerOutput(origins=[]),
+                intelligence=MapperOutput(actors=[], relations=[], narrative_summary=""),
+                ttps=ClassifierOutput(ttp_matches=[], primary_tactic="Execute"),
+                bridge=BridgeOutput(
+                    universal_needs=["safety"], issue_overlap="", narrative_deconstruction="",
+                    perception_gap="", moral_foundations={}, reframe="",
+                    socratic_dialogue=["R1"],
+                ),
+                audit=AuditorOutput(
+                    verdict=AuditVerdict.PASS, findings=[], confidence_adjustment=0.0,
+                    veto=False, summary="",
+                ),
+                overall_confidence=1.5,  # Out of bounds!
+            )

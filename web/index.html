@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Huginn &amp; Muninn</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header>
+    <h1>Huginn &amp; Muninn</h1>
+    <p class="subtitle">Fact-checking with Common Humanity</p>
+    <span id="status-indicator" class="status-dot" title="Checking Ollama..."></span>
+  </header>
+
+  <main>
+    <section class="input-section">
+      <label for="claim-input">Enter a claim to check:</label>
+      <textarea id="claim-input" rows="3" maxlength="2000"
+        placeholder="e.g. Vaccines cause autism in children according to a 2024 study."></textarea>
+
+      <div class="controls">
+        <div class="method-group">
+          <label><input type="radio" name="method" value="check" checked> Quick Check</label>
+          <label><input type="radio" name="method" value="analyze"> Deep Analysis</label>
+          <label><input type="radio" name="method" value="escalate"> Auto-escalate</label>
+          <label><input type="radio" name="method" value="compare"> Compare Models</label>
+        </div>
+        <label class="cache-toggle">
+          <input type="checkbox" id="no-cache"> Skip cache
+        </label>
+      </div>
+
+      <div id="compare-options" class="hidden">
+        <p class="compare-label">Select models to compare:</p>
+        <div id="model-checkboxes" class="model-checkboxes"></div>
+        <label class="cache-toggle">
+          <input type="checkbox" id="reconcile"> Reconcile results
+        </label>
+      </div>
+
+      <button id="analyze-btn">Analyze</button>
+    </section>
+
+    <section id="loading" class="hidden">
+      <div class="spinner"></div>
+      <p id="loading-message">Analyzing claim...</p>
+    </section>
+
+    <section id="error" class="hidden">
+      <p id="error-message"></p>
+    </section>
+
+    <section id="result" class="hidden">
+      <div id="result-content"></div>
+      <div class="result-actions">
+        <div class="feedback-section">
+          <p>Was this helpful?</p>
+          <div class="feedback-buttons">
+            <button class="feedback-btn" data-type="agree">Agree</button>
+            <button class="feedback-btn" data-type="disagree">Disagree</button>
+            <button class="feedback-btn" data-type="partial">Partially</button>
+            <button class="feedback-btn" data-type="unsure">Unsure</button>
+          </div>
+        </div>
+        <div class="session-add hidden" id="session-add">
+          <label for="session-select">Add to session:</label>
+          <select id="session-select"></select>
+          <button id="add-to-session-btn">Add</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="history-section">
+      <h2>Recent Checks</h2>
+      <ul id="history-list"></ul>
+    </section>
+
+    <section class="sessions-section">
+      <h2>Sessions</h2>
+      <div class="session-controls">
+        <input type="text" id="session-name" placeholder="New session name..." maxlength="200">
+        <button id="create-session-btn">Create</button>
+      </div>
+      <ul id="sessions-list"></ul>
+      <div id="session-detail" class="hidden">
+        <h3 id="session-detail-name"></h3>
+        <ul id="session-items-list"></ul>
+        <button id="session-back-btn">Back</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Huginn &amp; Muninn -- the fact-checker that finds common ground.</p>
+  </footer>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
