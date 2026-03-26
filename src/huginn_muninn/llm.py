@@ -171,6 +171,55 @@ class OpenAIClient:
         self.close()
 
 
+class AnthropicClient:
+    """Client for Anthropic API (Claude models)."""
+
+    def __init__(
+        self,
+        model: str = "claude-opus-4-6",
+        api_key: str | None = None,
+        temperature: float = 0.3,
+        max_tokens: int = 4096,
+    ):
+        import anthropic
+
+        self.model = model
+        self._temperature = temperature
+        self._max_tokens = max_tokens
+        self._client = anthropic.Anthropic(api_key=api_key) if api_key else anthropic.Anthropic()
+
+    def generate(self, prompt: str) -> str:
+        """Send prompt via Anthropic Messages API and return content."""
+        message = self._client.messages.create(
+            model=self.model,
+            max_tokens=self._max_tokens,
+            temperature=self._temperature,
+            messages=[{"role": "user", "content": prompt}],
+        )
+        return message.content[0].text
+
+    def check_available(self) -> bool:
+        """Check if Anthropic API is reachable."""
+        try:
+            self._client.messages.create(
+                model=self.model,
+                max_tokens=10,
+                messages=[{"role": "user", "content": "ping"}],
+            )
+            return True
+        except Exception:
+            return False
+
+    def close(self):
+        pass
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *exc):
+        self.close()
+
+
 def create_client(
     provider: str,
     base_url: str,
@@ -186,6 +235,12 @@ def create_client(
             base_url=base_url,
             model=model,
             api_key=api_key or "",
+            **kwargs,
+        )
+    elif provider == "anthropic":
+        return AnthropicClient(
+            model=model,
+            api_key=api_key,
             **kwargs,
         )
     else:

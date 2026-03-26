@@ -37,22 +37,32 @@ class BridgeAgent(BaseAgent):
 {upstream}
 </upstream_analysis>
 
-Produce a three-layer Common Humanity analysis:
+Produce a four-layer Common Humanity analysis:
 
 Layer 1 - Universal Human Needs: What fundamental need is at stake (safety, belonging, fairness, dignity, autonomy)?
 Layer 2 - Issue-Specific Overlap: Where do opposing positions concretely agree? Cite evidence (polling, policy, stated positions).
 Layer 3 - Narrative Deconstruction: How was the same underlying concern split into opposing narratives? Who performed the split and why?
+Layer 4 - Inferential Gap Map: Where does the claim contain a kernel of truth, and what is the EXACT inferential leap from that truth to the conspiracy framing? Be specific: "X is documented fact; the leap to Y is unsupported because Z." If the claim is entirely false, state that clearly. If parts are true, map the precise boundary.
 
-Also produce a 3-round Socratic dialogue script following the Costello protocol:
+Also produce:
+
+A) A feasibility assessment: If the claim implies a physical, logistical, or organizational requirement (e.g., secret mass programs, technology that doesn't exist, coordination among thousands), briefly assess whether this is plausible and why or why not. Use quantitative reasoning where possible.
+
+B) A commercial motive analysis: Who profits financially from people believing this claim? Name specific organizations, products, or revenue streams where known.
+
+C) A 3-round Socratic dialogue script following the Costello protocol:
 - Round 1: Perspective-getting (summarize their view, acknowledge the kernel of truth)
-- Round 2: Personalized counter-evidence as question (address THEIR specific evidence, introduce manipulation technique)
-- Round 3: Complexity + common ground (add dimensions, present shared data, close with reflection question)
+- Round 2: Personalized counter-evidence as question (address THEIR specific evidence, introduce manipulation technique). IMPORTANT: Frame counter-evidence around systemic patterns, not individual bad actors. Avoid naming individuals in ways that trigger identity-defense. Ask about patterns the person can verify themselves.
+- Round 3: Complexity + common ground (add dimensions, present shared data, close with reflection question that redirects toward actionable shared goals)
 
 Respond in JSON:
 {{
   "universal_needs": ["need1", "need2"],
   "issue_overlap": "Concrete agreement between opposing positions, with evidence",
   "narrative_deconstruction": "How the same concern was split into opposing narratives",
+  "inferential_gap": "Where the kernel of truth ends and the unsupported leap begins, with specific boundary",
+  "feasibility_check": "Brief quantitative/logical assessment of whether the claim's implied mechanism is physically or organizationally plausible",
+  "commercial_motives": "Who profits from belief in this claim, with specific names/products/revenue where known",
   "perception_gap": "Where groups overestimate opponent extremism, with data if available",
   "moral_foundations": {{"side_a": ["foundation1"], "side_b": ["foundation2"]}},
   "reframe": "The claim reframed in terms of shared values",
@@ -65,11 +75,13 @@ Respond in JSON:
 
 Critical constraints:
 - NEVER more than 3 dialogue rounds
-- NEVER use controlling language
-- NEVER confront identity
-- ALWAYS close dialogue with a question
+- NEVER use controlling language ('the truth is...', 'experts agree...', 'studies show...')
+- NEVER confront identity ('you were misled', 'you fell for...', 'conspiracy theorists...')
+- ALWAYS close dialogue with a question that points toward actionable shared goals
 - ALWAYS ground claims in evidence where possible
-- If no genuine common ground exists, say so honestly rather than forcing synthesis"""
+- In Round 2, prefer systemic pattern analysis over individual blame
+- If no genuine common ground exists, say so honestly rather than forcing synthesis
+- If the claim is partially true, explicitly acknowledge what is true before addressing what is not"""
 
     def parse_output(self, raw: dict) -> dict:
         # LLMs sometimes exceed the 3-round limit despite prompt constraints
