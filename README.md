@@ -65,8 +65,9 @@ Claim
        Breaks input into verifiable sub-claims
   |
   v
-[2] Origin Tracer
-       Tracks claim origins and spread patterns
+[2] Origin Tracer (v3: temporal context)
+       Tracks claim origins, spread patterns, and how
+       narratives migrate between ideological camps over time
   |
   v
 [3] Network Mapper
@@ -80,7 +81,7 @@ Claim
   v                   v
 [5] Bridge Builder  [6] Adversarial Auditor
    Common humanity      Red-teams the analysis
-   layer                for bias and errors
+   layer (v4)           for bias and errors
   +-------------------+
   |
   v
@@ -88,8 +89,38 @@ Orchestrator
   |
   v
 Comprehensive Report
-  (narrative deconstruction, perception gaps, Socratic dialogue)
+  (360-degree view: conspiracy narrative, scientific consensus,
+   perception gaps, Socratic dialogue)
 ```
+
+### Bridge Builder: The 360-Degree View (v4)
+
+The Bridge Builder produces a multi-layered analysis that presents both the conspiracy
+perspective AND the scientific/mainstream explanation with equal depth:
+
+| Layer | What It Does |
+|-------|-------------|
+| Universal Human Needs | Identifies the fundamental concern driving belief (safety, autonomy, fairness) |
+| Issue-Specific Overlap | Where opposing positions concretely agree, with evidence |
+| Narrative Deconstruction | How the same concern was split into opposing narratives, and by whom |
+| **Scientific Consensus** | The established explanation with mechanisms, studies, and data -- presented with equal depth to the conspiracy analysis |
+| Inferential Gap Map | The exact boundary between kernel-of-truth and unsupported leap |
+| Feasibility Assessment | Quantitative plausibility check (how many people, how much material, what logistics) |
+| Commercial Motive Analysis | Who profits from belief, with specific names and revenue streams |
+| Perception Gap | Where each side overestimates the other's extremism |
+| Socratic Dialogue | 3-round Costello protocol: perspective-getting, guided examination, integration |
+
+The scientific consensus field was added in v4 to close an asymmetry: earlier versions deeply
+validated the conspiracy perspective and its kernel of truth, but didn't equally present the
+scientific counter-explanation. A reader should come away understanding both sides in equal depth.
+
+### Origin Tracer: Temporal Context (v3)
+
+Claims migrate between ideological camps over time. "Media controlled by elites" was a
+left-wing critique in the 1990s, became a right-wing populist rallying cry in the 2010s,
+and now paradoxically applies to the conservative media ecosystem itself. The Origin Tracer
+tracks these shifts through temporal context eras, ideological migration mutations, and
+narrative inversions where a claim comes to apply to its original proponents.
 
 ---
 
@@ -153,6 +184,13 @@ between opposing positions using primary evidence. It deconstructs how the same 
 concern was split into irreconcilable-seeming narratives, and generates a three-round Socratic
 dialogue based on Costello, Pennycook & Rand (Science, 2024).
 
+**In v4**, the Bridge Builder also presents the established scientific or institutional
+explanation with equal depth and specificity as the conspiracy analysis. For a chemtrails
+claim, this means explaining what jet exhaust actually consists of, the physics of contrail
+formation, why some contrails persist (atmospheric supersaturation), the difference between
+contrails and actual cloud seeding programs, and key atmospheric studies. A reader unfamiliar
+with the topic comes away understanding both the conspiracy narrative and the science.
+
 The output is not a corrected belief. It is a cleared path toward one.
 
 The design follows cognitive apprenticeship principles (Collins, Brown & Newman, 1989):
@@ -164,14 +202,14 @@ internalization, not dependency.
 
 ## Designed Against Dependency
 
-A 2025 follow-up study (Bao et al., arXiv:2510.01537) found that AI dialogue can reduce
+A 2025 follow-up study (Rani et al., arXiv:2510.01537) found that AI dialogue can reduce
 conspiracy beliefs by 21% while simultaneously degrading independent discernment by 15%
 over four weeks. This dependency paradox is a real risk for any AI fact-checking tool.
 
 Huginn & Muninn addresses this through four architectural pillars:
 
 1. **Genuine Socratic method**: The system asks questions that guide reasoning rather than
-   delivering verdicts. Bao et al.'s own data shows "guiding and probing questions" correlate
+   delivering verdicts. Rani et al.'s own data shows "guiding and probing questions" correlate
    positively with independent detection skills (r=0.29), while directive correction undermines them.
 
 2. **Mandatory fading**: AI support progressively withdraws as user competence grows,
@@ -214,10 +252,31 @@ specific, bounded, and proposes research to resolve itself.
 
 ---
 
+## Test Suite Results
+
+The Bridge Builder has been validated across 20 real-world conspiracy and misinformation
+scenarios spanning health & science, geopolitics, environment, events, technology, and media.
+Six scenarios have been run through the full v4 pipeline with Opus 4.6:
+
+| Scenario | Score | Consensus Depth | Topic |
+|----------|-------|-----------------|-------|
+| HS-01 | **100%** | 10,209 chars | Chemtrails vs. contrail science |
+| HS-02 | **94.7%** | 8,229 chars | Vaccines-autism vs. epidemiology |
+| HS-04 | **95.5%** | 8,999 chars | Big Pharma suppression vs. drug development pipeline |
+| EN-01 | **97.3%** | 6,172 chars | Climate hoax vs. greenhouse physics |
+| EV-03 | **94.7%** | 7,075 chars | Election fraud vs. election security mechanics |
+| GP-01 | **94.7%** | 7,831 chars | Global elite control vs. institutional realities |
+
+Evaluation uses 11 weighted checks: needs coverage, issue overlap, narrative deconstruction,
+scientific consensus, inferential gap, feasibility, commercial motives, perception gap,
+Socratic dialogue quality, reframe quality, and controlling language detection.
+
+---
+
 ## Research Foundation
 
 Huginn & Muninn is grounded in peer-reviewed research. Two comprehensive research waves
-(~240 sources) inform the design. The project maintains an honest assessment of each
+(~370 sources) inform the design. The project maintains an honest assessment of each
 research pillar's strength.
 
 | Domain | Key Research | Status | How H&M Uses It |
@@ -252,8 +311,9 @@ Design decisions informed by explicitly ruling out documented anti-patterns:
 | Identity confrontation | Attacking beliefs is experienced as attacking the person | Never labels users as misled or manipulated |
 | Generic counter-narratives | Personalized content vastly outperforms generic responses | References the user's specific claim and evidence |
 | Forced engagement | Unsolicited corrections trigger doubling-down effects | Dialogue is always opt-in |
-| Directive AI correction | Creates dependency; -15.3% discernment decline (Bao et al. 2025) | Genuine Socratic questioning with progressive fading |
+| Directive AI correction | Creates dependency; -15.3% discernment decline (Rani et al. 2025) | Genuine Socratic questioning with progressive fading |
 | False equivalence | "Both sides" framing can legitimize extremism | Epistemic asymmetry detection overrides bridge-building when scientific consensus is clear |
+| One-sided analysis | Validating the conspiracy without presenting the science feels like endorsement | v4 presents scientific consensus with equal depth |
 
 ---
 
@@ -274,6 +334,17 @@ Huginn & Muninn calibrates its Socratic dialogue to developmental capacity:
 This calibration is informed by Bronlet (2025, Frontiers in Psychology), who demonstrated
 LLM-based automated scoring of the Washington University Sentence Completion Test (WUSCT)
 at kappa = 0.779, approaching the 0.80 threshold for reliable measurement.
+
+---
+
+## Version History
+
+| Version | What Changed |
+|---------|-------------|
+| v1 | Baseline: 3-layer analysis (needs, overlap, deconstruction), Socratic dialogue, perception gap, reframe |
+| v2 | Inferential gap mapping, feasibility assessment, commercial motive analysis, systemic pattern framing in Socratic Round 2 |
+| v3 | Temporal context awareness: tracks how claims migrate between ideological camps over time, ideological migration and inversion mutation types |
+| v4 | Scientific consensus explanation with equal depth to conspiracy analysis, creating a true 360-degree view |
 
 ---
 
