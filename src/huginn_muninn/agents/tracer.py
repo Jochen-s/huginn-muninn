@@ -33,6 +33,8 @@ For each sub-claim, identify:
 2. The propagation path (how it spread)
 3. Any mutations in the narrative as it spread
 
+CRITICAL: Track TEMPORAL CONTEXT SHIFTS. Many claims migrate between ideological camps over time as power dynamics change. For example, "media is controlled by elites" was a left-wing critique (Chomsky 1988) that was adopted by right-wing populism (Trump 2017) and now applies paradoxically to the adopters' own media ecosystem. Map these ideological migrations explicitly.
+
 Respond in JSON. IMPORTANT: Each enum field must be EXACTLY ONE value, not combined.
 
 {{
@@ -49,13 +51,31 @@ Respond in JSON. IMPORTANT: Each enum field must be EXACTLY ONE value, not combi
     {{
       "original": "original statement from source",
       "mutated": "how it was changed",
-      "mutation_type": "CHOOSE ONE: distortion, amplification, recontextualization, fabrication",
+      "mutation_type": "CHOOSE ONE: distortion, amplification, recontextualization, fabrication, ideological_migration, inversion",
       "source": "where the mutation occurred"
+    }}
+  ],
+  "temporal_context": [
+    {{
+      "era": "descriptive label for the time period",
+      "date_range": "YYYY to YYYY",
+      "dominant_framing": "which ideological camp primarily used this claim and how",
+      "key_actors": ["who promoted it in this era"],
+      "power_context": "what power dynamics made this framing relevant",
+      "irony_or_inversion": "if the claim now applies to those who adopted it, describe the paradox"
     }}
   ]
 }}
 
-Source tiers: 1=scientific/governmental, 2=established journalism, 3=regional/specialized, 4=social media/unknown"""
+Source tiers: 1=scientific/governmental, 2=established journalism, 3=regional/specialized, 4=social media/unknown
+
+Mutation types:
+- distortion: factual claim altered to change meaning
+- amplification: claim exaggerated beyond evidence
+- recontextualization: claim placed in misleading context
+- fabrication: claim invented without factual basis
+- ideological_migration: claim adopted by a different political camp with altered framing
+- inversion: claim now applies to those who adopted it (the paradox you must detect)"""
 
     def parse_output(self, raw: dict) -> dict:
         return TracerOutput(**raw).model_dump()

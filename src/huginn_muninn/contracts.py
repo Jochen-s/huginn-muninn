@@ -58,13 +58,23 @@ class OriginEntry(BaseModel):
 class NarrativeMutation(BaseModel):
     original: str
     mutated: str
-    mutation_type: Annotated[Literal["distortion", "amplification", "recontextualization", "fabrication"], BeforeValidator(_first_pipe_value)]
+    mutation_type: Annotated[Literal["distortion", "amplification", "recontextualization", "fabrication", "ideological_migration", "inversion"], BeforeValidator(_first_pipe_value)]
     source: str
+
+
+class TemporalContext(BaseModel):
+    era: str
+    date_range: str
+    dominant_framing: str
+    key_actors: list[str] = Field(default_factory=list)
+    power_context: str = ""
+    irony_or_inversion: str = ""
 
 
 class TracerOutput(BaseModel):
     origins: list[OriginEntry]
     mutations: list[NarrativeMutation] = Field(default_factory=list)
+    temporal_context: list[TemporalContext] = Field(default_factory=list)
 
 
 # --- Intelligence Mapper ---

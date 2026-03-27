@@ -1,0 +1,18 @@
+feat(huginn-muninn): 14 v2 scenario results + citation verification
+
+All 20 Bridge Builder scenarios now tested:
+- 14 new v2 results with Opus (HS-03/04/05, GP-01-05, EN-01/02, EV-02/04, TC-01, MD-01)
+- All passed with 0.92 confidence, zero controlling language violations
+- Notable: HS-05 (fluoridation) produced first "Inform" primary tactic
+- Notable: EN-01 (climate) cross-mapped 8 DISARM TTPs with 8 Goldberg tactics
+
+Citation verification (14 corrections applied to RESEARCH.md):
+- CRITICAL: "Bao et al." corrected to "Rani et al." (10+ occurrences)
+  arXiv:2510.01537 authors: Rani, Danry, Liang, Lippman, Maes (MIT)
+- CRITICAL: Boissin et al. authors corrected (was Chevallier/Goupil/Mercier)
+- CRITICAL: Hall et al. initials and title corrected
+- 7 significant title/year/venue corrections
+- 4 minor DOI/volume additions
+- Zero [NEEDS VERIFICATION] markers remain
+
+Co-Authored-By: Claude Opus 4.6 (1M context) <noreply@anthropic.com>
