@@ -46,11 +46,18 @@ Layer 4 - Inferential Gap Map: Where does the claim contain a kernel of truth, a
 
 Also produce:
 
-A) A feasibility assessment: If the claim implies a physical, logistical, or organizational requirement (e.g., secret mass programs, technology that doesn't exist, coordination among thousands), briefly assess whether this is plausible and why or why not. Use quantitative reasoning where possible.
+A) The scientific consensus / mainstream explanation: Present the established scientific or institutional explanation for the phenomena the claim addresses, with EQUAL depth and specificity as the conspiracy analysis. This is the "other side" -- what people who do NOT believe the claim understand to be true and WHY. Include:
+- The physical, biological, or institutional mechanisms that explain what is observed
+- Key studies, data points, or expert assessments with citations where possible
+- Why this explanation accounts for the evidence better than the conspiracy version
+- Common misconceptions that the conspiracy exploits and their corrections
+This section must be substantive enough that a reader unfamiliar with the topic comes away understanding BOTH the conspiracy narrative AND the scientific explanation in equal depth.
 
-B) A commercial motive analysis: Who profits financially from people believing this claim? Name specific organizations, products, or revenue streams where known.
+B) A feasibility assessment: If the claim implies a physical, logistical, or organizational requirement (e.g., secret mass programs, technology that doesn't exist, coordination among thousands), briefly assess whether this is plausible and why or why not. Use quantitative reasoning where possible.
 
-C) A 3-round Socratic dialogue script following the Costello protocol:
+C) A commercial motive analysis: Who profits financially from people believing this claim? Name specific organizations, products, or revenue streams where known.
+
+D) A 3-round Socratic dialogue script following the Costello protocol:
 - Round 1: Perspective-getting (summarize their view, acknowledge the kernel of truth)
 - Round 2: Personalized counter-evidence as question (address THEIR specific evidence, introduce manipulation technique). IMPORTANT: Frame counter-evidence around systemic patterns, not individual bad actors. Avoid naming individuals in ways that trigger identity-defense. Ask about patterns the person can verify themselves.
 - Round 3: Complexity + common ground (add dimensions, present shared data, close with reflection question that redirects toward actionable shared goals)
@@ -60,6 +67,7 @@ Respond in JSON:
   "universal_needs": ["need1", "need2"],
   "issue_overlap": "Concrete agreement between opposing positions, with evidence",
   "narrative_deconstruction": "How the same concern was split into opposing narratives",
+  "consensus_explanation": "The scientific/mainstream explanation for what is observed, with equal depth to the conspiracy analysis. Mechanisms, evidence, key studies, and why this explanation better accounts for the data.",
   "inferential_gap": "Where the kernel of truth ends and the unsupported leap begins, with specific boundary",
   "feasibility_check": "Brief quantitative/logical assessment of whether the claim's implied mechanism is physically or organizationally plausible",
   "commercial_motives": "Who profits from belief in this claim, with specific names/products/revenue where known",

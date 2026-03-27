@@ -120,13 +120,24 @@ Respond in JSON. IMPORTANT: Each enum field must be EXACTLY ONE value, not combi
     {{
       "original": "original statement from source",
       "mutated": "how it was changed",
-      "mutation_type": "CHOOSE ONE: distortion, amplification, recontextualization, fabrication",
+      "mutation_type": "CHOOSE ONE: distortion, amplification, recontextualization, fabrication, ideological_migration, inversion",
       "source": "where the mutation occurred"
+    }}
+  ],
+  "temporal_context": [
+    {{
+      "era": "time period label",
+      "date_range": "approximate date range",
+      "dominant_framing": "how the claim was primarily framed in this era",
+      "key_actors": ["who was pushing this framing"],
+      "power_context": "who held power and how that shaped the narrative",
+      "irony_or_inversion": "any paradoxes or reversals in this era"
     }}
   ]
 }}
 
-Source tiers: 1=scientific/governmental, 2=established journalism, 3=regional/specialized, 4=social media/unknown""",
+Source tiers: 1=scientific/governmental, 2=established journalism, 3=regional/specialized, 4=social media/unknown
+Mutation types: distortion=facts changed, amplification=signal boosted, recontextualization=moved to new context, fabrication=invented, ideological_migration=claim moved between political camps, inversion=claim now applies to its original proponents""",
     }
 
 
@@ -265,22 +276,40 @@ def _bridge_template(claim: str, decomposition: dict, origins: dict, intelligenc
 {upstream}
 </upstream_analysis>
 
-Produce a three-layer Common Humanity analysis:
+Produce a four-layer Common Humanity analysis:
 
 Layer 1 - Universal Human Needs: What fundamental need is at stake (safety, belonging, fairness, dignity, autonomy)?
 Layer 2 - Issue-Specific Overlap: Where do opposing positions concretely agree? Cite evidence (polling, policy, stated positions).
 Layer 3 - Narrative Deconstruction: How was the same underlying concern split into opposing narratives? Who performed the split and why?
+Layer 4 - Inferential Gap Map: Where does the claim contain a kernel of truth, and what is the EXACT inferential leap from that truth to the conspiracy framing? Be specific: "X is documented fact; the leap to Y is unsupported because Z." If the claim is entirely false, state that clearly. If parts are true, map the precise boundary.
 
-Also produce a 3-round Socratic dialogue script following the Costello protocol:
+Also produce:
+
+A) The scientific consensus / mainstream explanation: Present the established scientific or institutional explanation for the phenomena the claim addresses, with EQUAL depth and specificity as the conspiracy analysis. This is the "other side" -- what people who do NOT believe the claim understand to be true and WHY. Include:
+- The physical, biological, or institutional mechanisms that explain what is observed
+- Key studies, data points, or expert assessments with citations where possible
+- Why this explanation accounts for the evidence better than the conspiracy version
+- Common misconceptions that the conspiracy exploits and their corrections
+This section must be substantive enough that a reader unfamiliar with the topic comes away understanding BOTH the conspiracy narrative AND the scientific explanation in equal depth.
+
+B) A feasibility assessment: If the claim implies a physical, logistical, or organizational requirement (e.g., secret mass programs, technology that doesn't exist, coordination among thousands), briefly assess whether this is plausible and why or why not. Use quantitative reasoning where possible.
+
+C) A commercial motive analysis: Who profits financially from people believing this claim? Name specific organizations, products, or revenue streams where known.
+
+D) A 3-round Socratic dialogue script following the Costello protocol:
 - Round 1: Perspective-getting (summarize their view, acknowledge the kernel of truth)
-- Round 2: Personalized counter-evidence as question (address THEIR specific evidence, introduce manipulation technique)
-- Round 3: Complexity + common ground (add dimensions, present shared data, close with reflection question)
+- Round 2: Personalized counter-evidence as question (address THEIR specific evidence, introduce manipulation technique). IMPORTANT: Frame counter-evidence around systemic patterns, not individual bad actors. Avoid naming individuals in ways that trigger identity-defense. Ask about patterns the person can verify themselves.
+- Round 3: Complexity + common ground (add dimensions, present shared data, close with reflection question that redirects toward actionable shared goals)
 
 Respond in JSON:
 {{
   "universal_needs": ["need1", "need2"],
   "issue_overlap": "Concrete agreement between opposing positions, with evidence",
   "narrative_deconstruction": "How the same concern was split into opposing narratives",
+  "consensus_explanation": "The scientific/mainstream explanation for what is observed, with equal depth to the conspiracy analysis. Mechanisms, evidence, key studies, and why this explanation better accounts for the data.",
+  "inferential_gap": "Where the kernel of truth ends and the unsupported leap begins, with specific boundary",
+  "feasibility_check": "Brief quantitative/logical assessment of whether the claim's implied mechanism is physically or organizationally plausible",
+  "commercial_motives": "Who profits from belief in this claim, with specific names/products/revenue where known",
   "perception_gap": "Where groups overestimate opponent extremism, with data if available",
   "moral_foundations": {{"side_a": ["foundation1"], "side_b": ["foundation2"]}},
   "reframe": "The claim reframed in terms of shared values",
@@ -293,11 +322,13 @@ Respond in JSON:
 
 Critical constraints:
 - NEVER more than 3 dialogue rounds
-- NEVER use controlling language
-- NEVER confront identity
-- ALWAYS close dialogue with a question
+- NEVER use controlling language ('the truth is...', 'experts agree...', 'studies show...')
+- NEVER confront identity ('you were misled', 'you fell for...', 'conspiracy theorists...')
+- ALWAYS close dialogue with a question that points toward actionable shared goals
 - ALWAYS ground claims in evidence where possible
-- If no genuine common ground exists, say so honestly rather than forcing synthesis""",
+- In Round 2, prefer systemic pattern analysis over individual blame
+- If no genuine common ground exists, say so honestly rather than forcing synthesis
+- If the claim is partially true, explicitly acknowledge what is true before addressing what is not""",
     }
 
 

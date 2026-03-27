@@ -64,6 +64,7 @@ class Orchestrator:
             "universal_needs": ["unknown"],
             "issue_overlap": "",
             "narrative_deconstruction": "",
+            "consensus_explanation": "",
             "inferential_gap": "",
             "feasibility_check": "",
             "commercial_motives": "",
@@ -156,6 +157,7 @@ class Orchestrator:
             "ttps": {"ttp_matches": [], "primary_tactic": "Assess"},
             "bridge": {
                 "universal_needs": ["unknown"], "issue_overlap": "", "narrative_deconstruction": "",
+                "consensus_explanation": "",
                 "inferential_gap": "", "feasibility_check": "", "commercial_motives": "",
                 "perception_gap": "", "moral_foundations": {}, "reframe": "",
                 "socratic_dialogue": ["Analysis unavailable"],

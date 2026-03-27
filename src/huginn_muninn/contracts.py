@@ -125,6 +125,7 @@ class BridgeOutput(BaseModel):
     universal_needs: list[str] = Field(..., min_length=1)
     issue_overlap: Annotated[str, BeforeValidator(_null_to_empty_str)]
     narrative_deconstruction: Annotated[str, BeforeValidator(_null_to_empty_str)]
+    consensus_explanation: Annotated[str, BeforeValidator(_null_to_empty_str)] = ""
     inferential_gap: Annotated[str, BeforeValidator(_null_to_empty_str)] = ""
     feasibility_check: Annotated[str, BeforeValidator(_null_to_empty_str)] = ""
     commercial_motives: Annotated[str, BeforeValidator(_null_to_empty_str)] = ""

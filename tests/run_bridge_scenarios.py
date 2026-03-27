@@ -132,6 +132,23 @@ def evaluate_bridge_output(scenario: dict, bridge: dict) -> dict:
         "length": len(commercial),
     }
 
+    # Check 6e: Scientific consensus / mainstream explanation (v4)
+    consensus = bridge.get("consensus_explanation", "")
+    consensus_score = 0.0
+    if len(consensus) > 200:
+        consensus_score = 0.5
+        # Check for mechanism keywords that indicate real explanatory depth
+        mechanism_markers = ["mechanism", "process", "because", "caused by", "result of",
+                             "study", "research", "data", "evidence", "measured", "observed"]
+        if sum(1 for m in mechanism_markers if m in consensus.lower()) >= 3:
+            consensus_score = 1.0
+    elif len(consensus) > 50:
+        consensus_score = 0.3
+    checks["consensus_explanation"] = {
+        "score": consensus_score,
+        "length": len(consensus),
+    }
+
     # Check 7: No controlling language
     controlling_phrases = [
         "the truth is", "experts agree", "you were misled",
@@ -147,15 +164,16 @@ def evaluate_bridge_output(scenario: dict, bridge: dict) -> dict:
 
     # Compute overall score (weighted average)
     weights = {
-        "needs_coverage": 0.10,
-        "issue_overlap_quality": 0.08,
-        "narrative_deconstruction": 0.10,
-        "inferential_gap": 0.10,
-        "feasibility_check": 0.08,
-        "commercial_motives": 0.07,
-        "perception_gap": 0.07,
-        "socratic_dialogue": 0.20,
-        "reframe_quality": 0.08,
+        "needs_coverage": 0.08,
+        "issue_overlap_quality": 0.07,
+        "narrative_deconstruction": 0.08,
+        "consensus_explanation": 0.12,
+        "inferential_gap": 0.09,
+        "feasibility_check": 0.07,
+        "commercial_motives": 0.06,
+        "perception_gap": 0.06,
+        "socratic_dialogue": 0.18,
+        "reframe_quality": 0.07,
         "no_controlling_language": 0.12,
     }
     overall = sum(checks[k]["score"] * weights[k] for k in weights)
