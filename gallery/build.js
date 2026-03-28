@@ -305,27 +305,39 @@ const SHARED_CSS = `
   .metrics-table tr:last-child td { border-bottom: none; }
 
   .section {
-    padding: 32px 0;
+    padding: 40px 0;
     border-bottom: 1px solid var(--border);
   }
   .section:last-child { border-bottom: none; }
 
   .section h2 {
-    font-size: 1.25rem;
-    margin-bottom: 16px;
-    padding-bottom: 8px;
+    font-size: 1.3rem;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
     border-bottom: 2px solid var(--bg);
+    letter-spacing: -0.01em;
   }
 
-  .section p { margin-bottom: 12px; color: #2C3E50; }
+  .section p { margin-bottom: 16px; color: #2C3E50; }
   .section p:last-child { margin-bottom: 0; }
 
   .intro-note {
     color: var(--gray);
     font-size: 0.875rem;
     font-style: italic;
-    margin-bottom: 12px;
+    margin-bottom: 16px;
   }
+
+  /* Prose blocks: long-form text with proper paragraph spacing */
+  .prose {
+    font-size: 0.95rem;
+    line-height: 1.75;
+    color: #34495E;
+  }
+  .prose p {
+    margin-bottom: 16px;
+  }
+  .prose p:last-child { margin-bottom: 0; }
 
   /* Needs pills */
   .needs-list {
@@ -382,28 +394,30 @@ const SHARED_CSS = `
   .technique-text { font-size: 0.9rem; color: #2C3E50; line-height: 1.6; }
 
   /* Socratic dialogue */
-  .dialogue-round { margin-bottom: 20px; }
+  .dialogue-round { margin-bottom: 28px; }
+  .dialogue-round:last-child { margin-bottom: 0; }
   .round-label {
     font-size: 0.75rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
   }
   .round-1 .round-label { color: var(--teal); }
   .round-2 .round-label { color: var(--navy); }
   .round-3 .round-label { color: #6C3483; }
 
   .dialogue-bubble {
-    padding: 16px 18px;
+    padding: 20px 24px;
     border-radius: 8px;
-    font-size: 0.9rem;
-    line-height: 1.65;
-    white-space: pre-wrap;
+    font-size: 0.92rem;
+    line-height: 1.75;
   }
-  .round-1 .dialogue-bubble { background: #EAF7F4; border-left: 3px solid var(--teal); }
-  .round-2 .dialogue-bubble { background: #EAF0F7; border-left: 3px solid var(--navy); }
-  .round-3 .dialogue-bubble { background: #F5EEF8; border-left: 3px solid #6C3483; }
+  .dialogue-bubble p { margin-bottom: 12px; }
+  .dialogue-bubble p:last-child { margin-bottom: 0; }
+  .round-1 .dialogue-bubble { background: #EAF7F4; border-left: 4px solid var(--teal); }
+  .round-2 .dialogue-bubble { background: #EAF0F7; border-left: 4px solid var(--navy); }
+  .round-3 .dialogue-bubble { background: #F5EEF8; border-left: 4px solid #6C3483; }
 
   /* Reframe */
   .reframe-block {
@@ -506,6 +520,24 @@ function truncate(str, len) {
   if (!str) return '';
   if (str.length <= len) return str;
   return str.slice(0, len).replace(/\s+\S*$/, '') + '...';
+}
+
+function formatParagraphs(text) {
+  if (!text) return '';
+  const raw = String(text);
+  // Split on double newlines first (explicit paragraphs from the LLM)
+  let paragraphs = raw.split(/\n\s*\n/).map(p => p.trim()).filter(Boolean);
+  // If only one paragraph and it's very long, split on ALL-CAPS headers or numbered sections
+  if (paragraphs.length === 1 && paragraphs[0].length > 600) {
+    paragraphs = paragraphs[0]
+      .split(/\n(?=[A-Z][A-Z ]{3,}:|\d+[\.\)]\s|[-*]\s)/)
+      .map(p => p.trim()).filter(Boolean);
+  }
+  // If STILL one giant block, split on single newlines
+  if (paragraphs.length === 1 && paragraphs[0].length > 400) {
+    paragraphs = paragraphs[0].split(/\n/).map(p => p.trim()).filter(Boolean);
+  }
+  return paragraphs.map(p => `<p>${esc(p)}</p>`).join('\n');
 }
 
 function versionBadge(version) {
@@ -782,7 +814,7 @@ function renderSocraticDialogue(rounds) {
   return rounds.map((round, i) => `
     <div class="dialogue-round ${classNames[i] || ''}">
       <div class="round-label">Round ${i + 1}: ${labels[i] || 'Round ' + (i + 1)}</div>
-      <div class="dialogue-bubble">${esc(String(round))}</div>
+      <div class="dialogue-bubble">${formatParagraphs(String(round))}</div>
     </div>`).join('');
 }
 
@@ -811,7 +843,7 @@ function renderOptionalSection(title, text) {
   return `
     <div class="section">
       <h2>${title}</h2>
-      <p>${esc(text)}</p>
+      <div class="prose">${formatParagraphs(text)}</div>
     </div>`;
 }
 
@@ -850,7 +882,7 @@ function buildScenarioPage(scenario, allScenarios) {
     ? `<div class="section">
         <h2>Scientific Consensus / Mainstream Explanation</h2>
         <p class="intro-note">The established scientific or institutional explanation for this phenomenon.</p>
-        <p>${esc(bridge.consensus_explanation)}</p>
+        <div class="prose">${formatParagraphs(bridge.consensus_explanation)}</div>
       </div>`
     : '';
 
@@ -924,17 +956,17 @@ function buildScenarioPage(scenario, allScenarios) {
   <div class="section">
     <h2>Inferential Gap</h2>
     <p class="intro-note">Where the evidence ends and the leap begins.</p>
-    <p>${esc(bridge.inferential_gap)}</p>
+    <div class="prose">${formatParagraphs(bridge.inferential_gap)}</div>
   </div>` : ''}
 
   <div class="section">
     <h2>Common Ground</h2>
-    <p>${esc(bridge.issue_overlap || 'No common ground data available.')}</p>
+    <div class="prose">${formatParagraphs(bridge.issue_overlap || 'No common ground data available.')}</div>
   </div>
 
   <div class="section">
     <h2>Narrative Deconstruction</h2>
-    <p>${esc(bridge.narrative_deconstruction || 'No narrative deconstruction data available.')}</p>
+    <div class="prose">${formatParagraphs(bridge.narrative_deconstruction || 'No narrative deconstruction data available.')}</div>
   </div>
 
   ${renderOptionalSection('Feasibility Assessment', bridge.feasibility_check)}

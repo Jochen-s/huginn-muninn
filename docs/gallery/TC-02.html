@@ -211,27 +211,39 @@
   .metrics-table tr:last-child td { border-bottom: none; }
 
   .section {
-    padding: 32px 0;
+    padding: 40px 0;
     border-bottom: 1px solid var(--border);
   }
   .section:last-child { border-bottom: none; }
 
   .section h2 {
-    font-size: 1.25rem;
-    margin-bottom: 16px;
-    padding-bottom: 8px;
+    font-size: 1.3rem;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
     border-bottom: 2px solid var(--bg);
+    letter-spacing: -0.01em;
   }
 
-  .section p { margin-bottom: 12px; color: #2C3E50; }
+  .section p { margin-bottom: 16px; color: #2C3E50; }
   .section p:last-child { margin-bottom: 0; }
 
   .intro-note {
     color: var(--gray);
     font-size: 0.875rem;
     font-style: italic;
-    margin-bottom: 12px;
+    margin-bottom: 16px;
   }
+
+  /* Prose blocks: long-form text with proper paragraph spacing */
+  .prose {
+    font-size: 0.95rem;
+    line-height: 1.75;
+    color: #34495E;
+  }
+  .prose p {
+    margin-bottom: 16px;
+  }
+  .prose p:last-child { margin-bottom: 0; }
 
   /* Needs pills */
   .needs-list {
@@ -288,28 +300,30 @@
   .technique-text { font-size: 0.9rem; color: #2C3E50; line-height: 1.6; }
 
   /* Socratic dialogue */
-  .dialogue-round { margin-bottom: 20px; }
+  .dialogue-round { margin-bottom: 28px; }
+  .dialogue-round:last-child { margin-bottom: 0; }
   .round-label {
     font-size: 0.75rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
   }
   .round-1 .round-label { color: var(--teal); }
   .round-2 .round-label { color: var(--navy); }
   .round-3 .round-label { color: #6C3483; }
 
   .dialogue-bubble {
-    padding: 16px 18px;
+    padding: 20px 24px;
     border-radius: 8px;
-    font-size: 0.9rem;
-    line-height: 1.65;
-    white-space: pre-wrap;
+    font-size: 0.92rem;
+    line-height: 1.75;
   }
-  .round-1 .dialogue-bubble { background: #EAF7F4; border-left: 3px solid var(--teal); }
-  .round-2 .dialogue-bubble { background: #EAF0F7; border-left: 3px solid var(--navy); }
-  .round-3 .dialogue-bubble { background: #F5EEF8; border-left: 3px solid #6C3483; }
+  .dialogue-bubble p { margin-bottom: 12px; }
+  .dialogue-bubble p:last-child { margin-bottom: 0; }
+  .round-1 .dialogue-bubble { background: #EAF7F4; border-left: 4px solid var(--teal); }
+  .round-2 .dialogue-bubble { background: #EAF0F7; border-left: 4px solid var(--navy); }
+  .round-3 .dialogue-bubble { background: #F5EEF8; border-left: 4px solid #6C3483; }
 
   /* Reframe */
   .reframe-block {
@@ -445,12 +459,12 @@
 
   <div class="section">
     <h2>Common Ground</h2>
-    <p>There is remarkable, measurable agreement across the political spectrum on the core concern underneath this claim. A 2023 Pew Research study found that 79% of Americans are concerned about how companies use their personal data, and 72% believe they have little to no control over what data is collected about them. A 2023 AP-NORC poll found bipartisan majorities support federal privacy legislation. The bipartisan passage of COPPA 2.0 measures and the near-unanimous congressional opposition to unrestricted TikTok data practices demonstrate that concern about algorithmic influence on information access is not a fringe position -- it is a mainstream, cross-partisan view. People who believe AI is &#39;controlling&#39; them and people who frame it as &#39;algorithmic influence requiring regulation&#39; are worried about the same thing: they want to be the ones deciding what information shapes their worldview, not an algorithm optimized for someone else&#39;s profit. The disagreement is about mechanism and degree, not about whether the concern itself is legitimate.</p>
+    <div class="prose"><p>There is remarkable, measurable agreement across the political spectrum on the core concern underneath this claim. A 2023 Pew Research study found that 79% of Americans are concerned about how companies use their personal data, and 72% believe they have little to no control over what data is collected about them. A 2023 AP-NORC poll found bipartisan majorities support federal privacy legislation. The bipartisan passage of COPPA 2.0 measures and the near-unanimous congressional opposition to unrestricted TikTok data practices demonstrate that concern about algorithmic influence on information access is not a fringe position -- it is a mainstream, cross-partisan view. People who believe AI is &#39;controlling&#39; them and people who frame it as &#39;algorithmic influence requiring regulation&#39; are worried about the same thing: they want to be the ones deciding what information shapes their worldview, not an algorithm optimized for someone else&#39;s profit. The disagreement is about mechanism and degree, not about whether the concern itself is legitimate.</p></div>
   </div>
 
   <div class="section">
     <h2>Narrative Deconstruction</h2>
-    <p>The underlying concern -- that powerful institutions use technology to influence what information people see, and that this undermines individual agency -- is a single, coherent worry shared across political, ideological, and demographic lines. This concern was split into opposing narrative camps through a specific process. On one side, tech industry PR and mainstream institutional voices framed algorithms as neutral tools that &#39;connect people&#39; and &#39;organize information,&#39; minimizing documented harms and casting critics as technophobic or conspiratorial. On the other side, conspiracy media took the same documented harms and escalated them into claims of deliberate, coordinated thought control, which mainstream voices could then dismiss as paranoid. This created a false dichotomy: either you trust that algorithms are basically benign (the corporate/institutional narrative) or you believe in deliberate AI mind control (the conspiracy narrative). The actual position supported by evidence -- that algorithms meaningfully shape information exposure in ways that serve corporate interests, that government surveillance infrastructure exists and has been abused, and that both of these warrant democratic accountability -- gets squeezed out. Tech companies benefit from this split because it allows them to position all criticism on a spectrum anchored by conspiracy theorists, while conspiracy media benefits because real, documented abuses lend credibility to sensationalized claims. The people who lose are those seeking accurate understanding of how algorithmic systems actually affect their cognitive autonomy.</p>
+    <div class="prose"><p>The underlying concern -- that powerful institutions use technology to influence what information people see, and that this undermines individual agency -- is a single, coherent worry shared across political, ideological, and demographic lines. This concern was split into opposing narrative camps through a specific process. On one side, tech industry PR and mainstream institutional voices framed algorithms as neutral tools that &#39;connect people&#39; and &#39;organize information,&#39; minimizing documented harms and casting critics as technophobic or conspiratorial. On the other side, conspiracy media took the same documented harms and escalated them into claims of deliberate, coordinated thought control, which mainstream voices could then dismiss as paranoid. This created a false dichotomy: either you trust that algorithms are basically benign (the corporate/institutional narrative) or you believe in deliberate AI mind control (the conspiracy narrative). The actual position supported by evidence -- that algorithms meaningfully shape information exposure in ways that serve corporate interests, that government surveillance infrastructure exists and has been abused, and that both of these warrant democratic accountability -- gets squeezed out. Tech companies benefit from this split because it allows them to position all criticism on a spectrum anchored by conspiracy theorists, while conspiracy media benefits because real, documented abuses lend credibility to sensationalized claims. The people who lose are those seeking accurate understanding of how algorithmic systems actually affect their cognitive autonomy.</p></div>
   </div>
 
   
@@ -460,7 +474,7 @@
   
     <div class="section">
       <h2>Perception Gap</h2>
-      <p>Both camps significantly misperceive the other. People who voice this claim in its strong form (&#39;AI controls what we think&#39;) tend to perceive tech defenders as either naive or complicit in a control scheme, when in reality many tech employees and supporters share concerns about algorithmic harms but disagree about the mechanism (emergent vs. deliberate). Conversely, institutional voices who dismiss this concern tend to perceive claimants as conspiratorial and technologically illiterate, when survey data shows that concern about algorithmic influence on information access is held by large bipartisan majorities, including the technologically literate. The More in Common perception gap framework applies here: each side overestimates how extreme the other&#39;s position is. A Pew 2023 study found that 56% of Americans believe social media has been mostly bad for democracy -- this is not a fringe conspiracy position but a mainstream concern that gets mischaracterized when expressed in conspiratorial language.</p>
+      <div class="prose"><p>Both camps significantly misperceive the other. People who voice this claim in its strong form (&#39;AI controls what we think&#39;) tend to perceive tech defenders as either naive or complicit in a control scheme, when in reality many tech employees and supporters share concerns about algorithmic harms but disagree about the mechanism (emergent vs. deliberate). Conversely, institutional voices who dismiss this concern tend to perceive claimants as conspiratorial and technologically illiterate, when survey data shows that concern about algorithmic influence on information access is held by large bipartisan majorities, including the technologically literate. The More in Common perception gap framework applies here: each side overestimates how extreme the other&#39;s position is. A Pew 2023 study found that 56% of Americans believe social media has been mostly bad for democracy -- this is not a fringe conspiracy position but a mainstream concern that gets mischaracterized when expressed in conspiratorial language.</p></div>
     </div>
 
   <div class="section">
@@ -469,15 +483,15 @@
     
     <div class="dialogue-round round-1">
       <div class="round-label">Round 1: Perspective-Getting</div>
-      <div class="dialogue-bubble">Round 1 (Perspective-getting): I hear a real concern here, and significant parts of it are grounded in documented evidence. You are right that recommendation algorithms shape what content billions of people see every day -- Facebook&#39;s own internal research confirmed this, and a former employee risked her career to tell Congress about it. You are right that government surveillance programs collect data on citizens at massive scale -- the Snowden documents proved that, and the government effectively confirmed it. And you are right that these systems were not designed with your interests as the primary objective -- they were designed for engagement metrics and intelligence collection. That is a legitimate basis for concern about your autonomy over your own information environment. Where I want to explore further is the specific word &#39;control.&#39; When you say AI is used to &#39;control&#39; what you think -- do you mean that algorithms determine the content you encounter (which is documented), or that someone is deliberately directing your specific thoughts and feelings toward predetermined conclusions? Those are meaningfully different claims with very different evidence behind them.</div>
+      <div class="dialogue-bubble"><p>Round 1 (Perspective-getting): I hear a real concern here, and significant parts of it are grounded in documented evidence. You are right that recommendation algorithms shape what content billions of people see every day -- Facebook&#39;s own internal research confirmed this, and a former employee risked her career to tell Congress about it. You are right that government surveillance programs collect data on citizens at massive scale -- the Snowden documents proved that, and the government effectively confirmed it. And you are right that these systems were not designed with your interests as the primary objective -- they were designed for engagement metrics and intelligence collection. That is a legitimate basis for concern about your autonomy over your own information environment. Where I want to explore further is the specific word &#39;control.&#39; When you say AI is used to &#39;control&#39; what you think -- do you mean that algorithms determine the content you encounter (which is documented), or that someone is deliberately directing your specific thoughts and feelings toward predetermined conclusions? Those are meaningfully different claims with very different evidence behind them.</p></div>
     </div>
     <div class="dialogue-round round-2">
       <div class="round-label">Round 2: Guided Examination</div>
-      <div class="dialogue-bubble">Round 2 (Counter-evidence as question): Here is something interesting about the distinction between &#39;influence&#39; and &#39;control&#39; that might be worth thinking through. Facebook&#39;s emotional contagion study in 2014 showed that changing the emotional valence of News Feed content did affect users&#39; emotional expressions -- that is real algorithmic influence on feelings, documented in a peer-reviewed journal. But the same study showed the effect size was tiny (d=0.001 to 0.02), and users were not even aware it was happening, which means they could not have been &#39;resisting&#39; it -- yet the effect was still marginal. If a deliberate, controlled experiment by the platform itself produced only a tiny effect, what does that suggest about the gap between &#39;influence&#39; (which is real) and &#39;control&#39; (which implies the ability to reliably direct thought)? There is another layer worth considering: who benefits from you believing the mechanism is &#39;control&#39; rather than &#39;influence&#39;? If it is &#39;influence,&#39; the response is regulation, algorithmic transparency, and democratic accountability -- concrete, achievable reforms. If it is &#39;control,&#39; the response is either helplessness (if they control your thoughts, what can you do?) or wholesale rejection of all digital information (which isolates you from the very tools that could help you stay informed). Could the escalation from &#39;influence&#39; to &#39;control&#39; itself be a form of manipulation -- one that turns a solvable problem into an overwhelming one?</div>
+      <div class="dialogue-bubble"><p>Round 2 (Counter-evidence as question): Here is something interesting about the distinction between &#39;influence&#39; and &#39;control&#39; that might be worth thinking through. Facebook&#39;s emotional contagion study in 2014 showed that changing the emotional valence of News Feed content did affect users&#39; emotional expressions -- that is real algorithmic influence on feelings, documented in a peer-reviewed journal. But the same study showed the effect size was tiny (d=0.001 to 0.02), and users were not even aware it was happening, which means they could not have been &#39;resisting&#39; it -- yet the effect was still marginal. If a deliberate, controlled experiment by the platform itself produced only a tiny effect, what does that suggest about the gap between &#39;influence&#39; (which is real) and &#39;control&#39; (which implies the ability to reliably direct thought)? There is another layer worth considering: who benefits from you believing the mechanism is &#39;control&#39; rather than &#39;influence&#39;? If it is &#39;influence,&#39; the response is regulation, algorithmic transparency, and democratic accountability -- concrete, achievable reforms. If it is &#39;control,&#39; the response is either helplessness (if they control your thoughts, what can you do?) or wholesale rejection of all digital information (which isolates you from the very tools that could help you stay informed). Could the escalation from &#39;influence&#39; to &#39;control&#39; itself be a form of manipulation -- one that turns a solvable problem into an overwhelming one?</p></div>
     </div>
     <div class="dialogue-round round-3">
       <div class="round-label">Round 3: Integration</div>
-      <div class="dialogue-bubble">Round 3 (Complexity and common ground): What makes this topic so important is that the concern underneath it -- wanting agency over your own information environment -- is one of the most widely shared values across the entire political spectrum. Seventy-nine percent of Americans share your concern about how companies use data. Bipartisan majorities in Congress have voted for algorithmic accountability measures. The EU passed the AI Act with broad support specifically to address these issues. You are not alone in this worry, and the people you might think disagree with you mostly share the same underlying concern. Here is the fuller picture: AI-powered systems do influence what information you encounter, that influence does serve corporate and sometimes governmental interests rather than yours, and meaningful reforms (algorithmic transparency, data sovereignty, right to explanation) are both possible and already underway in some jurisdictions. Those are documented facts. The question that might be worth sitting with is: does framing this as &#39;control&#39; help you address the problem, or does it actually make the problem feel more hopeless than it needs to be? What would it look like if you channeled the energy behind this concern into supporting the specific, concrete reforms that are already making progress -- reforms backed by the same evidence that makes your concern legitimate in the first place?</div>
+      <div class="dialogue-bubble"><p>Round 3 (Complexity and common ground): What makes this topic so important is that the concern underneath it -- wanting agency over your own information environment -- is one of the most widely shared values across the entire political spectrum. Seventy-nine percent of Americans share your concern about how companies use data. Bipartisan majorities in Congress have voted for algorithmic accountability measures. The EU passed the AI Act with broad support specifically to address these issues. You are not alone in this worry, and the people you might think disagree with you mostly share the same underlying concern. Here is the fuller picture: AI-powered systems do influence what information you encounter, that influence does serve corporate and sometimes governmental interests rather than yours, and meaningful reforms (algorithmic transparency, data sovereignty, right to explanation) are both possible and already underway in some jurisdictions. Those are documented facts. The question that might be worth sitting with is: does framing this as &#39;control&#39; help you address the problem, or does it actually make the problem feel more hopeless than it needs to be? What would it look like if you channeled the energy behind this concern into supporting the specific, concrete reforms that are already making progress -- reforms backed by the same evidence that makes your concern legitimate in the first place?</p></div>
     </div>
   </div>
 
