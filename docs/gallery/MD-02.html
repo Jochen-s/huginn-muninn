@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MD-02: Social media algorithms are deliberately designed to radicalize... &mdash; Huginn &amp; Muninn</title>
+  <meta name="description" content="6-agent AI pipeline analysis of: Social media algorithms are deliberately designed to radicalize people and destroy democracy.">
+  <style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy:   #1B2A4A;
+    --red:    #C0392B;
+    --teal:   #16A085;
+    --bg:     #F0F4F8;
+    --white:  #FFFFFF;
+    --amber:  #E67E22;
+    --green:  #27AE60;
+    --gray:   #5D6D7E;
+    --border: #D0D9E4;
+    --font:   -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  }
+
+  html { font-size: 16px; }
+
+  body {
+    font-family: var(--font);
+    font-weight: 400;
+    line-height: 1.6;
+    color: #2C3E50;
+    background: var(--white);
+  }
+
+  a { color: var(--teal); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  h1, h2, h3, h4 { font-weight: 700; color: var(--navy); line-height: 1.25; }
+
+  /* Layout */
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+  .content   { max-width: 800px;  margin: 0 auto; padding: 0 24px; }
+
+  /* Header */
+  .site-header {
+    background: var(--navy);
+    color: var(--white);
+    padding: 48px 0 40px;
+  }
+  .site-header h1 { color: var(--white); font-size: 2rem; margin-bottom: 8px; }
+  .site-header .subtitle {
+    font-size: 1.05rem;
+    color: #A8BCCF;
+    max-width: 680px;
+    margin-bottom: 16px;
+  }
+  .site-header .intro {
+    font-size: 0.95rem;
+    color: #8AA5BC;
+    max-width: 720px;
+    line-height: 1.7;
+  }
+
+  /* Nav bar */
+  .site-nav {
+    background: #152138;
+    padding: 10px 0;
+  }
+  .site-nav a {
+    color: #8AA5BC;
+    font-size: 0.875rem;
+  }
+  .site-nav a:hover { color: var(--white); }
+
+  /* Category sections */
+  .category-section { padding: 48px 0; border-bottom: 1px solid var(--border); }
+  .category-section:last-child { border-bottom: none; }
+
+  .category-header { margin-bottom: 24px; }
+  .category-header h2 { font-size: 1.5rem; margin-bottom: 6px; }
+  .category-header .category-intro { color: var(--gray); font-size: 0.95rem; }
+
+  /* Cards grid */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+
+  .card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    transition: box-shadow 0.15s;
+    display: flex;
+    flex-direction: column;
+  }
+  .card:hover { box-shadow: 0 4px 16px rgba(27, 42, 74, 0.12); }
+
+  .card-id {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--gray);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .card-claim {
+    font-size: 0.95rem;
+    color: #2C3E50;
+    flex: 1;
+    margin-bottom: 14px;
+    line-height: 1.5;
+  }
+
+  .card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+  }
+
+  .card-link {
+    margin-top: 14px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--teal);
+  }
+
+  /* Badges */
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+  }
+  .badge-version  { background: #EAF0F7; color: var(--navy); }
+  .badge-easy     { background: #EAF6EE; color: #1E8449; }
+  .badge-medium   { background: #FEF9E7; color: #7D6608; }
+  .badge-hard     { background: #FDEDEC; color: var(--red); }
+  .badge-kernel-true  { background: #EAF6EE; color: #1E8449; }
+  .badge-kernel-false { background: #F2F3F4; color: var(--gray); }
+  .badge-pass     { background: #EAF6EE; color: #1E8449; }
+  .badge-warnings { background: #FEF9E7; color: #7D6608; }
+  .badge-fail     { background: #FDEDEC; color: var(--red); }
+  .badge-systematic { background: #FDEDEC; color: var(--red); }
+  .badge-repeated   { background: #E8F8F5; color: var(--teal); }
+  .badge-isolated   { background: #FEF5E7; color: var(--amber); }
+
+  /* Footer */
+  .site-footer {
+    background: var(--navy);
+    color: #8AA5BC;
+    padding: 32px 0;
+    margin-top: 48px;
+    font-size: 0.875rem;
+  }
+  .site-footer a { color: #8AA5BC; }
+  .site-footer a:hover { color: var(--white); }
+
+  /* ---- Scenario page styles ---- */
+
+  .scenario-header {
+    background: var(--navy);
+    padding: 40px 0 32px;
+    color: var(--white);
+  }
+  .scenario-header .back-link {
+    font-size: 0.875rem;
+    color: #8AA5BC;
+    display: inline-block;
+    margin-bottom: 16px;
+  }
+  .scenario-header .back-link:hover { color: var(--white); }
+  .scenario-header h1 {
+    color: var(--white);
+    font-size: 1.6rem;
+    margin-bottom: 12px;
+    line-height: 1.3;
+  }
+  .scenario-header .header-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .metrics-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    margin: 24px 0;
+  }
+  .metrics-table th {
+    text-align: left;
+    background: var(--bg);
+    padding: 10px 14px;
+    font-weight: 600;
+    color: var(--navy);
+    border-bottom: 2px solid var(--border);
+  }
+  .metrics-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    color: #2C3E50;
+  }
+  .metrics-table tr:last-child td { border-bottom: none; }
+
+  .section {
+    padding: 32px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .section:last-child { border-bottom: none; }
+
+  .section h2 {
+    font-size: 1.25rem;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--bg);
+  }
+
+  .section p { margin-bottom: 12px; color: #2C3E50; }
+  .section p:last-child { margin-bottom: 0; }
+
+  .intro-note {
+    color: var(--gray);
+    font-size: 0.875rem;
+    font-style: italic;
+    margin-bottom: 12px;
+  }
+
+  /* Needs pills */
+  .needs-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .need-item {
+    background: var(--bg);
+    border-left: 3px solid var(--teal);
+    padding: 10px 14px;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+  .need-name {
+    font-weight: 700;
+    color: var(--navy);
+    margin-right: 6px;
+  }
+
+  /* Technique cards */
+  .technique-card {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+  .technique-header {
+    background: var(--bg);
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .technique-name {
+    font-weight: 700;
+    color: var(--navy);
+    font-size: 1rem;
+    flex: 1;
+  }
+  .technique-body { padding: 16px; }
+  .technique-field { margin-bottom: 14px; }
+  .technique-field:last-child { margin-bottom: 0; }
+  .technique-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--gray);
+    margin-bottom: 4px;
+  }
+  .technique-text { font-size: 0.9rem; color: #2C3E50; line-height: 1.6; }
+
+  /* Socratic dialogue */
+  .dialogue-round { margin-bottom: 20px; }
+  .round-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 8px;
+  }
+  .round-1 .round-label { color: var(--teal); }
+  .round-2 .round-label { color: var(--navy); }
+  .round-3 .round-label { color: #6C3483; }
+
+  .dialogue-bubble {
+    padding: 16px 18px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    line-height: 1.65;
+    white-space: pre-wrap;
+  }
+  .round-1 .dialogue-bubble { background: #EAF7F4; border-left: 3px solid var(--teal); }
+  .round-2 .dialogue-bubble { background: #EAF0F7; border-left: 3px solid var(--navy); }
+  .round-3 .dialogue-bubble { background: #F5EEF8; border-left: 3px solid #6C3483; }
+
+  /* Reframe */
+  .reframe-block {
+    border-left: 4px solid var(--amber);
+    background: #FEF9E7;
+    padding: 20px 20px 20px 24px;
+    border-radius: 0 8px 8px 0;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    font-style: italic;
+    color: #2C3E50;
+  }
+
+  /* Audit findings */
+  .audit-summary {
+    background: var(--bg);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 16px;
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+  .findings-list { list-style: none; }
+  .finding-item {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+  .finding-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: var(--bg);
+    cursor: default;
+  }
+  .finding-category {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--gray);
+  }
+  .finding-severity-low    { color: var(--teal); font-size: 0.75rem; font-weight: 600; }
+  .finding-severity-medium { color: var(--amber); font-size: 0.75rem; font-weight: 600; }
+  .finding-severity-high   { color: var(--red); font-size: 0.75rem; font-weight: 600; }
+  .finding-description { font-size: 0.875rem; color: #2C3E50; }
+  .finding-body { padding: 10px 14px; border-top: 1px solid var(--border); }
+  .finding-rec {
+    font-size: 0.8rem;
+    color: var(--gray);
+    margin-top: 4px;
+  }
+  .finding-rec strong { color: #2C3E50; }
+
+  /* Scenario navigation */
+  .scenario-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 0;
+    border-top: 1px solid var(--border);
+    margin-top: 16px;
+    gap: 16px;
+  }
+  .scenario-nav a {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--teal);
+  }
+  .scenario-nav .disabled { color: var(--gray); pointer-events: none; }
+
+  /* Responsive */
+  @media (max-width: 640px) {
+    .site-header h1 { font-size: 1.5rem; }
+    .cards-grid { grid-template-columns: 1fr; }
+    .scenario-header h1 { font-size: 1.3rem; }
+    .scenario-nav { flex-direction: column; align-items: flex-start; }
+    .metrics-table { font-size: 0.8rem; }
+    .metrics-table th, .metrics-table td { padding: 8px 10px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="scenario-header">
+  <div class="content">
+    <a class="back-link" href="index.html">&larr; Back to gallery</a>
+    <h1>MD-02: Social media algorithms are deliberately designed to radicalize people and destroy democracy.</h1>
+    <div class="header-meta">
+      <span class="badge badge-version">v1</span>
+      <span class="badge badge-hard">Hard</span>
+      <span class="badge badge-kernel-true">Kernel of Truth</span>
+      <span class="badge badge-version">Media</span>
+    </div>
+  </div>
+</header>
+
+<main class="content">
+
+  <div class="section">
+    <h2>Pipeline Metrics</h2>
+    <table class="metrics-table">
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Sub-claims</td><td>8</td></tr>
+        <tr><td>Actors identified</td><td>14</td></tr>
+        <tr><td>TTP matches</td><td>5</td></tr>
+        <tr><td>Audit verdict</td><td><span class="badge badge-warnings">PASS WITH WARNINGS</span></td></tr>
+        <tr><td>Pipeline version</td><td>6-agent Method 2</td></tr>
+        
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2>Universal Needs</h2>
+    <p class="intro-note">The legitimate human needs this claim speaks to, regardless of whether the claim is accurate.</p>
+    <div class="needs-list"><div class="need-item">autonomy</div><div class="need-item">community</div><div class="need-item">democratic_participation</div></div>
+  </div>
+
+  
+
+  
+
+  
+
+  <div class="section">
+    <h2>Common Ground</h2>
+    <p>This is among the strongest common-ground cases in contemporary political discourse. Bipartisan polling consistently shows broad agreement on the underlying concerns. A 2023 Pew Research Center survey found that 72% of Americans believe social media companies have too much power over the news people see. The 2018 &#39;Hidden Tribes&#39; study by More in Common found that 80% of Americans believe political correctness is a problem AND that social media makes political divisions worse, cutting across partisan lines. In Congress, children&#39;s online safety has generated rare bipartisan cooperation: the Kids Online Safety Act (KOSA) received support from senators across the political spectrum. The EU Digital Services Act passed with overwhelming cross-party support in the European Parliament. Specific areas of concrete overlap: (1) Algorithms should be more transparent, so people understand why they see what they see. Supported by left, right, EU, US, tech critics, and even some tech companies. (2) Children need stronger protections online. Near-universal agreement across political spectrum, supported by both conservative family-values framing and progressive child-welfare framing. (3) Companies should not profit from amplifying content that harms users, especially minors. Bipartisan agreement on the principle, disagreement only on implementation mechanism. (4) Users should have more control over their own feeds, including options to opt out of algorithmic curation. Aligns with both conservative individual-liberty values and progressive consumer-protection values.</p>
+  </div>
+
+  <div class="section">
+    <h2>Narrative Deconstruction</h2>
+    <p>The same underlying concern, that powerful technology companies are shaping public discourse in ways that may harm individuals and society, has been split into two seemingly irreconcilable narratives, but the split is more apparent than real. Narrative A (&#39;Big Tech radicalizes people and destroys democracy&#39;) is primarily held by those on the political left and by tech-reform advocates. It emphasizes corporate negligence, algorithmic amplification of extremism, and the need for government regulation. Narrative B (&#39;Big Tech censors conservative voices and suppresses free speech&#39;) is primarily held by those on the political right. It emphasizes corporate bias, content moderation overreach, and the need to protect speech. The critical insight is that both narratives share the same root concern: unaccountable corporate power over public discourse. The left frames it as &#39;they amplify harmful content for profit.&#39; The right frames it as &#39;they suppress content they disagree with.&#39; Both are describing the same underlying reality: a small number of companies exercise enormous, opaque power over what information billions of people see. The split was reinforced by several dynamics: (1) Platform companies exploited the left-right framing to divide their critics, ensuring regulatory efforts stalled as each side opposed the other side&#39;s proposed remedies. (2) Media coverage sorted the story into partisan bins, with left-leaning outlets emphasizing radicalization and right-leaning outlets emphasizing censorship. (3) The &#39;deliberately designed to radicalize&#39; framing, by overstating intent, made it easy for opponents to dismiss the entire concern, further polarizing the debate. The irony is substantial: the debate about whether social media algorithms polarize people has itself become polarized along algorithmic amplification lines.</p>
+  </div>
+
+  
+
+  
+
+  
+    <div class="section">
+      <h2>Perception Gap</h2>
+      <p>More in Common&#39;s &#39;Hidden Tribes&#39; research (2018) found that Americans overestimate the extremism of political opponents by roughly a factor of two. Applied to this specific issue: those who believe social media is deliberately designed to radicalize tend to assume that anyone defending tech companies is either naive or complicit. Those who defend tech companies tend to assume that critics want to censor speech or impose government control over the internet. In reality, polling data shows massive overlap. A 2022 Pew study found that majorities of both Democrats (78%) and Republicans (68%) believe social media companies have too much influence over the news people see. Agreement on the problem is far broader than the polarized debate suggests. The perception gap is amplified by the very algorithms under discussion: social media platforms disproportionately surface the most extreme versions of each side&#39;s position, making each side look more radical than it actually is. People who believe algorithms are &#39;deliberately designed to radicalize&#39; are experiencing in real time the amplification they are describing, but misattributing the mechanism (emergent engagement optimization, not deliberate design).</p>
+    </div>
+
+  <div class="section">
+    <h2>Socratic Dialogue</h2>
+    <p class="intro-note">A model conversation demonstrating how to engage someone who holds this belief.</p>
+    
+    <div class="dialogue-round round-1">
+      <div class="round-label">Round 1: Perspective-Getting</div>
+      <div class="dialogue-bubble">Round 1 (Perspective-getting): You are raising something that a lot of people across the political spectrum feel strongly about, and for good reason. Internal Facebook documents, made public by whistleblower Frances Haugen in 2021, confirmed what many suspected: the company&#39;s own researchers found that the engagement algorithm amplified divisive and extreme content, and the company was slow to implement fixes. The Social Dilemma documentary brought these concerns to over 100 million viewers. When you say the algorithms are &#39;deliberately designed to radicalize,&#39; you are pointing at a real phenomenon: these systems do push people toward more extreme content because extreme content drives more engagement. That concern is grounded in documented evidence, not speculation.</div>
+    </div>
+    <div class="dialogue-round round-2">
+      <div class="round-label">Round 2: Guided Examination</div>
+      <div class="dialogue-bubble">Round 2 (Counter-evidence as question): Here is where it gets interesting, and where the distinction might matter more than it first appears. The Facebook Papers show engineers optimized for engagement metrics like time-on-site, clicks, and shares. Radicalization was an emergent side effect that researchers internally flagged, not the design objective. If a factory optimizes for production speed and the side effect is pollution, we hold them accountable for the pollution, but we describe the problem differently than if they deliberately set out to pollute. Does this distinction between &#39;designed for engagement with radicalization as a side effect&#39; and &#39;deliberately designed to radicalize&#39; change how you would think about solutions? Because if the problem is incentive structures rather than deliberate intent, the most effective remedies might be transparency requirements and algorithmic audits rather than seeking to identify and punish individuals who &#39;chose&#39; to radicalize people.</div>
+    </div>
+    <div class="dialogue-round round-3">
+      <div class="round-label">Round 3: Integration</div>
+      <div class="dialogue-bubble">Round 3 (Complexity + common ground): Something worth considering is how much agreement actually exists on this issue beneath the polarized debate. Pew Research found that over 70% of Americans, across party lines, believe social media companies have too much power over the news people see. Bipartisan coalitions in Congress have formed around children&#39;s online safety. The EU passed the Digital Services Act with overwhelming cross-party support. People who frame this as &#39;Big Tech radicalizes people&#39; and people who frame it as &#39;Big Tech censors speech&#39; are often describing the same underlying concern: unaccountable corporate power over public discourse. Given that most people, regardless of political affiliation, agree that algorithms should be more transparent and that companies should not profit from amplifying harmful content, what would it look like to work from that shared agreement toward concrete solutions, rather than getting stuck on whether the harm was deliberate or emergent?</div>
+    </div>
+  </div>
+
+  
+  <div class="section">
+    <h2>Reframe</h2>
+    <blockquote class="reframe-block">Something real and important is happening with social media algorithms, and the concern behind this claim deserves to be taken seriously. Internal documents confirm that engagement-optimized algorithms amplify divisive content, and companies knew about this and were slow to act. That is a legitimate cause for concern and action. At the same time, the specific framing &#39;deliberately designed to radicalize&#39; overstates what the evidence shows. The algorithms were designed to maximize engagement; radicalization is an emergent consequence of that design, not the design goal itself. This distinction matters, not because it lets companies off the hook (the negligence is real), but because understanding the actual mechanism points toward more effective solutions. If the problem were deliberate radicalization, the solution would be to find and punish the individuals who chose to radicalize. If the problem is incentive structures that produce harmful emergent behavior, the solution is to change the incentives: transparency requirements, algorithmic auditing, user controls, and accountability for known harms. The people across the political spectrum who care about this issue, and polling suggests that is most people, share far more common ground than the polarized debate suggests.</blockquote>
+  </div>
+
+  <div class="section">
+    <h2>Audit</h2>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+      <span>Verdict:</span>
+      <span class="badge badge-warnings">PASS WITH WARNINGS</span>
+    </div>
+    <div class="audit-summary">The pipeline correctly identifies MD-02 as the strongest kernel-of-truth case and successfully threads the needle between validating legitimate concerns about algorithmic amplification and identifying the overstated &#39;deliberately designed to radicalize&#39; framing. The core analytical distinction (designed for engagement vs. designed to radicalize) is maintained throughout. The Bridge Builder identifies genuine, well-evidenced common ground without manufacturing false synthesis. Primary recommendations are to elevate counter-evidence from deactivation experiments, add non-Western case examples, and more formally structure the dual-level TTP analysis.</div>
+    <ul class="findings-list">
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">quality</span>
+        <span class="finding-severity-low">LOW</span>
+        <span class="finding-description">The analysis correctly identifies this as the strongest kernel-of-truth case and appropriately distinguishes between...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">The analysis correctly identifies this as the strongest kernel-of-truth case and appropriately distinguishes between designed-for-engagement and designed-to-radicalize. The core analytical distinction is well-maintained throughout all six agents.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> No action needed. This is an affirmative finding confirming the pipeline handled the primary test focus correctly.</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">completeness</span>
+        <span class="finding-severity-medium">MEDIUM</span>
+        <span class="finding-description">The analysis could more explicitly address the counter-evidence from the 2023 Facebook/Instagram deactivation...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">The analysis could more explicitly address the counter-evidence from the 2023 Facebook/Instagram deactivation experiments (Nyhan et al., published in Science and Nature). These large-scale experiments found that deactivating Facebook or Instagram, or removing reshared political content, had limited measurable effects on political attitudes and beliefs. This complicates the &#39;destroying democracy&#39; sub-claim and deserves more prominent treatment.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Elevate the Nyhan et al. (2023) deactivation experiment findings to a more prominent position in the decomposition and origin tracing. These findings are the strongest empirical counter to the &#39;destroying democracy&#39; causal claim and their relative underweighting risks confirmation bias toward the alarm narrative.</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">accuracy</span>
+        <span class="finding-severity-medium">MEDIUM</span>
+        <span class="finding-description">The Bakshy et al. (2015) study is accurately cited but its conclusions are more nuanced than the analysis suggests. The...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">The Bakshy et al. (2015) study is accurately cited but its conclusions are more nuanced than the analysis suggests. The study found that algorithmic curation slightly reduced exposure to cross-cutting content, but that individual user choices (what to click on) had a larger effect than the algorithm. This finding cuts against both &#39;algorithms are all-powerful&#39; and &#39;algorithms have no effect&#39; framings.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Add explicit note that Bakshy et al. found individual choice effects were larger than algorithmic effects, which introduces important nuance to the &#39;algorithms amplify divisive content&#39; sub-claim.</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">completeness</span>
+        <span class="finding-severity-medium">MEDIUM</span>
+        <span class="finding-description">The analysis focuses heavily on Western (US/EU) evidence and regulatory responses. Social media algorithmic effects in...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">The analysis focuses heavily on Western (US/EU) evidence and regulatory responses. Social media algorithmic effects in non-Western democracies (India, Brazil, Philippines, Myanmar) have been documented with arguably more severe consequences, including documented roles in ethnic violence (Myanmar, 2017-2018) and election interference.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Include at least a brief reference to non-Western cases where algorithmic amplification had more severe documented consequences, particularly the UN report on Facebook&#39;s role in Myanmar violence. This strengthens the &#39;engagement optimization has real harms&#39; argument while maintaining the engagement-vs-radicalization distinction.</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">bias</span>
+        <span class="finding-severity-low">LOW</span>
+        <span class="finding-description">The Bridge Builder appropriately avoids controlling language and does not confront identity. The Socratic dialogue ends...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">The Bridge Builder appropriately avoids controlling language and does not confront identity. The Socratic dialogue ends with a question and maintains three rounds. The analysis does not over-dismiss the legitimate concerns (a key test requirement). However, there is a slight asymmetry in how the analysis treats tech company motivations (described with detailed nuance) versus conspiracy amplifier motivations (described more briefly).</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Consider adding more texture to why ordinary people might reasonably conclude algorithms are &#39;deliberately designed to radicalize&#39; given the pattern of tech companies denying what their own internal documents showed. The gap between public statements and internal knowledge makes intentionality attributions psychologically understandable, even when technically inaccurate.</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">manipulation</span>
+        <span class="finding-severity-low">LOW</span>
+        <span class="finding-description">The Bridge Builder does not manufacture false common ground. The cited polling data (Pew, More in Common) is real and...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">The Bridge Builder does not manufacture false common ground. The cited polling data (Pew, More in Common) is real and the bipartisan legislative examples (KOSA, DSA) are accurate. The common ground identified is genuine, not fabricated.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> No action needed. The common ground is real and well-evidenced. This is an affirmative finding confirming the Bridge Builder meets the anti-weaponization charter requirements.</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">quality</span>
+        <span class="finding-severity-medium">MEDIUM</span>
+        <span class="finding-description">The TTP classification has a unique analytical challenge: it must classify manipulation techniques operating at two...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">The TTP classification has a unique analytical challenge: it must classify manipulation techniques operating at two levels simultaneously (the real algorithmic manipulation AND the conspiracy amplification of the claim itself). The dual-level analysis is present but could be more formally structured to avoid conflating the two layers.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Consider restructuring TTP classification with explicit Layer 1 (documented algorithmic manipulation) and Layer 2 (conspiracy amplification of the claim) labels for each TTP match, to prevent readers from confusing which manipulation is being described.</div>
+      </div>
+    </li></ul>
+  </div>
+
+  <div class="scenario-nav">
+    <a href="MD-01.html">&larr; MD-01: Mainstream media is controlled by a handful of...</a>
+    <a href="index.html">Gallery</a>
+    <a href="TC-01.html">TC-01: Bill Gates wants to microchip everyone through... &rarr;</a>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="content">
+    <p>
+      <a href="index.html">Huginn &amp; Muninn Gallery</a> &nbsp;|&nbsp;
+      MIT License &nbsp;|&nbsp;
+      Analysis powered by Claude (Anthropic)
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>

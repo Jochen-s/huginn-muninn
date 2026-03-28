@@ -10,7 +10,7 @@ are being manipulated, and what they share with the people they have been taught
 This is not an oracle. It is a cognitive gymnasium. The goal is to teach you a mental framework
 you carry forever, then make the tool unnecessary.
 
-**Quick Links:** [Setup Guide](docs/SETUP-GUIDE.md) | [Scenario Gallery](gallery/) | [Changelog](CHANGELOG.md) | [Anti-Weaponization Charter](ANTI-WEAPONIZATION-CHARTER.md)
+**Quick Links:** [Setup Guide](docs/SETUP-GUIDE.md) | [Scenario Gallery](docs/gallery/index.html) | [Changelog](CHANGELOG.md) | [Anti-Weaponization Charter](ANTI-WEAPONIZATION-CHARTER.md)
 
 ---
 

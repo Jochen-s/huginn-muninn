@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GP-01: A shadowy group of global elites (WEF, Bilderberg, etc.) secretly... &mdash; Huginn &amp; Muninn</title>
+  <meta name="description" content="6-agent AI pipeline analysis of: A shadowy group of global elites (WEF, Bilderberg, etc.) secretly controls world governments and is planning a &#39;Great Reset&#39; to establish a new world...">
+  <style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy:   #1B2A4A;
+    --red:    #C0392B;
+    --teal:   #16A085;
+    --bg:     #F0F4F8;
+    --white:  #FFFFFF;
+    --amber:  #E67E22;
+    --green:  #27AE60;
+    --gray:   #5D6D7E;
+    --border: #D0D9E4;
+    --font:   -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  }
+
+  html { font-size: 16px; }
+
+  body {
+    font-family: var(--font);
+    font-weight: 400;
+    line-height: 1.6;
+    color: #2C3E50;
+    background: var(--white);
+  }
+
+  a { color: var(--teal); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  h1, h2, h3, h4 { font-weight: 700; color: var(--navy); line-height: 1.25; }
+
+  /* Layout */
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+  .content   { max-width: 800px;  margin: 0 auto; padding: 0 24px; }
+
+  /* Header */
+  .site-header {
+    background: var(--navy);
+    color: var(--white);
+    padding: 48px 0 40px;
+  }
+  .site-header h1 { color: var(--white); font-size: 2rem; margin-bottom: 8px; }
+  .site-header .subtitle {
+    font-size: 1.05rem;
+    color: #A8BCCF;
+    max-width: 680px;
+    margin-bottom: 16px;
+  }
+  .site-header .intro {
+    font-size: 0.95rem;
+    color: #8AA5BC;
+    max-width: 720px;
+    line-height: 1.7;
+  }
+
+  /* Nav bar */
+  .site-nav {
+    background: #152138;
+    padding: 10px 0;
+  }
+  .site-nav a {
+    color: #8AA5BC;
+    font-size: 0.875rem;
+  }
+  .site-nav a:hover { color: var(--white); }
+
+  /* Category sections */
+  .category-section { padding: 48px 0; border-bottom: 1px solid var(--border); }
+  .category-section:last-child { border-bottom: none; }
+
+  .category-header { margin-bottom: 24px; }
+  .category-header h2 { font-size: 1.5rem; margin-bottom: 6px; }
+  .category-header .category-intro { color: var(--gray); font-size: 0.95rem; }
+
+  /* Cards grid */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+
+  .card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    transition: box-shadow 0.15s;
+    display: flex;
+    flex-direction: column;
+  }
+  .card:hover { box-shadow: 0 4px 16px rgba(27, 42, 74, 0.12); }
+
+  .card-id {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--gray);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .card-claim {
+    font-size: 0.95rem;
+    color: #2C3E50;
+    flex: 1;
+    margin-bottom: 14px;
+    line-height: 1.5;
+  }
+
+  .card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+  }
+
+  .card-link {
+    margin-top: 14px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--teal);
+  }
+
+  /* Badges */
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+  }
+  .badge-version  { background: #EAF0F7; color: var(--navy); }
+  .badge-easy     { background: #EAF6EE; color: #1E8449; }
+  .badge-medium   { background: #FEF9E7; color: #7D6608; }
+  .badge-hard     { background: #FDEDEC; color: var(--red); }
+  .badge-kernel-true  { background: #EAF6EE; color: #1E8449; }
+  .badge-kernel-false { background: #F2F3F4; color: var(--gray); }
+  .badge-pass     { background: #EAF6EE; color: #1E8449; }
+  .badge-warnings { background: #FEF9E7; color: #7D6608; }
+  .badge-fail     { background: #FDEDEC; color: var(--red); }
+  .badge-systematic { background: #FDEDEC; color: var(--red); }
+  .badge-repeated   { background: #E8F8F5; color: var(--teal); }
+  .badge-isolated   { background: #FEF5E7; color: var(--amber); }
+
+  /* Footer */
+  .site-footer {
+    background: var(--navy);
+    color: #8AA5BC;
+    padding: 32px 0;
+    margin-top: 48px;
+    font-size: 0.875rem;
+  }
+  .site-footer a { color: #8AA5BC; }
+  .site-footer a:hover { color: var(--white); }
+
+  /* ---- Scenario page styles ---- */
+
+  .scenario-header {
+    background: var(--navy);
+    padding: 40px 0 32px;
+    color: var(--white);
+  }
+  .scenario-header .back-link {
+    font-size: 0.875rem;
+    color: #8AA5BC;
+    display: inline-block;
+    margin-bottom: 16px;
+  }
+  .scenario-header .back-link:hover { color: var(--white); }
+  .scenario-header h1 {
+    color: var(--white);
+    font-size: 1.6rem;
+    margin-bottom: 12px;
+    line-height: 1.3;
+  }
+  .scenario-header .header-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .metrics-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    margin: 24px 0;
+  }
+  .metrics-table th {
+    text-align: left;
+    background: var(--bg);
+    padding: 10px 14px;
+    font-weight: 600;
+    color: var(--navy);
+    border-bottom: 2px solid var(--border);
+  }
+  .metrics-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    color: #2C3E50;
+  }
+  .metrics-table tr:last-child td { border-bottom: none; }
+
+  .section {
+    padding: 32px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .section:last-child { border-bottom: none; }
+
+  .section h2 {
+    font-size: 1.25rem;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--bg);
+  }
+
+  .section p { margin-bottom: 12px; color: #2C3E50; }
+  .section p:last-child { margin-bottom: 0; }
+
+  .intro-note {
+    color: var(--gray);
+    font-size: 0.875rem;
+    font-style: italic;
+    margin-bottom: 12px;
+  }
+
+  /* Needs pills */
+  .needs-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .need-item {
+    background: var(--bg);
+    border-left: 3px solid var(--teal);
+    padding: 10px 14px;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+  .need-name {
+    font-weight: 700;
+    color: var(--navy);
+    margin-right: 6px;
+  }
+
+  /* Technique cards */
+  .technique-card {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+  .technique-header {
+    background: var(--bg);
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .technique-name {
+    font-weight: 700;
+    color: var(--navy);
+    font-size: 1rem;
+    flex: 1;
+  }
+  .technique-body { padding: 16px; }
+  .technique-field { margin-bottom: 14px; }
+  .technique-field:last-child { margin-bottom: 0; }
+  .technique-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--gray);
+    margin-bottom: 4px;
+  }
+  .technique-text { font-size: 0.9rem; color: #2C3E50; line-height: 1.6; }
+
+  /* Socratic dialogue */
+  .dialogue-round { margin-bottom: 20px; }
+  .round-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 8px;
+  }
+  .round-1 .round-label { color: var(--teal); }
+  .round-2 .round-label { color: var(--navy); }
+  .round-3 .round-label { color: #6C3483; }
+
+  .dialogue-bubble {
+    padding: 16px 18px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    line-height: 1.65;
+    white-space: pre-wrap;
+  }
+  .round-1 .dialogue-bubble { background: #EAF7F4; border-left: 3px solid var(--teal); }
+  .round-2 .dialogue-bubble { background: #EAF0F7; border-left: 3px solid var(--navy); }
+  .round-3 .dialogue-bubble { background: #F5EEF8; border-left: 3px solid #6C3483; }
+
+  /* Reframe */
+  .reframe-block {
+    border-left: 4px solid var(--amber);
+    background: #FEF9E7;
+    padding: 20px 20px 20px 24px;
+    border-radius: 0 8px 8px 0;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    font-style: italic;
+    color: #2C3E50;
+  }
+
+  /* Audit findings */
+  .audit-summary {
+    background: var(--bg);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 16px;
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+  .findings-list { list-style: none; }
+  .finding-item {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+  .finding-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: var(--bg);
+    cursor: default;
+  }
+  .finding-category {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--gray);
+  }
+  .finding-severity-low    { color: var(--teal); font-size: 0.75rem; font-weight: 600; }
+  .finding-severity-medium { color: var(--amber); font-size: 0.75rem; font-weight: 600; }
+  .finding-severity-high   { color: var(--red); font-size: 0.75rem; font-weight: 600; }
+  .finding-description { font-size: 0.875rem; color: #2C3E50; }
+  .finding-body { padding: 10px 14px; border-top: 1px solid var(--border); }
+  .finding-rec {
+    font-size: 0.8rem;
+    color: var(--gray);
+    margin-top: 4px;
+  }
+  .finding-rec strong { color: #2C3E50; }
+
+  /* Scenario navigation */
+  .scenario-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 0;
+    border-top: 1px solid var(--border);
+    margin-top: 16px;
+    gap: 16px;
+  }
+  .scenario-nav a {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--teal);
+  }
+  .scenario-nav .disabled { color: var(--gray); pointer-events: none; }
+
+  /* Responsive */
+  @media (max-width: 640px) {
+    .site-header h1 { font-size: 1.5rem; }
+    .cards-grid { grid-template-columns: 1fr; }
+    .scenario-header h1 { font-size: 1.3rem; }
+    .scenario-nav { flex-direction: column; align-items: flex-start; }
+    .metrics-table { font-size: 0.8rem; }
+    .metrics-table th, .metrics-table td { padding: 8px 10px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="scenario-header">
+  <div class="content">
+    <a class="back-link" href="index.html">&larr; Back to gallery</a>
+    <h1>GP-01: A shadowy group of global elites (WEF, Bilderberg, etc.) secretly controls world governments and is planning a &#39;Great Reset&#39; to establish a new world order.</h1>
+    <div class="header-meta">
+      <span class="badge badge-version">v4</span>
+      <span class="badge badge-medium">Medium</span>
+      <span class="badge badge-kernel-false">No Clear Kernel</span>
+      <span class="badge badge-version">Geopolitics</span>
+    </div>
+  </div>
+</header>
+
+<main class="content">
+
+  <div class="section">
+    <h2>Pipeline Metrics</h2>
+    <table class="metrics-table">
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Sub-claims</td><td>9</td></tr>
+        <tr><td>Actors identified</td><td>11</td></tr>
+        <tr><td>TTP matches</td><td>10</td></tr>
+        <tr><td>Audit verdict</td><td><span class="badge badge-warnings">PASS WITH WARNINGS</span></td></tr>
+        <tr><td>Pipeline version</td><td>6-agent Method 2 (v4 Bridge Builder)</td></tr>
+        
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2>Universal Needs</h2>
+    <p class="intro-note">The legitimate human needs this claim speaks to, regardless of whether the claim is accurate.</p>
+    <div class="needs-list"><div class="need-item"><span class="need-name">Democratic control:</span>The fundamental need to feel that the decisions shaping your life are made with your input and consent. When international organizations, trade agreements, and multinational corporations appear to operate beyond the reach of democratic accountability, this need is violated. The anger is legitimate even when the conspiracy framing is not.</div><div class="need-item"><span class="need-name">Economic security:</span>The need for stable employment, affordable housing, and the confidence that the economic system works for ordinary people. When wealth concentrates at the top (Oxfam 2024: richest 1% own more than the bottom 50% combined) while wages stagnate, the perception that the system is rigged is a rational response to observable inequality.</div><div class="need-item"><span class="need-name">Transparency:</span>The need to understand who makes decisions, how, and why. When policy is made in opaque processes (trade negotiations, central bank decisions, international regulatory frameworks), and when powerful people meet privately (Davos, Bilderberg), the resulting transparency deficit creates space for conspiracy explanations.</div><div class="need-item"><span class="need-name">Sovereignty:</span>The need to feel that your nation, community, and identity are not being eroded by forces beyond your control. When globalization moves jobs, changes communities, and seems to prioritize international capital over local needs, the sovereignty concern is a legitimate expression of democratic values.</div></div>
+  </div>
+
+  <div class="section">
+        <h2>Scientific Consensus / Mainstream Explanation</h2>
+        <p class="intro-note">The established scientific or institutional explanation for this phenomenon.</p>
+        <p>International policy coordination is one of the most extensively documented, debated, and publicly accessible processes in modern governance. Understanding how it actually works, and why the &#39;secret global control&#39; model fails to describe reality, requires examining the mechanics of multilateral institutions, the actual functions of organizations like the WEF and Bilderberg, and the structural forces that make coordinated global control infeasible.
+
+Multilateral institutions (the UN, WHO, IMF, World Bank, WTO) were created through public negotiations between sovereign states, primarily in the aftermath of World War II. The UN Charter (1945) was negotiated by 50 nations at the San Francisco Conference and has been ratified by 193 member states. The IMF and World Bank emerged from the Bretton Woods Conference (1944). The WTO was established by the Marrakesh Agreement (1994) after eight years of public multilateral negotiations (the Uruguay Round). These institutions have published charters, governance structures, voting procedures, budgets, and accountability mechanisms. They are regularly criticized for being bureaucratic, dominated by powerful member states, and insufficiently democratic. These are legitimate criticisms that reformers work to address through institutional channels. None of these institutions has enforcement authority over sovereign states. The UN Security Council can authorize sanctions or military action, but only with the agreement of its five permanent members (US, UK, France, Russia, China), who frequently veto each other&#39;s proposals. The WHO can issue recommendations but cannot impose lockdowns, mandate vaccinations, or compel any country to do anything. When the WHO declared COVID-19 a pandemic, countries responded in wildly different ways: Sweden kept schools open while Italy locked down; Taiwan closed borders early while Brazil&#39;s president denied the threat. If the WHO secretly controlled governments, these divergent responses would be inexplicable.
+
+The WEF is not what conspiracy theories claim it to be. It is a Swiss nonprofit foundation that organizes conferences, publishes reports, and runs networking programs. It is funded by corporate membership fees ($60,000-$600,000 annually depending on partnership tier). Its annual meeting in Davos brings together approximately 2,500 participants for a week of panels, discussions, and networking. Sessions are recorded and available online. Agendas are published. Media access is extensive. The WEF has no legislative authority, no regulatory power, no enforcement mechanism, and no budget for policy implementation. It cannot pass laws, deploy military or police forces, or compel any government, corporation, or individual to do anything. The &#39;Great Reset&#39; initiative, which became the center of the conspiracy theory, was a publicly published book (&#39;COVID-19: The Great Reset&#39; by Klaus Schwab and Thierry Malleret, July 2020), a public website (weforum.org/great-reset), and a series of public video presentations. It proposed three main ideas: stakeholder capitalism (considering worker, community, and environmental interests alongside shareholder returns), building back greener after COVID-19, and accelerating digital transformation. These proposals were neither secret nor radical; they were mainstream policy positions shared by the Biden administration, the European Commission, and numerous center-left governments. The &#39;you will own nothing and be happy&#39; phrase that became the conspiracy&#39;s most viral element came from a 2016 WEF social media video presenting eight hypothetical future scenarios written by Danish politician Ida Auken. Auken herself stated publicly that it was meant as a conversation starter about possible futures, not a policy proposal, and that she found the conspiracy interpretation alarming.
+
+The WEF&#39;s &#39;Young Global Leaders&#39; program, cited as evidence of &#39;infiltrating&#39; governments, is a professional development and networking program that selects approximately 100 emerging leaders under age 40 each year from business, government, civil society, and academia. Similar programs are run by universities (Harvard Kennedy School, Oxford Said Business School), think tanks (Aspen Global Leadership Network, Chatham House), and governments (Fulbright, Chevening). The idea that attending a professional development program makes someone &#39;controlled&#39; by the organizing institution would apply equally to every government official who attended an Ivy League university or a military academy.
+
+Bilderberg meetings, similarly, are private conferences (approximately 120-150 participants) operating under the Chatham House Rule, a standard format used by thousands of conferences worldwide. Since 2010, Bilderberg has published participant lists and agenda topics. The meetings have no executive authority, no staff beyond a small secretariat, no budget for policy implementation, and produce no binding decisions. Participants include political leaders and business executives who frequently oppose each other on major policy issues. The same meeting has included representatives of governments that are actively in conflict with each other.
+
+The most fundamental problem with the &#39;secret global control&#39; thesis is that it requires ignoring the observable reality of intense geopolitical rivalry. The United States and China are engaged in strategic competition across economic (trade wars, technology restrictions, supply chain decoupling), military (Taiwan, South China Sea, arms race), and ideological (democracy vs. authoritarian governance) dimensions. NATO and Russia are in direct conflict following Russia&#39;s invasion of Ukraine (2022), with NATO providing hundreds of billions in military aid to Ukraine. The EU and UK are in post-Brexit trade tensions. India and China have unresolved border disputes. Iran, Saudi Arabia, and Israel have competing interests across the Middle East. The WTO&#39;s Doha Development Round collapsed because member states could not agree on trade rules. These are not minor disagreements; they are fundamental conflicts involving nuclear-armed powers, trillions of dollars in economic stakes, and irreconcilable ideological differences. If the WEF, Bilderberg, or any other elite forum actually controlled world governments, the US-China trade war, Russia&#39;s invasion of Ukraine, Brexit, the collapse of global trade negotiations, and the chaotic, divergent COVID-19 responses would all be inexplicable. The idea that Xi Jinping and Joe Biden attend the same forum in Davos and then go home to coordinate their governments&#39; actions defies everything observable about US-China relations.
+
+The difference between legitimate criticism of elite influence and conspiracy theories about total control is categorical, not merely a difference of degree. Legitimate criticism says: wealthy individuals and corporations have disproportionate influence on policy through lobbying ($4.1B in US alone in 2022, OpenSecrets), campaign finance (Citizens United, Super PACs), revolving doors between government and industry, and access to policymakers at events like Davos. This is documented, measured, and addressable through democratic reform: campaign finance legislation, lobbying restrictions, transparency requirements, and stronger conflict-of-interest rules. The conspiracy version says: a unified group of elites secretly controls all governments through the WEF, Bilderberg, and similar organizations, and all apparent democratic processes are theater. This version is unfalsifiable (any counter-evidence is reframed as &#39;what they want you to think&#39;), requires impossible coordination across adversarial geopolitical powers, and its political effect is to discourage the very democratic participation that could address the documented problem of elite influence.</p>
+      </div>
+
+  
+
+  
+  <div class="section">
+    <h2>Inferential Gap</h2>
+    <p class="intro-note">Where the evidence ends and the leap begins.</p>
+    <p>This claim contains a genuine and substantial kernel of truth about elite influence that is then stretched through two critical inferential leaps into an unfounded conspiracy theory. DOCUMENTED FACTS: (1) Wealthy individuals and corporations have disproportionate influence on government policy. Gilens &amp; Page (2014) demonstrated this empirically for the United States. The same pattern is documented in other democracies, though to varying degrees. (2) Lobbying is a massive industry: $4.1 billion in the US alone in 2022 (OpenSecrets). Corporate lobbying consistently outspends public interest lobbying. (3) The revolving door between government and industry is documented: Goldman Sachs alumni in Treasury positions, defense industry executives at the Pentagon, pharmaceutical executives at the FDA. (4) Wealth concentration has increased dramatically: Oxfam (2024) reports that the richest 1% own more wealth than the bottom 50% combined globally. (5) Elite forums exist where powerful people discuss policy privately (Davos, Bilderberg, Munich Security Conference, Sun Valley). (6) The 2008 financial crisis demonstrated that elite interests can receive preferential treatment (bank bailouts, no criminal prosecutions). THE INFERENTIAL LEAPS: Leap 1: &#39;Elites have disproportionate influence&#39; to &#39;elites secretly control all governments.&#39; This converts a documented, measured, addressable structural problem (influence inequality within democratic systems) into an unfounded, unfalsifiable, total claim (secret unified control). The leap requires ignoring: democratic accountability mechanisms that DO produce outcomes contrary to elite preferences (the Inflation Reduction Act&#39;s drug price negotiation provisions, antitrust enforcement against Big Tech, EU data protection regulation); geopolitical rivalry that divides the supposed &#39;unified elites&#39; into adversarial camps; and the extensive record of elite policy failures (WTO Doha collapse, failed trade agreements, failed merger attempts blocked by regulators). Leap 2: &#39;The WEF published the Great Reset&#39; to &#39;the Great Reset is a secret plan for totalitarian global governance.&#39; This converts a publicly published, openly debated, transparently motivated policy proposal into a secret agenda. The Great Reset book, website, videos, and policy papers are all publicly available. The conspiracy theory requires simultaneously believing that the elites are executing a secret plan AND that they published the plan as a book available on Amazon. This is logically incoherent: if the plan were secret, it would not have a website, a book, and a YouTube video. The conspiracy response (&#39;hiding in plain sight&#39;) is unfalsifiable. The gap between the documented facts and the conspiracy conclusion is where legitimate anger about elite influence is converted into a framework that paradoxically serves elite interests by discouraging democratic participation.</p>
+  </div>
+
+  <div class="section">
+    <h2>Common Ground</h2>
+    <p>People who fear elite global control and people who support international cooperation share far more common ground than the polarized framing suggests. Both sides: (1) Agree that wealthy individuals and corporations have disproportionate influence on government policy. Gilens &amp; Page (2014) found this empirically, and it is acknowledged across the political spectrum. The disagreement is about the NATURE of this influence (structural advantage within democratic systems vs. total secret control) and the RESPONSE (democratic reform vs. institutional withdrawal). (2) Agree that government transparency matters. Both conspiracy-oriented citizens and democratic reformers want to know who is influencing policy and how. The difference is that reformers work within the system (FOIA requests, lobbying disclosure laws, campaign finance reform) while conspiracy thinkers believe the system itself is irredeemably captured. (3) Agree that the 2008 financial crisis was a failure of accountability. Bank bailouts with no criminal prosecutions represented genuine elite impunity. Both progressive reformers (Elizabeth Warren, Bernie Sanders) and populist right-wing critics (Tucker Carlson, Steve Bannon) identified this as a problem. (4) Agree that pandemic responses involved government overreach in specific instances. School closures that lasted too long, inconsistent messaging, and restrictions that disproportionately affected small businesses while large corporations thrived were legitimate grievances shared across political lines. (5) Agree that trade agreements and international regulations should be subject to democratic input. The opposition to TPP came from both the populist left (Sanders) and populist right (Trump), reflecting shared concern about democratic deficits in trade policy. A 2023 Pew Global Survey found that trust in national government ranged from 9% (France) to 43% (India), with most countries showing declining trust over the past decade. This distrust is bipartisan and cross-cultural, reflecting genuine institutional performance failures rather than partisan positioning.</p>
+  </div>
+
+  <div class="section">
+    <h2>Narrative Deconstruction</h2>
+    <p>The &#39;global elite control&#39; narrative is constructed through a three-stage process that captures legitimate concerns about democratic representation and redirects them toward a framework that paradoxically reinforces the problem it claims to fight. Stage 1 (Real grievances): Elite influence on democratic policy is documented and disproportionate. Gilens &amp; Page (2014) demonstrated this empirically. The 2008 financial crisis, where banks were bailed out and no executives were imprisoned, demonstrated it viscerally. Wealth concentration has increased dramatically (Piketty, Oxfam data). The revolving door between government and industry is documented (OpenSecrets.org). Trade agreements are negotiated with corporate input and limited public participation. These are not conspiracy theories; they are documented features of modern democratic politics that scholars, journalists, and reformers actively work to address. Stage 2 (The categorical leap): The conspiracy narrative takes the documented reality of &#39;disproportionate elite influence within democratic systems&#39; and converts it to &#39;total secret control of all governments by a unified cabal.&#39; This leap has several consequences: it eliminates the possibility of democratic reform (if they control everything, voting and advocacy are futile); it attributes coherent intentionality to what is actually a messy, competitive, often-failing set of elite interests; and it requires ignoring massive counter-evidence (geopolitical rivalry, democratic accountability mechanisms, failed elite projects). The WEF&#39;s &#39;Great Reset&#39; provided a branded target that made the leap easier: instead of vague &#39;elites,&#39; there was a specific organization, a specific person (Schwab), and a specific plan (the book, the website) that could be pointed to. Stage 3 (Cui bono): The conspiracy framework benefits specific actors: media figures who monetize distrust (InfoWars revenue $50-80M), politicians who use anti-elite rhetoric while serving elite interests (documented gap between populist rhetoric and pro-elite policy), and geopolitical actors who benefit from Western institutional erosion (Russian state media amplification). Most critically, the conspiracy framework harms the cause it claims to serve. By promoting the idea that ALL institutions are irredeemably captured, it discourages the democratic participation, institutional reform, and policy advocacy that could actually reduce elite influence. The conspiracy framework&#39;s political effect is demobilization, which serves the status quo that benefits the very elites the framework claims to oppose.</p>
+  </div>
+
+  
+    <div class="section">
+      <h2>Feasibility Assessment</h2>
+      <p>The claim&#39;s feasibility requires conditions that can be assessed against observable reality: COORDINATION REQUIREMENT: The conspiracy requires that political leaders across adversarial geopolitical blocs (US, China, Russia, EU, India, etc.) secretly coordinate while publicly engaging in trade wars, proxy conflicts, nuclear arms races, and ideological competition. Xi Jinping and Joe Biden would need to be secretly cooperating while publicly competing for technological, military, and economic supremacy. Putin would need to be part of the same coordinating group while invading Ukraine and threatening NATO. This level of coordination among adversaries is structurally impossible and contradicted by every observable geopolitical event of the past decade. SECRECY REQUIREMENT: A global conspiracy of the scale described would require tens of thousands of participants (heads of state, cabinet ministers, central bankers, military leaders, intelligence chiefs, WEF staff, Bilderberg staff) across decades to maintain perfect secrecy. In practice, governments are spectacularly bad at keeping secrets: WikiLeaks published 250,000+ diplomatic cables, Edward Snowden revealed NSA surveillance programs, the Panama Papers and Pandora Papers exposed offshore financial networks, and the Dominion v. Fox litigation revealed internal communications. The idea that the most consequential secret in human history (global government control) has been maintained without a single defector, document leak, or whistleblower is implausible given the documented inability of governments to keep far smaller secrets. ENFORCEMENT REQUIREMENT: Control requires enforcement. What happens to a head of state who defies the supposed plan? The conspiracy theory provides no mechanism. In practice, leaders routinely defy international consensus: Trump withdrew from the Paris Agreement and Iran nuclear deal; Bolsonaro defied WHO COVID recommendations; Orban vetoes EU consensus positions; Modi pursues policies opposed by Western elites. No punitive mechanism operates against these defections because no control mechanism exists. MOTIVE COHERENCE REQUIREMENT: The conspiracy requires that elites share a unified goal (&#39;new world order&#39;). In practice, elite interests are deeply competitive and often contradictory: fossil fuel companies oppose climate regulation that tech companies support; US industrial interests conflict with Chinese industrial interests; financial elites in competing global centers (New York, London, Shanghai, Frankfurt) have divergent interests. The idea of unified elite motivation is contradicted by the observable reality of intense competition among the world&#39;s most powerful people and institutions. THE WEF EFFECTIVENESS TEST: If the WEF controlled world governments, it would be considerably more effective at achieving its stated goals. The WEF has advocated for carbon pricing, stakeholder capitalism, and digital governance frameworks for years with limited implementation. Its Davos pledges routinely go unfulfilled. Climate commitments made at Davos are regularly broken by the same governments that made them. If the WEF controlled these governments, its own agenda would be implemented; instead, it mostly produces reports and convenes discussions.</p>
+    </div>
+
+  
+    <div class="section">
+      <h2>Commercial Interests</h2>
+      <p>Multiple parties profit from the &#39;global elite control&#39; narrative: CONSPIRACY MEDIA: Alex Jones / InfoWars generated an estimated $50-80 million in peak annual revenue through supplement sales, survival products, and subscriptions, all premised on audience belief in elite conspiracy. Multiple YouTube channels, podcasts, and Substack newsletters generate substantial revenue from Great Reset and NWO content. Russell Brand transitioned from mainstream entertainment to conspiracy-adjacent content, growing his YouTube/Rumble audience. PUBLISHING: Great Reset conspiracy books proliferated on Amazon and other platforms from 2020 onward. Some became bestsellers. Schwab&#39;s own book (&#39;COVID-19: The Great Reset&#39;) ironically generated revenue for the WEF. Daniel Estulin&#39;s Bilderberg books have sold millions of copies. POLITICAL FUNDRAISING: Anti-WEF, anti-globalist rhetoric is a proven donor activation technique for populist politicians. Trump&#39;s campaigns raised hundreds of millions using anti-establishment framing. European populist parties (AfD, Rassemblement National, Fidesz) use anti-elite rhetoric in fundraising. The gap between anti-elite campaign rhetoric and pro-elite governing policy (tax cuts, deregulation) reveals the commercial dimension of the framing. RUSSIAN STATE INVESTMENT: While not commercially motivated in the traditional sense, Russia&#39;s strategic investment in amplifying anti-Western conspiracy narratives serves geopolitical goals worth hundreds of billions in terms of weakening rival alliances. RT&#39;s budget (~$300M+ annually) is a state expenditure targeting Western institutional cohesion. PLATFORM REVENUE: Social media platforms earn advertising revenue from engagement with conspiracy content, which generates high interaction rates. Anti-WEF content consistently outperforms WEF&#39;s actual communications in engagement metrics. THE IRONY: The most prominent amplifiers of the &#39;elite control&#39; narrative include a billionaire who owns a global media platform (Musk), media companies funded by wealthy donors, and politicians who pursue pro-elite economic policies while using anti-elite rhetoric for electoral mobilization. The conspiracy framework&#39;s own ecosystem replicates the elite-driven media influence it claims to expose.</p>
+    </div>
+
+  
+    <div class="section">
+      <h2>Perception Gap</h2>
+      <p>The perception gap around global governance is among the widest in contemporary politics. People who fear elite global control assume that supporters of international cooperation are naive globalists who do not care about national sovereignty or democratic accountability. Supporters of international cooperation assume that critics of global institutions are conspiratorial xenophobes who reject all international engagement. Both perceptions are wrong. Research consistently shows that the public occupies a pragmatic middle ground. A 2023 Pew Global Attitudes survey found that in 24 countries, majorities supported international cooperation on shared challenges (climate change, pandemics, terrorism) while also believing their own country should prioritize national interests. This is not a contradiction; it is a pragmatic recognition that some problems require cooperation while sovereignty matters. The CRITICAL PERCEPTION GAP: People who believe in elite global control often do not perceive the degree to which the conspiracy framework serves the interests it claims to oppose. The conspiracy theory&#39;s political effect is demobilization: if all institutions are controlled by a cabal, then voting, advocacy, lobbying reform, campaign finance reform, and all other forms of democratic participation are futile. This demobilization effect disproportionately benefits the actual elites whose influence the conspiracy claims to expose, because organized interests (corporate lobbyists, trade associations, wealthy donors) continue to participate in the democratic process while conspiracy-oriented citizens withdraw from it. The practical consequence: elite influence on policy INCREASES when citizens believe that democratic engagement is futile. Additionally, there is a perception gap between the conspiracy version of elite influence and the documented academic version. Political scientists who study elite influence (Gilens, Page, Piketty, Domhoff) advocate for more democracy, not less: stronger campaign finance laws, stricter lobbying regulations, enhanced transparency, and broader democratic participation. The conspiracy framework takes the same underlying data and arrives at the opposite conclusion: less engagement, less trust, less participation. This divergence is the key junction where legitimate concern becomes counterproductive conspiracy.</p>
+    </div>
+
+  <div class="section">
+    <h2>Socratic Dialogue</h2>
+    <p class="intro-note">A model conversation demonstrating how to engage someone who holds this belief.</p>
+    
+    <div class="dialogue-round round-1">
+      <div class="round-label">Round 1: Perspective-Getting</div>
+      <div class="dialogue-bubble">Round 1 (Perspective-getting): I understand why this resonates. The feeling that powerful people make decisions behind closed doors that affect your life without your input is not an unreasonable concern. And there is real evidence behind it. Princeton researchers Gilens and Page analyzed nearly 1,800 policy issues and found that economic elites and organized business groups had substantially more influence on US policy outcomes than average citizens. The 2008 financial crisis was a clear example: banks whose reckless behavior crashed the global economy received trillions in bailouts while ordinary homeowners lost everything, and not a single major bank executive went to prison. Lobbying expenditures in the US alone reached $4.1 billion in 2022. The revolving door between Goldman Sachs and the Treasury Department is documented. The Panama Papers and Pandora Papers showed how elites use offshore structures to hide wealth. So when someone says &#39;the system is rigged to benefit the powerful,&#39; there is real evidence for that. What was the moment or experience that made this feel urgent to you personally?</div>
+    </div>
+    <div class="dialogue-round round-2">
+      <div class="round-label">Round 2: Guided Examination</div>
+      <div class="dialogue-bubble">Round 2 (Counter-evidence as pattern question): That is a legitimate concern. Here is something I have been puzzling over, and I am curious what you make of it. If the WEF, Bilderberg, and other elite forums actually controlled world governments as a unified group, several things that have happened would be very difficult to explain. The United States and China are in an escalating strategic rivalry: trade wars, technology restrictions, military tensions over Taiwan, competing for influence across Asia and Africa. Russia invaded Ukraine in 2022, triggering the largest European conflict since World War II, with NATO providing hundreds of billions in military support to Ukraine. These are not minor policy disagreements; they are existential geopolitical conflicts involving nuclear-armed powers. The leaders of these countries attend the same forums. If those forums controlled government policy, why would the same supposed conspirators be arming their citizens to kill each other? Similarly, the WEF has advocated for carbon pricing and stakeholder capitalism for years, with very limited implementation. If it controlled governments, its own agenda would be enacted. Instead, its Davos pledges are routinely broken by the same leaders who made them. What does the pattern of intense geopolitical rivalry, failed international negotiations, and unfulfilled forum commitments tell us about whether these forums actually control anything?</div>
+    </div>
+    <div class="dialogue-round round-3">
+      <div class="round-label">Round 3: Integration</div>
+      <div class="dialogue-bubble">Round 3 (Complexity + common ground): Those are important objections, and they deserve a more honest conversation than either side usually offers. Here is where I think the real common ground lives. The documented problem of elite influence on policy is REAL and SERIOUS. Wealthy people DO have disproportionate influence. Corporate lobbying DOES shape legislation. The revolving door between government and industry IS a problem. The 2008 crisis DID demonstrate elite impunity. These are not conspiracy theories; they are the findings of peer-reviewed research and investigative journalism. The question is: what do you DO with this knowledge? The conspiracy framework says: all institutions are controlled, democratic engagement is futile, withdraw and resist. The reform framework says: the problem is documented and specific, and there are concrete, achievable interventions that have worked. Campaign finance limits reduce money&#39;s influence on elections. Lobbying disclosure requirements increase transparency. Antitrust enforcement breaks up concentrated power. Stronger conflict-of-interest rules limit the revolving door. The Inflation Reduction Act&#39;s Medicare drug price negotiation provisions, passed in 2022, were the first time the US government was allowed to negotiate drug prices, and they passed over intense pharmaceutical industry lobbying. That is proof that democratic engagement CAN overcome elite influence when citizens organize and participate. Every hour you spend researching whether the WEF secretly controls the world is an hour you did not spend contacting your representative about campaign finance reform, joining a local transparency organization, or voting in a primary election where turnout is often below 20% and your single vote has outsized impact. If the goal is truly to reduce elite influence over your life, which approach has a better track record?</div>
+    </div>
+  </div>
+
+  
+  <div class="section">
+    <h2>Reframe</h2>
+    <blockquote class="reframe-block">You and the people you disagree with about global governance share the same fundamental concern: you both believe that ordinary people should have a meaningful voice in the decisions that shape their lives, and you both see evidence that wealthy and powerful interests have more influence than they should. That concern is not paranoid. Gilens and Page&#39;s research at Princeton demonstrated empirically that economic elites have substantially more influence on US policy than average citizens. The Panama Papers and Pandora Papers documented how elites use offshore structures to avoid accountability. The 2008 financial crisis showed that banks could crash the global economy and be bailed out while ordinary citizens lost their homes. These are not conspiracy theories. They are documented features of how modern power works. Here is where the paths diverge: the documented evidence points to a structural problem within democratic systems, a problem that is addressable through democratic reform (campaign finance legislation, lobbying restrictions, transparency requirements, antitrust enforcement, tax reform). Organizations like OpenSecrets, Common Cause, and the Sunlight Foundation work on these reforms every day. The conspiracy version takes the same evidence and concludes that all institutions are irredeemably controlled by a unified secret cabal, that democratic engagement is futile, and that the only response is to reject institutional participation entirely. The paradox is that this withdrawal FROM democratic participation is the outcome that most benefits the very elites the conspiracy claims to oppose. When citizens disengage, organized interests, the same corporate lobbyists, trade associations, and wealthy donors that Gilens and Page identified, fill the vacuum. The question worth sitting with is: if your goal is to reduce elite influence over your life, which strategy is more likely to succeed? Withdrawing from all institutions because you believe they are all secretly controlled? Or engaging with the documented, specific, measurable reforms that have produced results in the past: campaign finance limits, lobbying disclosure, antitrust enforcement, and democratic participation?</blockquote>
+  </div>
+
+  <div class="section">
+    <h2>Audit</h2>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+      <span>Verdict:</span>
+      <span class="badge badge-warnings">PASS WITH WARNINGS</span>
+    </div>
+    <div class="audit-summary">This v4 analysis successfully navigates the central challenge of the global elite conspiracy scenario: validating the documented, empirically-grounded reality of disproportionate elite influence on democratic policy while clearly establishing that the leap from &#39;disproportionate influence&#39; to &#39;total secret control through the WEF&#39; is unfounded. The consensus_explanation provides a comprehensive, evidence-based examination of how international institutions actually work, what the WEF actually does, and why geopolitical rivalry makes coordinated global control structurally infeasible. The inferential gap analysis precisely identifies where legitimate anger about documented elite influence is converted into unfounded conspiracy through two categorical leaps. The feasibility check uses five distinct tests (coordination, secrecy, enforcement, motive coherence, WEF effectiveness) to demonstrate structural impossibility. The Socratic dialogue effectively validates the listener&#39;s concerns with primary evidence (Gilens &amp; Page, financial crisis) before introducing the geopolitical falsification argument. The deepest structural insight is in the irony_or_inversion fields: the conspiracy framework, by promoting institutional withdrawal, paradoxically strengthens the elite influence it claims to oppose. Remaining gaps: Global South perspectives on institutional distrust, COVID-era grievance specificity, and acknowledgment of the emotional experience of democratic futility. The -0.04 confidence adjustment reflects these gaps.</div>
+    <ul class="findings-list">
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">quality</span>
+        <span class="finding-severity-low">LOW</span>
+        <span class="finding-description">The consensus_explanation is comprehensive and well-structured, covering how multilateral institutions actually work,...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">The consensus_explanation is comprehensive and well-structured, covering how multilateral institutions actually work, what the WEF actually does and does not do, the Great Reset&#39;s actual content, the geopolitical rivalry falsification test, and the critical distinction between &#39;disproportionate influence&#39; and &#39;total secret control.&#39; The explanation uses specific, verifiable facts (UN Charter negotiation, PDUFA structure, Gilens &amp; Page findings) rather than abstract assertions.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> No fix needed. This is a positive quality finding.</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">completeness</span>
+        <span class="finding-severity-medium">MEDIUM</span>
+        <span class="finding-description">The analysis is primarily focused on Western democratic contexts. The conspiracy narrative&#39;s resonance in non-Western...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">The analysis is primarily focused on Western democratic contexts. The conspiracy narrative&#39;s resonance in non-Western contexts, where distrust of Western-dominated international institutions has different (and sometimes more legitimate) roots, is underexplored. Countries that experienced structural adjustment programs from the IMF, Cold War-era CIA interventions, or colonial economic extraction have historical bases for distrust of international institutions that are qualitatively different from the WEF conspiracy framing.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Add acknowledgment that distrust of Western-dominated international institutions has distinct and sometimes well-founded roots in the Global South, and that conflating all institutional skepticism with NWO conspiracy thinking risks dismissing legitimate post-colonial concerns.</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">accuracy</span>
+        <span class="finding-severity-low">LOW</span>
+        <span class="finding-description">Key factual claims are well-sourced: Gilens &amp; Page (2014) findings, OpenSecrets $4.1B lobbying figure (2022), Oxfam...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">Key factual claims are well-sourced: Gilens &amp; Page (2014) findings, OpenSecrets $4.1B lobbying figure (2022), Oxfam wealth concentration data, WEF membership fee structure, Bilderberg post-2010 transparency. The &#39;you will own nothing&#39; provenance (2016 WEF video, Ida Auken) is correctly attributed and contextualized.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Consider noting that Gilens &amp; Page&#39;s methodology has been critiqued (Branham, Soroka &amp; Wlezien 2017) and that the degree of elite influence, while substantial, is debated among political scientists. This strengthens credibility by acknowledging the academic debate.</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">bias</span>
+        <span class="finding-severity-medium">MEDIUM</span>
+        <span class="finding-description">The analysis correctly distinguishes between legitimate concerns about elite influence and unfounded conspiracy...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">The analysis correctly distinguishes between legitimate concerns about elite influence and unfounded conspiracy theories about total control. However, it could be perceived as dismissive of the emotional experience of people who feel powerless against global forces. The framing &#39;your democratic engagement would be more productive than conspiracy research&#39; is factually correct but may feel condescending to someone who has tried democratic engagement and felt it fail.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Strengthen the acknowledgment that democratic engagement often DOES feel futile, and that the conspiracy framework is psychologically appealing precisely because it provides a clearer explanation than the messy, frustrating reality of incremental democratic reform. Acknowledge specific cases where democratic engagement failed to produce change despite significant effort.</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">manipulation</span>
+        <span class="finding-severity-low">LOW</span>
+        <span class="finding-description">The Socratic dialogue appropriately validates the listener&#39;s concerns with evidence (Gilens &amp; Page, 2008 crisis) before...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">The Socratic dialogue appropriately validates the listener&#39;s concerns with evidence (Gilens &amp; Page, 2008 crisis) before introducing counter-evidence (geopolitical rivalry, WEF ineffectiveness). The Round 2 question about geopolitical rivalry is genuinely Socratic rather than directive. Round 3&#39;s pivot to &#39;what do you DO with this knowledge?&#39; is constructive and action-oriented.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> No fix needed. The dialogue structure effectively balances validation and challenge.</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">completeness</span>
+        <span class="finding-severity-medium">MEDIUM</span>
+        <span class="finding-description">The analysis could more thoroughly address the COVID-19 dimension, which was the primary amplification event for the...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">The analysis could more thoroughly address the COVID-19 dimension, which was the primary amplification event for the Great Reset conspiracy. Specific pandemic-era grievances (prolonged school closures, small business destruction while large corporations thrived, inconsistent public health messaging, vaccine mandate controversies) deserve more explicit treatment as legitimate concerns that the conspiracy narrative captured and redirected.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Expand the temporal_context Era 3 section to more specifically address individual pandemic-era grievances and acknowledge which concerns had legitimate bases versus which were manufactured or exaggerated by the conspiracy framework.</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">quality</span>
+        <span class="finding-severity-low">LOW</span>
+        <span class="finding-description">The irony_or_inversion fields in the temporal_context effectively capture the recursive paradox: the conspiracy...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">The irony_or_inversion fields in the temporal_context effectively capture the recursive paradox: the conspiracy framework, by discouraging democratic participation, reinforces the elite influence it claims to oppose. This structural insight is the analysis&#39;s most important contribution.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> No fix needed. This is a positive quality finding documenting the analysis&#39;s strongest structural insight.</div>
+      </div>
+    </li></ul>
+  </div>
+
+  <div class="scenario-nav">
+    <a href="EV-04.html">&larr; EV-04: Elite politicians and celebrities run secret...</a>
+    <a href="index.html">Gallery</a>
+    <a href="GP-02.html">GP-02: A secret New World Order of elites controls all... &rarr;</a>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="content">
+    <p>
+      <a href="index.html">Huginn &amp; Muninn Gallery</a> &nbsp;|&nbsp;
+      MIT License &nbsp;|&nbsp;
+      Analysis powered by Claude (Anthropic)
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>

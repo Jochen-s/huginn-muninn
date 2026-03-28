@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HS-04: Big Pharma is suppressing natural cures for cancer to protect their... &mdash; Huginn &amp; Muninn</title>
+  <meta name="description" content="6-agent AI pipeline analysis of: Big Pharma is suppressing natural cures for cancer to protect their profits.">
+  <style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy:   #1B2A4A;
+    --red:    #C0392B;
+    --teal:   #16A085;
+    --bg:     #F0F4F8;
+    --white:  #FFFFFF;
+    --amber:  #E67E22;
+    --green:  #27AE60;
+    --gray:   #5D6D7E;
+    --border: #D0D9E4;
+    --font:   -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  }
+
+  html { font-size: 16px; }
+
+  body {
+    font-family: var(--font);
+    font-weight: 400;
+    line-height: 1.6;
+    color: #2C3E50;
+    background: var(--white);
+  }
+
+  a { color: var(--teal); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  h1, h2, h3, h4 { font-weight: 700; color: var(--navy); line-height: 1.25; }
+
+  /* Layout */
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+  .content   { max-width: 800px;  margin: 0 auto; padding: 0 24px; }
+
+  /* Header */
+  .site-header {
+    background: var(--navy);
+    color: var(--white);
+    padding: 48px 0 40px;
+  }
+  .site-header h1 { color: var(--white); font-size: 2rem; margin-bottom: 8px; }
+  .site-header .subtitle {
+    font-size: 1.05rem;
+    color: #A8BCCF;
+    max-width: 680px;
+    margin-bottom: 16px;
+  }
+  .site-header .intro {
+    font-size: 0.95rem;
+    color: #8AA5BC;
+    max-width: 720px;
+    line-height: 1.7;
+  }
+
+  /* Nav bar */
+  .site-nav {
+    background: #152138;
+    padding: 10px 0;
+  }
+  .site-nav a {
+    color: #8AA5BC;
+    font-size: 0.875rem;
+  }
+  .site-nav a:hover { color: var(--white); }
+
+  /* Category sections */
+  .category-section { padding: 48px 0; border-bottom: 1px solid var(--border); }
+  .category-section:last-child { border-bottom: none; }
+
+  .category-header { margin-bottom: 24px; }
+  .category-header h2 { font-size: 1.5rem; margin-bottom: 6px; }
+  .category-header .category-intro { color: var(--gray); font-size: 0.95rem; }
+
+  /* Cards grid */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+
+  .card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    transition: box-shadow 0.15s;
+    display: flex;
+    flex-direction: column;
+  }
+  .card:hover { box-shadow: 0 4px 16px rgba(27, 42, 74, 0.12); }
+
+  .card-id {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--gray);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .card-claim {
+    font-size: 0.95rem;
+    color: #2C3E50;
+    flex: 1;
+    margin-bottom: 14px;
+    line-height: 1.5;
+  }
+
+  .card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+  }
+
+  .card-link {
+    margin-top: 14px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--teal);
+  }
+
+  /* Badges */
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+  }
+  .badge-version  { background: #EAF0F7; color: var(--navy); }
+  .badge-easy     { background: #EAF6EE; color: #1E8449; }
+  .badge-medium   { background: #FEF9E7; color: #7D6608; }
+  .badge-hard     { background: #FDEDEC; color: var(--red); }
+  .badge-kernel-true  { background: #EAF6EE; color: #1E8449; }
+  .badge-kernel-false { background: #F2F3F4; color: var(--gray); }
+  .badge-pass     { background: #EAF6EE; color: #1E8449; }
+  .badge-warnings { background: #FEF9E7; color: #7D6608; }
+  .badge-fail     { background: #FDEDEC; color: var(--red); }
+  .badge-systematic { background: #FDEDEC; color: var(--red); }
+  .badge-repeated   { background: #E8F8F5; color: var(--teal); }
+  .badge-isolated   { background: #FEF5E7; color: var(--amber); }
+
+  /* Footer */
+  .site-footer {
+    background: var(--navy);
+    color: #8AA5BC;
+    padding: 32px 0;
+    margin-top: 48px;
+    font-size: 0.875rem;
+  }
+  .site-footer a { color: #8AA5BC; }
+  .site-footer a:hover { color: var(--white); }
+
+  /* ---- Scenario page styles ---- */
+
+  .scenario-header {
+    background: var(--navy);
+    padding: 40px 0 32px;
+    color: var(--white);
+  }
+  .scenario-header .back-link {
+    font-size: 0.875rem;
+    color: #8AA5BC;
+    display: inline-block;
+    margin-bottom: 16px;
+  }
+  .scenario-header .back-link:hover { color: var(--white); }
+  .scenario-header h1 {
+    color: var(--white);
+    font-size: 1.6rem;
+    margin-bottom: 12px;
+    line-height: 1.3;
+  }
+  .scenario-header .header-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .metrics-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    margin: 24px 0;
+  }
+  .metrics-table th {
+    text-align: left;
+    background: var(--bg);
+    padding: 10px 14px;
+    font-weight: 600;
+    color: var(--navy);
+    border-bottom: 2px solid var(--border);
+  }
+  .metrics-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    color: #2C3E50;
+  }
+  .metrics-table tr:last-child td { border-bottom: none; }
+
+  .section {
+    padding: 32px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .section:last-child { border-bottom: none; }
+
+  .section h2 {
+    font-size: 1.25rem;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--bg);
+  }
+
+  .section p { margin-bottom: 12px; color: #2C3E50; }
+  .section p:last-child { margin-bottom: 0; }
+
+  .intro-note {
+    color: var(--gray);
+    font-size: 0.875rem;
+    font-style: italic;
+    margin-bottom: 12px;
+  }
+
+  /* Needs pills */
+  .needs-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .need-item {
+    background: var(--bg);
+    border-left: 3px solid var(--teal);
+    padding: 10px 14px;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+  .need-name {
+    font-weight: 700;
+    color: var(--navy);
+    margin-right: 6px;
+  }
+
+  /* Technique cards */
+  .technique-card {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+  .technique-header {
+    background: var(--bg);
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .technique-name {
+    font-weight: 700;
+    color: var(--navy);
+    font-size: 1rem;
+    flex: 1;
+  }
+  .technique-body { padding: 16px; }
+  .technique-field { margin-bottom: 14px; }
+  .technique-field:last-child { margin-bottom: 0; }
+  .technique-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--gray);
+    margin-bottom: 4px;
+  }
+  .technique-text { font-size: 0.9rem; color: #2C3E50; line-height: 1.6; }
+
+  /* Socratic dialogue */
+  .dialogue-round { margin-bottom: 20px; }
+  .round-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 8px;
+  }
+  .round-1 .round-label { color: var(--teal); }
+  .round-2 .round-label { color: var(--navy); }
+  .round-3 .round-label { color: #6C3483; }
+
+  .dialogue-bubble {
+    padding: 16px 18px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    line-height: 1.65;
+    white-space: pre-wrap;
+  }
+  .round-1 .dialogue-bubble { background: #EAF7F4; border-left: 3px solid var(--teal); }
+  .round-2 .dialogue-bubble { background: #EAF0F7; border-left: 3px solid var(--navy); }
+  .round-3 .dialogue-bubble { background: #F5EEF8; border-left: 3px solid #6C3483; }
+
+  /* Reframe */
+  .reframe-block {
+    border-left: 4px solid var(--amber);
+    background: #FEF9E7;
+    padding: 20px 20px 20px 24px;
+    border-radius: 0 8px 8px 0;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    font-style: italic;
+    color: #2C3E50;
+  }
+
+  /* Audit findings */
+  .audit-summary {
+    background: var(--bg);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 16px;
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+  .findings-list { list-style: none; }
+  .finding-item {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+  .finding-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: var(--bg);
+    cursor: default;
+  }
+  .finding-category {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--gray);
+  }
+  .finding-severity-low    { color: var(--teal); font-size: 0.75rem; font-weight: 600; }
+  .finding-severity-medium { color: var(--amber); font-size: 0.75rem; font-weight: 600; }
+  .finding-severity-high   { color: var(--red); font-size: 0.75rem; font-weight: 600; }
+  .finding-description { font-size: 0.875rem; color: #2C3E50; }
+  .finding-body { padding: 10px 14px; border-top: 1px solid var(--border); }
+  .finding-rec {
+    font-size: 0.8rem;
+    color: var(--gray);
+    margin-top: 4px;
+  }
+  .finding-rec strong { color: #2C3E50; }
+
+  /* Scenario navigation */
+  .scenario-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 0;
+    border-top: 1px solid var(--border);
+    margin-top: 16px;
+    gap: 16px;
+  }
+  .scenario-nav a {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--teal);
+  }
+  .scenario-nav .disabled { color: var(--gray); pointer-events: none; }
+
+  /* Responsive */
+  @media (max-width: 640px) {
+    .site-header h1 { font-size: 1.5rem; }
+    .cards-grid { grid-template-columns: 1fr; }
+    .scenario-header h1 { font-size: 1.3rem; }
+    .scenario-nav { flex-direction: column; align-items: flex-start; }
+    .metrics-table { font-size: 0.8rem; }
+    .metrics-table th, .metrics-table td { padding: 8px 10px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="scenario-header">
+  <div class="content">
+    <a class="back-link" href="index.html">&larr; Back to gallery</a>
+    <h1>HS-04: Big Pharma is suppressing natural cures for cancer to protect their profits.</h1>
+    <div class="header-meta">
+      <span class="badge badge-version">v4</span>
+      <span class="badge badge-medium">Medium</span>
+      <span class="badge badge-kernel-true">Kernel of Truth</span>
+      <span class="badge badge-version">Health &amp; Science</span>
+    </div>
+  </div>
+</header>
+
+<main class="content">
+
+  <div class="section">
+    <h2>Pipeline Metrics</h2>
+    <table class="metrics-table">
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Sub-claims</td><td>9</td></tr>
+        <tr><td>Actors identified</td><td>11</td></tr>
+        <tr><td>TTP matches</td><td>10</td></tr>
+        <tr><td>Audit verdict</td><td><span class="badge badge-warnings">PASS WITH WARNINGS</span></td></tr>
+        <tr><td>Pipeline version</td><td>6-agent Method 2 (v4 Bridge Builder)</td></tr>
+        
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2>Universal Needs</h2>
+    <p class="intro-note">The legitimate human needs this claim speaks to, regardless of whether the claim is accurate.</p>
+    <div class="needs-list"><div class="need-item"><span class="need-name">Health and survival:</span>The most fundamental human need. When someone is diagnosed with cancer, or fears cancer, the desire for effective treatment transcends all political and ideological boundaries. The terror of a cancer diagnosis drives people to seek every possible option, and that drive is entirely rational and human.</div><div class="need-item"><span class="need-name">Autonomy:</span>The need to make informed decisions about one&#39;s own body and healthcare. People who distrust pharmaceutical companies are often expressing a deep need for medical autonomy, for the right to know all available options and to choose among them. This is a legitimate need regardless of whether the specific treatment choices are evidence-based.</div><div class="need-item"><span class="need-name">Trust:</span>The need to be able to trust the institutions that hold power over your health. When pharmaceutical companies are caught concealing risks (Vioxx), fueling addiction epidemics (OxyContin), or pricing lifesaving drugs out of reach (insulin), the resulting breach of trust is a rational response to documented betrayal.</div><div class="need-item"><span class="need-name">Fairness:</span>The need for a healthcare system that serves patients rather than shareholders. People who cannot afford cancer treatment in the US, who watch insulin prices rise while company profits soar, have a legitimate grievance about fairness that the suppression narrative exploits.</div></div>
+  </div>
+
+  <div class="section">
+        <h2>Scientific Consensus / Mainstream Explanation</h2>
+        <p class="intro-note">The established scientific or institutional explanation for this phenomenon.</p>
+        <p>Cancer treatment is one of the most intensively researched areas in modern medicine, involving tens of thousands of researchers, clinicians, and institutions across every country in the world. Understanding how cancer treatment actually works, and why &#39;natural cures&#39; have not replaced conventional treatment, requires examining several interconnected systems rather than accepting a simple suppression narrative.
+
+Cancer treatment today encompasses five major modalities: surgery (removing tumors physically), chemotherapy (drugs that kill rapidly dividing cells), radiation therapy (targeted energy to destroy cancer cells), immunotherapy (helping the immune system recognize and attack cancer), and targeted therapy (drugs designed to interfere with specific molecular targets in cancer cells). These modalities are used alone or in combination depending on cancer type, stage, and patient factors. Five-year survival rates for all cancers combined have risen from 49% (1975-1977) to 68% (2012-2018) in the United States, according to NCI SEER data. For some cancers, the improvements are dramatic: childhood leukemia went from a near-certain death sentence in the 1960s to a 90%+ cure rate today. Immunotherapy has transformed outcomes for metastatic melanoma, some lung cancers, and certain blood cancers. These improvements came from decades of painstaking research, thousands of clinical trials, and billions of dollars in investment from both public (NIH/NCI) and private (pharmaceutical) sources.
+
+Many natural compounds HAVE been tested for anticancer activity. This is not suppressed; it is one of the most active areas of pharmaceutical research. The NCI&#39;s Natural Products Branch has screened hundreds of thousands of natural compounds since 1960. When natural compounds show genuine anticancer activity, they are developed into drugs. Paclitaxel (Taxol), derived from the bark of the Pacific yew tree, is one of the most widely used chemotherapy drugs in the world, treating breast, ovarian, lung, and other cancers. Vincristine, from the Madagascar periwinkle, is essential for treating childhood leukemia and lymphomas. Etoposide, from the mayapple plant, treats lung cancer and testicular cancer. Camptothecin derivatives (topotecan, irinotecan) from the Chinese tree Camptotheca acuminata treat colon and ovarian cancers. According to Newman and Cragg (Journal of Natural Products, 2020), approximately 60% of all anticancer drugs approved between 1981 and 2019 were either natural products, derived from natural products, or inspired by natural product structures. The pharmaceutical industry does not suppress natural compounds; it actively hunts for them.
+
+The reason most &#39;natural cures&#39; promoted in alternative health communities have not become mainstream treatments is straightforward: they have been tested and failed. Laetrile (amygdalin from apricot pits) was tested in NCI-sponsored clinical trials (Moertel et al., NEJM, 1982) and showed no anticancer activity while causing cyanide toxicity. High-dose vitamin C was tested in Mayo Clinic trials (Creagan et al., NEJM, 1979; Moertel et al., NEJM, 1985) and did not improve outcomes for advanced cancer patients. Shark cartilage was tested in a Phase III trial (Lu et al., Cancer, 2010) and showed no benefit. Essiac tea and Gerson therapy have been studied in observational analyses and case series without evidence of efficacy. It is not that these compounds were never investigated; it is that they were investigated and found wanting. The alternative health response -- that the trials were rigged -- is unfalsifiable and would require that independent researchers at multiple institutions across different countries all conspired to produce false negative results.
+
+The drug development pipeline helps explain why proving a treatment works is genuinely difficult and expensive. The average cost of developing an approved drug is estimated at $2.6 billion (DiMasi et al., Journal of Health Economics, 2016), and the process takes 10-15 years from discovery to approval. This cost reflects the high failure rate: approximately 90% of drugs that enter clinical trials fail. The cost is not primarily a barrier erected to suppress natural compounds; it is a reflection of the biological complexity of cancer and the difficulty of demonstrating that a treatment is safe and effective in human beings. The patent system does create a structural issue: natural compounds in their unmodified form cannot be patented, which reduces the private-sector financial incentive to fund clinical trials for unmodified natural substances. However, three important counter-points apply: (1) Companies routinely patent formulations, delivery methods, and synthetic analogs of natural compounds, as they did with taxol (Bristol-Myers Squibb) and vincristine (Eli Lilly). (2) Public institutions (NCI, academic medical centers) fund natural compound research without needing patent protection. (3) The Orphan Drug Act (1983) and similar legislation provide financial incentives for treatments regardless of patentability.
+
+The patent cliff phenomenon directly contradicts the permanent-suppression model. When drug patents expire (typically after 20 years from filing), generic manufacturers enter the market and prices drop dramatically. Imatinib (Gleevec), the revolutionary chronic myeloid leukemia drug originally priced at $26,000+ per year, now has generics available at a fraction of the cost. Biosimilar competition is expanding: multiple Humira biosimilars entered the US market in 2023. The patent system does create temporary monopoly pricing, which is a legitimate and serious concern, but it does not create permanent suppression. Knowledge about drugs, including their natural-source origins, becomes fully public through patent disclosures, published clinical trial data, and FDA approval packages.
+
+The conspiracy model fails the universal healthcare test decisively. Over 30 countries have universal healthcare systems where the government pays for cancer treatment. The UK&#39;s National Health Service, Germany&#39;s statutory health insurance system, Japan&#39;s National Health Insurance, Australia&#39;s Medicare, and Canada&#39;s provincial health systems all have powerful financial incentives to minimize treatment costs. If effective natural cancer cures existed, these systems would adopt them enthusiastically because doing so would save billions. The NHS alone spends approximately GBP 6.3 billion annually on cancer treatment. The conspiracy requires that government health agencies in the UK, Germany, France, Japan, Australia, Canada, South Korea, Taiwan, and dozens of other countries, with their own independent research institutions and their own cost-reduction mandates, are ALL suppressing the same natural cures in coordination with American pharmaceutical companies, despite having directly opposing financial interests. This coordination requirement is not merely unlikely; it is structurally impossible given the competitive, often adversarial relationships between national healthcare systems.
+
+The &#39;Big Pharma profits from sickness&#39; argument fails on examination of actual industry behavior. When Gilead Sciences developed Sovaldi and Harvoni, which CURE hepatitis C (96-99% cure rates), the company earned over $96 billion in total HCV revenue. Sovaldi became the fastest drug to reach $10 billion in sales in pharmaceutical history. Cures can be spectacularly profitable. In oncology, companies compete ferociously to develop the most effective treatments because the commercial rewards are enormous: Keytruda (pembrolizumab, Merck) generated $25 billion in revenue in 2023 alone because it demonstrably helps patients with cancer live longer. The idea that companies would suppress a cure to sell less effective treatments ignores that a cancer cure would be the most valuable product in pharmaceutical history.
+
+Finally, the suppression narrative obscures the actual profit structure of its own industry. The US dietary supplement market exceeds $50 billion annually (Grand View Research, 2023), selling products that are NOT required to demonstrate efficacy before going to market. DSHEA (1994) created a regulatory framework that allows supplements to be sold with structure/function claims without undergoing clinical trials. The supplement industry is not a scrappy underdog fighting Big Pharma; it IS a major industry with powerful lobbying operations, substantial profit margins (often higher than pharmaceutical margins because there are no R&amp;D costs for clinical trials), and its own commercial interest in maintaining the narrative that conventional medicine is corrupt and natural alternatives are being suppressed. The most prominent promoters of &#39;suppressed natural cures&#39; (Mike Adams, estimated net worth from supplement/advertising empire; Joseph Mercola, estimated $100M+ net worth from supplement sales; Goop, $250M+ valuation) profit directly and substantially from the narrative they promote.</p>
+      </div>
+
+  
+
+  
+  <div class="section">
+    <h2>Inferential Gap</h2>
+    <p class="intro-note">Where the evidence ends and the leap begins.</p>
+    <p>The claim contains a substantial kernel of truth about pharmaceutical industry misconduct that is then stretched through three unsupported inferential leaps into an unfounded conspiracy theory. DOCUMENTED FACTS: (1) Pharmaceutical companies have documented cases of prioritizing profits over patient safety: Vioxx (Merck, $4.85B settlement), OxyContin (Purdue Pharma, $6B settlement, Sackler family), insulin pricing exploitation. (2) Drug pricing in the US is a genuine crisis: the US pays the highest drug prices in the developed world, and pharma lobbying against pricing reform is documented. (3) The FDA&#39;s funding structure (65% of drug review from industry PDUFA fees) creates a real conflict of interest. (4) Natural compounds CAN have anticancer properties and approximately 60% of anticancer drugs are natural-product-related. (5) The patent system does create reduced financial incentive to study unmodified natural compounds. THE INFERENTIAL LEAPS: Leap 1: &#39;Companies have done harmful things for profit&#39; to &#39;companies are suppressing cures for profit.&#39; This is a categorical generalization that converts specific documented cases into a universal claim. There is no documented case of any pharmaceutical company discovering an effective cancer cure and suppressing it. The economics actually run in the opposite direction: a cancer cure would be worth hundreds of billions of dollars. Leap 2: &#39;Some natural compounds have anticancer properties in laboratory settings&#39; to &#39;effective natural cures for cancer exist and are being hidden.&#39; This conflates in vitro activity with clinical efficacy. Almost any substance can kill cancer cells in a petri dish at sufficient concentration. The gap between a compound showing activity in a test tube and becoming a viable human treatment is enormous and is where most drug candidates fail, not because of suppression but because of pharmacokinetics, toxicity, bioavailability, and tumor heterogeneity. Leap 3: &#39;The patent system reduces incentive to study unpatentable compounds&#39; to &#39;the industry actively suppresses natural cures to protect patented drugs.&#39; This converts a structural economic issue (reduced private-sector incentive) into an active conspiracy (suppression). It ignores that public institutions (NCI, NIH, academic hospitals, international research bodies) study natural compounds extensively without patent motivation, and that companies routinely patent formulations and analogs of natural compounds. The inferential gap is WIDEST at Leap 1: the distance from &#39;Merck hid Vioxx risks&#39; to &#39;all of pharma is hiding cancer cures&#39; is where legitimate anger is converted into conspiracy thinking. Pharma pricing IS problematic; the leap to &#39;suppressing cures&#39; is an unfounded categorical escalation that redirects legitimate anger away from achievable reform.</p>
+  </div>
+
+  <div class="section">
+    <h2>Common Ground</h2>
+    <p>People who distrust Big Pharma and people who support evidence-based medicine share far more common ground than the polarized framing suggests. Both sides: (1) Agree that pharmaceutical companies have placed profits above patient safety in documented cases. The Vioxx scandal (Merck concealed cardiovascular risks, $4.85B settlement), the OxyContin crisis (Purdue Pharma, Sackler family, $6B settlement), and insulin pricing are acknowledged as corporate misconduct by mainstream medicine, not just by alternative health advocates. Oncologists and medical researchers are among the loudest critics of pharmaceutical pricing. (2) Agree that drug pricing in the United States is a serious problem. The Inflation Reduction Act (2022) included Medicare drug price negotiation provisions -- the first in US history -- reflecting bipartisan recognition that pharma pricing is broken. (3) Agree that patients should have access to accurate information about all treatment options, including complementary approaches. The National Center for Complementary and Integrative Health (NCCIH, part of NIH) funds research on complementary approaches because the medical establishment recognizes that some have evidence of benefit. (4) Agree that regulatory capture is a concern. The FDA&#39;s PDUFA funding structure (65% of drug review budget from industry fees) is criticized by both alternative health advocates and evidence-based medicine reformers. (5) Agree that natural compounds are a valuable source of medicines. The pharmaceutical industry&#39;s own history demonstrates this: taxol from yew bark, vincristine from periwinkle, aspirin from willow bark. The disagreement is about whether current natural compounds sold as supplements have demonstrated clinical efficacy for cancer, and about what standard of evidence should be required before recommending them to patients.</p>
+  </div>
+
+  <div class="section">
+    <h2>Narrative Deconstruction</h2>
+    <p>The &#39;Big Pharma suppresses natural cures&#39; narrative is constructed through a three-stage process that captures legitimate anger and redirects it away from actionable reform. Stage 1 (Real grievances): The pharmaceutical industry has a documented history of placing profits above patient safety: Merck concealed Vioxx cardiovascular risks for years; Purdue Pharma fueled the opioid epidemic while knowing OxyContin&#39;s addiction potential; insulin that costs $2-4 to manufacture is sold for $300+ per vial in the US; Martin Shkreli raised Daraprim&#39;s price 5,000% for naked profit. These are not conspiracy theories. They are documented corporate misconduct, adjudicated in courts and acknowledged by the industry itself. Additionally, the US healthcare system&#39;s structural failures (high costs, coverage gaps, medical debt as the leading cause of personal bankruptcy) create genuine suffering that breeds legitimate distrust. Stage 2 (The inferential leap): The suppression narrative takes these documented, specific instances of misconduct and performs a categorical generalization: if companies concealed risks with Vioxx, they must be concealing cures for cancer. If insulin is priced exploitatively, then all of medicine is designed to keep you sick for profit. This leap converts a set of addressable policy problems (pricing regulation, regulatory reform, universal coverage) into an unfalsifiable conspiracy theory. The leap is psychologically powerful because it provides a simpler explanation for a terrifying reality: cancer exists not because biology is complex and nature is indifferent, but because bad actors are withholding the solution. Stage 3 (Cui bono): The suppression narrative benefits specific commercial actors who sell alternative products. Mike Adams, Joseph Mercola, Ty Bollinger, and the $50+ billion supplement industry profit directly from consumer distrust of pharmaceutical medicine. The same profit motive that the narrative attributes to Big Pharma drives the alternative health industry, but this symmetry is systematically hidden. The narrative also harms those it claims to help: cancer patients who delay or refuse evidence-based treatment in favor of unproven alternatives have documented worse outcomes (Johnson et al., JNCI, 2018: patients using alternative medicine as primary treatment had 2.5x higher mortality).</p>
+  </div>
+
+  
+    <div class="section">
+      <h2>Feasibility Assessment</h2>
+      <p>The claim&#39;s feasibility requires conditions that can be assessed against observable reality: SCALE REQUIREMENT: The conspiracy requires that every oncologist worldwide -- hundreds of thousands of doctors across every country, healthcare system, cultural context, and political system -- is either complicit in suppression or too incompetent to discover what alternative health bloggers apparently know. These oncologists would need to watch their patients (and their own family members) die from cancer while knowing that effective natural cures exist. In practice, oncologists are among the most aggressive adopters of new treatments; when immunotherapy demonstrated efficacy, it was integrated into treatment protocols within years, not suppressed. Doctors who discover effective new treatments become famous and wealthy (Jim Allison won the Nobel Prize for immunotherapy; he did not suppress it). COORDINATION REQUIREMENT: The conspiracy requires coordination across pharmaceutical companies that compete fiercely with each other. Merck and Bristol-Myers Squibb spent billions racing each other to market with competing checkpoint inhibitors (Keytruda vs. Opdivo). A company that discovered a competitor was suppressing a cure would have every incentive to expose and exploit that information. The pharmaceutical industry is characterized by intense competition, corporate espionage, employee turnover, and litigation, all of which make sustained secrecy structurally impossible. UNIVERSAL HEALTHCARE TEST: Over 30 countries with universal healthcare systems pay for cancer treatment from public funds. The UK&#39;s NHS, Germany&#39;s statutory insurance, Japan&#39;s NHI, and dozens of others have direct financial incentives to minimize treatment costs. If a natural compound costing pennies could replace treatments costing thousands, these systems would adopt it immediately. No universal healthcare system anywhere in the world treats cancer primarily with &#39;natural cures,&#39; despite having every financial incentive to do so. This is the single strongest falsification of the conspiracy: the claim requires that governments paying for healthcare WANT expensive treatments when cheap ones would save billions. SECRECY REQUIREMENT: Pharmaceutical companies employ tens of thousands of scientists, many of whom are motivated by genuine desire to cure disease. Whistleblowers regularly expose pharma misconduct (Vioxx, OxyContin). The idea that a cancer cure could be discovered and suppressed without any of thousands of researchers exposing it -- especially when whistleblower protections and massive financial rewards exist -- contradicts the observable pattern of pharmaceutical whistleblowing. HISTORICAL COUNTER-EVIDENCE: The pharmaceutical industry has a documented track record of aggressively marketing cures when they find them. Gilead&#39;s hepatitis C cure (Sovaldi/Harvoni) was priced at $84,000 per course and generated over $96 billion in total HCV revenue. Novartis priced its CAR-T cell therapy Kymriah at $475,000 per treatment. Companies that find cures sell them at the highest price the market will bear; they do not suppress them.</p>
+    </div>
+
+  
+    <div class="section">
+      <h2>Commercial Interests</h2>
+      <p>Multiple parties profit from the &#39;Big Pharma suppresses cures&#39; narrative, and the financial ecosystem reveals the deepest irony of the claim: ALTERNATIVE HEALTH MEDIA: Mike Adams / NaturalNews generates revenue through advertising, supplement affiliates, and survival product sales, building a media empire on pharmaceutical distrust. Joseph Mercola accumulated an estimated $100M+ net worth through supplement sales and alternative health products promoted on Mercola.com. Ty and Charlene Bollinger&#39;s &#39;Truth About Cancer&#39; documentary series generated millions through digital sales, affiliate marketing, and product promotion. These figures profit directly from pharmaceutical distrust, giving them the same commercial incentive to maintain the narrative that they attribute to pharma companies maintaining the disease. THE SUPPLEMENT INDUSTRY: The US dietary supplement market exceeds $50 billion annually (Grand View Research, 2023). This is not a small, scrappy alternative to Big Pharma; it is a major industry with powerful lobbying operations (Natural Products Association, Council for Responsible Nutrition). DSHEA (1994) allows supplements to be sold without proving efficacy, meaning the supplement industry has LOWER evidentiary standards than the pharmaceutical industry while benefiting from consumer perception that natural equals safe and effective. Major supplement brands are owned by pharmaceutical companies: Pfizer owns Centrum and Caltrate; Bayer owns One A Day; GSK owned Horlicks. The &#39;Big Pharma vs. Natural Medicine&#39; framing obscures that they are often the same companies. LIFESTYLE BRANDS: Gwyneth Paltrow&#39;s Goop ($250M+ valuation by 2020) represents the premium end of the natural health market, selling wellness products at luxury prices to consumers who distrust conventional medicine. Goop paid $145,000 in penalties for unsubstantiated health claims but continued operating profitably. POLITICAL ACTORS: Pharmaceutical distrust overlaps with broader anti-institutional sentiment exploited by political figures. Anti-pharma content drives engagement and fundraising. PLATFORM REVENUE: Social media platforms earn advertising revenue from engagement with health conspiracy content. &#39;What your doctor doesn&#39;t want you to know&#39; videos generate high engagement metrics. THE CORE IRONY: The alternative health industry accuses pharma of suppressing cheap natural cures for profit while itself selling unproven natural products for profit. The supplement industry&#39;s profit margins are often HIGHER than pharmaceutical margins because supplements require no R&amp;D investment in clinical trials. The narrative creates the demand for the products the narrators sell, completing a self-reinforcing commercial cycle that mirrors the one it attributes to Big Pharma.</p>
+    </div>
+
+  
+    <div class="section">
+      <h2>Perception Gap</h2>
+      <p>The perception gap around pharmaceutical trust is one of the most consequential in public health. People who distrust Big Pharma assume that supporters of evidence-based medicine are naive corporate apologists who uncritically accept everything pharmaceutical companies say. Supporters of evidence-based medicine assume that pharma critics are scientifically illiterate conspiracy theorists. Both perceptions are wrong. A 2023 Gallup survey found that pharmaceutical companies ranked last among 25 industries in public trust, with only 29% of Americans viewing the industry positively. This distrust spans political lines: both Democrats and Republicans distrust pharma, though for somewhat different reasons (Democrats focus on pricing and access, Republicans focus on COVID vaccine mandates and government-pharma coordination). Yet the same population overwhelmingly uses pharmaceutical products: 66% of US adults take at least one prescription medication (CDC/NCHS, 2021). This creates a cognitive dissonance that the suppression narrative exploits. The CRITICAL PERCEPTION GAP: Pharma critics who promote natural cures often do not perceive the supplement industry as having the same profit motives they attribute to pharma. A patient who refuses chemotherapy because they distrust pharma profits and instead buys $200/month in supplements from NaturalNews is transferring money from one industry to another while believing they are rejecting commercial medicine. The supplement industry&#39;s $50+ billion in annual revenue, its powerful lobbying apparatus, and its resistance to regulation mirror pharma&#39;s own behavior, but this symmetry is invisible to consumers who have internalized the &#39;natural vs. corporate&#39; framing. Additionally, the perception gap extends to oncologists themselves. Patients who believe oncologists are complicit in suppression do not perceive that many oncologists are themselves critics of pharmaceutical pricing and advocate for drug pricing reform, expanded access programs, and biosimilar competition. The oncologist prescribing chemotherapy and the patient who distrusts chemotherapy often share the same anger at pharmaceutical pricing; they disagree about whether the treatments themselves work, not about whether pharma companies charge too much.</p>
+    </div>
+
+  <div class="section">
+    <h2>Socratic Dialogue</h2>
+    <p class="intro-note">A model conversation demonstrating how to engage someone who holds this belief.</p>
+    
+    <div class="dialogue-round round-1">
+      <div class="round-label">Round 1: Perspective-Getting</div>
+      <div class="dialogue-bubble">Round 1 (Perspective-getting): I hear the anger behind this, and I want you to know that some of it is entirely justified. Pharmaceutical companies have done indefensible things. Merck knew about Vioxx&#39;s cardiovascular risks and concealed them; they settled for $4.85 billion after patients died. The Sackler family built a fortune on OxyContin while knowing it was fueling addiction; Purdue Pharma&#39;s settlement was $6 billion. Insulin that costs a few dollars to manufacture is sold for $300 per vial in the US because companies can get away with it. Martin Shkreli raised Daraprim&#39;s price 5,000% because he could. These are not conspiracy theories; they are matters of public record, adjudicated in courts. So when someone says &#39;pharmaceutical companies care more about profits than patients,&#39; there are specific, documented cases where that statement is true. What was the experience that made this personal for you? Was it the cost of treatment, the side effects, or something else?</div>
+    </div>
+    <div class="dialogue-round round-2">
+      <div class="round-label">Round 2: Guided Examination</div>
+      <div class="dialogue-bubble">Round 2 (Counter-evidence as pattern question): That experience matters, and I am not going to dismiss it. Here is something I have been sitting with that I find genuinely interesting, and I wonder what you make of it. The most successful cancer drugs in history actually come FROM nature. Taxol, one of the most widely used chemotherapy drugs, comes from the bark of the Pacific yew tree. Vincristine, which turned childhood leukemia from a death sentence into a 90%+ cure rate, comes from the Madagascar periwinkle. Etoposide comes from the mayapple plant. According to a comprehensive review in the Journal of Natural Products in 2020, approximately 60% of all anticancer drugs approved between 1981 and 2019 were natural products, came from natural products, or were inspired by them. So the pharmaceutical industry does not suppress natural compounds; it actively searches for them, tests them, and turns them into drugs. When it does that, we call it medicine. What it does not do is sell unmodified plant material as a cancer treatment, and the reason is not suppression but pharmacology: a natural compound in a plant exists at variable concentrations, mixed with other compounds, and its bioavailability (how much your body actually absorbs) is often very low. The drug development process solves these problems, purifying, standardizing dosing, improving absorption, and testing for safety. Is it possible that the real issue is not suppression but the gap between a compound showing promise in a laboratory and becoming a reliable human treatment?</div>
+    </div>
+    <div class="dialogue-round round-3">
+      <div class="round-label">Round 3: Integration</div>
+      <div class="dialogue-bubble">Round 3 (Complexity + common ground): That is a fair pushback, and the cost question is central. Here is where I think the real common ground lives, and it is bigger than the suppression debate. You are angry about pharmaceutical pricing. So are oncologists. So are hospital administrators. So are the economists who study drug markets. The US is the only wealthy country in the world where a cancer diagnosis can lead to bankruptcy. In the UK, in Germany, in Japan, in Australia, cancer treatment is covered by the national healthcare system. Those countries still use the same drugs: taxol, vincristine, immunotherapy, targeted therapy. They just do not allow pharmaceutical companies to charge whatever they want. Now, here is a question worth considering. Over 30 countries with universal healthcare systems pay for cancer treatment from public funds. Their governments have every financial incentive to minimize treatment costs. If a natural compound costing a few cents could replace treatments costing thousands, those governments would adopt it in a heartbeat because it would save them billions. The fact that no universal healthcare system anywhere in the world uses &#39;natural cures&#39; as primary cancer treatment, despite having every financial incentive to do so, is worth sitting with. The energy that goes into believing cures are being suppressed could be directed toward something that would actually change your healthcare experience: demanding drug pricing reform, supporting universal coverage, strengthening FDA independence from industry funding, and ensuring that every patient can access evidence-based treatment regardless of income. Those are fights with concrete, achievable goals, and they address the exact anger you are feeling.</div>
+    </div>
+  </div>
+
+  
+  <div class="section">
+    <h2>Reframe</h2>
+    <blockquote class="reframe-block">You and the people you disagree with about cancer treatment share the same fundamental concern: you both want cancer patients to survive, and you both believe the pharmaceutical industry has done harmful things for profit. That concern is not imaginary. Merck hid Vioxx risks. Purdue Pharma fueled an opioid epidemic. Insulin prices in the US are indefensible. These are documented facts, not conspiracy theories. Here is where the paths diverge, and it is worth examining the fork carefully. The documented cases of pharmaceutical misconduct are about specific companies hiding specific risks of specific drugs, about pricing exploitation, and about regulatory failures. They are addressable problems with concrete policy solutions: drug pricing regulation (the Inflation Reduction Act&#39;s Medicare negotiation provisions are a start), FDA funding reform (reducing PDUFA dependence on industry fees), universal healthcare (every other wealthy nation has figured this out), and stronger whistleblower protections. The suppression narrative takes this legitimate anger and redirects it toward an unfalsifiable conspiracy: they are hiding the cure. This redirection actually serves the pharmaceutical industry&#39;s interests, because as long as critics focus on a conspiracy that cannot be proven or disproven, they are not focusing on the concrete, achievable policy reforms that would actually reduce pharmaceutical industry power. Meanwhile, the alternative health industry that sells you &#39;what Big Pharma doesn&#39;t want you to know&#39; is itself a $50+ billion industry, with its own profit margins, its own lobbying operations, and its own resistance to accountability. The question worth asking is not whether Big Pharma has done harmful things (it has, documentably) but whether the response that best protects your health is an unfalsifiable belief that cures are being hidden, or the concrete policy work of reforming drug pricing, strengthening regulation, and ensuring that every person can access evidence-based treatment regardless of income.</blockquote>
+  </div>
+
+  <div class="section">
+    <h2>Audit</h2>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+      <span>Verdict:</span>
+      <span class="badge badge-warnings">PASS WITH WARNINGS</span>
+    </div>
+    <div class="audit-summary">This v4 analysis successfully navigates the central challenge of the Big Pharma suppression scenario: validating legitimate anger about pharmaceutical industry misconduct while clearly establishing that the leap from &#39;documented pricing exploitation&#39; to &#39;suppressing cures&#39; is unfounded. The consensus_explanation is the strongest v4 addition, providing a comprehensive, evidence-based explanation that covers how cancer treatment works, why natural compounds follow the development path they do, the patent system&#39;s actual mechanics, the universal healthcare falsification test, and the supplement industry&#39;s own profit structure. The inferential gap analysis clearly delineates the three unsupported leaps from documented facts to conspiracy theory. The feasibility check effectively uses the universal healthcare argument as the strongest single falsification. The commercial motives section exposes the core irony: the alternative health industry that claims to fight Big Pharma operates with the same profit motives it attributes to pharmaceutical companies. Remaining gaps: US-centric framing of healthcare pricing, insufficient attention to medical racism as a driver of distrust, and the need to distinguish complementary from alternative medicine. The -0.04 confidence adjustment reflects these gaps in an otherwise strong analysis.</div>
+    <ul class="findings-list">
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">quality</span>
+        <span class="finding-severity-low">LOW</span>
+        <span class="finding-description">The consensus_explanation is the strongest addition in v4, providing a comprehensive, evidence-based explanation of how...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">The consensus_explanation is the strongest addition in v4, providing a comprehensive, evidence-based explanation of how cancer treatment actually works, why natural compounds have followed the path they have (some becoming drugs, most failing trials), and why the suppression model fails structural feasibility tests. The universal healthcare argument is particularly effective as a falsification tool.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> No fix needed. This is a positive quality finding.</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">completeness</span>
+        <span class="finding-severity-medium">MEDIUM</span>
+        <span class="finding-description">The analysis is primarily US-centric in its discussion of pharmaceutical pricing and regulatory capture. While the...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">The analysis is primarily US-centric in its discussion of pharmaceutical pricing and regulatory capture. While the universal healthcare argument is mentioned, the analysis could more explicitly address the non-US experience: in countries with price controls and universal coverage, the pharma suppression narrative has less traction because the pricing grievance is less acute. This suggests that the narrative&#39;s appeal is partly a function of US healthcare policy failures rather than inherent pharmaceutical industry behavior.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Add a brief note in the narrative_deconstruction acknowledging that the suppression narrative&#39;s strongest appeal is in countries with the most dysfunctional healthcare financing (primarily the US), and that this correlation suggests the narrative feeds on policy failure rather than on an industry-wide conspiracy.</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">accuracy</span>
+        <span class="finding-severity-low">LOW</span>
+        <span class="finding-description">Key factual claims are well-sourced: DiMasi $2.6B drug development cost (2016), Newman &amp; Cragg 60% figure for...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">Key factual claims are well-sourced: DiMasi $2.6B drug development cost (2016), Newman &amp; Cragg 60% figure for natural-product-derived anticancer drugs (2020), NCI SEER survival statistics, Goldman Sachs report (2018), Gilead HCV revenue figures. The Johnson et al. (JNCI, 2018) finding of 2.5x higher mortality for alternative medicine users as primary cancer treatment is correctly cited.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Consider noting that the DiMasi $2.6B figure is controversial and represents a high-end estimate. Other estimates (e.g., Wouters et al., JAMA, 2020) suggest lower median costs of $985M. The exact figure does not change the analysis but acknowledging the range strengthens credibility.</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">bias</span>
+        <span class="finding-severity-low">LOW</span>
+        <span class="finding-description">The analysis handles the empathy dimension well: it validates pharmaceutical industry anger as legitimate (Vioxx,...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">The analysis handles the empathy dimension well: it validates pharmaceutical industry anger as legitimate (Vioxx, OxyContin, insulin pricing) before addressing the inferential leap. The Socratic dialogue Round 1 explicitly validates the listener&#39;s experience before introducing counter-evidence. However, the analysis could more explicitly acknowledge that complementary and integrative medicine (as distinct from alternative medicine replacing conventional treatment) has evidence of benefit for some outcomes (e.g., acupuncture for chemotherapy-induced nausea and vomiting, per NCCN guidelines).</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Add a brief acknowledgment that the NCCIH and NCCN recognize certain complementary approaches as evidence-based adjuncts to conventional cancer treatment, distinguishing between complementary (alongside conventional) and alternative (instead of conventional) use.</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">manipulation</span>
+        <span class="finding-severity-low">LOW</span>
+        <span class="finding-description">The Socratic dialogue Round 2&#39;s pivot from &#39;natural compounds become drugs&#39; to questioning the suppression thesis is...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">The Socratic dialogue Round 2&#39;s pivot from &#39;natural compounds become drugs&#39; to questioning the suppression thesis is well-constructed and uses factual evidence rather than rhetorical pressure. The question at the end of Round 2 (&#39;Is it possible that the real issue is not suppression but the gap between laboratory promise and clinical reality?&#39;) is genuinely Socratic rather than directive.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> No fix needed. The current framing maintains autonomy-supportive language throughout.</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">completeness</span>
+        <span class="finding-severity-medium">MEDIUM</span>
+        <span class="finding-description">The analysis does not address the role of medical racism and historical medical abuse (Tuskegee, Henrietta Lacks,...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">The analysis does not address the role of medical racism and historical medical abuse (Tuskegee, Henrietta Lacks, forced sterilizations) in creating legitimate distrust that the suppression narrative exploits, particularly in Black and indigenous communities. This distrust has different roots and requires different engagement strategies than the general anti-pharma sentiment.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Add analysis of how historical medical abuse creates disproportionate vulnerability to the suppression narrative in communities with legitimate reasons for institutional distrust. This would strengthen both the empathy dimension and the practical applicability of the Socratic dialogue.</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">quality</span>
+        <span class="finding-severity-low">LOW</span>
+        <span class="finding-description">The temporal_context eras are well-structured and capture the narrative&#39;s evolution from pre-regulatory folk medicine...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">The temporal_context eras are well-structured and capture the narrative&#39;s evolution from pre-regulatory folk medicine through the laetrile wars to the modern digital supplement-industrial complex. The irony_or_inversion fields in each era add analytical depth.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> No fix needed. The temporal framing effectively contextualizes the narrative&#39;s current form.</div>
+      </div>
+    </li></ul>
+  </div>
+
+  <div class="scenario-nav">
+    <a href="HS-03.html">&larr; HS-03: 5G cell towers cause cancer and were responsible...</a>
+    <a href="index.html">Gallery</a>
+    <a href="HS-05.html">HS-05: Water fluoridation is mass medication without... &rarr;</a>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="content">
+    <p>
+      <a href="index.html">Huginn &amp; Muninn Gallery</a> &nbsp;|&nbsp;
+      MIT License &nbsp;|&nbsp;
+      Analysis powered by Claude (Anthropic)
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>
