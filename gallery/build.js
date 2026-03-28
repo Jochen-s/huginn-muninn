@@ -492,6 +492,22 @@ const SHARED_CSS = `
   .scenario-nav .disabled { color: var(--gray); pointer-events: none; }
 
   /* Responsive */
+  /* Evaluation methodology table */
+  .evaluation-section { background: #FAFBFD; margin: 0 -32px; padding: 40px 32px; border-bottom: 1px solid var(--border); }
+  .eval-summary { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+  .eval-overall { font-size: 2rem; font-weight: 700; color: var(--navy); }
+  .eval-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  .eval-table th { text-align: left; padding: 10px 12px; border-bottom: 2px solid var(--border); color: var(--gray); font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; }
+  .eval-table td { padding: 10px 12px; border-bottom: 1px solid #EEF1F5; }
+  .eval-table td:first-child { font-weight: 600; text-transform: capitalize; }
+  .eval-weight, .eval-score { text-align: center; font-variant-numeric: tabular-nums; }
+  .eval-status { text-align: center; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.04em; }
+  .eval-pass .eval-status { color: var(--green); }
+  .eval-partial .eval-status { color: var(--amber); }
+  .eval-fail .eval-status { color: var(--red); }
+  .eval-desc { color: var(--gray); font-size: 0.8rem; }
+  .eval-note { margin-top: 16px; font-size: 0.82rem; color: var(--gray); line-height: 1.6; }
+
   @media (max-width: 640px) {
     .site-header h1 { font-size: 1.5rem; }
     .cards-grid { grid-template-columns: 1fr; }
@@ -538,6 +554,203 @@ function formatParagraphs(text) {
     paragraphs = paragraphs[0].split(/\n/).map(p => p.trim()).filter(Boolean);
   }
   return paragraphs.map(p => `<p>${esc(p)}</p>`).join('\n');
+}
+
+// ---------------------------------------------------------------------------
+// Evaluation engine (JS port of tests/run_bridge_scenarios.py)
+// ---------------------------------------------------------------------------
+
+const EXPECTED_NEEDS = {
+  'HS-01': ['safety', 'autonomy', 'transparency'],
+  'HS-02': ['safety', 'trust', 'autonomy'],
+  'HS-03': ['safety', 'autonomy', 'fairness'],
+  'HS-04': ['fairness', 'autonomy', 'trust'],
+  'HS-05': ['safety', 'autonomy', 'belonging'],
+  'GP-01': ['autonomy', 'fairness', 'security'],
+  'GP-02': ['safety', 'trust', 'transparency'],
+  'GP-03': ['fairness', 'autonomy', 'transparency'],
+  'GP-04': ['safety', 'belonging', 'trust'],
+  'GP-05': ['fairness', 'dignity', 'belonging'],
+  'GP-06': ['fairness', 'accountability', 'belonging', 'autonomy'],
+  'EN-01': ['trust', 'fairness', 'autonomy'],
+  'EN-02': ['safety', 'autonomy', 'fairness'],
+  'EV-01': ['safety', 'trust', 'autonomy'],
+  'EV-02': ['safety', 'trust'],
+  'EV-03': ['fairness', 'trust', 'autonomy'],
+  'EV-04': ['safety', 'trust', 'autonomy'],
+  'TC-01': ['autonomy', 'safety', 'privacy'],
+  'TC-02': ['safety', 'autonomy', 'fairness'],
+  'MD-01': ['trust', 'autonomy', 'fairness'],
+  'MD-02': ['autonomy', 'fairness', 'trust'],
+};
+
+const CHECK_DESCRIPTIONS = {
+  needs_coverage: 'Expected universal human needs matched against identified needs',
+  issue_overlap_quality: 'Common ground text is substantive (>50 characters)',
+  narrative_deconstruction: 'Narrative deconstruction is substantive (>100 characters)',
+  consensus_explanation: 'Scientific/mainstream explanation >200 chars with 3+ mechanism keywords',
+  inferential_gap: 'Inferential gap analysis is substantive (>50 characters)',
+  feasibility_check: 'Feasibility assessment is substantive (>50 characters)',
+  commercial_motives: 'Commercial motive analysis is substantive (>30 characters)',
+  technique_naming: 'At least 1 technique named with mechanic (>30 chars) and precedent (>20 chars)',
+  perception_gap: 'Perception gap analysis is substantive (>30 characters)',
+  socratic_dialogue: '3 rounds, ends with question, Round 1 shows perspective-getting',
+  reframe_quality: 'Reframe >20 chars using shared-value language (we, together, both)',
+  no_controlling_language: 'Zero matches against 9 controlling phrases',
+};
+
+const WEIGHTS = {
+  needs_coverage: 0.07,
+  issue_overlap_quality: 0.06,
+  narrative_deconstruction: 0.07,
+  consensus_explanation: 0.11,
+  inferential_gap: 0.08,
+  feasibility_check: 0.06,
+  commercial_motives: 0.06,
+  technique_naming: 0.08,
+  perception_gap: 0.05,
+  socratic_dialogue: 0.17,
+  reframe_quality: 0.07,
+  no_controlling_language: 0.12,
+};
+
+function evaluateBridge(scenarioId, bridge) {
+  const checks = {};
+  const expected = EXPECTED_NEEDS[scenarioId] || [];
+
+  // Check 1: Needs coverage
+  const identified = (bridge.universal_needs || []).map(n => n.toLowerCase().replace(/ /g, '_'));
+  const matched = expected.filter(n => identified.some(id => id.includes(n))).length;
+  checks.needs_coverage = { score: matched / Math.max(expected.length, 1), matched, expected: expected.length };
+
+  // Check 2: Issue overlap
+  const overlap = bridge.issue_overlap || '';
+  checks.issue_overlap_quality = { score: overlap.length > 50 ? 1.0 : overlap.length > 10 ? 0.5 : 0.0 };
+
+  // Check 3: Narrative deconstruction
+  const narr = bridge.narrative_deconstruction || '';
+  checks.narrative_deconstruction = { score: narr.length > 100 ? 1.0 : narr.length > 20 ? 0.5 : 0.0 };
+
+  // Check 4: Consensus explanation
+  const cons = bridge.consensus_explanation || '';
+  let consScore = 0;
+  if (cons.length > 200) {
+    consScore = 0.5;
+    const markers = ['mechanism', 'process', 'because', 'caused by', 'result of', 'study', 'research', 'data', 'evidence', 'measured', 'observed'];
+    if (markers.filter(m => cons.toLowerCase().includes(m)).length >= 3) consScore = 1.0;
+  } else if (cons.length > 50) { consScore = 0.3; }
+  checks.consensus_explanation = { score: consScore };
+
+  // Check 5: Inferential gap
+  const gap = bridge.inferential_gap || '';
+  checks.inferential_gap = { score: gap.length > 50 ? 1.0 : gap.length > 10 ? 0.5 : 0.0 };
+
+  // Check 6: Feasibility
+  const feas = bridge.feasibility_check || '';
+  checks.feasibility_check = { score: feas.length > 50 ? 1.0 : feas.length > 10 ? 0.5 : 0.0 };
+
+  // Check 7: Commercial motives
+  const comm = bridge.commercial_motives || '';
+  checks.commercial_motives = { score: comm.length > 30 ? 1.0 : comm.length > 10 ? 0.5 : 0.0 };
+
+  // Check 8: Technique naming
+  const techs = bridge.techniques_revealed || [];
+  let techScore = 0;
+  if (techs.length >= 1) {
+    techScore = 0.5;
+    const hasMech = techs.some(t => (t.how_it_works || '').length > 30);
+    const hasPrec = techs.some(t => (t.historical_precedent || '').length > 20);
+    if (hasMech && hasPrec) techScore = 1.0;
+  }
+  checks.technique_naming = { score: techScore };
+
+  // Check 9: Perception gap
+  const pg = bridge.perception_gap || '';
+  checks.perception_gap = { score: pg.length > 30 ? 1.0 : pg.length > 5 ? 0.5 : 0.0 };
+
+  // Check 10: Socratic dialogue
+  const dialogue = bridge.socratic_dialogue || [];
+  let dScore = 0;
+  if (dialogue.length === 3) {
+    dScore = 0.5;
+    const r1 = (dialogue[0] || '').toLowerCase();
+    const r3 = (dialogue[2] || '').toLowerCase();
+    if (r3.includes('?')) dScore += 0.25;
+    if (['understand', 'see', 'hear', 'concern', 'worry', 'feel'].some(w => r1.includes(w))) dScore += 0.25;
+  }
+  checks.socratic_dialogue = { score: dScore };
+
+  // Check 11: Reframe quality
+  const reframe = bridge.reframe || '';
+  let rScore = 0;
+  if (reframe.length > 20) {
+    rScore = 0.5;
+    if (['we', 'together', 'shared', 'common', 'both', 'all of us', 'everyone'].some(w => reframe.toLowerCase().includes(w))) rScore = 1.0;
+  }
+  checks.reframe_quality = { score: rScore };
+
+  // Check 12: No controlling language
+  const controlling = ['the truth is', 'experts agree', 'you were misled', 'you fell for', 'you should know', 'the fact is', 'everyone knows', "it's obvious", 'you need to understand'];
+  const allText = JSON.stringify(bridge).toLowerCase();
+  const violations = controlling.filter(p => allText.includes(p));
+  checks.no_controlling_language = { score: violations.length === 0 ? 1.0 : 0.0, violations };
+
+  // Overall weighted score
+  let overall = 0;
+  for (const [k, w] of Object.entries(WEIGHTS)) {
+    overall += (checks[k]?.score || 0) * w;
+  }
+  const grade = overall >= 0.8 ? 'A' : overall >= 0.6 ? 'B' : overall >= 0.4 ? 'C' : 'D';
+
+  return { overall: Math.round(overall * 1000) / 1000, grade, checks };
+}
+
+function renderEvaluation(scenarioId, bridge) {
+  const ev = evaluateBridge(scenarioId, bridge);
+  const pct = (ev.overall * 100).toFixed(1);
+  const gradeClass = ev.grade === 'A' ? 'badge-pass' : ev.grade === 'B' ? 'badge-warn' : 'badge-fail';
+
+  let rows = '';
+  for (const [key, weight] of Object.entries(WEIGHTS)) {
+    const check = ev.checks[key] || { score: 0 };
+    const scorePct = (check.score * 100).toFixed(0);
+    const weightPct = (weight * 100).toFixed(0);
+    const desc = CHECK_DESCRIPTIONS[key] || '';
+    const status = check.score >= 0.8 ? 'pass' : check.score >= 0.5 ? 'partial' : 'fail';
+    const statusLabel = check.score >= 0.8 ? 'PASS' : check.score >= 0.5 ? 'PARTIAL' : 'MISS';
+    rows += `<tr class="eval-${status}">
+      <td>${esc(key.replace(/_/g, ' '))}</td>
+      <td class="eval-weight">${weightPct}%</td>
+      <td class="eval-score">${scorePct}%</td>
+      <td class="eval-status">${statusLabel}</td>
+      <td class="eval-desc">${esc(desc)}</td>
+    </tr>`;
+  }
+
+  return `
+    <div class="section evaluation-section">
+      <h2>Evaluation Methodology</h2>
+      <p class="intro-note">Full transparency on how this scenario was scored. 12 weighted checks, each independently measurable. <a href="https://github.com/Jochen-s/huginn-muninn/blob/main/tests/run_bridge_scenarios.py" target="_blank" rel="noopener">View source code</a></p>
+      <div class="eval-summary">
+        <span class="eval-overall">${pct}%</span>
+        <span class="badge ${gradeClass}">Grade ${ev.grade}</span>
+      </div>
+      <div style="overflow-x:auto">
+        <table class="eval-table">
+          <thead>
+            <tr>
+              <th>Check</th>
+              <th>Weight</th>
+              <th>Score</th>
+              <th>Status</th>
+              <th>What It Measures</th>
+            </tr>
+          </thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>
+      <p class="eval-note">Overall score = weighted sum of individual check scores. Weights reflect the relative importance of each dimension to the project's mission: Socratic dialogue quality (17%) and controlling language detection (12%) are weighted highest because autonomy-supportive framing is the core differentiator.</p>
+    </div>`;
 }
 
 function versionBadge(version) {
@@ -996,6 +1209,8 @@ function buildScenarioPage(scenario, allScenarios) {
     ${audit.summary ? `<div class="audit-summary">${esc(audit.summary)}</div>` : ''}
     ${renderFindings(audit.findings)}
   </div>
+
+  ${renderEvaluation(id, bridge)}
 
   <div class="scenario-nav">
     ${prevLink}
