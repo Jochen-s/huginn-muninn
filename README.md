@@ -10,6 +10,8 @@ are being manipulated, and what they share with the people they have been taught
 This is not an oracle. It is a cognitive gymnasium. The goal is to teach you a mental framework
 you carry forever, then make the tool unnecessary.
 
+**Quick Links:** [Setup Guide](docs/SETUP-GUIDE.md) | [Scenario Gallery](gallery/) | [Changelog](CHANGELOG.md) | [Anti-Weaponization Charter](ANTI-WEAPONIZATION-CHARTER.md)
+
 ---
 
 ## The Three Questions
@@ -79,8 +81,9 @@ Claim
   +-------------------+
   v                   v
 [5] Bridge Builder  [6] Adversarial Auditor
-   Common humanity      Red-teams the analysis
-   layer                for bias and errors
+   Common humanity       Red-teams the analysis
+   layer (v5)            for bias and errors
+   + Name the Trick
   +-------------------+
   |
   v
@@ -162,16 +165,39 @@ internalization, not dependency.
 
 ---
 
+## Name the Trick (v5)
+
+The Bridge Builder names each manipulation technique like revealing how a magic trick works.
+Before you know the mechanic, the illusion is seamless. The moment someone shows you the
+palm, the misdirection, the force, the spell breaks. You can never be fooled by that trick again.
+
+For each technique identified, the system provides:
+
+| Field | What It Shows |
+|-------|--------------|
+| **Technique** | Human-readable name (e.g., "Scapegoating", "Cherry Picking") |
+| **How it works** | The mechanic explained simply |
+| **Who uses it** | The specific actor deploying this technique |
+| **Historical precedent** | Where the same trick appeared before (tobacco industry, political campaigns) |
+| **Pattern type** | Isolated (one-off), Repeated (seen before), or Systematic (multi-campaign strategy) |
+
+**Asymmetric Weight Principle:** Not all technique uses are equal. A political leader deploying
+scapegoating as a documented, multi-decade strategy gets detailed analysis. A private citizen
+using emotional amplification in a frustrated observation gets a brief honest note. Treating
+them equally would be false equivalence -- one of the techniques the system is designed to detect.
+
+---
+
 ## Designed Against Dependency
 
-A 2025 follow-up study (Bao et al., arXiv:2510.01537) found that AI dialogue can reduce
+A 2025 follow-up study (Rani et al., arXiv:2510.01537) found that AI dialogue can reduce
 conspiracy beliefs by 21% while simultaneously degrading independent discernment by 15%
 over four weeks. This dependency paradox is a real risk for any AI fact-checking tool.
 
 Huginn & Muninn addresses this through four architectural pillars:
 
 1. **Genuine Socratic method**: The system asks questions that guide reasoning rather than
-   delivering verdicts. Bao et al.'s own data shows "guiding and probing questions" correlate
+   delivering verdicts. Rani et al.'s own data shows "guiding and probing questions" correlate
    positively with independent detection skills (r=0.29), while directive correction undermines them.
 
 2. **Mandatory fading**: AI support progressively withdraws as user competence grows,
@@ -214,10 +240,44 @@ specific, bounded, and proposes research to resolve itself.
 
 ---
 
+## Version History
+
+| Version | What Changed |
+|---------|-------------|
+| v1 | Baseline: 3-layer analysis (needs, overlap, deconstruction), Socratic dialogue, perception gap, reframe |
+| v2 | Inferential gap mapping, feasibility assessment, commercial motive analysis, systemic pattern framing in Socratic Round 2 |
+| v3 | Temporal context awareness: tracks how claims migrate between ideological camps over time |
+| v4 | Scientific consensus explanation with equal depth to conspiracy analysis, creating a 360-degree view |
+| v5 | "Name the Trick" technique reveal with mechanics and historical precedents. Asymmetric Weight Principle (pattern gravity). GP-06 Brexit/Farage sanewashing scenario. |
+
+---
+
+## Test Suite Results
+
+The Bridge Builder has been validated across 21 real-world conspiracy and misinformation
+scenarios spanning health & science, geopolitics, environment, events, technology, and media.
+
+| Scenario | Version | Score | Topic |
+|----------|---------|-------|-------|
+| HS-01 | **v5** | **100%** | Chemtrails vs. contrail science |
+| GP-06 | **v5** | **95.8%** | Brexit/Farage sanewashing (asymmetric weight showcase) |
+| HS-02 | v4 | 94.7% | Vaccines-autism vs. epidemiology |
+| HS-04 | v4 | 95.5% | Big Pharma suppression vs. drug development pipeline |
+| EN-01 | v4 | 97.3% | Climate hoax vs. greenhouse physics |
+| EV-03 | v4 | 94.7% | Election fraud vs. election security mechanics |
+| GP-01 | v4 | 94.7% | Global elite control vs. institutional realities |
+
+Evaluation uses 12 weighted checks including technique naming, scientific consensus,
+Socratic dialogue quality, and controlling language detection.
+
+[Browse all 21 scenarios in the Gallery](gallery/)
+
+---
+
 ## Research Foundation
 
 Huginn & Muninn is grounded in peer-reviewed research. Two comprehensive research waves
-(~240 sources) inform the design. The project maintains an honest assessment of each
+(~370 sources) inform the design. The project maintains an honest assessment of each
 research pillar's strength.
 
 | Domain | Key Research | Status | How H&M Uses It |
@@ -252,7 +312,7 @@ Design decisions informed by explicitly ruling out documented anti-patterns:
 | Identity confrontation | Attacking beliefs is experienced as attacking the person | Never labels users as misled or manipulated |
 | Generic counter-narratives | Personalized content vastly outperforms generic responses | References the user's specific claim and evidence |
 | Forced engagement | Unsolicited corrections trigger doubling-down effects | Dialogue is always opt-in |
-| Directive AI correction | Creates dependency; -15.3% discernment decline (Bao et al. 2025) | Genuine Socratic questioning with progressive fading |
+| Directive AI correction | Creates dependency; -15.3% discernment decline (Rani et al. 2025) | Genuine Socratic questioning with progressive fading |
 | False equivalence | "Both sides" framing can legitimize extremism | Epistemic asymmetry detection overrides bridge-building when scientific consensus is clear |
 
 ---

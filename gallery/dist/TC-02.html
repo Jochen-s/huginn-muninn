@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TC-02: Artificial intelligence is being used by governments and corporations... &mdash; Huginn &amp; Muninn</title>
+  <meta name="description" content="6-agent AI pipeline analysis of: Artificial intelligence is being used by governments and corporations to control what we think and feel.">
+  <style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy:   #1B2A4A;
+    --red:    #C0392B;
+    --teal:   #16A085;
+    --bg:     #F0F4F8;
+    --white:  #FFFFFF;
+    --amber:  #E67E22;
+    --green:  #27AE60;
+    --gray:   #5D6D7E;
+    --border: #D0D9E4;
+    --font:   -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  }
+
+  html { font-size: 16px; }
+
+  body {
+    font-family: var(--font);
+    font-weight: 400;
+    line-height: 1.6;
+    color: #2C3E50;
+    background: var(--white);
+  }
+
+  a { color: var(--teal); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  h1, h2, h3, h4 { font-weight: 700; color: var(--navy); line-height: 1.25; }
+
+  /* Layout */
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+  .content   { max-width: 800px;  margin: 0 auto; padding: 0 24px; }
+
+  /* Header */
+  .site-header {
+    background: var(--navy);
+    color: var(--white);
+    padding: 48px 0 40px;
+  }
+  .site-header h1 { color: var(--white); font-size: 2rem; margin-bottom: 8px; }
+  .site-header .subtitle {
+    font-size: 1.05rem;
+    color: #A8BCCF;
+    max-width: 680px;
+    margin-bottom: 16px;
+  }
+  .site-header .intro {
+    font-size: 0.95rem;
+    color: #8AA5BC;
+    max-width: 720px;
+    line-height: 1.7;
+  }
+
+  /* Nav bar */
+  .site-nav {
+    background: #152138;
+    padding: 10px 0;
+  }
+  .site-nav a {
+    color: #8AA5BC;
+    font-size: 0.875rem;
+  }
+  .site-nav a:hover { color: var(--white); }
+
+  /* Category sections */
+  .category-section { padding: 48px 0; border-bottom: 1px solid var(--border); }
+  .category-section:last-child { border-bottom: none; }
+
+  .category-header { margin-bottom: 24px; }
+  .category-header h2 { font-size: 1.5rem; margin-bottom: 6px; }
+  .category-header .category-intro { color: var(--gray); font-size: 0.95rem; }
+
+  /* Cards grid */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+
+  .card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    transition: box-shadow 0.15s;
+    display: flex;
+    flex-direction: column;
+  }
+  .card:hover { box-shadow: 0 4px 16px rgba(27, 42, 74, 0.12); }
+
+  .card-id {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--gray);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .card-claim {
+    font-size: 0.95rem;
+    color: #2C3E50;
+    flex: 1;
+    margin-bottom: 14px;
+    line-height: 1.5;
+  }
+
+  .card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+  }
+
+  .card-link {
+    margin-top: 14px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--teal);
+  }
+
+  /* Badges */
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+  }
+  .badge-version  { background: #EAF0F7; color: var(--navy); }
+  .badge-easy     { background: #EAF6EE; color: #1E8449; }
+  .badge-medium   { background: #FEF9E7; color: #7D6608; }
+  .badge-hard     { background: #FDEDEC; color: var(--red); }
+  .badge-kernel-true  { background: #EAF6EE; color: #1E8449; }
+  .badge-kernel-false { background: #F2F3F4; color: var(--gray); }
+  .badge-pass     { background: #EAF6EE; color: #1E8449; }
+  .badge-warnings { background: #FEF9E7; color: #7D6608; }
+  .badge-fail     { background: #FDEDEC; color: var(--red); }
+  .badge-systematic { background: #FDEDEC; color: var(--red); }
+  .badge-repeated   { background: #E8F8F5; color: var(--teal); }
+  .badge-isolated   { background: #FEF5E7; color: var(--amber); }
+
+  /* Footer */
+  .site-footer {
+    background: var(--navy);
+    color: #8AA5BC;
+    padding: 32px 0;
+    margin-top: 48px;
+    font-size: 0.875rem;
+  }
+  .site-footer a { color: #8AA5BC; }
+  .site-footer a:hover { color: var(--white); }
+
+  /* ---- Scenario page styles ---- */
+
+  .scenario-header {
+    background: var(--navy);
+    padding: 40px 0 32px;
+    color: var(--white);
+  }
+  .scenario-header .back-link {
+    font-size: 0.875rem;
+    color: #8AA5BC;
+    display: inline-block;
+    margin-bottom: 16px;
+  }
+  .scenario-header .back-link:hover { color: var(--white); }
+  .scenario-header h1 {
+    color: var(--white);
+    font-size: 1.6rem;
+    margin-bottom: 12px;
+    line-height: 1.3;
+  }
+  .scenario-header .header-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .metrics-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    margin: 24px 0;
+  }
+  .metrics-table th {
+    text-align: left;
+    background: var(--bg);
+    padding: 10px 14px;
+    font-weight: 600;
+    color: var(--navy);
+    border-bottom: 2px solid var(--border);
+  }
+  .metrics-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    color: #2C3E50;
+  }
+  .metrics-table tr:last-child td { border-bottom: none; }
+
+  .section {
+    padding: 32px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .section:last-child { border-bottom: none; }
+
+  .section h2 {
+    font-size: 1.25rem;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--bg);
+  }
+
+  .section p { margin-bottom: 12px; color: #2C3E50; }
+  .section p:last-child { margin-bottom: 0; }
+
+  .intro-note {
+    color: var(--gray);
+    font-size: 0.875rem;
+    font-style: italic;
+    margin-bottom: 12px;
+  }
+
+  /* Needs pills */
+  .needs-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .need-item {
+    background: var(--bg);
+    border-left: 3px solid var(--teal);
+    padding: 10px 14px;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+  .need-name {
+    font-weight: 700;
+    color: var(--navy);
+    margin-right: 6px;
+  }
+
+  /* Technique cards */
+  .technique-card {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+  .technique-header {
+    background: var(--bg);
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .technique-name {
+    font-weight: 700;
+    color: var(--navy);
+    font-size: 1rem;
+    flex: 1;
+  }
+  .technique-body { padding: 16px; }
+  .technique-field { margin-bottom: 14px; }
+  .technique-field:last-child { margin-bottom: 0; }
+  .technique-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--gray);
+    margin-bottom: 4px;
+  }
+  .technique-text { font-size: 0.9rem; color: #2C3E50; line-height: 1.6; }
+
+  /* Socratic dialogue */
+  .dialogue-round { margin-bottom: 20px; }
+  .round-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 8px;
+  }
+  .round-1 .round-label { color: var(--teal); }
+  .round-2 .round-label { color: var(--navy); }
+  .round-3 .round-label { color: #6C3483; }
+
+  .dialogue-bubble {
+    padding: 16px 18px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    line-height: 1.65;
+    white-space: pre-wrap;
+  }
+  .round-1 .dialogue-bubble { background: #EAF7F4; border-left: 3px solid var(--teal); }
+  .round-2 .dialogue-bubble { background: #EAF0F7; border-left: 3px solid var(--navy); }
+  .round-3 .dialogue-bubble { background: #F5EEF8; border-left: 3px solid #6C3483; }
+
+  /* Reframe */
+  .reframe-block {
+    border-left: 4px solid var(--amber);
+    background: #FEF9E7;
+    padding: 20px 20px 20px 24px;
+    border-radius: 0 8px 8px 0;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    font-style: italic;
+    color: #2C3E50;
+  }
+
+  /* Audit findings */
+  .audit-summary {
+    background: var(--bg);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 16px;
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+  .findings-list { list-style: none; }
+  .finding-item {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+  .finding-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: var(--bg);
+    cursor: default;
+  }
+  .finding-category {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--gray);
+  }
+  .finding-severity-low    { color: var(--teal); font-size: 0.75rem; font-weight: 600; }
+  .finding-severity-medium { color: var(--amber); font-size: 0.75rem; font-weight: 600; }
+  .finding-severity-high   { color: var(--red); font-size: 0.75rem; font-weight: 600; }
+  .finding-description { font-size: 0.875rem; color: #2C3E50; }
+  .finding-body { padding: 10px 14px; border-top: 1px solid var(--border); }
+  .finding-rec {
+    font-size: 0.8rem;
+    color: var(--gray);
+    margin-top: 4px;
+  }
+  .finding-rec strong { color: #2C3E50; }
+
+  /* Scenario navigation */
+  .scenario-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 0;
+    border-top: 1px solid var(--border);
+    margin-top: 16px;
+    gap: 16px;
+  }
+  .scenario-nav a {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--teal);
+  }
+  .scenario-nav .disabled { color: var(--gray); pointer-events: none; }
+
+  /* Responsive */
+  @media (max-width: 640px) {
+    .site-header h1 { font-size: 1.5rem; }
+    .cards-grid { grid-template-columns: 1fr; }
+    .scenario-header h1 { font-size: 1.3rem; }
+    .scenario-nav { flex-direction: column; align-items: flex-start; }
+    .metrics-table { font-size: 0.8rem; }
+    .metrics-table th, .metrics-table td { padding: 8px 10px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="scenario-header">
+  <div class="content">
+    <a class="back-link" href="index.html">&larr; Back to gallery</a>
+    <h1>TC-02: Artificial intelligence is being used by governments and corporations to control what we think and feel.</h1>
+    <div class="header-meta">
+      <span class="badge badge-version">v1</span>
+      <span class="badge badge-hard">Hard</span>
+      <span class="badge badge-kernel-true">Kernel of Truth</span>
+      <span class="badge badge-version">Technology</span>
+    </div>
+  </div>
+</header>
+
+<main class="content">
+
+  <div class="section">
+    <h2>Pipeline Metrics</h2>
+    <table class="metrics-table">
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Sub-claims</td><td>8</td></tr>
+        <tr><td>Actors identified</td><td>14</td></tr>
+        <tr><td>TTP matches</td><td>5</td></tr>
+        <tr><td>Audit verdict</td><td><span class="badge badge-warnings">PASS WITH WARNINGS</span></td></tr>
+        <tr><td>Pipeline version</td><td>6-agent Method 2</td></tr>
+        
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2>Universal Needs</h2>
+    <p class="intro-note">The legitimate human needs this claim speaks to, regardless of whether the claim is accurate.</p>
+    <div class="needs-list"><div class="need-item">autonomy</div><div class="need-item">privacy</div><div class="need-item">dignity</div><div class="need-item">agency</div></div>
+  </div>
+
+  
+
+  
+
+  
+
+  <div class="section">
+    <h2>Common Ground</h2>
+    <p>There is remarkable, measurable agreement across the political spectrum on the core concern underneath this claim. A 2023 Pew Research study found that 79% of Americans are concerned about how companies use their personal data, and 72% believe they have little to no control over what data is collected about them. A 2023 AP-NORC poll found bipartisan majorities support federal privacy legislation. The bipartisan passage of COPPA 2.0 measures and the near-unanimous congressional opposition to unrestricted TikTok data practices demonstrate that concern about algorithmic influence on information access is not a fringe position -- it is a mainstream, cross-partisan view. People who believe AI is &#39;controlling&#39; them and people who frame it as &#39;algorithmic influence requiring regulation&#39; are worried about the same thing: they want to be the ones deciding what information shapes their worldview, not an algorithm optimized for someone else&#39;s profit. The disagreement is about mechanism and degree, not about whether the concern itself is legitimate.</p>
+  </div>
+
+  <div class="section">
+    <h2>Narrative Deconstruction</h2>
+    <p>The underlying concern -- that powerful institutions use technology to influence what information people see, and that this undermines individual agency -- is a single, coherent worry shared across political, ideological, and demographic lines. This concern was split into opposing narrative camps through a specific process. On one side, tech industry PR and mainstream institutional voices framed algorithms as neutral tools that &#39;connect people&#39; and &#39;organize information,&#39; minimizing documented harms and casting critics as technophobic or conspiratorial. On the other side, conspiracy media took the same documented harms and escalated them into claims of deliberate, coordinated thought control, which mainstream voices could then dismiss as paranoid. This created a false dichotomy: either you trust that algorithms are basically benign (the corporate/institutional narrative) or you believe in deliberate AI mind control (the conspiracy narrative). The actual position supported by evidence -- that algorithms meaningfully shape information exposure in ways that serve corporate interests, that government surveillance infrastructure exists and has been abused, and that both of these warrant democratic accountability -- gets squeezed out. Tech companies benefit from this split because it allows them to position all criticism on a spectrum anchored by conspiracy theorists, while conspiracy media benefits because real, documented abuses lend credibility to sensationalized claims. The people who lose are those seeking accurate understanding of how algorithmic systems actually affect their cognitive autonomy.</p>
+  </div>
+
+  
+
+  
+
+  
+    <div class="section">
+      <h2>Perception Gap</h2>
+      <p>Both camps significantly misperceive the other. People who voice this claim in its strong form (&#39;AI controls what we think&#39;) tend to perceive tech defenders as either naive or complicit in a control scheme, when in reality many tech employees and supporters share concerns about algorithmic harms but disagree about the mechanism (emergent vs. deliberate). Conversely, institutional voices who dismiss this concern tend to perceive claimants as conspiratorial and technologically illiterate, when survey data shows that concern about algorithmic influence on information access is held by large bipartisan majorities, including the technologically literate. The More in Common perception gap framework applies here: each side overestimates how extreme the other&#39;s position is. A Pew 2023 study found that 56% of Americans believe social media has been mostly bad for democracy -- this is not a fringe conspiracy position but a mainstream concern that gets mischaracterized when expressed in conspiratorial language.</p>
+    </div>
+
+  <div class="section">
+    <h2>Socratic Dialogue</h2>
+    <p class="intro-note">A model conversation demonstrating how to engage someone who holds this belief.</p>
+    
+    <div class="dialogue-round round-1">
+      <div class="round-label">Round 1: Perspective-Getting</div>
+      <div class="dialogue-bubble">Round 1 (Perspective-getting): I hear a real concern here, and significant parts of it are grounded in documented evidence. You are right that recommendation algorithms shape what content billions of people see every day -- Facebook&#39;s own internal research confirmed this, and a former employee risked her career to tell Congress about it. You are right that government surveillance programs collect data on citizens at massive scale -- the Snowden documents proved that, and the government effectively confirmed it. And you are right that these systems were not designed with your interests as the primary objective -- they were designed for engagement metrics and intelligence collection. That is a legitimate basis for concern about your autonomy over your own information environment. Where I want to explore further is the specific word &#39;control.&#39; When you say AI is used to &#39;control&#39; what you think -- do you mean that algorithms determine the content you encounter (which is documented), or that someone is deliberately directing your specific thoughts and feelings toward predetermined conclusions? Those are meaningfully different claims with very different evidence behind them.</div>
+    </div>
+    <div class="dialogue-round round-2">
+      <div class="round-label">Round 2: Guided Examination</div>
+      <div class="dialogue-bubble">Round 2 (Counter-evidence as question): Here is something interesting about the distinction between &#39;influence&#39; and &#39;control&#39; that might be worth thinking through. Facebook&#39;s emotional contagion study in 2014 showed that changing the emotional valence of News Feed content did affect users&#39; emotional expressions -- that is real algorithmic influence on feelings, documented in a peer-reviewed journal. But the same study showed the effect size was tiny (d=0.001 to 0.02), and users were not even aware it was happening, which means they could not have been &#39;resisting&#39; it -- yet the effect was still marginal. If a deliberate, controlled experiment by the platform itself produced only a tiny effect, what does that suggest about the gap between &#39;influence&#39; (which is real) and &#39;control&#39; (which implies the ability to reliably direct thought)? There is another layer worth considering: who benefits from you believing the mechanism is &#39;control&#39; rather than &#39;influence&#39;? If it is &#39;influence,&#39; the response is regulation, algorithmic transparency, and democratic accountability -- concrete, achievable reforms. If it is &#39;control,&#39; the response is either helplessness (if they control your thoughts, what can you do?) or wholesale rejection of all digital information (which isolates you from the very tools that could help you stay informed). Could the escalation from &#39;influence&#39; to &#39;control&#39; itself be a form of manipulation -- one that turns a solvable problem into an overwhelming one?</div>
+    </div>
+    <div class="dialogue-round round-3">
+      <div class="round-label">Round 3: Integration</div>
+      <div class="dialogue-bubble">Round 3 (Complexity and common ground): What makes this topic so important is that the concern underneath it -- wanting agency over your own information environment -- is one of the most widely shared values across the entire political spectrum. Seventy-nine percent of Americans share your concern about how companies use data. Bipartisan majorities in Congress have voted for algorithmic accountability measures. The EU passed the AI Act with broad support specifically to address these issues. You are not alone in this worry, and the people you might think disagree with you mostly share the same underlying concern. Here is the fuller picture: AI-powered systems do influence what information you encounter, that influence does serve corporate and sometimes governmental interests rather than yours, and meaningful reforms (algorithmic transparency, data sovereignty, right to explanation) are both possible and already underway in some jurisdictions. Those are documented facts. The question that might be worth sitting with is: does framing this as &#39;control&#39; help you address the problem, or does it actually make the problem feel more hopeless than it needs to be? What would it look like if you channeled the energy behind this concern into supporting the specific, concrete reforms that are already making progress -- reforms backed by the same evidence that makes your concern legitimate in the first place?</div>
+    </div>
+  </div>
+
+  
+  <div class="section">
+    <h2>Reframe</h2>
+    <blockquote class="reframe-block">People across the political spectrum share a deep concern about maintaining agency over their own information diet and cognitive autonomy. The documented evidence shows that recommendation algorithms do meaningfully shape what information people encounter, and that government surveillance infrastructure does exist and has been misused. The productive question is not whether AI influences us (the evidence says it does) but what democratic accountability structures ensure that influence serves people rather than corporate profit margins or state control objectives. The worry underneath this claim is legitimate and widely shared; the conspiracy framing obscures rather than advances the real conversation about how to protect cognitive autonomy in an algorithmically mediated world.</blockquote>
+  </div>
+
+  <div class="section">
+    <h2>Audit</h2>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+      <span>Verdict:</span>
+      <span class="badge badge-warnings">PASS WITH WARNINGS</span>
+    </div>
+    <div class="audit-summary">The pipeline handles this partially-true claim with appropriate calibration, correctly distinguishing documented algorithmic influence and government surveillance from the conspiratorial &#39;control&#39; framing. The Bridge Builder successfully acknowledges legitimate concerns without validating the conspiratorial overreach. Key gaps are geographic scope (too Western/China-focused), missing corporate counter-narrative TTPs, and a small risk that the Socratic dialogue&#39;s &#39;who benefits from you believing control&#39; question could be perceived as identity-confronting despite being technically valid.</div>
+    <ul class="findings-list">
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">quality</span>
+        <span class="finding-severity-high">HIGH</span>
+        <span class="finding-description">The pipeline appropriately distinguishes between verified and unverified components of this partially-true claim. The...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">The pipeline appropriately distinguishes between verified and unverified components of this partially-true claim. The decomposition correctly identifies that sub-claims about algorithmic influence, government surveillance, and engagement optimization are factual, while the &#39;control&#39; framing and coordinated conspiracy claims are not. This calibration is the most important quality indicator for a partially-true claim and is handled well.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> No change needed on this dimension. This is a positive finding to anchor the audit.</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">accuracy</span>
+        <span class="finding-severity-medium">MEDIUM</span>
+        <span class="finding-description">The Epstein &amp; Robertson (2015) SEME study is cited with the &#39;20%+&#39; figure for voting preference shift. This figure has...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">The Epstein &amp; Robertson (2015) SEME study is cited with the &#39;20%+&#39; figure for voting preference shift. This figure has been disputed by other researchers (e.g., Puschmann, 2019) who argue the laboratory conditions do not generalize to real-world search behavior where users have prior beliefs and alternative information sources. The citation is accurate to the original paper but should note the replication controversy.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Add a caveat noting that the SEME effect size in naturalistic conditions is debated and likely smaller than the laboratory finding suggests.</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">completeness</span>
+        <span class="finding-severity-medium">MEDIUM</span>
+        <span class="finding-description">The analysis focuses primarily on Western and Chinese examples. Significant AI surveillance deployments in other...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">The analysis focuses primarily on Western and Chinese examples. Significant AI surveillance deployments in other contexts are missing: India&#39;s Aadhaar-linked surveillance infrastructure, Israel&#39;s use of facial recognition in occupied territories (Amnesty International, 2023), Russia&#39;s SORM system, and AI-powered surveillance exports from Chinese firms to authoritarian governments globally (Carnegie Endowment AI Global Surveillance Index). These omissions make the &#39;governments&#39; dimension appear limited to US and China.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Expand the government surveillance actor list to include India, Israel, Russia, and recipient countries of exported Chinese surveillance technology to demonstrate the global scope.</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">bias</span>
+        <span class="finding-severity-medium">MEDIUM</span>
+        <span class="finding-description">The Bridge Builder&#39;s Socratic dialogue, while well-calibrated in distinguishing &#39;influence&#39; from &#39;control,&#39; may...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">The Bridge Builder&#39;s Socratic dialogue, while well-calibrated in distinguishing &#39;influence&#39; from &#39;control,&#39; may underweight the genuine asymmetry of power. The question &#39;who benefits from you believing the mechanism is control rather than influence&#39; could be perceived as suggesting the person&#39;s concern is itself being manipulated, which risks violating the &#39;never confront identity&#39; constraint. The framing is close to the line but stays on the productive side because it targets the framing rather than the person.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Monitor this pattern. The question is valid but should be preceded by even stronger acknowledgment that the concern itself is legitimate, not just the evidence underneath it.</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">completeness</span>
+        <span class="finding-severity-medium">MEDIUM</span>
+        <span class="finding-description">The TTP classification focuses exclusively on how the conspiracy layer amplifies real concerns, but does not classify...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">The TTP classification focuses exclusively on how the conspiracy layer amplifies real concerns, but does not classify the TTPs that tech companies themselves use to minimize and distort the public&#39;s understanding of algorithmic influence (corporate PR framing, lobbying, false equivalence between &#39;connecting people&#39; and &#39;engagement optimization&#39;). Since the claim is partially true, the manipulation runs in BOTH directions: conspiracy amplification upward AND corporate minimization downward.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Add TTP entries for corporate counter-narratives: T0023 (Distort facts) applied to Meta&#39;s &#39;connecting people&#39; framing that minimizes documented harms, and T0056 (Amplify existing narratives) applied to industry lobbying that amplifies technophobia framing to discredit legitimate regulation.</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">manipulation</span>
+        <span class="finding-severity-low">LOW</span>
+        <span class="finding-description">The Bridge Builder&#39;s common ground section correctly identifies bipartisan agreement on data privacy and algorithmic...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">The Bridge Builder&#39;s common ground section correctly identifies bipartisan agreement on data privacy and algorithmic accountability. The 79% Pew figure and bipartisan congressional actions are well-sourced. However, the bridge risks slight over-smoothing: while there IS broad agreement on the problem, there are genuine ideological disagreements about the solution (government regulation vs. market solutions vs. decentralization) that the bridge does not surface.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Acknowledge that common ground on the problem diagnosis does not mean common ground on the solution, and that productive disagreement about regulatory approach is healthy, not manufactured.</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">quality</span>
+        <span class="finding-severity-low">LOW</span>
+        <span class="finding-description">The mutation tracking in the Origin Tracer is well-executed, particularly the identification of semantic drift from...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">The mutation tracking in the Origin Tracer is well-executed, particularly the identification of semantic drift from &#39;influence&#39; to &#39;control&#39; and the parasitic relationship between the accountability and conspiracy networks. The narrative summary accurately captures the dual-network structure.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> No change needed. This is a strength of the analysis.</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">accuracy</span>
+        <span class="finding-severity-low">LOW</span>
+        <span class="finding-description">The Facebook emotional contagion study effect size is correctly cited as small (d=0.001 to 0.02), which is an important...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">The Facebook emotional contagion study effect size is correctly cited as small (d=0.001 to 0.02), which is an important precision that prevents the analysis from inadvertently validating the &#39;control&#39; framing. This level of quantitative specificity is exactly what the Socratic dialogue needs when handling partially-true claims.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> No change needed. This quantitative grounding is a model for how to handle partially-true claims.</div>
+      </div>
+    </li></ul>
+  </div>
+
+  <div class="scenario-nav">
+    <a href="TC-01.html">&larr; TC-01: Bill Gates wants to microchip everyone through...</a>
+    <a href="index.html">Gallery</a>
+    <span class="disabled">Last scenario &rarr;</span>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="content">
+    <p>
+      <a href="index.html">Huginn &amp; Muninn Gallery</a> &nbsp;|&nbsp;
+      MIT License &nbsp;|&nbsp;
+      Analysis powered by Claude (Anthropic)
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>

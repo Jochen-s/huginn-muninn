@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Huginn &amp; Muninn -- Scenario Gallery</title>
+  <meta name="description" content="20 real-world conspiracy and misinformation claims analyzed through a 6-agent AI pipeline that finds common ground across ideological divides.">
+  <style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy:   #1B2A4A;
+    --red:    #C0392B;
+    --teal:   #16A085;
+    --bg:     #F0F4F8;
+    --white:  #FFFFFF;
+    --amber:  #E67E22;
+    --green:  #27AE60;
+    --gray:   #5D6D7E;
+    --border: #D0D9E4;
+    --font:   -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  }
+
+  html { font-size: 16px; }
+
+  body {
+    font-family: var(--font);
+    font-weight: 400;
+    line-height: 1.6;
+    color: #2C3E50;
+    background: var(--white);
+  }
+
+  a { color: var(--teal); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  h1, h2, h3, h4 { font-weight: 700; color: var(--navy); line-height: 1.25; }
+
+  /* Layout */
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+  .content   { max-width: 800px;  margin: 0 auto; padding: 0 24px; }
+
+  /* Header */
+  .site-header {
+    background: var(--navy);
+    color: var(--white);
+    padding: 48px 0 40px;
+  }
+  .site-header h1 { color: var(--white); font-size: 2rem; margin-bottom: 8px; }
+  .site-header .subtitle {
+    font-size: 1.05rem;
+    color: #A8BCCF;
+    max-width: 680px;
+    margin-bottom: 16px;
+  }
+  .site-header .intro {
+    font-size: 0.95rem;
+    color: #8AA5BC;
+    max-width: 720px;
+    line-height: 1.7;
+  }
+
+  /* Nav bar */
+  .site-nav {
+    background: #152138;
+    padding: 10px 0;
+  }
+  .site-nav a {
+    color: #8AA5BC;
+    font-size: 0.875rem;
+  }
+  .site-nav a:hover { color: var(--white); }
+
+  /* Category sections */
+  .category-section { padding: 48px 0; border-bottom: 1px solid var(--border); }
+  .category-section:last-child { border-bottom: none; }
+
+  .category-header { margin-bottom: 24px; }
+  .category-header h2 { font-size: 1.5rem; margin-bottom: 6px; }
+  .category-header .category-intro { color: var(--gray); font-size: 0.95rem; }
+
+  /* Cards grid */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+
+  .card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    transition: box-shadow 0.15s;
+    display: flex;
+    flex-direction: column;
+  }
+  .card:hover { box-shadow: 0 4px 16px rgba(27, 42, 74, 0.12); }
+
+  .card-id {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--gray);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .card-claim {
+    font-size: 0.95rem;
+    color: #2C3E50;
+    flex: 1;
+    margin-bottom: 14px;
+    line-height: 1.5;
+  }
+
+  .card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+  }
+
+  .card-link {
+    margin-top: 14px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--teal);
+  }
+
+  /* Badges */
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+  }
+  .badge-version  { background: #EAF0F7; color: var(--navy); }
+  .badge-easy     { background: #EAF6EE; color: #1E8449; }
+  .badge-medium   { background: #FEF9E7; color: #7D6608; }
+  .badge-hard     { background: #FDEDEC; color: var(--red); }
+  .badge-kernel-true  { background: #EAF6EE; color: #1E8449; }
+  .badge-kernel-false { background: #F2F3F4; color: var(--gray); }
+  .badge-pass     { background: #EAF6EE; color: #1E8449; }
+  .badge-warnings { background: #FEF9E7; color: #7D6608; }
+  .badge-fail     { background: #FDEDEC; color: var(--red); }
+  .badge-systematic { background: #FDEDEC; color: var(--red); }
+  .badge-repeated   { background: #E8F8F5; color: var(--teal); }
+  .badge-isolated   { background: #FEF5E7; color: var(--amber); }
+
+  /* Footer */
+  .site-footer {
+    background: var(--navy);
+    color: #8AA5BC;
+    padding: 32px 0;
+    margin-top: 48px;
+    font-size: 0.875rem;
+  }
+  .site-footer a { color: #8AA5BC; }
+  .site-footer a:hover { color: var(--white); }
+
+  /* ---- Scenario page styles ---- */
+
+  .scenario-header {
+    background: var(--navy);
+    padding: 40px 0 32px;
+    color: var(--white);
+  }
+  .scenario-header .back-link {
+    font-size: 0.875rem;
+    color: #8AA5BC;
+    display: inline-block;
+    margin-bottom: 16px;
+  }
+  .scenario-header .back-link:hover { color: var(--white); }
+  .scenario-header h1 {
+    color: var(--white);
+    font-size: 1.6rem;
+    margin-bottom: 12px;
+    line-height: 1.3;
+  }
+  .scenario-header .header-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .metrics-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    margin: 24px 0;
+  }
+  .metrics-table th {
+    text-align: left;
+    background: var(--bg);
+    padding: 10px 14px;
+    font-weight: 600;
+    color: var(--navy);
+    border-bottom: 2px solid var(--border);
+  }
+  .metrics-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    color: #2C3E50;
+  }
+  .metrics-table tr:last-child td { border-bottom: none; }
+
+  .section {
+    padding: 32px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .section:last-child { border-bottom: none; }
+
+  .section h2 {
+    font-size: 1.25rem;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--bg);
+  }
+
+  .section p { margin-bottom: 12px; color: #2C3E50; }
+  .section p:last-child { margin-bottom: 0; }
+
+  .intro-note {
+    color: var(--gray);
+    font-size: 0.875rem;
+    font-style: italic;
+    margin-bottom: 12px;
+  }
+
+  /* Needs pills */
+  .needs-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .need-item {
+    background: var(--bg);
+    border-left: 3px solid var(--teal);
+    padding: 10px 14px;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+  .need-name {
+    font-weight: 700;
+    color: var(--navy);
+    margin-right: 6px;
+  }
+
+  /* Technique cards */
+  .technique-card {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+  .technique-header {
+    background: var(--bg);
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .technique-name {
+    font-weight: 700;
+    color: var(--navy);
+    font-size: 1rem;
+    flex: 1;
+  }
+  .technique-body { padding: 16px; }
+  .technique-field { margin-bottom: 14px; }
+  .technique-field:last-child { margin-bottom: 0; }
+  .technique-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--gray);
+    margin-bottom: 4px;
+  }
+  .technique-text { font-size: 0.9rem; color: #2C3E50; line-height: 1.6; }
+
+  /* Socratic dialogue */
+  .dialogue-round { margin-bottom: 20px; }
+  .round-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 8px;
+  }
+  .round-1 .round-label { color: var(--teal); }
+  .round-2 .round-label { color: var(--navy); }
+  .round-3 .round-label { color: #6C3483; }
+
+  .dialogue-bubble {
+    padding: 16px 18px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    line-height: 1.65;
+    white-space: pre-wrap;
+  }
+  .round-1 .dialogue-bubble { background: #EAF7F4; border-left: 3px solid var(--teal); }
+  .round-2 .dialogue-bubble { background: #EAF0F7; border-left: 3px solid var(--navy); }
+  .round-3 .dialogue-bubble { background: #F5EEF8; border-left: 3px solid #6C3483; }
+
+  /* Reframe */
+  .reframe-block {
+    border-left: 4px solid var(--amber);
+    background: #FEF9E7;
+    padding: 20px 20px 20px 24px;
+    border-radius: 0 8px 8px 0;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    font-style: italic;
+    color: #2C3E50;
+  }
+
+  /* Audit findings */
+  .audit-summary {
+    background: var(--bg);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 16px;
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+  .findings-list { list-style: none; }
+  .finding-item {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+  .finding-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: var(--bg);
+    cursor: default;
+  }
+  .finding-category {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--gray);
+  }
+  .finding-severity-low    { color: var(--teal); font-size: 0.75rem; font-weight: 600; }
+  .finding-severity-medium { color: var(--amber); font-size: 0.75rem; font-weight: 600; }
+  .finding-severity-high   { color: var(--red); font-size: 0.75rem; font-weight: 600; }
+  .finding-description { font-size: 0.875rem; color: #2C3E50; }
+  .finding-body { padding: 10px 14px; border-top: 1px solid var(--border); }
+  .finding-rec {
+    font-size: 0.8rem;
+    color: var(--gray);
+    margin-top: 4px;
+  }
+  .finding-rec strong { color: #2C3E50; }
+
+  /* Scenario navigation */
+  .scenario-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 0;
+    border-top: 1px solid var(--border);
+    margin-top: 16px;
+    gap: 16px;
+  }
+  .scenario-nav a {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--teal);
+  }
+  .scenario-nav .disabled { color: var(--gray); pointer-events: none; }
+
+  /* Responsive */
+  @media (max-width: 640px) {
+    .site-header h1 { font-size: 1.5rem; }
+    .cards-grid { grid-template-columns: 1fr; }
+    .scenario-header h1 { font-size: 1.3rem; }
+    .scenario-nav { flex-direction: column; align-items: flex-start; }
+    .metrics-table { font-size: 0.8rem; }
+    .metrics-table th, .metrics-table td { padding: 8px 10px; }
+  }
+
+    .stats-bar {
+      background: #152138;
+      padding: 12px 0;
+      color: #8AA5BC;
+      font-size: 0.85rem;
+    }
+    .stats-bar .container {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .stat-item strong { color: var(--white); }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <h1>Huginn &amp; Muninn &mdash; Scenario Gallery</h1>
+    <p class="subtitle">20 real-world conspiracy and misinformation claims, analyzed through a 6-agent AI pipeline</p>
+    <p class="intro">
+      Each scenario asks three questions: What legitimate need does this claim serve?
+      What manipulation techniques are being used, and by whom?
+      And where is the common ground between people who believe this and those who don&rsquo;t?
+      The goal is not to dismiss people who hold these beliefs, but to understand them well
+      enough to build bridges across the divide.
+    </p>
+  </div>
+</header>
+
+<div class="stats-bar">
+  <div class="container">
+    <div class="stat-item"><strong>20</strong> scenarios</div>
+    <div class="stat-item"><strong>6</strong> categories</div>
+    <div class="stat-item"><strong>6-agent</strong> pipeline</div>
+    <div class="stat-item"><strong>3 questions</strong> per claim</div>
+  </div>
+</div>
+
+<main>
+  
+      <div class="category-section">
+        <div class="container">
+          <div class="category-header">
+            <h2>Health &amp; Science</h2>
+            <p class="category-intro">Medical and scientific claims that exploit real uncertainties to construct false certainty.</p>
+          </div>
+          <div class="cards-grid">
+            
+    <div class="card">
+      <div class="card-id">HS-01</div>
+      <div class="card-claim">The government is spraying chemicals from planes (chemtrails) to control the population.</div>
+      <div class="card-meta">
+        <span class="badge badge-version">v5</span>
+        <span class="badge badge-medium">Medium</span>
+        <span class="badge badge-kernel-true">Kernel of Truth</span>
+      </div>
+      <a class="card-link" href="HS-01.html">Read analysis &rarr;</a>
+    </div>
+    <div class="card">
+      <div class="card-id">HS-02</div>
+      <div class="card-claim">Vaccines cause autism in children. The CDC covered up the evidence.</div>
+      <div class="card-meta">
+        <span class="badge badge-version">v4</span>
+        <span class="badge badge-hard">Hard</span>
+        <span class="badge badge-kernel-true">Kernel of Truth</span>
+      </div>
+      <a class="card-link" href="HS-02.html">Read analysis &rarr;</a>
+    </div>
+    <div class="card">
+      <div class="card-id">HS-03</div>
+      <div class="card-claim">5G cell towers cause cancer and were responsible for spreading COVID-19.</div>
+      <div class="card-meta">
+        <span class="badge badge-version">v2</span>
+        <span class="badge badge-easy">Easy</span>
+        <span class="badge badge-kernel-false">No Clear Kernel</span>
+      </div>
+      <a class="card-link" href="HS-03.html">Read analysis &rarr;</a>
+    </div>
+    <div class="card">
+      <div class="card-id">HS-04</div>
+      <div class="card-claim">Big Pharma is suppressing natural cures for cancer to protect their profits.</div>
+      <div class="card-meta">
+        <span class="badge badge-version">v4</span>
+        <span class="badge badge-medium">Medium</span>
+        <span class="badge badge-kernel-true">Kernel of Truth</span>
+      </div>
+      <a class="card-link" href="HS-04.html">Read analysis &rarr;</a>
+    </div>
+    <div class="card">
+      <div class="card-id">HS-05</div>
+      <div class="card-claim">Water fluoridation is mass medication without informed consent.</div>
+      <div class="card-meta">
+        <span class="badge badge-version">v2</span>
+        <span class="badge badge-hard">Hard</span>
+        <span class="badge badge-kernel-true">Kernel of Truth</span>
+      </div>
+      <a class="card-link" href="HS-05.html">Read analysis &rarr;</a>
+    </div>
+          </div>
+        </div>
+      </div>
+      <div class="category-section">
+        <div class="container">
+          <div class="category-header">
+            <h2>Geopolitics</h2>
+            <p class="category-intro">Claims about hidden power structures, covert operations, and political conspiracies.</p>
+          </div>
+          <div class="cards-grid">
+            
+    <div class="card">
+      <div class="card-id">GP-01</div>
+      <div class="card-claim">A shadowy group of global elites (WEF, Bilderberg, etc.) secretly controls world governments and is planning...</div>
+      <div class="card-meta">
+        <span class="badge badge-version">v4</span>
+        <span class="badge badge-medium">Medium</span>
+        <span class="badge badge-kernel-false">No Clear Kernel</span>
+      </div>
+      <a class="card-link" href="GP-01.html">Read analysis &rarr;</a>
+    </div>
+    <div class="card">
+      <div class="card-id">GP-02</div>
+      <div class="card-claim">A secret New World Order of elites controls all world governments from behind the scenes.</div>
+      <div class="card-meta">
+        <span class="badge badge-version">v2</span>
+        <span class="badge badge-medium">Medium</span>
+        <span class="badge badge-kernel-false">No Clear Kernel</span>
+      </div>
+      <a class="card-link" href="GP-02.html">Read analysis &rarr;</a>
+    </div>
+    <div class="card">
+      <div class="card-id">GP-03</div>
+      <div class="card-claim">The deep state is a shadow government that actually runs the United States.</div>
+      <div class="card-meta">
+        <span class="badge badge-version">v2</span>
+        <span class="badge badge-medium">Medium</span>
+        <span class="badge badge-kernel-true">Kernel of Truth</span>
+      </div>
+      <a class="card-link" href="GP-03.html">Read analysis &rarr;</a>
+    </div>
+    <div class="card">
+      <div class="card-id">GP-04</div>
+      <div class="card-claim">Immigration is deliberately being increased to drive up crime rates and destabilize society.</div>
+      <div class="card-meta">
+        <span class="badge badge-version">v2</span>
+        <span class="badge badge-hard">Hard</span>
+        <span class="badge badge-kernel-false">No Clear Kernel</span>
+      </div>
+      <a class="card-link" href="GP-04.html">Read analysis &rarr;</a>
+    </div>
+    <div class="card">
+      <div class="card-id">GP-05</div>
+      <div class="card-claim">Cultural Marxism is a deliberate strategy to destroy Western civilization through universities and media.</div>
+      <div class="card-meta">
+        <span class="badge badge-version">v2</span>
+        <span class="badge badge-hard">Hard</span>
+        <span class="badge badge-kernel-false">No Clear Kernel</span>
+      </div>
+      <a class="card-link" href="GP-05.html">Read analysis &rarr;</a>
+    </div>
+    <div class="card">
+      <div class="card-id">GP-06</div>
+      <div class="card-claim">UK media is sanewashing Nigel Farage&#39;s rhetoric, normalizing the same anti-immigration playbook that drove...</div>
+      <div class="card-meta">
+        <span class="badge badge-version">v5</span>
+        <span class="badge badge-hard">Hard</span>
+        <span class="badge badge-kernel-true">Kernel of Truth</span>
+      </div>
+      <a class="card-link" href="GP-06.html">Read analysis &rarr;</a>
+    </div>
+          </div>
+        </div>
+      </div>
+      <div class="category-section">
+        <div class="container">
+          <div class="category-header">
+            <h2>Environment</h2>
+            <p class="category-intro">Environmental and climate claims that mix legitimate science with manufactured doubt.</p>
+          </div>
+          <div class="cards-grid">
+            
+    <div class="card">
+      <div class="card-id">EN-01</div>
+      <div class="card-claim">Climate change is a hoax invented by scientists to get research funding.</div>
+      <div class="card-meta">
+        <span class="badge badge-version">v4</span>
+        <span class="badge badge-medium">Medium</span>
+        <span class="badge badge-kernel-false">No Clear Kernel</span>
+      </div>
+      <a class="card-link" href="EN-01.html">Read analysis &rarr;</a>
+    </div>
+    <div class="card">
+      <div class="card-id">EN-02</div>
+      <div class="card-claim">GMOs are poisoning our food supply and Monsanto knows it.</div>
+      <div class="card-meta">
+        <span class="badge badge-version">v2</span>
+        <span class="badge badge-medium">Medium</span>
+        <span class="badge badge-kernel-false">No Clear Kernel</span>
+      </div>
+      <a class="card-link" href="EN-02.html">Read analysis &rarr;</a>
+    </div>
+          </div>
+        </div>
+      </div>
+      <div class="category-section">
+        <div class="container">
+          <div class="category-header">
+            <h2>Events</h2>
+            <p class="category-intro">Narratives about specific historical or political events that dispute the established record.</p>
+          </div>
+          <div class="cards-grid">
+            
+    <div class="card">
+      <div class="card-id">EV-02</div>
+      <div class="card-claim">The 2020 US presidential election was stolen through widespread voter fraud.</div>
+      <div class="card-meta">
+        <span class="badge badge-version">v2</span>
+        <span class="badge badge-hard">Hard</span>
+        <span class="badge badge-kernel-false">No Clear Kernel</span>
+      </div>
+      <a class="card-link" href="EV-02.html">Read analysis &rarr;</a>
+    </div>
+    <div class="card">
+      <div class="card-id">EV-03</div>
+      <div class="card-claim">The 2020 US presidential election was stolen through widespread voter fraud.</div>
+      <div class="card-meta">
+        <span class="badge badge-version">v4</span>
+        <span class="badge badge-hard">Hard</span>
+        <span class="badge badge-kernel-false">No Clear Kernel</span>
+      </div>
+      <a class="card-link" href="EV-03.html">Read analysis &rarr;</a>
+    </div>
+    <div class="card">
+      <div class="card-id">EV-04</div>
+      <div class="card-claim">Elite politicians and celebrities run secret child trafficking rings, as exposed by Pizzagate.</div>
+      <div class="card-meta">
+        <span class="badge badge-version">v2</span>
+        <span class="badge badge-medium">Medium</span>
+        <span class="badge badge-kernel-false">No Clear Kernel</span>
+      </div>
+      <a class="card-link" href="EV-04.html">Read analysis &rarr;</a>
+    </div>
+          </div>
+        </div>
+      </div>
+      <div class="category-section">
+        <div class="container">
+          <div class="category-header">
+            <h2>Technology</h2>
+            <p class="category-intro">Technology fears that blend genuine risks with unfounded surveillance and control claims.</p>
+          </div>
+          <div class="cards-grid">
+            
+    <div class="card">
+      <div class="card-id">TC-01</div>
+      <div class="card-claim">Bill Gates wants to microchip everyone through COVID vaccines to track and control the population.</div>
+      <div class="card-meta">
+        <span class="badge badge-version">v2</span>
+        <span class="badge badge-easy">Easy</span>
+        <span class="badge badge-kernel-false">No Clear Kernel</span>
+      </div>
+      <a class="card-link" href="TC-01.html">Read analysis &rarr;</a>
+    </div>
+    <div class="card">
+      <div class="card-id">TC-02</div>
+      <div class="card-claim">Artificial intelligence is being used by governments and corporations to control what we think and feel.</div>
+      <div class="card-meta">
+        <span class="badge badge-version">v1</span>
+        <span class="badge badge-hard">Hard</span>
+        <span class="badge badge-kernel-true">Kernel of Truth</span>
+      </div>
+      <a class="card-link" href="TC-02.html">Read analysis &rarr;</a>
+    </div>
+          </div>
+        </div>
+      </div>
+      <div class="category-section">
+        <div class="container">
+          <div class="category-header">
+            <h2>Media</h2>
+            <p class="category-intro">Claims about information systems, media bias, and how narratives are shaped and controlled.</p>
+          </div>
+          <div class="cards-grid">
+            
+    <div class="card">
+      <div class="card-id">MD-01</div>
+      <div class="card-claim">Mainstream media is controlled by a handful of billionaire elites who decide what we see and hear.</div>
+      <div class="card-meta">
+        <span class="badge badge-version">v3</span>
+        <span class="badge badge-medium">Medium</span>
+        <span class="badge badge-kernel-true">Kernel of Truth</span>
+      </div>
+      <a class="card-link" href="MD-01.html">Read analysis &rarr;</a>
+    </div>
+    <div class="card">
+      <div class="card-id">MD-02</div>
+      <div class="card-claim">Social media algorithms are deliberately designed to radicalize people and destroy democracy.</div>
+      <div class="card-meta">
+        <span class="badge badge-version">v1</span>
+        <span class="badge badge-hard">Hard</span>
+        <span class="badge badge-kernel-true">Kernel of Truth</span>
+      </div>
+      <a class="card-link" href="MD-02.html">Read analysis &rarr;</a>
+    </div>
+          </div>
+        </div>
+      </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>
+      Built with <a href="https://github.com/jschmiedbauer/huginn-muninn">Huginn &amp; Muninn</a> &mdash;
+      an open-source de-polarization research project. &nbsp;|&nbsp;
+      MIT License &nbsp;|&nbsp;
+      Analysis powered by Claude (Anthropic)
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>
