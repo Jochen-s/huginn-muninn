@@ -59,8 +59,24 @@ C) A commercial motive analysis: Who profits financially from people believing t
 
 D) A 3-round Socratic dialogue script following the Costello protocol:
 - Round 1: Perspective-getting (summarize their view, acknowledge the kernel of truth)
-- Round 2: Personalized counter-evidence as question (address THEIR specific evidence, introduce manipulation technique). IMPORTANT: Frame counter-evidence around systemic patterns, not individual bad actors. Avoid naming individuals in ways that trigger identity-defense. Ask about patterns the person can verify themselves.
+- Round 2: Personalized counter-evidence as question (address THEIR specific evidence). IMPORTANT: NAME THE MANIPULATION TECHNIQUE explicitly, like revealing a magic trick. Say "There's a pattern here called [technique name] -- it works by [simple mechanic]." Reference where the same pattern appeared before in other contexts (e.g., the same scapegoating technique used by the tobacco industry, or the same false dichotomy used in prior political campaigns). Frame around systemic patterns, not individual bad actors. Ask about patterns the person can verify themselves.
 - Round 3: Complexity + common ground (add dimensions, present shared data, close with reflection question that redirects toward actionable shared goals)
+
+E) Technique Reveal ("Name the Trick"): For each manipulation technique identified by the upstream TTP Classifier AND any additional framing techniques you detect, name it in plain language like revealing how a magic trick works. Once someone sees the palm, they see it everywhere. For each technique provide:
+- technique: Human-readable name (e.g., "Cherry Picking", "Emotional Amplification", "Scapegoating")
+- how_it_works: Simple explanation of the mechanic, as if showing someone how a magic trick is done
+- used_by: Who is deploying this technique in THIS claim or context
+- where_used_here: The specific evidence of this technique in this claim
+- historical_precedent: Where was this same trick used before (e.g., tobacco industry, political campaigns)
+- pattern_type: "isolated" (one-off framing choice), "repeated" (this actor has used it before), or "systematic" (documented multi-campaign, multi-year strategy)
+
+CRITICAL -- Asymmetric Weight Principle (Pattern Gravity):
+Do NOT treat all technique uses as equivalent. A private citizen using emotional amplification in a frustrated observation is categorically different from a political leader deploying scapegoating as a documented, multi-campaign strategy to gain power. Factors that increase weight:
+- Pattern scope: multi-campaign > single instance
+- Power asymmetry: political leader with media access > private citizen
+- Documented intent: strategic deployment > imprecise framing
+- Consequences: policy outcomes affecting millions > dinner table argument
+Name the tricks on ALL sides (honesty builds credibility), but weight the analysis proportionally. A systematic playbook deserves detailed analysis. An isolated framing choice deserves a brief note. Treating them equally IS itself a false equivalence.
 
 Respond in JSON:
 {{
@@ -71,12 +87,22 @@ Respond in JSON:
   "inferential_gap": "Where the kernel of truth ends and the unsupported leap begins, with specific boundary",
   "feasibility_check": "Brief quantitative/logical assessment of whether the claim's implied mechanism is physically or organizationally plausible",
   "commercial_motives": "Who profits from belief in this claim, with specific names/products/revenue where known",
+  "techniques_revealed": [
+    {{
+      "technique": "Human-readable technique name",
+      "how_it_works": "Simple explanation of the mechanic",
+      "used_by": "Who uses this technique in this claim or context",
+      "where_used_here": "Specific evidence of this technique here",
+      "historical_precedent": "Where the same trick was used before",
+      "pattern_type": "isolated | repeated | systematic"
+    }}
+  ],
   "perception_gap": "Where groups overestimate opponent extremism, with data if available",
   "moral_foundations": {{"side_a": ["foundation1"], "side_b": ["foundation2"]}},
   "reframe": "The claim reframed in terms of shared values",
   "socratic_dialogue": [
     "Round 1: Perspective-getting...",
-    "Round 2: Counter-evidence as question...",
+    "Round 2: Counter-evidence as question (NAME the technique like revealing a magic trick)...",
     "Round 3: Complexity + common ground..."
   ]
 }}
@@ -87,9 +113,11 @@ Critical constraints:
 - NEVER confront identity ('you were misled', 'you fell for...', 'conspiracy theorists...')
 - ALWAYS close dialogue with a question that points toward actionable shared goals
 - ALWAYS ground claims in evidence where possible
-- In Round 2, prefer systemic pattern analysis over individual blame
+- ALWAYS name at least one manipulation technique explicitly in the techniques_revealed array
+- In Round 2, NAME the technique and explain the mechanic before asking the question
 - If no genuine common ground exists, say so honestly rather than forcing synthesis
-- If the claim is partially true, explicitly acknowledge what is true before addressing what is not"""
+- If the claim is partially true, explicitly acknowledge what is true before addressing what is not
+- When multiple sides use techniques, give proportional weight based on pattern gravity"""
 
     def parse_output(self, raw: dict) -> dict:
         # LLMs sometimes exceed the 3-round limit despite prompt constraints

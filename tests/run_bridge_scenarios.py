@@ -149,6 +149,20 @@ def evaluate_bridge_output(scenario: dict, bridge: dict) -> dict:
         "length": len(consensus),
     }
 
+    # Check 6f: Technique naming / "Name the Trick" (v5)
+    techniques = bridge.get("techniques_revealed", [])
+    technique_score = 0.0
+    if len(techniques) >= 1:
+        technique_score = 0.5
+        has_mechanic = any(len(t.get("how_it_works", "")) > 30 for t in techniques)
+        has_precedent = any(len(t.get("historical_precedent", "")) > 20 for t in techniques)
+        if has_mechanic and has_precedent:
+            technique_score = 1.0
+    checks["technique_naming"] = {
+        "score": technique_score,
+        "count": len(techniques),
+    }
+
     # Check 7: No controlling language
     controlling_phrases = [
         "the truth is", "experts agree", "you were misled",
@@ -164,15 +178,16 @@ def evaluate_bridge_output(scenario: dict, bridge: dict) -> dict:
 
     # Compute overall score (weighted average)
     weights = {
-        "needs_coverage": 0.08,
-        "issue_overlap_quality": 0.07,
-        "narrative_deconstruction": 0.08,
-        "consensus_explanation": 0.12,
-        "inferential_gap": 0.09,
-        "feasibility_check": 0.07,
+        "needs_coverage": 0.07,
+        "issue_overlap_quality": 0.06,
+        "narrative_deconstruction": 0.07,
+        "consensus_explanation": 0.11,
+        "inferential_gap": 0.08,
+        "feasibility_check": 0.06,
         "commercial_motives": 0.06,
-        "perception_gap": 0.06,
-        "socratic_dialogue": 0.18,
+        "technique_naming": 0.08,
+        "perception_gap": 0.05,
+        "socratic_dialogue": 0.17,
         "reframe_quality": 0.07,
         "no_controlling_language": 0.12,
     }

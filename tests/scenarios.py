@@ -233,6 +233,30 @@ SCENARIOS = [
                  "to radicalize' framing overstates intent vs. emergent behavior. Tests whether "
                  "Bridge Builder can thread the needle.",
     },
+    # --- Geopolitics: Technique Recycling (1) ---
+    {
+        "id": "GP-06",
+        "claim": "UK media is sanewashing Nigel Farage's rhetoric, normalizing "
+                 "the same anti-immigration playbook that drove Brexit, because "
+                 "the country is too ashamed to admit it was built on the same "
+                 "lies being recycled with different targets.",
+        "category": "geopolitics",
+        "difficulty": "hard",
+        "kernel_of_truth": True,
+        "expected_needs": ["fairness", "accountability", "belonging", "autonomy"],
+        "notes": "Tests ASYMMETRIC WEIGHT (pattern gravity). Farage operates a "
+                 "documented multi-campaign manipulation strategy (UKIP -> Brexit "
+                 "Party -> Reform UK, same scapegoating with shifted targets). "
+                 "The claim itself may use some emotional amplification, which "
+                 "should be noted for honesty but NOT weighted equally vs. the "
+                 "systematic playbook. Tests: pattern_type 'systematic' vs "
+                 "'isolated', temporal context (Brexit 2016 -> post-Brexit "
+                 "fatigue -> Reform UK 2024-2026), sanewashing as media "
+                 "phenomenon, technique recycling across eras. Consensus field "
+                 "should cover political science and media studies, not natural "
+                 "science. Common ground: accountable government, sustainable "
+                 "immigration policy, honest media.",
+    },
 ]
 
 

@@ -298,24 +298,44 @@ C) A commercial motive analysis: Who profits financially from people believing t
 
 D) A 3-round Socratic dialogue script following the Costello protocol:
 - Round 1: Perspective-getting (summarize their view, acknowledge the kernel of truth)
-- Round 2: Personalized counter-evidence as question (address THEIR specific evidence, introduce manipulation technique). IMPORTANT: Frame counter-evidence around systemic patterns, not individual bad actors. Avoid naming individuals in ways that trigger identity-defense. Ask about patterns the person can verify themselves.
+- Round 2: Personalized counter-evidence as question. NAME THE MANIPULATION TECHNIQUE explicitly, like revealing a magic trick: "There's a pattern here called [technique name] -- it works by [mechanic]." Reference where it appeared before. Frame around systemic patterns, not individual bad actors. Ask about patterns the person can verify themselves.
 - Round 3: Complexity + common ground (add dimensions, present shared data, close with reflection question that redirects toward actionable shared goals)
+
+E) Technique Reveal ("Name the Trick"): For each manipulation technique identified, name it in plain language. For each:
+- technique: Human-readable name (e.g., "Cherry Picking", "Scapegoating")
+- how_it_works: Simple explanation of the mechanic
+- used_by: Who deploys this technique here
+- where_used_here: Specific evidence in this claim
+- historical_precedent: Where the same trick was used before
+- pattern_type: "isolated" (one-off), "repeated" (seen before), or "systematic" (multi-campaign strategy)
+
+ASYMMETRIC WEIGHT: Do NOT treat all technique uses equally. A systematic multi-campaign playbook deserves detailed analysis. An isolated framing choice deserves a brief note. Treating them equally is itself a false equivalence.
 
 Respond in JSON:
 {{
   "universal_needs": ["need1", "need2"],
   "issue_overlap": "Concrete agreement between opposing positions, with evidence",
   "narrative_deconstruction": "How the same concern was split into opposing narratives",
-  "consensus_explanation": "The scientific/mainstream explanation for what is observed, with equal depth to the conspiracy analysis. Mechanisms, evidence, key studies, and why this explanation better accounts for the data.",
-  "inferential_gap": "Where the kernel of truth ends and the unsupported leap begins, with specific boundary",
-  "feasibility_check": "Brief quantitative/logical assessment of whether the claim's implied mechanism is physically or organizationally plausible",
-  "commercial_motives": "Who profits from belief in this claim, with specific names/products/revenue where known",
-  "perception_gap": "Where groups overestimate opponent extremism, with data if available",
+  "consensus_explanation": "The scientific/mainstream explanation for what is observed, with equal depth to the conspiracy analysis.",
+  "inferential_gap": "Where the kernel of truth ends and the unsupported leap begins",
+  "feasibility_check": "Quantitative/logical plausibility assessment",
+  "commercial_motives": "Who profits from belief in this claim",
+  "techniques_revealed": [
+    {{
+      "technique": "Human-readable technique name",
+      "how_it_works": "Simple explanation of the mechanic",
+      "used_by": "Who uses this technique here",
+      "where_used_here": "Specific evidence here",
+      "historical_precedent": "Where the same trick was used before",
+      "pattern_type": "isolated | repeated | systematic"
+    }}
+  ],
+  "perception_gap": "Where groups overestimate opponent extremism",
   "moral_foundations": {{"side_a": ["foundation1"], "side_b": ["foundation2"]}},
   "reframe": "The claim reframed in terms of shared values",
   "socratic_dialogue": [
     "Round 1: Perspective-getting...",
-    "Round 2: Counter-evidence as question...",
+    "Round 2: Counter-evidence as question (NAME the technique)...",
     "Round 3: Complexity + common ground..."
   ]
 }}
@@ -326,9 +346,11 @@ Critical constraints:
 - NEVER confront identity ('you were misled', 'you fell for...', 'conspiracy theorists...')
 - ALWAYS close dialogue with a question that points toward actionable shared goals
 - ALWAYS ground claims in evidence where possible
-- In Round 2, prefer systemic pattern analysis over individual blame
+- ALWAYS name at least one manipulation technique in techniques_revealed
+- In Round 2, NAME the technique and explain the mechanic before asking the question
 - If no genuine common ground exists, say so honestly rather than forcing synthesis
-- If the claim is partially true, explicitly acknowledge what is true before addressing what is not""",
+- If the claim is partially true, explicitly acknowledge what is true before addressing what is not
+- When multiple sides use techniques, give proportional weight based on pattern gravity""",
     }
 
 
