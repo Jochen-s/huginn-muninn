@@ -8175,7 +8175,7 @@
           "node_type": "actor",
           "label": "Nathan Cofnas",
           "actor_type": "influencer",
-          "motivation": "Oxford DPhil in philosophy of biology; Hebrew University postdoc. Current most sophisticated academic proponent. Publishes in Biology & Philosophy and Philosophical Psychology. Monetizes Substack 'Wrong Side of History'. Motivation: career differentiation through contrarian positioning in academic philosophy of science; Substack subscriber income from 'suppressed science' audience; genuine philosophical commitment to what he frames as scientific integrity against ideological distortion.",
+          "motivation": "Oxford DPhil in philosophy of biology; Hebrew University postdoc. Current most sophisticated academic proponent. Peer-reviewed work in Biology & Philosophy and Philosophical Psychology constitutes a distinct epistemic tier from the Rushton/Lynn network; his arguments deserve direct philosophical engagement on their merits. Separately, he operates a Substack 'Wrong Side of History' that monetizes 'suppressed science' framing for a subscriber audience. These two activities should be assessed independently: the peer-reviewed arguments stand or fall on their evidentiary and logical content; the Substack monetization reflects an institutional incentive structure that rewards persecution narrative regardless of accuracy. Motivation for academic work: genuine philosophical commitment to what he frames as scientific integrity against ideological distortion, and career differentiation through heterodox positioning. Motivation for Substack: subscriber income from audiences attracted to contrarian content.",
           "credibility": 0.28,
           "scenarios": [
             "SC-01"
@@ -22794,12 +22794,12 @@
       {
         "data": {
           "edge_type": "relates_to",
-          "relation": "funds",
+          "relation": "amplifies",
           "confidence": 0.55,
           "scenarios": [
             "SC-01"
           ],
-          "label": "funds",
+          "label": "amplifies",
           "source": "actor:silicon-valley-rationalist-and-libertarian-community",
           "target": "actor:substack-and-podcast-ecosystem-cofnas-bo-winegard-emil-kirkegaard-edward-dutton"
         }

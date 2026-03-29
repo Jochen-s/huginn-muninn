@@ -281,7 +281,7 @@ Produce a four-layer Common Humanity analysis:
 Layer 1 - Universal Human Needs: What fundamental need is at stake (safety, belonging, fairness, dignity, autonomy)?
 Layer 2 - Issue-Specific Overlap: Where do opposing positions concretely agree? Cite evidence (polling, policy, stated positions).
 Layer 3 - Narrative Deconstruction: How was the same underlying concern split into opposing narratives? Who performed the split and why?
-Layer 4 - Inferential Gap Map: Where does the claim contain a kernel of truth, and what is the EXACT inferential leap from that truth to the conspiracy framing? Be specific: "X is documented fact; the leap to Y is unsupported because Z." If the claim is entirely false, state that clearly. If parts are true, map the precise boundary.
+Layer 4 - Inferential Gap Map: Where does the claim contain a kernel of truth, and what is the EXACT inferential leap from that truth to the conspiracy framing? Be specific: "X is documented fact; the leap to Y is unsupported because Z." If the claim is entirely false, state that clearly. If parts are true, map the precise boundary. If the claim invokes a 'default hypothesis' or burden-of-proof argument (claiming the alternative should be assumed true unless disproved), explicitly engage with why the standard scientific burden places the positive claim as requiring positive evidence.
 
 Also produce:
 
@@ -294,11 +294,11 @@ This section must be substantive enough that a reader unfamiliar with the topic 
 
 B) A feasibility assessment: If the claim implies a physical, logistical, or organizational requirement (e.g., secret mass programs, technology that doesn't exist, coordination among thousands), briefly assess whether this is plausible and why or why not. Use quantitative reasoning where possible.
 
-C) A commercial motive analysis: Who profits financially from people believing this claim? Name specific organizations, products, or revenue streams where known.
+C) A commercial motive analysis: Who profits financially from people believing this claim? Name specific organizations, products, or revenue streams where known. Distinguish between the funding and distribution infrastructure (where commercial and political motives are documented) and individual researchers (some of whom hold positions based on evidence they find genuinely compelling). Do not imply that all proponents of a position are cynically motivated.
 
 D) A 3-round Socratic dialogue script following the Costello protocol:
 - Round 1: Perspective-getting (summarize their view, acknowledge the kernel of truth)
-- Round 2: Personalized counter-evidence as question. NAME THE MANIPULATION TECHNIQUE explicitly, like revealing a magic trick: "There's a pattern here called [technique name] -- it works by [mechanic]." Reference where it appeared before. Frame around systemic patterns, not individual bad actors. Ask about patterns the person can verify themselves.
+- Round 2: Name the technique, then invite self-discovery. First, NAME THE MANIPULATION TECHNIQUE explicitly, like revealing a magic trick. Then, before providing counter-evidence directly, ask a Socratic question that invites the interlocutor to grapple with the counter-evidence on their own terms (e.g., 'Have you come across [specific finding] in your reading?'). Only after this invitation, provide the evidence if needed. This two-beat structure reduces confrontational temperature while preserving epistemic content. Reference where the technique appeared before. Frame around systemic patterns, not individual bad actors.
 - Round 3: Complexity + common ground (add dimensions, present shared data, close with reflection question that redirects toward actionable shared goals)
 
 E) Technique Reveal ("Name the Trick"): For each manipulation technique identified, name it in plain language. For each:
