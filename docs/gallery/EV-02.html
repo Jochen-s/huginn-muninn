@@ -70,6 +70,7 @@
     font-size: 0.875rem;
   }
   .site-nav a:hover { color: var(--white); }
+  .site-nav a.active { color: var(--white); font-weight: 600; }
 
   /* Category sections */
   .category-section { padding: 48px 0; border-bottom: 1px solid var(--border); }
@@ -425,6 +426,13 @@
 </style>
 </head>
 <body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a href="index.html">Gallery</a>
+    <a href="graph.html">Knowledge Graph</a>
+  </div>
+</nav>
 
 <header class="scenario-header">
   <div class="content">

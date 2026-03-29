@@ -164,6 +164,7 @@ const SHARED_CSS = `
     font-size: 0.875rem;
   }
   .site-nav a:hover { color: var(--white); }
+  .site-nav a.active { color: var(--white); font-weight: 600; }
 
   /* Category sections */
   .category-section { padding: 48px 0; border-bottom: 1px solid var(--border); }
@@ -940,6 +941,13 @@ function buildIndex(scenarios) {
   </div>
 </header>
 
+<nav class="site-nav">
+  <div class="container">
+    <a href="index.html" class="active">Gallery</a>
+    <a href="graph.html">Knowledge Graph</a>
+  </div>
+</nav>
+
 <div class="stats-bar">
   <div class="container">
     <div class="stat-item"><strong>${totalCount}</strong> scenarios</div>
@@ -1118,6 +1126,13 @@ function buildScenarioPage(scenario, allScenarios) {
 </head>
 <body>
 
+<nav class="site-nav">
+  <div class="container">
+    <a href="index.html">Gallery</a>
+    <a href="graph.html">Knowledge Graph</a>
+  </div>
+</nav>
+
 <header class="scenario-header">
   <div class="content">
     <a class="back-link" href="index.html">&larr; Back to gallery</a>
@@ -1235,6 +1250,511 @@ function buildScenarioPage(scenario, allScenarios) {
 }
 
 // ---------------------------------------------------------------------------
+// Knowledge Graph page
+// ---------------------------------------------------------------------------
+
+function buildGraphPage() {
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Knowledge Graph | Huginn &amp; Muninn</title>
+<style>${SHARED_CSS}
+
+  #cy {
+    width: 100%;
+    height: 600px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: #FAFBFC;
+  }
+  .graph-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 16px;
+    align-items: center;
+  }
+  .graph-controls label {
+    font-size: 0.9rem;
+    color: var(--gray);
+  }
+  .graph-controls select, .graph-controls input {
+    padding: 6px 10px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 0.85rem;
+  }
+  .graph-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 12px;
+    font-size: 0.85rem;
+    color: var(--gray);
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .legend-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .graph-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .stat-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 16px;
+    text-align: center;
+  }
+  .stat-card .stat-num {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--navy);
+  }
+  .stat-card .stat-label {
+    font-size: 0.8rem;
+    color: var(--gray);
+    margin-top: 4px;
+  }
+  #node-detail {
+    display: none;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+    margin-top: 16px;
+  }
+  #node-detail h3 { margin-bottom: 8px; }
+  #node-detail .detail-field {
+    font-size: 0.9rem;
+    margin-bottom: 6px;
+  }
+  #node-detail .detail-label {
+    font-weight: 600;
+    color: var(--navy);
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <h1>Knowledge Graph</h1>
+    <p class="subtitle">Cross-scenario connections: actors, techniques, and narrative patterns across 21 disinformation analyses.</p>
+    <p class="intro">Click any node to explore. Same actors and techniques appearing across multiple scenarios reveal the recycled playbooks behind disinformation.</p>
+  </div>
+</header>
+
+<nav class="site-nav">
+  <div class="container">
+    <a href="index.html">Gallery</a>
+    <a href="graph.html" class="active">Knowledge Graph</a>
+  </div>
+</nav>
+
+<main class="content" style="max-width:1100px;padding-top:32px;padding-bottom:64px;">
+
+  <div class="graph-stats" id="graph-stats"></div>
+
+  <div class="graph-controls">
+    <div>
+      <label for="filter-type">Show:</label>
+      <select id="filter-type">
+        <option value="all">All node types</option>
+        <option value="scenario">Scenarios only</option>
+        <option value="actor">Actors only</option>
+        <option value="technique">Techniques (DISARM)</option>
+        <option value="technique_reveal">Named Tricks</option>
+        <option value="scenario+actor" selected>Scenarios + Actors</option>
+        <option value="scenario+actor+technique">Scenarios + Actors + Techniques</option>
+      </select>
+    </div>
+    <div>
+      <label for="filter-category">Category:</label>
+      <select id="filter-category">
+        <option value="all">All categories</option>
+        <option value="Health & Science">Health & Science</option>
+        <option value="Geopolitics">Geopolitics</option>
+        <option value="Environment">Environment</option>
+        <option value="Events">Events</option>
+        <option value="Technology">Technology</option>
+        <option value="Media">Media</option>
+      </select>
+    </div>
+    <div>
+      <label for="filter-search">Search:</label>
+      <input type="text" id="filter-search" placeholder="Actor or technique name..." />
+    </div>
+  </div>
+
+  <div class="graph-legend">
+    <span class="legend-item"><span class="legend-dot" style="background:#1B2A4A"></span> Scenario</span>
+    <span class="legend-item"><span class="legend-dot" style="background:#C0392B"></span> Actor</span>
+    <span class="legend-item"><span class="legend-dot" style="background:#16A085"></span> Technique (DISARM)</span>
+    <span class="legend-item"><span class="legend-dot" style="background:#8E44AD"></span> Named Trick</span>
+    <span class="legend-item"><span class="legend-dot" style="background:#E67E22"></span> Mutation</span>
+    <span class="legend-item"><span class="legend-dot" style="background:#2980B9"></span> Temporal Era</span>
+  </div>
+
+  <div id="cy"></div>
+  <div id="node-detail"></div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="content">
+    <p>
+      <a href="index.html">Huginn &amp; Muninn Gallery</a> &nbsp;|&nbsp;
+      MIT License &nbsp;|&nbsp;
+      Analysis powered by Claude (Anthropic)
+    </p>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/cytoscape@3.30.4/dist/cytoscape.min.js"></script>
+<script>
+(function() {
+  'use strict';
+
+  var NODE_COLORS = {
+    scenario: '#1B2A4A',
+    actor: '#C0392B',
+    technique: '#16A085',
+    technique_reveal: '#8E44AD',
+    mutation: '#E67E22',
+    temporal_era: '#2980B9',
+    claim: '#95A5A6'
+  };
+
+  var NODE_SHAPES = {
+    scenario: 'round-rectangle',
+    actor: 'ellipse',
+    technique: 'diamond',
+    technique_reveal: 'star',
+    mutation: 'triangle',
+    temporal_era: 'hexagon',
+    claim: 'ellipse'
+  };
+
+  var cy;
+
+  function init() {
+    fetch('graph-data.json')
+      .then(function(resp) { return resp.json(); })
+      .then(function(graphData) {
+        renderStats(graphData);
+        initGraph(graphData);
+        attachControls();
+      });
+  }
+
+  function renderStats(data) {
+    var nodes = data.elements.nodes;
+    var edges = data.elements.edges;
+    var types = {};
+    nodes.forEach(function(n) {
+      var t = n.data.node_type || 'unknown';
+      types[t] = (types[t] || 0) + 1;
+    });
+
+    var crossActors = nodes.filter(function(n) {
+      return n.data.node_type === 'actor' &&
+        n.data.scenarios && n.data.scenarios.length > 1;
+    }).length;
+
+    var el = document.getElementById('graph-stats');
+    var h = '';
+    h += statCard(types.scenario || 0, 'Scenarios');
+    h += statCard(types.actor || 0, 'Actors');
+    h += statCard(crossActors, 'Cross-Scenario Actors');
+    h += statCard((types.technique || 0) + (types.technique_reveal || 0), 'Techniques');
+    h += statCard(edges.length, 'Connections');
+    el.textContent = '';
+    el.insertAdjacentHTML('beforeend', h);
+  }
+
+  function statCard(num, label) {
+    return '<div class="stat-card"><div class="stat-num">' +
+      num + '</div><div class="stat-label">' + escHtml(label) + '</div></div>';
+  }
+
+  function initGraph(data) {
+    var elements = [];
+
+    data.elements.nodes.forEach(function(n) {
+      var d = n.data;
+      var nt = d.node_type || 'unknown';
+      var nodeData = {
+        id: d.id,
+        label: truncLabel(d.label || d.id, 30),
+        fullLabel: d.label || d.id,
+        node_type: nt,
+        color: NODE_COLORS[nt] || '#999',
+        shape: NODE_SHAPES[nt] || 'ellipse',
+        size: nodeSize(d)
+      };
+      var keys = Object.keys(d);
+      for (var i = 0; i < keys.length; i++) {
+        if (!(keys[i] in nodeData)) nodeData[keys[i]] = d[keys[i]];
+      }
+      elements.push({ group: 'nodes', data: nodeData });
+    });
+
+    data.elements.edges.forEach(function(e) {
+      var d = e.data;
+      elements.push({
+        group: 'edges',
+        data: {
+          id: d.source + '->' + d.target,
+          source: d.source,
+          target: d.target,
+          edge_type: d.edge_type || '',
+          label: d.label || ''
+        }
+      });
+    });
+
+    cy = cytoscape({
+      container: document.getElementById('cy'),
+      elements: elements,
+      style: [
+        {
+          selector: 'node',
+          style: {
+            'label': 'data(label)',
+            'background-color': 'data(color)',
+            'shape': 'data(shape)',
+            'width': 'data(size)',
+            'height': 'data(size)',
+            'font-size': '10px',
+            'text-wrap': 'ellipsis',
+            'text-max-width': '100px',
+            'text-valign': 'bottom',
+            'text-margin-y': 6,
+            'color': '#2C3E50',
+            'border-width': 1,
+            'border-color': '#D0D9E4'
+          }
+        },
+        {
+          selector: 'edge',
+          style: {
+            'width': 1.5,
+            'line-color': '#BDC3C7',
+            'target-arrow-color': '#BDC3C7',
+            'target-arrow-shape': 'triangle',
+            'curve-style': 'bezier',
+            'arrow-scale': 0.8
+          }
+        },
+        {
+          selector: 'node:selected',
+          style: {
+            'border-width': 3,
+            'border-color': '#E74C3C'
+          }
+        },
+        {
+          selector: '.highlighted',
+          style: {
+            'border-width': 3,
+            'border-color': '#F39C12'
+          }
+        },
+        {
+          selector: '.dimmed',
+          style: {
+            'opacity': 0.15
+          }
+        }
+      ],
+      layout: {
+        name: 'cose',
+        idealEdgeLength: 120,
+        nodeRepulsion: 8000,
+        gravity: 0.3,
+        numIter: 300,
+        animate: false
+      },
+      minZoom: 0.3,
+      maxZoom: 3
+    });
+
+    cy.on('tap', 'node', function(evt) {
+      showNodeDetail(evt.target.data());
+      highlightNeighbors(evt.target);
+    });
+
+    cy.on('tap', function(evt) {
+      if (evt.target === cy) {
+        hideNodeDetail();
+        cy.elements().removeClass('highlighted dimmed');
+      }
+    });
+  }
+
+  function nodeSize(d) {
+    var nt = d.node_type;
+    if (nt === 'scenario') return 40;
+    if (nt === 'actor') {
+      var sc = (d.scenarios || []).length;
+      return 25 + sc * 8;
+    }
+    if (nt === 'technique' || nt === 'technique_reveal') {
+      var sc2 = (d.scenarios || []).length;
+      return 20 + sc2 * 6;
+    }
+    return 18;
+  }
+
+  function truncLabel(str, len) {
+    return str.length > len ? str.slice(0, len - 1) + '\\u2026' : str;
+  }
+
+  function highlightNeighbors(node) {
+    cy.elements().removeClass('highlighted dimmed');
+    var neighborhood = node.neighborhood().add(node);
+    cy.elements().addClass('dimmed');
+    neighborhood.removeClass('dimmed').addClass('highlighted');
+    node.removeClass('dimmed');
+  }
+
+  function showNodeDetail(d) {
+    var el = document.getElementById('node-detail');
+    el.style.display = 'block';
+
+    var h = '<h3>' + escHtml(d.fullLabel || d.label) + '</h3>';
+    h += detailField('Type', d.node_type);
+
+    if (d.node_type === 'scenario') {
+      h += detailField('Claim', d.claim);
+      h += detailField('Category', d.category);
+      h += detailField('Version', d.version);
+      h += detailField('Confidence', d.confidence ? (d.confidence * 100).toFixed(0) + '%' : '');
+      h += '<div style="margin-top:8px"><a href="' + escHtml(d.label) + '.html">View full analysis</a></div>';
+    } else if (d.node_type === 'actor') {
+      h += detailField('Actor type', d.actor_type);
+      h += detailField('Credibility', d.credibility ? (d.credibility * 100).toFixed(0) + '%' : '');
+      h += detailField('Motivation', d.motivation);
+      h += detailField('Appears in', (d.scenarios || []).join(', '));
+    } else if (d.node_type === 'technique') {
+      h += detailField('DISARM ID', d.disarm_id);
+      h += detailField('Max confidence', d.max_confidence ? (d.max_confidence * 100).toFixed(0) + '%' : '');
+      h += detailField('Used in', (d.scenarios || []).join(', '));
+    } else if (d.node_type === 'technique_reveal') {
+      h += detailField('Pattern type', d.pattern_type);
+      h += detailField('How it works', d.how_it_works);
+      h += detailField('Historical precedent', d.historical_precedent);
+      h += detailField('Appears in', (d.scenarios || []).join(', '));
+    } else if (d.node_type === 'mutation') {
+      h += detailField('Mutation type', d.mutation_type);
+      h += detailField('Original', d.original);
+      h += detailField('Mutated', d.mutated);
+    } else if (d.node_type === 'temporal_era') {
+      h += detailField('Date range', d.date_range);
+      h += detailField('Dominant framing', d.dominant_framing);
+    }
+
+    el.textContent = '';
+    el.insertAdjacentHTML('beforeend', h);
+  }
+
+  function hideNodeDetail() {
+    document.getElementById('node-detail').style.display = 'none';
+  }
+
+  function detailField(label, value) {
+    if (!value) return '';
+    return '<div class="detail-field"><span class="detail-label">' +
+      escHtml(label) + ':</span> ' + escHtml(String(value)) + '</div>';
+  }
+
+  function escHtml(str) {
+    var d = document.createElement('div');
+    d.textContent = str || '';
+    return d.innerHTML;
+  }
+
+  function attachControls() {
+    document.getElementById('filter-type').addEventListener('change', applyFilters);
+    document.getElementById('filter-category').addEventListener('change', applyFilters);
+    document.getElementById('filter-search').addEventListener('input', applyFilters);
+    applyFilters();
+  }
+
+  function applyFilters() {
+    var typeFilter = document.getElementById('filter-type').value;
+    var catFilter = document.getElementById('filter-category').value;
+    var search = document.getElementById('filter-search').value.toLowerCase().trim();
+
+    cy.batch(function() {
+      cy.elements().removeClass('dimmed');
+
+      cy.nodes().forEach(function(node) {
+        var d = node.data();
+        var visible = true;
+
+        if (typeFilter !== 'all') {
+          var allowedTypes = typeFilter.split('+');
+          if (allowedTypes.indexOf(d.node_type) === -1) {
+            visible = false;
+          }
+        }
+
+        if (catFilter !== 'all' && visible) {
+          if (d.node_type === 'scenario') {
+            if (d.category !== catFilter) visible = false;
+          } else {
+            var connectedScenarios = node.neighborhood('node[node_type="scenario"]');
+            var hasMatch = false;
+            connectedScenarios.forEach(function(s) {
+              if (s.data('category') === catFilter) hasMatch = true;
+            });
+            if (!hasMatch && connectedScenarios.length > 0) visible = false;
+          }
+        }
+
+        if (search && visible) {
+          var label = (d.fullLabel || d.label || '').toLowerCase();
+          if (label.indexOf(search) === -1) visible = false;
+        }
+
+        if (!visible) {
+          node.addClass('dimmed');
+        }
+      });
+
+      cy.edges().forEach(function(edge) {
+        var src = edge.source();
+        var tgt = edge.target();
+        if (src.hasClass('dimmed') && tgt.hasClass('dimmed')) {
+          edge.addClass('dimmed');
+        }
+      });
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', init);
+})();
+</script>
+
+</body>
+</html>`;
+}
+
+// ---------------------------------------------------------------------------
 // Main
 // ---------------------------------------------------------------------------
 
@@ -1272,8 +1792,14 @@ function main() {
     written++;
   }
 
+  // Write knowledge graph page
+  const graphHtml = buildGraphPage();
+  const graphPath = path.join(DIST_DIR, 'graph.html');
+  fs.writeFileSync(graphPath, graphHtml, 'utf8');
+  console.log(`Written: graph.html (${(graphHtml.length / 1024).toFixed(1)} KB)`);
+
   console.log();
-  console.log(`Done. Generated index.html + ${written} scenario pages.`);
+  console.log(`Done. Generated index.html + ${written} scenario pages + graph.html.`);
   console.log(`Open: ${path.join(DIST_DIR, 'index.html')}`);
 }
 
