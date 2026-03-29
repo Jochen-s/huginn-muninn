@@ -3,6 +3,22 @@
 All notable changes to Huginn & Muninn are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.6.0] - 2026-03-29 -- "Follow the Breadcrumbs"
+
+### Added
+- **Knowledge Graph**: Cross-scenario entity extraction into a NetworkX graph (587 nodes, 1,157 edges) using POLE-Extended schema. Reveals shared actors, recycled techniques, and narrative patterns across 20 disinformation scenarios.
+- **Interactive Visualization**: Cytoscape.js graph page with filter controls (node type, category, text search), neighbor highlighting on click, and detail panels linking back to scenario analyses.
+- **Cross-Scenario Deduplication**: Same actors (e.g., "Fossil Fuel Industry") and techniques (e.g., DISARM T0023 "Distort Facts") appearing in multiple scenarios are unified into single nodes with proportional sizing.
+- **7 Entity Types**: Scenario, Actor, Technique (DISARM TTP), TechniqueReveal (Named Trick), Claim, Mutation, TemporalEra.
+- **Graph Builder CLI**: `python graph/build_graph.py` extracts entities from JSON results and exports Cytoscape.js-compatible JSON.
+- **Gallery Navigation**: Nav bar added to all gallery pages (index, 20 scenarios, knowledge graph).
+- **Implementation Plan**: `docs/plans/2026-03-28-knowledge-graph-phase1.md` (17 tasks, TDD).
+- **18 new tests** for graph builder (total 273 passing).
+
+### Changed
+- Gallery builder generates graph.html alongside scenario pages.
+- `networkx>=3.0` added to dependencies.
+
 ## [0.5.0] - 2026-03-28 -- "Name the Trick"
 
 ### Added

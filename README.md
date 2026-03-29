@@ -10,7 +10,7 @@ are being manipulated, and what they share with the people they have been taught
 This is not an oracle. It is a cognitive gymnasium. The goal is to teach you a mental framework
 you carry forever, then make the tool unnecessary.
 
-**Quick Links:** [Setup Guide](docs/SETUP-GUIDE.md) | [Scenario Gallery](docs/gallery/index.html) | [Changelog](CHANGELOG.md) | [Anti-Weaponization Charter](ANTI-WEAPONIZATION-CHARTER.md)
+**Quick Links:** [Setup Guide](docs/SETUP-GUIDE.md) | [Scenario Gallery](docs/gallery/index.html) | [Knowledge Graph](docs/gallery/graph.html) | [Changelog](CHANGELOG.md) | [Anti-Weaponization Charter](ANTI-WEAPONIZATION-CHARTER.md)
 
 ---
 
@@ -165,6 +165,32 @@ internalization, not dependency.
 
 ---
 
+## Knowledge Graph: Follow the Breadcrumbs
+
+The same actors, techniques, and playbooks appear across multiple disinformation campaigns.
+The knowledge graph makes these cross-scenario connections visible.
+
+**587 nodes, 1,157 edges** extracted from 20 analyzed scenarios:
+
+| Entity Type | Count | What it captures |
+|---|---|---|
+| Scenario | 20 | Each analyzed claim |
+| Actor | 214 | People, organizations, media outlets, bot networks |
+| Technique (DISARM) | 20 | Classified manipulation tactics |
+| Named Trick | 10 | Plain-language technique reveals (v5) |
+| Claim | 161 | Decomposed sub-claims |
+| Mutation | 137 | How narratives evolve between campaigns |
+| Temporal Era | 25 | Historical periods and power contexts |
+
+Cross-scenario actors are deduplicated: when "Fossil Fuel Industry" appears in both a climate
+denial scenario and a vaccine skepticism scenario, they become a single node connected to both.
+The larger the node, the more scenarios it touches. This is the "follow the breadcrumbs"
+capability: click an actor and see every scenario they touch, every technique they deploy.
+
+[View the interactive knowledge graph](docs/gallery/graph.html)
+
+---
+
 ## Name the Trick (v5)
 
 The Bridge Builder names each manipulation technique like revealing how a magic trick works.
@@ -249,6 +275,7 @@ specific, bounded, and proposes research to resolve itself.
 | v3 | Temporal context awareness: tracks how claims migrate between ideological camps over time |
 | v4 | Scientific consensus explanation with equal depth to conspiracy analysis, creating a 360-degree view |
 | v5 | "Name the Trick" technique reveal with mechanics and historical precedents. Asymmetric Weight Principle (pattern gravity). GP-06 Brexit/Farage sanewashing scenario. |
+| v6 | Knowledge graph: cross-scenario entity extraction (587 nodes, 1,157 edges), Cytoscape.js visualization, "follow the breadcrumbs" navigation. |
 
 ---
 
