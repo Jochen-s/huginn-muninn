@@ -44,6 +44,7 @@ CATEGORY_BY_PREFIX = {
     "EV": "Events",
     "TC": "Technology",
     "MD": "Media",
+    "SC": "Science Controversy",
 }
 
 _PATTERN_SEVERITY: dict[str, int] = {"isolated": 0, "repeated": 1, "systematic": 2}

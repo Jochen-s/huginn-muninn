@@ -1,0 +1,1250 @@
+{
+  "scenario_id": "SC-01",
+  "version": "v5",
+  "claim": "IQ differences between racial groups are primarily genetic, and this scientific finding is being suppressed by mainstream academia due to political correctness.",
+  "model": "claude-opus-4-6",
+  "provider": "anthropic",
+  "overall_confidence": 0.9,
+  "evaluation": {
+    "scores": null,
+    "notes": "Assembled by orchestrator from 6 Method 2 pipeline stages. Audit verdict: pass_with_warnings. Confidence adjustment applied: +0.05."
+  },
+  "pipeline_stats": {
+    "decomposer": {
+      "sub_claims": 10
+    },
+    "tracer": {
+      "origins": 10,
+      "mutations": 21,
+      "temporal_context_eras": 6
+    },
+    "mapper": {
+      "actors": 20,
+      "relations": 38
+    },
+    "classifier": {
+      "ttp_matches": 9
+    },
+    "bridge": {
+      "universal_needs": 5
+    },
+    "auditor": {
+      "verdict": "pass_with_warnings",
+      "findings": 11,
+      "confidence_adjustment": 0.05
+    }
+  },
+  "decomposition": {
+    "sub_claims": [
+      {
+        "text": "There are measurable average IQ score differences between racial groups",
+        "type": "factual",
+        "verifiable": true
+      },
+      {
+        "text": "Racial groups as used in IQ research constitute biologically distinct categories",
+        "type": "factual",
+        "verifiable": true
+      },
+      {
+        "text": "Genetic factors are the primary cause of average IQ differences between racial groups",
+        "type": "causal",
+        "verifiable": true
+      },
+      {
+        "text": "The genetic explanation for group IQ differences constitutes a scientific finding",
+        "type": "opinion",
+        "verifiable": false
+      },
+      {
+        "text": "Mainstream academia is actively suppressing the genetic explanation for group IQ differences",
+        "type": "factual",
+        "verifiable": true
+      },
+      {
+        "text": "Political correctness is the cause of this alleged suppression by mainstream academia",
+        "type": "causal",
+        "verifiable": false
+      },
+      {
+        "text": "There exists a scientific consensus supporting the genetic explanation for group IQ differences that is being ignored",
+        "type": "factual",
+        "verifiable": true
+      },
+      {
+        "text": "Environmental, socioeconomic, and historical factors do not primarily explain observed group IQ score gaps",
+        "type": "factual",
+        "verifiable": true
+      },
+      {
+        "text": "IQ tests are valid and unbiased measures of innate cognitive ability across racial groups",
+        "type": "factual",
+        "verifiable": true
+      },
+      {
+        "text": "Academic institutions should not allow political considerations to influence scientific inquiry",
+        "type": "value",
+        "verifiable": false
+      }
+    ],
+    "original_claim": "IQ differences between racial groups are primarily genetic, and this scientific finding is being suppressed by mainstream academia due to political correctness.",
+    "complexity": "multi_actor"
+  },
+  "origins": {
+    "scenario_id": "SC-01",
+    "version": "v1",
+    "claim": "IQ differences between racial groups are primarily genetic, and this scientific finding is being suppressed by mainstream academia due to political correctness.",
+    "analyst_model": "claude-sonnet-4-6",
+    "current_proponent": "Nathan Cofnas",
+    "lineage_anchors": [
+      "Arthur Jensen (1969)",
+      "J. Philippe Rushton",
+      "Richard Lynn",
+      "Herrnstein & Murray (1994)",
+      "Pioneer Fund",
+      "Mankind Quarterly"
+    ],
+    "analysis_date": "2026-03-28",
+    "origins": [
+      {
+        "sub_claim_id": "SC-01-01",
+        "sub_claim": "There are measurable average IQ score differences between racial groups",
+        "type": "factual",
+        "verifiable": true,
+        "status": "partially_verified",
+        "status_note": "Mean score gaps on standardized tests between self-identified racial groups in the US are documented in peer-reviewed literature. The existence of the gap is not in dispute; its interpretation, causes, and the validity of the categories are.",
+        "earliest_source": {
+          "description": "The first systematic documentation in modern psychometrics comes from US Army Alpha and Beta tests administered to ~1.75 million recruits during World War I (1917-1918), analyzed by Carl Brigham in 'A Study of American Intelligence' (1923, Princeton University Press). Brigham reported differential mean scores across immigrant and racial groups. Brigham later publicly recanted the hereditarian interpretation in 1930 ('Intelligence Tests of Immigrant Groups', Psychological Review), calling his earlier analysis 'without foundation'.",
+          "date": "1923",
+          "source_tier": 1,
+          "actor": "Carl Brigham / US Army Surgeon General's Office",
+          "institutional_context": "Post-WWI eugenics movement; Immigration Restriction Act of 1924 used similar data as justification"
+        },
+        "propagation_path": [
+          "WWI Army test data (1917-1918) -> Brigham 'Study of American Intelligence' (1923)",
+          "1930s-1950s: Eugenics movement uses gap data; mainstream psychology increasingly skeptical post-WWII",
+          "Audrey Shuey 'The Testing of Negro Intelligence' (1958, funded by eugenicist Wickliffe Draper via Pioneer Fund)",
+          "Arthur Jensen 'How Much Can We Boost IQ and Scholastic Achievement?' Harvard Educational Review (1969) - restores academic legitimacy claim",
+          "Jensen data replicated and extended by J. Philippe Rushton and Richard Lynn through 1980s-2000s",
+          "The Bell Curve (Herrnstein & Murray, 1994) brings data to mass audience via Free Press/Simon & Schuster",
+          "Post-Bell Curve: gap data becomes standard rhetorical anchor in race-realist online communities (Stormfront, VDare, 2000s)",
+          "Nathan Cofnas in academic journals (2016-present) and Substack reasserts the data as suppressed fact"
+        ],
+        "mutations": [
+          {
+            "type": "recontextualization",
+            "description": "The raw score gap fact (uncontested) is routinely presented without Flynn Effect context, stereotype threat research, or test-score-gap-vs-ability-gap distinctions, making a measurement artifact appear to be a direct window onto genetic endowment."
+          },
+          {
+            "type": "amplification",
+            "description": "The 15-point (approximately 1 standard deviation) Black-white gap in US data has been presented as fixed and universal, ignoring the documented narrowing from 1970-2000 (roughly 4-7 points by some measures) which strongly implicates environmental causation."
+          }
+        ]
+      },
+      {
+        "sub_claim_id": "SC-01-02",
+        "sub_claim": "Racial groups as used in IQ research constitute biologically distinct categories",
+        "type": "factual",
+        "verifiable": true,
+        "status": "contradicted_by_consensus",
+        "status_note": "The major human genetics and biological anthropology consensus (American Anthropological Association statement 1998; American Society of Human Genetics 2018; Nature Genetics editorials) holds that human genetic variation is clinal, not categorical. Self-identified racial groups are not discrete biological taxa. This does not mean genetic ancestry is irrelevant to medicine, but it does mean race-as-used-in-survey-research is a social/administrative category, not a biological one.",
+        "earliest_source": {
+          "description": "The biological race concept in Western science traces to Carl Linnaeus 'Systema Naturae' (1735), which categorized humans into four 'varieties' with explicitly normative rankings. This was formalized racially by Johann Friedrich Blumenbach (1775, 'De Generis Humani Varietate Nativa') into the five-race schema (Caucasian, Mongolian, Malay, Ethiopian, American) that underlies modern folk categories. The hereditarian IQ research tradition treats these categories as sufficiently biological to support population genetics reasoning.",
+          "date": "1735",
+          "source_tier": 1,
+          "actor": "Linnaeus / Blumenbach; later absorbed into 19th century scientific racism",
+          "institutional_context": "Colonial-era taxonomy produced in the context of slave economies and imperial expansion; racial hierarchy was built into the classification framework from inception"
+        },
+        "propagation_path": [
+          "19th century polygenism (Agassiz, Morton) treats races as near-species",
+          "Francis Galton's Hereditary Genius (1869) formalizes race-intelligence hierarchy in psychometrics lineage",
+          "Early 20th century IQ testing inherits racial category schema from eugenics movement",
+          "Jensen (1969) uses US Census racial categories as if they were biologically meaningful for population genetics inference",
+          "Rushton's 'Race, Evolution and Behavior' (1994) explicitly treats three races (Negroid/Mongoloid/Caucasoid) as biological taxa with different r/K life history strategies",
+          "Bell Curve (1994) treats Black/White/Asian/Hispanic as natural kinds for heritability analysis",
+          "Post-2000 race-realist internet communities treat 23andMe ancestry percentages as vindicating biological race categories",
+          "Cofnas (2020s) argues that population genetics clusters justify treating racial groups as real for IQ research"
+        ],
+        "mutations": [
+          {
+            "type": "recontextualization",
+            "description": "Modern population genetics does identify ancestry clusters corresponding roughly to continental origin. This legitimate finding has been systematically recontextualized as validating the US Census racial categories used in IQ research, eliding the difference between continuous ancestry gradients and discrete administrative race boxes."
+          },
+          {
+            "type": "distortion",
+            "description": "Lewontin's 1972 finding that ~85% of human genetic variation is within rather than between 'races' is routinely dismissed in herediterian literature (via 'Lewontin's fallacy' argument by A.W.F. Edwards 2003), but the Edwards rebuttal specifically concerned cluster detection algorithms, not the heritability of IQ across socially-defined groups."
+          }
+        ]
+      },
+      {
+        "sub_claim_id": "SC-01-03",
+        "sub_claim": "Genetic factors are the primary cause of average IQ differences between racial groups",
+        "type": "causal",
+        "verifiable": true,
+        "status": "not_established",
+        "status_note": "No peer-reviewed study has established a specific genetic mechanism explaining the between-group IQ gap. Twin study and adoption study heritability estimates are within-group measures and cannot be extrapolated to between-group differences (the logical error Jensen himself acknowledged in 1969 but proceeded to make anyway). The American Psychological Association's 1996 task force report 'Intelligence: Knowns and Unknowns' explicitly stated the cause of the group difference is not known. GWAS polygenic scores for IQ developed in European populations do not transfer predictively to African populations, a finding more consistent with environmental confounding and population stratification than with shared genetic architecture.",
+        "earliest_source": {
+          "description": "Arthur Jensen's 1969 Harvard Educational Review article 'How Much Can We Boost IQ and Scholastic Achievement?' is the modern origin point for the claim that genetic factors are the primary cause. Jensen argued from within-race heritability estimates (~0.80 in white twins) that the between-group gap is likely 'substantially' genetic. The paper ran 123 pages and was published in a journal that did not peer-review it by the usual process. Jensen was responding to the failure of Head Start compensatory education programs, which he attributed to genetic limits on IQ plasticity.",
+          "date": "1969",
+          "source_tier": 1,
+          "actor": "Arthur Jensen, UC Berkeley",
+          "institutional_context": "Pioneer Fund had been funding Jensen's research. The article appeared in the context of the Civil Rights Movement and backlash to Great Society education programs. Jensen received FBI protection after threats; framing of himself as a persecuted truth-teller begins here."
+        },
+        "propagation_path": [
+          "Jensen (1969) HER -> immediate counter-response in same journal from 22 scholars (Kagan, Hunt, Crow et al.)",
+          "Pioneer Fund continues Jensen funding; Jensen publishes 'Bias in Mental Testing' (1980) and 'The g Factor' (1998)",
+          "J. Philippe Rushton (Pioneer Fund grantee) extends to 3-race model with evolutionary framework (Rushton 1988, 1995)",
+          "Richard Lynn (Mankind Quarterly contributor, Pioneer Fund grantee) compiles cross-national IQ data claiming African mean IQ ~70 ('IQ and the Wealth of Nations', 2002, with Vanhanen)",
+          "Herrnstein & Murray Bell Curve (1994) brings Jensen-derived framing to mass audience; 300,000+ copies sold",
+          "Linda Gottfredson 'Mainstream Science on Intelligence' WSJ op-ed (1994) gets 52 signatures, presented as consensus",
+          "Post-Bell Curve: claim circulates in race-realist webzines (VDare founded 1999, American Renaissance founded 1990)",
+          "James Watson Nobel laureate comments (2007): 'inherently gloomy about the prospect of Africa' due to different intelligence levels",
+          "Nathan Cofnas academic career: 'Does Developmental Plasticity Provide Evidence Against Nativist Accounts of Cognitive Development?' (2016), 'The Egalitarian Dogma Revisited' (2020), Substack 'Wrong Side of History' (2022-present)",
+          "Substack/Twitter/X ecosystem (2020-present): Cofnas, Emil Kirkegaard, 'The Jolly Heretic' (Edward Dutton) disseminate to alt-right adjacent audiences"
+        ],
+        "mutations": [
+          {
+            "type": "distortion",
+            "description": "The logical gap between within-group heritability and between-group heritability is the central error. Jensen acknowledged this distinction in 1969 but argued analogically from Lewontin's corn example. The error has been identified by Nisbett et al. (2012 Psychological Science), Flynn (2010), and others, but is systematically omitted in hereditarian popularizations."
+          },
+          {
+            "type": "amplification",
+            "description": "Lynn's cross-national IQ data (used to claim African mean IQ ~70) has been methodologically critiqued as using samples of colonized, malnourished, low-schooling populations and presenting them as national population means. Wicherts et al. (2010, Intelligence) found Lynn and Vanhanen's average sample was not representative; corrected estimates are substantially higher."
+          },
+          {
+            "type": "recontextualization",
+            "description": "The 2003 'Mainstream Science on Intelligence' WSJ statement (Gottfredson) has been retroactively cited as if it endorsed the genetic hypothesis. It did not; it endorsed high within-group heritability and the reality of group mean differences, while explicitly declining to adjudicate causation."
+          }
+        ]
+      },
+      {
+        "sub_claim_id": "SC-01-04",
+        "sub_claim": "The genetic explanation for group IQ differences constitutes a scientific finding",
+        "type": "opinion",
+        "verifiable": false,
+        "status": "unverified_opinion",
+        "status_note": "A scientific finding requires a specific testable mechanism, positive evidence distinguishing it from alternatives, and reproducibility. The genetic hypothesis for between-group IQ differences has none of these: no causal genetic variants have been identified, no mechanism proposed, and GWAS polygenic prediction fails cross-ethnically in ways inconsistent with a simple additive genetic model. Calling it a 'finding' is a rhetorical move that pre-supposes the conclusion.",
+        "earliest_source": {
+          "description": "The framing of the genetic hypothesis as an established 'finding' rather than a contested hypothesis appears to originate in the post-Bell Curve discourse. Herrnstein & Murray wrote in Chapter 13 (1994) as if the genetic contribution was 'likely' and 'reasonable to assume', blurring the line between conjecture and finding. By the 2000s, race-realist online communities treated it as settled science. Gottfredson's framing in WSJ 2003 ('a mainstream scientific finding') laundered this framing back into quasi-academic discourse.",
+          "date": "1994",
+          "source_tier": 2,
+          "actor": "Herrnstein & Murray / Gottfredson",
+          "institutional_context": "Free Press (Simon & Schuster subsidiary) published Bell Curve with major marketing budget; AEI hosted Murray; Manhattan Institute and other conservative think tanks provided amplification infrastructure"
+        },
+        "propagation_path": [
+          "Bell Curve (1994) presents genetic hypothesis as 'the most plausible hypothesis'",
+          "Gottfredson WSJ statement (1994, 2003) lends academic signatory weight",
+          "Online framing evolves: 'scientists are not allowed to say' -> 'suppressed finding' -> 'established fact'",
+          "Cofnas in academic philosophy journals argues the genetic hypothesis is the 'default hypothesis' that egalitarians must disprove",
+          "Substack and podcast ecosystem (Lex Fridman, Joe Rogan, Stefan Molyneux) presents as 'just asking questions about censored science'"
+        ],
+        "mutations": [
+          {
+            "type": "ideological_migration",
+            "description": "What began as a hereditarian academic claim (Jensen 1969) became a culture-war talking point by 1994, then a 'free speech in science' cause by 2000s, and by 2020s is presented as establishment science being suppressed by woke progressives. The political valence shifted but the underlying claim remained structurally identical."
+          },
+          {
+            "type": "recontextualization",
+            "description": "Cofnas's 'default hypothesis' framing is a rhetorical inversion: he argues the burden of proof should rest on those claiming environment explains the gap. This flips the standard scientific convention that the burden rests on the party asserting a specific causal mechanism."
+          }
+        ]
+      },
+      {
+        "sub_claim_id": "SC-01-05",
+        "sub_claim": "Mainstream academia is actively suppressing the genetic explanation for group IQ differences",
+        "type": "factual",
+        "verifiable": true,
+        "status": "not_established",
+        "status_note": "The suppression claim is not supported by the publication record. Jensen published in major journals throughout his career. Rushton held a tenured professorship at University of Western Ontario until his death. Lynn published in peer-reviewed journals. Cofnas has published in Biology & Philosophy, Philosophical Psychology, and other academic venues. The Bell Curve was a mainstream bestseller reviewed in every major publication. What is described as 'suppression' is more accurately described as critical scrutiny, peer review rejection of methodologically inadequate papers, and social consequences for public statements (Watson 2007, Lawrence Summers 2005). These are features of normal academic functioning, not suppression.",
+        "earliest_source": {
+          "description": "The 'suppression' narrative crystallizes around reactions to Jensen (1969). Jensen received hate mail and campus protests; the American Psychological Association initially declined to endorse his methods. Jensen framed this as ideological persecution. The Pioneer Fund and associated network systematically cultivated a counter-narrative of scientific martyrdom, documented in William Tucker's 'The Funding of Scientific Racism' (2002, University of Illinois Press).",
+          "date": "1969",
+          "source_tier": 1,
+          "actor": "Jensen / Pioneer Fund network",
+          "institutional_context": "Wickliffe Draper, the Pioneer Fund's founder, had connections to Nazi-era racial science. The fund selectively supported researchers whose conclusions aligned with its pre-existing ideological commitments (documented by Barry Mehler, Institute for the Study of Academic Racism)."
+        },
+        "propagation_path": [
+          "Jensen 1969 protests -> Jensen self-narrative as persecuted truth-teller",
+          "Rushton fired lectures, reinstated on appeal (1989) -> amplified as suppression evidence",
+          "James Watson stripped of honorary titles (2019) -> presented as proof of thought policing",
+          "Google engineer James Damore memo controversy (2017) -> 'suppression' narrative migrates to tech culture",
+          "Cofnas: 'The Egalitarian Dogma Revisited' (2020) frames mainstream genetics as ideologically captured",
+          "Substack ecosystem (2022-present): 'cancelled scientists' genre; Cofnas 'Wrong Side of History' newsletter as suppressed truth platform"
+        ],
+        "mutations": [
+          {
+            "type": "distortion",
+            "description": "Professional consequences for making contested empirical claims in public (Watson 2007: 'Africans are genetically less intelligent') are reframed as ideological persecution rather than the normal functioning of scientific reputation and editorial standards."
+          },
+          {
+            "type": "inversion",
+            "description": "The Pioneer Fund, which funded the research network in question, was itself an instrument of ideological distortion of science. The claim that mainstream academia is ideologically distorting science applies with greater evidence to the funding apparatus being used to prosecute the hereditarian research program."
+          }
+        ]
+      },
+      {
+        "sub_claim_id": "SC-01-06",
+        "sub_claim": "Political correctness is the cause of this alleged suppression by mainstream academia",
+        "type": "causal",
+        "verifiable": false,
+        "status": "unverified_causal",
+        "status_note": "Even granting the suppression premise (which is not established), 'political correctness' as a causal mechanism is unfalsifiable as stated. The term serves a rhetorical function: it delegitimizes critical responses without engaging their substance. The actual sociology of science suggests that peer review, replication requirements, and methodological critique are the operative mechanisms when hereditarian IQ papers are rejected.",
+        "earliest_source": {
+          "description": "The 'political correctness' framing applied to race science originates in the conservative backlash to university campus speech controversies of the late 1980s. Allan Bloom's 'The Closing of the American Mind' (1987) and Dinesh D'Souza's 'Illiberal Education' (1991) established the PC narrative as a conservative cultural touchstone. Herrnstein & Murray explicitly invoked it in the Bell Curve preface (1994), claiming they were addressing topics that had become 'forbidden'. The phrase 'the new McCarthyism' was applied to critics of race science by Jensen supporters.",
+          "date": "1991",
+          "source_tier": 2,
+          "actor": "Herrnstein & Murray; conservative think tank infrastructure (AEI, Manhattan Institute)",
+          "institutional_context": "Reagan/Bush era culture wars; defunding of Great Society programs provided political incentive to attribute poverty to genetics rather than policy"
+        },
+        "propagation_path": [
+          "Bell Curve (1994) preface frames authors as brave truth-tellers against PC orthodoxy",
+          "AEI, Manhattan Institute, Heritage Foundation amplify PC-suppression framing in op-eds and events",
+          "Rushton/Lynn/Gottfredson frame peer review rejections as political gatekeeping",
+          "Post-2015 'anti-woke' culture war: PC rebranded as 'wokeism'; same functional claim, new vocabulary",
+          "Cofnas Substack 'Wrong Side of History': explicitly frames himself as saying what mainstream academics cannot"
+        ],
+        "mutations": [
+          {
+            "type": "amplification",
+            "description": "The PC/suppression narrative has intensified with social media, allowing self-described 'heterodox' researchers to monetize the persecution narrative directly (Substack subscribers, Patreon, speaking fees at alt-right adjacent conferences such as American Renaissance Conference)."
+          },
+          {
+            "type": "ideological_migration",
+            "description": "The 'brave scientist vs. ideological censors' frame was originally a Cold War anti-communist trope (Lysenko affair). It has been borrowed and applied to race science critics, inverting the historical valence: the Lysenko suppression was carried out by state power enforcing ideological orthodoxy; the race science case involves peer review of contested methodology."
+          }
+        ]
+      },
+      {
+        "sub_claim_id": "SC-01-07",
+        "sub_claim": "There exists a scientific consensus supporting the genetic explanation for group IQ differences that is being ignored",
+        "type": "factual",
+        "verifiable": true,
+        "status": "false",
+        "status_note": "No such consensus exists. The APA 1996 'Intelligence: Knowns and Unknowns' report explicitly stated the cause of the group gap is unknown. The American Anthropological Association 1998 statement rejects biological race as a valid scientific category. A 2020 survey of intelligence researchers (Warne & Burningham, Intelligence) found divided opinion, not consensus. Genome-wide association studies have not identified variants explaining between-group gaps. The Gottfredson 1994 WSJ statement (52 signatories) is the primary document cited as consensus; it explicitly did not endorse the genetic causal hypothesis.",
+        "earliest_source": {
+          "description": "The claim of a suppressed consensus appears to originate in Linda Gottfredson's 1994 Wall Street Journal op-ed 'Mainstream Science on Intelligence', signed by 52 researchers. Gottfredson has since presented this as proof of consensus for the genetic hypothesis, but the document itself only asserted consensus on the reality of IQ tests, heritability within groups, and the existence of group mean differences. The genetic causal hypothesis was not stated as consensus. This gap between what the document says and how it is cited is the foundational distortion.",
+          "date": "1994",
+          "source_tier": 2,
+          "actor": "Linda Gottfredson, University of Delaware",
+          "institutional_context": "Published in WSJ (not a scientific journal) during peak Bell Curve controversy; organized as explicit counter-response to critics; several signatories later expressed regret or clarified they did not endorse genetic causation"
+        },
+        "propagation_path": [
+          "Gottfredson WSJ (1994) -> cited in Bell Curve as consensus evidence",
+          "Gottfredson WSJ reprinted in 'Intelligence and Social Policy' journal issue (1997) for academic citation",
+          "Race-realist websites (AmRen, VDare, Stormfront) cite as definitive proof of consensus (2000s-present)",
+          "Cofnas cites Gottfredson statement in academic papers as establishing the reality of group differences (true) while implying it supports genetic causation (not in the document)"
+        ],
+        "mutations": [
+          {
+            "type": "distortion",
+            "description": "The Gottfredson statement is systematically cited as endorsing genetic causation. It does not. The slide from 'group differences are real and partially heritable within groups' to 'the between-group gap is primarily genetic' is the core logical mutation in the lineage."
+          },
+          {
+            "type": "fabrication",
+            "description": "The number of signatories (52) has been cited as representing 'most intelligence researchers', a fabrication given that the field contains thousands of active researchers worldwide and the signatories were a self-selected group approached by Gottfredson, several of whom had Pioneer Fund ties."
+          }
+        ]
+      },
+      {
+        "sub_claim_id": "SC-01-08",
+        "sub_claim": "Environmental, socioeconomic, and historical factors do not primarily explain observed group IQ score gaps",
+        "type": "factual",
+        "verifiable": true,
+        "status": "contradicted_by_evidence",
+        "status_note": "A substantial body of evidence supports environmental explanations. (1) The Flynn Effect: IQ scores rose 3 points per decade across the 20th century in all populations tested, demonstrating massive environmental plasticity of the phenotype. (2) The Black-white IQ gap in the US narrowed from roughly 15 points in 1970 to roughly 9-10 points by 1990 (Dickens & Flynn 2006, Psychological Science), a change too rapid for genetic causes. (3) Adoption studies: Black children adopted into white middle-class families showed IQ gains (Minnesota Transracial Adoption Study, though later follow-up is contested). (4) Stereotype threat effects on test performance (Steele & Aronson 1995, JPSP) are robust. (5) Blood lead level disparities (which depress IQ) track racial residential segregation patterns. (6) School funding disparities, incarceration effects on family structures, and documented testing bias all provide mechanism-specified environmental pathways.",
+        "earliest_source": {
+          "description": "The systematic case for environmental explanations was assembled most influentially in Otto Klineberg's 'Negro Intelligence and Selective Migration' (1935, Columbia University Press), which found Northern-raised Black children outperformed Southern-raised Black children, demonstrating environment effects. Klineberg's findings were largely ignored by the hereditarian tradition. The modern environmental case is anchored in James Flynn's 'Are We Getting Smarter?' (2012) and Nisbett et al. 'Intelligence: New Findings and Theoretical Developments' (2012, American Psychologist).",
+          "date": "1935",
+          "source_tier": 1,
+          "actor": "Otto Klineberg, Columbia University",
+          "institutional_context": "Klineberg was working explicitly against the hereditarian mainstream of 1930s American psychology; his work was conducted in context of NAACP legal strategy to challenge school segregation"
+        },
+        "propagation_path": [
+          "Klineberg (1935) largely suppressed in mainstream citations in favor of Brigham/Jensen lineage",
+          "Flynn Effect documented by Flynn (1984, 1987 Psychological Bulletin) -> forced hereditarians to accommodate non-genetic IQ change",
+          "Dickens & Flynn (2006) Black-white gap narrowing -> strong evidence for environmental causation",
+          "Nisbett et al. (2012) comprehensive review in American Psychologist -> most authoritative recent counter-statement",
+          "Environmental case circulates primarily in academic literature; less amplified by think tank infrastructure than hereditarian case"
+        ],
+        "mutations": [
+          {
+            "type": "distortion",
+            "description": "The Flynn Effect is handled in hereditarian literature by arguing it reflects 'hollow' test-score gains (not real g increase). This is empirically contested but is presented in hereditarian summaries as settled, allowing them to dismiss the most powerful evidence for environmental plasticity."
+          },
+          {
+            "type": "recontextualization",
+            "description": "The partial gap-narrowing data (1970-1990) is acknowledged by some hereditarians but then recontextualized as evidence that the remaining gap is genetic: 'we've done everything environmental and the gap persists'. This assumes environmental interventions have been comprehensive and sufficient, which is not established."
+          }
+        ]
+      },
+      {
+        "sub_claim_id": "SC-01-09",
+        "sub_claim": "IQ tests are valid and unbiased measures of innate cognitive ability across racial groups",
+        "type": "factual",
+        "verifiable": true,
+        "status": "partially_false",
+        "status_note": "IQ tests have predictive validity for academic and occupational outcomes within the populations on which they were normed (primarily white, middle-class, Western populations). This is established. However: (1) 'innate cognitive ability' is not a well-defined scientific target; tests measure performance, not a fixed biological capacity. (2) Stereotype threat (Steele & Aronson 1995) demonstrably depresses performance under conditions of threat. (3) Tests were historically designed with cultural knowledge that advantages majority culture test-takers. (4) The National Academy of Sciences (1982, Ability Testing report) found tests are differentially predictive across groups in some domains. Jensen himself in 'Bias in Mental Testing' (1980) argued tests are not biased in the statistical sense (differential item functioning), which is a narrower claim than 'unbiased measure of innate ability' - a conflation routinely made in hereditarian popularizations.",
+        "earliest_source": {
+          "description": "Alfred Binet developed the original IQ test in 1904 (Binet-Simon Scale) explicitly as a tool to identify children needing educational support, not as a measure of fixed innate intelligence. Binet explicitly warned against treating scores as fixed measurements of innate capacity. Henry Goddard translated the test into English (1908) and immediately deployed it to argue for hereditary feeblemindedness, stripping Binet's cautionary framing. Lewis Terman's Stanford-Binet revision (1916) introduced the IQ ratio and explicitly embedded racial hierarchy into the norming assumptions.",
+          "date": "1904",
+          "source_tier": 1,
+          "actor": "Alfred Binet (original); Henry Goddard / Lewis Terman (hereditarianized version)",
+          "institutional_context": "Goddard was a eugenicist who used IQ data to argue for immigration restriction; his work directly informed the 1924 Immigration Act. Terman was a Stanford eugenicist. The IQ test was weaponized for racial hierarchy before it was 2 decades old."
+        },
+        "propagation_path": [
+          "Binet (1904) -> Goddard (1908, 1912 'The Kallikak Family') strips environmental framing, adds hereditarian interpretation",
+          "Terman Stanford-Binet (1916) -> Army Alpha/Beta (1917) -> first mass racial IQ comparison",
+          "Brigham (1923) 'A Study of American Intelligence' -> eugenics immigration policy",
+          "Jensen 'Bias in Mental Testing' (1980) argues against item bias, taken as comprehensive rebuttal to test bias critique",
+          "Gottfredson (1988, 2002) argues IQ is the most important single variable in life outcomes -> naturalizes IQ as fundamental biological measure",
+          "Popular science (Malcolm Gladwell, Steven Pinker debates) keeps IQ validity as contested terrain in mainstream discourse"
+        ],
+        "mutations": [
+          {
+            "type": "distortion",
+            "description": "Jensen's specific and narrow finding (tests do not show differential item functioning by race, i.e., items do not perform differently across groups) has been generalized into the claim that IQ tests are unbiased measures of innate cognitive ability. These are entirely different claims. Narrow psychometric bias is a property of item statistics; cultural, motivational, and situational factors affecting performance are a separate question."
+          },
+          {
+            "type": "recontextualization",
+            "description": "The concept of g (general intelligence factor, derived from factor analysis by Spearman 1904) has been reified from a statistical abstraction into a biological entity. Hereditarians treat g-loadings as windows onto biological intelligence, but g is a mathematical artifact of positive correlations among cognitive tests, not a directly measured brain property."
+          }
+        ]
+      },
+      {
+        "sub_claim_id": "SC-01-10",
+        "sub_claim": "Academic institutions should not allow political considerations to influence scientific inquiry",
+        "type": "value",
+        "verifiable": false,
+        "status": "value_claim",
+        "status_note": "This is a normative claim on which most scientists would agree in the abstract. Its function in this argument is selective: it is invoked to delegitimize scrutiny of race science while the political and financial motivations of the hereditarian research network (Pioneer Fund, Mankind Quarterly, Wickliffe Draper's white-separatist agenda) are not subjected to the same standard. The claim is deployed asymmetrically.",
+        "earliest_source": {
+          "description": "The principle of value-free science (Wertfreiheit) derives from Max Weber's 'Science as a Vocation' (1917). Its application to race science as a rhetorical shield appears in Jensen's 1969 HER article, which opens with a call to 'free academic inquiry' from ideological constraints. This framing was developed more explicitly by Roger Pearson (Pioneer Fund chairman and former editor of Mankind Quarterly) who founded the Committee for the Advancement of Science and Scholarship specifically to create an organizational embodiment of the 'objective science vs. ideology' framing.",
+          "date": "1969",
+          "source_tier": 1,
+          "actor": "Jensen / Roger Pearson (Pioneer Fund chairman)",
+          "institutional_context": "Roger Pearson had pre-war connections to Nazi racial science networks, documented by George Michael ('The Enemy of My Enemy', 2006). Pearson used the free-science framing as a laundering mechanism for ideologically motivated hereditarian research."
+        },
+        "propagation_path": [
+          "Jensen (1969) deploys Weberian free inquiry framing",
+          "Mankind Quarterly and Pioneer Fund institutionalize 'suppressed truth' as organizational identity",
+          "Bell Curve (1994) preface: 'we are merely reporting what the data say'",
+          "Charles Murray American Enterprise Institute position: policy institute framing reinforces 'neutral science vs. ideology'",
+          "Cofnas deploys identical framing: genetics is being blocked by 'egalitarian dogma' (Cofnas 2020)"
+        ],
+        "mutations": [
+          {
+            "type": "inversion",
+            "description": "The most significant inversion: the Pioneer Fund network that bankrolled the hereditarian research tradition was itself ideologically motivated from inception. Wickliffe Draper, the fund's founder, explicitly wanted to fund research supporting segregation and repatriation of Black Americans. The 'political considerations corrupting science' critique applies most directly to the funding source of the network making the critique."
+          },
+          {
+            "type": "ideological_migration",
+            "description": "By the 2020s, the 'free science' framing has migrated from a fringe hereditarian talking point to a mainstream free-speech argument. Figures like Peter Thiel, Elon Musk, and various Silicon Valley rationalist community members have adopted it, extending the network's reach far beyond its original white-nationalist funding base."
+          }
+        ]
+      }
+    ],
+    "temporal_context": [
+      {
+        "era_id": "ERA-01",
+        "label": "Scientific Racism and Eugenics",
+        "dates": "1850-1945",
+        "dominant_framing": "Race science is mainstream science. Racial hierarchy is a natural fact being measured and documented. Intelligence differences justify immigration restriction, forced sterilization, and colonial administration.",
+        "key_actors": [
+          "Francis Galton (eugenics founder, 1869)",
+          "Henry Goddard (IQ hereditarian, 1908-1920s)",
+          "Lewis Terman (Stanford-Binet, 1916)",
+          "Carl Brigham (Army Alpha analysis, 1923; later recanted)",
+          "Harry Laughlin (Eugenics Record Office, testified before Congress for immigration restriction)",
+          "Madison Grant ('The Passing of the Great Race', 1916)"
+        ],
+        "power_context": "Race science is funded by mainstream institutions (Cold Spring Harbor, Carnegie Institution, Rockefeller Foundation early grants). It provides ideological cover for Jim Crow, immigration restriction (1924 Act), and Nazi racial laws (Nuremberg Laws cited US eugenics statutes as precedent).",
+        "irony": "Arthur Jensen and his successors frame themselves as brave outsiders challenging establishment orthodoxy. In this era, their intellectual predecessors WERE the establishment. The hereditarian tradition did not emerge from the margins; it emerged from the center of elite academic and philanthropic power.",
+        "key_publications": [
+          "Galton 'Hereditary Genius' (1869)",
+          "Goddard 'The Kallikak Family' (1912)",
+          "Brigham 'A Study of American Intelligence' (1923)",
+          "Grant 'The Passing of the Great Race' (1916)"
+        ]
+      },
+      {
+        "era_id": "ERA-02",
+        "label": "Post-War Delegitimization and Underground Network Formation",
+        "dates": "1945-1968",
+        "dominant_framing": "Eugenics and race science are discredited by their association with Nazi atrocities. Mainstream genetics and anthropology move toward anti-racist positions (UNESCO Statements on Race, 1950, 1951, 1964). The hereditarian tradition retreats to fringe venues.",
+        "key_actors": [
+          "Wickliffe Draper (Pioneer Fund founder, pre-war connections to Nazi race science, funds underground network)",
+          "Henry Garrett (former APA president, active in white citizens' councils, funds Audrey Shuey)",
+          "Audrey Shuey ('The Testing of Negro Intelligence', 1958, Pioneer Fund funded)",
+          "Roger Pearson (Mankind Quarterly founder, former member of neo-fascist Northern League)"
+        ],
+        "power_context": "Pioneer Fund provides underground funding infrastructure. Mankind Quarterly provides publication venue that lacks normal peer review standards. The network deliberately maintains a veneer of scientific respectability while operating outside mainstream science.",
+        "irony": "This era establishes the template for claiming suppression: the network that had recently been hegemonic now genuinely IS marginalized, and that marginalization is real. But it is marginalized because of its association with genocide, not because of ideological censorship of true findings.",
+        "key_publications": [
+          "Shuey 'The Testing of Negro Intelligence' (1958)",
+          "Mankind Quarterly launched (1960)"
+        ]
+      },
+      {
+        "era_id": "ERA-03",
+        "label": "Jensen Controversy and Academic Re-entry",
+        "dates": "1969-1979",
+        "dominant_framing": "Jensen attempts to re-legitimate hereditarian IQ claims in mainstream academic venue. Framing shifts to 'educational realism': compensatory education cannot overcome genetic limits, therefore Head Start is futile.",
+        "key_actors": [
+          "Arthur Jensen (UC Berkeley, Pioneer Fund grantee)",
+          "William Shockley (Nobel laureate, advocate for voluntary sterilization of low-IQ individuals)",
+          "Hans Eysenck (London, popularizes Jensen internationally)",
+          "Richard Lewontin, Leon Kamin, Stephen Jay Gould (principal scientific critics)"
+        ],
+        "power_context": "Jensen publication in Harvard Educational Review gives the claim academic cover. Publication follows failure of LBJ Great Society education programs, providing political context in which 'genetic limits' argument has policy appeal for conservatives opposing welfare state expansion. Pioneer Fund increases grants to Jensen.",
+        "irony": "Jensen's 1969 paper acknowledges the logical fallacy of inferring between-group heritability from within-group heritability. He proceeds to make the inference anyway. This acknowledgment-then-commission of the error is reproduced in almost every subsequent hereditarian paper and ignored in almost every popularization.",
+        "key_publications": [
+          "Jensen HER (1969)",
+          "Eysenck 'The IQ Argument' (1971)",
+          "Kamin 'The Science and Politics of IQ' (1974)",
+          "Jensen 'Bias in Mental Testing' (1980)"
+        ]
+      },
+      {
+        "era_id": "ERA-04",
+        "label": "Evolutionary Framing and Mass-Market Breakthrough",
+        "dates": "1980-1999",
+        "dominant_framing": "Race differences in IQ are embedded in a broader evolutionary framework (Rushton r/K theory). The Bell Curve brings the claim to a mass audience. A coordinated think-tank infrastructure amplifies and defends the work against critics.",
+        "key_actors": [
+          "J. Philippe Rushton (University of Western Ontario, Pioneer Fund president after 2002)",
+          "Richard Lynn (University of Ulster, Mankind Quarterly editorial board)",
+          "Charles Murray (AEI Fellow, Bell Curve co-author)",
+          "Richard Herrnstein (Harvard, deceased 1994, Bell Curve co-author)",
+          "Linda Gottfredson (University of Delaware, orchestrator of 'mainstream' consensus statement)",
+          "Bradley Foundation and AEI (institutional infrastructure for Murray post-Bell Curve)"
+        ],
+        "power_context": "Bell Curve published by Free Press with major marketing support. AEI, Manhattan Institute, and Heritage Foundation provide think-tank infrastructure. New York Times, The New Republic, Newsweek publish reviews; the book is taken seriously as mainstream discourse even by critics. This is the peak of the network's mainstream penetration.",
+        "irony": "The Bell Curve's central argument is that cognitive stratification is driving inequality and this is largely immutable. This was published during the Clinton administration's welfare reform efforts. The policy implication (inequality is natural and unresponsive to intervention) was immediately useful to Republicans opposing welfare expansion, creating an alignment of financial and ideological interests that is not a coincidence.",
+        "key_publications": [
+          "Rushton 'Race, Evolution and Behavior' (1994)",
+          "Herrnstein & Murray 'The Bell Curve' (1994)",
+          "Gottfredson 'Mainstream Science on Intelligence' WSJ (1994)",
+          "Lynn & Vanhanen 'IQ and the Wealth of Nations' (2002)"
+        ]
+      },
+      {
+        "era_id": "ERA-05",
+        "label": "Internet Distribution and Demographic Mainstreaming",
+        "dates": "2000-2015",
+        "dominant_framing": "The claim migrates from academic and think-tank venues to the internet. Race-realist websites (VDare, American Renaissance, Stormfront) make it a staple of white identity politics. James Watson controversy (2007) regenerates the 'suppression' narrative. 'Human biodiversity' (HBD) becomes the rebranded term for a new, slightly more polished version.",
+        "key_actors": [
+          "Peter Brimelow (VDare founder, former National Review)",
+          "Jared Taylor (American Renaissance, former journalist)",
+          "Steve Sailer (iSteve blog, introduces HBD framing to more mainstream readership)",
+          "James Watson (Nobel laureate, provides legitimacy anchor for suppression narrative after 2007 controversy)",
+          "Emil Kirkegaard (independent researcher, prolific producer of hereditarian content)"
+        ],
+        "power_context": "Pioneer Fund continues but network increasingly self-sustaining through internet monetization. The 'HBD' rebranding attracts libertarian and 'rationalist' readers who are uncomfortable with explicit white nationalism but are attracted to the contrarian framing. The Overton window for racial IQ claims widens in online spaces.",
+        "irony": "The 'human biodiversity' rebranding presents the same claims as politically neutral evolutionary science, stripping the explicit white-nationalist framing while preserving the intellectual structure. This allows the claims to circulate in communities (libertarians, Silicon Valley rationalists, LessWrong) that would reject explicit white nationalism.",
+        "key_publications": [
+          "Sailer iSteve blog (2000s)",
+          "Cochran & Harpending 'The 10,000 Year Explosion' (2009) - adjacent claim providing academic cover",
+          "Kirkegaard OpenPsych journals (self-published, 2014-present)"
+        ]
+      },
+      {
+        "era_id": "ERA-06",
+        "label": "Academic Rehabilitation Attempt and Substack Era",
+        "dates": "2016-present",
+        "dominant_framing": "Nathan Cofnas and a small network of academic philosophers and psychologists attempt to re-enter mainstream academic journals with the genetic hypothesis. The 'anti-woke' culture war provides new amplification infrastructure. Substack enables direct-to-audience monetization of 'censored' claims. The claim now circulates in mainstream conservative media (Fox, Daily Wire) as well as alt-right venues.",
+        "key_actors": [
+          "Nathan Cofnas (Oxford DPhil in philosophy of biology, Hebrew University postdoc; publishes in Biology & Philosophy, Philosophical Psychology)",
+          "Bo Winegard (previously Marietta College, fired after controversy; now Substack)",
+          "Ben Winegard (co-author with Bo Winegard)",
+          "Razib Khan (population geneticist, Substack 'Gene Expression')",
+          "Charles Murray (continues at AEI, Substack; 'Human Diversity' 2020)",
+          "Jordan Peterson (amplifies race IQ claims adjacent material to millions via podcast)"
+        ],
+        "power_context": "Substack removes platform-level gatekeeping, allowing direct monetization of controversial content. The anti-woke cultural moment (post-2016, accelerated post-2020 DEI backlash) makes 'race science defender' a commercially viable identity. Silicon Valley libertarian funders (Thiel adjacents) provide financial support to associated media ventures. Cofnas's 'default hypothesis' framing is the most sophisticated current academic presentation.",
+        "irony": "Cofnas, who is Jewish, presents a particular irony in the lineage: the Pioneer Fund network that built the intellectual infrastructure he deploys was explicitly antisemitic (Draper, Pearson, Rushton all held views placing Ashkenazi Jews in a complex position relative to white racial hierarchy). Cofnas's deployment of this lineage to argue for genetic intelligence hierarchy, while himself belonging to a group the original architects viewed with suspicion, represents a genuine ideological mutation. His work is, however, now cited by neo-Nazis as Jewish confirmation of white racial hierarchy.",
+        "key_publications": [
+          "Cofnas 'The Egalitarian Dogma Revisited' Philosophical Psychology (2020)",
+          "Murray 'Human Diversity: The Biology of Gender, Race and Class' (2020)",
+          "Cofnas 'Wrong Side of History' Substack (2022-present)",
+          "Kirkegaard multiple OpenPsych papers (self-published journals, 2014-present)"
+        ]
+      }
+    ],
+    "who_benefits_ecosystem": {
+      "financial": [
+        "Pioneer Fund: Wickliffe Draper's 1937 endowment, explicitly founded to fund eugenics and oppose Black civil rights. Funded Jensen, Rushton, Lynn, Gottfredson, and others. Assets estimated at ~$5M when Rushton became president (2002).",
+        "Mankind Quarterly: Publication venue with no standard peer review; owned/controlled by Pioneer Fund network. Provides citation infrastructure for claims that would not survive mainstream review.",
+        "American Renaissance / VDare: Revenue from conferences, subscriptions, donations. The IQ claim is a core audience-development tool.",
+        "Substack monetization: Cofnas, Bo Winegard, Kirkegaard, others derive direct income from subscriber base attracted to 'suppressed science' framing.",
+        "Conservative think tanks (AEI, Manhattan Institute): Murray's position at AEI has been funded for decades. The claim provides intellectual justification for opposing affirmative action, welfare programs, and immigration."
+      ],
+      "political": [
+        "Immigration restriction: The claim that IQ differences are genetic justifies limiting immigration from lower-IQ mean countries (Lynn's cross-national data used directly in this argument by VDare and Roy Beck/NumbersUSA adjacents).",
+        "Opposition to affirmative action: If group gaps are genetic and immutable, affirmative action is futile and counterproductive. This argument was explicit in Bell Curve and remains central to Murray's current work.",
+        "Welfare state opposition: If poverty is substantially genetic, redistribution cannot address its root cause. This is the direct policy implication Jensen drew in 1969 and Murray has drawn continuously since.",
+        "White identity politics: The claim provides a quasi-scientific anchor for white racial grievance politics, particularly the claim that anti-white discrimination is real and unjustified given natural group differences."
+      ],
+      "ideological": [
+        "Libertarian 'meritocracy' ideology: If outcomes reflect genetic merit, current hierarchies are natural and intervention is counterproductive. This is attractive to high-IQ individuals (including many in Silicon Valley) who benefit from current hierarchies.",
+        "Counter-signaling as identity: In online rationalist and 'heterodox' communities, accepting race IQ heritability has become a marker of intellectual seriousness and freedom from social conformity pressure. This community identity value is independent of evidential merit."
+      ]
+    },
+    "counter_network": {
+      "description": "The critique of hereditarian race science has its own network, which should be noted for symmetry.",
+      "key_actors": [
+        "Richard Lewontin (Harvard population geneticist, documented that Pioneer Fund funded Jensen; 'The Doctrine of DNA', 1991)",
+        "Leon Kamin ('The Science and Politics of IQ', 1974; exposed Cyril Burt's data fabrication)",
+        "Stephen Jay Gould ('The Mismeasure of Man', 1981; 2nd ed. 1996; critiqued IQ reification and g)",
+        "James Flynn (political philosopher and psychometrician; documented Flynn Effect; 'Race, IQ and Jensen', 1980)",
+        "Robert Sternberg (Yale/Cornell psychologist; critiqued g-reification and narrow IQ definition)",
+        "Claude Steele & Joshua Aronson (stereotype threat research, 1995)",
+        "William Tucker ('The Funding of Scientific Racism', 2002; documented Pioneer Fund history)"
+      ],
+      "institutional": [
+        "American Anthropological Association (1998 Race statement)",
+        "American Psychological Association (1996 'Knowns and Unknowns' task force)",
+        "American Society of Human Genetics (2018 statement on genetics and race)"
+      ],
+      "critique": "The counter-network has tended to be more ideologically diverse and less financially organized than the hereditarian network. Its institutional statements carry more epistemic weight; its popular amplification is weaker. Critics have sometimes overcorrected (Gould's critique of Spearman's g is partly valid, partly overstated; his attribution of bias to factor rotation was itself critiqued)."
+    },
+    "methodological_verdict": {
+      "what_is_established": [
+        "Standardized IQ tests show mean score differences between self-identified racial groups in the US (primarily the approximately 10-15 point Black-white gap, substantially narrowed since 1970).",
+        "IQ scores have substantial within-group heritability in Western adult populations (roughly 0.5-0.8 in adults).",
+        "IQ scores predict academic and occupational outcomes within the populations on which tests were normed.",
+        "The Flynn Effect demonstrates massive environmental plasticity of IQ phenotype across the 20th century."
+      ],
+      "what_is_not_established": [
+        "The between-group genetic contribution to mean score differences. No specific genetic variants have been identified. GWAS polygenic scores fail cross-ethnically.",
+        "That racial categories as used in US survey research constitute biologically meaningful units for population genetics inference.",
+        "That environmental, historical, and socioeconomic factors have been exhausted as explanations.",
+        "That mainstream academia is suppressing a scientific consensus that exists."
+      ],
+      "core_logical_error": "The fallacy of inferring between-group heritability from within-group heritability. Jensen acknowledged this in 1969. It is reproduced in every subsequent hereditarian popularization and omitted in every summary that presents the genetic hypothesis as established."
+    }
+  },
+  "intelligence": {
+    "scenario_id": "SC-01",
+    "analyst_model": "claude-sonnet-4-6",
+    "analysis_date": "2026-03-28",
+    "claim": "IQ differences between racial groups are primarily genetic, and this scientific finding is being suppressed by mainstream academia due to political correctness.",
+    "actors": [
+      {
+        "name": "Pioneer Fund",
+        "type": "organization",
+        "motivation": "Founded 1937 by Wickliffe Draper with explicit goals of funding eugenics research and opposing Black civil rights. Financial motivation: preserve endowment purpose. Ideological motivation: provide scientific legitimacy for white separatism and immigration restriction. The fund is the backbone funding apparatus of the hereditarian network, having supported Jensen, Rushton, Lynn, Gottfredson, and others over six decades.",
+        "credibility": 0.05,
+        "evidence": "William Tucker 'The Funding of Scientific Racism' (2002, University of Illinois Press) documents the fund's history. Draper's connections to Nazi-era racial science are documented. Roger Pearson, Pioneer Fund chairman, was a former member of the neo-fascist Northern League (documented by George Michael 'The Enemy of My Enemy', 2006). Fund assets estimated ~$5M when Rushton became president (2002). This is not speculative: the fund's IRS 990 filings are public record and the grantee list is documented."
+      },
+      {
+        "name": "Arthur Jensen",
+        "type": "influencer",
+        "motivation": "Career incentive: Jensen's 1969 Harvard Educational Review paper made him internationally prominent. After receiving FBI protection from campus protests, he adopted a self-narrative as a persecuted truth-teller, which reinforced his identity and provided rhetorical infrastructure. He was a Pioneer Fund grantee throughout his career. His 1969 paper provided the modern academic anchor for the genetic hypothesis, framed in the context of opposition to Great Society education programs.",
+        "credibility": 0.25,
+        "evidence": "Jensen 'How Much Can We Boost IQ and Scholastic Achievement?' Harvard Educational Review (1969). Jensen himself acknowledged in the 1969 paper that within-group heritability cannot be extrapolated to between-group differences, then proceeded to make that inference anyway (origins file SC-01-03, status: not_established). Pioneer Fund grantee status documented by Tucker (2002). Paper was not peer-reviewed by standard process (origins file SC-01-03)."
+      },
+      {
+        "name": "Mankind Quarterly / Roger Pearson",
+        "type": "organization",
+        "motivation": "Mankind Quarterly (founded 1960) provides a publication venue that mimics academic form without standard peer review, allowing hereditarian claims to accumulate citation infrastructure. Roger Pearson (founder) used the free-science framing as a laundering mechanism for ideologically motivated research. Motivation: provide publication legitimacy for claims that would not survive mainstream review.",
+        "credibility": 0.05,
+        "evidence": "Origins file SC-01-10: Roger Pearson is documented as having pre-war connections to Nazi racial science networks (George Michael, 2006). Pearson founded the Committee for the Advancement of Science and Scholarship as an organizational embodiment of the 'objective science vs. ideology' framing. Mankind Quarterly's Pioneer Fund connections are documented by Tucker (2002). Speculative assessment: the degree of direct editorial coordination between Pioneer Fund and Mankind Quarterly publication decisions is not fully public."
+      },
+      {
+        "name": "J. Philippe Rushton",
+        "type": "influencer",
+        "motivation": "Academic career and Pioneer Fund grantee; became Pioneer Fund president (2002). Extended Jensen's claims to a three-race evolutionary framework (r/K life history theory), providing pseudoscientific architecture that attracted both academic and white-nationalist audiences. Motivation: professional advancement within the hereditarian network, ideological commitment to biological race hierarchy.",
+        "credibility": 0.08,
+        "evidence": "Origins file SC-01-03: Rushton's r/K race theory (1988, 1995) treats three races as biological taxa, a position contradicted by consensus in human genetics (AAA 1998, ASHG 2018). Pioneer Fund president from 2002 until death. 'Race, Evolution and Behavior' (1994) self-published a mass-market paperback edition for wide distribution. Held tenured professorship at University of Western Ontario (not suppressed, contrary to suppression narrative)."
+      },
+      {
+        "name": "Richard Lynn",
+        "type": "influencer",
+        "motivation": "Compiled cross-national IQ data claiming African mean IQ approximately 70, used to argue genetic hierarchy maps onto national development. Published in Mankind Quarterly (Pioneer Fund-linked) and co-authored 'IQ and the Wealth of Nations' (2002). Motivation: career within hereditarian network; the cross-national data serves immigration restriction and development-aid-opposition arguments that align with far-right funders.",
+        "credibility": 0.06,
+        "evidence": "Origins file SC-01-03: Lynn's data has been methodologically critiqued by Wicherts et al. (2010, Intelligence), who found Lynn and Vanhanen's average sample was not nationally representative (colonized, malnourished, low-schooling populations presented as national means). Corrected estimates substantially higher. University of Ulster academic, published in Mankind Quarterly, Pioneer Fund grantee. Assessment: the data fabrication framing is not fully established; the methodological inadequacy is documented."
+      },
+      {
+        "name": "Richard Herrnstein and Charles Murray",
+        "type": "influencer",
+        "motivation": "Herrnstein (Harvard, deceased 1994): academic career; cognitive stratification thesis supported existing meritocratic hierarchy claims. Murray (AEI Fellow): ideological alignment with conservative opposition to welfare state, affirmative action, and immigration; professional position at American Enterprise Institute funded for decades. 'The Bell Curve' (1994, 300,000+ copies sold) brought the genetic IQ claim to mass audience with major publisher marketing support (Free Press/Simon & Schuster).",
+        "credibility": 0.18,
+        "evidence": "Origins file SC-01-04: Bell Curve presents genetic hypothesis as 'the most plausible hypothesis', blurring conjecture and finding. Chapter 13 frames genetic contribution as 'likely' and 'reasonable to assume'. AEI hosted Murray post-publication; Manhattan Institute provided amplification. Origins file SC-01-06: The policy implication (inequality is natural and unresponsive to intervention) was immediately useful to Republicans opposing welfare expansion during Clinton-era welfare reform debates. The alignment of financial/ideological interests is noted in origins file as not coincidental."
+      },
+      {
+        "name": "Linda Gottfredson",
+        "type": "influencer",
+        "motivation": "University of Delaware psychologist. Orchestrated the 1994 Wall Street Journal statement ('Mainstream Science on Intelligence', 52 signatories) as an explicit counter-response to Bell Curve critics. Motivation: professional investment in the validity of IQ as a fundamental social-stratification variable; career identity built around defending g-based intelligence theory against bias critiques.",
+        "credibility": 0.22,
+        "evidence": "Origins file SC-01-07: The Gottfredson WSJ statement (1994) is the foundational distortion in the 'suppressed consensus' sub-claim. The document endorsed high within-group heritability and reality of group differences, but explicitly did not endorse genetic causation. Yet it has been cited as consensus evidence for genetic causation continuously since. Several signatories later expressed regret or clarified they did not endorse genetic causation. Statement published in WSJ (not a scientific journal) during peak Bell Curve controversy."
+      },
+      {
+        "name": "Nathan Cofnas",
+        "type": "influencer",
+        "motivation": "Oxford DPhil in philosophy of biology; Hebrew University postdoc. Current most sophisticated academic proponent. Publishes in Biology & Philosophy and Philosophical Psychology. Monetizes Substack 'Wrong Side of History'. Motivation: career differentiation through contrarian positioning in academic philosophy of science; Substack subscriber income from 'suppressed science' audience; genuine philosophical commitment to what he frames as scientific integrity against ideological distortion.",
+        "credibility": 0.28,
+        "evidence": "Origins files SC-01-03, SC-01-04, SC-01-05, SC-01-06: Cofnas's 'default hypothesis' framing (genetic explanation is the null that environmentalists must disprove) is identified as a rhetorical inversion of standard scientific burden-of-proof conventions. He publishes in legitimate peer-reviewed journals, distinguishing him from Rushton/Lynn tier. Substack 'Wrong Side of History' (2022-present) documents the monetization structure. Irony noted in ERA-06: his work is cited by neo-Nazis despite his Jewish identity, representing a genuine ideological mutation in the lineage."
+      },
+      {
+        "name": "American Enterprise Institute (AEI) and Conservative Think Tank Infrastructure",
+        "type": "organization",
+        "motivation": "AEI houses Charles Murray; Manhattan Institute and Heritage Foundation provide amplification for Bell Curve-derived arguments. Motivation: the genetic IQ claim provides intellectual justification for three core conservative policy positions: opposing affirmative action, opposing welfare expansion, and supporting immigration restriction. These policy goals are the primary driver of think-tank investment in the hereditarian claim.",
+        "credibility": 0.3,
+        "evidence": "Origins file SC-01-06: AEI, Manhattan Institute, Heritage Foundation amplify the PC-suppression framing in op-eds and events. Origins file SC-01-04: Bell Curve policy implication aligned with Republican welfare reform opposition during Clinton era. Bradley Foundation funded Murray's AEI position for decades (documented in Murray's own acknowledgments). Assessment: the specific degree of coordination between think-tank funding decisions and hereditarian claim promotion is partially documented but not fully public."
+      },
+      {
+        "name": "Alt-Right and White Nationalist Media (VDare, American Renaissance, Stormfront)",
+        "type": "media",
+        "motivation": "Core audience-development and radicalization tool. The IQ claim provides a quasi-scientific anchor for white racial grievance politics and the claim that anti-white discrimination is unjustified given natural group differences. Revenue from conferences, subscriptions, donations. VDare (Peter Brimelow, founded 1999), American Renaissance (Jared Taylor), Stormfront (founded 1996) use the hereditarian academic lineage to appear scientifically grounded.",
+        "credibility": 0.02,
+        "evidence": "Origins files SC-01-01, SC-01-07: Post-Bell Curve, these venues cite the Gottfredson statement and Jensen/Rushton/Lynn as definitive proof of genetic hierarchy. Origins file ERA-05: The 'human biodiversity' (HBD) rebranding emerged partly to allow circulation in communities uncomfortable with explicit white nationalism. Speculative assessment: direct coordination between Pioneer Fund and VDare/AmRen editorial decisions is not documented, but the financial and ideological alignment is established."
+      },
+      {
+        "name": "Substack and Podcast Ecosystem (Cofnas, Bo Winegard, Emil Kirkegaard, Edward Dutton)",
+        "type": "media",
+        "motivation": "Direct monetization of 'suppressed science' framing. Substack removes platform-level gatekeeping, enabling subscriber income from audiences attracted to contrarian race-science content. Bo Winegard (fired from Marietta College after controversy; now Substack), Emil Kirkegaard (runs OpenPsych self-publishing journals), Edward Dutton 'The Jolly Heretic' (YouTube/Substack). Motivation: personal income and community identity as brave truth-tellers.",
+        "credibility": 0.1,
+        "evidence": "Origins file ERA-06 and SC-01-06: Substack ecosystem documented as current primary distribution mechanism. Kirkegaard's OpenPsych is a self-published journal network without standard peer review (analogous to Mankind Quarterly's function in previous era). Bo Winegard fired after controversy documented in ERA-06. The 'persecution narrative monetization' pattern is direct: subscriber counts grow when deplatforming events occur."
+      },
+      {
+        "name": "Mainstream Podcast Amplifiers (Jordan Peterson, Joe Rogan, Lex Fridman)",
+        "type": "media",
+        "motivation": "Not ideologically committed hereditarian actors, but provide significant amplification to adjacent claims through 'just asking questions' framing. Jordan Peterson regularly discusses IQ and group differences with audiences of millions. Motivation: audience engagement, contrarian intellectual brand, opposition to what they frame as ideological capture of academia.",
+        "credibility": 0.4,
+        "evidence": "Origins file SC-01-04: Lex Fridman, Joe Rogan, Stefan Molyneux named as presenting genetic IQ claims as 'just asking questions about censored science'. Jordan Peterson named in ERA-06 as amplifying race IQ adjacent material. Speculative assessment: none of these figures is likely directly coordinating with Pioneer Fund network; the amplification is ideologically motivated but organizationally independent."
+      },
+      {
+        "name": "Silicon Valley Rationalist and Libertarian Community",
+        "type": "influencer",
+        "motivation": "The HBD rebranding attracted libertarian and rationalist readers uncomfortable with explicit white nationalism but attracted to the contrarian framing. Accepting race IQ heritability has become a marker of intellectual seriousness in some online rationalist communities (LessWrong-adjacent). Peter Thiel and associated funders provide financial support to related media ventures. Motivation: libertarian meritocracy ideology (if outcomes reflect genetic merit, current hierarchies are natural); counter-signaling as intellectual identity.",
+        "credibility": 0.35,
+        "evidence": "Origins files SC-01-10 and ERA-05/06: The free-science framing has migrated from fringe hereditarian talking point to mainstream Silicon Valley argument. 'Who benefits' ecosystem documents: libertarian meritocracy ideology finds the genetic hypothesis convenient; high-IQ individuals who benefit from current hierarchies find it ideologically attractive. Speculative assessment: Thiel-specific funding links to hereditarian content are not fully documented in the source material; this is partially inferred from the ERA-06 context note."
+      },
+      {
+        "name": "Sincere Claim-Makers (ordinary people who encounter the claim)",
+        "type": "unknown",
+        "motivation": "People who sincerely encounter the IQ claim online, often via rationalist or heterodox communities, and ask the question in good faith. Motivation: genuine curiosity about contested empirical questions; attraction to the 'forbidden knowledge' framing as a signal of intellectual independence; distrust of mainstream institutions (which is sometimes warranted). These actors are not part of the funding network; they are the downstream audience that the network's distribution infrastructure is designed to reach.",
+        "credibility": 0.6,
+        "evidence": "Not a documented actor in the source files directly, but the claim would not circulate as widely without sincere questioners who are distinct from ideological promoters. The 'claim-maker' role is inferred from the network's distribution logic: Pioneer Fund -> academic papers -> think tanks -> mass market -> internet -> podcast ecosystem -> sincere audience. Assessment is partly speculative: the proportion of sincere vs. ideologically motivated question-askers cannot be established from available evidence."
+      },
+      {
+        "name": "American Psychological Association (APA) Task Force",
+        "type": "organization",
+        "motivation": "Counter-actor. The 1996 APA task force report 'Intelligence: Knowns and Unknowns' was convened specifically to provide a credible institutional response to the Bell Curve controversy. Motivation: maintain scientific integrity; provide authoritative summary of what is and is not established in intelligence research.",
+        "credibility": 0.85,
+        "evidence": "Origins file SC-01-03: APA 1996 task force explicitly stated the cause of the between-group IQ gap is not known. This is the most authoritative single statement on the question. The report was produced by a broadly constituted panel, not a partisan group. Its finding that genetic causation is unestablished is directly opposed to the hereditarian network's central claim."
+      },
+      {
+        "name": "American Anthropological Association and Human Genetics Consensus Bodies",
+        "type": "organization",
+        "motivation": "Counter-actor. AAA 1998 statement on race, American Society of Human Genetics 2018 statement, and Nature Genetics editorials hold that human genetic variation is clinal, not categorical, and that race as used in US survey research is a social/administrative category, not a biological one.",
+        "credibility": 0.9,
+        "evidence": "Origins file SC-01-02: AAA 1998, ASHG 2018, Nature Genetics editorials cited as consensus sources. These are the primary professional bodies for biological anthropology and human genetics. Their position directly contradicts the sub-claim that racial groups constitute biologically distinct categories for population genetics inference."
+      },
+      {
+        "name": "James Flynn",
+        "type": "influencer",
+        "motivation": "Counter-actor. Political philosopher and psychometrician who documented the Flynn Effect (IQ scores rising ~3 points per decade across the 20th century in all tested populations). This finding is the most powerful single piece of evidence for environmental plasticity of the IQ phenotype. Motivation: scientific accuracy; the Flynn Effect was not politically motivated but its implications directly undermine the genetic hypothesis for group differences.",
+        "credibility": 0.88,
+        "evidence": "Origins file SC-01-08: Flynn Effect documented in Flynn (1984, 1987 Psychological Bulletin); Dickens & Flynn (2006, Psychological Science) showing Black-white gap narrowing 1970-1990. The gap narrowing of ~4-7 points over two decades is too rapid for genetic causes, providing strong evidence for environmental causation. Flynn's 'Race, IQ and Jensen' (1980) is an early systematic counter-analysis."
+      },
+      {
+        "name": "Nisbett, Aronson, Blair, Dickens et al. (Environmental Evidence Network)",
+        "type": "organization",
+        "motivation": "Counter-actor. Academic researchers who have assembled the systematic case for environmental explanations: stereotype threat (Steele & Aronson 1995), comprehensive environmental reviews (Nisbett et al. 2012 American Psychologist), adoption studies, lead exposure data. Motivation: scientific accuracy; no documented ideological funding comparable to Pioneer Fund.",
+        "credibility": 0.85,
+        "evidence": "Origins file SC-01-08: Nisbett et al. 'Intelligence: New Findings and Theoretical Developments' (2012, American Psychologist) is the most authoritative recent comprehensive counter-statement. Steele & Aronson stereotype threat (1995, JPSP) is a robust, replicated finding. These researchers publish in mainstream peer-reviewed journals with standard review processes, unlike Mankind Quarterly."
+      },
+      {
+        "name": "Richard Lewontin, Leon Kamin, Stephen Jay Gould",
+        "type": "influencer",
+        "motivation": "Counter-actors. Lewontin documented Pioneer Fund funding of Jensen (population genetics critique); Kamin exposed Cyril Burt's data fabrication; Gould critiqued IQ reification and g in 'The Mismeasure of Man' (1981, 2nd ed. 1996). Motivation: scientific accuracy and political opposition to biological determinism.",
+        "credibility": 0.72,
+        "evidence": "Origins file counter_network: Lewontin's critique of Pioneer Fund funding is documented. Kamin's exposure of Burt fabrication is established. Gould's critique of g is partly valid (g is a statistical abstraction reified into a biological entity) but partly overstated (his attribution of bias to factor rotation was itself critiqued). Counter-network note in origins file acknowledges critics have sometimes overcorrected. Credibility score reflects genuine contribution with some documented methodological overclaiming."
+      },
+      {
+        "name": "William Tucker",
+        "type": "influencer",
+        "motivation": "Counter-actor. Author of 'The Funding of Scientific Racism' (2002, University of Illinois Press), the primary documented history of Pioneer Fund operations and Wickliffe Draper's ideological agenda. Motivation: historical accountability and transparency about funding flows in research.",
+        "credibility": 0.88,
+        "evidence": "Origins files reference Tucker 2002 as the primary documentary source for Pioneer Fund history. Published by University of Illinois Press (peer-reviewed academic press). Tucker's access to IRS filings and historical records provides primary source documentation rather than inference."
+      }
+    ],
+    "relations": [
+      {
+        "source_actor": "Pioneer Fund",
+        "target_actor": "Arthur Jensen",
+        "relation_type": "funds",
+        "confidence": 0.97
+      },
+      {
+        "source_actor": "Pioneer Fund",
+        "target_actor": "J. Philippe Rushton",
+        "relation_type": "funds",
+        "confidence": 0.97
+      },
+      {
+        "source_actor": "Pioneer Fund",
+        "target_actor": "Richard Lynn",
+        "relation_type": "funds",
+        "confidence": 0.95
+      },
+      {
+        "source_actor": "Pioneer Fund",
+        "target_actor": "Linda Gottfredson",
+        "relation_type": "funds",
+        "confidence": 0.9
+      },
+      {
+        "source_actor": "Pioneer Fund",
+        "target_actor": "Mankind Quarterly / Roger Pearson",
+        "relation_type": "coordinates",
+        "confidence": 0.92
+      },
+      {
+        "source_actor": "Arthur Jensen",
+        "target_actor": "Richard Herrnstein and Charles Murray",
+        "relation_type": "cites",
+        "confidence": 0.97
+      },
+      {
+        "source_actor": "Arthur Jensen",
+        "target_actor": "J. Philippe Rushton",
+        "relation_type": "cites",
+        "confidence": 0.95
+      },
+      {
+        "source_actor": "J. Philippe Rushton",
+        "target_actor": "Mankind Quarterly / Roger Pearson",
+        "relation_type": "coordinates",
+        "confidence": 0.85
+      },
+      {
+        "source_actor": "Richard Lynn",
+        "target_actor": "Mankind Quarterly / Roger Pearson",
+        "relation_type": "coordinates",
+        "confidence": 0.9
+      },
+      {
+        "source_actor": "Richard Herrnstein and Charles Murray",
+        "target_actor": "American Enterprise Institute (AEI) and Conservative Think Tank Infrastructure",
+        "relation_type": "coordinates",
+        "confidence": 0.92
+      },
+      {
+        "source_actor": "American Enterprise Institute (AEI) and Conservative Think Tank Infrastructure",
+        "target_actor": "Richard Herrnstein and Charles Murray",
+        "relation_type": "funds",
+        "confidence": 0.9
+      },
+      {
+        "source_actor": "Richard Herrnstein and Charles Murray",
+        "target_actor": "Linda Gottfredson",
+        "relation_type": "amplifies",
+        "confidence": 0.88
+      },
+      {
+        "source_actor": "Linda Gottfredson",
+        "target_actor": "Richard Herrnstein and Charles Murray",
+        "relation_type": "amplifies",
+        "confidence": 0.88
+      },
+      {
+        "source_actor": "Richard Herrnstein and Charles Murray",
+        "target_actor": "Alt-Right and White Nationalist Media (VDare, American Renaissance, Stormfront)",
+        "relation_type": "amplifies",
+        "confidence": 0.85
+      },
+      {
+        "source_actor": "Alt-Right and White Nationalist Media (VDare, American Renaissance, Stormfront)",
+        "target_actor": "Richard Herrnstein and Charles Murray",
+        "relation_type": "amplifies",
+        "confidence": 0.9
+      },
+      {
+        "source_actor": "Alt-Right and White Nationalist Media (VDare, American Renaissance, Stormfront)",
+        "target_actor": "Arthur Jensen",
+        "relation_type": "amplifies",
+        "confidence": 0.88
+      },
+      {
+        "source_actor": "Alt-Right and White Nationalist Media (VDare, American Renaissance, Stormfront)",
+        "target_actor": "Richard Lynn",
+        "relation_type": "amplifies",
+        "confidence": 0.9
+      },
+      {
+        "source_actor": "Nathan Cofnas",
+        "target_actor": "Arthur Jensen",
+        "relation_type": "cites",
+        "confidence": 0.92
+      },
+      {
+        "source_actor": "Nathan Cofnas",
+        "target_actor": "Linda Gottfredson",
+        "relation_type": "cites",
+        "confidence": 0.9
+      },
+      {
+        "source_actor": "Nathan Cofnas",
+        "target_actor": "Substack and Podcast Ecosystem (Cofnas, Bo Winegard, Emil Kirkegaard, Edward Dutton)",
+        "relation_type": "coordinates",
+        "confidence": 0.88
+      },
+      {
+        "source_actor": "Substack and Podcast Ecosystem (Cofnas, Bo Winegard, Emil Kirkegaard, Edward Dutton)",
+        "target_actor": "Alt-Right and White Nationalist Media (VDare, American Renaissance, Stormfront)",
+        "relation_type": "amplifies",
+        "confidence": 0.72
+      },
+      {
+        "source_actor": "Mainstream Podcast Amplifiers (Jordan Peterson, Joe Rogan, Lex Fridman)",
+        "target_actor": "Substack and Podcast Ecosystem (Cofnas, Bo Winegard, Emil Kirkegaard, Edward Dutton)",
+        "relation_type": "amplifies",
+        "confidence": 0.65
+      },
+      {
+        "source_actor": "Mainstream Podcast Amplifiers (Jordan Peterson, Joe Rogan, Lex Fridman)",
+        "target_actor": "Nathan Cofnas",
+        "relation_type": "amplifies",
+        "confidence": 0.6
+      },
+      {
+        "source_actor": "Silicon Valley Rationalist and Libertarian Community",
+        "target_actor": "Nathan Cofnas",
+        "relation_type": "amplifies",
+        "confidence": 0.7
+      },
+      {
+        "source_actor": "Silicon Valley Rationalist and Libertarian Community",
+        "target_actor": "Substack and Podcast Ecosystem (Cofnas, Bo Winegard, Emil Kirkegaard, Edward Dutton)",
+        "relation_type": "funds",
+        "confidence": 0.55
+      },
+      {
+        "source_actor": "Sincere Claim-Makers (ordinary people who encounter the claim)",
+        "target_actor": "Substack and Podcast Ecosystem (Cofnas, Bo Winegard, Emil Kirkegaard, Edward Dutton)",
+        "relation_type": "amplifies",
+        "confidence": 0.75
+      },
+      {
+        "source_actor": "Sincere Claim-Makers (ordinary people who encounter the claim)",
+        "target_actor": "Mainstream Podcast Amplifiers (Jordan Peterson, Joe Rogan, Lex Fridman)",
+        "relation_type": "amplifies",
+        "confidence": 0.8
+      },
+      {
+        "source_actor": "American Psychological Association (APA) Task Force",
+        "target_actor": "Richard Herrnstein and Charles Murray",
+        "relation_type": "opposes",
+        "confidence": 0.95
+      },
+      {
+        "source_actor": "American Psychological Association (APA) Task Force",
+        "target_actor": "Arthur Jensen",
+        "relation_type": "opposes",
+        "confidence": 0.88
+      },
+      {
+        "source_actor": "American Anthropological Association and Human Genetics Consensus Bodies",
+        "target_actor": "J. Philippe Rushton",
+        "relation_type": "opposes",
+        "confidence": 0.95
+      },
+      {
+        "source_actor": "American Anthropological Association and Human Genetics Consensus Bodies",
+        "target_actor": "Richard Lynn",
+        "relation_type": "opposes",
+        "confidence": 0.92
+      },
+      {
+        "source_actor": "James Flynn",
+        "target_actor": "Arthur Jensen",
+        "relation_type": "opposes",
+        "confidence": 0.95
+      },
+      {
+        "source_actor": "James Flynn",
+        "target_actor": "Richard Herrnstein and Charles Murray",
+        "relation_type": "opposes",
+        "confidence": 0.9
+      },
+      {
+        "source_actor": "Nisbett, Aronson, Blair, Dickens et al. (Environmental Evidence Network)",
+        "target_actor": "Richard Herrnstein and Charles Murray",
+        "relation_type": "opposes",
+        "confidence": 0.92
+      },
+      {
+        "source_actor": "Nisbett, Aronson, Blair, Dickens et al. (Environmental Evidence Network)",
+        "target_actor": "Nathan Cofnas",
+        "relation_type": "opposes",
+        "confidence": 0.85
+      },
+      {
+        "source_actor": "Richard Lewontin, Leon Kamin, Stephen Jay Gould",
+        "target_actor": "Arthur Jensen",
+        "relation_type": "opposes",
+        "confidence": 0.97
+      },
+      {
+        "source_actor": "Richard Lewontin, Leon Kamin, Stephen Jay Gould",
+        "target_actor": "Pioneer Fund",
+        "relation_type": "opposes",
+        "confidence": 0.9
+      },
+      {
+        "source_actor": "William Tucker",
+        "target_actor": "Pioneer Fund",
+        "relation_type": "opposes",
+        "confidence": 0.97
+      },
+      {
+        "source_actor": "William Tucker",
+        "target_actor": "Mankind Quarterly / Roger Pearson",
+        "relation_type": "opposes",
+        "confidence": 0.95
+      }
+    ],
+    "narrative_summary": "The claim that racial IQ gaps are primarily genetic and that this finding is suppressed by academia is not a spontaneous grassroots observation. It is the output of a specific, funded, historically traceable information network whose origins precede the Civil Rights Movement and whose financial backing traces directly to a eugenics endowment with documented connections to Nazi-era racial science.\n\nThe architecture of the network has three historical layers. The first layer is the Pioneer Fund, founded in 1937 by Wickliffe Draper with explicit goals of funding eugenics and opposing Black civil rights. The Fund created the financial infrastructure that sustained the hereditarian research tradition through six decades, funding Jensen, Rushton, Lynn, Gottfredson, and others. It also created Mankind Quarterly as a publication venue that mimics academic form without standard peer review, allowing hereditarian claims to accumulate citation infrastructure that would not survive mainstream review.\n\nThe second layer is the academic-to-mass-market pipeline. Arthur Jensen's 1969 Harvard Educational Review paper provided the modern academic anchor for the genetic hypothesis, appearing in the context of backlash against Great Society education programs. Jensen himself acknowledged the central logical fallacy (that within-group heritability cannot be extrapolated to between-group differences) and then committed it anyway. This acknowledgment-then-commission of the error is reproduced in every subsequent hereditarian paper and omitted in every summary presented to popular audiences. The Bell Curve (1994) carried Jensen's framework to a mass audience of 300,000+ readers, backed by major publisher marketing and think-tank amplification from AEI and Manhattan Institute. The policy utility was direct: if inequality is genetic, welfare expansion and affirmative action are futile. This alignment of financial and ideological interests was not coincidental.\n\nThe third layer is the contemporary distribution ecosystem. As mainstream academic credibility eroded for the Pioneer Fund network, the suppression narrative itself became the product. Substack enables direct monetization of 'censored science' content; deplatforming events increase subscriber counts. The 'human biodiversity' rebranding stripped explicit white-nationalist framing while preserving the intellectual structure, enabling circulation in libertarian, rationalist, and Silicon Valley communities that would reject overt white nationalism. Mainstream podcast amplifiers (Peterson, Rogan, Fridman) provide reach to millions through 'just asking questions' framing without organizational coordination with the Pioneer Fund network.\n\nThe 'who benefits' analysis is the most important lens. Financial beneficiaries include Substack creators monetizing persecution narratives, think-tank fellows whose positions depend on intellectual justification for welfare and affirmative action opposition, and the Pioneer Fund endowment itself whose purpose is served by continued research output. Political beneficiaries include immigration restrictionists (Lynn's cross-national data used directly by VDare and NumbersUSA adjacents), opponents of affirmative action (if gaps are genetic, racial preferences are unjust), opponents of welfare expansion (if poverty is genetic, redistribution is futile), and white identity politicians who need a scientific anchor for racial grievance politics. Ideological beneficiaries include Silicon Valley meritocrats who find it convenient that current hierarchies reflect natural cognitive differences, and online contrarians for whom accepting the genetic hypothesis is a signal of intellectual independence.\n\nThe counter-network has greater epistemic weight but weaker distribution infrastructure. The APA 1996 task force explicitly stated genetic causation is unestablished. The AAA and ASHG have issued consensus statements that racial categories are not biologically meaningful for population genetics inference. James Flynn's documentation of massive 20th-century IQ gains and the Black-white gap narrowing provide the most powerful evidence that the IQ phenotype is environmentally plastic and that the gap has environmental causes. Nisbett et al. (2012) provides the most comprehensive environmental synthesis. These findings circulate primarily in academic literature without the think-tank and media amplification infrastructure available to the hereditarian network.\n\nThe sincere question-asker deserves specific acknowledgment. A substantial proportion of people who encounter this claim are not ideologically motivated; they have encountered the 'forbidden knowledge' framing through podcast or Substack exposure and are genuinely curious about a contested empirical question. They are the downstream audience that the distribution network is designed to reach, and they are not served well by either uncritical amplification or reflexive dismissal. The honest answer is that IQ test score gaps between self-identified racial groups are documented; the genetic causal hypothesis is not established and is the minority position among relevant experts; and the network claiming suppression is itself the product of a century-long ideologically funded effort to establish what it claims is being suppressed."
+  },
+  "ttps": {
+    "scenario_id": "SC-01",
+    "analyst_model": "claude-sonnet-4-6",
+    "analysis_date": "2026-03-28",
+    "claim": "IQ differences between racial groups are primarily genetic, and this scientific finding is being suppressed by mainstream academia due to political correctness.",
+    "ttp_matches": [
+      {
+        "disarm_id": "T0023",
+        "technique_name": "Distort Facts",
+        "confidence": 0.97,
+        "evidence": "Multiple documented distortions in the lineage. (1) The Gottfredson 1994 WSJ statement (52 signatories) is systematically cited as endorsing genetic causation; it explicitly did not -- it endorsed within-group heritability and the reality of group mean differences while declining to adjudicate causation (SC-01-07 status: false). (2) Jensen's own 1969 acknowledgment that within-group heritability cannot be extrapolated to between-group differences was made and then violated in the same paper; subsequent popularizations omit the acknowledgment entirely (SC-01-03 mutation: distortion). (3) Lynn's cross-national IQ data uses malnourished, colonized, low-schooling samples and presents them as national population means; Wicherts et al. (2010) documents the methodological distortion (intelligence.json: Richard Lynn actor, credibility 0.06). (4) Jensen's narrow finding -- that IQ items do not show differential item functioning by race -- is generalized into the claim that tests are unbiased measures of innate cognitive ability, a conflation of two entirely different claims (SC-01-09 mutation: distortion). (5) The Flynn Effect, which provides the most powerful evidence for environmental plasticity, is characterized in hereditarian literature as 'hollow' gains not reflecting real g increase -- a contested empirical claim presented as settled (SC-01-08 mutation: distortion)."
+      },
+      {
+        "disarm_id": "T0022",
+        "technique_name": "Leverage Conspiracy Theory",
+        "confidence": 0.96,
+        "evidence": "The 'suppression by political correctness' framing is the structural core of the claim and maps directly to conspiracy theory logic: a true finding exists, an institutional power (academia) is actively hiding it, and the motive is ideological (PC/wokeism). The upstream analysis documents this as not established: Jensen, Rushton, Lynn, Gottfredson, Cofnas all published in mainstream venues throughout their careers; Rushton held a tenured professorship until death; the Bell Curve was a mainstream bestseller reviewed in every major publication (SC-01-05, status: not_established). The suppression narrative crystallizes around Jensen's 1969 campus protests, which Pioneer Fund systematically cultivated into a 'scientific martyrdom' counter-narrative (SC-01-05 earliest_source). By the 2020s, the narrative has mutated from 'campus protests' through 'Watson/Summers cancelled' to 'Substack as refuge from thought police' -- each iteration feeding subscriber growth when deplatforming events occur (intelligence.json: Substack and Podcast Ecosystem actor evidence). The conspiracy framing is operationally functional: it preemptively discredits any institutional rebuttal as further evidence of suppression."
+      },
+      {
+        "disarm_id": "T0004",
+        "technique_name": "Develop Competing Narratives",
+        "confidence": 0.95,
+        "evidence": "The hereditarian network has systematically built a parallel institutional infrastructure designed to mimic and compete with mainstream scientific discourse. Mankind Quarterly (founded 1960) provides a publication venue that mimics academic form without standard peer review, allowing hereditarian claims to accumulate citation infrastructure that would not survive mainstream review (intelligence.json: Mankind Quarterly actor). Emil Kirkegaard's OpenPsych is the contemporary equivalent -- self-published journal networks without standard peer review, analogous to Mankind Quarterly's function (intelligence.json: Substack and Podcast Ecosystem actor evidence). The Gottfredson 1994 WSJ statement was explicitly constructed as a counter-narrative to Bell Curve critics -- an organized signatory document designed to compete with APA and AAA statements (SC-01-07 status_note). Nathan Cofnas's 'default hypothesis' framing is a competing methodological narrative: it argues the genetic explanation is the null hypothesis that environmentalists must disprove, directly inverting the standard scientific burden-of-proof convention (SC-01-04 mutation: recontextualization). The competing narrative has distinct distribution infrastructure: Pioneer Fund -> academic papers -> think tanks (AEI, Manhattan Institute) -> mass market (Bell Curve) -> internet -> podcast ecosystem (SC-01 propagation narrative, intelligence.json narrative_summary)."
+      },
+      {
+        "disarm_id": "T0056",
+        "technique_name": "Amplify Existing Narratives",
+        "confidence": 0.92,
+        "evidence": "The hereditarian network takes the real and documented concern about ideological capture of science -- a legitimate worry with genuine historical examples (Lysenko affair, Cold War anthropology) -- and amplifies it selectively to cover race science. The 'PC suppression' mutation (SC-01-06 mutation: ideological_migration) explicitly borrows the Lysenko framing: 'the brave scientist vs. ideological censors' was a Cold War anti-communist trope now applied to race science critics, inverting the historical valence. Mainstream podcast amplifiers (Jordan Peterson, Joe Rogan, Lex Fridman) provide reach to millions through 'just asking questions about censored science' framing without organizational coordination with the Pioneer Fund network (intelligence.json: Mainstream Podcast Amplifiers actor). The Silicon Valley rationalist community adopts the 'free science' framing as a marker of intellectual independence, extending the network's reach far beyond its original white-nationalist funding base (SC-01-10 mutation: ideological_migration; intelligence.json: Silicon Valley Rationalist and Libertarian Community actor). The real concern (academic groupthink exists) is amplified into evidence for a specific false narrative (race science findings are suppressed)."
+      },
+      {
+        "disarm_id": "T0044",
+        "technique_name": "Seed Distortions",
+        "confidence": 0.93,
+        "evidence": "The claim is decomposed (decomposition.json) into 10 sub-claims, most of which are individually seeded distortions that compound. Sub-claim SC-01-01 (IQ gaps are measurable) is true and uncontested; it seeds the impression that the entire narrative is factual. Sub-claim SC-01-02 (racial groups are biologically distinct) is contradicted by AAA and ASHG consensus but is seeded as a background assumption enabling all downstream inferences. Sub-claim SC-01-09 (IQ tests are unbiased measures of innate ability) conflates narrow psychometric bias (Jensen's actual finding) with freedom from all environmental and motivational influences -- a seeded distortion that forecloses test-validity critique. The Gottfredson 52-signatory document seeds the false consensus at the foundation of the suppression claim: it is cited for a conclusion it does not contain (SC-01-07 mutation: distortion, fabrication). Lynn's cross-national data seeds the claim that African cognitive capacity is categorically lower; Wicherts et al. (2010) documented the methodological inadequacy but the seeded number (African mean IQ ~70) circulates independently of the critique."
+      },
+      {
+        "disarm_id": "T0010",
+        "technique_name": "Cultivate Ignorant Agents",
+        "confidence": 0.88,
+        "evidence": "The upstream intelligence analysis explicitly identifies 'Sincere Claim-Makers (ordinary people who encounter the claim)' as a distinct actor class (intelligence.json: Sincere Claim-Makers actor, credibility 0.60). These individuals encounter the claim through podcast or Substack exposure and share it in good faith, attracted by the 'forbidden knowledge' framing as a signal of intellectual independence and distrust of mainstream institutions. They are not part of the funding network; they are the downstream audience the network's distribution infrastructure is designed to reach. The Pioneer Fund -> academic papers -> think tanks -> mass market -> internet -> podcast ecosystem -> sincere audience pipeline (intelligence.json narrative_summary) is explicitly designed to produce sincere amplifiers who are insulated from the funding history and ideological origins of the claim. The Substack ecosystem specifically optimizes for this: deplatforming events increase subscriber counts and produce new sincere sharers (intelligence.json: Substack actor evidence). The 'human biodiversity' rebranding stripped explicit white-nationalist framing to enable circulation in rationalist communities that would reject overt white nationalism -- a deliberate cultivation of ignorant agents in ideologically adjacent spaces."
+      },
+      {
+        "disarm_id": "T0049",
+        "technique_name": "Flooding",
+        "confidence": 0.82,
+        "evidence": "The hereditarian network has produced a sustained volume of content over six decades that creates the impression of an overwhelming scientific literature. Pioneer Fund funded Jensen, Rushton, Lynn, Gottfredson, and others continuously from 1937 to the present (intelligence.json: Pioneer Fund actor, relations). Mankind Quarterly provides a dedicated venue that has published hereditarian content without standard peer review since 1960, accumulating citation infrastructure. OpenPsych (Kirkegaard) replicates this function in the internet era (intelligence.json: Substack actor evidence). The Gottfredson statement lists 52 signatories to create volume impression; the number has been cited as representing 'most intelligence researchers', a fabrication given that the field contains thousands (SC-01-07 mutation: fabrication). The Bell Curve (300,000+ copies) and its successor media ecosystem generate a volume of hereditarian content that outpaces the distribution capacity of the counter-evidence network: 'Environmental case circulates primarily in academic literature; less amplified by think tank infrastructure than hereditarian case' (SC-01-08 propagation_path). The contemporary Substack/podcast ecosystem adds continuous fresh content production to the historically accumulated corpus."
+      },
+      {
+        "disarm_id": "T0016",
+        "technique_name": "Create Clickbait",
+        "confidence": 0.78,
+        "evidence": "The contemporary distribution layer of the hereditarian network explicitly monetizes engagement through suppression framing. Nathan Cofnas's Substack 'Wrong Side of History' (2022-present) is documented as monetizing subscriber income from audiences attracted to contrarian race-science content (intelligence.json: Nathan Cofnas actor evidence). Bo Winegard (fired from Marietta College; now Substack) and Edward Dutton 'The Jolly Heretic' (YouTube/Substack) use the persecution narrative directly as engagement optimization: 'subscriber counts grow when deplatforming events occur' (intelligence.json: Substack and Podcast Ecosystem actor evidence). The engagement mechanics are explicit: deplatforming = content + controversy + new subscribers. The SC-01-04 propagation path documents the evolution: 'Online framing evolves: scientists are not allowed to say -> suppressed finding -> established fact' -- each iteration optimized for higher emotional engagement. The 'forbidden knowledge' hook is a structural clickbait element independent of its truth value."
+      },
+      {
+        "disarm_id": "T0048",
+        "technique_name": "Cause Harm to Physical/Cognitive Targets",
+        "confidence": 0.85,
+        "evidence": "The upstream intelligence analysis documents direct policy harm pathways. The Bell Curve's policy implication was explicit and immediately useful: 'if inequality is genetic, welfare expansion and affirmative action are futile' (intelligence.json: Herrnstein and Murray actor, AEI actor). AEI, Manhattan Institute, and Heritage Foundation amplified the claim specifically because it provided intellectual justification for three core policy positions: opposing affirmative action, opposing welfare expansion, and supporting immigration restriction (intelligence.json: AEI actor motivation). Lynn's cross-national IQ data is used directly by VDare and NumbersUSA-adjacent immigration restriction networks (intelligence.json: Alt-Right Media actor evidence). The Alt-Right and white nationalist media use the IQ claim as a quasi-scientific anchor for racial grievance politics and for arguing that anti-white discrimination is unjustified given natural group differences (intelligence.json: Alt-Right actor motivation). The foundational cognitive harm is biological determinism: if group IQ gaps are genetic, then interventions targeting structural racism, educational inequality, lead exposure, and poverty are futile -- a conclusion that forecloses the policy space for addressing documented environmental harms. Reagan/Bush era defunding of Great Society programs provided political incentive to attribute poverty to genetics rather than policy (SC-01-06 institutional_context)."
+      }
+    ],
+    "primary_tactic": "Execute",
+    "tactic_rationale": "The claim is not in a planning or preparation phase. The network producing it has an established, active distribution infrastructure (Substack, podcast ecosystem, think tanks, academic publication venues) that is currently executing amplification. The suppression framing is a live rhetorical operation targeting real policy debates. The Execute phase classification reflects that this is operational disinformation in active circulation, not a nascent or preparatory campaign.",
+    "analyst_notes": "The claim uses all nine matched TTPs simultaneously, not sequentially. The structural architecture is: T0044 (seed distortions at sub-claim level) provides the factual scaffolding; T0023 (distort facts) builds the false causal inference on that scaffolding; T0004 (competing narratives) provides the parallel institutional infrastructure; T0022 (conspiracy theory) preemptively neutralizes all institutional rebuttals; T0056 (amplify existing narratives) launders the claim through legitimate free-speech concerns; T0010 (ignorant agents) generates sincere amplifiers insulated from the funding history; T0049 (flooding) creates volume impression of scientific consensus; T0016 (clickbait) monetizes the distribution layer; T0048 (harm) is the downstream policy impact the network is designed to produce. The compound effect is that each TTP reinforces the others: the conspiracy framing makes distortions harder to correct, the flooding makes ignorant agents harder to reach, and the clickbait incentives ensure continuous content production regardless of epistemic merit."
+  },
+  "bridge": {
+    "scenario_id": "SC-01",
+    "analyst_model": "claude-sonnet-4-6",
+    "analysis_date": "2026-03-28",
+    "bridge_version": "v1",
+    "claim": "IQ differences between racial groups are primarily genetic, and this scientific finding is being suppressed by mainstream academia due to political correctness.",
+    "universal_needs": [
+      "truth",
+      "fairness",
+      "academic_freedom",
+      "dignity",
+      "identity",
+      "dignity"
+    ],
+    "issue_overlap": "Opposing positions share more concrete agreement than the public debate suggests. The disagreement is concentrated at the causal inference level, not at the level of basic observations.\n\nIQ test score gaps between self-identified racial groups are real and documented\n\nBoth the APA 1996 task force and hereditarian researchers agree that measured score gaps exist in US data. This is not in dispute. The disagreement is about what these gaps measure and what causes them.\n\nIQ tests have meaningful predictive validity for educational and occupational outcomes\n\nThe APA 1996 report, Nisbett et al. 2012, and the hereditarian literature all accept that IQ scores predict performance outcomes better than chance. Both sides use IQ data as meaningful. The disagreement is about what IQ measures and whether gaps in scores reflect gaps in innate capacity.\n\nIdeological pressures can distort scientific research\n\nThis is agreed on both sides, though the examples differ. Environmental researchers cite Pioneer Fund ideological funding of Jensen, Rushton, and Lynn over six decades as a documented case of ideology distorting science (Tucker 2002, University of Illinois Press). Hereditarian researchers cite the Lysenko affair and post-2010 replication crisis in social psychology. Both concerns are legitimate. The irony is that the strongest documented case of ideological funding distorting race science is the Pioneer Fund itself, not mainstream academia.\n\nThe educational achievement gap represents a genuine and serious social problem requiring explanation\n\nBoth sides agree the gap exists and that understanding its causes matters enormously for policy. The disagreement is about which causes are primary. Nisbett et al. 2012 and the hereditarian literature both treat this as a serious empirical question. The dispute is about evidence, not whether the question matters.\n\nWithin-group heritability of IQ is substantial (estimates range 0.50-0.80 in adults)\n\nThis is accepted in both the APA 1996 report and hereditarian literature. The APA task force affirmed high within-group heritability. The critical disagreement is that within-group heritability cannot be extrapolated to between-group differences -- a point Jensen himself acknowledged in 1969 before making the inference anyway.\n\nThe actual scientific disagreement is narrow and precise: whether between-group IQ score differences are primarily caused by genetic factors or primarily by environmental, historical, and socioeconomic factors. This is an empirical question that has not been resolved by the available evidence. The APA 1996 task force concluded: 'The cause of that differential is not known.' That conclusion -- honest acknowledgment of genuine uncertainty -- is where the evidence currently sits.",
+    "narrative_deconstruction": "The same underlying concern -- 'is academic science being honest with us?' -- was deliberately split into two opposing tribes by actors with specific financial and political interests. Understanding how the split was performed makes the manipulation visible without requiring anyone to feel attacked.\n\nThe Pioneer Fund, founded in 1937 by Wickliffe Draper with explicit goals of funding eugenics research and opposing Black civil rights, created the institutional infrastructure that transformed a legitimate scientific question into a culture-war weapon. The mechanism was a three-stage operation that took sixty years to complete.\n\nManufacture the suppression narrative\n\nWhen Arthur Jensen published his 1969 paper and received campus protests, the Pioneer Fund network systematically cultivated Jensen's experience into a 'scientific martyrdom' narrative. The protests were real. The intellectual isolation Jensen felt was real. But the narrative frame -- 'brave scientist vs. ideological censors' -- was not a spontaneous reaction. It was a deliberate counter-narrative construction designed to make any critical scrutiny of hereditarian claims appear to be evidence of suppression rather than scientific rebuttal. William Tucker's 2002 history (University of Illinois Press) documents this process. Every subsequent controversy -- Rushton lectures (1989), Watson comments (2007), Damore memo (2017) -- was fed into the same narrative machine to refresh and amplify it.\n\nLaunder ideology through academic form\n\nMankind Quarterly (founded 1960 by Roger Pearson, who had pre-war connections to Nazi racial science networks) provided a publication venue that mimics academic form without standard peer review. This allowed hereditarian claims to accumulate citation infrastructure that would not survive mainstream review. The Gottfredson 1994 Wall Street Journal statement -- 52 signatories presented as a scientific consensus -- was explicitly constructed as a counter-narrative to Bell Curve critics, published in a newspaper rather than a scientific journal. It endorsed within-group heritability and the reality of score gaps, but explicitly declined to endorse the genetic causal hypothesis. Every subsequent citation of this document as 'consensus evidence for genetic causation' is a documented distortion of what it actually said.\n\nMigrate to mass-market and digital distribution\n\nThe Bell Curve (1994, Free Press/Simon & Schuster) carried the Pioneer Fund network's framework to a mass audience of 300,000+ readers, backed by American Enterprise Institute and Manhattan Institute amplification. The policy utility was direct: if inequality is genetic, welfare expansion and affirmative action are futile. This alignment of financial interests (AEI, Bradley Foundation funding Murray) with ideological goals (opposing welfare state) and the hereditarian claim was not coincidental. The contemporary Substack and podcast ecosystem completed the migration: deplatforming events generate subscriber growth, persecution narratives monetize directly, and the 'human biodiversity' rebranding stripped explicit white-nationalist framing to enable circulation in rationalist and Silicon Valley communities.\n\nPioneer Fund (Wickliffe Draper / Roger Pearson lineage)\n\nProvided sustained financial infrastructure for six decades. Created publication venue (Mankind Quarterly) to mimic academic legitimacy. Funded Jensen, Rushton, Lynn, Gottfredson continuously.\n\nPreserve endowment purpose (eugenics, white separatism, immigration restriction). Provide scientific legitimacy for political goals.\n\nConservative think tank infrastructure (AEI, Manhattan Institute, Heritage Foundation)\n\nAmplified Bell Curve claims. Provided institutional home for Murray post-publication. Translated hereditarian findings into policy arguments against welfare and affirmative action.\n\nIntellectual justification for three core policy positions: opposing affirmative action, opposing welfare expansion, supporting immigration restriction.\n\nSubstack / podcast monetization ecosystem\n\nContemporary distribution layer. Monetizes persecution narrative directly. Produces continuous content independent of epistemic merit. Deplatforming events increase subscriber counts.\n\nSubscriber income. Community identity as 'brave truth-tellers'. Career differentiation through contrarian positioning.\n\nA substantial proportion of people who encounter this claim are not part of the funding network. They are ordinary people who have encountered the 'forbidden knowledge' framing through podcast or Substack exposure and are genuinely curious. They are the downstream audience the network is designed to reach. They deserve a direct, honest answer -- not dismissal, and not amplification of the false framing.",
+    "consensus_explanation": "The established behavioral genetics and cognitive science position, as represented by the APA 1996 task force and Nisbett et al. 2012 American Psychologist review, holds that the cause of between-group IQ score differences is not genetically established and is most parsimoniously explained by environmental, historical, and socioeconomic factors. Here is the substantive evidence.\n\nIQ scores have risen approximately 3 points per decade throughout the 20th century across every tested population (Flynn 1984, 1987 Psychological Bulletin). This means the average person in 1900 would score roughly 30 points lower on today's tests -- a staggering magnitude that cannot be explained by genetic change, which operates on timescales of thousands of years, not decades. The Flynn Effect is the single most powerful evidence that the IQ phenotype is highly environmentally plastic. If IQ were primarily genetically fixed, this generational rise would be impossible.\n\nDickens and Flynn (2006, Psychological Science) documented that the Black-white IQ gap in the United States narrowed by approximately 4-7 points between 1970 and 2000. This narrowing is too rapid for genetic causation. Genetic composition of populations does not change measurably in 30 years. The narrowing directly implicates environmental improvements -- reduced lead exposure, improved school quality, reduced poverty rates, reduced explicit discrimination -- as causal factors.\n\nIQ gains of 30+ points per century are incompatible with genetic explanation; genes cannot change that fast\n\nThe Black-white gap has narrowed measurably in a single generation, ruling out primarily genetic causation\n\nEvery population shows Flynn gains when environmental conditions improve, regardless of ancestry\n\nThe transracial adoption studies provide the closest thing to a natural experiment on this question. Scarr and Weinberg (1976) found that Black and mixed-race children adopted into white middle-class families showed IQ scores substantially above the Black average and approaching or reaching the white average. Moore (1986) found that Black children adopted by white families scored 13 points higher than Black children adopted by Black working-class families. These studies directly demonstrate environmental plasticity. The hereditarian counter-argument (that adoptees may regress to group means by adulthood) is contested and relies on methodologically problematic follow-up studies with small samples and high attrition.\n\nWeinberg, Scarr, and Waldman's follow-up (1992) showed some regression, but the sample had high attrition and the follow-up timing coincided with adolescent identity development, a known period of environmental sensitivity. The early-childhood results remain the most methodologically robust.\n\nSteele and Aronson (1995, Journal of Personality and Social Psychology) demonstrated that merely reminding Black students of their racial identity before a cognitive test significantly reduced their performance, while removing the racial prime eliminated the gap. This effect has been replicated in multiple populations and testing contexts. It demonstrates that IQ test performance is sensitive to social context, motivation, and identity threat in ways that affect the measured gap without touching genetic factors.\n\nAwareness of negative stereotypes about one's group creates cognitive load and performance anxiety. This is not about believing the stereotype -- it operates even in people who explicitly reject it. The interference is automatic and measurable in physiological stress responses.\n\nStereotype threat research has produced practical interventions (value affirmation, growth mindset framing, identity-safe environments) that measurably reduce achievement gaps in controlled studies, providing further evidence that environmental and psychological factors are causally active.\n\nEpigenetic research shows that environmental exposures -- stress, nutrition, toxin exposure, trauma -- alter gene expression in ways that affect cognitive development and can be heritable across generations without changing DNA sequence. Adverse childhood experiences, poverty-related stress, and historical trauma can produce measurable effects on cognitive outcomes through epigenetic pathways. This is a relatively new field, but it provides a biological mechanism by which historical and social conditions could produce heritable cognitive differences without those differences being 'genetic' in the sense hereditarian researchers mean.\n\nLead exposure, which was disproportionately concentrated in lower-income and minority communities through leaded paint and gasoline, is estimated to have reduced IQ scores by 2-5 points in exposed populations. Reyes (2007, NBER) documented that gasoline lead phaseout in the 1970s-80s contributed to crime rate declines and cognitive improvements that were geographically and demographically correlated with exposure patterns.\n\nThis is the central logical issue in the entire debate. Within-group heritability measures how much of the variation in IQ within a population is associated with genetic variation within that population. It does not -- and cannot -- tell us anything about the causes of differences between populations. Jensen himself acknowledged this distinction in his 1969 paper. The standard illustration: plant the same seeds in rich soil and in nutrient-poor soil. Within each plot, the height variation among plants will be highly heritable (same soil, same conditions -- differences come from genetics). But the difference in average height between plots is entirely due to the environment (different soil). High within-group heritability is fully compatible with the between-group difference being entirely environmental.\n\nH^2 (between-group) cannot be inferred from h^2 (within-group). This is not contested. It is textbook behavioral genetics. The hereditarian argument that high within-group heritability implies genetic between-group differences commits a logical error that population geneticists recognize and that Jensen acknowledged before committing it anyway.\n\nThe American Psychological Association convened a broadly constituted task force in 1996 specifically to provide an authoritative scientific summary after the Bell Curve controversy. The report 'Intelligence: Knowns and Unknowns' (Neisser et al., American Psychologist 1996) is the most credible single institutional statement on the question. Its conclusion regarding between-group differences: 'The cause of that differential is not known.' The report affirmed high within-group heritability, the reality of score gaps, and the predictive validity of IQ tests, while explicitly refusing to endorse genetic causation of group differences. This is not political correctness -- it is a distinguished panel declining to assert what the evidence does not support.\n\nNisbett, Aronson, Blair, Dickens, Flynn, Halpern, and Turkheimer's comprehensive review in American Psychologist (2012) is the most authoritative recent synthesis. Key findings: (1) the Black-white gap has narrowed substantially since the 1970s, consistent with environmental causation; (2) environmental interventions (early childhood education, reduced lead exposure, poverty reduction) produce measurable IQ gains; (3) adoption studies show large environmental effects on group-level scores; (4) genetic factors that explain within-group differences have not been shown to explain between-group differences; (5) the available evidence is most consistent with environmental causation. The review explicitly names the within-group / between-group heritability distinction as the key logical issue.\n\nGenome-wide association studies (GWAS) have identified polygenic scores for IQ using European population samples. When these scores are applied to African-ancestry populations, their predictive validity drops substantially -- not the pattern expected if the same genetic variants were driving IQ variation in both populations. This finding is more consistent with population stratification, environmental confounding, and the social construction of racial categories than with shared genetic architecture for IQ differences.",
+    "inferential_gap": "There are documented average IQ test score differences between self-identified racial groups in the United States. IQ tests have meaningful predictive validity for educational outcomes. Within-group heritability of IQ in adults is substantial. These three facts are real and are not in serious scientific dispute.\n\nThe leap is from 'within-group heritability is high' to 'between-group differences are primarily genetic'. This leap is a known logical fallacy in population genetics. It is the plant-in-different-soil error: within each plot, height is heritable; the difference between plots is environmental. Jensen acknowledged this gap in 1969 and crossed it anyway using an analogy rather than evidence. Every subsequent hereditarian paper has repeated the crossing without improving the evidence. The APA 1996 task force, Nisbett et al. 2012, and the broader genetics consensus identify this exact inference as the point where the claim breaks down.\n\nThe secondary leap is from 'some people criticize this research' to 'this research is being suppressed'. Jensen, Rushton, Lynn, Gottfredson, and Cofnas all published continuously in academic venues, held tenured positions, sold millions of books with major publishers, and appeared on major media platforms. Criticism, peer review rejection of methodologically inadequate papers, and social consequences for public statements are features of normal scientific functioning, not suppression. The 'suppression' framing transforms standard academic scrutiny into evidence of persecution, which conveniently makes the claim unfalsifiable: any rebuttal becomes further evidence of suppression.\n\nThe inferential gap is not accidental. It does specific rhetorical work: it allows the claim to appear grounded in uncontested facts (score gaps are real) while the contested part (genetic causation) is smuggled in as an implication. A reader who accepts the facts and does not know the within/between heritability distinction walks away believing the genetic conclusion is supported by the factual foundation. The smuggling is the technique.",
+    "feasibility_check": "The suppression claim is not plausible given the documented publication record.\n\nArthur Jensen published in Harvard Educational Review, Psychological Review, and major scientific journals throughout his career until his death in 2012.\n\nJ. Philippe Rushton held a tenured professorship at the University of Western Ontario until his death in 2012. He was never fired despite repeated controversy.\n\nRichard Lynn published in peer-reviewed journals including Intelligence throughout his career and holds an emeritus position at Ulster.\n\nCharles Murray's 'The Bell Curve' sold 300,000+ copies through Free Press (Simon & Schuster) and was reviewed in every major US publication including the New York Times, The New Yorker, and The New Republic.\n\nNathan Cofnas has published in Biology & Philosophy and Philosophical Psychology, both standard peer-reviewed academic journals.\n\nLinda Gottfredson published the 1994 WSJ statement with 52 signatories and has published in mainstream journals continuously.\n\nWhat is described as suppression is: (a) critical peer review rejecting papers with methodological inadequacies, (b) professional reputational consequences for public statements (Watson 2007: 'Africans are genetically less intelligent'), and (c) social controversy. These are features of normal scientific and public discourse.\n\nThe strongest documented case of ideological funding distorting race science is the Pioneer Fund itself, not mainstream academia. The fund was founded with explicit eugenic and white-separatist goals in 1937 and funded the hereditarian network for six decades with ideologically committed resources. The claim that academia is ideologically distorting science in this domain applies with greater documentary evidence to the funding apparatus behind the claim than to the mainstream institutions the claim accuses.",
+    "commercial_motives": "Follow the money. The belief that racial IQ gaps are primarily genetic and that this is being suppressed is not a neutral scientific hypothesis circulating on its merits. It is a product with a supply chain, a distribution network, and specific beneficiaries who profit materially or politically from its circulation.\n\nPioneer Fund\n\nideological\n\nThe Pioneer Fund exists to fund eugenics research and oppose Black civil rights. Every paper it funds, every journal article it supports, every researcher whose career it sustains is a fulfillment of its founding purpose. The fund's endowment (~$5M under Rushton's presidency) is preserved and legitimized by the continued production of hereditarian research output. Without a living research program, the fund's purpose is exhausted.\n\nPioneer Fund -> Jensen (decades of grants) -> Rushton (decades of grants, president 2002) -> Lynn (grants) -> Gottfredson (grants) -> Mankind Quarterly (coordination)\n\nConservative think tanks (AEI, Manhattan Institute, Bradley Foundation)\n\npolitical and financial\n\nThe genetic IQ claim provides intellectual justification for three high-value policy positions: opposing affirmative action (if gaps are genetic, racial preferences are unjust), opposing welfare expansion (if poverty is genetic, redistribution is futile), and supporting immigration restriction (if national IQ differences are genetic, importing low-IQ populations is harmful). These positions align directly with the donor base of AEI, Manhattan Institute, and Heritage Foundation. Bradley Foundation funded Murray's AEI position for decades (documented in Murray's own acknowledgments). The policy utility is direct: one claim supports three major legislative agendas.\n\nBradley Foundation -> AEI Fellow salary for Murray -> Bell Curve -> policy infrastructure -> legislative advocacy\n\nMass market publishing (Free Press / Simon & Schuster)\n\nfinancial\n\nBell Curve sold 300,000+ copies. Controversy drives sales. The book was published with major marketing infrastructure by a mainstream publisher precisely because the controversy guaranteed sales. Publishers do not require the claim to be true; they require it to be controversial and to reach an audience.\n\nFree Press -> Bell Curve publication -> 300,000+ copies -> author royalties -> AEI amplification\n\nSubstack and podcast ecosystem (Cofnas, Winegard, Kirkegaard, Dutton)\n\ndirect financial\n\nThis is the most transparent commercial motive in the contemporary ecosystem. Substack enables direct subscriber monetization. Nathan Cofnas's 'Wrong Side of History' newsletter monetizes 'suppressed science' content directly. Edward Dutton ('The Jolly Heretic') monetizes YouTube/Substack. Bo Winegard monetizes persecution narrative after being fired from Marietta College. The critical structural feature: deplatforming events increase subscriber counts. The business model is literally: controversy and persecution -> audience growth -> subscription revenue. The incentive is to maintain and amplify the persecution narrative regardless of its accuracy.\n\nControversy / deplatforming event -> new subscribers -> subscription revenue -> more controversial content -> more subscribers\n\nAlt-right and white nationalist media (VDare, American Renaissance, Stormfront)\n\nideological and financial\n\nThese venues use the hereditarian academic lineage to appear scientifically grounded. The IQ claim provides a quasi-scientific anchor for white racial grievance politics and for arguing that anti-white discrimination is unjustified. Conference revenue (American Renaissance Conference), subscriptions, donations, and speaker fees depend on maintaining an audience that believes the claim. The 'scientific' framing -- citing Jensen, Rushton, and the Gottfredson statement -- is the primary legitimization mechanism.\n\nAcademic lineage (Jensen -> Rushton -> Gottfredson) -> VDare / AmRen citation -> audience legitimization -> donations / conference revenue\n\nSilicon Valley libertarian-meritocracy ideology\n\nideological\n\nIf the observed hierarchy of outcomes -- who leads tech companies, who earns the most, who holds the most credentials -- reflects natural cognitive differences that are partly genetic, then the current hierarchy is legitimate and requires no structural intervention. This is not a financial motive for most individuals but a powerful ideological motive. Accepting the genetic IQ claim is a way of explaining and justifying existing hierarchies without requiring scrutiny of structural factors. For people who benefit from current hierarchies, this is an attractive conclusion regardless of its evidentiary basis.\n\nIdeological convenience -> amplification in rationalist / tech communities -> normalization -> resistance to equity programs -> maintenance of current hierarchy\n\nMainstream podcast amplifiers (Peterson, Rogan, Fridman)\n\nfinancial (audience engagement)\n\nControversy drives engagement. The 'forbidden knowledge' frame generates higher listen-through rates, more shares, and more subscriptions than mainstream topics. These amplifiers are not ideologically committed hereditarian actors, but their business model rewards controversy. Millions of listeners encounter the genetic IQ claim through these platforms without the Pioneer Fund funding history or the Pioneer Fund network's ideological goals.\n\nControversial content -> engagement metrics -> advertising revenue / Spotify deals / Patreon -> incentive to repeat\n\nBefore accepting a belief, it is worth asking: who profits from me holding this belief? In this case, the beneficiaries include a eugenics endowment, conservative think tanks opposing welfare and affirmative action, alt-right media organizations, Substack creators whose income grows with persecution narratives, and commercial podcast platforms that profit from controversy. None of these beneficiaries need the belief to be true. They need it to be believed.",
+    "techniques_revealed": [
+      {
+        "technique": "Cherry Picking",
+        "how_it_works": "Selecting only the evidence that supports your conclusion while ignoring the evidence that contradicts it.",
+        "used_by": "Hereditarian academic network",
+        "where_used_here": "The hereditarian claim cherry-picks within-group heritability data (which is real) while systematically omitting the Flynn Effect, the Black-white gap narrowing, adoption study results, stereotype threat research, and the GWAS cross-population failure. Each of these omitted findings directly contradicts the genetic causation hypothesis. A reader who sees only the selected evidence will reach a different conclusion than a reader who sees all of it.",
+        "historical_precedent": "Tobacco industry selecting favorable studies while suppressing unfavorable ones (Oreskes & Conway 2010)",
+        "pattern_type": "systematic"
+      },
+      {
+        "technique": "Distort Facts",
+        "how_it_works": "Taking real findings and subtly changing what they say.",
+        "used_by": "Hereditarian network",
+        "where_used_here": "The Gottfredson 1994 statement (52 signatories) is cited as endorsing genetic causation. It explicitly did not. Read the document yourself.; Jensen's narrow finding that IQ items show no differential item functioning by race is generalized into 'tests are unbiased measures of innate genetic ability'. These are completely different claims.; Lynn's cross-national IQ data uses malnourished, low-schooling, colonized samples as national population means. Wicherts et al. 2010 documented this. The corr",
+        "historical_precedent": "",
+        "pattern_type": "systematic"
+      },
+      {
+        "technique": "Conspiracy Theory Frame",
+        "how_it_works": "Framing any institutional rebuttal as proof of the conspiracy, making the claim unfalsifiable.",
+        "used_by": "Hereditarian network",
+        "where_used_here": "When peer reviewers reject hereditarian papers for methodological inadequacy, this is cited as suppression rather than quality control.; When James Watson faces professional consequences for saying Africans are genetically less intelligent, this is cited as thought policing rather than normal reputational consequences.; The structural problem: if any criticism proves suppression, the claim cannot be falsified. A claim that cannot be falsified is not scientific.",
+        "historical_precedent": "",
+        "pattern_type": "systematic"
+      },
+      {
+        "technique": "Seed Distortions",
+        "how_it_works": "Embedding false background assumptions early so later false conclusions seem to follow naturally.",
+        "used_by": "Hereditarian network",
+        "where_used_here": "Treating racial categories as biologically meaningful for population genetics (contradicted by AAA 1998 and ASHG 2018 consensus) is assumed rather than argued.; Treating IQ score gaps as equivalent to innate ability gaps is assumed rather than established.; The uncontested fact (score gaps exist) is used to seed the false conclusion (gaps are genetic).",
+        "historical_precedent": "",
+        "pattern_type": "systematic"
+      },
+      {
+        "technique": "Competing Narrative Infrastructure",
+        "how_it_works": "Building a parallel publication system that looks like science but skips the quality controls.",
+        "used_by": "Hereditarian network",
+        "where_used_here": "Mankind Quarterly (founded 1960) mimics academic journal form without standard peer review, allowing claims to accumulate citation infrastructure.; Emil Kirkegaard's OpenPsych is the contemporary version: self-published journals without standard review.; The Gottfredson WSJ statement (in a newspaper, not a journal) is cited as if it were a scientific consensus document.",
+        "historical_precedent": "",
+        "pattern_type": "systematic"
+      },
+      {
+        "technique": "Persecution Narrative Monetization",
+        "how_it_works": "Making money from the story that you are being silenced.",
+        "used_by": "Hereditarian network",
+        "where_used_here": "Substack newsletters titled 'Wrong Side of History' and 'The Jolly Heretic' earn subscription revenue from the 'forbidden knowledge' frame.; Deplatforming events generate subscriber spikes. The business model rewards persecution, not accuracy.; This is the contemporary layer of the ecosystem: the suppression narrative is now a product with a price.",
+        "historical_precedent": "",
+        "pattern_type": "systematic"
+      },
+      {
+        "technique": "Amplify Legitimate Concerns",
+        "how_it_works": "Taking a real and valid concern and using it to legitimize a false claim.",
+        "used_by": "Hereditarian network",
+        "where_used_here": "Academic groupthink is a real problem with genuine examples (Lysenko affair, replication crisis). This real concern is amplified to cover a specific false narrative about race science suppression.; Ideological funding distorting research is a real problem. The irony is that the strongest documented case is the Pioneer Fund itself.; The real concern validates the feeling; the false claim rides on that validation.",
+        "historical_precedent": "",
+        "pattern_type": "incidental"
+      }
+    ],
+    "perception_gap": "Brave scientists are following evidence wherever it leads, and a politically correct academy is suppressing findings that make progressives uncomfortable. The 52-signatory statement proves there is a suppressed consensus. The fact that people react so strongly to this research proves they know it is true and are afraid of it.\n\nA small network of ideologically funded researchers with documented connections to eugenics organizations has spent sixty years trying to establish a claim that the evidence does not support, using publication venues that mimic science without its quality controls, and framing legitimate scientific criticism as political persecution.\n\nThe hereditarian perception misses the documented funding history and the Pioneer Fund's ideological origins. The mainstream perception sometimes dismisses sincere questioners who are not part of the network and who deserve a direct, honest engagement with the evidence rather than a conversation-stopping accusation of racism. Both perceptions have become tribal markers rather than epistemic tools.\n\nWhat actually causes the documented achievement gaps, and what interventions would genuinely help? This is the question that gets buried under the genetics debate. Both sides claim to care about the answer. Getting to that shared ground requires naming the manipulation that has kept the debate stuck.",
+    "moral_foundations": {
+      "hereditarian_side": [
+        "Care (concern for honest science serving human welfare)",
+        "Fairness (merit should be measured accurately)",
+        "Authority (scientific expertise and method should govern claims)",
+        "Liberty (freedom from ideological gatekeeping of inquiry)"
+      ],
+      "mainstream_side": [
+        "Care (concern for harm to dignity and opportunity of affected groups)",
+        "Fairness (structural inequalities, not genetics, explain outcomes)",
+        "Sanctity (human dignity is not reducible to test scores)",
+        "Equality (equal human worth regardless of measured differences)"
+      ],
+      "bridge_note": "Both sides invoke Care and Fairness -- they simply disagree about what harm is primary (harm to scientific freedom vs. harm to human dignity from false biological hierarchy claims) and what fairness requires (freedom to publish vs. structural remedy for documented inequalities). These are not incompatible concerns. A science that is both free from ideological funding and responsive to human dignity is the shared goal."
+    },
+    "reframe": "Everyone who takes this question seriously wants the same thing at the deepest level: they want people to succeed or fail based on what they actually do and learn, not based on circumstances of birth. The disagreement is about which circumstances matter most and which are changeable. The evidence strongly suggests that environmental circumstances are highly changeable -- and that the primary obstacle to acting on that evidence has been a sixty-year campaign, funded by a eugenics endowment, to make biological determinism seem like the scientifically courageous position.\n\nIf the documented achievement gaps between racial groups in the United States are primarily caused by environmental and historical factors -- lead exposure, school quality differences, wealth gaps compounding over generations, stereotype threat, epigenetic effects of chronic stress -- then what would it take to close them? And why has so much institutional energy gone into the genetic hypothesis rather than the environmental interventions that adoption studies and Flynn Effect data suggest would actually work?",
+    "socratic_dialogue": [
+      "I hear you valuing honest, uncensored science, and I think that is genuinely important. You are looking at IQ score data and seeing patterns that seem to be systematically ignored. That frustration with institutions telling you what you are allowed to think about is real, and shared by people across the political spectrum. The score gaps you are pointing to are documented. The APA, Brookings, and multiple meta-analyses all confirm they exist. You are not imagining them.",
+      "Here is something worth looking into yourself: There is a pattern called Cherry Picking, where someone shows you real data but leaves out the context that would change your conclusion. The IQ gaps are real, but consider the Flynn Effect: IQ scores rose roughly 30 points over the 20th century across every tested population. That is a larger change than the between-group gap, and it happened in about three generations, which is too fast for genetic change. If environment can move IQ scores by 30 points in 80 years, what does that tell us about a 15-point gap between groups who have lived in vastly different environments for centuries?",
+      "Both sides of this debate share something important: a genuine desire to understand why educational outcomes differ and what we can actually do about it. The hereditarian framing says 'it is genetic, so stop wasting money on interventions.' The environmental framing says 'it is structural, so invest in interventions.' But if we follow the evidence on what actually works, both sides would want the same thing: early childhood programs, reduced lead exposure, better nutrition, and reduced poverty, because those are the interventions with the strongest evidence of raising cognitive outcomes across all groups. What would it look like to focus our energy there?"
+    ]
+  },
+  "audit": {
+    "verdict": "pass_with_warnings",
+    "findings": [
+      {
+        "category": "accuracy",
+        "severity": "medium",
+        "description": "The Gottfredson Wall Street Journal statement date is cited inconsistently across files. The intelligence.json and bridge.json files describe it as a '1994' statement; the origins file references it as both '1994' and '2003' in different sub-claims (SC-01-03 propagation path says 'WSJ op-ed (1994)'; SC-01-04 earliest_source names 'Gottfredson WSJ 2003'). These are actually two different documents: Gottfredson organized the 1994 statement ('Mainstream Science on Intelligence', Wall Street Journal, Dec 13 1994) and co-authored a 2003 restatement. Conflating them or mislabeling either weakens the evidentiary chain, because the original is the one most frequently cited as consensus evidence for genetic causation. The analysis does not clearly distinguish between the two.",
+        "recommendation": "Verify which Gottfredson statement each citation refers to and label them distinctly (1994 original vs. 2003 follow-up). The factual record should not have internally inconsistent dates for the same claimed document."
+      },
+      {
+        "category": "accuracy",
+        "severity": "medium",
+        "description": "Jensen's credibility score of 0.25 and the framing of his work are broadly defensible, but one specific accuracy claim is overstated: the analysis states Jensen's 1969 paper 'was not peer-reviewed by standard process'. This is asserted as fact in the intelligence.json actor record. Harvard Educational Review was student-edited, which is unconventional for a research article of this scope, but the claim as stated ('not peer-reviewed') is stronger than what the source record supports. Tucker (2002) is cited as the basis for Pioneer Fund funding but does not appear to be cited as the source for the peer-review claim. If this is unverified, it should be flagged as such rather than stated as established.",
+        "recommendation": "Either cite the specific source documenting HER's review process for the Jensen paper, or qualify the claim as 'published in a student-edited journal without standard peer review' and note the evidence basis."
+      },
+      {
+        "category": "accuracy",
+        "severity": "low",
+        "description": "The analysis states GWAS polygenic scores for IQ 'do not transfer predictively to African populations', presenting this as a clean finding against the genetic hypothesis. This is directionally correct but overstated. The lower cross-ancestry transferability of European-derived PGS is real and documented, but it reflects a combination of factors: population stratification, different LD patterns, different allele frequencies, and potentially different causal variants. It is consistent with but does not definitively rule out the genetic hypothesis for group differences -- it primarily shows the current PGS tools are population-specific. The analysis treats this as stronger evidence of environmental causation than it technically is.",
+        "recommendation": "Qualify the GWAS finding: 'European-derived polygenic scores show substantially reduced predictive validity in African-ancestry populations; this is most consistent with population-specific LD structure and environmental confounding rather than shared causal genetic architecture, but does not in itself rule out genetic contributions to group differences.'"
+      },
+      {
+        "category": "bias",
+        "severity": "medium",
+        "description": "The treatment of Nathan Cofnas is notably heavier than it needs to be given his actual epistemic position. Cofnas is assigned credibility 0.28, which is defensible. However, his Substack monetization is explicitly cited as a motivation in a way that implies commercial interest undermines his academic work. His peer-reviewed publications (Biology & Philosophy, Philosophical Psychology) are legitimate venues. The analysis correctly notes he is distinct from the Rushton/Lynn tier, but the consistent pairing of his academic arguments with his Substack income risks a mild ad hominem pattern: conflating the quality of his peer-reviewed arguments with his business model. His philosophical 'default hypothesis' framing deserves direct rebuttal on its merits (which the bridge.json does provide) rather than primarily being contextualized by subscriber counts.",
+        "recommendation": "In the techniques_revealed and TTP sections, distinguish more clearly between the epistemic quality of Cofnas's peer-reviewed arguments (which deserve direct engagement) and the broader Substack ecosystem's monetization of persecution narratives. The 'default hypothesis' framing is worth rebutting philosophically -- the bridge.json does this well in the inferential_gap section, but the intelligence.json framing leans too heavily on commercial motive."
+      },
+      {
+        "category": "bias",
+        "severity": "low",
+        "description": "The analysis includes 'Silicon Valley Rationalist and Libertarian Community' as an actor with a 'funds' relationship to the Substack ecosystem at confidence 0.55. The evidence note itself says 'Thiel-specific funding links to hereditarian content are not fully documented in the source material; this is partially inferred.' A confidence-0.55 funding relationship with an explicitly flagged speculative basis should either be upgraded to an 'amplifies' relationship (which the evidence would support) or clearly labeled as speculative inference rather than documented funding. Presenting this as a 'funds' relation at 0.55 risks creating a misleading impression of a documented financial network that does not actually exist in the record.",
+        "recommendation": "Change the relation_type from 'funds' to 'amplifies' for the Silicon Valley -> Substack link, or add a 'speculative' flag to the relation record consistent with how the actor evidence section hedges it."
+      },
+      {
+        "category": "completeness",
+        "severity": "medium",
+        "description": "The analysis correctly acknowledges within-group heritability as real and high (0.50-0.80 in adults), which is an important concession to the hereditarian position. However, the hereditarian side's strongest current argument -- Cofnas's 'default hypothesis' framing, which argues that without a specific environmental mechanism explaining the gap, the genetic hypothesis should be the null -- is addressed in the bridge.json's inferential_gap section but is not substantively engaged in the TTP analysis or the origins file. The TTP file identifies this framing as 'T0004 Competing Narrative' rather than engaging it as a philosophical argument about burden of proof, which is where its actual force lies. A sophisticated reader familiar with Cofnas's published work would note this.",
+        "recommendation": "Add a direct engagement with the burden-of-proof argument in the origins or bridge file: explain why the standard scientific burden of proof places the genetic hypothesis as the one requiring positive evidence (specific causal variants, cross-ancestry PGS transfer, candidate gene mechanisms), not the environmental hypothesis. The bridge.json's 'exact inferential leap' section partially does this but does not name Cofnas's specific framing."
+      },
+      {
+        "category": "completeness",
+        "severity": "medium",
+        "description": "The counter-evidence section documents the Flynn Effect and adoption studies well. However, the Minnesota Transracial Adoption Study follow-up (Weinberg, Scarr, Waldman 1992) is mentioned only in passing with a methodological caveat. This is the most-cited hereditarian counter-evidence to the adoption argument. The analysis notes 'high attrition and adolescent identity development' but does not engage the specific numbers (the Black adoptees' scores did regress toward the Black mean in the follow-up). A reader who knows the 1992 follow-up will feel this important piece of counter-counter-evidence is underweighted. The analysis should either engage it more fully or explicitly acknowledge its significance to the debate.",
+        "recommendation": "Expand the adoption study section to directly address the Weinberg et al. 1992 follow-up results: acknowledge the regression finding, note the methodological limits (attrition rate, sample size, timing), and explain why the early childhood results remain the stronger evidence. Do not appear to hide a finding that sophisticated readers will know."
+      },
+      {
+        "category": "completeness",
+        "severity": "low",
+        "description": "The analysis does not engage the behavioral genetics finding that heritability of IQ increases substantially with age and socioeconomic advantage (Turkheimer et al. 2003): in impoverished environments, heritability of IQ is low; in affluent environments it is high. This finding is directly relevant to the group differences debate because it predicts that measured group heritability will be suppressed by the environmental disadvantages that are more prevalent in lower-SES groups -- meaning high within-group heritability in white middle-class samples says even less about causes of between-group gaps than the standard analysis suggests. This strengthens the environmental case further and is a legitimate extension of what the analysis presents.",
+        "recommendation": "Add a brief note in the consensus_explanation section or the within_vs_between_heritability subsection citing Turkheimer et al. 2003 and its implication: heritability estimates from advantaged white samples cannot be generalized even within that group, let alone across groups with different environmental distributions."
+      },
+      {
+        "category": "manipulation",
+        "severity": "low",
+        "description": "The 'who benefits' commercial_motives section in bridge.json is largely well-executed, but the closing question -- 'None of these beneficiaries need the belief to be true. They need it to be believed.' -- while rhetorically effective, comes close to implying that no one holds the genetic hypothesis in good faith. The analysis does acknowledge sincere questioners separately, and the bridge.json's Socratic dialogue handles them with appropriate dignity. But the commercial_motives section's framing could, in isolation, be read as implying the entire hereditarian academic tradition is cynically motivated rather than being a mix of ideologically-funded bad actors, genuinely mistaken researchers, and legitimate edge-case scientific inquiry. This framing risk is low but worth noting given the 'who benefits' section's prominent placement.",
+        "recommendation": "Add a brief clarifying sentence in the commercial_motives section distinguishing between the funding and distribution infrastructure (where commercial motives are documented) and individual researchers (some of whom hold the position based on evidence they find genuinely compelling, even if that evidence is evaluated as insufficient by the mainstream). This protects the analysis from appearing to make a blanket bad-faith accusation."
+      },
+      {
+        "category": "quality",
+        "severity": "low",
+        "description": "The Socratic dialogue in bridge.json follows the Costello protocol structurally (validate concern, name technique with verifiable counter-evidence, bridge to shared goals). The three rounds are appropriately sequenced. However, Round 2 names 'Cherry Picking' as the technique but then immediately provides the Flynn Effect counter-evidence in the same round, which may feel confrontational to a questioner who has not yet acknowledged the framing. The Costello protocol works best when technique-naming and evidence-provision are calibrated to the interlocutor's readiness. Providing corrective evidence before the interlocutor has signaled interest in updating risks defensive reactions. The round's question at the end ('Does that pattern change how you are thinking?') partially mitigates this by staying curious.",
+        "recommendation": "Consider splitting Round 2 into two beats: first, ask a Socratic question that invites the interlocutor to grapple with the Flynn Effect on their own terms (e.g., 'Have you come across the Flynn Effect in what you have been reading?') before providing the counter-evidence. This lowers the confrontational temperature without sacrificing the epistemic content."
+      },
+      {
+        "category": "quality",
+        "severity": "low",
+        "description": "The decomposition.json classifies sub-claim SC-01-04 ('The genetic explanation constitutes a scientific finding') as 'verifiable: false'. This is a classification error: the question of whether a claim constitutes a scientific finding is itself an empirical and methodological question that is verifiable through examination of the evidentiary record. The correct classification would be 'verifiable: true' with status 'not_established' (consistent with how SC-01-03 is handled). The 'verifiable: false' classification may cause downstream processing to treat this sub-claim differently from the other empirical sub-claims.",
+        "recommendation": "Change decomposition.json SC-01-04 'verifiable' from false to true, consistent with its type='opinion' but also consistent with the fact that whether something meets the threshold for 'scientific finding' is an assessable empirical question. The 'unverified_opinion' status in origins.json is appropriate; the decomposition classification should align."
+      }
+    ],
+    "confidence_adjustment": 0.05,
+    "veto": false,
+    "summary": "This is a thorough, well-sourced, and structurally sound disinformation analysis. The core epistemic distinction -- between 'score gaps are documented' (true) and 'gaps are primarily genetic' (not established) -- is maintained clearly throughout all five files. The within-group / between-group heritability distinction is explained accurately and attributed correctly to the APA 1996 task force and Jensen's own 1969 acknowledgment. The hereditarian position is not straw-manned: within-group heritability, test predictive validity, and the reality of score gaps are all explicitly conceded. Sincere questioners are identified as a distinct actor class and treated with dignity in the bridge.json Socratic dialogue. The 'who benefits' analysis is honest about speculative vs. documented claims in most cases.\n\nThe findings above are primarily calibration issues rather than structural errors. The most consequential are: (1) the inconsistent dating of the Gottfredson statement, which could be exploited by informed critics to challenge the analysis's accuracy; (2) the underengagement with the Weinberg et al. 1992 adoption study follow-up, which is the hereditarian side's strongest counter to the adoption evidence; (3) the Cofnas commercial-motive framing, which risks mild ad hominem drift in the TTP analysis even though the bridge.json handles his arguments more fairly; and (4) the speculative 'funds' relationship assigned to Silicon Valley, which should be downgraded to 'amplifies'.\n\nNone of these findings rise to the level requiring a veto or a fail verdict. The analysis passes with warnings. A revision addressing the four medium-severity findings would bring the analysis to a level where it could be presented to a broad audience including people already familiar with the hereditarian literature without providing easy technical handles for dismissal."
+  }
+}

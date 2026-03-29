@@ -257,6 +257,35 @@ SCENARIOS = [
                  "science. Common ground: accountable government, sustainable "
                  "immigration policy, honest media.",
     },
+
+    # --- Science Controversy ---
+    {
+        "id": "SC-01",
+        "claim": (
+            "IQ differences between racial groups are primarily genetic, "
+            "and this scientific finding is being suppressed by mainstream "
+            "academia due to political correctness."
+        ),
+        "category": "science_controversy",
+        "difficulty": "hard",
+        "kernel_of_truth": True,
+        "expected_needs": ["truth", "fairness", "academic_freedom", "identity", "dignity"],
+        "notes": "Tests MANUFACTURED SCIENTIFIC CONTROVERSY. Nathan Cofnas "
+                 "position. Score gaps are documented (Brookings, APA). The "
+                 "manipulation is the causal leap: 'gaps exist' to 'genetics "
+                 "explains them' while suppressing environmental evidence "
+                 "(poverty, stereotype threat, educational access, epigenetics, "
+                 "Flynn effect). WHO BENEFITS: hereditarian ecosystem (Pioneer "
+                 "Fund legacy, alt-right media, political actors opposing equity "
+                 "programs). Cofnas -> Jensen/Rushton lineage -> Lynn -> Mankind "
+                 "Quarterly -> Pioneer Fund. Asymmetric weight: Cofnas is part "
+                 "of systematic academic repackaging of race science (pattern "
+                 "type: systematic). Cherry-picking is the primary technique: "
+                 "presenting score gaps without environmental context. The "
+                 "'suppression' narrative is itself a technique (manufactured "
+                 "martyrdom). Common ground: honest science, fair opportunity, "
+                 "understanding real causes of educational inequality.",
+    },
 ]
 
 

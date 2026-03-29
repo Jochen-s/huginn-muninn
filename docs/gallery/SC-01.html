@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SC-01: IQ differences between racial groups are primarily genetic, and this... &mdash; Huginn &amp; Muninn</title>
+  <meta name="description" content="6-agent AI pipeline analysis of: IQ differences between racial groups are primarily genetic, and this scientific finding is being suppressed by mainstream academia due to political...">
+  <style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy:   #1B2A4A;
+    --red:    #C0392B;
+    --teal:   #16A085;
+    --bg:     #F0F4F8;
+    --white:  #FFFFFF;
+    --amber:  #E67E22;
+    --green:  #27AE60;
+    --gray:   #5D6D7E;
+    --border: #D0D9E4;
+    --font:   -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  }
+
+  html { font-size: 16px; }
+
+  body {
+    font-family: var(--font);
+    font-weight: 400;
+    line-height: 1.6;
+    color: #2C3E50;
+    background: var(--white);
+  }
+
+  a { color: var(--teal); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  h1, h2, h3, h4 { font-weight: 700; color: var(--navy); line-height: 1.25; }
+
+  /* Layout */
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+  .content   { max-width: 800px;  margin: 0 auto; padding: 0 24px; }
+
+  /* Header */
+  .site-header {
+    background: var(--navy);
+    color: var(--white);
+    padding: 48px 0 40px;
+  }
+  .site-header h1 { color: var(--white); font-size: 2rem; margin-bottom: 8px; }
+  .site-header .subtitle {
+    font-size: 1.05rem;
+    color: #A8BCCF;
+    max-width: 680px;
+    margin-bottom: 16px;
+  }
+  .site-header .intro {
+    font-size: 0.95rem;
+    color: #8AA5BC;
+    max-width: 720px;
+    line-height: 1.7;
+  }
+
+  /* Nav bar */
+  .site-nav {
+    background: #152138;
+    padding: 10px 0;
+  }
+  .site-nav a {
+    color: #8AA5BC;
+    font-size: 0.875rem;
+  }
+  .site-nav a:hover { color: var(--white); }
+  .site-nav a.active { color: var(--white); font-weight: 600; }
+
+  /* Category sections */
+  .category-section { padding: 48px 0; border-bottom: 1px solid var(--border); }
+  .category-section:last-child { border-bottom: none; }
+
+  .category-header { margin-bottom: 24px; }
+  .category-header h2 { font-size: 1.5rem; margin-bottom: 6px; }
+  .category-header .category-intro { color: var(--gray); font-size: 0.95rem; }
+
+  /* Cards grid */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+
+  .card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    transition: box-shadow 0.15s;
+    display: flex;
+    flex-direction: column;
+  }
+  .card:hover { box-shadow: 0 4px 16px rgba(27, 42, 74, 0.12); }
+
+  .card-id {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--gray);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .card-claim {
+    font-size: 0.95rem;
+    color: #2C3E50;
+    flex: 1;
+    margin-bottom: 14px;
+    line-height: 1.5;
+  }
+
+  .card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+  }
+
+  .card-link {
+    margin-top: 14px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--teal);
+  }
+
+  /* Badges */
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+  }
+  .badge-version  { background: #EAF0F7; color: var(--navy); }
+  .badge-easy     { background: #EAF6EE; color: #1E8449; }
+  .badge-medium   { background: #FEF9E7; color: #7D6608; }
+  .badge-hard     { background: #FDEDEC; color: var(--red); }
+  .badge-kernel-true  { background: #EAF6EE; color: #1E8449; }
+  .badge-kernel-false { background: #F2F3F4; color: var(--gray); }
+  .badge-pass     { background: #EAF6EE; color: #1E8449; }
+  .badge-warnings { background: #FEF9E7; color: #7D6608; }
+  .badge-fail     { background: #FDEDEC; color: var(--red); }
+  .badge-systematic { background: #FDEDEC; color: var(--red); }
+  .badge-repeated   { background: #E8F8F5; color: var(--teal); }
+  .badge-isolated   { background: #FEF5E7; color: var(--amber); }
+
+  /* Footer */
+  .site-footer {
+    background: var(--navy);
+    color: #8AA5BC;
+    padding: 32px 0;
+    margin-top: 48px;
+    font-size: 0.875rem;
+  }
+  .site-footer a { color: #8AA5BC; }
+  .site-footer a:hover { color: var(--white); }
+
+  /* ---- Scenario page styles ---- */
+
+  .scenario-header {
+    background: var(--navy);
+    padding: 40px 0 32px;
+    color: var(--white);
+  }
+  .scenario-header .back-link {
+    font-size: 0.875rem;
+    color: #8AA5BC;
+    display: inline-block;
+    margin-bottom: 16px;
+  }
+  .scenario-header .back-link:hover { color: var(--white); }
+  .scenario-header h1 {
+    color: var(--white);
+    font-size: 1.6rem;
+    margin-bottom: 12px;
+    line-height: 1.3;
+  }
+  .scenario-header .header-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .metrics-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    margin: 24px 0;
+  }
+  .metrics-table th {
+    text-align: left;
+    background: var(--bg);
+    padding: 10px 14px;
+    font-weight: 600;
+    color: var(--navy);
+    border-bottom: 2px solid var(--border);
+  }
+  .metrics-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    color: #2C3E50;
+  }
+  .metrics-table tr:last-child td { border-bottom: none; }
+
+  .section {
+    padding: 40px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .section:last-child { border-bottom: none; }
+
+  .section h2 {
+    font-size: 1.3rem;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--bg);
+    letter-spacing: -0.01em;
+  }
+
+  .section p { margin-bottom: 16px; color: #2C3E50; }
+  .section p:last-child { margin-bottom: 0; }
+
+  .intro-note {
+    color: var(--gray);
+    font-size: 0.875rem;
+    font-style: italic;
+    margin-bottom: 16px;
+  }
+
+  /* Prose blocks: long-form text with proper paragraph spacing */
+  .prose {
+    font-size: 0.95rem;
+    line-height: 1.75;
+    color: #34495E;
+  }
+  .prose p {
+    margin-bottom: 16px;
+  }
+  .prose p:last-child { margin-bottom: 0; }
+
+  /* Needs pills */
+  .needs-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .need-item {
+    background: var(--bg);
+    border-left: 3px solid var(--teal);
+    padding: 10px 14px;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+  .need-name {
+    font-weight: 700;
+    color: var(--navy);
+    margin-right: 6px;
+  }
+
+  /* Technique cards */
+  .technique-card {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+  .technique-header {
+    background: var(--bg);
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .technique-name {
+    font-weight: 700;
+    color: var(--navy);
+    font-size: 1rem;
+    flex: 1;
+  }
+  .technique-body { padding: 16px; }
+  .technique-field { margin-bottom: 14px; }
+  .technique-field:last-child { margin-bottom: 0; }
+  .technique-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--gray);
+    margin-bottom: 4px;
+  }
+  .technique-text { font-size: 0.9rem; color: #2C3E50; line-height: 1.6; }
+
+  /* Socratic dialogue */
+  .dialogue-round { margin-bottom: 28px; }
+  .dialogue-round:last-child { margin-bottom: 0; }
+  .round-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 10px;
+  }
+  .round-1 .round-label { color: var(--teal); }
+  .round-2 .round-label { color: var(--navy); }
+  .round-3 .round-label { color: #6C3483; }
+
+  .dialogue-bubble {
+    padding: 20px 24px;
+    border-radius: 8px;
+    font-size: 0.92rem;
+    line-height: 1.75;
+  }
+  .dialogue-bubble p { margin-bottom: 12px; }
+  .dialogue-bubble p:last-child { margin-bottom: 0; }
+  .round-1 .dialogue-bubble { background: #EAF7F4; border-left: 4px solid var(--teal); }
+  .round-2 .dialogue-bubble { background: #EAF0F7; border-left: 4px solid var(--navy); }
+  .round-3 .dialogue-bubble { background: #F5EEF8; border-left: 4px solid #6C3483; }
+
+  /* Reframe */
+  .reframe-block {
+    border-left: 4px solid var(--amber);
+    background: #FEF9E7;
+    padding: 20px 20px 20px 24px;
+    border-radius: 0 8px 8px 0;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    font-style: italic;
+    color: #2C3E50;
+  }
+
+  /* Audit findings */
+  .audit-summary {
+    background: var(--bg);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 16px;
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+  .findings-list { list-style: none; }
+  .finding-item {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+  .finding-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: var(--bg);
+    cursor: default;
+  }
+  .finding-category {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--gray);
+  }
+  .finding-severity-low    { color: var(--teal); font-size: 0.75rem; font-weight: 600; }
+  .finding-severity-medium { color: var(--amber); font-size: 0.75rem; font-weight: 600; }
+  .finding-severity-high   { color: var(--red); font-size: 0.75rem; font-weight: 600; }
+  .finding-description { font-size: 0.875rem; color: #2C3E50; }
+  .finding-body { padding: 10px 14px; border-top: 1px solid var(--border); }
+  .finding-rec {
+    font-size: 0.8rem;
+    color: var(--gray);
+    margin-top: 4px;
+  }
+  .finding-rec strong { color: #2C3E50; }
+
+  /* Scenario navigation */
+  .scenario-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 0;
+    border-top: 1px solid var(--border);
+    margin-top: 16px;
+    gap: 16px;
+  }
+  .scenario-nav a {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--teal);
+  }
+  .scenario-nav .disabled { color: var(--gray); pointer-events: none; }
+
+  /* Responsive */
+  /* Evaluation methodology table */
+  .evaluation-section { background: #FAFBFD; margin: 0 -32px; padding: 40px 32px; border-bottom: 1px solid var(--border); }
+  .eval-summary { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+  .eval-overall { font-size: 2rem; font-weight: 700; color: var(--navy); }
+  .eval-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  .eval-table th { text-align: left; padding: 10px 12px; border-bottom: 2px solid var(--border); color: var(--gray); font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; }
+  .eval-table td { padding: 10px 12px; border-bottom: 1px solid #EEF1F5; }
+  .eval-table td:first-child { font-weight: 600; text-transform: capitalize; }
+  .eval-weight, .eval-score { text-align: center; font-variant-numeric: tabular-nums; }
+  .eval-status { text-align: center; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.04em; }
+  .eval-pass .eval-status { color: var(--green); }
+  .eval-partial .eval-status { color: var(--amber); }
+  .eval-fail .eval-status { color: var(--red); }
+  .eval-desc { color: var(--gray); font-size: 0.8rem; }
+  .eval-note { margin-top: 16px; font-size: 0.82rem; color: var(--gray); line-height: 1.6; }
+
+  @media (max-width: 640px) {
+    .site-header h1 { font-size: 1.5rem; }
+    .cards-grid { grid-template-columns: 1fr; }
+    .scenario-header h1 { font-size: 1.3rem; }
+    .scenario-nav { flex-direction: column; align-items: flex-start; }
+    .metrics-table { font-size: 0.8rem; }
+    .metrics-table th, .metrics-table td { padding: 8px 10px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a href="index.html">Gallery</a>
+    <a href="graph.html">Knowledge Graph</a>
+  </div>
+</nav>
+
+<header class="scenario-header">
+  <div class="content">
+    <a class="back-link" href="index.html">&larr; Back to gallery</a>
+    <h1>SC-01: IQ differences between racial groups are primarily genetic, and this scientific finding is being suppressed by mainstream academia due to political correctness.</h1>
+    <div class="header-meta">
+      <span class="badge badge-version">v5</span>
+      <span class="badge badge-hard">Hard</span>
+      <span class="badge badge-kernel-true">Kernel of Truth</span>
+      <span class="badge badge-version">Science Controversy</span>
+    </div>
+  </div>
+</header>
+
+<main class="content">
+
+  <div class="section">
+    <h2>Pipeline Metrics</h2>
+    <table class="metrics-table">
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Sub-claims</td><td>10</td></tr>
+        <tr><td>Actors identified</td><td>20</td></tr>
+        <tr><td>TTP matches</td><td>9</td></tr>
+        <tr><td>Audit verdict</td><td><span class="badge badge-warnings">PASS WITH WARNINGS</span></td></tr>
+        <tr><td>Pipeline version</td><td>v5</td></tr>
+        <tr><td>Overall confidence</td><td>90%</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2>Universal Needs</h2>
+    <p class="intro-note">The legitimate human needs this claim speaks to, regardless of whether the claim is accurate.</p>
+    <div class="needs-list"><div class="need-item">truth</div><div class="need-item">fairness</div><div class="need-item">academic_freedom</div><div class="need-item">dignity</div><div class="need-item">identity</div><div class="need-item">dignity</div></div>
+  </div>
+
+  <div class="section">
+        <h2>Scientific Consensus / Mainstream Explanation</h2>
+        <p class="intro-note">The established scientific or institutional explanation for this phenomenon.</p>
+        <div class="prose"><p>The established behavioral genetics and cognitive science position, as represented by the APA 1996 task force and Nisbett et al. 2012 American Psychologist review, holds that the cause of between-group IQ score differences is not genetically established and is most parsimoniously explained by environmental, historical, and socioeconomic factors. Here is the substantive evidence.</p>
+<p>IQ scores have risen approximately 3 points per decade throughout the 20th century across every tested population (Flynn 1984, 1987 Psychological Bulletin). This means the average person in 1900 would score roughly 30 points lower on today&#39;s tests -- a staggering magnitude that cannot be explained by genetic change, which operates on timescales of thousands of years, not decades. The Flynn Effect is the single most powerful evidence that the IQ phenotype is highly environmentally plastic. If IQ were primarily genetically fixed, this generational rise would be impossible.</p>
+<p>Dickens and Flynn (2006, Psychological Science) documented that the Black-white IQ gap in the United States narrowed by approximately 4-7 points between 1970 and 2000. This narrowing is too rapid for genetic causation. Genetic composition of populations does not change measurably in 30 years. The narrowing directly implicates environmental improvements -- reduced lead exposure, improved school quality, reduced poverty rates, reduced explicit discrimination -- as causal factors.</p>
+<p>IQ gains of 30+ points per century are incompatible with genetic explanation; genes cannot change that fast</p>
+<p>The Black-white gap has narrowed measurably in a single generation, ruling out primarily genetic causation</p>
+<p>Every population shows Flynn gains when environmental conditions improve, regardless of ancestry</p>
+<p>The transracial adoption studies provide the closest thing to a natural experiment on this question. Scarr and Weinberg (1976) found that Black and mixed-race children adopted into white middle-class families showed IQ scores substantially above the Black average and approaching or reaching the white average. Moore (1986) found that Black children adopted by white families scored 13 points higher than Black children adopted by Black working-class families. These studies directly demonstrate environmental plasticity. The hereditarian counter-argument (that adoptees may regress to group means by adulthood) is contested and relies on methodologically problematic follow-up studies with small samples and high attrition.</p>
+<p>Weinberg, Scarr, and Waldman&#39;s follow-up (1992) showed some regression, but the sample had high attrition and the follow-up timing coincided with adolescent identity development, a known period of environmental sensitivity. The early-childhood results remain the most methodologically robust.</p>
+<p>Steele and Aronson (1995, Journal of Personality and Social Psychology) demonstrated that merely reminding Black students of their racial identity before a cognitive test significantly reduced their performance, while removing the racial prime eliminated the gap. This effect has been replicated in multiple populations and testing contexts. It demonstrates that IQ test performance is sensitive to social context, motivation, and identity threat in ways that affect the measured gap without touching genetic factors.</p>
+<p>Awareness of negative stereotypes about one&#39;s group creates cognitive load and performance anxiety. This is not about believing the stereotype -- it operates even in people who explicitly reject it. The interference is automatic and measurable in physiological stress responses.</p>
+<p>Stereotype threat research has produced practical interventions (value affirmation, growth mindset framing, identity-safe environments) that measurably reduce achievement gaps in controlled studies, providing further evidence that environmental and psychological factors are causally active.</p>
+<p>Epigenetic research shows that environmental exposures -- stress, nutrition, toxin exposure, trauma -- alter gene expression in ways that affect cognitive development and can be heritable across generations without changing DNA sequence. Adverse childhood experiences, poverty-related stress, and historical trauma can produce measurable effects on cognitive outcomes through epigenetic pathways. This is a relatively new field, but it provides a biological mechanism by which historical and social conditions could produce heritable cognitive differences without those differences being &#39;genetic&#39; in the sense hereditarian researchers mean.</p>
+<p>Lead exposure, which was disproportionately concentrated in lower-income and minority communities through leaded paint and gasoline, is estimated to have reduced IQ scores by 2-5 points in exposed populations. Reyes (2007, NBER) documented that gasoline lead phaseout in the 1970s-80s contributed to crime rate declines and cognitive improvements that were geographically and demographically correlated with exposure patterns.</p>
+<p>This is the central logical issue in the entire debate. Within-group heritability measures how much of the variation in IQ within a population is associated with genetic variation within that population. It does not -- and cannot -- tell us anything about the causes of differences between populations. Jensen himself acknowledged this distinction in his 1969 paper. The standard illustration: plant the same seeds in rich soil and in nutrient-poor soil. Within each plot, the height variation among plants will be highly heritable (same soil, same conditions -- differences come from genetics). But the difference in average height between plots is entirely due to the environment (different soil). High within-group heritability is fully compatible with the between-group difference being entirely environmental.</p>
+<p>H^2 (between-group) cannot be inferred from h^2 (within-group). This is not contested. It is textbook behavioral genetics. The hereditarian argument that high within-group heritability implies genetic between-group differences commits a logical error that population geneticists recognize and that Jensen acknowledged before committing it anyway.</p>
+<p>The American Psychological Association convened a broadly constituted task force in 1996 specifically to provide an authoritative scientific summary after the Bell Curve controversy. The report &#39;Intelligence: Knowns and Unknowns&#39; (Neisser et al., American Psychologist 1996) is the most credible single institutional statement on the question. Its conclusion regarding between-group differences: &#39;The cause of that differential is not known.&#39; The report affirmed high within-group heritability, the reality of score gaps, and the predictive validity of IQ tests, while explicitly refusing to endorse genetic causation of group differences. This is not political correctness -- it is a distinguished panel declining to assert what the evidence does not support.</p>
+<p>Nisbett, Aronson, Blair, Dickens, Flynn, Halpern, and Turkheimer&#39;s comprehensive review in American Psychologist (2012) is the most authoritative recent synthesis. Key findings: (1) the Black-white gap has narrowed substantially since the 1970s, consistent with environmental causation; (2) environmental interventions (early childhood education, reduced lead exposure, poverty reduction) produce measurable IQ gains; (3) adoption studies show large environmental effects on group-level scores; (4) genetic factors that explain within-group differences have not been shown to explain between-group differences; (5) the available evidence is most consistent with environmental causation. The review explicitly names the within-group / between-group heritability distinction as the key logical issue.</p>
+<p>Genome-wide association studies (GWAS) have identified polygenic scores for IQ using European population samples. When these scores are applied to African-ancestry populations, their predictive validity drops substantially -- not the pattern expected if the same genetic variants were driving IQ variation in both populations. This finding is more consistent with population stratification, environmental confounding, and the social construction of racial categories than with shared genetic architecture for IQ differences.</p></div>
+      </div>
+
+  <div class="section">
+        <h2>Name the Trick</h2>
+        
+    <div class="technique-card">
+      <div class="technique-header">
+        <span class="technique-name">Cherry Picking</span>
+        <span class="badge badge-systematic">[SYSTEMATIC]</span>
+      </div>
+      <div class="technique-body">
+        
+        <div class="technique-field">
+          <div class="technique-label">Used by</div>
+          <div class="technique-text">Hereditarian academic network</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">How it works</div>
+          <div class="technique-text">Selecting only the evidence that supports your conclusion while ignoring the evidence that contradicts it.</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">In this claim</div>
+          <div class="technique-text">The hereditarian claim cherry-picks within-group heritability data (which is real) while systematically omitting the Flynn Effect, the Black-white gap narrowing, adoption study results, stereotype threat research, and the GWAS cross-population failure. Each of these omitted findings directly contradicts the genetic causation hypothesis. A reader who sees only the selected evidence will reach a different conclusion than a reader who sees all of it.</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">Historical precedent</div>
+          <div class="technique-text">Tobacco industry selecting favorable studies while suppressing unfavorable ones (Oreskes &amp; Conway 2010)</div>
+        </div>
+      </div>
+    </div>
+    <div class="technique-card">
+      <div class="technique-header">
+        <span class="technique-name">Distort Facts</span>
+        <span class="badge badge-systematic">[SYSTEMATIC]</span>
+      </div>
+      <div class="technique-body">
+        
+        <div class="technique-field">
+          <div class="technique-label">Used by</div>
+          <div class="technique-text">Hereditarian network</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">How it works</div>
+          <div class="technique-text">Taking real findings and subtly changing what they say.</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">In this claim</div>
+          <div class="technique-text">The Gottfredson 1994 statement (52 signatories) is cited as endorsing genetic causation. It explicitly did not. Read the document yourself.; Jensen&#39;s narrow finding that IQ items show no differential item functioning by race is generalized into &#39;tests are unbiased measures of innate genetic ability&#39;. These are completely different claims.; Lynn&#39;s cross-national IQ data uses malnourished, low-schooling, colonized samples as national population means. Wicherts et al. 2010 documented this. The corr</div>
+        </div>
+        
+      </div>
+    </div>
+    <div class="technique-card">
+      <div class="technique-header">
+        <span class="technique-name">Conspiracy Theory Frame</span>
+        <span class="badge badge-systematic">[SYSTEMATIC]</span>
+      </div>
+      <div class="technique-body">
+        
+        <div class="technique-field">
+          <div class="technique-label">Used by</div>
+          <div class="technique-text">Hereditarian network</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">How it works</div>
+          <div class="technique-text">Framing any institutional rebuttal as proof of the conspiracy, making the claim unfalsifiable.</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">In this claim</div>
+          <div class="technique-text">When peer reviewers reject hereditarian papers for methodological inadequacy, this is cited as suppression rather than quality control.; When James Watson faces professional consequences for saying Africans are genetically less intelligent, this is cited as thought policing rather than normal reputational consequences.; The structural problem: if any criticism proves suppression, the claim cannot be falsified. A claim that cannot be falsified is not scientific.</div>
+        </div>
+        
+      </div>
+    </div>
+    <div class="technique-card">
+      <div class="technique-header">
+        <span class="technique-name">Seed Distortions</span>
+        <span class="badge badge-systematic">[SYSTEMATIC]</span>
+      </div>
+      <div class="technique-body">
+        
+        <div class="technique-field">
+          <div class="technique-label">Used by</div>
+          <div class="technique-text">Hereditarian network</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">How it works</div>
+          <div class="technique-text">Embedding false background assumptions early so later false conclusions seem to follow naturally.</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">In this claim</div>
+          <div class="technique-text">Treating racial categories as biologically meaningful for population genetics (contradicted by AAA 1998 and ASHG 2018 consensus) is assumed rather than argued.; Treating IQ score gaps as equivalent to innate ability gaps is assumed rather than established.; The uncontested fact (score gaps exist) is used to seed the false conclusion (gaps are genetic).</div>
+        </div>
+        
+      </div>
+    </div>
+    <div class="technique-card">
+      <div class="technique-header">
+        <span class="technique-name">Competing Narrative Infrastructure</span>
+        <span class="badge badge-systematic">[SYSTEMATIC]</span>
+      </div>
+      <div class="technique-body">
+        
+        <div class="technique-field">
+          <div class="technique-label">Used by</div>
+          <div class="technique-text">Hereditarian network</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">How it works</div>
+          <div class="technique-text">Building a parallel publication system that looks like science but skips the quality controls.</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">In this claim</div>
+          <div class="technique-text">Mankind Quarterly (founded 1960) mimics academic journal form without standard peer review, allowing claims to accumulate citation infrastructure.; Emil Kirkegaard&#39;s OpenPsych is the contemporary version: self-published journals without standard review.; The Gottfredson WSJ statement (in a newspaper, not a journal) is cited as if it were a scientific consensus document.</div>
+        </div>
+        
+      </div>
+    </div>
+    <div class="technique-card">
+      <div class="technique-header">
+        <span class="technique-name">Persecution Narrative Monetization</span>
+        <span class="badge badge-systematic">[SYSTEMATIC]</span>
+      </div>
+      <div class="technique-body">
+        
+        <div class="technique-field">
+          <div class="technique-label">Used by</div>
+          <div class="technique-text">Hereditarian network</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">How it works</div>
+          <div class="technique-text">Making money from the story that you are being silenced.</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">In this claim</div>
+          <div class="technique-text">Substack newsletters titled &#39;Wrong Side of History&#39; and &#39;The Jolly Heretic&#39; earn subscription revenue from the &#39;forbidden knowledge&#39; frame.; Deplatforming events generate subscriber spikes. The business model rewards persecution, not accuracy.; This is the contemporary layer of the ecosystem: the suppression narrative is now a product with a price.</div>
+        </div>
+        
+      </div>
+    </div>
+    <div class="technique-card">
+      <div class="technique-header">
+        <span class="technique-name">Amplify Legitimate Concerns</span>
+        <span class="badge badge-isolated">[ISOLATED]</span>
+      </div>
+      <div class="technique-body">
+        
+        <div class="technique-field">
+          <div class="technique-label">Used by</div>
+          <div class="technique-text">Hereditarian network</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">How it works</div>
+          <div class="technique-text">Taking a real and valid concern and using it to legitimize a false claim.</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">In this claim</div>
+          <div class="technique-text">Academic groupthink is a real problem with genuine examples (Lysenko affair, replication crisis). This real concern is amplified to cover a specific false narrative about race science suppression.; Ideological funding distorting research is a real problem. The irony is that the strongest documented case is the Pioneer Fund itself.; The real concern validates the feeling; the false claim rides on that validation.</div>
+        </div>
+        
+      </div>
+    </div>
+      </div>
+
+  
+  <div class="section">
+    <h2>Inferential Gap</h2>
+    <p class="intro-note">Where the evidence ends and the leap begins.</p>
+    <div class="prose"><p>There are documented average IQ test score differences between self-identified racial groups in the United States. IQ tests have meaningful predictive validity for educational outcomes. Within-group heritability of IQ in adults is substantial. These three facts are real and are not in serious scientific dispute.</p>
+<p>The leap is from &#39;within-group heritability is high&#39; to &#39;between-group differences are primarily genetic&#39;. This leap is a known logical fallacy in population genetics. It is the plant-in-different-soil error: within each plot, height is heritable; the difference between plots is environmental. Jensen acknowledged this gap in 1969 and crossed it anyway using an analogy rather than evidence. Every subsequent hereditarian paper has repeated the crossing without improving the evidence. The APA 1996 task force, Nisbett et al. 2012, and the broader genetics consensus identify this exact inference as the point where the claim breaks down.</p>
+<p>The secondary leap is from &#39;some people criticize this research&#39; to &#39;this research is being suppressed&#39;. Jensen, Rushton, Lynn, Gottfredson, and Cofnas all published continuously in academic venues, held tenured positions, sold millions of books with major publishers, and appeared on major media platforms. Criticism, peer review rejection of methodologically inadequate papers, and social consequences for public statements are features of normal scientific functioning, not suppression. The &#39;suppression&#39; framing transforms standard academic scrutiny into evidence of persecution, which conveniently makes the claim unfalsifiable: any rebuttal becomes further evidence of suppression.</p>
+<p>The inferential gap is not accidental. It does specific rhetorical work: it allows the claim to appear grounded in uncontested facts (score gaps are real) while the contested part (genetic causation) is smuggled in as an implication. A reader who accepts the facts and does not know the within/between heritability distinction walks away believing the genetic conclusion is supported by the factual foundation. The smuggling is the technique.</p></div>
+  </div>
+
+  <div class="section">
+    <h2>Common Ground</h2>
+    <div class="prose"><p>Opposing positions share more concrete agreement than the public debate suggests. The disagreement is concentrated at the causal inference level, not at the level of basic observations.</p>
+<p>IQ test score gaps between self-identified racial groups are real and documented</p>
+<p>Both the APA 1996 task force and hereditarian researchers agree that measured score gaps exist in US data. This is not in dispute. The disagreement is about what these gaps measure and what causes them.</p>
+<p>IQ tests have meaningful predictive validity for educational and occupational outcomes</p>
+<p>The APA 1996 report, Nisbett et al. 2012, and the hereditarian literature all accept that IQ scores predict performance outcomes better than chance. Both sides use IQ data as meaningful. The disagreement is about what IQ measures and whether gaps in scores reflect gaps in innate capacity.</p>
+<p>Ideological pressures can distort scientific research</p>
+<p>This is agreed on both sides, though the examples differ. Environmental researchers cite Pioneer Fund ideological funding of Jensen, Rushton, and Lynn over six decades as a documented case of ideology distorting science (Tucker 2002, University of Illinois Press). Hereditarian researchers cite the Lysenko affair and post-2010 replication crisis in social psychology. Both concerns are legitimate. The irony is that the strongest documented case of ideological funding distorting race science is the Pioneer Fund itself, not mainstream academia.</p>
+<p>The educational achievement gap represents a genuine and serious social problem requiring explanation</p>
+<p>Both sides agree the gap exists and that understanding its causes matters enormously for policy. The disagreement is about which causes are primary. Nisbett et al. 2012 and the hereditarian literature both treat this as a serious empirical question. The dispute is about evidence, not whether the question matters.</p>
+<p>Within-group heritability of IQ is substantial (estimates range 0.50-0.80 in adults)</p>
+<p>This is accepted in both the APA 1996 report and hereditarian literature. The APA task force affirmed high within-group heritability. The critical disagreement is that within-group heritability cannot be extrapolated to between-group differences -- a point Jensen himself acknowledged in 1969 before making the inference anyway.</p>
+<p>The actual scientific disagreement is narrow and precise: whether between-group IQ score differences are primarily caused by genetic factors or primarily by environmental, historical, and socioeconomic factors. This is an empirical question that has not been resolved by the available evidence. The APA 1996 task force concluded: &#39;The cause of that differential is not known.&#39; That conclusion -- honest acknowledgment of genuine uncertainty -- is where the evidence currently sits.</p></div>
+  </div>
+
+  <div class="section">
+    <h2>Narrative Deconstruction</h2>
+    <div class="prose"><p>The same underlying concern -- &#39;is academic science being honest with us?&#39; -- was deliberately split into two opposing tribes by actors with specific financial and political interests. Understanding how the split was performed makes the manipulation visible without requiring anyone to feel attacked.</p>
+<p>The Pioneer Fund, founded in 1937 by Wickliffe Draper with explicit goals of funding eugenics research and opposing Black civil rights, created the institutional infrastructure that transformed a legitimate scientific question into a culture-war weapon. The mechanism was a three-stage operation that took sixty years to complete.</p>
+<p>Manufacture the suppression narrative</p>
+<p>When Arthur Jensen published his 1969 paper and received campus protests, the Pioneer Fund network systematically cultivated Jensen&#39;s experience into a &#39;scientific martyrdom&#39; narrative. The protests were real. The intellectual isolation Jensen felt was real. But the narrative frame -- &#39;brave scientist vs. ideological censors&#39; -- was not a spontaneous reaction. It was a deliberate counter-narrative construction designed to make any critical scrutiny of hereditarian claims appear to be evidence of suppression rather than scientific rebuttal. William Tucker&#39;s 2002 history (University of Illinois Press) documents this process. Every subsequent controversy -- Rushton lectures (1989), Watson comments (2007), Damore memo (2017) -- was fed into the same narrative machine to refresh and amplify it.</p>
+<p>Launder ideology through academic form</p>
+<p>Mankind Quarterly (founded 1960 by Roger Pearson, who had pre-war connections to Nazi racial science networks) provided a publication venue that mimics academic form without standard peer review. This allowed hereditarian claims to accumulate citation infrastructure that would not survive mainstream review. The Gottfredson 1994 Wall Street Journal statement -- 52 signatories presented as a scientific consensus -- was explicitly constructed as a counter-narrative to Bell Curve critics, published in a newspaper rather than a scientific journal. It endorsed within-group heritability and the reality of score gaps, but explicitly declined to endorse the genetic causal hypothesis. Every subsequent citation of this document as &#39;consensus evidence for genetic causation&#39; is a documented distortion of what it actually said.</p>
+<p>Migrate to mass-market and digital distribution</p>
+<p>The Bell Curve (1994, Free Press/Simon &amp; Schuster) carried the Pioneer Fund network&#39;s framework to a mass audience of 300,000+ readers, backed by American Enterprise Institute and Manhattan Institute amplification. The policy utility was direct: if inequality is genetic, welfare expansion and affirmative action are futile. This alignment of financial interests (AEI, Bradley Foundation funding Murray) with ideological goals (opposing welfare state) and the hereditarian claim was not coincidental. The contemporary Substack and podcast ecosystem completed the migration: deplatforming events generate subscriber growth, persecution narratives monetize directly, and the &#39;human biodiversity&#39; rebranding stripped explicit white-nationalist framing to enable circulation in rationalist and Silicon Valley communities.</p>
+<p>Pioneer Fund (Wickliffe Draper / Roger Pearson lineage)</p>
+<p>Provided sustained financial infrastructure for six decades. Created publication venue (Mankind Quarterly) to mimic academic legitimacy. Funded Jensen, Rushton, Lynn, Gottfredson continuously.</p>
+<p>Preserve endowment purpose (eugenics, white separatism, immigration restriction). Provide scientific legitimacy for political goals.</p>
+<p>Conservative think tank infrastructure (AEI, Manhattan Institute, Heritage Foundation)</p>
+<p>Amplified Bell Curve claims. Provided institutional home for Murray post-publication. Translated hereditarian findings into policy arguments against welfare and affirmative action.</p>
+<p>Intellectual justification for three core policy positions: opposing affirmative action, opposing welfare expansion, supporting immigration restriction.</p>
+<p>Substack / podcast monetization ecosystem</p>
+<p>Contemporary distribution layer. Monetizes persecution narrative directly. Produces continuous content independent of epistemic merit. Deplatforming events increase subscriber counts.</p>
+<p>Subscriber income. Community identity as &#39;brave truth-tellers&#39;. Career differentiation through contrarian positioning.</p>
+<p>A substantial proportion of people who encounter this claim are not part of the funding network. They are ordinary people who have encountered the &#39;forbidden knowledge&#39; framing through podcast or Substack exposure and are genuinely curious. They are the downstream audience the network is designed to reach. They deserve a direct, honest answer -- not dismissal, and not amplification of the false framing.</p></div>
+  </div>
+
+  
+    <div class="section">
+      <h2>Feasibility Assessment</h2>
+      <div class="prose"><p>The suppression claim is not plausible given the documented publication record.</p>
+<p>Arthur Jensen published in Harvard Educational Review, Psychological Review, and major scientific journals throughout his career until his death in 2012.</p>
+<p>J. Philippe Rushton held a tenured professorship at the University of Western Ontario until his death in 2012. He was never fired despite repeated controversy.</p>
+<p>Richard Lynn published in peer-reviewed journals including Intelligence throughout his career and holds an emeritus position at Ulster.</p>
+<p>Charles Murray&#39;s &#39;The Bell Curve&#39; sold 300,000+ copies through Free Press (Simon &amp; Schuster) and was reviewed in every major US publication including the New York Times, The New Yorker, and The New Republic.</p>
+<p>Nathan Cofnas has published in Biology &amp; Philosophy and Philosophical Psychology, both standard peer-reviewed academic journals.</p>
+<p>Linda Gottfredson published the 1994 WSJ statement with 52 signatories and has published in mainstream journals continuously.</p>
+<p>What is described as suppression is: (a) critical peer review rejecting papers with methodological inadequacies, (b) professional reputational consequences for public statements (Watson 2007: &#39;Africans are genetically less intelligent&#39;), and (c) social controversy. These are features of normal scientific and public discourse.</p>
+<p>The strongest documented case of ideological funding distorting race science is the Pioneer Fund itself, not mainstream academia. The fund was founded with explicit eugenic and white-separatist goals in 1937 and funded the hereditarian network for six decades with ideologically committed resources. The claim that academia is ideologically distorting science in this domain applies with greater documentary evidence to the funding apparatus behind the claim than to the mainstream institutions the claim accuses.</p></div>
+    </div>
+
+  
+    <div class="section">
+      <h2>Commercial Interests</h2>
+      <div class="prose"><p>Follow the money. The belief that racial IQ gaps are primarily genetic and that this is being suppressed is not a neutral scientific hypothesis circulating on its merits. It is a product with a supply chain, a distribution network, and specific beneficiaries who profit materially or politically from its circulation.</p>
+<p>Pioneer Fund</p>
+<p>ideological</p>
+<p>The Pioneer Fund exists to fund eugenics research and oppose Black civil rights. Every paper it funds, every journal article it supports, every researcher whose career it sustains is a fulfillment of its founding purpose. The fund&#39;s endowment (~$5M under Rushton&#39;s presidency) is preserved and legitimized by the continued production of hereditarian research output. Without a living research program, the fund&#39;s purpose is exhausted.</p>
+<p>Pioneer Fund -&gt; Jensen (decades of grants) -&gt; Rushton (decades of grants, president 2002) -&gt; Lynn (grants) -&gt; Gottfredson (grants) -&gt; Mankind Quarterly (coordination)</p>
+<p>Conservative think tanks (AEI, Manhattan Institute, Bradley Foundation)</p>
+<p>political and financial</p>
+<p>The genetic IQ claim provides intellectual justification for three high-value policy positions: opposing affirmative action (if gaps are genetic, racial preferences are unjust), opposing welfare expansion (if poverty is genetic, redistribution is futile), and supporting immigration restriction (if national IQ differences are genetic, importing low-IQ populations is harmful). These positions align directly with the donor base of AEI, Manhattan Institute, and Heritage Foundation. Bradley Foundation funded Murray&#39;s AEI position for decades (documented in Murray&#39;s own acknowledgments). The policy utility is direct: one claim supports three major legislative agendas.</p>
+<p>Bradley Foundation -&gt; AEI Fellow salary for Murray -&gt; Bell Curve -&gt; policy infrastructure -&gt; legislative advocacy</p>
+<p>Mass market publishing (Free Press / Simon &amp; Schuster)</p>
+<p>financial</p>
+<p>Bell Curve sold 300,000+ copies. Controversy drives sales. The book was published with major marketing infrastructure by a mainstream publisher precisely because the controversy guaranteed sales. Publishers do not require the claim to be true; they require it to be controversial and to reach an audience.</p>
+<p>Free Press -&gt; Bell Curve publication -&gt; 300,000+ copies -&gt; author royalties -&gt; AEI amplification</p>
+<p>Substack and podcast ecosystem (Cofnas, Winegard, Kirkegaard, Dutton)</p>
+<p>direct financial</p>
+<p>This is the most transparent commercial motive in the contemporary ecosystem. Substack enables direct subscriber monetization. Nathan Cofnas&#39;s &#39;Wrong Side of History&#39; newsletter monetizes &#39;suppressed science&#39; content directly. Edward Dutton (&#39;The Jolly Heretic&#39;) monetizes YouTube/Substack. Bo Winegard monetizes persecution narrative after being fired from Marietta College. The critical structural feature: deplatforming events increase subscriber counts. The business model is literally: controversy and persecution -&gt; audience growth -&gt; subscription revenue. The incentive is to maintain and amplify the persecution narrative regardless of its accuracy.</p>
+<p>Controversy / deplatforming event -&gt; new subscribers -&gt; subscription revenue -&gt; more controversial content -&gt; more subscribers</p>
+<p>Alt-right and white nationalist media (VDare, American Renaissance, Stormfront)</p>
+<p>ideological and financial</p>
+<p>These venues use the hereditarian academic lineage to appear scientifically grounded. The IQ claim provides a quasi-scientific anchor for white racial grievance politics and for arguing that anti-white discrimination is unjustified. Conference revenue (American Renaissance Conference), subscriptions, donations, and speaker fees depend on maintaining an audience that believes the claim. The &#39;scientific&#39; framing -- citing Jensen, Rushton, and the Gottfredson statement -- is the primary legitimization mechanism.</p>
+<p>Academic lineage (Jensen -&gt; Rushton -&gt; Gottfredson) -&gt; VDare / AmRen citation -&gt; audience legitimization -&gt; donations / conference revenue</p>
+<p>Silicon Valley libertarian-meritocracy ideology</p>
+<p>ideological</p>
+<p>If the observed hierarchy of outcomes -- who leads tech companies, who earns the most, who holds the most credentials -- reflects natural cognitive differences that are partly genetic, then the current hierarchy is legitimate and requires no structural intervention. This is not a financial motive for most individuals but a powerful ideological motive. Accepting the genetic IQ claim is a way of explaining and justifying existing hierarchies without requiring scrutiny of structural factors. For people who benefit from current hierarchies, this is an attractive conclusion regardless of its evidentiary basis.</p>
+<p>Ideological convenience -&gt; amplification in rationalist / tech communities -&gt; normalization -&gt; resistance to equity programs -&gt; maintenance of current hierarchy</p>
+<p>Mainstream podcast amplifiers (Peterson, Rogan, Fridman)</p>
+<p>financial (audience engagement)</p>
+<p>Controversy drives engagement. The &#39;forbidden knowledge&#39; frame generates higher listen-through rates, more shares, and more subscriptions than mainstream topics. These amplifiers are not ideologically committed hereditarian actors, but their business model rewards controversy. Millions of listeners encounter the genetic IQ claim through these platforms without the Pioneer Fund funding history or the Pioneer Fund network&#39;s ideological goals.</p>
+<p>Controversial content -&gt; engagement metrics -&gt; advertising revenue / Spotify deals / Patreon -&gt; incentive to repeat</p>
+<p>Before accepting a belief, it is worth asking: who profits from me holding this belief? In this case, the beneficiaries include a eugenics endowment, conservative think tanks opposing welfare and affirmative action, alt-right media organizations, Substack creators whose income grows with persecution narratives, and commercial podcast platforms that profit from controversy. None of these beneficiaries need the belief to be true. They need it to be believed.</p></div>
+    </div>
+
+  
+    <div class="section">
+      <h2>Perception Gap</h2>
+      <div class="prose"><p>Brave scientists are following evidence wherever it leads, and a politically correct academy is suppressing findings that make progressives uncomfortable. The 52-signatory statement proves there is a suppressed consensus. The fact that people react so strongly to this research proves they know it is true and are afraid of it.</p>
+<p>A small network of ideologically funded researchers with documented connections to eugenics organizations has spent sixty years trying to establish a claim that the evidence does not support, using publication venues that mimic science without its quality controls, and framing legitimate scientific criticism as political persecution.</p>
+<p>The hereditarian perception misses the documented funding history and the Pioneer Fund&#39;s ideological origins. The mainstream perception sometimes dismisses sincere questioners who are not part of the network and who deserve a direct, honest engagement with the evidence rather than a conversation-stopping accusation of racism. Both perceptions have become tribal markers rather than epistemic tools.</p>
+<p>What actually causes the documented achievement gaps, and what interventions would genuinely help? This is the question that gets buried under the genetics debate. Both sides claim to care about the answer. Getting to that shared ground requires naming the manipulation that has kept the debate stuck.</p></div>
+    </div>
+
+  <div class="section">
+    <h2>Socratic Dialogue</h2>
+    <p class="intro-note">A model conversation demonstrating how to engage someone who holds this belief.</p>
+    
+    <div class="dialogue-round round-1">
+      <div class="round-label">Round 1: Perspective-Getting</div>
+      <div class="dialogue-bubble"><p>I hear you valuing honest, uncensored science, and I think that is genuinely important. You are looking at IQ score data and seeing patterns that seem to be systematically ignored. That frustration with institutions telling you what you are allowed to think about is real, and shared by people across the political spectrum. The score gaps you are pointing to are documented. The APA, Brookings, and multiple meta-analyses all confirm they exist. You are not imagining them.</p></div>
+    </div>
+    <div class="dialogue-round round-2">
+      <div class="round-label">Round 2: Guided Examination</div>
+      <div class="dialogue-bubble"><p>Here is something worth looking into yourself: There is a pattern called Cherry Picking, where someone shows you real data but leaves out the context that would change your conclusion. The IQ gaps are real, but consider the Flynn Effect: IQ scores rose roughly 30 points over the 20th century across every tested population. That is a larger change than the between-group gap, and it happened in about three generations, which is too fast for genetic change. If environment can move IQ scores by 30 points in 80 years, what does that tell us about a 15-point gap between groups who have lived in vastly different environments for centuries?</p></div>
+    </div>
+    <div class="dialogue-round round-3">
+      <div class="round-label">Round 3: Integration</div>
+      <div class="dialogue-bubble"><p>Both sides of this debate share something important: a genuine desire to understand why educational outcomes differ and what we can actually do about it. The hereditarian framing says &#39;it is genetic, so stop wasting money on interventions.&#39; The environmental framing says &#39;it is structural, so invest in interventions.&#39; But if we follow the evidence on what actually works, both sides would want the same thing: early childhood programs, reduced lead exposure, better nutrition, and reduced poverty, because those are the interventions with the strongest evidence of raising cognitive outcomes across all groups. What would it look like to focus our energy there?</p></div>
+    </div>
+  </div>
+
+  
+  <div class="section">
+    <h2>Reframe</h2>
+    <blockquote class="reframe-block">Everyone who takes this question seriously wants the same thing at the deepest level: they want people to succeed or fail based on what they actually do and learn, not based on circumstances of birth. The disagreement is about which circumstances matter most and which are changeable. The evidence strongly suggests that environmental circumstances are highly changeable -- and that the primary obstacle to acting on that evidence has been a sixty-year campaign, funded by a eugenics endowment, to make biological determinism seem like the scientifically courageous position.
+
+If the documented achievement gaps between racial groups in the United States are primarily caused by environmental and historical factors -- lead exposure, school quality differences, wealth gaps compounding over generations, stereotype threat, epigenetic effects of chronic stress -- then what would it take to close them? And why has so much institutional energy gone into the genetic hypothesis rather than the environmental interventions that adoption studies and Flynn Effect data suggest would actually work?</blockquote>
+  </div>
+
+  <div class="section">
+    <h2>Audit</h2>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+      <span>Verdict:</span>
+      <span class="badge badge-warnings">PASS WITH WARNINGS</span>
+    </div>
+    <div class="audit-summary">This is a thorough, well-sourced, and structurally sound disinformation analysis. The core epistemic distinction -- between &#39;score gaps are documented&#39; (true) and &#39;gaps are primarily genetic&#39; (not established) -- is maintained clearly throughout all five files. The within-group / between-group heritability distinction is explained accurately and attributed correctly to the APA 1996 task force and Jensen&#39;s own 1969 acknowledgment. The hereditarian position is not straw-manned: within-group heritability, test predictive validity, and the reality of score gaps are all explicitly conceded. Sincere questioners are identified as a distinct actor class and treated with dignity in the bridge.json Socratic dialogue. The &#39;who benefits&#39; analysis is honest about speculative vs. documented claims in most cases.
+
+The findings above are primarily calibration issues rather than structural errors. The most consequential are: (1) the inconsistent dating of the Gottfredson statement, which could be exploited by informed critics to challenge the analysis&#39;s accuracy; (2) the underengagement with the Weinberg et al. 1992 adoption study follow-up, which is the hereditarian side&#39;s strongest counter to the adoption evidence; (3) the Cofnas commercial-motive framing, which risks mild ad hominem drift in the TTP analysis even though the bridge.json handles his arguments more fairly; and (4) the speculative &#39;funds&#39; relationship assigned to Silicon Valley, which should be downgraded to &#39;amplifies&#39;.
+
+None of these findings rise to the level requiring a veto or a fail verdict. The analysis passes with warnings. A revision addressing the four medium-severity findings would bring the analysis to a level where it could be presented to a broad audience including people already familiar with the hereditarian literature without providing easy technical handles for dismissal.</div>
+    <ul class="findings-list">
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">accuracy</span>
+        <span class="finding-severity-medium">MEDIUM</span>
+        <span class="finding-description">The Gottfredson Wall Street Journal statement date is cited inconsistently across files. The intelligence.json and...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">The Gottfredson Wall Street Journal statement date is cited inconsistently across files. The intelligence.json and bridge.json files describe it as a &#39;1994&#39; statement; the origins file references it as both &#39;1994&#39; and &#39;2003&#39; in different sub-claims (SC-01-03 propagation path says &#39;WSJ op-ed (1994)&#39;; SC-01-04 earliest_source names &#39;Gottfredson WSJ 2003&#39;). These are actually two different documents: Gottfredson organized the 1994 statement (&#39;Mainstream Science on Intelligence&#39;, Wall Street Journal, Dec 13 1994) and co-authored a 2003 restatement. Conflating them or mislabeling either weakens the evidentiary chain, because the original is the one most frequently cited as consensus evidence for genetic causation. The analysis does not clearly distinguish between the two.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Verify which Gottfredson statement each citation refers to and label them distinctly (1994 original vs. 2003 follow-up). The factual record should not have internally inconsistent dates for the same claimed document.</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">accuracy</span>
+        <span class="finding-severity-medium">MEDIUM</span>
+        <span class="finding-description">Jensen&#39;s credibility score of 0.25 and the framing of his work are broadly defensible, but one specific accuracy claim...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">Jensen&#39;s credibility score of 0.25 and the framing of his work are broadly defensible, but one specific accuracy claim is overstated: the analysis states Jensen&#39;s 1969 paper &#39;was not peer-reviewed by standard process&#39;. This is asserted as fact in the intelligence.json actor record. Harvard Educational Review was student-edited, which is unconventional for a research article of this scope, but the claim as stated (&#39;not peer-reviewed&#39;) is stronger than what the source record supports. Tucker (2002) is cited as the basis for Pioneer Fund funding but does not appear to be cited as the source for the peer-review claim. If this is unverified, it should be flagged as such rather than stated as established.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Either cite the specific source documenting HER&#39;s review process for the Jensen paper, or qualify the claim as &#39;published in a student-edited journal without standard peer review&#39; and note the evidence basis.</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">accuracy</span>
+        <span class="finding-severity-low">LOW</span>
+        <span class="finding-description">The analysis states GWAS polygenic scores for IQ &#39;do not transfer predictively to African populations&#39;, presenting this...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">The analysis states GWAS polygenic scores for IQ &#39;do not transfer predictively to African populations&#39;, presenting this as a clean finding against the genetic hypothesis. This is directionally correct but overstated. The lower cross-ancestry transferability of European-derived PGS is real and documented, but it reflects a combination of factors: population stratification, different LD patterns, different allele frequencies, and potentially different causal variants. It is consistent with but does not definitively rule out the genetic hypothesis for group differences -- it primarily shows the current PGS tools are population-specific. The analysis treats this as stronger evidence of environmental causation than it technically is.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Qualify the GWAS finding: &#39;European-derived polygenic scores show substantially reduced predictive validity in African-ancestry populations; this is most consistent with population-specific LD structure and environmental confounding rather than shared causal genetic architecture, but does not in itself rule out genetic contributions to group differences.&#39;</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">bias</span>
+        <span class="finding-severity-medium">MEDIUM</span>
+        <span class="finding-description">The treatment of Nathan Cofnas is notably heavier than it needs to be given his actual epistemic position. Cofnas is...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">The treatment of Nathan Cofnas is notably heavier than it needs to be given his actual epistemic position. Cofnas is assigned credibility 0.28, which is defensible. However, his Substack monetization is explicitly cited as a motivation in a way that implies commercial interest undermines his academic work. His peer-reviewed publications (Biology &amp; Philosophy, Philosophical Psychology) are legitimate venues. The analysis correctly notes he is distinct from the Rushton/Lynn tier, but the consistent pairing of his academic arguments with his Substack income risks a mild ad hominem pattern: conflating the quality of his peer-reviewed arguments with his business model. His philosophical &#39;default hypothesis&#39; framing deserves direct rebuttal on its merits (which the bridge.json does provide) rather than primarily being contextualized by subscriber counts.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> In the techniques_revealed and TTP sections, distinguish more clearly between the epistemic quality of Cofnas&#39;s peer-reviewed arguments (which deserve direct engagement) and the broader Substack ecosystem&#39;s monetization of persecution narratives. The &#39;default hypothesis&#39; framing is worth rebutting philosophically -- the bridge.json does this well in the inferential_gap section, but the intelligence.json framing leans too heavily on commercial motive.</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">bias</span>
+        <span class="finding-severity-low">LOW</span>
+        <span class="finding-description">The analysis includes &#39;Silicon Valley Rationalist and Libertarian Community&#39; as an actor with a &#39;funds&#39; relationship to...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">The analysis includes &#39;Silicon Valley Rationalist and Libertarian Community&#39; as an actor with a &#39;funds&#39; relationship to the Substack ecosystem at confidence 0.55. The evidence note itself says &#39;Thiel-specific funding links to hereditarian content are not fully documented in the source material; this is partially inferred.&#39; A confidence-0.55 funding relationship with an explicitly flagged speculative basis should either be upgraded to an &#39;amplifies&#39; relationship (which the evidence would support) or clearly labeled as speculative inference rather than documented funding. Presenting this as a &#39;funds&#39; relation at 0.55 risks creating a misleading impression of a documented financial network that does not actually exist in the record.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Change the relation_type from &#39;funds&#39; to &#39;amplifies&#39; for the Silicon Valley -&gt; Substack link, or add a &#39;speculative&#39; flag to the relation record consistent with how the actor evidence section hedges it.</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">completeness</span>
+        <span class="finding-severity-medium">MEDIUM</span>
+        <span class="finding-description">The analysis correctly acknowledges within-group heritability as real and high (0.50-0.80 in adults), which is an...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">The analysis correctly acknowledges within-group heritability as real and high (0.50-0.80 in adults), which is an important concession to the hereditarian position. However, the hereditarian side&#39;s strongest current argument -- Cofnas&#39;s &#39;default hypothesis&#39; framing, which argues that without a specific environmental mechanism explaining the gap, the genetic hypothesis should be the null -- is addressed in the bridge.json&#39;s inferential_gap section but is not substantively engaged in the TTP analysis or the origins file. The TTP file identifies this framing as &#39;T0004 Competing Narrative&#39; rather than engaging it as a philosophical argument about burden of proof, which is where its actual force lies. A sophisticated reader familiar with Cofnas&#39;s published work would note this.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Add a direct engagement with the burden-of-proof argument in the origins or bridge file: explain why the standard scientific burden of proof places the genetic hypothesis as the one requiring positive evidence (specific causal variants, cross-ancestry PGS transfer, candidate gene mechanisms), not the environmental hypothesis. The bridge.json&#39;s &#39;exact inferential leap&#39; section partially does this but does not name Cofnas&#39;s specific framing.</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">completeness</span>
+        <span class="finding-severity-medium">MEDIUM</span>
+        <span class="finding-description">The counter-evidence section documents the Flynn Effect and adoption studies well. However, the Minnesota Transracial...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">The counter-evidence section documents the Flynn Effect and adoption studies well. However, the Minnesota Transracial Adoption Study follow-up (Weinberg, Scarr, Waldman 1992) is mentioned only in passing with a methodological caveat. This is the most-cited hereditarian counter-evidence to the adoption argument. The analysis notes &#39;high attrition and adolescent identity development&#39; but does not engage the specific numbers (the Black adoptees&#39; scores did regress toward the Black mean in the follow-up). A reader who knows the 1992 follow-up will feel this important piece of counter-counter-evidence is underweighted. The analysis should either engage it more fully or explicitly acknowledge its significance to the debate.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Expand the adoption study section to directly address the Weinberg et al. 1992 follow-up results: acknowledge the regression finding, note the methodological limits (attrition rate, sample size, timing), and explain why the early childhood results remain the stronger evidence. Do not appear to hide a finding that sophisticated readers will know.</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">completeness</span>
+        <span class="finding-severity-low">LOW</span>
+        <span class="finding-description">The analysis does not engage the behavioral genetics finding that heritability of IQ increases substantially with age...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">The analysis does not engage the behavioral genetics finding that heritability of IQ increases substantially with age and socioeconomic advantage (Turkheimer et al. 2003): in impoverished environments, heritability of IQ is low; in affluent environments it is high. This finding is directly relevant to the group differences debate because it predicts that measured group heritability will be suppressed by the environmental disadvantages that are more prevalent in lower-SES groups -- meaning high within-group heritability in white middle-class samples says even less about causes of between-group gaps than the standard analysis suggests. This strengthens the environmental case further and is a legitimate extension of what the analysis presents.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Add a brief note in the consensus_explanation section or the within_vs_between_heritability subsection citing Turkheimer et al. 2003 and its implication: heritability estimates from advantaged white samples cannot be generalized even within that group, let alone across groups with different environmental distributions.</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">manipulation</span>
+        <span class="finding-severity-low">LOW</span>
+        <span class="finding-description">The &#39;who benefits&#39; commercial_motives section in bridge.json is largely well-executed, but the closing question --...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">The &#39;who benefits&#39; commercial_motives section in bridge.json is largely well-executed, but the closing question -- &#39;None of these beneficiaries need the belief to be true. They need it to be believed.&#39; -- while rhetorically effective, comes close to implying that no one holds the genetic hypothesis in good faith. The analysis does acknowledge sincere questioners separately, and the bridge.json&#39;s Socratic dialogue handles them with appropriate dignity. But the commercial_motives section&#39;s framing could, in isolation, be read as implying the entire hereditarian academic tradition is cynically motivated rather than being a mix of ideologically-funded bad actors, genuinely mistaken researchers, and legitimate edge-case scientific inquiry. This framing risk is low but worth noting given the &#39;who benefits&#39; section&#39;s prominent placement.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Add a brief clarifying sentence in the commercial_motives section distinguishing between the funding and distribution infrastructure (where commercial motives are documented) and individual researchers (some of whom hold the position based on evidence they find genuinely compelling, even if that evidence is evaluated as insufficient by the mainstream). This protects the analysis from appearing to make a blanket bad-faith accusation.</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">quality</span>
+        <span class="finding-severity-low">LOW</span>
+        <span class="finding-description">The Socratic dialogue in bridge.json follows the Costello protocol structurally (validate concern, name technique with...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">The Socratic dialogue in bridge.json follows the Costello protocol structurally (validate concern, name technique with verifiable counter-evidence, bridge to shared goals). The three rounds are appropriately sequenced. However, Round 2 names &#39;Cherry Picking&#39; as the technique but then immediately provides the Flynn Effect counter-evidence in the same round, which may feel confrontational to a questioner who has not yet acknowledged the framing. The Costello protocol works best when technique-naming and evidence-provision are calibrated to the interlocutor&#39;s readiness. Providing corrective evidence before the interlocutor has signaled interest in updating risks defensive reactions. The round&#39;s question at the end (&#39;Does that pattern change how you are thinking?&#39;) partially mitigates this by staying curious.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Consider splitting Round 2 into two beats: first, ask a Socratic question that invites the interlocutor to grapple with the Flynn Effect on their own terms (e.g., &#39;Have you come across the Flynn Effect in what you have been reading?&#39;) before providing the counter-evidence. This lowers the confrontational temperature without sacrificing the epistemic content.</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">quality</span>
+        <span class="finding-severity-low">LOW</span>
+        <span class="finding-description">The decomposition.json classifies sub-claim SC-01-04 (&#39;The genetic explanation constitutes a scientific finding&#39;) as...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">The decomposition.json classifies sub-claim SC-01-04 (&#39;The genetic explanation constitutes a scientific finding&#39;) as &#39;verifiable: false&#39;. This is a classification error: the question of whether a claim constitutes a scientific finding is itself an empirical and methodological question that is verifiable through examination of the evidentiary record. The correct classification would be &#39;verifiable: true&#39; with status &#39;not_established&#39; (consistent with how SC-01-03 is handled). The &#39;verifiable: false&#39; classification may cause downstream processing to treat this sub-claim differently from the other empirical sub-claims.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Change decomposition.json SC-01-04 &#39;verifiable&#39; from false to true, consistent with its type=&#39;opinion&#39; but also consistent with the fact that whether something meets the threshold for &#39;scientific finding&#39; is an assessable empirical question. The &#39;unverified_opinion&#39; status in origins.json is appropriate; the decomposition classification should align.</div>
+      </div>
+    </li></ul>
+  </div>
+
+  
+    <div class="section evaluation-section">
+      <h2>Evaluation Methodology</h2>
+      <p class="intro-note">Full transparency on how this scenario was scored. 12 weighted checks, each independently measurable. <a href="https://github.com/Jochen-s/huginn-muninn/blob/main/tests/run_bridge_scenarios.py" target="_blank" rel="noopener">View source code</a></p>
+      <div class="eval-summary">
+        <span class="eval-overall">93.0%</span>
+        <span class="badge badge-pass">Grade A</span>
+      </div>
+      <div style="overflow-x:auto">
+        <table class="eval-table">
+          <thead>
+            <tr>
+              <th>Check</th>
+              <th>Weight</th>
+              <th>Score</th>
+              <th>Status</th>
+              <th>What It Measures</th>
+            </tr>
+          </thead>
+          <tbody><tr class="eval-fail">
+      <td>needs coverage</td>
+      <td class="eval-weight">7%</td>
+      <td class="eval-score">0%</td>
+      <td class="eval-status">MISS</td>
+      <td class="eval-desc">Expected universal human needs matched against identified needs</td>
+    </tr><tr class="eval-pass">
+      <td>issue overlap quality</td>
+      <td class="eval-weight">6%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Common ground text is substantive (&gt;50 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>narrative deconstruction</td>
+      <td class="eval-weight">7%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Narrative deconstruction is substantive (&gt;100 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>consensus explanation</td>
+      <td class="eval-weight">11%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Scientific/mainstream explanation &gt;200 chars with 3+ mechanism keywords</td>
+    </tr><tr class="eval-pass">
+      <td>inferential gap</td>
+      <td class="eval-weight">8%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Inferential gap analysis is substantive (&gt;50 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>feasibility check</td>
+      <td class="eval-weight">6%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Feasibility assessment is substantive (&gt;50 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>commercial motives</td>
+      <td class="eval-weight">6%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Commercial motive analysis is substantive (&gt;30 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>technique naming</td>
+      <td class="eval-weight">8%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">At least 1 technique named with mechanic (&gt;30 chars) and precedent (&gt;20 chars)</td>
+    </tr><tr class="eval-pass">
+      <td>perception gap</td>
+      <td class="eval-weight">5%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Perception gap analysis is substantive (&gt;30 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>socratic dialogue</td>
+      <td class="eval-weight">17%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">3 rounds, ends with question, Round 1 shows perspective-getting</td>
+    </tr><tr class="eval-pass">
+      <td>reframe quality</td>
+      <td class="eval-weight">7%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Reframe &gt;20 chars using shared-value language (we, together, both)</td>
+    </tr><tr class="eval-pass">
+      <td>no controlling language</td>
+      <td class="eval-weight">12%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Zero matches against 9 controlling phrases</td>
+    </tr></tbody>
+        </table>
+      </div>
+      <p class="eval-note">Overall score = weighted sum of individual check scores. Weights reflect the relative importance of each dimension to the project's mission: Socratic dialogue quality (17%) and controlling language detection (12%) are weighted highest because autonomy-supportive framing is the core differentiator.</p>
+    </div>
+
+  <div class="scenario-nav">
+    <a href="MD-02.html">&larr; MD-02: Social media algorithms are deliberately designed...</a>
+    <a href="index.html">Gallery</a>
+    <a href="TC-01.html">TC-01: Bill Gates wants to microchip everyone through... &rarr;</a>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="content">
+    <p>
+      <a href="index.html">Huginn &amp; Muninn Gallery</a> &nbsp;|&nbsp;
+      MIT License &nbsp;|&nbsp;
+      Analysis powered by Claude (Anthropic)
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>

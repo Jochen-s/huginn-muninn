@@ -26,6 +26,7 @@ const CATEGORY_ORDER = [
   'Events',
   'Technology',
   'Media',
+  'Science Controversy',
 ];
 
 const CATEGORY_BY_PREFIX = {
@@ -35,6 +36,7 @@ const CATEGORY_BY_PREFIX = {
   EV: 'Events',
   TC: 'Technology',
   MD: 'Media',
+  SC: 'Science Controversy',
 };
 
 const CATEGORY_INTROS = {
@@ -44,6 +46,7 @@ const CATEGORY_INTROS = {
   'Events': 'Narratives about specific historical or political events that dispute the established record.',
   'Technology': 'Technology fears that blend genuine risks with unfounded surveillance and control claims.',
   'Media': 'Claims about information systems, media bias, and how narratives are shaped and controlled.',
+  'Science Controversy': 'Claims that weaponize legitimate scientific data by cherry-picking findings and suppressing context to manufacture false certainty.',
 };
 
 // Difficulty is derived from the scenario's overall_confidence, pipeline version, and complexity.
@@ -69,6 +72,7 @@ const DIFFICULTY_MAP = {
   'TC-02': 'Hard',
   'MD-01': 'Medium',
   'MD-02': 'Hard',
+  'SC-01': 'Hard',
 };
 
 // Kernel of truth: does the claim have a meaningful factual core?
@@ -93,6 +97,7 @@ const KERNEL_MAP = {
   'TC-02': true,
   'MD-01': true,
   'MD-02': true,
+  'SC-01': true,
 };
 
 // ---------------------------------------------------------------------------
@@ -1391,6 +1396,7 @@ function buildGraphPage() {
         <option value="Events">Events</option>
         <option value="Technology">Technology</option>
         <option value="Media">Media</option>
+        <option value="Science Controversy">Science Controversy</option>
       </select>
     </div>
     <div>

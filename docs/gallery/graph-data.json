@@ -220,6 +220,7 @@
             "HS-04",
             "HS-05",
             "MD-01",
+            "SC-01",
             "TC-01"
           ],
           "id": "technique:T0004",
@@ -248,6 +249,7 @@
             "HS-04",
             "HS-05",
             "MD-01",
+            "SC-01",
             "TC-01"
           ],
           "id": "technique:T0010",
@@ -275,6 +277,7 @@
             "HS-04",
             "HS-05",
             "MD-01",
+            "SC-01",
             "TC-01"
           ],
           "id": "technique:T0016",
@@ -313,7 +316,7 @@
           "node_type": "technique",
           "label": "Leverage Conspiracy Theory",
           "disarm_id": "T0022",
-          "max_confidence": 0.95,
+          "max_confidence": 0.96,
           "scenarios": [
             "EN-01",
             "EV-03",
@@ -329,6 +332,7 @@
             "HS-04",
             "HS-05",
             "MD-01",
+            "SC-01",
             "TC-01"
           ],
           "id": "technique:T0022",
@@ -341,7 +345,7 @@
           "node_type": "technique",
           "label": "Distort Facts",
           "disarm_id": "T0023",
-          "max_confidence": 0.95,
+          "max_confidence": 0.97,
           "scenarios": [
             "EN-01",
             "EN-02",
@@ -361,6 +365,7 @@
             "HS-05",
             "MD-01",
             "MD-02",
+            "SC-01",
             "TC-01",
             "TC-02"
           ],
@@ -415,6 +420,7 @@
             "HS-05",
             "MD-01",
             "MD-02",
+            "SC-01",
             "TC-01",
             "TC-02"
           ],
@@ -469,6 +475,7 @@
             "HS-05",
             "MD-01",
             "MD-02",
+            "SC-01",
             "TC-01",
             "TC-02"
           ],
@@ -988,7 +995,7 @@
           "node_type": "technique",
           "label": "Seed distortions",
           "disarm_id": "T0044",
-          "max_confidence": 0.85,
+          "max_confidence": 0.93,
           "scenarios": [
             "EN-02",
             "EV-02",
@@ -997,6 +1004,7 @@
             "GP-06",
             "HS-03",
             "MD-02",
+            "SC-01",
             "TC-02"
           ],
           "id": "technique:T0044",
@@ -5132,10 +5140,11 @@
           "node_type": "technique_reveal",
           "label": "Cherry Picking",
           "how_it_works": "Selecting only the evidence that supports a predetermined conclusion while ignoring the vastly larger body of evidence that contradicts it. The technique works because the selected evidence is often real, making the argument feel grounded even as it systematically excludes context. The audience sees genuine data points and reasonably concludes 'the evidence supports this,' never realizing they are seeing a carefully curated subset. It is like a card trick where the magician shows you five cards from a deck of fifty-two and asks you to judge the whole deck by those five.",
-          "pattern_type": "repeated",
+          "pattern_type": "systematic",
           "historical_precedent": "The tobacco industry employed systematic cherry picking for decades, funding studies designed to find ambiguous results and then promoting only those results while suppressing the overwhelming evidence linking smoking to cancer. The Tobacco Industry Research Committee (1954-1998) spent billions selecting and amplifying doubt-producing research. The playbook was later adopted by fossil fuel companies questioning climate science (e.g., Exxon's internal research vs. public communications, documented by Supran and Oreskes, 2017, Environmental Research Letters).",
           "scenarios": [
-            "HS-01"
+            "HS-01",
+            "SC-01"
           ],
           "id": "reveal:cherry-picking",
           "value": "reveal:cherry-picking",
@@ -7973,6 +7982,555 @@
           "id": "claim:MD-02-7",
           "value": "claim:MD-02-7",
           "name": "claim:MD-02-7"
+        }
+      },
+      {
+        "data": {
+          "node_type": "scenario",
+          "label": "SC-01",
+          "claim": "IQ differences between racial groups are primarily genetic, and this scientific finding is being suppressed by mainstream academia due to political correctness.",
+          "version": "v5",
+          "model": "claude-opus-4-6",
+          "category": "Science Controversy",
+          "confidence": 0.9,
+          "complexity": "multi_actor",
+          "id": "scenario:SC-01",
+          "value": "scenario:SC-01",
+          "name": "scenario:SC-01"
+        }
+      },
+      {
+        "data": {
+          "node_type": "actor",
+          "label": "Pioneer Fund",
+          "actor_type": "organization",
+          "motivation": "Founded 1937 by Wickliffe Draper with explicit goals of funding eugenics research and opposing Black civil rights. Financial motivation: preserve endowment purpose. Ideological motivation: provide scientific legitimacy for white separatism and immigration restriction. The fund is the backbone funding apparatus of the hereditarian network, having supported Jensen, Rushton, Lynn, Gottfredson, and others over six decades.",
+          "credibility": 0.05,
+          "scenarios": [
+            "SC-01"
+          ],
+          "id": "actor:pioneer-fund",
+          "value": "actor:pioneer-fund",
+          "name": "actor:pioneer-fund"
+        }
+      },
+      {
+        "data": {
+          "node_type": "actor",
+          "label": "Arthur Jensen",
+          "actor_type": "influencer",
+          "motivation": "Career incentive: Jensen's 1969 Harvard Educational Review paper made him internationally prominent. After receiving FBI protection from campus protests, he adopted a self-narrative as a persecuted truth-teller, which reinforced his identity and provided rhetorical infrastructure. He was a Pioneer Fund grantee throughout his career. His 1969 paper provided the modern academic anchor for the genetic hypothesis, framed in the context of opposition to Great Society education programs.",
+          "credibility": 0.25,
+          "scenarios": [
+            "SC-01"
+          ],
+          "id": "actor:arthur-jensen",
+          "value": "actor:arthur-jensen",
+          "name": "actor:arthur-jensen"
+        }
+      },
+      {
+        "data": {
+          "node_type": "actor",
+          "label": "Mankind Quarterly / Roger Pearson",
+          "actor_type": "organization",
+          "motivation": "Mankind Quarterly (founded 1960) provides a publication venue that mimics academic form without standard peer review, allowing hereditarian claims to accumulate citation infrastructure. Roger Pearson (founder) used the free-science framing as a laundering mechanism for ideologically motivated research. Motivation: provide publication legitimacy for claims that would not survive mainstream review.",
+          "credibility": 0.05,
+          "scenarios": [
+            "SC-01"
+          ],
+          "id": "actor:mankind-quarterly-roger-pearson",
+          "value": "actor:mankind-quarterly-roger-pearson",
+          "name": "actor:mankind-quarterly-roger-pearson"
+        }
+      },
+      {
+        "data": {
+          "node_type": "actor",
+          "label": "J. Philippe Rushton",
+          "actor_type": "influencer",
+          "motivation": "Academic career and Pioneer Fund grantee; became Pioneer Fund president (2002). Extended Jensen's claims to a three-race evolutionary framework (r/K life history theory), providing pseudoscientific architecture that attracted both academic and white-nationalist audiences. Motivation: professional advancement within the hereditarian network, ideological commitment to biological race hierarchy.",
+          "credibility": 0.08,
+          "scenarios": [
+            "SC-01"
+          ],
+          "id": "actor:j-philippe-rushton",
+          "value": "actor:j-philippe-rushton",
+          "name": "actor:j-philippe-rushton"
+        }
+      },
+      {
+        "data": {
+          "node_type": "actor",
+          "label": "Richard Lynn",
+          "actor_type": "influencer",
+          "motivation": "Compiled cross-national IQ data claiming African mean IQ approximately 70, used to argue genetic hierarchy maps onto national development. Published in Mankind Quarterly (Pioneer Fund-linked) and co-authored 'IQ and the Wealth of Nations' (2002). Motivation: career within hereditarian network; the cross-national data serves immigration restriction and development-aid-opposition arguments that align with far-right funders.",
+          "credibility": 0.06,
+          "scenarios": [
+            "SC-01"
+          ],
+          "id": "actor:richard-lynn",
+          "value": "actor:richard-lynn",
+          "name": "actor:richard-lynn"
+        }
+      },
+      {
+        "data": {
+          "node_type": "actor",
+          "label": "Richard Herrnstein and Charles Murray",
+          "actor_type": "influencer",
+          "motivation": "Herrnstein (Harvard, deceased 1994): academic career; cognitive stratification thesis supported existing meritocratic hierarchy claims. Murray (AEI Fellow): ideological alignment with conservative opposition to welfare state, affirmative action, and immigration; professional position at American Enterprise Institute funded for decades. 'The Bell Curve' (1994, 300,000+ copies sold) brought the genetic IQ claim to mass audience with major publisher marketing support (Free Press/Simon & Schuster).",
+          "credibility": 0.18,
+          "scenarios": [
+            "SC-01"
+          ],
+          "id": "actor:richard-herrnstein-and-charles-murray",
+          "value": "actor:richard-herrnstein-and-charles-murray",
+          "name": "actor:richard-herrnstein-and-charles-murray"
+        }
+      },
+      {
+        "data": {
+          "node_type": "actor",
+          "label": "Linda Gottfredson",
+          "actor_type": "influencer",
+          "motivation": "University of Delaware psychologist. Orchestrated the 1994 Wall Street Journal statement ('Mainstream Science on Intelligence', 52 signatories) as an explicit counter-response to Bell Curve critics. Motivation: professional investment in the validity of IQ as a fundamental social-stratification variable; career identity built around defending g-based intelligence theory against bias critiques.",
+          "credibility": 0.22,
+          "scenarios": [
+            "SC-01"
+          ],
+          "id": "actor:linda-gottfredson",
+          "value": "actor:linda-gottfredson",
+          "name": "actor:linda-gottfredson"
+        }
+      },
+      {
+        "data": {
+          "node_type": "actor",
+          "label": "Nathan Cofnas",
+          "actor_type": "influencer",
+          "motivation": "Oxford DPhil in philosophy of biology; Hebrew University postdoc. Current most sophisticated academic proponent. Publishes in Biology & Philosophy and Philosophical Psychology. Monetizes Substack 'Wrong Side of History'. Motivation: career differentiation through contrarian positioning in academic philosophy of science; Substack subscriber income from 'suppressed science' audience; genuine philosophical commitment to what he frames as scientific integrity against ideological distortion.",
+          "credibility": 0.28,
+          "scenarios": [
+            "SC-01"
+          ],
+          "id": "actor:nathan-cofnas",
+          "value": "actor:nathan-cofnas",
+          "name": "actor:nathan-cofnas"
+        }
+      },
+      {
+        "data": {
+          "node_type": "actor",
+          "label": "American Enterprise Institute (AEI) and Conservative Think Tank Infrastructure",
+          "actor_type": "organization",
+          "motivation": "AEI houses Charles Murray; Manhattan Institute and Heritage Foundation provide amplification for Bell Curve-derived arguments. Motivation: the genetic IQ claim provides intellectual justification for three core conservative policy positions: opposing affirmative action, opposing welfare expansion, and supporting immigration restriction. These policy goals are the primary driver of think-tank investment in the hereditarian claim.",
+          "credibility": 0.3,
+          "scenarios": [
+            "SC-01"
+          ],
+          "id": "actor:american-enterprise-institute-aei-and-conservative-think-tank-infrastructure",
+          "value": "actor:american-enterprise-institute-aei-and-conservative-think-tank-infrastructure",
+          "name": "actor:american-enterprise-institute-aei-and-conservative-think-tank-infrastructure"
+        }
+      },
+      {
+        "data": {
+          "node_type": "actor",
+          "label": "Alt-Right and White Nationalist Media (VDare, American Renaissance, Stormfront)",
+          "actor_type": "media",
+          "motivation": "Core audience-development and radicalization tool. The IQ claim provides a quasi-scientific anchor for white racial grievance politics and the claim that anti-white discrimination is unjustified given natural group differences. Revenue from conferences, subscriptions, donations. VDare (Peter Brimelow, founded 1999), American Renaissance (Jared Taylor), Stormfront (founded 1996) use the hereditarian academic lineage to appear scientifically grounded.",
+          "credibility": 0.02,
+          "scenarios": [
+            "SC-01"
+          ],
+          "id": "actor:alt-right-and-white-nationalist-media-vdare-american-renaissance-stormfront",
+          "value": "actor:alt-right-and-white-nationalist-media-vdare-american-renaissance-stormfront",
+          "name": "actor:alt-right-and-white-nationalist-media-vdare-american-renaissance-stormfront"
+        }
+      },
+      {
+        "data": {
+          "node_type": "actor",
+          "label": "Substack and Podcast Ecosystem (Cofnas, Bo Winegard, Emil Kirkegaard, Edward Dutton)",
+          "actor_type": "media",
+          "motivation": "Direct monetization of 'suppressed science' framing. Substack removes platform-level gatekeeping, enabling subscriber income from audiences attracted to contrarian race-science content. Bo Winegard (fired from Marietta College after controversy; now Substack), Emil Kirkegaard (runs OpenPsych self-publishing journals), Edward Dutton 'The Jolly Heretic' (YouTube/Substack). Motivation: personal income and community identity as brave truth-tellers.",
+          "credibility": 0.1,
+          "scenarios": [
+            "SC-01"
+          ],
+          "id": "actor:substack-and-podcast-ecosystem-cofnas-bo-winegard-emil-kirkegaard-edward-dutton",
+          "value": "actor:substack-and-podcast-ecosystem-cofnas-bo-winegard-emil-kirkegaard-edward-dutton",
+          "name": "actor:substack-and-podcast-ecosystem-cofnas-bo-winegard-emil-kirkegaard-edward-dutton"
+        }
+      },
+      {
+        "data": {
+          "node_type": "actor",
+          "label": "Mainstream Podcast Amplifiers (Jordan Peterson, Joe Rogan, Lex Fridman)",
+          "actor_type": "media",
+          "motivation": "Not ideologically committed hereditarian actors, but provide significant amplification to adjacent claims through 'just asking questions' framing. Jordan Peterson regularly discusses IQ and group differences with audiences of millions. Motivation: audience engagement, contrarian intellectual brand, opposition to what they frame as ideological capture of academia.",
+          "credibility": 0.4,
+          "scenarios": [
+            "SC-01"
+          ],
+          "id": "actor:mainstream-podcast-amplifiers-jordan-peterson-joe-rogan-lex-fridman",
+          "value": "actor:mainstream-podcast-amplifiers-jordan-peterson-joe-rogan-lex-fridman",
+          "name": "actor:mainstream-podcast-amplifiers-jordan-peterson-joe-rogan-lex-fridman"
+        }
+      },
+      {
+        "data": {
+          "node_type": "actor",
+          "label": "Silicon Valley Rationalist and Libertarian Community",
+          "actor_type": "influencer",
+          "motivation": "The HBD rebranding attracted libertarian and rationalist readers uncomfortable with explicit white nationalism but attracted to the contrarian framing. Accepting race IQ heritability has become a marker of intellectual seriousness in some online rationalist communities (LessWrong-adjacent). Peter Thiel and associated funders provide financial support to related media ventures. Motivation: libertarian meritocracy ideology (if outcomes reflect genetic merit, current hierarchies are natural); counter-signaling as intellectual identity.",
+          "credibility": 0.35,
+          "scenarios": [
+            "SC-01"
+          ],
+          "id": "actor:silicon-valley-rationalist-and-libertarian-community",
+          "value": "actor:silicon-valley-rationalist-and-libertarian-community",
+          "name": "actor:silicon-valley-rationalist-and-libertarian-community"
+        }
+      },
+      {
+        "data": {
+          "node_type": "actor",
+          "label": "Sincere Claim-Makers (ordinary people who encounter the claim)",
+          "actor_type": "unknown",
+          "motivation": "People who sincerely encounter the IQ claim online, often via rationalist or heterodox communities, and ask the question in good faith. Motivation: genuine curiosity about contested empirical questions; attraction to the 'forbidden knowledge' framing as a signal of intellectual independence; distrust of mainstream institutions (which is sometimes warranted). These actors are not part of the funding network; they are the downstream audience that the network's distribution infrastructure is designed to reach.",
+          "credibility": 0.6,
+          "scenarios": [
+            "SC-01"
+          ],
+          "id": "actor:sincere-claim-makers-ordinary-people-who-encounter-the-claim",
+          "value": "actor:sincere-claim-makers-ordinary-people-who-encounter-the-claim",
+          "name": "actor:sincere-claim-makers-ordinary-people-who-encounter-the-claim"
+        }
+      },
+      {
+        "data": {
+          "node_type": "actor",
+          "label": "American Psychological Association (APA) Task Force",
+          "actor_type": "organization",
+          "motivation": "Counter-actor. The 1996 APA task force report 'Intelligence: Knowns and Unknowns' was convened specifically to provide a credible institutional response to the Bell Curve controversy. Motivation: maintain scientific integrity; provide authoritative summary of what is and is not established in intelligence research.",
+          "credibility": 0.85,
+          "scenarios": [
+            "SC-01"
+          ],
+          "id": "actor:american-psychological-association-apa-task-force",
+          "value": "actor:american-psychological-association-apa-task-force",
+          "name": "actor:american-psychological-association-apa-task-force"
+        }
+      },
+      {
+        "data": {
+          "node_type": "actor",
+          "label": "American Anthropological Association and Human Genetics Consensus Bodies",
+          "actor_type": "organization",
+          "motivation": "Counter-actor. AAA 1998 statement on race, American Society of Human Genetics 2018 statement, and Nature Genetics editorials hold that human genetic variation is clinal, not categorical, and that race as used in US survey research is a social/administrative category, not a biological one.",
+          "credibility": 0.9,
+          "scenarios": [
+            "SC-01"
+          ],
+          "id": "actor:american-anthropological-association-and-human-genetics-consensus-bodies",
+          "value": "actor:american-anthropological-association-and-human-genetics-consensus-bodies",
+          "name": "actor:american-anthropological-association-and-human-genetics-consensus-bodies"
+        }
+      },
+      {
+        "data": {
+          "node_type": "actor",
+          "label": "James Flynn",
+          "actor_type": "influencer",
+          "motivation": "Counter-actor. Political philosopher and psychometrician who documented the Flynn Effect (IQ scores rising ~3 points per decade across the 20th century in all tested populations). This finding is the most powerful single piece of evidence for environmental plasticity of the IQ phenotype. Motivation: scientific accuracy; the Flynn Effect was not politically motivated but its implications directly undermine the genetic hypothesis for group differences.",
+          "credibility": 0.88,
+          "scenarios": [
+            "SC-01"
+          ],
+          "id": "actor:james-flynn",
+          "value": "actor:james-flynn",
+          "name": "actor:james-flynn"
+        }
+      },
+      {
+        "data": {
+          "node_type": "actor",
+          "label": "Nisbett, Aronson, Blair, Dickens et al. (Environmental Evidence Network)",
+          "actor_type": "organization",
+          "motivation": "Counter-actor. Academic researchers who have assembled the systematic case for environmental explanations: stereotype threat (Steele & Aronson 1995), comprehensive environmental reviews (Nisbett et al. 2012 American Psychologist), adoption studies, lead exposure data. Motivation: scientific accuracy; no documented ideological funding comparable to Pioneer Fund.",
+          "credibility": 0.85,
+          "scenarios": [
+            "SC-01"
+          ],
+          "id": "actor:nisbett-aronson-blair-dickens-et-al-environmental-evidence-network",
+          "value": "actor:nisbett-aronson-blair-dickens-et-al-environmental-evidence-network",
+          "name": "actor:nisbett-aronson-blair-dickens-et-al-environmental-evidence-network"
+        }
+      },
+      {
+        "data": {
+          "node_type": "actor",
+          "label": "Richard Lewontin, Leon Kamin, Stephen Jay Gould",
+          "actor_type": "influencer",
+          "motivation": "Counter-actors. Lewontin documented Pioneer Fund funding of Jensen (population genetics critique); Kamin exposed Cyril Burt's data fabrication; Gould critiqued IQ reification and g in 'The Mismeasure of Man' (1981, 2nd ed. 1996). Motivation: scientific accuracy and political opposition to biological determinism.",
+          "credibility": 0.72,
+          "scenarios": [
+            "SC-01"
+          ],
+          "id": "actor:richard-lewontin-leon-kamin-stephen-jay-gould",
+          "value": "actor:richard-lewontin-leon-kamin-stephen-jay-gould",
+          "name": "actor:richard-lewontin-leon-kamin-stephen-jay-gould"
+        }
+      },
+      {
+        "data": {
+          "node_type": "actor",
+          "label": "William Tucker",
+          "actor_type": "influencer",
+          "motivation": "Counter-actor. Author of 'The Funding of Scientific Racism' (2002, University of Illinois Press), the primary documented history of Pioneer Fund operations and Wickliffe Draper's ideological agenda. Motivation: historical accountability and transparency about funding flows in research.",
+          "credibility": 0.88,
+          "scenarios": [
+            "SC-01"
+          ],
+          "id": "actor:william-tucker",
+          "value": "actor:william-tucker",
+          "name": "actor:william-tucker"
+        }
+      },
+      {
+        "data": {
+          "node_type": "technique",
+          "label": "Cause Harm to Physical/Cognitive Targets",
+          "disarm_id": "T0048",
+          "max_confidence": 0.85,
+          "scenarios": [
+            "SC-01"
+          ],
+          "id": "technique:T0048",
+          "value": "technique:T0048",
+          "name": "technique:T0048"
+        }
+      },
+      {
+        "data": {
+          "node_type": "technique_reveal",
+          "label": "Distort Facts",
+          "how_it_works": "Taking real findings and subtly changing what they say.",
+          "pattern_type": "systematic",
+          "historical_precedent": "",
+          "scenarios": [
+            "SC-01"
+          ],
+          "id": "reveal:distort-facts",
+          "value": "reveal:distort-facts",
+          "name": "reveal:distort-facts"
+        }
+      },
+      {
+        "data": {
+          "node_type": "technique_reveal",
+          "label": "Conspiracy Theory Frame",
+          "how_it_works": "Framing any institutional rebuttal as proof of the conspiracy, making the claim unfalsifiable.",
+          "pattern_type": "systematic",
+          "historical_precedent": "",
+          "scenarios": [
+            "SC-01"
+          ],
+          "id": "reveal:conspiracy-theory-frame",
+          "value": "reveal:conspiracy-theory-frame",
+          "name": "reveal:conspiracy-theory-frame"
+        }
+      },
+      {
+        "data": {
+          "node_type": "technique_reveal",
+          "label": "Seed Distortions",
+          "how_it_works": "Embedding false background assumptions early so later false conclusions seem to follow naturally.",
+          "pattern_type": "systematic",
+          "historical_precedent": "",
+          "scenarios": [
+            "SC-01"
+          ],
+          "id": "reveal:seed-distortions",
+          "value": "reveal:seed-distortions",
+          "name": "reveal:seed-distortions"
+        }
+      },
+      {
+        "data": {
+          "node_type": "technique_reveal",
+          "label": "Competing Narrative Infrastructure",
+          "how_it_works": "Building a parallel publication system that looks like science but skips the quality controls.",
+          "pattern_type": "systematic",
+          "historical_precedent": "",
+          "scenarios": [
+            "SC-01"
+          ],
+          "id": "reveal:competing-narrative-infrastructure",
+          "value": "reveal:competing-narrative-infrastructure",
+          "name": "reveal:competing-narrative-infrastructure"
+        }
+      },
+      {
+        "data": {
+          "node_type": "technique_reveal",
+          "label": "Persecution Narrative Monetization",
+          "how_it_works": "Making money from the story that you are being silenced.",
+          "pattern_type": "systematic",
+          "historical_precedent": "",
+          "scenarios": [
+            "SC-01"
+          ],
+          "id": "reveal:persecution-narrative-monetization",
+          "value": "reveal:persecution-narrative-monetization",
+          "name": "reveal:persecution-narrative-monetization"
+        }
+      },
+      {
+        "data": {
+          "node_type": "technique_reveal",
+          "label": "Amplify Legitimate Concerns",
+          "how_it_works": "Taking a real and valid concern and using it to legitimize a false claim.",
+          "pattern_type": "incidental",
+          "historical_precedent": "",
+          "scenarios": [
+            "SC-01"
+          ],
+          "id": "reveal:amplify-legitimate-concerns",
+          "value": "reveal:amplify-legitimate-concerns",
+          "name": "reveal:amplify-legitimate-concerns"
+        }
+      },
+      {
+        "data": {
+          "node_type": "claim",
+          "label": "There are measurable average IQ score differences between racial groups",
+          "full_text": "There are measurable average IQ score differences between racial groups",
+          "claim_type": "factual",
+          "verifiable": true,
+          "scenario": "SC-01",
+          "id": "claim:SC-01-0",
+          "value": "claim:SC-01-0",
+          "name": "claim:SC-01-0"
+        }
+      },
+      {
+        "data": {
+          "node_type": "claim",
+          "label": "Racial groups as used in IQ research constitute biologically distinct categories",
+          "full_text": "Racial groups as used in IQ research constitute biologically distinct categories",
+          "claim_type": "factual",
+          "verifiable": true,
+          "scenario": "SC-01",
+          "id": "claim:SC-01-1",
+          "value": "claim:SC-01-1",
+          "name": "claim:SC-01-1"
+        }
+      },
+      {
+        "data": {
+          "node_type": "claim",
+          "label": "Genetic factors are the primary cause of average IQ differences between racial g",
+          "full_text": "Genetic factors are the primary cause of average IQ differences between racial groups",
+          "claim_type": "causal",
+          "verifiable": true,
+          "scenario": "SC-01",
+          "id": "claim:SC-01-2",
+          "value": "claim:SC-01-2",
+          "name": "claim:SC-01-2"
+        }
+      },
+      {
+        "data": {
+          "node_type": "claim",
+          "label": "The genetic explanation for group IQ differences constitutes a scientific findin",
+          "full_text": "The genetic explanation for group IQ differences constitutes a scientific finding",
+          "claim_type": "opinion",
+          "verifiable": false,
+          "scenario": "SC-01",
+          "id": "claim:SC-01-3",
+          "value": "claim:SC-01-3",
+          "name": "claim:SC-01-3"
+        }
+      },
+      {
+        "data": {
+          "node_type": "claim",
+          "label": "Mainstream academia is actively suppressing the genetic explanation for group IQ",
+          "full_text": "Mainstream academia is actively suppressing the genetic explanation for group IQ differences",
+          "claim_type": "factual",
+          "verifiable": true,
+          "scenario": "SC-01",
+          "id": "claim:SC-01-4",
+          "value": "claim:SC-01-4",
+          "name": "claim:SC-01-4"
+        }
+      },
+      {
+        "data": {
+          "node_type": "claim",
+          "label": "Political correctness is the cause of this alleged suppression by mainstream aca",
+          "full_text": "Political correctness is the cause of this alleged suppression by mainstream academia",
+          "claim_type": "causal",
+          "verifiable": false,
+          "scenario": "SC-01",
+          "id": "claim:SC-01-5",
+          "value": "claim:SC-01-5",
+          "name": "claim:SC-01-5"
+        }
+      },
+      {
+        "data": {
+          "node_type": "claim",
+          "label": "There exists a scientific consensus supporting the genetic explanation for group",
+          "full_text": "There exists a scientific consensus supporting the genetic explanation for group IQ differences that is being ignored",
+          "claim_type": "factual",
+          "verifiable": true,
+          "scenario": "SC-01",
+          "id": "claim:SC-01-6",
+          "value": "claim:SC-01-6",
+          "name": "claim:SC-01-6"
+        }
+      },
+      {
+        "data": {
+          "node_type": "claim",
+          "label": "Environmental, socioeconomic, and historical factors do not primarily explain ob",
+          "full_text": "Environmental, socioeconomic, and historical factors do not primarily explain observed group IQ score gaps",
+          "claim_type": "factual",
+          "verifiable": true,
+          "scenario": "SC-01",
+          "id": "claim:SC-01-7",
+          "value": "claim:SC-01-7",
+          "name": "claim:SC-01-7"
+        }
+      },
+      {
+        "data": {
+          "node_type": "claim",
+          "label": "IQ tests are valid and unbiased measures of innate cognitive ability across raci",
+          "full_text": "IQ tests are valid and unbiased measures of innate cognitive ability across racial groups",
+          "claim_type": "factual",
+          "verifiable": true,
+          "scenario": "SC-01",
+          "id": "claim:SC-01-8",
+          "value": "claim:SC-01-8",
+          "name": "claim:SC-01-8"
+        }
+      },
+      {
+        "data": {
+          "node_type": "claim",
+          "label": "Academic institutions should not allow political considerations to influence sci",
+          "full_text": "Academic institutions should not allow political considerations to influence scientific inquiry",
+          "claim_type": "value",
+          "verifiable": false,
+          "scenario": "SC-01",
+          "id": "claim:SC-01-9",
+          "value": "claim:SC-01-9",
+          "name": "claim:SC-01-9"
         }
       },
       {
@@ -19086,6 +19644,904 @@
           "label": "cites",
           "source": "actor:civil-society-organizations-more-in-common-pew-research-etc",
           "target": "actor:academic-researchers-bakshy-guess-nyhan-ribeiro-et-al"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "features",
+          "label": "features",
+          "source": "scenario:SC-01",
+          "target": "actor:pioneer-fund"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "features",
+          "label": "features",
+          "source": "scenario:SC-01",
+          "target": "actor:arthur-jensen"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "features",
+          "label": "features",
+          "source": "scenario:SC-01",
+          "target": "actor:mankind-quarterly-roger-pearson"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "features",
+          "label": "features",
+          "source": "scenario:SC-01",
+          "target": "actor:j-philippe-rushton"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "features",
+          "label": "features",
+          "source": "scenario:SC-01",
+          "target": "actor:richard-lynn"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "features",
+          "label": "features",
+          "source": "scenario:SC-01",
+          "target": "actor:richard-herrnstein-and-charles-murray"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "features",
+          "label": "features",
+          "source": "scenario:SC-01",
+          "target": "actor:linda-gottfredson"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "features",
+          "label": "features",
+          "source": "scenario:SC-01",
+          "target": "actor:nathan-cofnas"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "features",
+          "label": "features",
+          "source": "scenario:SC-01",
+          "target": "actor:american-enterprise-institute-aei-and-conservative-think-tank-infrastructure"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "features",
+          "label": "features",
+          "source": "scenario:SC-01",
+          "target": "actor:alt-right-and-white-nationalist-media-vdare-american-renaissance-stormfront"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "features",
+          "label": "features",
+          "source": "scenario:SC-01",
+          "target": "actor:substack-and-podcast-ecosystem-cofnas-bo-winegard-emil-kirkegaard-edward-dutton"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "features",
+          "label": "features",
+          "source": "scenario:SC-01",
+          "target": "actor:mainstream-podcast-amplifiers-jordan-peterson-joe-rogan-lex-fridman"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "features",
+          "label": "features",
+          "source": "scenario:SC-01",
+          "target": "actor:silicon-valley-rationalist-and-libertarian-community"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "features",
+          "label": "features",
+          "source": "scenario:SC-01",
+          "target": "actor:sincere-claim-makers-ordinary-people-who-encounter-the-claim"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "features",
+          "label": "features",
+          "source": "scenario:SC-01",
+          "target": "actor:american-psychological-association-apa-task-force"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "features",
+          "label": "features",
+          "source": "scenario:SC-01",
+          "target": "actor:american-anthropological-association-and-human-genetics-consensus-bodies"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "features",
+          "label": "features",
+          "source": "scenario:SC-01",
+          "target": "actor:james-flynn"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "features",
+          "label": "features",
+          "source": "scenario:SC-01",
+          "target": "actor:nisbett-aronson-blair-dickens-et-al-environmental-evidence-network"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "features",
+          "label": "features",
+          "source": "scenario:SC-01",
+          "target": "actor:richard-lewontin-leon-kamin-stephen-jay-gould"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "features",
+          "label": "features",
+          "source": "scenario:SC-01",
+          "target": "actor:william-tucker"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "uses",
+          "confidence": 0.97,
+          "label": "uses",
+          "source": "scenario:SC-01",
+          "target": "technique:T0023"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "uses",
+          "confidence": 0.96,
+          "label": "uses",
+          "source": "scenario:SC-01",
+          "target": "technique:T0022"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "uses",
+          "confidence": 0.95,
+          "label": "uses",
+          "source": "scenario:SC-01",
+          "target": "technique:T0004"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "uses",
+          "confidence": 0.92,
+          "label": "uses",
+          "source": "scenario:SC-01",
+          "target": "technique:T0056"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "uses",
+          "confidence": 0.93,
+          "label": "uses",
+          "source": "scenario:SC-01",
+          "target": "technique:T0044"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "uses",
+          "confidence": 0.88,
+          "label": "uses",
+          "source": "scenario:SC-01",
+          "target": "technique:T0010"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "uses",
+          "confidence": 0.82,
+          "label": "uses",
+          "source": "scenario:SC-01",
+          "target": "technique:T0049"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "uses",
+          "confidence": 0.78,
+          "label": "uses",
+          "source": "scenario:SC-01",
+          "target": "technique:T0016"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "uses",
+          "confidence": 0.85,
+          "label": "uses",
+          "source": "scenario:SC-01",
+          "target": "technique:T0048"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "reveals",
+          "used_by": "Hereditarian academic network",
+          "pattern_type": "systematic",
+          "label": "reveals",
+          "source": "scenario:SC-01",
+          "target": "reveal:cherry-picking"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "reveals",
+          "used_by": "Hereditarian network",
+          "pattern_type": "systematic",
+          "label": "reveals",
+          "source": "scenario:SC-01",
+          "target": "reveal:distort-facts"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "reveals",
+          "used_by": "Hereditarian network",
+          "pattern_type": "systematic",
+          "label": "reveals",
+          "source": "scenario:SC-01",
+          "target": "reveal:conspiracy-theory-frame"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "reveals",
+          "used_by": "Hereditarian network",
+          "pattern_type": "systematic",
+          "label": "reveals",
+          "source": "scenario:SC-01",
+          "target": "reveal:seed-distortions"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "reveals",
+          "used_by": "Hereditarian network",
+          "pattern_type": "systematic",
+          "label": "reveals",
+          "source": "scenario:SC-01",
+          "target": "reveal:competing-narrative-infrastructure"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "reveals",
+          "used_by": "Hereditarian network",
+          "pattern_type": "systematic",
+          "label": "reveals",
+          "source": "scenario:SC-01",
+          "target": "reveal:persecution-narrative-monetization"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "reveals",
+          "used_by": "Hereditarian network",
+          "pattern_type": "incidental",
+          "label": "reveals",
+          "source": "scenario:SC-01",
+          "target": "reveal:amplify-legitimate-concerns"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "contains",
+          "label": "contains",
+          "source": "scenario:SC-01",
+          "target": "claim:SC-01-0"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "contains",
+          "label": "contains",
+          "source": "scenario:SC-01",
+          "target": "claim:SC-01-1"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "contains",
+          "label": "contains",
+          "source": "scenario:SC-01",
+          "target": "claim:SC-01-2"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "contains",
+          "label": "contains",
+          "source": "scenario:SC-01",
+          "target": "claim:SC-01-3"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "contains",
+          "label": "contains",
+          "source": "scenario:SC-01",
+          "target": "claim:SC-01-4"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "contains",
+          "label": "contains",
+          "source": "scenario:SC-01",
+          "target": "claim:SC-01-5"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "contains",
+          "label": "contains",
+          "source": "scenario:SC-01",
+          "target": "claim:SC-01-6"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "contains",
+          "label": "contains",
+          "source": "scenario:SC-01",
+          "target": "claim:SC-01-7"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "contains",
+          "label": "contains",
+          "source": "scenario:SC-01",
+          "target": "claim:SC-01-8"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "contains",
+          "label": "contains",
+          "source": "scenario:SC-01",
+          "target": "claim:SC-01-9"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "relates_to",
+          "relation": "funds",
+          "confidence": 0.97,
+          "scenarios": [
+            "SC-01"
+          ],
+          "label": "funds",
+          "source": "actor:pioneer-fund",
+          "target": "actor:arthur-jensen"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "relates_to",
+          "relation": "funds",
+          "confidence": 0.97,
+          "scenarios": [
+            "SC-01"
+          ],
+          "label": "funds",
+          "source": "actor:pioneer-fund",
+          "target": "actor:j-philippe-rushton"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "relates_to",
+          "relation": "funds",
+          "confidence": 0.95,
+          "scenarios": [
+            "SC-01"
+          ],
+          "label": "funds",
+          "source": "actor:pioneer-fund",
+          "target": "actor:richard-lynn"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "relates_to",
+          "relation": "funds",
+          "confidence": 0.9,
+          "scenarios": [
+            "SC-01"
+          ],
+          "label": "funds",
+          "source": "actor:pioneer-fund",
+          "target": "actor:linda-gottfredson"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "relates_to",
+          "relation": "coordinates",
+          "confidence": 0.92,
+          "scenarios": [
+            "SC-01"
+          ],
+          "label": "coordinates",
+          "source": "actor:pioneer-fund",
+          "target": "actor:mankind-quarterly-roger-pearson"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "relates_to",
+          "relation": "cites",
+          "confidence": 0.97,
+          "scenarios": [
+            "SC-01"
+          ],
+          "label": "cites",
+          "source": "actor:arthur-jensen",
+          "target": "actor:richard-herrnstein-and-charles-murray"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "relates_to",
+          "relation": "cites",
+          "confidence": 0.95,
+          "scenarios": [
+            "SC-01"
+          ],
+          "label": "cites",
+          "source": "actor:arthur-jensen",
+          "target": "actor:j-philippe-rushton"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "relates_to",
+          "relation": "coordinates",
+          "confidence": 0.85,
+          "scenarios": [
+            "SC-01"
+          ],
+          "label": "coordinates",
+          "source": "actor:j-philippe-rushton",
+          "target": "actor:mankind-quarterly-roger-pearson"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "relates_to",
+          "relation": "coordinates",
+          "confidence": 0.9,
+          "scenarios": [
+            "SC-01"
+          ],
+          "label": "coordinates",
+          "source": "actor:richard-lynn",
+          "target": "actor:mankind-quarterly-roger-pearson"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "relates_to",
+          "relation": "coordinates",
+          "confidence": 0.92,
+          "scenarios": [
+            "SC-01"
+          ],
+          "label": "coordinates",
+          "source": "actor:richard-herrnstein-and-charles-murray",
+          "target": "actor:american-enterprise-institute-aei-and-conservative-think-tank-infrastructure"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "relates_to",
+          "relation": "amplifies",
+          "confidence": 0.88,
+          "scenarios": [
+            "SC-01"
+          ],
+          "label": "amplifies",
+          "source": "actor:richard-herrnstein-and-charles-murray",
+          "target": "actor:linda-gottfredson"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "relates_to",
+          "relation": "amplifies",
+          "confidence": 0.85,
+          "scenarios": [
+            "SC-01"
+          ],
+          "label": "amplifies",
+          "source": "actor:richard-herrnstein-and-charles-murray",
+          "target": "actor:alt-right-and-white-nationalist-media-vdare-american-renaissance-stormfront"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "relates_to",
+          "relation": "amplifies",
+          "confidence": 0.88,
+          "scenarios": [
+            "SC-01"
+          ],
+          "label": "amplifies",
+          "source": "actor:linda-gottfredson",
+          "target": "actor:richard-herrnstein-and-charles-murray"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "relates_to",
+          "relation": "cites",
+          "confidence": 0.92,
+          "scenarios": [
+            "SC-01"
+          ],
+          "label": "cites",
+          "source": "actor:nathan-cofnas",
+          "target": "actor:arthur-jensen"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "relates_to",
+          "relation": "cites",
+          "confidence": 0.9,
+          "scenarios": [
+            "SC-01"
+          ],
+          "label": "cites",
+          "source": "actor:nathan-cofnas",
+          "target": "actor:linda-gottfredson"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "relates_to",
+          "relation": "coordinates",
+          "confidence": 0.88,
+          "scenarios": [
+            "SC-01"
+          ],
+          "label": "coordinates",
+          "source": "actor:nathan-cofnas",
+          "target": "actor:substack-and-podcast-ecosystem-cofnas-bo-winegard-emil-kirkegaard-edward-dutton"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "relates_to",
+          "relation": "funds",
+          "confidence": 0.9,
+          "scenarios": [
+            "SC-01"
+          ],
+          "label": "funds",
+          "source": "actor:american-enterprise-institute-aei-and-conservative-think-tank-infrastructure",
+          "target": "actor:richard-herrnstein-and-charles-murray"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "relates_to",
+          "relation": "amplifies",
+          "confidence": 0.9,
+          "scenarios": [
+            "SC-01"
+          ],
+          "label": "amplifies",
+          "source": "actor:alt-right-and-white-nationalist-media-vdare-american-renaissance-stormfront",
+          "target": "actor:richard-herrnstein-and-charles-murray"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "relates_to",
+          "relation": "amplifies",
+          "confidence": 0.88,
+          "scenarios": [
+            "SC-01"
+          ],
+          "label": "amplifies",
+          "source": "actor:alt-right-and-white-nationalist-media-vdare-american-renaissance-stormfront",
+          "target": "actor:arthur-jensen"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "relates_to",
+          "relation": "amplifies",
+          "confidence": 0.9,
+          "scenarios": [
+            "SC-01"
+          ],
+          "label": "amplifies",
+          "source": "actor:alt-right-and-white-nationalist-media-vdare-american-renaissance-stormfront",
+          "target": "actor:richard-lynn"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "relates_to",
+          "relation": "amplifies",
+          "confidence": 0.72,
+          "scenarios": [
+            "SC-01"
+          ],
+          "label": "amplifies",
+          "source": "actor:substack-and-podcast-ecosystem-cofnas-bo-winegard-emil-kirkegaard-edward-dutton",
+          "target": "actor:alt-right-and-white-nationalist-media-vdare-american-renaissance-stormfront"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "relates_to",
+          "relation": "amplifies",
+          "confidence": 0.65,
+          "scenarios": [
+            "SC-01"
+          ],
+          "label": "amplifies",
+          "source": "actor:mainstream-podcast-amplifiers-jordan-peterson-joe-rogan-lex-fridman",
+          "target": "actor:substack-and-podcast-ecosystem-cofnas-bo-winegard-emil-kirkegaard-edward-dutton"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "relates_to",
+          "relation": "amplifies",
+          "confidence": 0.6,
+          "scenarios": [
+            "SC-01"
+          ],
+          "label": "amplifies",
+          "source": "actor:mainstream-podcast-amplifiers-jordan-peterson-joe-rogan-lex-fridman",
+          "target": "actor:nathan-cofnas"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "relates_to",
+          "relation": "amplifies",
+          "confidence": 0.7,
+          "scenarios": [
+            "SC-01"
+          ],
+          "label": "amplifies",
+          "source": "actor:silicon-valley-rationalist-and-libertarian-community",
+          "target": "actor:nathan-cofnas"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "relates_to",
+          "relation": "funds",
+          "confidence": 0.55,
+          "scenarios": [
+            "SC-01"
+          ],
+          "label": "funds",
+          "source": "actor:silicon-valley-rationalist-and-libertarian-community",
+          "target": "actor:substack-and-podcast-ecosystem-cofnas-bo-winegard-emil-kirkegaard-edward-dutton"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "relates_to",
+          "relation": "amplifies",
+          "confidence": 0.75,
+          "scenarios": [
+            "SC-01"
+          ],
+          "label": "amplifies",
+          "source": "actor:sincere-claim-makers-ordinary-people-who-encounter-the-claim",
+          "target": "actor:substack-and-podcast-ecosystem-cofnas-bo-winegard-emil-kirkegaard-edward-dutton"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "relates_to",
+          "relation": "amplifies",
+          "confidence": 0.8,
+          "scenarios": [
+            "SC-01"
+          ],
+          "label": "amplifies",
+          "source": "actor:sincere-claim-makers-ordinary-people-who-encounter-the-claim",
+          "target": "actor:mainstream-podcast-amplifiers-jordan-peterson-joe-rogan-lex-fridman"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "relates_to",
+          "relation": "opposes",
+          "confidence": 0.95,
+          "scenarios": [
+            "SC-01"
+          ],
+          "label": "opposes",
+          "source": "actor:american-psychological-association-apa-task-force",
+          "target": "actor:richard-herrnstein-and-charles-murray"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "relates_to",
+          "relation": "opposes",
+          "confidence": 0.88,
+          "scenarios": [
+            "SC-01"
+          ],
+          "label": "opposes",
+          "source": "actor:american-psychological-association-apa-task-force",
+          "target": "actor:arthur-jensen"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "relates_to",
+          "relation": "opposes",
+          "confidence": 0.95,
+          "scenarios": [
+            "SC-01"
+          ],
+          "label": "opposes",
+          "source": "actor:american-anthropological-association-and-human-genetics-consensus-bodies",
+          "target": "actor:j-philippe-rushton"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "relates_to",
+          "relation": "opposes",
+          "confidence": 0.92,
+          "scenarios": [
+            "SC-01"
+          ],
+          "label": "opposes",
+          "source": "actor:american-anthropological-association-and-human-genetics-consensus-bodies",
+          "target": "actor:richard-lynn"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "relates_to",
+          "relation": "opposes",
+          "confidence": 0.95,
+          "scenarios": [
+            "SC-01"
+          ],
+          "label": "opposes",
+          "source": "actor:james-flynn",
+          "target": "actor:arthur-jensen"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "relates_to",
+          "relation": "opposes",
+          "confidence": 0.9,
+          "scenarios": [
+            "SC-01"
+          ],
+          "label": "opposes",
+          "source": "actor:james-flynn",
+          "target": "actor:richard-herrnstein-and-charles-murray"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "relates_to",
+          "relation": "opposes",
+          "confidence": 0.92,
+          "scenarios": [
+            "SC-01"
+          ],
+          "label": "opposes",
+          "source": "actor:nisbett-aronson-blair-dickens-et-al-environmental-evidence-network",
+          "target": "actor:richard-herrnstein-and-charles-murray"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "relates_to",
+          "relation": "opposes",
+          "confidence": 0.85,
+          "scenarios": [
+            "SC-01"
+          ],
+          "label": "opposes",
+          "source": "actor:nisbett-aronson-blair-dickens-et-al-environmental-evidence-network",
+          "target": "actor:nathan-cofnas"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "relates_to",
+          "relation": "opposes",
+          "confidence": 0.97,
+          "scenarios": [
+            "SC-01"
+          ],
+          "label": "opposes",
+          "source": "actor:richard-lewontin-leon-kamin-stephen-jay-gould",
+          "target": "actor:arthur-jensen"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "relates_to",
+          "relation": "opposes",
+          "confidence": 0.9,
+          "scenarios": [
+            "SC-01"
+          ],
+          "label": "opposes",
+          "source": "actor:richard-lewontin-leon-kamin-stephen-jay-gould",
+          "target": "actor:pioneer-fund"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "relates_to",
+          "relation": "opposes",
+          "confidence": 0.97,
+          "scenarios": [
+            "SC-01"
+          ],
+          "label": "opposes",
+          "source": "actor:william-tucker",
+          "target": "actor:pioneer-fund"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "relates_to",
+          "relation": "opposes",
+          "confidence": 0.95,
+          "scenarios": [
+            "SC-01"
+          ],
+          "label": "opposes",
+          "source": "actor:william-tucker",
+          "target": "actor:mankind-quarterly-roger-pearson"
         }
       },
       {
