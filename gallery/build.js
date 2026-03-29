@@ -1384,6 +1384,17 @@ function buildGraphPage() {
         <option value="technique_reveal">Named Tricks</option>
         <option value="scenario+actor" selected>Scenarios + Actors</option>
         <option value="scenario+actor+technique">Scenarios + Actors + Techniques</option>
+        <option value="scenario+technique">Playbook View (Scenarios + Techniques)</option>
+      </select>
+    </div>
+    <div>
+      <label for="filter-perspective">Perspective:</label>
+      <select id="filter-perspective">
+        <option value="all">All perspectives</option>
+        <option value="scientific_consensus">Scientific Consensus</option>
+        <option value="concerned_citizen">Concerned Citizen</option>
+        <option value="institutional_skeptic">Institutional Skeptic</option>
+        <option value="bridge_builder">Bridge Builder</option>
       </select>
     </div>
     <div>
@@ -1402,6 +1413,9 @@ function buildGraphPage() {
     <div>
       <label for="filter-search">Search:</label>
       <input type="text" id="filter-search" placeholder="Actor or technique name..." />
+    </div>
+    <div>
+      <button id="btn-shared-reality" style="padding:6px 14px;border:1px solid var(--border);border-radius:6px;font-size:0.85rem;background:var(--white);cursor:pointer;">Show Shared Reality</button>
     </div>
   </div>
 
@@ -1584,6 +1598,42 @@ function buildGraphPage() {
           style: {
             'opacity': 0.15
           }
+        },
+        {
+          selector: 'edge[edge_type="cross_scenario"]',
+          style: {
+            'line-style': 'dashed',
+            'line-dash-pattern': [6, 3],
+            'width': 'mapData(weight, 2, 10, 2, 6)',
+            'line-color': '#E74C3C',
+            'target-arrow-color': '#E74C3C',
+            'target-arrow-shape': 'none'
+          }
+        },
+        {
+          selector: 'edge[edge_type="co_occurs"]',
+          style: {
+            'line-style': 'dotted',
+            'width': 1,
+            'line-color': '#95A5A6',
+            'target-arrow-shape': 'none'
+          }
+        },
+        {
+          selector: '.shared-reality',
+          style: {
+            'border-width': 4,
+            'border-color': '#F1C40F',
+            'background-opacity': 1
+          }
+        },
+        {
+          selector: '.pivot-point',
+          style: {
+            'border-width': 3,
+            'border-color': '#E74C3C',
+            'border-style': 'double'
+          }
         }
       ],
       layout: {
@@ -1649,6 +1699,10 @@ function buildGraphPage() {
       h += detailField('Category', d.category);
       h += detailField('Version', d.version);
       h += detailField('Confidence', d.confidence ? (d.confidence * 100).toFixed(0) + '%' : '');
+      if (d.false_polarization_gap != null) {
+        var gapPct = (d.false_polarization_gap * 100).toFixed(0);
+        h += detailField('Shared Reality', gapPct + '% of underlying concerns are shared across perspectives');
+      }
       h += '<div style="margin-top:8px"><a href="' + escHtml(d.label) + '.html">View full analysis</a></div>';
     } else if (d.node_type === 'actor') {
       h += detailField('Actor type', d.actor_type);
@@ -1693,10 +1747,43 @@ function buildGraphPage() {
     return d.innerHTML;
   }
 
+  var PERSPECTIVE_EMPHASIS = {
+    scientific_consensus: ['technique', 'claim'],
+    concerned_citizen: ['actor', 'scenario'],
+    institutional_skeptic: ['actor'],
+    bridge_builder: ['scenario']
+  };
+
   function attachControls() {
     document.getElementById('filter-type').addEventListener('change', applyFilters);
     document.getElementById('filter-category').addEventListener('change', applyFilters);
     document.getElementById('filter-search').addEventListener('input', applyFilters);
+    document.getElementById('filter-perspective').addEventListener('change', applyFilters);
+
+    document.getElementById('btn-shared-reality').addEventListener('click', function() {
+      var active = this.classList.toggle('active');
+      this.style.background = active ? '#F1C40F' : 'var(--white)';
+      this.style.color = active ? '#2C3E50' : '';
+      this.textContent = active ? 'Hide Shared Reality' : 'Show Shared Reality';
+      cy.batch(function() {
+        cy.nodes().removeClass('shared-reality pivot-point');
+        if (active) {
+          cy.nodes().forEach(function(node) {
+            var d = node.data();
+            if (d.node_type === 'scenario' && d.false_polarization_gap > 0.5) {
+              node.addClass('shared-reality');
+            }
+            if (d.node_type === 'actor' && (d.scenarios || []).length >= 3) {
+              node.addClass('shared-reality');
+            }
+            if (d.pivot_point) {
+              node.addClass('pivot-point');
+            }
+          });
+        }
+      });
+    });
+
     applyFilters();
   }
 
@@ -1704,6 +1791,8 @@ function buildGraphPage() {
     var typeFilter = document.getElementById('filter-type').value;
     var catFilter = document.getElementById('filter-category').value;
     var search = document.getElementById('filter-search').value.toLowerCase().trim();
+    var perspective = document.getElementById('filter-perspective').value;
+    var emphTypes = perspective !== 'all' ? PERSPECTIVE_EMPHASIS[perspective] || [] : [];
 
     cy.batch(function() {
       cy.elements().removeClass('dimmed');
@@ -1739,6 +1828,10 @@ function buildGraphPage() {
 
         if (!visible) {
           node.addClass('dimmed');
+        } else if (emphTypes.length > 0 && emphTypes.indexOf(d.node_type) === -1 && d.node_type !== 'scenario') {
+          node.style('opacity', 0.4);
+        } else {
+          node.style('opacity', 1);
         }
       });
 

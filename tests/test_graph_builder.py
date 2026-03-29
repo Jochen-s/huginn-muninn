@@ -6,7 +6,7 @@ from pathlib import Path
 
 import pytest
 
-from graph.build_graph import EDGE_TYPES, NODE_TYPES
+from graph.build_graph import EDGE_TYPES, FLICC_MAP, NODE_TYPES
 
 
 # ---------------------------------------------------------------------------
@@ -424,3 +424,211 @@ def test_full_pipeline_with_real_results():
 
     cy = export_cytoscape(G)
     assert len(cy["elements"]["nodes"]) == stats["total_nodes"]
+
+
+# ---------------------------------------------------------------------------
+# Phase B: Feature 1 — FLICC taxonomy mapping
+# ---------------------------------------------------------------------------
+
+def test_flicc_mapping():
+    """FLICC_MAP exists and technique nodes receive flicc_category attribute."""
+    from graph.build_graph import build_graph
+
+    assert isinstance(FLICC_MAP, dict)
+    assert len(FLICC_MAP) > 0
+
+    results = [_minimal_result("GP-01")]
+    results[0]["ttps"] = {
+        "ttp_matches": [
+            {"disarm_id": "T0023", "technique_name": "Distort Facts", "confidence": 0.9},
+            {"disarm_id": "T0099", "technique_name": "Unknown Technique", "confidence": 0.5},
+        ],
+        "primary_tactic": "Execute",
+    }
+
+    G = build_graph(results)
+    mapped_node = G.nodes["technique:T0023"]
+    unmapped_node = G.nodes["technique:T0099"]
+
+    assert mapped_node["flicc_category"] == FLICC_MAP["T0023"]
+    assert unmapped_node["flicc_category"] == ""
+
+
+# ---------------------------------------------------------------------------
+# Phase B: Feature 2 — Cross-scenario edges
+# ---------------------------------------------------------------------------
+
+def test_cross_scenario_edges():
+    """Two scenarios sharing 2+ actors receive a cross_scenario edge."""
+    from graph.build_graph import build_graph
+
+    actor_a = {"name": "Alice", "type": "influencer", "motivation": "", "credibility": 0.5, "evidence": ""}
+    actor_b = {"name": "Bob", "type": "media", "motivation": "", "credibility": 0.4, "evidence": ""}
+    actor_c = {"name": "Carol", "type": "organization", "motivation": "", "credibility": 0.3, "evidence": ""}
+
+    results = [
+        _minimal_result("GP-01", actors=[actor_a, actor_b, actor_c]),
+        _minimal_result("GP-02", actors=[actor_a, actor_b]),
+        _minimal_result("GP-03", actors=[actor_c]),
+    ]
+
+    G = build_graph(results)
+
+    assert G.has_edge("scenario:GP-01", "scenario:GP-02")
+    edge = G.edges["scenario:GP-01", "scenario:GP-02"]
+    assert edge["edge_type"] == "cross_scenario"
+
+    assert not G.has_edge("scenario:GP-01", "scenario:GP-03")
+    assert not G.has_edge("scenario:GP-02", "scenario:GP-03")
+
+
+def test_cross_scenario_edge_weight():
+    """Cross-scenario edge weight equals the number of shared actors."""
+    from graph.build_graph import build_graph
+
+    actor_a = {"name": "Alice", "type": "influencer", "motivation": "", "credibility": 0.5, "evidence": ""}
+    actor_b = {"name": "Bob", "type": "media", "motivation": "", "credibility": 0.4, "evidence": ""}
+    actor_c = {"name": "Carol", "type": "organization", "motivation": "", "credibility": 0.3, "evidence": ""}
+
+    results = [
+        _minimal_result("EN-01", actors=[actor_a, actor_b, actor_c]),
+        _minimal_result("EN-02", actors=[actor_a, actor_b, actor_c]),
+    ]
+
+    G = build_graph(results)
+
+    assert G.has_edge("scenario:EN-01", "scenario:EN-02")
+    edge = G.edges["scenario:EN-01", "scenario:EN-02"]
+    assert edge["weight"] == 3
+    assert sorted(edge["shared_actors"]) == ["Alice", "Bob", "Carol"]
+
+
+# ---------------------------------------------------------------------------
+# Phase B: Feature 3 — Technique co-occurrence edges
+# ---------------------------------------------------------------------------
+
+def test_technique_cooccurrence_edges():
+    """Two techniques appearing together in 3+ scenarios receive a co_occurs edge."""
+    from graph.build_graph import build_graph
+
+    ttp_a = {"disarm_id": "T0023", "technique_name": "Distort Facts", "confidence": 0.9}
+    ttp_b = {"disarm_id": "T0044", "technique_name": "Cherry Pick", "confidence": 0.8}
+
+    results = [
+        _minimal_result(f"SC-0{i}", **{
+            "ttps": {"ttp_matches": [ttp_a, ttp_b], "primary_tactic": "Execute"}
+        })
+        for i in range(1, 4)
+    ]
+
+    G = build_graph(results)
+
+    assert G.has_edge("technique:T0023", "technique:T0044")
+    edge = G.edges["technique:T0023", "technique:T0044"]
+    assert edge["edge_type"] == "co_occurs"
+    assert edge["weight"] == 3
+    assert sorted(edge["shared_scenarios"]) == ["SC-01", "SC-02", "SC-03"]
+
+
+def test_cooccurrence_threshold():
+    """Co-occurrence below 3 scenarios produces no co_occurs edge."""
+    from graph.build_graph import build_graph
+
+    ttp_a = {"disarm_id": "T0023", "technique_name": "Distort Facts", "confidence": 0.9}
+    ttp_b = {"disarm_id": "T0044", "technique_name": "Cherry Pick", "confidence": 0.8}
+
+    results = [
+        _minimal_result(f"TC-0{i}", **{
+            "ttps": {"ttp_matches": [ttp_a, ttp_b], "primary_tactic": "Execute"}
+        })
+        for i in range(1, 3)
+    ]
+
+    G = build_graph(results)
+
+    assert not G.has_edge("technique:T0023", "technique:T0044")
+
+
+# ---------------------------------------------------------------------------
+# Phase C: Perspectives and False Polarization Gap
+# ---------------------------------------------------------------------------
+
+
+def test_load_perspectives():
+    from graph.build_graph import load_perspectives
+
+    perspectives = load_perspectives()
+    assert len(perspectives) == 4
+    assert perspectives[0]["id"] == "scientific_consensus"
+    assert "moral_foundations" in perspectives[0]
+    assert "emphasis_node_types" in perspectives[0]
+
+
+def test_false_polarization_gap():
+    from graph.build_graph import build_graph
+
+    results = [_minimal_result("GP-01")]
+    results[0]["bridge"]["moral_foundations"] = {
+        "side_a": ["fairness", "loyalty", "authority"],
+        "side_b": ["fairness", "care", "liberty"],
+    }
+
+    G = build_graph(results)
+    gap = G.nodes["scenario:GP-01"].get("false_polarization_gap")
+    assert gap is not None
+    # shared = {fairness}, total = {fairness, loyalty, authority, care, liberty} = 5
+    # gap = 1/5 = 0.2
+    assert 0.15 <= gap <= 0.25
+
+
+def test_false_polarization_gap_high_overlap():
+    from graph.build_graph import build_graph
+
+    results = [_minimal_result("GP-01")]
+    results[0]["bridge"]["moral_foundations"] = {
+        "side_a": ["fairness", "care"],
+        "side_b": ["fairness", "care", "authority"],
+    }
+
+    G = build_graph(results)
+    gap = G.nodes["scenario:GP-01"]["false_polarization_gap"]
+    # shared = {fairness, care} = 2, total = {fairness, care, authority} = 3
+    # gap = 2/3 = 0.67
+    assert 0.6 <= gap <= 0.7
+
+
+def test_false_polarization_gap_empty():
+    from graph.build_graph import build_graph
+
+    results = [_minimal_result("GP-01")]
+    results[0]["bridge"]["moral_foundations"] = {}
+
+    G = build_graph(results)
+    gap = G.nodes["scenario:GP-01"]["false_polarization_gap"]
+    assert gap == 0.0
+
+
+# ---------------------------------------------------------------------------
+# Phase D: Pivot Points
+# ---------------------------------------------------------------------------
+
+
+def test_pivot_points():
+    from graph.build_graph import build_graph
+
+    results = [_minimal_result("GP-01", actors=[
+        {"name": "Central Actor", "type": "organization", "motivation": "", "credibility": 0.3, "evidence": ""},
+        {"name": "Minor Actor", "type": "influencer", "motivation": "", "credibility": 0.5, "evidence": ""},
+    ], relations=[
+        {"source_actor": "Central Actor", "target_actor": "Minor Actor", "relation_type": "funds", "confidence": 0.9},
+    ])]
+    results[0]["ttps"] = {
+        "ttp_matches": [
+            {"disarm_id": "T0023", "technique_name": "Distort Facts", "confidence": 0.9, "evidence": ""},
+        ],
+        "primary_tactic": "Execute",
+    }
+
+    G = build_graph(results)
+    pivot_nodes = [n for n, d in G.nodes(data=True) if d.get("pivot_point")]
+    assert len(pivot_nodes) >= 1

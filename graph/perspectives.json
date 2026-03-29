@@ -1,0 +1,34 @@
+[
+  {
+    "id": "scientific_consensus",
+    "name": "Scientific Consensus",
+    "description": "View weighted by evidence quality and source tier",
+    "emphasis_node_types": ["technique", "claim"],
+    "emphasis_fields": ["consensus_explanation"],
+    "moral_foundations": {"care": 0.3, "fairness": 0.3, "authority": 0.2, "liberty": 0.2}
+  },
+  {
+    "id": "concerned_citizen",
+    "name": "Concerned Citizen",
+    "description": "View weighted by personal impact and safety needs",
+    "emphasis_node_types": ["actor", "scenario"],
+    "emphasis_fields": ["universal_needs", "perception_gap"],
+    "moral_foundations": {"care": 0.4, "fairness": 0.2, "loyalty": 0.2, "authority": 0.2}
+  },
+  {
+    "id": "institutional_skeptic",
+    "name": "Institutional Skeptic",
+    "description": "View highlighting accountability gaps and commercial motives",
+    "emphasis_node_types": ["actor"],
+    "emphasis_fields": ["commercial_motives", "credibility"],
+    "moral_foundations": {"fairness": 0.3, "liberty": 0.3, "authority": 0.2, "care": 0.2}
+  },
+  {
+    "id": "bridge_builder",
+    "name": "Bridge Builder",
+    "description": "View highlighting shared reality and common ground",
+    "emphasis_node_types": ["scenario"],
+    "emphasis_fields": ["issue_overlap", "universal_needs", "reframe"],
+    "moral_foundations": {"care": 0.3, "fairness": 0.3, "loyalty": 0.2, "liberty": 0.2}
+  }
+]

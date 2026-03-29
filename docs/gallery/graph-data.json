@@ -14,6 +14,7 @@
           "category": "Environment",
           "confidence": 0,
           "complexity": "multi_actor",
+          "false_polarization_gap": 0.4,
           "id": "scenario:EN-01",
           "value": "scenario:EN-01",
           "name": "scenario:EN-01"
@@ -205,6 +206,7 @@
           "label": "Develop Competing Narratives",
           "disarm_id": "T0004",
           "max_confidence": 0.95,
+          "flicc_category": "Logical fallacies",
           "scenarios": [
             "EN-01",
             "EV-03",
@@ -234,6 +236,7 @@
           "label": "Cultivate Ignorant Agents",
           "disarm_id": "T0010",
           "max_confidence": 0.95,
+          "flicc_category": "Fake experts",
           "scenarios": [
             "EN-01",
             "EV-03",
@@ -263,6 +266,7 @@
           "label": "Create Clickbait",
           "disarm_id": "T0016",
           "max_confidence": 0.9,
+          "flicc_category": "Cherry picking",
           "scenarios": [
             "EN-01",
             "EV-03",
@@ -291,6 +295,7 @@
           "label": "Generate Information Pollution",
           "disarm_id": "T0019",
           "max_confidence": 0.9,
+          "flicc_category": "",
           "scenarios": [
             "EN-01",
             "EV-03",
@@ -317,6 +322,7 @@
           "label": "Leverage Conspiracy Theory",
           "disarm_id": "T0022",
           "max_confidence": 0.96,
+          "flicc_category": "Conspiracy theories",
           "scenarios": [
             "EN-01",
             "EV-03",
@@ -346,6 +352,7 @@
           "label": "Distort Facts",
           "disarm_id": "T0023",
           "max_confidence": 0.97,
+          "flicc_category": "Logical fallacies",
           "scenarios": [
             "EN-01",
             "EN-02",
@@ -369,6 +376,22 @@
             "TC-01",
             "TC-02"
           ],
+          "pivot_point": true,
+          "pivot_for": [
+            "EN-01",
+            "EN-02",
+            "EV-02",
+            "EV-03",
+            "GP-04",
+            "GP-05",
+            "GP-06",
+            "HS-02",
+            "HS-03",
+            "HS-04",
+            "MD-02",
+            "SC-01",
+            "TC-01"
+          ],
           "id": "technique:T0023",
           "value": "technique:T0023",
           "name": "technique:T0023"
@@ -380,6 +403,7 @@
           "label": "Leak Altered Documents",
           "disarm_id": "T0025",
           "max_confidence": 0.85,
+          "flicc_category": "",
           "scenarios": [
             "EN-01",
             "EN-02",
@@ -401,6 +425,7 @@
           "label": "Flooding",
           "disarm_id": "T0049",
           "max_confidence": 0.9,
+          "flicc_category": "Cherry picking",
           "scenarios": [
             "EN-01",
             "EN-02",
@@ -435,6 +460,7 @@
           "label": "Tertiary Sites Amplify Narratives",
           "disarm_id": "T0052",
           "max_confidence": 0.85,
+          "flicc_category": "",
           "scenarios": [
             "EN-01",
             "EV-03",
@@ -458,6 +484,7 @@
           "label": "Dedicated Websites",
           "disarm_id": "T0056",
           "max_confidence": 0.95,
+          "flicc_category": "Logical fallacies",
           "scenarios": [
             "EN-01",
             "EN-02",
@@ -490,6 +517,7 @@
           "label": "Sell Merchandise",
           "disarm_id": "T0061",
           "max_confidence": 0.95,
+          "flicc_category": "",
           "scenarios": [
             "EN-01",
             "EV-03",
@@ -799,6 +827,7 @@
           "category": "Environment",
           "confidence": 0,
           "complexity": "multi_actor",
+          "false_polarization_gap": 0.6,
           "id": "scenario:EN-02",
           "value": "scenario:EN-02",
           "name": "scenario:EN-02"
@@ -996,6 +1025,7 @@
           "label": "Seed distortions",
           "disarm_id": "T0044",
           "max_confidence": 0.93,
+          "flicc_category": "Cherry picking",
           "scenarios": [
             "EN-02",
             "EV-02",
@@ -1018,6 +1048,7 @@
           "label": "Bait legitimate media",
           "disarm_id": "T0039",
           "max_confidence": 0.8,
+          "flicc_category": "",
           "scenarios": [
             "EN-02",
             "EV-02",
@@ -1039,6 +1070,7 @@
           "label": "Use search engine optimization",
           "disarm_id": "T0046",
           "max_confidence": 0.75,
+          "flicc_category": "",
           "scenarios": [
             "EN-02",
             "EV-02",
@@ -1246,6 +1278,7 @@
           "category": "Events",
           "confidence": 0,
           "complexity": "multi_actor",
+          "false_polarization_gap": 0.6,
           "id": "scenario:EV-02",
           "value": "scenario:EV-02",
           "name": "scenario:EV-02"
@@ -1471,6 +1504,7 @@
           "label": "Organize rallies or events",
           "disarm_id": "T0057",
           "max_confidence": 0.95,
+          "flicc_category": "",
           "scenarios": [
             "EV-02",
             "HS-03"
@@ -1486,6 +1520,7 @@
           "label": "Create fake expert personas",
           "disarm_id": "T0029",
           "max_confidence": 0.9,
+          "flicc_category": "",
           "scenarios": [
             "EV-02",
             "GP-04",
@@ -1730,6 +1765,7 @@
           "category": "Events",
           "confidence": 0,
           "complexity": "multi_actor",
+          "false_polarization_gap": 0.5,
           "id": "scenario:EV-03",
           "value": "scenario:EV-03",
           "name": "scenario:EV-03"
@@ -1861,6 +1897,7 @@
           "label": "Create Inauthentic Websites",
           "disarm_id": "T0007",
           "max_confidence": 0.8,
+          "flicc_category": "",
           "scenarios": [
             "EV-03",
             "HS-02"
@@ -2159,6 +2196,7 @@
           "category": "Events",
           "confidence": 0,
           "complexity": "multi_actor",
+          "false_polarization_gap": 0.6,
           "id": "scenario:EV-04",
           "value": "scenario:EV-04",
           "name": "scenario:EV-04"
@@ -2187,6 +2225,17 @@
           "motivation": "Audience engagement and commercial revenue. Jones was among the most prominent amplifiers of Pizzagate, devoting multiple segments to the claims in November-December 2016. InfoWars generated estimated $50-80M annual peak revenue primarily through supplement sales. Pizzagate content drove significant traffic. Jones later issued a rare partial retraction regarding Comet Ping Pong (March 2017) after legal threats from Alefantis, though he continued promoting adjacent trafficking conspiracy narratives.",
           "credibility": 0.05,
           "scenarios": [
+            "EV-04",
+            "GP-01",
+            "GP-02",
+            "GP-03",
+            "HS-01",
+            "HS-05",
+            "MD-01",
+            "TC-02"
+          ],
+          "pivot_point": true,
+          "pivot_for": [
             "EV-04",
             "GP-01",
             "GP-02",
@@ -2357,6 +2406,7 @@
           "label": "YouTube-based",
           "disarm_id": "T0031",
           "max_confidence": 0.9,
+          "flicc_category": "",
           "scenarios": [
             "EV-04",
             "GP-02",
@@ -2376,6 +2426,7 @@
           "label": "Compromise Legitimate Accounts",
           "disarm_id": "T0011",
           "max_confidence": 0.8,
+          "flicc_category": "",
           "scenarios": [
             "EV-04",
             "GP-02",
@@ -2593,6 +2644,7 @@
           "category": "Geopolitics",
           "confidence": 0,
           "complexity": "multi_actor",
+          "false_polarization_gap": 0.6,
           "id": "scenario:GP-01",
           "value": "scenario:GP-01",
           "name": "scenario:GP-01"
@@ -2760,6 +2812,7 @@
           "label": "Use bots or cyborgs",
           "disarm_id": "T0053",
           "max_confidence": 0.75,
+          "flicc_category": "",
           "scenarios": [
             "GP-01",
             "HS-03"
@@ -3058,6 +3111,7 @@
           "category": "Geopolitics",
           "confidence": 0,
           "complexity": "multi_actor",
+          "false_polarization_gap": 1.0,
           "id": "scenario:GP-02",
           "value": "scenario:GP-02",
           "name": "scenario:GP-02"
@@ -3433,6 +3487,7 @@
           "category": "Geopolitics",
           "confidence": 0,
           "complexity": "multi_actor",
+          "false_polarization_gap": 1.0,
           "id": "scenario:GP-03",
           "value": "scenario:GP-03",
           "name": "scenario:GP-03"
@@ -3810,6 +3865,7 @@
           "category": "Geopolitics",
           "confidence": 0,
           "complexity": "multi_actor",
+          "false_polarization_gap": 0.6,
           "id": "scenario:GP-04",
           "value": "scenario:GP-04",
           "name": "scenario:GP-04"
@@ -4184,6 +4240,7 @@
           "category": "Geopolitics",
           "confidence": 0,
           "complexity": "multi_actor",
+          "false_polarization_gap": 0.0,
           "id": "scenario:GP-05",
           "value": "scenario:GP-05",
           "name": "scenario:GP-05"
@@ -4498,6 +4555,7 @@
           "category": "Geopolitics",
           "confidence": 0,
           "complexity": "multi_actor",
+          "false_polarization_gap": 0.3333333333333333,
           "id": "scenario:GP-06",
           "value": "scenario:GP-06",
           "name": "scenario:GP-06"
@@ -4950,6 +5008,7 @@
           "category": "Health & Science",
           "confidence": 0.9,
           "complexity": "complex",
+          "false_polarization_gap": 1.0,
           "id": "scenario:HS-01",
           "value": "scenario:HS-01",
           "name": "scenario:HS-01"
@@ -5472,6 +5531,7 @@
           "category": "Health & Science",
           "confidence": 0.92,
           "complexity": "complex",
+          "false_polarization_gap": 0.0,
           "id": "scenario:HS-02",
           "value": "scenario:HS-02",
           "name": "scenario:HS-02"
@@ -5976,6 +6036,7 @@
           "category": "Health & Science",
           "confidence": 0,
           "complexity": "complex",
+          "false_polarization_gap": 0.5,
           "id": "scenario:HS-03",
           "value": "scenario:HS-03",
           "name": "scenario:HS-03"
@@ -6338,6 +6399,7 @@
           "category": "Health & Science",
           "confidence": 0,
           "complexity": "multi_actor",
+          "false_polarization_gap": 1.0,
           "id": "scenario:HS-04",
           "value": "scenario:HS-04",
           "name": "scenario:HS-04"
@@ -6767,6 +6829,7 @@
           "category": "Health & Science",
           "confidence": 0,
           "complexity": "complex",
+          "false_polarization_gap": 0.6,
           "id": "scenario:HS-05",
           "value": "scenario:HS-05",
           "name": "scenario:HS-05"
@@ -7112,6 +7175,7 @@
           "category": "Media",
           "confidence": 0,
           "complexity": "multi_actor",
+          "false_polarization_gap": 0.0,
           "id": "scenario:MD-01",
           "value": "scenario:MD-01",
           "name": "scenario:MD-01"
@@ -7571,6 +7635,7 @@
           "category": "Media",
           "confidence": 0,
           "complexity": "multi_actor",
+          "false_polarization_gap": 0.0,
           "id": "scenario:MD-02",
           "value": "scenario:MD-02",
           "name": "scenario:MD-02"
@@ -7994,6 +8059,7 @@
           "category": "Science Controversy",
           "confidence": 0.9,
           "complexity": "multi_actor",
+          "false_polarization_gap": 0.0,
           "id": "scenario:SC-01",
           "value": "scenario:SC-01",
           "name": "scenario:SC-01"
@@ -8305,6 +8371,7 @@
           "label": "Cause Harm to Physical/Cognitive Targets",
           "disarm_id": "T0048",
           "max_confidence": 0.85,
+          "flicc_category": "Impossible expectations",
           "scenarios": [
             "SC-01"
           ],
@@ -8543,6 +8610,7 @@
           "category": "Technology",
           "confidence": 0,
           "complexity": "complex",
+          "false_polarization_gap": 0.6,
           "id": "scenario:TC-01",
           "value": "scenario:TC-01",
           "name": "scenario:TC-01"
@@ -8904,6 +8972,7 @@
           "category": "Technology",
           "confidence": 0,
           "complexity": "multi_actor",
+          "false_polarization_gap": 0.0,
           "id": "scenario:TC-02",
           "value": "scenario:TC-02",
           "name": "scenario:TC-02"
@@ -9798,6 +9867,1741 @@
       },
       {
         "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EN-01",
+            "EV-03",
+            "EV-04",
+            "GP-01",
+            "GP-02",
+            "GP-03",
+            "GP-04",
+            "GP-05",
+            "GP-06",
+            "HS-01",
+            "HS-02",
+            "HS-04",
+            "HS-05",
+            "MD-01",
+            "SC-01",
+            "TC-01"
+          ],
+          "weight": 16,
+          "label": "co-occurs (16x)",
+          "source": "technique:T0004",
+          "target": "technique:T0010"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EV-04",
+            "GP-02",
+            "HS-01",
+            "HS-02",
+            "MD-01",
+            "TC-01"
+          ],
+          "weight": 6,
+          "label": "co-occurs (6x)",
+          "source": "technique:T0004",
+          "target": "technique:T0011"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EN-01",
+            "EV-03",
+            "EV-04",
+            "GP-01",
+            "GP-02",
+            "GP-03",
+            "GP-04",
+            "GP-06",
+            "HS-01",
+            "HS-02",
+            "HS-04",
+            "HS-05",
+            "MD-01",
+            "SC-01",
+            "TC-01"
+          ],
+          "weight": 15,
+          "label": "co-occurs (15x)",
+          "source": "technique:T0004",
+          "target": "technique:T0016"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EN-01",
+            "EV-03",
+            "EV-04",
+            "GP-02",
+            "GP-03",
+            "GP-04",
+            "GP-05",
+            "HS-01",
+            "HS-02",
+            "HS-04",
+            "HS-05",
+            "MD-01",
+            "TC-01"
+          ],
+          "weight": 13,
+          "label": "co-occurs (13x)",
+          "source": "technique:T0004",
+          "target": "technique:T0019"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EN-01",
+            "EV-03",
+            "EV-04",
+            "GP-01",
+            "GP-02",
+            "GP-03",
+            "GP-04",
+            "GP-05",
+            "GP-06",
+            "HS-01",
+            "HS-02",
+            "HS-04",
+            "HS-05",
+            "MD-01",
+            "SC-01",
+            "TC-01"
+          ],
+          "weight": 16,
+          "label": "co-occurs (16x)",
+          "source": "technique:T0004",
+          "target": "technique:T0022"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EN-01",
+            "EV-03",
+            "EV-04",
+            "GP-01",
+            "GP-02",
+            "GP-03",
+            "GP-04",
+            "GP-05",
+            "GP-06",
+            "HS-01",
+            "HS-02",
+            "HS-04",
+            "HS-05",
+            "MD-01",
+            "SC-01",
+            "TC-01"
+          ],
+          "weight": 16,
+          "label": "co-occurs (16x)",
+          "source": "technique:T0004",
+          "target": "technique:T0023"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EN-01",
+            "EV-03",
+            "GP-02",
+            "GP-04",
+            "HS-01",
+            "HS-02"
+          ],
+          "weight": 6,
+          "label": "co-occurs (6x)",
+          "source": "technique:T0004",
+          "target": "technique:T0025"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EV-04",
+            "GP-02",
+            "GP-03",
+            "GP-04",
+            "HS-01",
+            "TC-01"
+          ],
+          "weight": 6,
+          "label": "co-occurs (6x)",
+          "source": "technique:T0004",
+          "target": "technique:T0031"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "GP-05",
+            "HS-02",
+            "HS-04"
+          ],
+          "weight": 3,
+          "label": "co-occurs (3x)",
+          "source": "technique:T0004",
+          "target": "technique:T0039"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "GP-01",
+            "GP-05",
+            "GP-06",
+            "SC-01"
+          ],
+          "weight": 4,
+          "label": "co-occurs (4x)",
+          "source": "technique:T0004",
+          "target": "technique:T0044"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EV-04",
+            "GP-02",
+            "GP-03",
+            "GP-04",
+            "HS-01",
+            "TC-01"
+          ],
+          "weight": 6,
+          "label": "co-occurs (6x)",
+          "source": "technique:T0004",
+          "target": "technique:T0046"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EN-01",
+            "EV-03",
+            "EV-04",
+            "GP-01",
+            "GP-02",
+            "GP-03",
+            "GP-04",
+            "GP-05",
+            "GP-06",
+            "HS-01",
+            "HS-02",
+            "HS-04",
+            "HS-05",
+            "MD-01",
+            "SC-01",
+            "TC-01"
+          ],
+          "weight": 16,
+          "label": "co-occurs (16x)",
+          "source": "technique:T0004",
+          "target": "technique:T0049"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EN-01",
+            "EV-03",
+            "EV-04",
+            "GP-02",
+            "GP-03",
+            "GP-04",
+            "HS-01",
+            "HS-05",
+            "MD-01",
+            "TC-01"
+          ],
+          "weight": 10,
+          "label": "co-occurs (10x)",
+          "source": "technique:T0004",
+          "target": "technique:T0052"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EN-01",
+            "EV-04",
+            "GP-01",
+            "GP-02",
+            "GP-03",
+            "GP-04",
+            "GP-06",
+            "HS-01",
+            "HS-02",
+            "HS-04",
+            "HS-05",
+            "MD-01",
+            "SC-01",
+            "TC-01"
+          ],
+          "weight": 14,
+          "label": "co-occurs (14x)",
+          "source": "technique:T0004",
+          "target": "technique:T0056"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EN-01",
+            "EV-03",
+            "EV-04",
+            "GP-01",
+            "GP-02",
+            "GP-03",
+            "GP-04",
+            "HS-01",
+            "HS-02",
+            "HS-04",
+            "HS-05",
+            "MD-01",
+            "TC-01"
+          ],
+          "weight": 13,
+          "label": "co-occurs (13x)",
+          "source": "technique:T0004",
+          "target": "technique:T0061"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EV-04",
+            "GP-02",
+            "HS-01",
+            "HS-02",
+            "MD-01",
+            "TC-01"
+          ],
+          "weight": 6,
+          "label": "co-occurs (6x)",
+          "source": "technique:T0010",
+          "target": "technique:T0011"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EN-01",
+            "EV-03",
+            "EV-04",
+            "GP-01",
+            "GP-02",
+            "GP-03",
+            "GP-04",
+            "GP-06",
+            "HS-01",
+            "HS-02",
+            "HS-04",
+            "HS-05",
+            "MD-01",
+            "SC-01",
+            "TC-01"
+          ],
+          "weight": 15,
+          "label": "co-occurs (15x)",
+          "source": "technique:T0010",
+          "target": "technique:T0016"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EN-01",
+            "EV-03",
+            "EV-04",
+            "GP-02",
+            "GP-03",
+            "GP-04",
+            "GP-05",
+            "HS-01",
+            "HS-02",
+            "HS-04",
+            "HS-05",
+            "MD-01",
+            "TC-01"
+          ],
+          "weight": 13,
+          "label": "co-occurs (13x)",
+          "source": "technique:T0010",
+          "target": "technique:T0019"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EN-01",
+            "EV-03",
+            "EV-04",
+            "GP-01",
+            "GP-02",
+            "GP-03",
+            "GP-04",
+            "GP-05",
+            "GP-06",
+            "HS-01",
+            "HS-02",
+            "HS-04",
+            "HS-05",
+            "MD-01",
+            "SC-01",
+            "TC-01"
+          ],
+          "weight": 16,
+          "label": "co-occurs (16x)",
+          "source": "technique:T0010",
+          "target": "technique:T0022"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EN-01",
+            "EV-03",
+            "EV-04",
+            "GP-01",
+            "GP-02",
+            "GP-03",
+            "GP-04",
+            "GP-05",
+            "GP-06",
+            "HS-01",
+            "HS-02",
+            "HS-04",
+            "HS-05",
+            "MD-01",
+            "SC-01",
+            "TC-01"
+          ],
+          "weight": 16,
+          "label": "co-occurs (16x)",
+          "source": "technique:T0010",
+          "target": "technique:T0023"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EN-01",
+            "EV-03",
+            "GP-02",
+            "GP-04",
+            "HS-01",
+            "HS-02"
+          ],
+          "weight": 6,
+          "label": "co-occurs (6x)",
+          "source": "technique:T0010",
+          "target": "technique:T0025"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EV-04",
+            "GP-02",
+            "GP-03",
+            "GP-04",
+            "HS-01",
+            "TC-01"
+          ],
+          "weight": 6,
+          "label": "co-occurs (6x)",
+          "source": "technique:T0010",
+          "target": "technique:T0031"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "GP-05",
+            "HS-02",
+            "HS-04"
+          ],
+          "weight": 3,
+          "label": "co-occurs (3x)",
+          "source": "technique:T0010",
+          "target": "technique:T0039"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "GP-01",
+            "GP-05",
+            "GP-06",
+            "SC-01"
+          ],
+          "weight": 4,
+          "label": "co-occurs (4x)",
+          "source": "technique:T0010",
+          "target": "technique:T0044"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EV-04",
+            "GP-02",
+            "GP-03",
+            "GP-04",
+            "HS-01",
+            "TC-01"
+          ],
+          "weight": 6,
+          "label": "co-occurs (6x)",
+          "source": "technique:T0010",
+          "target": "technique:T0046"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EN-01",
+            "EV-03",
+            "EV-04",
+            "GP-01",
+            "GP-02",
+            "GP-03",
+            "GP-04",
+            "GP-05",
+            "GP-06",
+            "HS-01",
+            "HS-02",
+            "HS-04",
+            "HS-05",
+            "MD-01",
+            "SC-01",
+            "TC-01"
+          ],
+          "weight": 16,
+          "label": "co-occurs (16x)",
+          "source": "technique:T0010",
+          "target": "technique:T0049"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EN-01",
+            "EV-03",
+            "EV-04",
+            "GP-02",
+            "GP-03",
+            "GP-04",
+            "HS-01",
+            "HS-05",
+            "MD-01",
+            "TC-01"
+          ],
+          "weight": 10,
+          "label": "co-occurs (10x)",
+          "source": "technique:T0010",
+          "target": "technique:T0052"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EN-01",
+            "EV-04",
+            "GP-01",
+            "GP-02",
+            "GP-03",
+            "GP-04",
+            "GP-06",
+            "HS-01",
+            "HS-02",
+            "HS-04",
+            "HS-05",
+            "MD-01",
+            "SC-01",
+            "TC-01"
+          ],
+          "weight": 14,
+          "label": "co-occurs (14x)",
+          "source": "technique:T0010",
+          "target": "technique:T0056"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EN-01",
+            "EV-03",
+            "EV-04",
+            "GP-01",
+            "GP-02",
+            "GP-03",
+            "GP-04",
+            "HS-01",
+            "HS-02",
+            "HS-04",
+            "HS-05",
+            "MD-01",
+            "TC-01"
+          ],
+          "weight": 13,
+          "label": "co-occurs (13x)",
+          "source": "technique:T0010",
+          "target": "technique:T0061"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EN-01",
+            "EV-03",
+            "EV-04",
+            "GP-02",
+            "GP-03",
+            "GP-04",
+            "HS-01",
+            "HS-02",
+            "HS-04",
+            "HS-05",
+            "MD-01",
+            "TC-01"
+          ],
+          "weight": 12,
+          "label": "co-occurs (12x)",
+          "source": "technique:T0016",
+          "target": "technique:T0019"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EN-01",
+            "EV-03",
+            "EV-04",
+            "GP-01",
+            "GP-02",
+            "GP-03",
+            "GP-04",
+            "GP-06",
+            "HS-01",
+            "HS-02",
+            "HS-04",
+            "HS-05",
+            "MD-01",
+            "SC-01",
+            "TC-01"
+          ],
+          "weight": 15,
+          "label": "co-occurs (15x)",
+          "source": "technique:T0016",
+          "target": "technique:T0022"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EN-01",
+            "EV-03",
+            "EV-04",
+            "GP-01",
+            "GP-02",
+            "GP-03",
+            "GP-04",
+            "GP-06",
+            "HS-01",
+            "HS-02",
+            "HS-04",
+            "HS-05",
+            "MD-01",
+            "SC-01",
+            "TC-01"
+          ],
+          "weight": 15,
+          "label": "co-occurs (15x)",
+          "source": "technique:T0016",
+          "target": "technique:T0023"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EN-01",
+            "EV-03",
+            "GP-02",
+            "GP-04",
+            "HS-01",
+            "HS-02"
+          ],
+          "weight": 6,
+          "label": "co-occurs (6x)",
+          "source": "technique:T0016",
+          "target": "technique:T0025"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EV-04",
+            "GP-02",
+            "GP-03",
+            "GP-04",
+            "HS-01",
+            "TC-01"
+          ],
+          "weight": 6,
+          "label": "co-occurs (6x)",
+          "source": "technique:T0016",
+          "target": "technique:T0031"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "GP-01",
+            "GP-06",
+            "SC-01"
+          ],
+          "weight": 3,
+          "label": "co-occurs (3x)",
+          "source": "technique:T0016",
+          "target": "technique:T0044"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EV-04",
+            "GP-02",
+            "GP-03",
+            "GP-04",
+            "HS-01",
+            "TC-01"
+          ],
+          "weight": 6,
+          "label": "co-occurs (6x)",
+          "source": "technique:T0016",
+          "target": "technique:T0046"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EN-01",
+            "EV-03",
+            "EV-04",
+            "GP-01",
+            "GP-02",
+            "GP-03",
+            "GP-04",
+            "GP-06",
+            "HS-01",
+            "HS-02",
+            "HS-04",
+            "HS-05",
+            "MD-01",
+            "SC-01",
+            "TC-01"
+          ],
+          "weight": 15,
+          "label": "co-occurs (15x)",
+          "source": "technique:T0016",
+          "target": "technique:T0049"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EN-01",
+            "EV-03",
+            "EV-04",
+            "GP-02",
+            "GP-03",
+            "GP-04",
+            "HS-01",
+            "HS-05",
+            "MD-01",
+            "TC-01"
+          ],
+          "weight": 10,
+          "label": "co-occurs (10x)",
+          "source": "technique:T0016",
+          "target": "technique:T0052"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EN-01",
+            "EV-04",
+            "GP-01",
+            "GP-02",
+            "GP-03",
+            "GP-04",
+            "GP-06",
+            "HS-01",
+            "HS-02",
+            "HS-04",
+            "HS-05",
+            "MD-01",
+            "SC-01",
+            "TC-01"
+          ],
+          "weight": 14,
+          "label": "co-occurs (14x)",
+          "source": "technique:T0016",
+          "target": "technique:T0056"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EN-01",
+            "EV-03",
+            "EV-04",
+            "GP-01",
+            "GP-02",
+            "GP-03",
+            "GP-04",
+            "HS-01",
+            "HS-02",
+            "HS-04",
+            "HS-05",
+            "MD-01",
+            "TC-01"
+          ],
+          "weight": 13,
+          "label": "co-occurs (13x)",
+          "source": "technique:T0016",
+          "target": "technique:T0061"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EN-01",
+            "EV-03",
+            "EV-04",
+            "GP-02",
+            "GP-03",
+            "GP-04",
+            "GP-05",
+            "HS-01",
+            "HS-02",
+            "HS-04",
+            "HS-05",
+            "MD-01",
+            "TC-01"
+          ],
+          "weight": 13,
+          "label": "co-occurs (13x)",
+          "source": "technique:T0019",
+          "target": "technique:T0022"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EN-01",
+            "EV-03",
+            "EV-04",
+            "GP-02",
+            "GP-03",
+            "GP-04",
+            "GP-05",
+            "HS-01",
+            "HS-02",
+            "HS-04",
+            "HS-05",
+            "MD-01",
+            "TC-01"
+          ],
+          "weight": 13,
+          "label": "co-occurs (13x)",
+          "source": "technique:T0019",
+          "target": "technique:T0023"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EN-01",
+            "EV-03",
+            "GP-02",
+            "GP-04",
+            "HS-01",
+            "HS-02"
+          ],
+          "weight": 6,
+          "label": "co-occurs (6x)",
+          "source": "technique:T0019",
+          "target": "technique:T0025"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EV-04",
+            "GP-02",
+            "GP-03",
+            "GP-04",
+            "HS-01",
+            "TC-01"
+          ],
+          "weight": 6,
+          "label": "co-occurs (6x)",
+          "source": "technique:T0019",
+          "target": "technique:T0031"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "GP-05",
+            "HS-02",
+            "HS-04"
+          ],
+          "weight": 3,
+          "label": "co-occurs (3x)",
+          "source": "technique:T0019",
+          "target": "technique:T0039"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EV-04",
+            "GP-02",
+            "GP-03",
+            "GP-04",
+            "HS-01",
+            "TC-01"
+          ],
+          "weight": 6,
+          "label": "co-occurs (6x)",
+          "source": "technique:T0019",
+          "target": "technique:T0046"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EN-01",
+            "EV-03",
+            "EV-04",
+            "GP-02",
+            "GP-03",
+            "GP-04",
+            "GP-05",
+            "HS-01",
+            "HS-02",
+            "HS-04",
+            "HS-05",
+            "MD-01",
+            "TC-01"
+          ],
+          "weight": 13,
+          "label": "co-occurs (13x)",
+          "source": "technique:T0019",
+          "target": "technique:T0049"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EN-01",
+            "EV-03",
+            "EV-04",
+            "GP-02",
+            "GP-03",
+            "GP-04",
+            "HS-01",
+            "HS-05",
+            "MD-01",
+            "TC-01"
+          ],
+          "weight": 10,
+          "label": "co-occurs (10x)",
+          "source": "technique:T0019",
+          "target": "technique:T0052"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EN-01",
+            "EV-04",
+            "GP-02",
+            "GP-03",
+            "GP-04",
+            "HS-01",
+            "HS-02",
+            "HS-04",
+            "HS-05",
+            "MD-01",
+            "TC-01"
+          ],
+          "weight": 11,
+          "label": "co-occurs (11x)",
+          "source": "technique:T0019",
+          "target": "technique:T0056"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EN-01",
+            "EV-03",
+            "EV-04",
+            "GP-02",
+            "GP-03",
+            "GP-04",
+            "HS-01",
+            "HS-02",
+            "HS-04",
+            "HS-05",
+            "MD-01",
+            "TC-01"
+          ],
+          "weight": 12,
+          "label": "co-occurs (12x)",
+          "source": "technique:T0019",
+          "target": "technique:T0061"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EN-01",
+            "EV-03",
+            "EV-04",
+            "GP-01",
+            "GP-02",
+            "GP-03",
+            "GP-04",
+            "GP-05",
+            "GP-06",
+            "HS-01",
+            "HS-02",
+            "HS-04",
+            "HS-05",
+            "MD-01",
+            "SC-01",
+            "TC-01"
+          ],
+          "weight": 16,
+          "label": "co-occurs (16x)",
+          "source": "technique:T0022",
+          "target": "technique:T0023"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EN-01",
+            "EV-03",
+            "GP-02",
+            "GP-04",
+            "HS-01",
+            "HS-02"
+          ],
+          "weight": 6,
+          "label": "co-occurs (6x)",
+          "source": "technique:T0022",
+          "target": "technique:T0025"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EV-04",
+            "GP-02",
+            "GP-03",
+            "GP-04",
+            "HS-01",
+            "TC-01"
+          ],
+          "weight": 6,
+          "label": "co-occurs (6x)",
+          "source": "technique:T0022",
+          "target": "technique:T0031"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "GP-05",
+            "HS-02",
+            "HS-04"
+          ],
+          "weight": 3,
+          "label": "co-occurs (3x)",
+          "source": "technique:T0022",
+          "target": "technique:T0039"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "GP-01",
+            "GP-05",
+            "GP-06",
+            "SC-01"
+          ],
+          "weight": 4,
+          "label": "co-occurs (4x)",
+          "source": "technique:T0022",
+          "target": "technique:T0044"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EV-04",
+            "GP-02",
+            "GP-03",
+            "GP-04",
+            "HS-01",
+            "TC-01"
+          ],
+          "weight": 6,
+          "label": "co-occurs (6x)",
+          "source": "technique:T0022",
+          "target": "technique:T0046"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EN-01",
+            "EV-03",
+            "EV-04",
+            "GP-01",
+            "GP-02",
+            "GP-03",
+            "GP-04",
+            "GP-05",
+            "GP-06",
+            "HS-01",
+            "HS-02",
+            "HS-04",
+            "HS-05",
+            "MD-01",
+            "SC-01",
+            "TC-01"
+          ],
+          "weight": 16,
+          "label": "co-occurs (16x)",
+          "source": "technique:T0022",
+          "target": "technique:T0049"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EN-01",
+            "EV-03",
+            "EV-04",
+            "GP-02",
+            "GP-03",
+            "GP-04",
+            "HS-01",
+            "HS-05",
+            "MD-01",
+            "TC-01"
+          ],
+          "weight": 10,
+          "label": "co-occurs (10x)",
+          "source": "technique:T0022",
+          "target": "technique:T0052"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EN-01",
+            "EV-04",
+            "GP-01",
+            "GP-02",
+            "GP-03",
+            "GP-04",
+            "GP-06",
+            "HS-01",
+            "HS-02",
+            "HS-04",
+            "HS-05",
+            "MD-01",
+            "SC-01",
+            "TC-01"
+          ],
+          "weight": 14,
+          "label": "co-occurs (14x)",
+          "source": "technique:T0022",
+          "target": "technique:T0056"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EN-01",
+            "EV-03",
+            "EV-04",
+            "GP-01",
+            "GP-02",
+            "GP-03",
+            "GP-04",
+            "HS-01",
+            "HS-02",
+            "HS-04",
+            "HS-05",
+            "MD-01",
+            "TC-01"
+          ],
+          "weight": 13,
+          "label": "co-occurs (13x)",
+          "source": "technique:T0022",
+          "target": "technique:T0061"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EN-01",
+            "EN-02",
+            "EV-02",
+            "EV-03",
+            "GP-02",
+            "GP-04",
+            "HS-01",
+            "HS-02"
+          ],
+          "weight": 8,
+          "label": "co-occurs (8x)",
+          "source": "technique:T0023",
+          "target": "technique:T0025"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EV-02",
+            "GP-04",
+            "HS-03"
+          ],
+          "weight": 3,
+          "label": "co-occurs (3x)",
+          "source": "technique:T0023",
+          "target": "technique:T0029"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EV-04",
+            "GP-02",
+            "GP-03",
+            "GP-04",
+            "HS-01",
+            "TC-01"
+          ],
+          "weight": 6,
+          "label": "co-occurs (6x)",
+          "source": "technique:T0023",
+          "target": "technique:T0031"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EN-02",
+            "EV-02",
+            "GP-05",
+            "HS-02",
+            "HS-03",
+            "HS-04",
+            "MD-02",
+            "TC-02"
+          ],
+          "weight": 8,
+          "label": "co-occurs (8x)",
+          "source": "technique:T0023",
+          "target": "technique:T0039"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EN-02",
+            "EV-02",
+            "GP-01",
+            "GP-05",
+            "GP-06",
+            "HS-03",
+            "MD-02",
+            "SC-01",
+            "TC-02"
+          ],
+          "weight": 9,
+          "label": "co-occurs (9x)",
+          "source": "technique:T0023",
+          "target": "technique:T0044"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EN-02",
+            "EV-02",
+            "EV-04",
+            "GP-02",
+            "GP-03",
+            "GP-04",
+            "HS-01",
+            "HS-03",
+            "TC-01"
+          ],
+          "weight": 9,
+          "label": "co-occurs (9x)",
+          "source": "technique:T0023",
+          "target": "technique:T0046"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EN-01",
+            "EN-02",
+            "EV-02",
+            "EV-03",
+            "EV-04",
+            "GP-01",
+            "GP-02",
+            "GP-03",
+            "GP-04",
+            "GP-05",
+            "GP-06",
+            "HS-01",
+            "HS-02",
+            "HS-03",
+            "HS-04",
+            "HS-05",
+            "MD-01",
+            "MD-02",
+            "SC-01",
+            "TC-01",
+            "TC-02"
+          ],
+          "weight": 21,
+          "label": "co-occurs (21x)",
+          "source": "technique:T0023",
+          "target": "technique:T0049"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EN-01",
+            "EV-03",
+            "EV-04",
+            "GP-02",
+            "GP-03",
+            "GP-04",
+            "HS-01",
+            "HS-05",
+            "MD-01",
+            "TC-01"
+          ],
+          "weight": 10,
+          "label": "co-occurs (10x)",
+          "source": "technique:T0023",
+          "target": "technique:T0052"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EN-01",
+            "EN-02",
+            "EV-02",
+            "EV-04",
+            "GP-01",
+            "GP-02",
+            "GP-03",
+            "GP-04",
+            "GP-06",
+            "HS-01",
+            "HS-02",
+            "HS-03",
+            "HS-04",
+            "HS-05",
+            "MD-01",
+            "MD-02",
+            "SC-01",
+            "TC-01",
+            "TC-02"
+          ],
+          "weight": 19,
+          "label": "co-occurs (19x)",
+          "source": "technique:T0023",
+          "target": "technique:T0056"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EN-01",
+            "EV-03",
+            "EV-04",
+            "GP-01",
+            "GP-02",
+            "GP-03",
+            "GP-04",
+            "HS-01",
+            "HS-02",
+            "HS-04",
+            "HS-05",
+            "MD-01",
+            "TC-01"
+          ],
+          "weight": 13,
+          "label": "co-occurs (13x)",
+          "source": "technique:T0023",
+          "target": "technique:T0061"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "GP-02",
+            "GP-04",
+            "HS-01"
+          ],
+          "weight": 3,
+          "label": "co-occurs (3x)",
+          "source": "technique:T0025",
+          "target": "technique:T0031"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EN-02",
+            "EV-02",
+            "HS-02"
+          ],
+          "weight": 3,
+          "label": "co-occurs (3x)",
+          "source": "technique:T0025",
+          "target": "technique:T0039"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EN-02",
+            "EV-02",
+            "GP-02",
+            "GP-04",
+            "HS-01"
+          ],
+          "weight": 5,
+          "label": "co-occurs (5x)",
+          "source": "technique:T0025",
+          "target": "technique:T0046"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EN-01",
+            "EN-02",
+            "EV-02",
+            "EV-03",
+            "GP-02",
+            "GP-04",
+            "HS-01",
+            "HS-02"
+          ],
+          "weight": 8,
+          "label": "co-occurs (8x)",
+          "source": "technique:T0025",
+          "target": "technique:T0049"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EN-01",
+            "EV-03",
+            "GP-02",
+            "GP-04",
+            "HS-01"
+          ],
+          "weight": 5,
+          "label": "co-occurs (5x)",
+          "source": "technique:T0025",
+          "target": "technique:T0052"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EN-01",
+            "EN-02",
+            "EV-02",
+            "GP-02",
+            "GP-04",
+            "HS-01",
+            "HS-02"
+          ],
+          "weight": 7,
+          "label": "co-occurs (7x)",
+          "source": "technique:T0025",
+          "target": "technique:T0056"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EN-01",
+            "EV-03",
+            "GP-02",
+            "GP-04",
+            "HS-01",
+            "HS-02"
+          ],
+          "weight": 6,
+          "label": "co-occurs (6x)",
+          "source": "technique:T0025",
+          "target": "technique:T0061"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EN-01",
+            "EV-03",
+            "EV-04",
+            "GP-02",
+            "GP-03",
+            "GP-04",
+            "HS-01",
+            "HS-05",
+            "MD-01",
+            "TC-01"
+          ],
+          "weight": 10,
+          "label": "co-occurs (10x)",
+          "source": "technique:T0049",
+          "target": "technique:T0052"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EN-01",
+            "EN-02",
+            "EV-02",
+            "EV-04",
+            "GP-01",
+            "GP-02",
+            "GP-03",
+            "GP-04",
+            "GP-06",
+            "HS-01",
+            "HS-02",
+            "HS-03",
+            "HS-04",
+            "HS-05",
+            "MD-01",
+            "MD-02",
+            "SC-01",
+            "TC-01",
+            "TC-02"
+          ],
+          "weight": 19,
+          "label": "co-occurs (19x)",
+          "source": "technique:T0049",
+          "target": "technique:T0056"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EN-01",
+            "EV-03",
+            "EV-04",
+            "GP-01",
+            "GP-02",
+            "GP-03",
+            "GP-04",
+            "HS-01",
+            "HS-02",
+            "HS-04",
+            "HS-05",
+            "MD-01",
+            "TC-01"
+          ],
+          "weight": 13,
+          "label": "co-occurs (13x)",
+          "source": "technique:T0049",
+          "target": "technique:T0061"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EN-01",
+            "EV-04",
+            "GP-02",
+            "GP-03",
+            "GP-04",
+            "HS-01",
+            "HS-05",
+            "MD-01",
+            "TC-01"
+          ],
+          "weight": 9,
+          "label": "co-occurs (9x)",
+          "source": "technique:T0052",
+          "target": "technique:T0056"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EN-01",
+            "EV-03",
+            "EV-04",
+            "GP-02",
+            "GP-03",
+            "GP-04",
+            "HS-01",
+            "HS-05",
+            "MD-01",
+            "TC-01"
+          ],
+          "weight": 10,
+          "label": "co-occurs (10x)",
+          "source": "technique:T0052",
+          "target": "technique:T0061"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EN-01",
+            "EV-04",
+            "GP-01",
+            "GP-02",
+            "GP-03",
+            "GP-04",
+            "HS-01",
+            "HS-02",
+            "HS-04",
+            "HS-05",
+            "MD-01",
+            "TC-01"
+          ],
+          "weight": 12,
+          "label": "co-occurs (12x)",
+          "source": "technique:T0056",
+          "target": "technique:T0061"
+        }
+      },
+      {
+        "data": {
           "edge_type": "features",
           "label": "features",
           "source": "scenario:EN-02",
@@ -10063,6 +11867,19 @@
           "label": "contains",
           "source": "scenario:EN-02",
           "target": "claim:EN-02-6"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "cross_scenario",
+          "shared_actors": [
+            "Joseph Mercola / Mercola.com",
+            "Russian state media (RT, Sputnik)"
+          ],
+          "weight": 2,
+          "label": "2 shared actors",
+          "source": "scenario:EN-02",
+          "target": "scenario:HS-04"
         }
       },
       {
@@ -10445,6 +12262,201 @@
       },
       {
         "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EN-02",
+            "EV-02",
+            "HS-03"
+          ],
+          "weight": 3,
+          "label": "co-occurs (3x)",
+          "source": "technique:T0044",
+          "target": "technique:T0046"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EN-02",
+            "EV-02",
+            "GP-01",
+            "GP-05",
+            "GP-06",
+            "HS-03",
+            "MD-02",
+            "SC-01",
+            "TC-02"
+          ],
+          "weight": 9,
+          "label": "co-occurs (9x)",
+          "source": "technique:T0044",
+          "target": "technique:T0049"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EN-02",
+            "EV-02",
+            "GP-01",
+            "GP-06",
+            "HS-03",
+            "MD-02",
+            "SC-01",
+            "TC-02"
+          ],
+          "weight": 8,
+          "label": "co-occurs (8x)",
+          "source": "technique:T0044",
+          "target": "technique:T0056"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EN-02",
+            "EV-02",
+            "GP-05",
+            "HS-03",
+            "MD-02",
+            "TC-02"
+          ],
+          "weight": 6,
+          "label": "co-occurs (6x)",
+          "source": "technique:T0039",
+          "target": "technique:T0044"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EN-02",
+            "EV-02",
+            "HS-03"
+          ],
+          "weight": 3,
+          "label": "co-occurs (3x)",
+          "source": "technique:T0039",
+          "target": "technique:T0046"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EN-02",
+            "EV-02",
+            "GP-05",
+            "HS-02",
+            "HS-03",
+            "HS-04",
+            "MD-02",
+            "TC-02"
+          ],
+          "weight": 8,
+          "label": "co-occurs (8x)",
+          "source": "technique:T0039",
+          "target": "technique:T0049"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EN-02",
+            "EV-02",
+            "HS-02",
+            "HS-03",
+            "HS-04",
+            "MD-02",
+            "TC-02"
+          ],
+          "weight": 7,
+          "label": "co-occurs (7x)",
+          "source": "technique:T0039",
+          "target": "technique:T0056"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EN-02",
+            "EV-02",
+            "EV-04",
+            "GP-02",
+            "GP-03",
+            "GP-04",
+            "HS-01",
+            "HS-03",
+            "TC-01"
+          ],
+          "weight": 9,
+          "label": "co-occurs (9x)",
+          "source": "technique:T0046",
+          "target": "technique:T0049"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EV-04",
+            "GP-02",
+            "GP-03",
+            "GP-04",
+            "HS-01",
+            "TC-01"
+          ],
+          "weight": 6,
+          "label": "co-occurs (6x)",
+          "source": "technique:T0046",
+          "target": "technique:T0052"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EN-02",
+            "EV-02",
+            "EV-04",
+            "GP-02",
+            "GP-03",
+            "GP-04",
+            "HS-01",
+            "HS-03",
+            "TC-01"
+          ],
+          "weight": 9,
+          "label": "co-occurs (9x)",
+          "source": "technique:T0046",
+          "target": "technique:T0056"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EV-04",
+            "GP-02",
+            "GP-03",
+            "GP-04",
+            "HS-01",
+            "TC-01"
+          ],
+          "weight": 6,
+          "label": "co-occurs (6x)",
+          "source": "technique:T0046",
+          "target": "technique:T0061"
+        }
+      },
+      {
+        "data": {
           "edge_type": "features",
           "label": "features",
           "source": "scenario:EV-02",
@@ -10770,6 +12782,21 @@
           "label": "contains",
           "source": "scenario:EV-02",
           "target": "claim:EV-02-7"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "cross_scenario",
+          "shared_actors": [
+            "CISA (Cybersecurity and Infrastructure Security Agency)",
+            "Donald Trump / Trump Campaign",
+            "Rudy Giuliani",
+            "Sidney Powell"
+          ],
+          "weight": 4,
+          "label": "4 shared actors",
+          "source": "scenario:EV-02",
+          "target": "scenario:EV-03"
         }
       },
       {
@@ -11162,6 +13189,48 @@
           "label": "funds",
           "source": "actor:save-america-pac-trump-fundraising-apparatus",
           "target": "actor:donald-trump-trump-campaign"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EV-02",
+            "GP-04",
+            "HS-03"
+          ],
+          "weight": 3,
+          "label": "co-occurs (3x)",
+          "source": "technique:T0029",
+          "target": "technique:T0046"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EV-02",
+            "GP-04",
+            "HS-03"
+          ],
+          "weight": 3,
+          "label": "co-occurs (3x)",
+          "source": "technique:T0029",
+          "target": "technique:T0049"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EV-02",
+            "GP-04",
+            "HS-03"
+          ],
+          "weight": 3,
+          "label": "co-occurs (3x)",
+          "source": "technique:T0029",
+          "target": "technique:T0056"
         }
       },
       {
@@ -12422,6 +14491,270 @@
       },
       {
         "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EV-04",
+            "GP-02",
+            "GP-03",
+            "GP-04",
+            "HS-01",
+            "TC-01"
+          ],
+          "weight": 6,
+          "label": "co-occurs (6x)",
+          "source": "technique:T0031",
+          "target": "technique:T0046"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EV-04",
+            "GP-02",
+            "GP-03",
+            "GP-04",
+            "HS-01",
+            "TC-01"
+          ],
+          "weight": 6,
+          "label": "co-occurs (6x)",
+          "source": "technique:T0031",
+          "target": "technique:T0049"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EV-04",
+            "GP-02",
+            "GP-03",
+            "GP-04",
+            "HS-01",
+            "TC-01"
+          ],
+          "weight": 6,
+          "label": "co-occurs (6x)",
+          "source": "technique:T0031",
+          "target": "technique:T0052"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EV-04",
+            "GP-02",
+            "GP-03",
+            "GP-04",
+            "HS-01",
+            "TC-01"
+          ],
+          "weight": 6,
+          "label": "co-occurs (6x)",
+          "source": "technique:T0031",
+          "target": "technique:T0056"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EV-04",
+            "GP-02",
+            "GP-03",
+            "GP-04",
+            "HS-01",
+            "TC-01"
+          ],
+          "weight": 6,
+          "label": "co-occurs (6x)",
+          "source": "technique:T0031",
+          "target": "technique:T0061"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EV-04",
+            "GP-02",
+            "HS-01",
+            "HS-02",
+            "MD-01",
+            "TC-01"
+          ],
+          "weight": 6,
+          "label": "co-occurs (6x)",
+          "source": "technique:T0011",
+          "target": "technique:T0016"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EV-04",
+            "GP-02",
+            "HS-01",
+            "HS-02",
+            "MD-01",
+            "TC-01"
+          ],
+          "weight": 6,
+          "label": "co-occurs (6x)",
+          "source": "technique:T0011",
+          "target": "technique:T0019"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EV-04",
+            "GP-02",
+            "HS-01",
+            "HS-02",
+            "MD-01",
+            "TC-01"
+          ],
+          "weight": 6,
+          "label": "co-occurs (6x)",
+          "source": "technique:T0011",
+          "target": "technique:T0022"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EV-04",
+            "GP-02",
+            "HS-01",
+            "HS-02",
+            "MD-01",
+            "TC-01"
+          ],
+          "weight": 6,
+          "label": "co-occurs (6x)",
+          "source": "technique:T0011",
+          "target": "technique:T0023"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "GP-02",
+            "HS-01",
+            "HS-02"
+          ],
+          "weight": 3,
+          "label": "co-occurs (3x)",
+          "source": "technique:T0011",
+          "target": "technique:T0025"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EV-04",
+            "GP-02",
+            "HS-01",
+            "TC-01"
+          ],
+          "weight": 4,
+          "label": "co-occurs (4x)",
+          "source": "technique:T0011",
+          "target": "technique:T0031"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EV-04",
+            "GP-02",
+            "HS-01",
+            "TC-01"
+          ],
+          "weight": 4,
+          "label": "co-occurs (4x)",
+          "source": "technique:T0011",
+          "target": "technique:T0046"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EV-04",
+            "GP-02",
+            "HS-01",
+            "HS-02",
+            "MD-01",
+            "TC-01"
+          ],
+          "weight": 6,
+          "label": "co-occurs (6x)",
+          "source": "technique:T0011",
+          "target": "technique:T0049"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EV-04",
+            "GP-02",
+            "HS-01",
+            "MD-01",
+            "TC-01"
+          ],
+          "weight": 5,
+          "label": "co-occurs (5x)",
+          "source": "technique:T0011",
+          "target": "technique:T0052"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EV-04",
+            "GP-02",
+            "HS-01",
+            "HS-02",
+            "MD-01",
+            "TC-01"
+          ],
+          "weight": 6,
+          "label": "co-occurs (6x)",
+          "source": "technique:T0011",
+          "target": "technique:T0056"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "co_occurs",
+          "shared_scenarios": [
+            "EV-04",
+            "GP-02",
+            "HS-01",
+            "HS-02",
+            "MD-01",
+            "TC-01"
+          ],
+          "weight": 6,
+          "label": "co-occurs (6x)",
+          "source": "technique:T0011",
+          "target": "technique:T0061"
+        }
+      },
+      {
+        "data": {
           "edge_type": "features",
           "label": "features",
           "source": "scenario:GP-01",
@@ -12764,6 +15097,48 @@
           "label": "spans",
           "source": "scenario:GP-01",
           "target": "era:era-3-covid-19-and-the-great-reset-convergence-2020-2026"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "cross_scenario",
+          "shared_actors": [
+            "Alex Jones / InfoWars",
+            "Bilderberg Group",
+            "QAnon Movement",
+            "World Economic Forum (Klaus Schwab)"
+          ],
+          "weight": 4,
+          "label": "4 shared actors",
+          "source": "scenario:GP-01",
+          "target": "scenario:GP-02"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "cross_scenario",
+          "shared_actors": [
+            "Alex Jones / InfoWars",
+            "QAnon Movement",
+            "Russian State Media (RT, Sputnik) and Influence Operations"
+          ],
+          "weight": 3,
+          "label": "3 shared actors",
+          "source": "scenario:GP-01",
+          "target": "scenario:GP-03"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "cross_scenario",
+          "shared_actors": [
+            "Alex Jones / InfoWars",
+            "Elon Musk / X (formerly Twitter)"
+          ],
+          "weight": 2,
+          "label": "2 shared actors",
+          "source": "scenario:GP-01",
+          "target": "scenario:MD-01"
         }
       },
       {
@@ -13383,6 +15758,19 @@
       },
       {
         "data": {
+          "edge_type": "cross_scenario",
+          "shared_actors": [
+            "Alex Jones / InfoWars",
+            "QAnon Movement"
+          ],
+          "weight": 2,
+          "label": "2 shared actors",
+          "source": "scenario:GP-02",
+          "target": "scenario:GP-03"
+        }
+      },
+      {
+        "data": {
           "edge_type": "relates_to",
           "relation": "funds",
           "confidence": 0.85,
@@ -13978,6 +16366,32 @@
           "label": "contains",
           "source": "scenario:GP-03",
           "target": "claim:GP-03-7"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "cross_scenario",
+          "shared_actors": [
+            "Alex Jones / InfoWars",
+            "Steve Bannon / Breitbart News"
+          ],
+          "weight": 2,
+          "label": "2 shared actors",
+          "source": "scenario:GP-03",
+          "target": "scenario:MD-01"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "cross_scenario",
+          "shared_actors": [
+            "Alex Jones / InfoWars",
+            "Edward Snowden"
+          ],
+          "weight": 2,
+          "label": "2 shared actors",
+          "source": "scenario:GP-03",
+          "target": "scenario:TC-02"
         }
       },
       {
@@ -16092,6 +18506,19 @@
           "label": "spans",
           "source": "scenario:HS-01",
           "target": "era:era-3-mainstreaming-monetization-and-cross-pollination"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "cross_scenario",
+          "shared_actors": [
+            "Alex Jones / InfoWars",
+            "Russian state media (RT, Sputnik)"
+          ],
+          "weight": 2,
+          "label": "2 shared actors",
+          "source": "scenario:HS-01",
+          "target": "scenario:MD-01"
         }
       },
       {
@@ -19331,6 +21758,21 @@
           "label": "contains",
           "source": "scenario:MD-02",
           "target": "claim:MD-02-7"
+        }
+      },
+      {
+        "data": {
+          "edge_type": "cross_scenario",
+          "shared_actors": [
+            "ByteDance / TikTok",
+            "Frances Haugen",
+            "Meta (formerly Facebook)",
+            "Shoshana Zuboff"
+          ],
+          "weight": 4,
+          "label": "4 shared actors",
+          "source": "scenario:MD-02",
+          "target": "scenario:TC-02"
         }
       },
       {

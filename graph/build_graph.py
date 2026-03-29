@@ -10,6 +10,7 @@ import hashlib
 import json
 import re
 from collections import Counter
+from itertools import combinations
 from pathlib import Path
 
 import networkx as nx
@@ -48,6 +49,18 @@ CATEGORY_BY_PREFIX = {
 }
 
 _PATTERN_SEVERITY: dict[str, int] = {"isolated": 0, "repeated": 1, "systematic": 2}
+
+FLICC_MAP: dict[str, str] = {
+    "T0010": "Fake experts",
+    "T0022": "Conspiracy theories",
+    "T0023": "Logical fallacies",
+    "T0004": "Logical fallacies",
+    "T0044": "Cherry picking",
+    "T0049": "Cherry picking",
+    "T0056": "Logical fallacies",
+    "T0016": "Cherry picking",
+    "T0048": "Impossible expectations",
+}
 
 
 # ---------------------------------------------------------------------------
@@ -112,11 +125,70 @@ def load_results(results_dir: Path | None = None) -> list[dict]:
 
 
 # ---------------------------------------------------------------------------
+# Perspectives and metrics
+# ---------------------------------------------------------------------------
+
+def load_perspectives(config_path: Path | None = None) -> list[dict]:
+    """Load perspective presets from JSON config."""
+    config_path = config_path or Path(__file__).parent / "perspectives.json"
+    with open(config_path) as f:
+        return json.load(f)
+
+
+def _compute_false_polarization_gap(bridge: dict) -> float:
+    """Compute False Polarization Gap from moral foundations data.
+
+    Returns ratio of shared moral foundations to total unique foundations.
+    Higher values mean more shared reality than perceived.
+    """
+    mf = bridge.get("moral_foundations", {})
+    if not mf:
+        return 0.0
+
+    def _extract_foundations(items: list) -> set[str]:
+        foundations = set()
+        for item in items:
+            if isinstance(item, str):
+                # Extract foundation name: "fairness/cheating: ..." -> "fairness"
+                clean = item.split("/")[0].split(":")[0].strip().lower()
+                if clean:
+                    foundations.add(clean)
+        return foundations
+
+    side_a = _extract_foundations(mf.get("side_a", []))
+    side_b = _extract_foundations(mf.get("side_b", []))
+
+    if not side_a and not side_b:
+        return 0.0
+
+    shared = side_a & side_b
+    total = side_a | side_b
+    return len(shared) / len(total) if total else 0.0
+
+
+def _compute_pivot_points(G: nx.DiGraph) -> None:
+    """Mark the most influential non-scenario node per scenario as pivot_point."""
+    for node_id, data in list(G.nodes(data=True)):
+        if data.get("node_type") != "scenario":
+            continue
+        sid = data.get("label", "")
+        neighbors = list(G.successors(node_id)) + list(G.predecessors(node_id))
+        non_scenario = [n for n in neighbors if G.nodes[n].get("node_type") != "scenario"]
+        if not non_scenario:
+            continue
+        best_node = max(non_scenario, key=lambda n: G.degree(n))
+        G.nodes[best_node]["pivot_point"] = True
+        G.nodes[best_node].setdefault("pivot_for", []).append(sid)
+
+
+# ---------------------------------------------------------------------------
 # Node builders
 # ---------------------------------------------------------------------------
 
 def _add_scenario(G: nx.DiGraph, r: dict, sid: str) -> None:
     """Add a scenario node to the graph."""
+    bridge = r.get("bridge", {})
+    gap = _compute_false_polarization_gap(bridge)
     G.add_node(f"scenario:{sid}", **{
         "node_type": "scenario",
         "label": sid,
@@ -126,6 +198,7 @@ def _add_scenario(G: nx.DiGraph, r: dict, sid: str) -> None:
         "category": _category(sid),
         "confidence": r.get("overall_confidence", 0),
         "complexity": r.get("decomposition", {}).get("complexity", ""),
+        "false_polarization_gap": gap,
     })
 
 
@@ -218,6 +291,7 @@ def _add_techniques(G: nx.DiGraph, r: dict, sid: str) -> None:
                 "label": ttp.get("technique_name", disarm_id),
                 "disarm_id": disarm_id,
                 "max_confidence": ttp.get("confidence", 0),
+                "flicc_category": FLICC_MAP.get(disarm_id, ""),
                 "scenarios": [sid],
             })
 
@@ -360,6 +434,67 @@ def _add_temporal_eras(G: nx.DiGraph, r: dict, sid: str) -> None:
 
 
 # ---------------------------------------------------------------------------
+# Cross-scenario and co-occurrence enrichment
+# ---------------------------------------------------------------------------
+
+def _add_cross_scenario_edges(G: nx.DiGraph) -> None:
+    """Add cross_scenario edges between scenario pairs sharing 2+ actors.
+
+    For each pair of scenarios that share two or more actors, adds a
+    directed edge (first scenario -> second scenario, lexicographic order)
+    with the sorted list of shared actor names, the count as weight, and
+    a human-readable label.
+    """
+    scenario_actors: dict[str, list[str]] = {}
+    for actor_node, data in G.nodes(data=True):
+        if data.get("node_type") == "actor":
+            name = data.get("label", actor_node)
+            for sid in data.get("scenarios", []):
+                scenario_actors.setdefault(sid, [])
+                scenario_actors[sid].append(name)
+
+    for sid_a, sid_b in combinations(sorted(scenario_actors), 2):
+        shared = sorted(
+            set(scenario_actors[sid_a]) & set(scenario_actors[sid_b])
+        )
+        count = len(shared)
+        if count >= 2:
+            G.add_edge(f"scenario:{sid_a}", f"scenario:{sid_b}", **{
+                "edge_type": "cross_scenario",
+                "shared_actors": shared,
+                "weight": count,
+                "label": f"{count} shared actors",
+            })
+
+
+def _add_cooccurrence_edges(G: nx.DiGraph) -> None:
+    """Add co_occurs edges between technique pairs appearing in 3+ scenarios.
+
+    For each pair of DISARM technique nodes that both appear in three or
+    more common scenarios, adds a directed edge (lexicographic order on
+    node IDs) with the sorted list of shared scenario IDs, the count as
+    weight, and a human-readable label.
+    """
+    technique_scenarios: dict[str, list[str]] = {}
+    for node, data in G.nodes(data=True):
+        if data.get("node_type") == "technique":
+            technique_scenarios[node] = data.get("scenarios", [])
+
+    for tid_a, tid_b in combinations(sorted(technique_scenarios), 2):
+        shared = sorted(
+            set(technique_scenarios[tid_a]) & set(technique_scenarios[tid_b])
+        )
+        count = len(shared)
+        if count >= 3:
+            G.add_edge(tid_a, tid_b, **{
+                "edge_type": "co_occurs",
+                "shared_scenarios": shared,
+                "weight": count,
+                "label": f"co-occurs ({count}x)",
+            })
+
+
+# ---------------------------------------------------------------------------
 # Graph builder
 # ---------------------------------------------------------------------------
 
@@ -382,6 +517,10 @@ def build_graph(results: list[dict]) -> nx.DiGraph:
         _add_mutations(G, r, sid)
         _add_claims(G, r, sid)
         _add_temporal_eras(G, r, sid)
+
+    _add_cross_scenario_edges(G)
+    _add_cooccurrence_edges(G)
+    _compute_pivot_points(G)
 
     return G
 
