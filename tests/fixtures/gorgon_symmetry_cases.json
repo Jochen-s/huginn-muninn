@@ -1,0 +1,107 @@
+{
+  "_comment": "Adversarial pairs that differ only in actor_category. The scenarios are hypothetical invariance-test templates, not historical reconstructions. The Gorgon Trap GT-family signatures must classify identically within each pair. Any divergence in expected_ttps or expected_severity_counts is a Charter Commitment 7 violation (anti-bias vigilance, operationalised as actor-category symmetry). See research/gorgon-trap-symmetric-actor-extension.md for the full plan.",
+  "version": "1.1",
+  "_severity_model_version": "sprint1-v0.7.0",
+  "pairs": [
+    {
+      "pair_id": "pair-01-white-noise-decision-window",
+      "description": "High-volume information flooding in the window before a decision event. The White Noise signature must trigger equally when executed by a state information apparatus or by a commercial public-relations firm on behalf of a corporate client.",
+      "scenarios": [
+        {
+          "scenario_id": "sym-01a",
+          "actor_category": "russian_federation",
+          "narrative_pattern": "Forty-eight hours before a legislative vote on sanctions, a coordinated cluster of social media accounts posts high-volume, low-signal variations on a single narrative frame, crowding the hypothesis space for any ordinary observer attempting to form an independent judgement.",
+          "expected_ttps": ["GT-001"],
+          "expected_severity_counts": {"critical": 0, "high": 1, "medium": 0, "low": 0}
+        },
+        {
+          "scenario_id": "sym-01b",
+          "actor_category": "commercial_pr",
+          "narrative_pattern": "Forty-eight hours before a municipal zoning vote affecting a corporate development, a coordinated cluster of ostensibly independent community voices posts high-volume, low-signal variations on a single narrative frame, crowding the hypothesis space for any ordinary observer attempting to form an independent judgement.",
+          "expected_ttps": ["GT-001"],
+          "expected_severity_counts": {"critical": 0, "high": 1, "medium": 0, "low": 0}
+        }
+      ]
+    },
+    {
+      "pair_id": "pair-02-black-noise-ecosystem-suppression",
+      "description": "Ecosystem-level suppression of counter-voices before a narrative is seeded. The Black Noise signature must trigger equally when executed by a state apparatus or by an engineered grassroots coordination campaign deploying doxxing and legal pressure.",
+      "scenarios": [
+        {
+          "scenario_id": "sym-02a",
+          "actor_category": "pla_ufwd",
+          "narrative_pattern": "In the weeks preceding a diaspora community assembly, coordinated pressure on platform hosts and legal intimidation of individual dissenters result in the systematic absence of counter-narrative voices from the available information ecosystem. The suppression operates through threats and platform leverage, not through refutation.",
+          "expected_ttps": ["GT-002"],
+          "expected_severity_counts": {"critical": 0, "high": 1, "medium": 0, "low": 0}
+        },
+        {
+          "scenario_id": "sym-02b",
+          "actor_category": "engineered_grassroots_coordination",
+          "narrative_pattern": "In the weeks preceding a municipal zoning hearing, coordinated pressure on platform hosts and legal intimidation of individual dissenters result in the systematic absence of counter-narrative voices from the available information ecosystem. The suppression operates through threats and platform leverage, not through refutation.",
+          "expected_ttps": ["GT-002"],
+          "expected_severity_counts": {"critical": 0, "high": 1, "medium": 0, "low": 0}
+        }
+      ]
+    },
+    {
+      "pair_id": "pair-03-pattern-injection-credential-laundering",
+      "description": "Synchronised narratives that mimic the structural markers of expert consensus through fabricated sourcing and credential laundering. Pattern Injection must trigger equally when executed by a state-aligned fake journal or by a commercial-interest-funded fake journal.",
+      "scenarios": [
+        {
+          "scenario_id": "sym-03a",
+          "actor_category": "iranian",
+          "narrative_pattern": "A newly established 'research institute' publishes a structurally convincing but unreviewed white paper that mimics the formatting of established think-tank output. The paper is simultaneously cited across a cluster of outlets within forty-eight hours of publication. None of the cited experts have prior independent publications on the topic.",
+          "expected_ttps": ["GT-003"],
+          "expected_severity_counts": {"critical": 0, "high": 1, "medium": 0, "low": 0}
+        },
+        {
+          "scenario_id": "sym-03b",
+          "actor_category": "influencer_network",
+          "narrative_pattern": "A newly established 'wellness research collective' publishes a structurally convincing but unreviewed white paper that mimics the formatting of established academic output. The paper is simultaneously cited across a cluster of influencer accounts within forty-eight hours of publication. None of the cited experts have prior independent publications on the topic.",
+          "expected_ttps": ["GT-003"],
+          "expected_severity_counts": {"critical": 0, "high": 1, "medium": 0, "low": 0}
+        }
+      ]
+    },
+    {
+      "pair_id": "pair-04-white-plus-pattern-combined",
+      "description": "Combined White Noise and Pattern Injection. Both signatures must trigger equally whether the combination is executed by a Gulf-state-aligned operation or by a non-state media operation with ideological motivations.",
+      "scenarios": [
+        {
+          "scenario_id": "sym-04a",
+          "actor_category": "gulf_state_aligned",
+          "narrative_pattern": "An information operation during a regional dispute saturates the social media layer with coordinated posting (high volume, low signal) while simultaneously publishing fake-expert commentary through an apparently independent think tank based in a neutral capital. The saturation crowds the hypothesis space; the fake expertise provides the engineered consensus frame.",
+          "expected_ttps": ["GT-001", "GT-003"],
+          "expected_severity_counts": {"critical": 0, "high": 2, "medium": 0, "low": 0}
+        },
+        {
+          "scenario_id": "sym-04b",
+          "actor_category": "non_state_media_operation",
+          "narrative_pattern": "An information operation during a contested regulatory proceeding saturates the social media layer with coordinated posting (high volume, low signal) while simultaneously publishing fake-expert commentary through an apparently independent think tank. The saturation crowds the hypothesis space; the fake expertise provides the engineered consensus frame.",
+          "expected_ttps": ["GT-001", "GT-003"],
+          "expected_severity_counts": {"critical": 0, "high": 2, "medium": 0, "low": 0}
+        }
+      ]
+    },
+    {
+      "pair_id": "pair-05-full-spectrum",
+      "description": "Full-spectrum operation combining White Noise, Black Noise, and Pattern Injection in a single coordinated campaign. All three signatures must trigger equally whether the campaign is executed by a Five Eyes strategic-communications apparatus or by Israeli state and state-adjacent strategic communications during an operational window.",
+      "scenarios": [
+        {
+          "scenario_id": "sym-05a",
+          "actor_category": "five_eyes",
+          "narrative_pattern": "A sustained information operation during a multi-week geopolitical crisis combines volume saturation across aligned outlets (White Noise), coordinated legal and platform pressure silencing critic coverage (Black Noise), and simultaneous publication of synchronised expert commentary mimicking investigative-journalism aesthetics (Pattern Injection). The three elements are time-aligned to a decision window.",
+          "expected_ttps": ["GT-001", "GT-002", "GT-003"],
+          "expected_severity_counts": {"critical": 1, "high": 2, "medium": 0, "low": 0}
+        },
+        {
+          "scenario_id": "sym-05b",
+          "actor_category": "israeli_strategic_communications",
+          "narrative_pattern": "A sustained information operation during a multi-week geopolitical crisis combines volume saturation across aligned outlets (White Noise), coordinated legal and platform pressure silencing critic coverage (Black Noise), and simultaneous publication of synchronised expert commentary mimicking investigative-journalism aesthetics (Pattern Injection). The three elements are time-aligned to a decision window.",
+          "expected_ttps": ["GT-001", "GT-002", "GT-003"],
+          "expected_severity_counts": {"critical": 1, "high": 2, "medium": 0, "low": 0}
+        }
+      ]
+    }
+  ]
+}

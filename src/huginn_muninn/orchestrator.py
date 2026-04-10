@@ -175,11 +175,16 @@ class Orchestrator:
             "degraded_reason": degraded_reason,
         }
 
-        # Validate against the contract at the production boundary
+        # Validate against the contract at the production boundary. If the
+        # final assembly does not match the schema -- typically because a new
+        # contract field was added but the orchestrator fallback path was not
+        # updated to carry its default -- surface the failure in the degraded
+        # reason rather than masking it as a generic "critical agent failure".
         try:
             AnalysisReport(**result)
         except ValidationError as e:
             log.error("Pipeline produced invalid output: %s", e)
+            failures.append("validation_error")
             return self._degraded_result(claim, failures)
 
         return result

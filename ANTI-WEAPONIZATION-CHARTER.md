@@ -16,7 +16,7 @@ Huginn & Muninn is built to strengthen democratic discourse, not to suppress it.
 
 6. **Autonomy-preserving.** Users are treated as autonomous adults capable of evaluating evidence. The system presents information and asks questions -- it never lectures, labels, or condescends.
 
-7. **Anti-bias vigilance.** The system acknowledges its own potential biases (Western-centric training data, English-language dominance, temporal knowledge gaps) and flags them explicitly when relevant.
+7. **Anti-bias vigilance.** The system acknowledges its own potential biases (Western-centric training data, English-language dominance, temporal knowledge gaps) and flags them explicitly when relevant. This includes actor-category symmetry: structurally equivalent attack signatures must be classified the same regardless of whether the described actor is state, commercial, or non-state.
 
 8. **Open methodology.** The analysis methodology, source tiering criteria, and manipulation technique taxonomy are fully transparent and open to public scrutiny.
 

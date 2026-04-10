@@ -235,3 +235,58 @@ class TestHypothesisExpansionScore:
         # Non-dict entries count toward len() but not toward causal_count.
         # 2/5 * 1.0 * 1.0 = 0.4
         assert score == 0.4
+
+
+class TestValidationFailureMarker:
+    """Sprint 2 PR 1: when AnalysisReport validation fails at the production
+    boundary (orchestrator.py:181-183), the degraded result must surface the
+    failure via degraded_reason instead of masking it as a generic
+    'Critical agent failure'. This catches schema/fallback drift early."""
+
+    def test_validation_failure_surfaces_marker_in_reason(self, monkeypatch):
+        """Force a Pydantic ValidationError at the final-assembly boundary
+        and assert degraded_reason contains the validation_error marker."""
+        from huginn_muninn import orchestrator as orch_module
+
+        client = make_mock_client(MOCK_RESPONSES)
+        orch = Orchestrator(client)
+
+        real_cls = orch_module.AnalysisReport
+
+        class _AlwaysFailReport:
+            def __init__(self, **_kwargs):
+                # Trigger a real ValidationError via the genuine schema so we
+                # hit the except-branch we actually care about.
+                real_cls.model_validate({})
+
+        monkeypatch.setattr(orch_module, "AnalysisReport", _AlwaysFailReport)
+        result = orch.run("X is true because Y")
+
+        assert result["degraded"] is True
+        assert result["degraded_reason"] is not None
+        assert "validation_error" in result["degraded_reason"].lower(), (
+            f"Expected 'validation_error' in degraded_reason, got: "
+            f"{result['degraded_reason']}"
+        )
+
+    def test_validation_failure_result_parses_against_real_contract(self, monkeypatch):
+        """Even after forcing a boundary-validation failure, the returned
+        degraded result must still parse against the REAL AnalysisReport."""
+        from huginn_muninn import orchestrator as orch_module
+        from huginn_muninn.contracts import AnalysisReport as RealReport
+
+        client = make_mock_client(MOCK_RESPONSES)
+        orch = Orchestrator(client)
+
+        real_cls = orch_module.AnalysisReport
+
+        class _AlwaysFailReport:
+            def __init__(self, **_kwargs):
+                real_cls.model_validate({})
+
+        monkeypatch.setattr(orch_module, "AnalysisReport", _AlwaysFailReport)
+        result = orch.run("X is true because Y")
+
+        # The degraded result must still satisfy the real contract
+        report = RealReport(**result)
+        assert report.degraded is True

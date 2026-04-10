@@ -25,6 +25,8 @@ data/*
 
 # Internal
 .claude/
+.fleet/
+.codex/
 HANDOFF.md
 NUL
 deploy/
