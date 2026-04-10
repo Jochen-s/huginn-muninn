@@ -7,7 +7,7 @@ import pytest
 from huginn_muninn.agents.base import AgentError
 from huginn_muninn.contracts import AnalysisReport
 from huginn_muninn.llm import OllamaClient
-from huginn_muninn.orchestrator import Orchestrator
+from huginn_muninn.orchestrator import Orchestrator, _compute_hypothesis_expansion_score
 
 
 MOCK_RESPONSES = {
@@ -132,3 +132,106 @@ class TestOrchestrator:
         orch = Orchestrator(client)
         result = orch.run("X is true because Y")
         assert result["overall_confidence"] == 0.7
+
+    def test_pre_gorgon_mock_responses_still_parse(self):
+        """Regression guard: MOCK_RESPONSES lacks the cognitive-warfare fields.
+        The pipeline must still produce a valid AnalysisReport by relying on
+        Pydantic defaults on every new Decomposer/Tracer/Auditor field."""
+        client = make_mock_client(MOCK_RESPONSES)
+        orch = Orchestrator(client)
+        result = orch.run("X is true because Y")
+        report = AnalysisReport(**result)
+        # All Gorgon defaults should be populated
+        assert report.decomposition.hypothesis_crowding == "low"
+        assert report.decomposition.manipulation_vector_density == 0.0
+        assert report.decomposition.complexity_explosion_flag is False
+        assert report.origins.notable_omissions == []
+        assert report.audit.frame_capture_risk == "none"
+        assert report.audit.frame_capture_evidence == ""
+
+    def test_degraded_result_conforms_to_contract_with_gorgon_fields(self):
+        """The degraded fallback must populate every new cognitive-warfare field."""
+        client = MagicMock(spec=OllamaClient)
+        client.generate.side_effect = Exception("total failure")
+        orch = Orchestrator(client)
+        result = orch.run("X is true because Y")
+        report = AnalysisReport(**result)
+        assert report.decomposition.hypothesis_crowding == "low"
+        assert report.origins.notable_omissions == []
+        assert report.audit.frame_capture_risk == "none"
+
+
+class TestHypothesisExpansionScore:
+    """P1 #5: deterministic zero-token hypothesis-expansion signal."""
+
+    def test_empty_subclaims_returns_zero(self):
+        assert _compute_hypothesis_expansion_score({"sub_claims": []}) == 0.0
+
+    def test_missing_subclaims_key_returns_zero(self):
+        assert _compute_hypothesis_expansion_score({}) == 0.0
+
+    def test_single_simple_factual_claim_is_low(self):
+        score = _compute_hypothesis_expansion_score({
+            "sub_claims": [{"text": "X", "type": "factual"}],
+            "complexity": "simple",
+        })
+        # 1/5 * 1.0 * 1.0 = 0.2
+        assert score == 0.2
+
+    def test_five_simple_claims_without_causal_is_moderate(self):
+        score = _compute_hypothesis_expansion_score({
+            "sub_claims": [{"text": f"X{i}", "type": "factual"} for i in range(5)],
+            "complexity": "simple",
+        })
+        # 5/5 * 1.0 * 1.0 = 1.0
+        assert score == 1.0
+
+    def test_three_causal_claims_amplify_score(self):
+        score = _compute_hypothesis_expansion_score({
+            "sub_claims": [
+                {"text": "X1", "type": "causal"},
+                {"text": "X2", "type": "causal"},
+                {"text": "X3", "type": "causal"},
+            ],
+            "complexity": "moderate",
+        })
+        # 3/5 * 1.5 * 1.25 = 1.125 -> capped at 1.0
+        assert score == 1.0
+
+    def test_score_bounded_at_one(self):
+        score = _compute_hypothesis_expansion_score({
+            "sub_claims": [{"text": f"X{i}", "type": "causal"} for i in range(10)],
+            "complexity": "multi_actor",
+        })
+        assert 0.0 <= score <= 1.0
+        assert score == 1.0
+
+    def test_multi_actor_complexity_weighted_higher(self):
+        simple = _compute_hypothesis_expansion_score({
+            "sub_claims": [{"text": "X", "type": "factual"}],
+            "complexity": "simple",
+        })
+        multi_actor = _compute_hypothesis_expansion_score({
+            "sub_claims": [{"text": "X", "type": "factual"}],
+            "complexity": "multi_actor",
+        })
+        assert multi_actor > simple
+
+    def test_unknown_complexity_defaults_to_simple(self):
+        score = _compute_hypothesis_expansion_score({
+            "sub_claims": [{"text": "X", "type": "factual"}],
+            "complexity": "unknown_value",
+        })
+        assert score == 0.2
+
+    def test_handles_none_subclaims(self):
+        assert _compute_hypothesis_expansion_score({"sub_claims": None}) == 0.0
+
+    def test_ignores_non_dict_subclaim_entries(self):
+        score = _compute_hypothesis_expansion_score({
+            "sub_claims": ["not-a-dict", {"text": "X", "type": "causal"}],
+            "complexity": "simple",
+        })
+        # Non-dict entries count toward len() but not toward causal_count.
+        # 2/5 * 1.0 * 1.0 = 0.4
+        assert score == 0.4

@@ -263,6 +263,145 @@ class TestAuditorOutput:
         assert out.veto
 
 
+class TestGorgonFieldDefaults:
+    """Regression guards for the cognitive-warfare taxonomy fields: every new
+    field must have a safe default so older LLM outputs, fallback dicts, and
+    cached JSON still parse at the AnalysisReport validation boundary."""
+
+    def test_decomposer_hypothesis_crowding_defaults_to_low(self):
+        out = DecomposerOutput(
+            sub_claims=[SubClaim(text="X", type=SubClaimType.FACTUAL)],
+            original_claim="X",
+            complexity="simple",
+        )
+        assert out.hypothesis_crowding == "low"
+
+    def test_decomposer_manipulation_vector_density_defaults_to_zero(self):
+        out = DecomposerOutput(
+            sub_claims=[SubClaim(text="X", type=SubClaimType.FACTUAL)],
+            original_claim="X",
+            complexity="simple",
+        )
+        assert out.manipulation_vector_density == 0.0
+
+    def test_decomposer_complexity_explosion_flag_defaults_false(self):
+        out = DecomposerOutput(
+            sub_claims=[SubClaim(text="X", type=SubClaimType.FACTUAL)],
+            original_claim="X",
+            complexity="simple",
+        )
+        assert out.complexity_explosion_flag is False
+
+    def test_decomposer_accepts_explicit_high_crowding(self):
+        out = DecomposerOutput(
+            sub_claims=[SubClaim(text="X", type=SubClaimType.FACTUAL)],
+            original_claim="X",
+            complexity="complex",
+            hypothesis_crowding="high",
+            manipulation_vector_density=0.6,
+            complexity_explosion_flag=True,
+        )
+        assert out.hypothesis_crowding == "high"
+        assert out.manipulation_vector_density == 0.6
+        assert out.complexity_explosion_flag is True
+
+    def test_decomposer_manipulation_vector_density_bounds(self):
+        with pytest.raises(ValidationError):
+            DecomposerOutput(
+                sub_claims=[SubClaim(text="X", type=SubClaimType.FACTUAL)],
+                original_claim="X",
+                complexity="simple",
+                manipulation_vector_density=1.5,
+            )
+
+    def test_old_format_decomposer_dict_still_parses(self):
+        """Regression guard: pre-Gorgon LLM outputs must still parse."""
+        old_dict = {
+            "sub_claims": [{"text": "X", "type": "factual", "verifiable": True}],
+            "original_claim": "X",
+            "complexity": "simple",
+        }
+        out = DecomposerOutput(**old_dict)
+        assert out.hypothesis_crowding == "low"
+        assert out.manipulation_vector_density == 0.0
+        assert out.complexity_explosion_flag is False
+
+    def test_mutation_relay_type_defaults_to_ambiguous(self):
+        mut = NarrativeMutation(
+            original="a", mutated="b",
+            mutation_type="distortion", source="s",
+        )
+        assert mut.relay_type == "ambiguous"
+
+    def test_mutation_relay_type_pipe_separated(self):
+        mut = NarrativeMutation(
+            original="a", mutated="b",
+            mutation_type="distortion", source="s",
+            relay_type="knowing|unknowing",
+        )
+        assert mut.relay_type == "knowing"
+
+    def test_tracer_notable_omissions_defaults_empty(self):
+        out = TracerOutput(origins=[])
+        assert out.notable_omissions == []
+
+    def test_tracer_notable_omissions_accepts_up_to_three(self):
+        out = TracerOutput(
+            origins=[],
+            notable_omissions=["peer-reviewed primary research", "contemporaneous news", "official statements"],
+        )
+        assert len(out.notable_omissions) == 3
+
+    def test_tracer_notable_omissions_rejects_more_than_three(self):
+        with pytest.raises(ValidationError):
+            TracerOutput(
+                origins=[],
+                notable_omissions=["a", "b", "c", "d"],
+            )
+
+    def test_old_format_tracer_dict_still_parses(self):
+        """Regression guard: pre-Gorgon Tracer fallback must still parse."""
+        old_dict = {"origins": [], "mutations": []}
+        out = TracerOutput(**old_dict)
+        assert out.notable_omissions == []
+
+    def test_auditor_frame_capture_risk_defaults_to_none(self):
+        out = AuditorOutput(
+            verdict=AuditVerdict.PASS,
+            findings=[],
+            confidence_adjustment=0.0,
+            veto=False,
+            summary="ok",
+        )
+        assert out.frame_capture_risk == "none"
+        assert out.frame_capture_evidence == ""
+
+    def test_auditor_frame_capture_risk_accepts_high(self):
+        out = AuditorOutput(
+            verdict=AuditVerdict.PASS_WITH_WARNINGS,
+            findings=[],
+            confidence_adjustment=-0.1,
+            veto=False,
+            summary="imported causal chain without restatement",
+            frame_capture_risk="high",
+            frame_capture_evidence="Decomposer adopted the claim's 'X causes Y' label without restatement",
+        )
+        assert out.frame_capture_risk == "high"
+
+    def test_old_format_auditor_dict_still_parses(self):
+        """Regression guard: pre-Gorgon Auditor fallback must still parse."""
+        old_dict = {
+            "verdict": "pass_with_warnings",
+            "findings": [],
+            "confidence_adjustment": -0.1,
+            "veto": False,
+            "summary": "ok",
+        }
+        out = AuditorOutput(**old_dict)
+        assert out.frame_capture_risk == "none"
+        assert out.frame_capture_evidence == ""
+
+
 class TestAnalysisInput:
     def test_valid_input(self):
         inp = AnalysisInput(claim="Test claim", context=None, language="en")

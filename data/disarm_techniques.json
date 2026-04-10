@@ -1,0 +1,129 @@
+{
+  "techniques": [
+    {
+      "id": "T0025",
+      "name": "Leak altered documents",
+      "tactic": "Prepare",
+      "description": "Release modified documents as if genuine to support a narrative"
+    },
+    {
+      "id": "T0039",
+      "name": "Bait legitimate media",
+      "tactic": "Execute",
+      "description": "Create stories designed to be picked up by legitimate news outlets"
+    },
+    {
+      "id": "T0049",
+      "name": "Flood the information space",
+      "tactic": "Execute",
+      "description": "Produce large volumes of content to drown out competing narratives"
+    },
+    {
+      "id": "T0046",
+      "name": "Use search engine optimization",
+      "tactic": "Execute",
+      "description": "Manipulate search rankings to promote preferred narratives"
+    },
+    {
+      "id": "T0023",
+      "name": "Distort facts",
+      "tactic": "Prepare",
+      "description": "Take genuine facts and present them in misleading context"
+    },
+    {
+      "id": "T0044",
+      "name": "Seed distortions",
+      "tactic": "Execute",
+      "description": "Introduce small inaccuracies that compound over time"
+    },
+    {
+      "id": "T0056",
+      "name": "Amplify existing narratives",
+      "tactic": "Execute",
+      "description": "Boost organic grievances to inflame division"
+    },
+    {
+      "id": "T0029",
+      "name": "Create fake expert personas",
+      "tactic": "Prepare",
+      "description": "Fabricate authority figures to lend credibility"
+    },
+    {
+      "id": "T0053",
+      "name": "Use bots or cyborgs",
+      "tactic": "Execute",
+      "description": "Deploy automated accounts to simulate grassroots support"
+    },
+    {
+      "id": "T0057",
+      "name": "Organize rallies or events",
+      "tactic": "Execute",
+      "description": "Create real-world events to validate online narratives"
+    },
+    {
+      "id": "GT-001",
+      "name": "White Noise",
+      "tactic": "Execute",
+      "description": "Flood the information environment with high-volume, low-signal content to crowd the hypothesis space, making it computationally expensive for audiences and analysts to isolate credible signals from noise; pattern analytically grounded in Briggs et al. 2026 cognitive warfare taxonomy, heuristic pending community empirical validation"
+    },
+    {
+      "id": "GT-002",
+      "name": "Black Noise",
+      "tactic": "Prepare",
+      "description": "Systematically suppress, de-platform, or exclude contradicting sources from the information ecosystem before primary narratives are seeded, shaping the evidentiary baseline so that counter-evidence is absent rather than rebutted; pattern analytically grounded in Briggs et al. 2026 cognitive warfare taxonomy, heuristic pending community empirical validation"
+    },
+    {
+      "id": "GT-003",
+      "name": "Pattern Injection",
+      "tactic": "Prepare",
+      "description": "Seed synchronized narratives that mimic the structural markers of expert consensus, employing fabricated sourcing, credential laundering, false attribution, and mimicry of investigative journalism formats to cause audiences to accept engineered conclusions as independently verified findings; pattern analytically grounded in Briggs et al. 2026 cognitive warfare taxonomy, heuristic pending community empirical validation"
+    }
+  ],
+  "common_framing_techniques": [
+    {
+      "name": "false_dichotomy",
+      "label": "False Dichotomy",
+      "description": "Presenting a complex issue as only two opposing choices, hiding middle ground and shared concerns"
+    },
+    {
+      "name": "emotional_amplification",
+      "label": "Emotional Amplification",
+      "description": "Using fear, outrage, or disgust to override careful reasoning about a genuinely complex topic"
+    },
+    {
+      "name": "scapegoating",
+      "label": "Scapegoating",
+      "description": "Blaming a specific group for a systemic problem, redirecting attention from shared structural causes"
+    },
+    {
+      "name": "false_equivalence",
+      "label": "False Equivalence",
+      "description": "Presenting two very different things as equally valid to create confusion about established evidence"
+    },
+    {
+      "name": "cherry_picking",
+      "label": "Cherry Picking",
+      "description": "Selecting only evidence that supports one view while ignoring the broader picture"
+    },
+    {
+      "name": "appeal_to_fear",
+      "label": "Appeal to Fear",
+      "description": "Using threat of harm to prevent rational evaluation of evidence"
+    },
+    {
+      "name": "manufactured_consensus",
+      "label": "Manufactured Consensus",
+      "description": "Creating the illusion that a fringe view is widely held through coordinated amplification"
+    },
+    {
+      "name": "whataboutism",
+      "label": "Whataboutism",
+      "description": "Deflecting criticism by pointing to unrelated wrongs, preventing focus on the actual issue"
+    },
+    {
+      "name": "none_detected",
+      "label": "No Manipulation Detected",
+      "description": "The claim does not appear to use identifiable manipulation techniques"
+    }
+  ]
+}

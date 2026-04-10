@@ -191,6 +191,63 @@ capability: click an actor and see every scenario they touch, every technique th
 
 ---
 
+## Cognitive Warfare Detection (v0.7.0)
+
+Classical disinformation analysis focuses on whether a claim is true. A more recent class of
+attacks does not depend on individual false claims at all: they operate by overwhelming the
+audience's ability to decide which of several plausible framings the evidence actually supports,
+or by structuring false narratives to mimic the surface features of legitimate expert consensus.
+
+Version 0.7.0 adds a detection layer for this class of attack, derived from Briggs, Danyk, and
+Weiss (2026), cross-referenced against the foundational RAND "Firehose of Falsehood" work and
+the OODA-loop literature. The full integration decision record, including what we explicitly
+did not adopt from the source paper and why, is in [`research/gorgon-trap-integration.md`](research/gorgon-trap-integration.md).
+
+Three new DISARM entries are matched by the TTP Classifier:
+
+| ID | Name | What it detects |
+|----|------|-----------------|
+| **GT-001** | White Noise | High-volume, low-signal flooding that crowds the hypothesis space and makes verification computationally expensive. |
+| **GT-002** | Black Noise | Ecosystem-level suppression of contradicting sources *before* primary narratives are seeded, so counter-evidence is absent rather than rebutted. |
+| **GT-003** | Pattern Injection | Synchronized narratives that mimic the structural markers of expert consensus (fabricated sourcing, credential laundering, investigative-journalism mimicry). |
+
+Each entry is written in actor-neutral language: the same structural signature may be produced
+by a state intelligence service, a commercial PR firm, a grassroots campaign, or a single
+influencer, and the classifier recognises it in all cases.
+
+Three new signals ride on the existing agent outputs:
+
+- **`hypothesis_crowding`** on the Decomposer captures how many plausible competing interpretations
+  the input framing admits (`low` / `medium` / `high`). Deliberately qualitative: the source paper
+  proposes a quantum-cognition formalism for this concept, which we declined to implement
+  literally because there is no concrete Hilbert space, no measurement protocol, and no
+  predictive advantage over classical tools. A qualitative scale captures the useful residue
+  without the false precision. The Decomposer prompt explicitly prevents inflating sub-claim count
+  to justify a higher rating.
+- **`notable_omissions`** on the Origin Tracer lists up to three source *types* that would be
+  expected for the claim's topic and era but are missing from the available context. The prompt
+  requires "missing from context" framing, disallows intent attribution, and forbids invented
+  source names. This captures the Black Noise signal without requiring a full omission-detection
+  search infrastructure, and without encouraging speculation about suppression.
+- **`frame_capture_risk`** on the Adversarial Auditor detects when the pipeline's own analysis
+  has adopted the input claim's framing, labels, or implied causality without independently
+  restating the question. It is gated on upstream signals so it does not degrade into speculative
+  flagging. The term is deliberately chosen over the source paper's "verification trap" wording,
+  which risks priming the Auditor against legitimate fact-checking. A claim can be rigorously
+  fact-checked and have frame-capture issues simultaneously; they are orthogonal concerns.
+
+A deterministic orchestrator helper, `_compute_hypothesis_expansion_score`, derives a bounded
+0.0-1.0 reproducible signal from the Decomposer's existing output (sub-claim count, causal
+ratio, declared complexity) and feeds it to the Auditor's context under `gorgon_signals`.
+This costs zero additional LLM tokens and gives the frame-capture check a reproducible
+signal to gate on rather than forcing the LLM to re-infer the Decomposer's work.
+
+All of the above is additive. Existing callers that do not emit the new fields continue to
+work unchanged; every new field declares a safe default, and the orchestrator's degraded-result
+fallback populates them explicitly.
+
+---
+
 ## Name the Trick (v5)
 
 The Bridge Builder names each manipulation technique like revealing how a magic trick works.

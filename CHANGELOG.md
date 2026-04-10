@@ -3,6 +3,30 @@
 All notable changes to Huginn & Muninn are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.7.0] - 2026-04-10 -- "Frame Capture"
+
+### Added
+- **Cognitive warfare taxonomy**: Three new DISARM technique entries covering attacks that target the sense-making phase of decision-making rather than the belief-formation phase. GT-001 (White Noise) flags information flooding that crowds the hypothesis space; GT-002 (Black Noise) flags ecosystem-level source suppression; GT-003 (Pattern Injection) flags synchronized narratives that mimic expert-consensus structure through fabricated sourcing, credential laundering, or investigative-journalism mimicry. All three are written in actor-neutral language and ship as heuristics pending community empirical validation. See `research/gorgon-trap-integration.md`.
+- **`hypothesis_crowding` signal on the Decomposer**: A qualitative `low` / `medium` / `high` field on `DecomposerOutput` describing how many plausible competing interpretations the input framing admits. Narrowly scoped in the prompt so that the Decomposer cannot justify inflating sub-claim count to claim a higher rating.
+- **`manipulation_vector_density` and `complexity_explosion_flag`**: Companion fields on `DecomposerOutput` that capture the ratio of sub-claims opening a manipulation surface and a boolean threshold flag on claim structure.
+- **`notable_omissions` on the Origin Tracer**: A capped list (up to three entries) of source *types* that would be expected to exist for a claim's topic and era but are missing from the available context. The Tracer prompt enforces "missing from context" framing and disallows intent attribution and invented source names.
+- **`relay_type` on `NarrativeMutation`**: Classifies each amplification step as `knowing`, `unknowing`, or `ambiguous`, defaulting to `ambiguous` when the relay's awareness is not explicit.
+- **`frame_capture_risk` on the Adversarial Auditor**: A three-valued audit signal (`none` / `possible` / `high`) that detects when the pipeline's own analysis has adopted the input claim's framing, labels, or implied causality without independently restating the question. Deliberately chosen over the paper's "verification trap" terminology to prevent priming the Auditor against legitimate fact-checking. Assessment is gated on upstream signals (`hypothesis_crowding="high"`, non-empty `notable_omissions`, or a matched `GT-` TTP) so that the check does not degrade into speculative flagging.
+- **`_compute_hypothesis_expansion_score` orchestrator helper**: A deterministic zero-token helper that derives a bounded 0.0-1.0 score from the Decomposer's existing output. Feeds the Auditor's context as part of a `gorgon_signals` dictionary so that `frame_capture_risk` gating relies on a reproducible signal rather than LLM re-inference.
+- **25 new tests**: `TestGorgonFieldDefaults` (15) in `tests/test_contracts.py`, `TestHypothesisExpansionScore` (10) in `tests/test_orchestrator.py`, plus 3 Auditor prompt-shape tests and 2 backward-compatibility regression guards.
+- **Research note**: `research/gorgon-trap-integration.md` documenting what was integrated from the Briggs et al. 2026 cognitive-warfare taxonomy, what was deliberately rejected (density-matrix formalism, weaponized absurdity counter-tactic, victim framing, population-level claims), the falsification criteria for each rejection, and the revisit triggers for future re-review.
+
+### Changed
+- `data/disarm_techniques.json` is now tracked in the repository. Previously `.gitignore` excluded the entire `data/` directory, which left a new checkout unable to run the classifier without manual intervention. The DISARM seed is now a committed first-class asset; transient `data/` artifacts remain ignored via a targeted pattern.
+- The Adversarial Auditor's `build_prompt` now serializes `gorgon_signals` when present, so the deterministic hypothesis-expansion signal actually reaches the LLM. Without this step the helper would be dead code from the Auditor's perspective.
+- All new `contracts.py` fields declare safe defaults so older LLM outputs, cached JSON, and the orchestrator's degraded-result fallback paths continue to parse against `AnalysisReport`.
+
+### Rejected (with falsification criteria)
+- **Literal density-matrix / von Neumann entropy computation**. No concrete Hilbert space, no measurement protocol, no falsifiable prediction, no predictive advantage over classical information theory. Falsification criterion: a paper that specifies a concrete construction with measurable interference effects.
+- **Weaponized Absurdity as a counter-tactic**. Cited doctrinal support is a single satirical blog post, structurally opposed to the Bridge Builder, violates Anti-Weaponization Charter Commitments 4 and 6, and is inconsistent with Costello, Pennycook, and Rand (2024) on dignity-preserving belief change. Falsification criterion: a peer-reviewed randomized trial showing weaponized absurdity outperforms Socratic dialogue on depolarization metrics without compromising user dignity.
+- **"Victim of cognitive warfare" framing**. Removes agency and creates a rescuer-victim dynamic inconsistent with the deep-canvassing evidence base. We use "people navigating information environments designed to exploit trust" instead.
+- **Population-level mechanism claims**. Huginn & Muninn operates at the individual-claim level; the paper's systemic claims are not extrapolated into individual diagnostics.
+
 ## [0.6.0] - 2026-03-29 -- "Follow the Breadcrumbs"
 
 ### Added

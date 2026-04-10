@@ -18,6 +18,40 @@ from huginn_muninn.llm import LLMClient
 log = logging.getLogger(__name__)
 
 
+# Zero-token deterministic helper: computes a hypothesis-space expansion score
+# from existing Decomposer output fields. Not an entropy calculation and not a
+# quantum formalism -- literal density-matrix math was deliberately avoided as
+# false precision without a concrete Hilbert-space construction. Score feeds
+# the Auditor's context under "gorgon_signals" so frame-capture assessment can
+# be gated on a reproducible signal rather than LLM re-inference.
+_COMPLEXITY_SCORES: dict[str, float] = {
+    "simple": 1.0,
+    "moderate": 1.25,
+    "complex": 1.5,
+    "multi_actor": 1.75,
+}
+
+
+def _compute_hypothesis_expansion_score(decomposition: dict) -> float:
+    """Derive a hypothesis-expansion signal from the Decomposer output.
+
+    Bounded 0.0-1.0. Rises with sub-claim count, density of causal sub-claims,
+    and declared complexity. Deterministic: adds zero LLM tokens.
+    """
+    sub_claims = decomposition.get("sub_claims") or []
+    if not sub_claims:
+        return 0.0
+    causal_count = sum(
+        1 for s in sub_claims if isinstance(s, dict) and s.get("type") == "causal"
+    )
+    causal_weight = 1.5 if causal_count > 2 else 1.0
+    complexity_weight = _COMPLEXITY_SCORES.get(
+        decomposition.get("complexity", "simple"), 1.0,
+    )
+    raw = (len(sub_claims) / 5) * causal_weight * complexity_weight
+    return round(min(1.0, raw), 3)
+
+
 class Orchestrator:
     """Coordinates the 6-agent Method 2 pipeline."""
 
@@ -46,7 +80,7 @@ class Orchestrator:
 
         # Stage 2: Origin tracing
         origins = self._run_agent(self.tracer, {**context}, failures)
-        origins = origins or {"origins": [], "mutations": []}
+        origins = origins or {"origins": [], "mutations": [], "notable_omissions": []}
         context["origins"] = origins
 
         # Stage 3: Intelligence mapping
@@ -76,6 +110,18 @@ class Orchestrator:
         }
 
         # Stage 5: Adversarial Audit
+        # Gorgon Trap P1 #5: compute deterministic hypothesis-expansion signal
+        # from the Decomposer output and pass it to the Auditor so it can gate
+        # frame_capture_risk assessment without an additional LLM call.
+        gorgon_signals = {
+            "hypothesis_expansion_score": _compute_hypothesis_expansion_score(decomposition),
+            "hypothesis_crowding": decomposition.get("hypothesis_crowding", "low"),
+            "notable_omissions_count": len(origins.get("notable_omissions", []) or []),
+            "has_gt_ttps": any(
+                (m.get("disarm_id") or "").startswith("GT-")
+                for m in ttps.get("ttp_matches", []) or []
+            ),
+        }
         audit = self._run_agent(
             self.auditor,
             {
@@ -85,6 +131,7 @@ class Orchestrator:
                 "intelligence": intelligence,
                 "ttps": ttps,
                 "bridge": bridge,
+                "gorgon_signals": gorgon_signals,
             },
             failures,
         )
@@ -95,6 +142,8 @@ class Orchestrator:
             "confidence_adjustment": -0.1,
             "veto": False,
             "summary": "Auditor agent failed; results unverified",
+            "frame_capture_risk": "none",
+            "frame_capture_evidence": "",
         }
 
         # Compute overall confidence
@@ -152,8 +201,13 @@ class Orchestrator:
                 "sub_claims": [{"text": claim, "type": "factual", "verifiable": False}],
                 "original_claim": claim,
                 "complexity": "simple",
+                # Fallback must carry every schema default so AnalysisReport
+                # validation succeeds even when every agent call failed.
+                "hypothesis_crowding": "low",
+                "manipulation_vector_density": 0.0,
+                "complexity_explosion_flag": False,
             },
-            "origins": {"origins": [], "mutations": []},
+            "origins": {"origins": [], "mutations": [], "notable_omissions": []},
             "intelligence": {"actors": [], "relations": [], "narrative_summary": ""},
             "ttps": {"ttp_matches": [], "primary_tactic": "Assess"},
             "bridge": {
@@ -167,6 +221,8 @@ class Orchestrator:
             "audit": {
                 "verdict": "fail", "findings": [], "confidence_adjustment": 0,
                 "veto": False, "summary": "Pipeline degraded due to critical agent failure",
+                "frame_capture_risk": "none",
+                "frame_capture_evidence": "",
             },
             "overall_confidence": 0.0,
             "method": "method_2",

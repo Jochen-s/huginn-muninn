@@ -417,3 +417,59 @@ class TestAuditorAgent:
         })
         assert "bias" in prompt.lower()
         assert "veto" in prompt.lower()
+
+    def test_prompt_includes_gorgon_signals_when_present(self):
+        """gorgon_signals (the deterministic hypothesis-expansion dict) must
+        reach the LLM prompt. Without this the helper would be dead code."""
+        client = MagicMock(spec=OllamaClient)
+        agent = AuditorAgent(client)
+        prompt = agent.build_prompt({
+            "original_claim": "test",
+            "decomposition": {"sub_claims": [], "hypothesis_crowding": "high"},
+            "origins": {"origins": [], "notable_omissions": ["peer-reviewed primary research"]},
+            "intelligence": {"actors": []},
+            "ttps": {"ttp_matches": [{"disarm_id": "GT-001", "technique_name": "White Noise", "confidence": 0.8, "evidence": "flood"}]},
+            "bridge": {"universal_needs": []},
+            "gorgon_signals": {
+                "hypothesis_expansion_score": 0.8,
+                "hypothesis_crowding": "high",
+                "notable_omissions_count": 1,
+                "has_gt_ttps": True,
+            },
+        })
+        assert "gorgon_signals" in prompt
+        assert "hypothesis_expansion_score" in prompt
+        assert "has_gt_ttps" in prompt
+
+    def test_prompt_omits_gorgon_signals_when_absent(self):
+        """Backward-compat: callers that don't pass gorgon_signals still work."""
+        client = MagicMock(spec=OllamaClient)
+        agent = AuditorAgent(client)
+        prompt = agent.build_prompt({
+            "original_claim": "test",
+            "decomposition": {"sub_claims": []},
+            "origins": {"origins": []},
+            "intelligence": {"actors": []},
+            "ttps": {"ttp_matches": []},
+            "bridge": {"universal_needs": []},
+        })
+        assert "gorgon_signals" not in prompt
+
+    def test_prompt_includes_frame_capture_audit_block(self):
+        """The 'DISTINCT from fact-checking' clause must reach the LLM so frame
+        capture is not conflated with verification suppression."""
+        client = MagicMock(spec=OllamaClient)
+        agent = AuditorAgent(client)
+        prompt = agent.build_prompt({
+            "original_claim": "test",
+            "decomposition": {"sub_claims": []},
+            "origins": {"origins": []},
+            "intelligence": {"actors": []},
+            "ttps": {"ttp_matches": []},
+            "bridge": {"universal_needs": []},
+        })
+        # The phrase may be split across a line break in the f-string;
+        # normalize whitespace before asserting.
+        normalized = " ".join(prompt.split())
+        assert "DISTINCT from fact-checking" in normalized
+        assert "frame_capture_risk" in prompt

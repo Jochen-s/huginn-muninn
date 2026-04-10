@@ -22,13 +22,20 @@ class AuditorAgent(BaseAgent):
         )
 
     def build_prompt(self, input_data: dict) -> str:
-        all_outputs = sanitize_for_prompt(json.dumps({
+        # Serialize gorgon_signals when the orchestrator provides it so the
+        # deterministic hypothesis-expansion helper actually reaches the LLM.
+        # Without this, the signal would be dead code from the Auditor's view.
+        analysis_payload: dict[str, object] = {
             "decomposition": input_data.get("decomposition", {}),
             "origins": input_data.get("origins", {}),
             "intelligence": input_data.get("intelligence", {}),
             "ttps": input_data.get("ttps", {}),
             "bridge": input_data.get("bridge", {}),
-        }, indent=2))
+        }
+        gorgon_signals = input_data.get("gorgon_signals")
+        if gorgon_signals:
+            analysis_payload["gorgon_signals"] = gorgon_signals
+        all_outputs = sanitize_for_prompt(json.dumps(analysis_payload, indent=2))
         safe_claim = sanitize_claim(input_data["original_claim"])
 
         return f"""Audit this complete analysis of the claim: "<claim>{safe_claim}</claim>"
@@ -43,6 +50,35 @@ Check for:
 3. **Completeness**: Are important perspectives missing? Are there blind spots?
 4. **Manipulation**: Could this analysis itself be used to manipulate? Does the Bridge Builder manufacture false common ground?
 5. **Quality**: Is the reasoning sound? Are causal claims justified?
+
+COGNITIVE WARFARE AND FRAME CAPTURE AUDIT:
+
+Assess frame_capture_risk using EXISTING audit categories only. Do NOT invent new
+category values. Use category="manipulation" for cognitive warfare patterns and
+category="quality" for frame capture. Prefix descriptions with [cognitive_warfare]
+or [frame_capture] respectively so findings are locatable by substring.
+
+**Frame capture** is when the analysis ADOPTS the claim's framing, labels, or implied
+causality without independently restating the question. This is DISTINCT from
+fact-checking, which remains central to your job. Frame capture is NOT a reason to
+suppress verification of concrete factual claims. A claim can be rigorously
+fact-checked AND have frame capture issues simultaneously.
+
+**Trigger gate**: Explicitly assess frame_capture_risk only when upstream signals
+indicate possible cognitive warfare: hypothesis_crowding="high" in the Decomposer
+output, OR notable_omissions is non-empty in the Tracer output, OR the Classifier
+matched any TTP with id starting "GT-". Otherwise default frame_capture_risk to
+"none".
+
+**Evidence requirement**: When flagging frame_capture_risk as "possible" or "high",
+cite the SPECIFIC frame element in frame_capture_evidence: a label, a causal link,
+a categorization, or a framing device that was imported from the input claim and
+used by upstream agents without independent restatement. Do NOT flag on
+pattern-recognition alone -- every flag must name a specific imported element.
+
+**Rarity signal**: These are advanced audit categories. In most ordinary runs,
+frame_capture_risk will be "none". Flag sparingly and only with explicit upstream
+signals.
 
 VETO is a RARE NUCLEAR OPTION. You should almost never use it.
 
@@ -89,7 +125,9 @@ Respond in JSON. IMPORTANT: Each enum field must be EXACTLY ONE value, not combi
   ],
   "confidence_adjustment": -1.0 to 1.0,
   "veto": true or false,
-  "summary": "Overall assessment in one sentence"
+  "summary": "Overall assessment in one sentence",
+  "frame_capture_risk": "CHOOSE ONE: none, possible, high (default: none)",
+  "frame_capture_evidence": "Specific imported frame element, or empty string if none"
 }}
 
 DECISION GUIDE:

@@ -43,6 +43,16 @@ class DecomposerOutput(BaseModel):
     sub_claims: list[SubClaim] = Field(..., min_length=1)
     original_claim: str
     complexity: Annotated[Literal["simple", "moderate", "complex", "multi_actor"], BeforeValidator(_first_pipe_value)]
+    # Qualitative hypothesis-space saturation signal (Briggs, Danyk, Weiss 2026
+    # cognitive-warfare taxonomy). Deliberately qualitative: literal density-matrix
+    # formalism rejected as false precision without a concrete Hilbert space.
+    # All three fields default so older LLM outputs still parse.
+    hypothesis_crowding: Annotated[
+        Literal["low", "medium", "high"],
+        BeforeValidator(_first_pipe_value),
+    ] = "low"
+    manipulation_vector_density: float = Field(default=0.0, ge=0.0, le=1.0)
+    complexity_explosion_flag: bool = False
 
 
 # --- Origin Tracer ---
@@ -60,6 +70,12 @@ class NarrativeMutation(BaseModel):
     mutated: str
     mutation_type: Annotated[Literal["distortion", "amplification", "recontextualization", "fabrication", "ideological_migration", "inversion"], BeforeValidator(_first_pipe_value)]
     source: str
+    # Relay classification for narrative mutation tracking. Default "ambiguous"
+    # prevents speculation about intent when explicit signals are absent.
+    relay_type: Annotated[
+        Literal["knowing", "unknowing", "ambiguous"],
+        BeforeValidator(_first_pipe_value),
+    ] = "ambiguous"
 
 
 class TemporalContext(BaseModel):
@@ -75,6 +91,11 @@ class TracerOutput(BaseModel):
     origins: list[OriginEntry]
     mutations: list[NarrativeMutation] = Field(default_factory=list)
     temporal_context: list[TemporalContext] = Field(default_factory=list)
+    # --- Gorgon Trap assimilation (P1 #4) ---
+    # Source TYPES missing from the claim/context. Capped at 3 to prevent
+    # hallucination sprawl. Empty default; the "missing from context" framing
+    # (vs. speculative "suppressed") lives in the Tracer prompt, not the schema.
+    notable_omissions: list[str] = Field(default_factory=list, max_length=3)
 
 
 # --- Intelligence Mapper ---
@@ -169,6 +190,20 @@ class AuditorOutput(BaseModel):
     confidence_adjustment: float = Field(..., ge=-1.0, le=1.0)
     veto: bool = False
     summary: str
+    # --- Gorgon Trap assimilation (P1 #3) ---
+    # Frame capture risk. The term is deliberately chosen over "verification
+    # trap" to avoid priming the Auditor against legitimate fact-checking:
+    # frame capture is when upstream agents adopt the claim's framing without
+    # independent restatement, which is orthogonal to whether the claim was
+    # fact-checked. Cognitive-warfare findings are routed through the existing
+    # AuditFinding.category values ("manipulation" / "quality") with description
+    # prefixes [cognitive_warfare] / [frame_capture] -- the category enum is
+    # intentionally not expanded here to avoid breaking downstream renderers.
+    frame_capture_risk: Annotated[
+        Literal["none", "possible", "high"],
+        BeforeValidator(_first_pipe_value),
+    ] = "none"
+    frame_capture_evidence: str = ""
 
     @model_validator(mode="after")
     def veto_requires_fail(self) -> "AuditorOutput":
