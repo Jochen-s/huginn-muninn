@@ -499,12 +499,36 @@ class TestBridgePromptPreservation:
         assert "same underlying concern was split" in prompt or "split into opposing narratives" in prompt
 
     def test_consensus_explanation_instruction_preserved(self):
+        """Sprint 2 PR 3 fleet convergence (Federation Minor #3): tighten
+        the 'equal depth' assertion to the fuller canonical phrase
+        'equal depth and specificity' which appears in the section A
+        consensus-explanation instruction at bridge.py:49. Both the
+        phrase and its adjacent scientific/mainstream-explanation
+        framing must survive any Sprint 2+ prompt expansion."""
         prompt = self._build_prompt()
         assert "scientific consensus" in prompt.lower() or "consensus_explanation" in prompt
         assert "mainstream explanation" in prompt or "scientific or institutional explanation" in prompt
-        # The "equal depth" discipline is the load-bearing epistemic
-        # commitment; it must survive the Sprint 2 additions.
-        assert "equal depth" in prompt.lower()
+        # The full "equal depth and specificity" phrase is the canonical
+        # epistemic commitment (section A, bridge.py:49). It must
+        # survive Sprint 2 additions.
+        lower = prompt.lower()
+        assert "equal depth and specificity" in lower, (
+            "Load-bearing consensus_explanation instruction 'equal depth "
+            "and specificity' missing from Bridge prompt section A."
+        )
+        # And the shorter 'equal depth' reference must still appear in
+        # the JSON schema body near the consensus_explanation label so
+        # the JSON template teaches the same discipline. Use rindex to
+        # anchor on the JSON-schema occurrence (the LAST 'consensus_
+        # explanation' in the prompt), not the first -- the first may
+        # appear in a scope-reminder preamble that lives upstream of
+        # the JSON template.
+        label_idx = lower.rindex("consensus_explanation")
+        window = lower[label_idx : label_idx + 500]
+        assert "equal depth" in window, (
+            "'equal depth' must appear near the consensus_explanation "
+            "JSON-schema label in the Bridge prompt."
+        )
 
 
 class TestBridgeCommunicationPosturePrompt:
@@ -605,12 +629,38 @@ class TestBridgeScopedP26Prompt:
 
     def test_prebunking_note_forbids_new_factual_assertions(self):
         """The field must be a technique-recognition cue, not a new
-        factual claim. The Romulan scope discipline."""
+        factual claim. The Romulan scope discipline.
+
+        Sprint 2 PR 3 fleet convergence (Federation Minor #5, Klingon
+        Minor #4): the previous assertion `"not" in lower` was vacuous
+        -- "not" appears hundreds of times in any non-trivial English
+        prompt. Replaced with an anchored assertion on the canonical
+        section I header phrase 'NOT a new factual assertion' which
+        lives in bridge.py:95."""
         prompt = self._build_prompt()
         lower = prompt.lower()
         assert "prebunking_note" in prompt
         assert "technique warning" in lower or "technique-recognition" in lower
-        assert "not" in lower  # the 'NOT a new factual assertion' phrasing
+        # Section I header 'Prebunking Note (technique warning, NOT a
+        # new factual assertion)' is the canonical scope phrase. Anchor
+        # the assertion on the section header so a future edit that
+        # drops or weakens the header trips this test.
+        assert "prebunking note" in lower, (
+            "Section I header 'Prebunking Note' missing from prompt."
+        )
+        header_idx = lower.index("prebunking note")
+        header_window = lower[header_idx : header_idx + 200]
+        assert "not a new factual assertion" in header_window, (
+            "The 'NOT a new factual assertion' phrase must appear in the "
+            "Prebunking Note section header, mirroring the canonical "
+            "Romulan scope-discipline from bridge.py:95."
+        )
+        # The 'NOT a substitute' clause (prebunking is additive to
+        # Inferential Gap Map) must also appear somewhere in the prompt.
+        assert "not a substitute" in lower, (
+            "'NOT a substitute' clause missing from prompt -- section I "
+            "must preserve the additive-not-substitute discipline."
+        )
         assert "factual assertion" in lower or "factual claims" in lower
 
     def test_prebunking_note_is_additive_not_substitute(self):

@@ -343,7 +343,18 @@ class BridgeOutput(BaseModel):
     #                         dominate and the kernel of truth must be
     #                         acknowledged before any correction can land.
     # The posture MUST NOT move overall_confidence; the invariance is
-    # enforced by test_orchestrator.py::TestCommunicationPostureInvariance.
+    # enforced by test_orchestrator.py::TestVerificationPriorityFallback
+    # (the communication_posture invariance tests live inside that class).
+    #
+    # ADVISORY-ONLY (Sprint 2 PR 3 fleet convergence, Romulan MUST #2):
+    # This field is advisory to a downstream HUMAN communicator. It must
+    # NOT be used as an automated routing gate, content-moderation signal,
+    # or input to any automated decision with legal or similarly-significant
+    # effect on an individual. Using this field to gate automated actions
+    # without human review would convert an advisory register into a
+    # GDPR Art. 22 / EU AI Act Annex III decision surface, which is out
+    # of scope for this analysis-aid tool. The Charter Commitment 4
+    # posture/content separation discipline applies at this boundary.
     communication_posture: Annotated[
         Literal["direct_correction", "inoculation_first", "relational_first"],
         BeforeValidator(_first_pipe_value),
@@ -363,7 +374,17 @@ class BridgeOutput(BaseModel):
     # P2-6 (scoped): technique warning, not a new factual assertion.
     # Example: "watch for the fabricated-source-mimicry pattern in
     # similar claims". The prompt constrains this to technique naming.
-    prebunking_note: Annotated[str, BeforeValidator(_null_to_empty_str)] = ""
+    #
+    # Sprint 2 PR 3 fleet convergence (Borg Minor #4): enforce a hard
+    # length cap at the schema level so the "one sentence" discipline in
+    # the prompt is backed by a mechanical guard. 500 characters is
+    # generous enough for a long English sentence but tight enough to
+    # catch a prompt-compliance failure that produces a paragraph. The
+    # cap mirrors the `socratic_dialogue` max_length=3 discipline from
+    # Sprint 1 (schema-level protection for renderer assumptions).
+    prebunking_note: Annotated[str, BeforeValidator(_null_to_empty_str)] = Field(
+        default="", max_length=500
+    )
 
     @model_validator(mode="after")
     def _scope_scrub_narrative_pattern_fields(self) -> "BridgeOutput":

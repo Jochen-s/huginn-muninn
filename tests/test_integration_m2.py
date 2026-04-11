@@ -201,49 +201,78 @@ class TestMethodTwoPipeline:
         assert "safety" in report.bridge.universal_needs
 
     def test_pipeline_symmetric_actor_swap_on_bridge_fields(self):
-        """Sprint 2 PR 3 Codex must-fix #4 (Medium severity):
-        swapping actor-category labels in an otherwise-identical Bridge
-        output must not cause PR 3 fields to flip as if evidence were
-        asymmetric. The Sprint 1 symmetric-actor-invariance discipline
-        (BG-044) is extended to the new PR 3 fields.
+        """Sprint 2 PR 3 Codex must-fix #4 + PR 3 fleet convergence
+        (Klingon Minor #5, Holodeck I-roles I2): swapping upstream
+        actor-category labels while holding bridge output structurally
+        identical must not cause PR 3 fields to flip as if evidence
+        were asymmetric. The Sprint 1 BG-044 symmetric-actor-invariance
+        discipline extends to the new PR 3 fields, enforcing Charter
+        Commitment 7 at the bridge-output boundary.
 
-        We run the pipeline twice with Bridge outputs that differ only
-        in whether actor framing leans 'state' vs 'commercial' and
-        assert every PR 3 field ends up identical. This is the charter-
-        level enforcement that register choice never tracks direction."""
-        bridge_state = json.loads(MOCK_BRIDGE)
-        bridge_state["communication_posture"] = "inoculation_first"
-        bridge_state["pattern_density_warning"] = True
-        bridge_state["vacuum_filled_by"] = (
+        Test structure: two pipeline runs with different MOCK_MAPPER
+        outputs (one 'state' actor framing, one 'commercial' actor
+        framing) but identical structural bridge responses. The PR 3
+        fields must round-trip identically across both runs, and
+        overall_confidence must not move on actor-label substitution
+        alone."""
+        # Upstream actor-category framings that differ ONLY in actor
+        # category labels -- the structural signature (TTPs, mutations,
+        # origins) is held constant.
+        mapper_state = json.dumps({
+            "actors": [
+                {"name": "State-Aligned Outlet A", "type": "state", "motivation": "political", "credibility": 0.4, "evidence": "structural"},
+                {"name": "State-Aligned Outlet B", "type": "state", "motivation": "political", "credibility": 0.4, "evidence": "structural"},
+                {"name": "Research institutions", "type": "organization", "motivation": "academic research", "credibility": 0.85, "evidence": "peer-review"},
+            ],
+            "relations": [],
+            "narrative_summary": "State-aligned outlets amplified a structural narrative.",
+        })
+        mapper_commercial = json.dumps({
+            "actors": [
+                {"name": "Commercial Outlet A", "type": "media", "motivation": "revenue", "credibility": 0.4, "evidence": "structural"},
+                {"name": "Commercial Outlet B", "type": "media", "motivation": "revenue", "credibility": 0.4, "evidence": "structural"},
+                {"name": "Research institutions", "type": "organization", "motivation": "academic research", "credibility": 0.85, "evidence": "peer-review"},
+            ],
+            "relations": [],
+            "narrative_summary": "Commercial outlets amplified a structural narrative.",
+        })
+
+        bridge_payload = json.loads(MOCK_BRIDGE)
+        bridge_payload["communication_posture"] = "inoculation_first"
+        bridge_payload["pattern_density_warning"] = True
+        bridge_payload["vacuum_filled_by"] = (
             "absence of primary reporting filled by synchronised anonymous commentary"
         )
-        bridge_state["prebunking_note"] = (
+        bridge_payload["prebunking_note"] = (
             "watch for the fabricated-expert-chorus technique in similar claims"
         )
-        # Second variant -- structurally identical evidence, just a
-        # different actor-category frame in the narrative_summary.
-        bridge_commercial = dict(bridge_state)
 
-        def run_with(bridge_payload):
+        def run_with_mapper(mapper_payload):
             client = MagicMock(spec=OllamaClient)
             client.generate.side_effect = [
-                MOCK_DECOMPOSER, MOCK_TRACER, MOCK_MAPPER,
+                MOCK_DECOMPOSER, MOCK_TRACER, mapper_payload,
                 MOCK_CLASSIFIER, json.dumps(bridge_payload), MOCK_AUDITOR,
             ]
             orch = Orchestrator(client)
             result = orch.run("Claim under symmetric-actor test")
             return AnalysisReport(**result)
 
-        report_a = run_with(bridge_state)
-        report_b = run_with(bridge_commercial)
+        report_state = run_with_mapper(mapper_state)
+        report_commercial = run_with_mapper(mapper_commercial)
 
-        # Every PR 3 field must be identical across the two runs.
-        assert report_a.bridge.communication_posture == report_b.bridge.communication_posture
-        assert report_a.bridge.pattern_density_warning == report_b.bridge.pattern_density_warning
-        assert report_a.bridge.vacuum_filled_by == report_b.bridge.vacuum_filled_by
-        assert report_a.bridge.prebunking_note == report_b.bridge.prebunking_note
-        # And overall_confidence must not move on actor-label substitution.
-        assert report_a.overall_confidence == report_b.overall_confidence
+        # Every PR 3 Bridge field must be identical across the two runs.
+        # Charter Commitment 7: structurally equivalent attack signatures
+        # must be classified the same regardless of whether the actor is
+        # state, commercial, or non-state.
+        assert report_state.bridge.communication_posture == report_commercial.bridge.communication_posture
+        assert report_state.bridge.pattern_density_warning == report_commercial.bridge.pattern_density_warning
+        assert report_state.bridge.vacuum_filled_by == report_commercial.bridge.vacuum_filled_by
+        assert report_state.bridge.prebunking_note == report_commercial.bridge.prebunking_note
+        # overall_confidence must not move on actor-label substitution.
+        assert report_state.overall_confidence == report_commercial.overall_confidence
+        # Sanity: the mapper actors DID change between runs, so this is
+        # a real symmetry test and not just an idempotency test.
+        assert report_state.intelligence.actors[0].type != report_commercial.intelligence.actors[0].type
 
     def test_pipeline_backcompat_legacy_bridge_defaults_all_pr3_fields(self):
         """The legacy MOCK_BRIDGE fixture predates all four PR 3 fields.

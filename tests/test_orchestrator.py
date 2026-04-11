@@ -37,6 +37,18 @@ MOCK_RESPONSES = {
         "moral_foundations": {},
         "reframe": "This is about fairness",
         "socratic_dialogue": ["Round 1", "Round 2", "Round 3?"],
+        # Sprint 2 PR 3 fields carried in the base fixture per the plan
+        # constraint "every new field gets a MOCK_RESPONSES update atomic
+        # with the contract change" (Federation PR 3 review, Major #1).
+        # Previously omitted and silently relying on Pydantic defaults;
+        # the fleet convergence flagged this as a pattern divergence from
+        # PR 2. All four are at their safe defaults here so existing
+        # tests that dynamically override individual fields via dict
+        # spread continue to work unchanged.
+        "communication_posture": "direct_correction",
+        "pattern_density_warning": False,
+        "vacuum_filled_by": "",
+        "prebunking_note": "",
     },
     "adversarial_auditor": {
         "verdict": "pass",
@@ -437,22 +449,54 @@ class TestValidationFailureMarker:
         assert confidences[0] == 0.7  # unchanged baseline
 
     def test_communication_posture_not_referenced_in_confidence_computation(self):
-        """Architectural grep-style lock (Klingon + Codex): the orchestrator
-        confidence-computation block at orchestrator.py:149-153 must not
-        reference communication_posture or pattern_density_warning. If a
-        future edit wires the posture into the scalar, this test fails
-        before the runtime invariance test can trigger."""
+        """Architectural grep-style lock (Klingon + Codex + Sprint 2 PR 3
+        fleet convergence): the orchestrator confidence-computation block
+        must not reference communication_posture or pattern_density_warning.
+        If a future edit wires the posture into the scalar, this test fails
+        before the runtime invariance test can trigger.
+
+        Fleet review Round 2 findings (Federation #2, Klingon #2, Borg #2,
+        Ferengi redundancy): the sentinel-string-index approach is fragile
+        to duplicate sentinels or sentinel renames. Hardening:
+
+        1. Assert BOTH sentinels appear EXACTLY once. Duplicate sentinels
+           silently slice the wrong region; zero sentinels raise ValueError
+           which may be reported as error rather than failure in CI.
+        2. Assert the sentinel START appears BEFORE the sentinel END in
+           the source text. A reordered refactor must trip this test.
+        3. Use explicit error messages so sentinel drift fails loud.
+        """
         import inspect
         from huginn_muninn import orchestrator as orch_module
 
         source = inspect.getsource(orch_module.Orchestrator.run)
-        # Locate the confidence-computation block and assert neither field
-        # appears inside it. The sentinel strings surrounding the block are
-        # stable markers; if a future edit removes them, this test fails
-        # loudly rather than silently regressing.
-        assert "# Compute overall confidence" in source
-        start = source.index("# Compute overall confidence")
-        end = source.index("# Check for veto")
+        start_sentinel = "# Compute overall confidence"
+        end_sentinel = "# Check for veto"
+
+        # (1) Each sentinel must appear exactly once in the run() source.
+        start_count = source.count(start_sentinel)
+        end_count = source.count(end_sentinel)
+        assert start_count == 1, (
+            f"Sentinel {start_sentinel!r} must appear EXACTLY once in "
+            f"Orchestrator.run source (found {start_count}). Sprint 2 PR 3 "
+            f"fleet-review convergence: duplicate sentinels silently slice "
+            f"the wrong region. If you are refactoring the confidence "
+            f"block, update this test to reference the new sentinel or "
+            f"switch to a line-range extraction."
+        )
+        assert end_count == 1, (
+            f"Sentinel {end_sentinel!r} must appear EXACTLY once in "
+            f"Orchestrator.run source (found {end_count})."
+        )
+
+        start = source.index(start_sentinel)
+        end = source.index(end_sentinel)
+        # (2) Sentinel ordering must be preserved.
+        assert start < end, (
+            f"Sentinel ordering corrupted: {start_sentinel!r} must precede "
+            f"{end_sentinel!r} in the source. A refactor may have moved "
+            f"the confidence block; update this test or the orchestrator."
+        )
         block = source[start:end]
         assert "communication_posture" not in block, (
             "communication_posture referenced inside confidence computation. "
