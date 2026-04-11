@@ -3,6 +3,52 @@
 All notable changes to Huginn & Muninn are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.8.0] - 2026-04-11 -- "Scoped Diagnostics"
+
+Sprint 2 completion release. Charter and symmetry foundations, verification priority triage, and Bridge Builder scoped diagnostics. Every shipping item is grounded in peer-reviewed literature and enforced by adversarial tests.
+
+### Added (Sprint 2 PR 3 -- Bridge Scoped Diagnostics)
+- **`communication_posture` on `BridgeOutput`**: A `Literal["direct_correction","inoculation_first","relational_first"]` field that selects the communicative register of the analysis, orthogonal to numeric confidence. `direct_correction` is the default and classical-refutation posture. `inoculation_first` follows the McGuire 1964 / van der Linden 2017/2020 / Roozenbeek & van der Linden 2022 prebunking literature and leads with naming the manipulation technique before introducing counter-evidence. `relational_first` follows the Common Humanity (Perry et al.) / Costello protocol (Costello, Pennycook, Rand 2024) literature and starts from acknowledgment of the kernel of truth before any correction. Posture is advisory to downstream communicators; it is mechanically separated from `overall_confidence` by runtime invariance tests and a grep-style architectural lock (BG-042 Confidence-Posture Separation).
+- **`pattern_density_warning` on `BridgeOutput`**: A content-describing boolean that flags claims whose structural features (repeated numeric coincidences, rhythmic lexical choices, escalating concept chains) predispose readers to over-connect. Grounded in Alter & Oppenheimer 2009 / Schwarz 1998 on processing-fluency effects. The flag describes the claim, never the reader.
+- **`vacuum_filled_by` on `BridgeOutput`**: A narrative-pattern-only description of what filled an expertise or information vacuum around the claim. Grounded in the Golebiewski & boyd data-voids literature and Starbird et al. 2019 on collaborative disinformation. Prompt-enforced strict scope: no named publishers, no named individuals, no named organisations.
+- **`prebunking_note` on `BridgeOutput`**: A one-sentence technique-recognition cue a reader can carry forward. Grounded in Roozenbeek, van der Linden, Goldberg, Rathje & Lewandowsky 2022 on technique-specific prebunking durability. Additive to the Inferential Gap Map; never a substitute.
+- **P2-11 Inferential Gap Map labeling**: The existing Layer 4 inferential-gap instruction is now explicitly labeled in the Bridge Builder prompt as "[REPARATIVE PATTERN-INJECTION RESPONSE -- load-bearing]", making the intent legible to future editors. The underlying kernel-and-leap instruction is unchanged; a new `TestBridgePromptPreservation` class enforces that it cannot drift.
+- **35 new tests**: `TestBridgeCommunicationPosture` (8), `TestBridgePatternDensityWarning` (3), `TestBridgeVacuumFilledByAndPrebunkingNote` (7), `TestBridgePromptPreservation` (4), `TestBridgeCommunicationPosturePrompt` (4), `TestBridgeScopedP26Prompt` (5), and four confidence-invariance / integration tests.
+- **Research note**: `research/bridge-scoped-diagnostics-scientific-grounding.md` -- a ~3,500-word record of the peer-reviewed literature behind each new field, with revisit triggers for replication failures.
+- **Sprint 2 PR 3 Codex mitigations** (5 must-fixes): Codex GPT-5.4 adversarial review returned HOLD with a High-severity blind spot -- `vacuum_filled_by` and `prebunking_note` were prompt-constrained to narrative patterns only, but the schema accepted toxic strings naming publishers/organisations/individuals if the LLM ignored the prompt. The policy guarantee was not yet an implementation guarantee. Fixes shipped: (1) schema-level scope scrubber at `contracts.py::_scope_scrub_narrative_pattern_fields` with blocklist + proper-noun-run detection, replacing scope violations with `[scope:redacted-named-entity]` marker (degrade-do-not-crash); (2) 12 new negative tests in `TestBridgeScopeScrubber` covering named publishers, state-aligned outlets for symmetric enforcement, multi-token Capitalised runs, and narrative-pattern preservation; (3) integration test `test_pipeline_scrubs_named_publisher_in_vacuum_filled_by` proving the scrubber fires through the full orchestrator boundary; (4) symmetric-actor integration test `test_pipeline_symmetric_actor_swap_on_bridge_fields` extending BG-044 invariance to the four PR 3 fields; (5) `TestBridgePromptTokenBudget` locking the Sprint 2 Zero-Regression Constraint #5 of <6,500 input tokens against accidental prompt drift. Science note §3.4 rewritten to hedge the `relational_first` posture's Common Humanity / Costello grounding explicitly as design-informed synthesis rather than a validated posture-taxonomy finding.
+
+### Added (Sprint 2 PR 2 -- Verification Priority)
+- **`verification_priority` on `SubClaim`**: A `Literal["critical","high","low"] = "low"` triage field with a strict anti-inflation discipline in the Decomposer prompt. The anti-inflation clause ("marking everything critical defeats the triage purpose and degrades downstream resource allocation") is load-bearing and test-enforced. Structural triggering criteria only -- the prompt explicitly forbids triage based on legal-register language, politically-charged topics, or named-individual references.
+- **Schema-level coherence validator**: `verifiable=False + verification_priority="critical"` is an incoherent combination; the schema silently downgrades to `"high"` rather than raising, mirroring Sprint 1's "degrade, do not crash" discipline.
+- **Cache normalization**: `HuginnDB._normalize_cached_analysis` runs every cache read through `AnalysisReport.model_validate().model_dump()` so pre-Sprint-2 analyses surface every new Pydantic default on cache hit. Fixes a High-severity blind spot where fresh runs would carry new fields and cache hits would silently omit them.
+- **Validation-failure marker enhancement**: The production-boundary marker at `orchestrator.py` now includes the exception class name (`validation_error:<ClassName>`) so downstream log aggregators can distinguish schema drift from other validation failures.
+- **77 new tests** covering triage defaults, literal drift (trailing-space, punctuation, capitalization, None, comma-separated, pipe-separated), cross-field coherence, cache normalization, Auditor count-invariance, priority-confidence invariance, and Decomposer prompt preservation.
+
+### Added (Sprint 2 PR 1 -- Charter and Symmetry Foundations)
+- **Actor-category symmetric invariance test suite**: `tests/test_gorgon_symmetry.py` with 5 adversarial pairs asserting bit-equivalent TTP classification and severity counts across 10 actor categories (state and non-state). Operationalises Anti-Weaponization Charter Commitment 7.
+- **Symmetric actor extension plan**: `research/gorgon-trap-symmetric-actor-extension.md` as the parent research note for the invariance discipline.
+- **Documentation language lint**: `tests/test_docs_language.py` with a word-bounded regex lint + 60-character proximity gate enforcing the charter's vocabulary discipline across public-facing docs.
+- **Charter Commitment 7 expansion**: `ANTI-WEAPONIZATION-CHARTER.md` expanded to operationalise anti-bias vigilance as actor-category symmetry.
+- **Validation-failure marker**: The production-boundary `AnalysisReport` validator at `orchestrator.py` now surfaces schema failures in `degraded_reason` instead of masking them as generic "critical agent failure". Closes a Codex-identified blind spot from Sprint 1.
+- **28 new tests**: `test_docs_language.py` (8), `test_gorgon_symmetry.py` (18), and 2 validation-marker regression tests.
+
+### Changed
+- Bridge Builder prompt in `agents/bridge.py` gains five new sections (F/G/H/I plus the reparative-Pattern-Injection labeling) while preserving the existing load-bearing inferential_gap, narrative_deconstruction, and consensus_explanation instructions verbatim. A dedicated `TestBridgePromptPreservation` class enforces this preservation at the assertion level.
+- `BridgeOutput` and `SubClaim` Pydantic schemas each gain safe defaults on every new field so that older LLM outputs, cached JSON, and the orchestrator's degraded-result fallback paths continue to parse against `AnalysisReport`.
+- Both the normal and degraded orchestrator bridge-fallback paths explicitly carry every new field default -- a zero-regression requirement restated in the Sprint 2 plan.
+- Decomposer prompt legal-register language removed per Romulan / Holodeck legal-review convergence. "Legal liability" and "criminal conduct" are no longer triggering criteria; structural ("material downstream harm", "falsifiable numeric assertion") language replaces them.
+
+### Review discipline
+- **Six-faction fleet review** on every PR (Federation, Klingon, Romulan, Ferengi, Borg, Holodeck).
+- **Codex GPT-5.4 adversarial review** on every PR as an independent cross-model check.
+- **Zero regression** against the Sprint 1 Codex-mandated constraints. Every Sprint 2 PR closed with the baseline plus net-new tests passing; Sprint 1 PR 1 shipped at 86 baseline -> 116 passing; PR 2 shipped at 116 -> 193; PR 3 shipped at 193 -> 228.
+
+### Rejected in Sprint 2 (with falsification criteria)
+- **P2-8 `timing_suspicion`**: Rejected as specified. Six factions plus Codex converged on the judgement that an LLM-generated "suspicious timing" flag creates structural false-positive exposure on legitimate journalism, protest, and grassroots activity -- a Charter Commitment 3 violation vector. Revisit only with a labeled-corpus 0% false-positive gate and observational-only scope.
+- **P2-9 Frame-Amplification Pre-Check**: Deferred. The "route to inoculation-style response *instead of* direct refutation" framing recreates the Sprint 1 rejection by letting frame-risk suppress verification. An acceptable reformulation is an additive-only posture overlay, which `communication_posture` partially addresses.
+- **P2-13 self-poisoning triad**: Rejected entirely. Charter Commitment 1 (no surveillance / dossiers / profiling) is dispositive. No Sprint 2 reformulation path.
+- **S1 AuditFinding enum expansion**: Deferred. A hidden consumer in `docs/generate-comprehensive-findings.js` groups `AuditFinding.category` into report buckets; adding new literals would create unlabeled buckets in generated reports until the docs generator is updated.
+
 ## [0.7.0] - 2026-04-10 -- "Frame Capture"
 
 ### Added

@@ -455,6 +455,262 @@ class TestBridgeAgent:
         assert "controlling language" in prompt
 
 
+class TestBridgePromptPreservation:
+    """Sprint 2 PR 3 load-bearing safeguard: the existing
+    inferential_gap, narrative_deconstruction, and consensus_explanation
+    instructions must survive the P2-11 labeling change unchanged. These
+    three instructions were identified in Sprint 2 planning as the load-
+    bearing lines at bridge.py:45/49/62. The P2-11 relabeling is allowed
+    to ADD context (the reparative Pattern-Injection response label), but
+    must NEVER remove or rephrase the underlying instruction."""
+
+    def _build_prompt(self) -> str:
+        client = MagicMock(spec=OllamaClient)
+        agent = BridgeAgent(client)
+        return agent.build_prompt({
+            "original_claim": "test",
+            "sub_claims": [],
+            "origins": {},
+            "intelligence": {},
+            "ttps": {},
+        })
+
+    def test_inferential_gap_kernel_and_leap_structure_preserved(self):
+        """The kernel+leap structure is the reparative Pattern-Injection
+        response. If a future edit collapses this into a generic
+        refutation, PR 3's main repair channel is broken."""
+        prompt = self._build_prompt()
+        assert "kernel of truth" in prompt
+        assert "inferential leap" in prompt
+        # The concrete exemplar must remain
+        assert "X is documented fact" in prompt
+        assert "leap to Y" in prompt
+
+    def test_p211_label_present(self):
+        """The P2-11 reparative-Pattern-Injection label must be in the
+        prompt near Layer 4 so the intent is legible to future editors."""
+        prompt = self._build_prompt()
+        assert "REPARATIVE PATTERN-INJECTION RESPONSE" in prompt
+        assert "GT-003" in prompt or "Pattern Injection" in prompt
+
+    def test_narrative_deconstruction_instruction_preserved(self):
+        prompt = self._build_prompt()
+        assert "Narrative Deconstruction" in prompt
+        assert "same underlying concern was split" in prompt or "split into opposing narratives" in prompt
+
+    def test_consensus_explanation_instruction_preserved(self):
+        prompt = self._build_prompt()
+        assert "scientific consensus" in prompt.lower() or "consensus_explanation" in prompt
+        assert "mainstream explanation" in prompt or "scientific or institutional explanation" in prompt
+        # The "equal depth" discipline is the load-bearing epistemic
+        # commitment; it must survive the Sprint 2 additions.
+        assert "equal depth" in prompt.lower()
+
+
+class TestBridgeCommunicationPosturePrompt:
+    """Sprint 2 PR 3 P2-10: the Bridge prompt must teach the LLM how to
+    select a communication posture. These tests enforce that (1) all three
+    literal values are present in the prompt, (2) each posture maps to its
+    scientific grounding, and (3) the prompt explicitly states the
+    orthogonality between posture and confidence (BG-042)."""
+
+    def _build_prompt(self) -> str:
+        client = MagicMock(spec=OllamaClient)
+        agent = BridgeAgent(client)
+        return agent.build_prompt({
+            "original_claim": "test",
+            "sub_claims": [],
+            "origins": {},
+            "intelligence": {},
+            "ttps": {},
+        })
+
+    def test_prompt_lists_all_three_posture_literals(self):
+        prompt = self._build_prompt()
+        assert "direct_correction" in prompt
+        assert "inoculation_first" in prompt
+        assert "relational_first" in prompt
+
+    def test_prompt_cites_inoculation_science(self):
+        """Scientific grounding for inoculation_first. Without these
+        citation anchors, the posture is a black-box hand-wave; with
+        them, it is a technique-recognition cue a reader can chase."""
+        prompt = self._build_prompt()
+        lower = prompt.lower()
+        assert "mcguire" in lower
+        assert "van der linden" in lower
+
+    def test_prompt_cites_common_humanity_science(self):
+        """Scientific grounding for relational_first."""
+        prompt = self._build_prompt()
+        assert "Common Humanity" in prompt
+        assert "Costello" in prompt
+
+    def test_prompt_declares_orthogonality_to_confidence(self):
+        """BG-042 discipline: the prompt must explicitly state that
+        posture is orthogonal to analytical confidence. If this line
+        disappears, future LLMs (and future editors) will conflate the
+        two."""
+        prompt = self._build_prompt()
+        lower = prompt.lower()
+        assert "orthogonal" in lower or "orthogonal to overall_confidence" in lower or "separate from" in lower
+        # And the explicit anti-conflation instruction:
+        assert "not how certain" in lower or "confidence lives in" in lower
+
+
+class TestBridgeScopedP26Prompt:
+    """Sprint 2 PR 3 scoped P2-6: the Bridge prompt must teach the LLM
+    the strict scope constraints on vacuum_filled_by and prebunking_note.
+    These are the Romulan/Holodeck-grade scope disciplines. Violations
+    are defamation-adjacent exposures."""
+
+    def _build_prompt(self) -> str:
+        client = MagicMock(spec=OllamaClient)
+        agent = BridgeAgent(client)
+        return agent.build_prompt({
+            "original_claim": "test",
+            "sub_claims": [],
+            "origins": {},
+            "intelligence": {},
+            "ttps": {},
+        })
+
+    def test_pattern_density_warning_is_content_describing(self):
+        """The field must be framed as a CLAIM warning, not a reader
+        pathology diagnosis. The 'apophenia' framing is deliberately
+        absent (Holodeck feedback)."""
+        prompt = self._build_prompt()
+        lower = prompt.lower()
+        assert "pattern_density_warning" in prompt
+        # Must not pathologise the reader
+        assert "apophenia" not in lower
+        # Must describe the claim, not the reader
+        assert "structural" in lower or "structural features" in lower
+
+    def test_vacuum_filled_by_forbids_named_publishers(self):
+        """The prompt must explicitly forbid naming publishers,
+        individuals, or organisations in vacuum_filled_by."""
+        prompt = self._build_prompt()
+        # Both forbids must appear so the LLM does not infer a loophole
+        assert "vacuum_filled_by" in prompt
+        assert "never named publishers" in prompt.lower() or "never name publishers" in prompt.lower() or "not named publishers" in prompt.lower() or "not name publishers" in prompt.lower()
+        assert "narrative pattern" in prompt.lower()
+
+    def test_vacuum_filled_by_provides_acceptable_and_unacceptable_examples(self):
+        """Concrete exemplars must be in the prompt so the LLM has a
+        template to follow, not just a rule to obey."""
+        prompt = self._build_prompt()
+        assert "Acceptable" in prompt or "acceptable" in prompt
+        assert "UNACCEPTABLE" in prompt or "unacceptable" in prompt
+
+    def test_prebunking_note_forbids_new_factual_assertions(self):
+        """The field must be a technique-recognition cue, not a new
+        factual claim. The Romulan scope discipline."""
+        prompt = self._build_prompt()
+        lower = prompt.lower()
+        assert "prebunking_note" in prompt
+        assert "technique warning" in lower or "technique-recognition" in lower
+        assert "not" in lower  # the 'NOT a new factual assertion' phrasing
+        assert "factual assertion" in lower or "factual claims" in lower
+
+    def test_prebunking_note_is_additive_not_substitute(self):
+        """PR 3 load-bearing: prebunking_note must not replace the
+        inferential_gap reparative response. The prompt must make this
+        explicit so future edits cannot silently promote the prebunking
+        note into the primary repair channel."""
+        prompt = self._build_prompt()
+        lower = prompt.lower()
+        assert "additive" in lower or "not a substitute" in lower
+
+
+class TestBridgePromptTokenBudget:
+    """Sprint 2 PR 3 Codex must-fix #5 (Medium severity):
+    the Sprint 2 Zero-Regression Constraint #5 is 'Bridge prompt length
+    budget: stay below 6,500 input tokens'. PR 3 adds four new sections
+    (F/G/H/I) and a ~3,500-word science note is cited inline. Codex
+    flagged that the budget was not re-locked after PR 3's expansion.
+
+    This test measures the Bridge prompt at build time against a
+    character budget that corresponds to approximately 6,500 tokens
+    (conservative 3.6-char-per-token ratio for English prompt text,
+    giving ~23,400 chars ceiling). The baseline PR 3 prompt is around
+    12,300 chars / ~3,075 tokens so there is ample headroom, but the
+    assertion locks the ceiling so a future prompt expansion cannot
+    silently drift above 6,500 tokens without this test failing."""
+
+    # Conservative token budget: the zero-regression constraint is
+    # 6,500 input tokens. At ~3.6 English chars per token that is
+    # ~23,400 characters. We set the hard limit to that value.
+    MAX_PROMPT_CHARS = 23_400
+    # A softer warning ceiling at 80% of the hard limit for early
+    # signal on a prompt expansion that is still within budget but
+    # eroding headroom. This is a pure assertion -- no warning API.
+    WARN_PROMPT_CHARS = 18_720
+
+    def _build_bridge_prompt(self) -> str:
+        client = MagicMock(spec=OllamaClient)
+        agent = BridgeAgent(client)
+        return agent.build_prompt({
+            "original_claim": "A representative claim of typical length for this pipeline",
+            "sub_claims": [
+                {"text": "Sub-claim A", "type": "factual", "verifiable": True},
+                {"text": "Sub-claim B", "type": "causal", "verifiable": True},
+            ],
+            "origins": [
+                {
+                    "sub_claim": "Sub-claim A",
+                    "earliest_source": "example.org",
+                    "earliest_date": "2024-01-01",
+                    "source_tier": 2,
+                    "propagation_path": ["example.org", "news.example"],
+                }
+            ],
+            "actors": [
+                {
+                    "name": "Actor One",
+                    "type": "media",
+                    "motivation": "audience",
+                    "credibility": 0.5,
+                    "evidence": "sample evidence",
+                }
+            ],
+            "ttp_matches": [
+                {
+                    "disarm_id": "T0001",
+                    "technique_name": "Distortion",
+                    "confidence": 0.6,
+                    "evidence": "sample",
+                }
+            ],
+            "narrative_summary": "A short narrative summary for budget measurement.",
+            "claim": "Test claim",
+        })
+
+    def test_bridge_prompt_stays_below_6500_token_budget(self):
+        """Hard ceiling: Bridge prompt must not exceed the approximate
+        6,500 input-token budget set by Sprint 2 Zero-Regression #5."""
+        prompt = self._build_bridge_prompt()
+        assert len(prompt) <= self.MAX_PROMPT_CHARS, (
+            f"Bridge prompt is {len(prompt)} chars (~{len(prompt) // 4} "
+            f"tokens), exceeding the {self.MAX_PROMPT_CHARS}-char ceiling "
+            f"(~6,500 tokens). Sprint 2 Zero-Regression Constraint #5 "
+            f"requires the Bridge prompt to stay below 6,500 input tokens."
+        )
+
+    def test_bridge_prompt_headroom_warning_ceiling(self):
+        """Early-warning ceiling at 80% of budget. If this assertion
+        fails while the hard ceiling still passes, the next PR should
+        re-negotiate the budget explicitly rather than creeping upward.
+        Current PR 3 baseline is ~12,300 chars, deep under 18,720."""
+        prompt = self._build_bridge_prompt()
+        assert len(prompt) <= self.WARN_PROMPT_CHARS, (
+            f"Bridge prompt is {len(prompt)} chars, above the "
+            f"{self.WARN_PROMPT_CHARS}-char warning ceiling (80% of "
+            f"the 6,500-token budget). Headroom is eroding; explicit "
+            f"review required before the next prompt expansion."
+        )
+
+
 from huginn_muninn.agents.auditor import AuditorAgent
 from huginn_muninn.contracts import AuditorOutput, AuditVerdict
 

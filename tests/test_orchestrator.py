@@ -406,6 +406,63 @@ class TestValidationFailureMarker:
         report = RealReport(**result)
         assert report.degraded is True
 
+    def test_communication_posture_does_not_co_vary_with_overall_confidence(self):
+        """Sprint 2 PR 3 load-bearing safeguard (Codex Risk #6 survival):
+        communication_posture is orthogonal to numeric confidence by
+        design. Varying posture across all three literals for otherwise-
+        identical inputs must not move overall_confidence. This is the
+        BG-042 Confidence-Posture Separation contract enforced at the
+        pipeline level, not just at the schema level.
+
+        If this test fails, the Bridge posture has been wired into the
+        confidence formula -- an architectural violation that invalidates
+        Sprint 1's confidence-adjustment discipline and re-opens the
+        Sprint 1 Codex Risk #6 attack surface."""
+        confidences = []
+        for posture in ["direct_correction", "inoculation_first", "relational_first"]:
+            responses = {**MOCK_RESPONSES}
+            responses["bridge_builder"] = {
+                **MOCK_RESPONSES["bridge_builder"],
+                "communication_posture": posture,
+            }
+            client = make_mock_client(responses)
+            orch = Orchestrator(client)
+            result = orch.run("X is true because Y")
+            confidences.append(result["overall_confidence"])
+        assert len(set(confidences)) == 1, (
+            f"communication_posture moved overall_confidence: {confidences}. "
+            f"BG-042 violation: posture is communicative register, not "
+            f"confidence input."
+        )
+        assert confidences[0] == 0.7  # unchanged baseline
+
+    def test_communication_posture_not_referenced_in_confidence_computation(self):
+        """Architectural grep-style lock (Klingon + Codex): the orchestrator
+        confidence-computation block at orchestrator.py:149-153 must not
+        reference communication_posture or pattern_density_warning. If a
+        future edit wires the posture into the scalar, this test fails
+        before the runtime invariance test can trigger."""
+        import inspect
+        from huginn_muninn import orchestrator as orch_module
+
+        source = inspect.getsource(orch_module.Orchestrator.run)
+        # Locate the confidence-computation block and assert neither field
+        # appears inside it. The sentinel strings surrounding the block are
+        # stable markers; if a future edit removes them, this test fails
+        # loudly rather than silently regressing.
+        assert "# Compute overall confidence" in source
+        start = source.index("# Compute overall confidence")
+        end = source.index("# Check for veto")
+        block = source[start:end]
+        assert "communication_posture" not in block, (
+            "communication_posture referenced inside confidence computation. "
+            "Posture is advisory register; must not move overall_confidence."
+        )
+        assert "pattern_density_warning" not in block, (
+            "pattern_density_warning referenced inside confidence computation. "
+            "The flag is content-descriptive; must not move confidence."
+        )
+
     def test_priority_does_not_co_vary_with_overall_confidence(self):
         """Holodeck P-roles mitigation / BG-042 Confidence-Posture
         Separation: varying verification_priority across critical/high/low

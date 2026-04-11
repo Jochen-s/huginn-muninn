@@ -20,6 +20,7 @@ from huginn_muninn.contracts import (
     AuditorOutput,
     AnalysisInput,
     AnalysisReport,
+    _SCOPE_VIOLATION_MARKER,
 )
 
 
@@ -204,6 +205,398 @@ class TestBridgeOutput:
                 reframe="reframe",
                 socratic_dialogue=["R1"],
             )
+
+
+class TestBridgeCommunicationPosture:
+    """Sprint 2 PR 3 P2-10: communication_posture on BridgeOutput.
+
+    Scientific grounding: `communication_posture` is orthogonal to numeric
+    confidence. Confidence answers "how certain is the analysis?"; posture
+    answers "how should the analysis be communicated to someone who
+    currently believes a counter-narrative?". The separation is the BG-042
+    Confidence-Posture Separation pattern: epistemic certainty must be
+    mechanically separable from communicative register.
+
+    The three postures correspond to three well-studied response
+    strategies from the misinformation-correction literature:
+    - "direct_correction" — classical refutation; appropriate when the
+      reader is already open to the correction and the frame is shared.
+    - "inoculation_first" — technique-naming prebunk (McGuire 1964,
+      van der Linden 2020, Roozenbeek & van der Linden 2022); appropriate
+      when the reader is still in the manipulation frame and a direct
+      correction would trigger identity defence.
+    - "relational_first" — Common Humanity / acknowledgment-first
+      (Perry et al. Common Humanity scale; Costello protocol); appropriate
+      when identity stakes dominate and the kernel of truth must be
+      acknowledged before any correction can land.
+
+    The posture is advisory to downstream consumers. It MUST NOT move
+    overall_confidence (that is the invariance contract enforced in
+    test_orchestrator.py). This is the reason the field is on BridgeOutput
+    and not on AuditorOutput: the Auditor produces confidence;
+    the Bridge Builder produces the communicative register."""
+
+    def _minimal_bridge_kwargs(self) -> dict:
+        return {
+            "universal_needs": ["safety"],
+            "issue_overlap": "overlap",
+            "narrative_deconstruction": "deconstruction",
+            "perception_gap": "gap",
+            "moral_foundations": {},
+            "reframe": "reframe",
+            "socratic_dialogue": ["R1"],
+        }
+
+    def test_communication_posture_defaults_to_direct_correction(self):
+        out = BridgeOutput(**self._minimal_bridge_kwargs())
+        assert out.communication_posture == "direct_correction"
+
+    def test_communication_posture_accepts_inoculation_first(self):
+        out = BridgeOutput(
+            **self._minimal_bridge_kwargs(),
+            communication_posture="inoculation_first",
+        )
+        assert out.communication_posture == "inoculation_first"
+
+    def test_communication_posture_accepts_relational_first(self):
+        out = BridgeOutput(
+            **self._minimal_bridge_kwargs(),
+            communication_posture="relational_first",
+        )
+        assert out.communication_posture == "relational_first"
+
+    def test_communication_posture_rejects_unknown_literal(self):
+        with pytest.raises(ValidationError):
+            BridgeOutput(
+                **self._minimal_bridge_kwargs(),
+                communication_posture="neutral",
+            )
+
+    def test_communication_posture_rejects_empty_string(self):
+        with pytest.raises(ValidationError):
+            BridgeOutput(
+                **self._minimal_bridge_kwargs(),
+                communication_posture="",
+            )
+
+    def test_communication_posture_rejects_none(self):
+        with pytest.raises(ValidationError):
+            BridgeOutput(
+                **self._minimal_bridge_kwargs(),
+                communication_posture=None,
+            )
+
+    def test_communication_posture_pipe_separated_takes_first(self):
+        out = BridgeOutput(
+            **self._minimal_bridge_kwargs(),
+            communication_posture="inoculation_first|relational_first",
+        )
+        assert out.communication_posture == "inoculation_first"
+
+    def test_old_format_bridge_dict_still_parses(self):
+        """Regression guard: pre-Sprint-2-PR-3 LLM outputs and cached
+        analyses must still parse, with posture defaulting to
+        direct_correction."""
+        old_dict = {
+            "universal_needs": ["safety"],
+            "issue_overlap": "overlap",
+            "narrative_deconstruction": "deconstruction",
+            "perception_gap": "gap",
+            "moral_foundations": {},
+            "reframe": "reframe",
+            "socratic_dialogue": ["R1"],
+        }
+        out = BridgeOutput(**old_dict)
+        assert out.communication_posture == "direct_correction"
+
+
+class TestBridgePatternDensityWarning:
+    """Sprint 2 PR 3 scoped P2-6: pattern_density_warning on BridgeOutput.
+
+    This field is renamed from the original `apophenia_bait_flag` proposal
+    per Holodeck feedback: 'apophenia' pathologises the reader, while
+    'pattern density' describes the claim's structural signature. The
+    boolean is content-describing, not reader-diagnosing.
+
+    A pattern_density_warning=True output indicates that the claim
+    exhibits structural features (repeated numeric coincidences, rhythmic
+    lexical choices, escalating concept chaining) that humans are
+    predisposed to over-connect. It is a warning to the downstream reader
+    that the claim's surface pattern may be exerting extra persuasive
+    pull, not a judgement that the reader is pathological.
+
+    Default False so that failure to flag never inflates the signal."""
+
+    def _minimal_bridge_kwargs(self) -> dict:
+        return {
+            "universal_needs": ["safety"],
+            "issue_overlap": "overlap",
+            "narrative_deconstruction": "deconstruction",
+            "perception_gap": "gap",
+            "moral_foundations": {},
+            "reframe": "reframe",
+            "socratic_dialogue": ["R1"],
+        }
+
+    def test_pattern_density_warning_defaults_to_false(self):
+        out = BridgeOutput(**self._minimal_bridge_kwargs())
+        assert out.pattern_density_warning is False
+
+    def test_pattern_density_warning_accepts_true(self):
+        out = BridgeOutput(
+            **self._minimal_bridge_kwargs(),
+            pattern_density_warning=True,
+        )
+        assert out.pattern_density_warning is True
+
+    def test_old_format_bridge_dict_defaults_pattern_density_false(self):
+        old_dict = {
+            "universal_needs": ["safety"],
+            "issue_overlap": "overlap",
+            "narrative_deconstruction": "deconstruction",
+            "perception_gap": "gap",
+            "moral_foundations": {},
+            "reframe": "reframe",
+            "socratic_dialogue": ["R1"],
+        }
+        out = BridgeOutput(**old_dict)
+        assert out.pattern_density_warning is False
+
+
+class TestBridgeVacuumFilledByAndPrebunkingNote:
+    """Sprint 2 PR 3 scoped P2-6: vacuum_filled_by + prebunking_note.
+
+    Both fields default to empty string so that absent-data never creates
+    a spurious positive. The prompt (tested in test_agents.py) constrains
+    both fields to narrative patterns only -- never named publishers,
+    never named individuals, never named organisations. This is the
+    Romulan-grade scope discipline Sprint 2 planned for.
+
+    vacuum_filled_by: a structural description of what narrative pattern
+    filled an expertise or information vacuum in the claim's surroundings.
+    Example: 'the absence of peer-reviewed primary sources was filled by
+    synchronised fake-expert commentary'.
+
+    prebunking_note: a technique warning, not a new factual assertion.
+    Example: 'watch for the fabricated-source-mimicry pattern when
+    evaluating similar claims'."""
+
+    def _minimal_bridge_kwargs(self) -> dict:
+        return {
+            "universal_needs": ["safety"],
+            "issue_overlap": "overlap",
+            "narrative_deconstruction": "deconstruction",
+            "perception_gap": "gap",
+            "moral_foundations": {},
+            "reframe": "reframe",
+            "socratic_dialogue": ["R1"],
+        }
+
+    def test_vacuum_filled_by_defaults_to_empty_string(self):
+        out = BridgeOutput(**self._minimal_bridge_kwargs())
+        assert out.vacuum_filled_by == ""
+
+    def test_prebunking_note_defaults_to_empty_string(self):
+        out = BridgeOutput(**self._minimal_bridge_kwargs())
+        assert out.prebunking_note == ""
+
+    def test_vacuum_filled_by_accepts_narrative_pattern_string(self):
+        out = BridgeOutput(
+            **self._minimal_bridge_kwargs(),
+            vacuum_filled_by="absence of primary research filled by synchronised expert commentary",
+        )
+        assert "synchronised" in out.vacuum_filled_by
+
+    def test_prebunking_note_accepts_technique_warning(self):
+        out = BridgeOutput(
+            **self._minimal_bridge_kwargs(),
+            prebunking_note="watch for the fabricated-source-mimicry pattern in similar claims",
+        )
+        assert "pattern" in out.prebunking_note
+
+    def test_null_vacuum_filled_by_coerced_to_empty(self):
+        """BeforeValidator _null_to_empty_str must cover the new field,
+        matching the existing Bridge string-field null coercion pattern."""
+        out = BridgeOutput(
+            **self._minimal_bridge_kwargs(),
+            vacuum_filled_by=None,
+        )
+        assert out.vacuum_filled_by == ""
+
+    def test_null_prebunking_note_coerced_to_empty(self):
+        out = BridgeOutput(
+            **self._minimal_bridge_kwargs(),
+            prebunking_note=None,
+        )
+        assert out.prebunking_note == ""
+
+    def test_old_format_bridge_dict_defaults_both_empty(self):
+        old_dict = {
+            "universal_needs": ["safety"],
+            "issue_overlap": "overlap",
+            "narrative_deconstruction": "deconstruction",
+            "perception_gap": "gap",
+            "moral_foundations": {},
+            "reframe": "reframe",
+            "socratic_dialogue": ["R1"],
+        }
+        out = BridgeOutput(**old_dict)
+        assert out.vacuum_filled_by == ""
+        assert out.prebunking_note == ""
+
+
+class TestBridgeScopeScrubber:
+    """Sprint 2 PR 3 Codex mitigation (must-fix #1, High severity):
+    prompt-level scope discipline on vacuum_filled_by / prebunking_note
+    is insufficient enforcement. These tests lock the schema-level
+    scrubber at `contracts.py::_scope_scrub_narrative_pattern_fields`.
+
+    The scrubber mirrors SubClaim's "degrade, do not crash" discipline:
+    on out-of-scope named-entity content it replaces the field with
+    `_SCOPE_VIOLATION_MARKER` rather than raising. The policy guarantee
+    (no named publishers) becomes an implementation guarantee that
+    cannot be bypassed by a future prompt edit or model swap."""
+
+    def _minimal_bridge_kwargs(self) -> dict:
+        return {
+            "universal_needs": ["safety"],
+            "issue_overlap": "overlap",
+            "narrative_deconstruction": "deconstruction",
+            "perception_gap": "gap",
+            "moral_foundations": {},
+            "reframe": "reframe",
+            "socratic_dialogue": ["R1"],
+        }
+
+    # --- vacuum_filled_by: named-publisher rejections ---
+
+    def test_vacuum_filled_by_scrubs_new_york_times(self):
+        """Codex example #1: 'The New York Times filled the expertise
+        vacuum around the climate-lab claim' must NOT reach downstream."""
+        out = BridgeOutput(
+            **self._minimal_bridge_kwargs(),
+            vacuum_filled_by="The New York Times filled the expertise vacuum around the climate-lab claim",
+        )
+        assert out.vacuum_filled_by == _SCOPE_VIOLATION_MARKER
+
+    def test_vacuum_filled_by_scrubs_bbc_mention(self):
+        out = BridgeOutput(
+            **self._minimal_bridge_kwargs(),
+            vacuum_filled_by="the BBC filled the reporting gap",
+        )
+        assert out.vacuum_filled_by == _SCOPE_VIOLATION_MARKER
+
+    def test_vacuum_filled_by_scrubs_rt_symmetric(self):
+        """Symmetry: blocklist rejects state-aligned outlets too.
+        Charter Commitment 3: 'no named publishers' is direction-neutral."""
+        out = BridgeOutput(
+            **self._minimal_bridge_kwargs(),
+            vacuum_filled_by="Russia Today filled the official-denial vacuum",
+        )
+        assert out.vacuum_filled_by == _SCOPE_VIOLATION_MARKER
+
+    def test_vacuum_filled_by_scrubs_capitalised_run(self):
+        """Three-token Capitalised run catches unknown publishers not
+        on the blocklist (e.g., a made-up 'Daily Sentinel Media')."""
+        out = BridgeOutput(
+            **self._minimal_bridge_kwargs(),
+            vacuum_filled_by="Daily Sentinel Media ran the story first",
+        )
+        assert out.vacuum_filled_by == _SCOPE_VIOLATION_MARKER
+
+    def test_vacuum_filled_by_scrubs_two_word_with_news_suffix(self):
+        """Two-Capitalised-token run with a news-entity suffix."""
+        out = BridgeOutput(
+            **self._minimal_bridge_kwargs(),
+            vacuum_filled_by="London Times ran coverage synchronized with the campaign",
+        )
+        assert out.vacuum_filled_by == _SCOPE_VIOLATION_MARKER
+
+    # --- vacuum_filled_by: narrative-pattern strings PRESERVED ---
+
+    def test_vacuum_filled_by_preserves_pattern_description(self):
+        """Narrative pattern without named entities must pass through."""
+        payload = (
+            "absence of peer-reviewed primary sources was filled by "
+            "synchronised fake-expert commentary and repeated numeric "
+            "coincidences"
+        )
+        out = BridgeOutput(
+            **self._minimal_bridge_kwargs(),
+            vacuum_filled_by=payload,
+        )
+        assert out.vacuum_filled_by == payload
+
+    def test_vacuum_filled_by_preserves_sentence_start_capital(self):
+        """Sentence-initial capitalisation must not trigger the scrubber.
+        'Absence of primary research...' is narrative-pattern prose."""
+        payload = (
+            "Absence of primary research created a vacuum later filled "
+            "by synchronised anonymous commentary"
+        )
+        out = BridgeOutput(
+            **self._minimal_bridge_kwargs(),
+            vacuum_filled_by=payload,
+        )
+        assert out.vacuum_filled_by == payload
+
+    # --- prebunking_note: named-entity rejections ---
+
+    def test_prebunking_note_scrubs_named_publisher(self):
+        """Codex example #2: 'watch for Fox-style laundering' style
+        named-outlet content in prebunk warnings."""
+        out = BridgeOutput(
+            **self._minimal_bridge_kwargs(),
+            prebunking_note="watch for Daily Mail laundering patterns in similar claims",
+        )
+        assert out.prebunking_note == _SCOPE_VIOLATION_MARKER
+
+    def test_prebunking_note_scrubs_named_person(self):
+        """Multi-token proper-noun run should trigger on named individuals."""
+        out = BridgeOutput(
+            **self._minimal_bridge_kwargs(),
+            prebunking_note="watch for John Michael Smith Jr style amplification",
+        )
+        assert out.prebunking_note == _SCOPE_VIOLATION_MARKER
+
+    def test_prebunking_note_preserves_technique_warning(self):
+        """Technique naming with no proper nouns must survive unchanged."""
+        payload = (
+            "watch for the fabricated-source-mimicry pattern when "
+            "evaluating similar claims"
+        )
+        out = BridgeOutput(
+            **self._minimal_bridge_kwargs(),
+            prebunking_note=payload,
+        )
+        assert out.prebunking_note == payload
+
+    def test_prebunking_note_preserves_sentence_start_capital(self):
+        payload = (
+            "Watch for fabricated-expert commentary and numeric-coincidence "
+            "stacking in adjacent narratives"
+        )
+        out = BridgeOutput(
+            **self._minimal_bridge_kwargs(),
+            prebunking_note=payload,
+        )
+        assert out.prebunking_note == payload
+
+    # --- scrubber never crashes pipeline (degrade, do not crash) ---
+
+    def test_scope_scrubber_degrades_does_not_raise(self):
+        """A single policy violation must not take down the pipeline.
+        Mirrors SubClaim triage downgrade discipline from PR 2."""
+        # No exception should be raised; the offending field is scrubbed.
+        out = BridgeOutput(
+            **self._minimal_bridge_kwargs(),
+            vacuum_filled_by="New York Times reporting cycle",
+            prebunking_note="watch for Washington Post style pieces",
+        )
+        assert out.vacuum_filled_by == _SCOPE_VIOLATION_MARKER
+        assert out.prebunking_note == _SCOPE_VIOLATION_MARKER
+        # The non-scoped fields remain intact.
+        assert out.issue_overlap == "overlap"
 
 
 class TestAuditorOutput:

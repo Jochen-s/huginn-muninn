@@ -248,6 +248,102 @@ fallback populates them explicitly.
 
 ---
 
+## Scoped Diagnostics (v0.8.0)
+
+Version 0.8.0 ships Sprint 2: three PRs that extend the cognitive-warfare detection layer with
+scoped diagnostic fields, each grounded in peer-reviewed literature and each enforced by
+adversarial tests. The full scientific grounding is recorded in
+[`research/bridge-scoped-diagnostics-scientific-grounding.md`](research/bridge-scoped-diagnostics-scientific-grounding.md).
+
+### Communication posture (Bridge Builder, PR 3)
+
+A `communication_posture` field selects the communicative register of the analysis. It is
+orthogonal to numeric confidence: confidence answers "how certain is the analysis?"; posture
+answers "how should this land with a reader who currently holds the counter-narrative?".
+
+- **`direct_correction`** is the default and classical-refutation posture, appropriate when the
+  reader is already open to correction and the analytical frame is shared.
+- **`inoculation_first`** follows the McGuire 1964 inoculation-theory literature and its modern
+  extensions (van der Linden, Leiserowitz, Rosenthal & Maibach 2017 for climate; Roozenbeek &
+  van der Linden 2019/2022 for technique-specific prebunking). It leads with naming the
+  manipulation technique before introducing counter-evidence, appropriate when the reader is
+  still inside the manipulation frame and a direct correction would trigger identity defence.
+- **`relational_first`** follows the Common Humanity (Perry et al. 2018) and Costello protocol
+  (Costello, Pennycook & Rand 2024) literature. It starts from acknowledgment of the kernel of
+  truth before any correction, appropriate when identity stakes dominate and receptive updating
+  requires shared-reality perception (Kappes et al. 2020).
+
+The posture is mechanically separated from `overall_confidence` by runtime invariance tests and
+a grep-style architectural lock on the confidence-computation block. This is the BG-042
+Confidence-Posture Separation pattern: varying posture across all three literals for otherwise-
+identical inputs must not move `overall_confidence`.
+
+### Pattern density warning
+
+A `pattern_density_warning` boolean flags claims whose structural features (repeated numeric
+coincidences, rhythmic lexical choices, escalating concept chains, dense cross-reference webs)
+predispose readers to over-connect. Grounded in the processing-fluency literature
+(Schwarz 1998; Alter & Oppenheimer 2009; Whittlesea & Williams 2001). The field describes the
+claim, never the reader -- the original `apophenia_bait_flag` name was rejected because it
+pathologises the reader rather than naming the claim's engineering.
+
+### Vacuum filled by / prebunking note
+
+Two scoped string fields capture the ecosystem dynamics around the claim:
+
+- **`vacuum_filled_by`** describes, at the narrative-pattern level only, what filled an
+  expertise or information vacuum around the claim. Grounded in the data-voids literature
+  (Golebiewski & boyd 2019; Marwick & Lewis 2017) and the collaborative-disinformation work
+  (Starbird, Arif, Wilson 2019). The prompt enforces a strict scope constraint: the field
+  must name a narrative pattern, never a publisher, an individual, or an organisation. This is
+  the legal-exposure discipline identified in adversarial review: describing a structural
+  signature is analysis; naming a filler is attribution.
+- **`prebunking_note`** is a one-sentence technique-recognition cue a reader can carry
+  forward to identify similar claims. Grounded in Roozenbeek, van der Linden, Goldberg,
+  Rathje & Lewandowsky 2022, which established that the durable effect of prebunking lives in
+  technique-specific recognition, not topic-specific correction. The field is additive to the
+  Inferential Gap Map below; it is not a substitute.
+
+### Inferential Gap Map as the reparative Pattern-Injection response
+
+The Bridge Builder's existing Layer 4 Inferential Gap Map is now explicitly labeled in the
+prompt as the reparative response to Pattern Injection (GT-003). The load-bearing move --
+"X is documented fact; the leap to Y is unsupported because Z" -- is unchanged; the
+labeling makes the intent legible to future editors so the kernel+leap separation cannot
+silently collapse into a generic refutation. Classical refutation fails against Pattern
+Injection because it leaves the injected pattern intact (Lewandowsky et al. 2012 on
+continued-influence; Walter & Tukachinsky 2020 meta-analysis). The kernel-and-leap structure
+is what lets a reader in the manipulation frame step back without having to surrender the
+observation that brought them to the claim.
+
+### Verification priority triage (Decomposer, PR 2)
+
+Each sub-claim carries a `verification_priority` triage label (`critical` / `high` / `low`,
+default `low`) advising downstream verification work on where to spend attention. The
+Decomposer prompt enforces a load-bearing anti-inflation clause: "marking everything critical
+defeats the triage purpose". Triggering criteria are strictly structural (falsifiable numeric
+assertion, material downstream harm) rather than legal-register (the earlier "legal liability /
+criminal conduct" phrasing was removed per adversarial-review convergence on defamation
+exposure). Symmetric-actor invariance tests and a schema-level coherence validator
+(`verifiable=False + critical` silently downgrades to `high`) back the field at the contract
+boundary.
+
+### Actor-category symmetric invariance (PR 1)
+
+Anti-Weaponization Charter Commitment 7 is now operationalised as actor-category symmetry.
+The test suite at [`tests/test_gorgon_symmetry.py`](tests/test_gorgon_symmetry.py) contains
+five adversarial pairs spanning ten actor categories (six state, four non-state). Within each
+pair, the GT-family signatures must classify identically regardless of which actor category
+the claim names. Any divergence is a charter violation. The companion plan is at
+[`research/gorgon-trap-symmetric-actor-extension.md`](research/gorgon-trap-symmetric-actor-extension.md).
+
+All Sprint 2 additions are additive. Every new field declares a safe default, the orchestrator
+fallback paths (both normal and degraded) carry every default explicitly, and the DB cache
+reader normalises every legacy cached analysis through the current `AnalysisReport` contract so
+fresh runs and cache hits always return the same shape.
+
+---
+
 ## Name the Trick (v5)
 
 The Bridge Builder names each manipulation technique like revealing how a magic trick works.

@@ -42,7 +42,7 @@ Produce a four-layer Common Humanity analysis:
 Layer 1 - Universal Human Needs: What fundamental need is at stake (safety, belonging, fairness, dignity, autonomy)?
 Layer 2 - Issue-Specific Overlap: Where do opposing positions concretely agree? Cite evidence (polling, policy, stated positions).
 Layer 3 - Narrative Deconstruction: How was the same underlying concern split into opposing narratives? Who performed the split and why?
-Layer 4 - Inferential Gap Map: Where does the claim contain a kernel of truth, and what is the EXACT inferential leap from that truth to the conspiracy framing? Be specific: "X is documented fact; the leap to Y is unsupported because Z." If the claim is entirely false, state that clearly. If parts are true, map the precise boundary.
+Layer 4 - Inferential Gap Map [REPARATIVE PATTERN-INJECTION RESPONSE -- load-bearing]: Where does the claim contain a kernel of truth, and what is the EXACT inferential leap from that truth to the conspiracy framing? Be specific: "X is documented fact; the leap to Y is unsupported because Z." If the claim is entirely false, state that clearly. If parts are true, map the precise boundary. This layer is the primary repair channel when upstream has detected Pattern Injection (Gorgon Trap GT-003) or a general fabricated-consensus signature: separating the kernel from the leap is what allows a reader in the manipulation frame to step back without having to surrender the kernel. Preserve the kernel+leap structure; do not collapse this layer into a generic refutation.
 
 Also produce:
 
@@ -78,6 +78,22 @@ Do NOT treat all technique uses as equivalent. A private citizen using emotional
 - Consequences: policy outcomes affecting millions > dinner table argument
 Name the tricks on ALL sides (honesty builds credibility), but weight the analysis proportionally. A systematic playbook deserves detailed analysis. An isolated framing choice deserves a brief note. Treating them equally IS itself a false equivalence.
 
+F) Communication Posture (epistemic/communicative separation -- BG-042):
+Select the single best communicative register for this analysis by choosing ONE of the three values below. The posture is ORTHOGONAL to analytical confidence: it describes how the message should LAND with a reader who currently holds the counter-narrative, not how certain the analysis is. Confidence lives in the Auditor; posture lives here.
+- "direct_correction" -- classical refutation. Appropriate when the reader is already open to correction, the frame is shared, and the analytical content can be delivered without first dismantling a manipulation structure. This is the default.
+- "inoculation_first" -- technique-naming prebunk (McGuire 1964; van der Linden 2020; Roozenbeek & van der Linden 2022). Appropriate when the reader is still inside the manipulation frame and a direct correction would trigger identity defence. Lead with naming the technique ("this is how X-style argument works"); only then introduce counter-evidence. Use this when the upstream Classifier has flagged Gorgon Trap GT-family TTPs or high manipulation-vector density.
+- "relational_first" -- Common Humanity / acknowledgment-first (Perry et al. Common Humanity scale; Costello-protocol Round 1). Appropriate when identity stakes dominate the claim and any correction will be read as attack unless the kernel of truth is acknowledged first. Use this when perception_gap is high, moral_foundations diverge sharply, or the upstream pipeline signals sleaze-merchant / identity-targeting dynamics.
+Do not use this field to express uncertainty about the facts. It is advisory to downstream communicators about the FORM of the response, not the CONTENT.
+
+G) Pattern Density Warning (content-describing, not reader-diagnosing):
+Set pattern_density_warning to true only when the claim exhibits structural features that predispose readers to over-connect: repeated numeric coincidences, rhythmic lexical choices, escalating concept chains, or dense cross-reference to a constellation of related claims. False by default. This is a warning about the CLAIM'S structural persuasive pull, never a diagnosis of the reader as pathological.
+
+H) Vacuum Filled By (narrative pattern only -- NOT named publishers):
+If an expertise or information vacuum around the claim was filled by a recognisable narrative pattern, describe the PATTERN structurally. Examples of acceptable outputs: "the absence of peer-reviewed primary research was filled by synchronised fake-expert commentary", "a contemporaneous-news vacuum was filled by astroturf-grade citizen testimonials". UNACCEPTABLE outputs: naming specific publishers, individuals, organisations, think-tanks, or campaigns. If no vacuum-filling pattern is detected, leave the field as an empty string. This is a strict scope constraint; violations are treated as a regression.
+
+I) Prebunking Note (technique warning, NOT a new factual assertion):
+A one-sentence technique-recognition cue that a reader can carry forward to recognise similar claims. Examples: "watch for the fabricated-source-mimicry pattern when evaluating similar claims", "this is the tobacco-industry's manufactured-doubt template applied to a new topic". UNACCEPTABLE: introducing new factual claims about any specific actor, adding conclusions not supported by the upstream analysis, or turning this field into an editorial. If no useful prebunking cue applies, leave the field as an empty string. The field is additive to the Inferential Gap Map above; it is NOT a substitute.
+
 Respond in JSON:
 {{
   "universal_needs": ["need1", "need2"],
@@ -104,7 +120,11 @@ Respond in JSON:
     "Round 1: Perspective-getting...",
     "Round 2: Counter-evidence as question (NAME the technique like revealing a magic trick)...",
     "Round 3: Complexity + common ground..."
-  ]
+  ],
+  "communication_posture": "CHOOSE ONE: direct_correction, inoculation_first, relational_first",
+  "pattern_density_warning": false,
+  "vacuum_filled_by": "Narrative pattern that filled an expertise/information vacuum, or empty string. NEVER name publishers or individuals.",
+  "prebunking_note": "Technique-recognition cue for similar future claims, or empty string. NEVER introduce new factual claims."
 }}
 
 Critical constraints:

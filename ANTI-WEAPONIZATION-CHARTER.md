@@ -10,7 +10,7 @@ Huginn & Muninn is built to strengthen democratic discourse, not to suppress it.
 
 3. **Evidence-first actor analysis.** Any analysis of actors or networks requires documented evidence of coordinated inauthentic behavior. Legitimate dissent, protest, and minority viewpoints must never be flagged as disinformation.
 
-4. **Reconciliation, not suppression.** The Common Humanity layer exists to find shared ground between divided groups. It must never be used to manufacture false consensus or push any political agenda.
+4. **Reconciliation, not suppression.** The Common Humanity layer exists to find shared ground between divided groups. It must never be used to manufacture false consensus or push any political agenda. The Bridge Builder's communication posture (direct correction, inoculation-first, or relational-first) is advisory to the downstream communicator about the FORM of the response, never an instrument for suppressing or softening factual content to fit a preferred political register. Posture is mechanically separated from analytical confidence at the schema and runtime levels so that no register choice can ever move a numeric truth-claim.
 
 5. **Transparent uncertainty.** Every output carries confidence scores and explicit unknowns. When the system cannot determine the truth, it says so clearly rather than forcing a verdict.
 

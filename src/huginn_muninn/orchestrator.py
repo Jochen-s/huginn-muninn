@@ -107,6 +107,14 @@ class Orchestrator:
             "moral_foundations": {},
             "reframe": "",
             "socratic_dialogue": ["Bridge analysis unavailable"],
+            # Sprint 2 PR 3: Bridge scoped diagnostics. When the Bridge
+            # Builder fails, the fallback must still carry every schema
+            # default so AnalysisReport validation succeeds. All values
+            # are the "safe absent-signal" defaults; see contracts.py.
+            "communication_posture": "direct_correction",
+            "pattern_density_warning": False,
+            "vacuum_filled_by": "",
+            "prebunking_note": "",
         }
 
         # Stage 5: Adversarial Audit
@@ -240,6 +248,13 @@ class Orchestrator:
                 "techniques_revealed": [],
                 "perception_gap": "", "moral_foundations": {}, "reframe": "",
                 "socratic_dialogue": ["Analysis unavailable"],
+                # Sprint 2 PR 3: Bridge scoped diagnostics must also appear
+                # in the degraded fallback so every codepath reaches the
+                # AnalysisReport contract with every field populated.
+                "communication_posture": "direct_correction",
+                "pattern_density_warning": False,
+                "vacuum_filled_by": "",
+                "prebunking_note": "",
             },
             "audit": {
                 "verdict": "fail", "findings": [], "confidence_adjustment": 0,
