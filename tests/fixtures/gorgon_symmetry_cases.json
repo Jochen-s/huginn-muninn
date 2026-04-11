@@ -1,7 +1,8 @@
 {
   "_comment": "Adversarial pairs that differ only in actor_category. The scenarios are hypothetical invariance-test templates, not historical reconstructions. The Gorgon Trap GT-family signatures must classify identically within each pair. Any divergence in expected_ttps or expected_severity_counts is a Charter Commitment 7 violation (anti-bias vigilance, operationalised as actor-category symmetry). See research/gorgon-trap-symmetric-actor-extension.md for the full plan.",
-  "version": "1.1",
-  "_severity_model_version": "sprint1-v0.7.0",
+  "_severity_vocabulary_note": "expected_severity_counts uses the Sprint 1 GT-family severity schema (critical/high/medium/low) on the classifier axis. This is distinct from the Sprint 2 PR 2 SubClaim.verification_priority field, which uses the values critical/high/low on the Decomposer axis and is enforced separately at the contract level (see tests/test_gorgon_symmetry.py::TestVerificationPrioritySymmetry and tests/test_contracts.py::TestSubClaimVerificationPriority). Reusing the word 'critical' across the two vocabularies is intentional (both refer to structural high-impact signals) but the two axes must not be conflated in consumer code.",
+  "version": "1.2",
+  "_severity_model_version": "sprint2-pr2-v0.7.1",
   "pairs": [
     {
       "pair_id": "pair-01-white-noise-decision-window",

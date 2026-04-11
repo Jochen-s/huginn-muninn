@@ -184,7 +184,13 @@ class Orchestrator:
             AnalysisReport(**result)
         except ValidationError as e:
             log.error("Pipeline produced invalid output: %s", e)
-            failures.append("validation_error")
+            # Sprint 2 PR 2 / Federation mitigation: include the exception
+            # type name in the marker so downstream log aggregators can
+            # distinguish schema drift from other validation failures. The
+            # existing "validation_error" prefix is preserved so earlier
+            # regression tests continue to match via substring / lowercase
+            # containment.
+            failures.append(f"validation_error:{type(e).__name__}")
             return self._degraded_result(claim, failures)
 
         return result
@@ -203,7 +209,19 @@ class Orchestrator:
         return {
             "claim": claim,
             "decomposition": {
-                "sub_claims": [{"text": claim, "type": "factual", "verifiable": False}],
+                "sub_claims": [
+                    {
+                        "text": claim,
+                        "type": "factual",
+                        "verifiable": False,
+                        # Sprint 2 P2-7: triage default is "low" in the
+                        # fallback path. When every agent has failed, we have
+                        # no evidence that this sub-claim deserves higher
+                        # verification priority; inflating it would violate
+                        # the anti-inflation discipline shipped in PR 2.
+                        "verification_priority": "low",
+                    },
+                ],
                 "original_claim": claim,
                 "complexity": "simple",
                 # Fallback must carry every schema default so AnalysisReport

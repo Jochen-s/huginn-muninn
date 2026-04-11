@@ -154,7 +154,7 @@ class HuginnDB:
                 (claim,),
             ).fetchone()
         if row:
-            return json.loads(row["analysis_json"])
+            return self._normalize_cached_analysis(json.loads(row["analysis_json"]))
         return None
 
     def get_cached_analysis_with_id(self, claim: str) -> tuple[dict, int] | None:
@@ -164,8 +164,43 @@ class HuginnDB:
                 (claim,),
             ).fetchone()
         if row:
-            return json.loads(row["analysis_json"]), row["id"]
+            return (
+                self._normalize_cached_analysis(json.loads(row["analysis_json"])),
+                row["id"],
+            )
         return None
+
+    @staticmethod
+    def _normalize_cached_analysis(raw: dict) -> dict:
+        """Populate schema defaults on a cache hit so pre-Sprint-2 cached
+        analyses return the same shape as fresh runs.
+
+        Codex PR 2 review identified a High-severity blind spot: new Pydantic
+        fields (verification_priority on SubClaim, hypothesis_crowding on
+        DecomposerOutput, frame_capture_risk on AuditorOutput, etc.) are
+        absent on cached analyses that predate the corresponding sprint. API
+        and CLI callers then see split output shape: fresh runs carry the
+        field, cache hits do not. Running the cached dict through
+        AnalysisReport.model_validate().model_dump() forces every Pydantic
+        default to populate, so downstream consumers always see the current
+        schema regardless of when the entry was cached.
+
+        If the cached dict cannot be validated (schema change, hand-edited
+        row, pre-method-2 verdict), fall back to returning the raw dict so
+        that the read path degrades gracefully rather than raising. A
+        validation failure here is not a pipeline failure; the caller can
+        still inspect whatever fields are present. Logging is deliberately
+        omitted to keep this read path zero-dependency.
+        """
+        # Deferred import avoids a module-level cycle between db.py and
+        # contracts.py and lets test fixtures stub this method cheaply.
+        from huginn_muninn.contracts import AnalysisReport
+        from pydantic import ValidationError
+
+        try:
+            return AnalysisReport.model_validate(raw).model_dump(mode="json")
+        except ValidationError:
+            return raw
 
     def get_recent_verdicts(self, limit: int = 20) -> list[dict]:
         """Return recent verdicts, most recent first."""

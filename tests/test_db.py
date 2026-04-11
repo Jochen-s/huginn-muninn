@@ -65,6 +65,157 @@ class TestAnalysisStorage:
         db.close()
 
 
+class TestCachedAnalysisNormalization:
+    """Sprint 2 PR 2 / Codex blind-spot #1 mitigation.
+
+    Legacy Method 2 analyses cached before PR 1 and PR 2 predate the new
+    Pydantic fields (verification_priority, hypothesis_crowding,
+    frame_capture_risk, notable_omissions, etc.). On cache read, the DB
+    layer must populate every schema default so API/CLI/gallery consumers
+    see the same shape regardless of whether the entry was cached yesterday
+    or a month ago. Without this normalization, fresh runs would ship the
+    new fields and cache hits would silently omit them -- Codex rated this a
+    High-severity blind spot and blocked PR 2 commit on it.
+
+    The fallback behavior when normalization fails (schema mismatch,
+    hand-edited rows, pre-Method-2 entries) is to return the raw dict so
+    that the read path degrades gracefully rather than raising; the rest of
+    the system already handles missing-key shapes defensively."""
+
+    @staticmethod
+    def _build_legacy_pre_pr2_analysis(claim: str) -> dict:
+        """A complete-enough pre-PR-2 Method 2 analysis with no
+        verification_priority on any sub-claim. This is the exact shape
+        that older cached entries have on disk."""
+        return {
+            "claim": claim,
+            "decomposition": {
+                "sub_claims": [
+                    {"text": "X happened", "type": "factual", "verifiable": True},
+                ],
+                "original_claim": claim,
+                "complexity": "simple",
+                "hypothesis_crowding": "low",
+                "manipulation_vector_density": 0.0,
+                "complexity_explosion_flag": False,
+            },
+            "origins": {
+                "origins": [],
+                "mutations": [],
+                "temporal_context": [],
+                "notable_omissions": [],
+            },
+            "intelligence": {
+                "actors": [],
+                "relations": [],
+                "narrative_summary": "",
+            },
+            "ttps": {"ttp_matches": [], "primary_tactic": "Execute"},
+            "bridge": {
+                "universal_needs": ["safety"],
+                "issue_overlap": "",
+                "narrative_deconstruction": "",
+                "consensus_explanation": "",
+                "inferential_gap": "",
+                "feasibility_check": "",
+                "commercial_motives": "",
+                "techniques_revealed": [],
+                "perception_gap": "",
+                "moral_foundations": {},
+                "reframe": "",
+                "socratic_dialogue": ["R1"],
+            },
+            "audit": {
+                "verdict": "pass",
+                "findings": [],
+                "confidence_adjustment": 0.0,
+                "veto": False,
+                "summary": "ok",
+                "frame_capture_risk": "none",
+                "frame_capture_evidence": "",
+            },
+            "overall_confidence": 0.7,
+            "method": "method_2",
+            "degraded": False,
+            "degraded_reason": None,
+        }
+
+    def test_legacy_cache_hit_populates_verification_priority(self, tmp_path):
+        """PR 2 blind-spot mitigation: a pre-PR-2 analysis written to the
+        cache must surface verification_priority="low" on the sub-claim
+        when read back, not an absent key."""
+        db = HuginnDB(tmp_path / "test.db")
+        legacy = self._build_legacy_pre_pr2_analysis("Test")
+        # Sanity: the legacy shape has no verification_priority on the sub-claim
+        assert "verification_priority" not in legacy["decomposition"]["sub_claims"][0]
+        db.store_analysis("Test", legacy)
+        cached = db.get_cached_analysis("Test")
+        assert cached is not None
+        sub_claim = cached["decomposition"]["sub_claims"][0]
+        assert sub_claim["verification_priority"] == "low"
+        db.close()
+
+    def test_legacy_cache_hit_with_id_populates_priority(self, tmp_path):
+        """Same invariant for the with_id variant used by the API path."""
+        db = HuginnDB(tmp_path / "test.db")
+        legacy = self._build_legacy_pre_pr2_analysis("Test")
+        db.store_analysis("Test", legacy)
+        result = db.get_cached_analysis_with_id("Test")
+        assert result is not None
+        cached, _ = result
+        sub_claim = cached["decomposition"]["sub_claims"][0]
+        assert sub_claim["verification_priority"] == "low"
+        db.close()
+
+    def test_fresh_analysis_priority_survives_cache_round_trip(self, tmp_path):
+        """An analysis with an explicit 'critical' priority must preserve
+        that value through a cache store+read round trip. Normalization must
+        not downgrade explicit values."""
+        db = HuginnDB(tmp_path / "test.db")
+        fresh = self._build_legacy_pre_pr2_analysis("Test")
+        fresh["decomposition"]["sub_claims"][0]["verification_priority"] = "critical"
+        db.store_analysis("Test", fresh)
+        cached = db.get_cached_analysis("Test")
+        assert cached["decomposition"]["sub_claims"][0]["verification_priority"] == "critical"
+        db.close()
+
+    def test_unvalidatable_cache_entry_returns_raw(self, tmp_path):
+        """Degrade-gracefully invariant: if the cached dict is too broken
+        to validate, the normalization helper must return the raw dict so
+        callers still receive something. This prevents the cache path from
+        crashing production when a hand-edited row exists."""
+        db = HuginnDB(tmp_path / "test.db")
+        broken = {"claim": "X", "method": "method_2"}  # no decomposition at all
+        db.store_analysis("X", broken)
+        cached = db.get_cached_analysis("X")
+        # Raw dict survives even though it would never pass AnalysisReport validation
+        assert cached == broken
+        db.close()
+
+    def test_normalization_populates_all_sprint1_pr2_defaults(self, tmp_path):
+        """A legacy entry that is missing EVERY Sprint 1 and Sprint 2 field
+        must surface all of them as defaults on read. Regression guard
+        against future sprints' new fields breaking the same way."""
+        db = HuginnDB(tmp_path / "test.db")
+        legacy = self._build_legacy_pre_pr2_analysis("Test")
+        # Strip every new field to the absolute legacy baseline
+        legacy["decomposition"]["sub_claims"][0] = {
+            "text": "X",
+            "type": "factual",
+            "verifiable": True,
+        }
+        db.store_analysis("Test", legacy)
+        cached = db.get_cached_analysis("Test")
+        sc = cached["decomposition"]["sub_claims"][0]
+        # Sprint 2 PR 2 field
+        assert sc["verification_priority"] == "low"
+        # Sprint 1 fields on decomposition/audit/origins carry through
+        assert cached["decomposition"]["hypothesis_crowding"] == "low"
+        assert cached["audit"]["frame_capture_risk"] == "none"
+        assert cached["origins"]["notable_omissions"] == []
+        db.close()
+
+
 class TestSessions:
     def test_create_session(self, db):
         sid = db.create_session("Test Session")

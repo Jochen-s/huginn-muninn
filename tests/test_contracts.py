@@ -402,6 +402,247 @@ class TestGorgonFieldDefaults:
         assert out.frame_capture_evidence == ""
 
 
+class TestSubClaimVerificationPriority:
+    """Sprint 2 P2-7: triage priority on sub-claims. Every new field must
+    (1) default to a safe value so older LLM outputs still parse,
+    (2) validate the literal set strictly,
+    (3) survive orchestrator fallback, and
+    (4) never regress Sprint 1's backwards-compat guarantee.
+
+    The priority is explicitly 'low' by default -- not 'high' or 'critical' --
+    so that failing to triage never inflates verification debt. The anti-
+    inflation clause lives in the Decomposer prompt (see test_agents.py);
+    this contract-level test only enforces the literal discipline and the
+    default-safety discipline."""
+
+    def test_verification_priority_defaults_to_low(self):
+        sc = SubClaim(text="CO2 levels are rising", type=SubClaimType.FACTUAL)
+        assert sc.verification_priority == "low"
+
+    def test_verification_priority_accepts_critical(self):
+        sc = SubClaim(
+            text="X caused the deaths of N people",
+            type=SubClaimType.FACTUAL,
+            verification_priority="critical",
+        )
+        assert sc.verification_priority == "critical"
+
+    def test_verification_priority_accepts_high(self):
+        sc = SubClaim(
+            text="Policy Y will raise costs by Z percent",
+            type=SubClaimType.FACTUAL,
+            verification_priority="high",
+        )
+        assert sc.verification_priority == "high"
+
+    def test_verification_priority_accepts_low(self):
+        sc = SubClaim(
+            text="Commentator A said B",
+            type=SubClaimType.OPINION,
+            verification_priority="low",
+        )
+        assert sc.verification_priority == "low"
+
+    def test_verification_priority_rejects_unknown_literal(self):
+        with pytest.raises(ValidationError):
+            SubClaim(
+                text="X",
+                type=SubClaimType.FACTUAL,
+                verification_priority="urgent",  # not in the literal set
+            )
+
+    def test_verification_priority_rejects_empty_string(self):
+        with pytest.raises(ValidationError):
+            SubClaim(
+                text="X",
+                type=SubClaimType.FACTUAL,
+                verification_priority="",
+            )
+
+    def test_verification_priority_rejects_trailing_space(self):
+        """Codex PR 2 Q2 drift matrix: 'critical ' with a trailing space is
+        an observed LLM drift pattern. The literal gate must reject it
+        rather than silently parse it as critical."""
+        with pytest.raises(ValidationError):
+            SubClaim(
+                text="X",
+                type=SubClaimType.FACTUAL,
+                verification_priority="critical ",
+            )
+
+    def test_verification_priority_rejects_punctuation(self):
+        """Codex PR 2 Q2 drift matrix: 'Critical!' with punctuation is an
+        observed LLM drift pattern, especially for urgency-coded outputs."""
+        with pytest.raises(ValidationError):
+            SubClaim(
+                text="X",
+                type=SubClaimType.FACTUAL,
+                verification_priority="Critical!",
+            )
+
+    def test_verification_priority_rejects_capitalized_uppercase(self):
+        """Codex PR 2 Q2 drift matrix: 'URGENT' / 'Critical' / 'HIGH' are
+        observed LLM drift patterns. The Literal set is case-sensitive."""
+        for variant in ["URGENT", "Critical", "HIGH", "LOW"]:
+            with pytest.raises(ValidationError):
+                SubClaim(
+                    text="X",
+                    type=SubClaimType.FACTUAL,
+                    verification_priority=variant,
+                )
+
+    def test_verification_priority_rejects_none(self):
+        """Codex PR 2 Q2 drift matrix: explicit None (not 'missing key')
+        must be rejected. Missing key is handled by the default; None is an
+        affirmative invalid value."""
+        with pytest.raises(ValidationError):
+            SubClaim(
+                text="X",
+                type=SubClaimType.FACTUAL,
+                verification_priority=None,
+            )
+
+    def test_verification_priority_rejects_comma_separated(self):
+        """Codex PR 2 Q2 drift matrix: 'critical, high' is an observed LLM
+        drift pattern distinct from the pipe-separated form that
+        _first_pipe_value handles. Comma-separated must be rejected."""
+        with pytest.raises(ValidationError):
+            SubClaim(
+                text="X",
+                type=SubClaimType.FACTUAL,
+                verification_priority="critical, high",
+            )
+
+    def test_incoherent_unverifiable_critical_downgrades_to_high(self):
+        """Holodeck I-roles mitigation: verifiable=False combined with
+        verification_priority='critical' is incoherent (nothing to verify,
+        yet marked as a critical verification target). The schema-level
+        validator must downgrade rather than raise, because a single
+        incoherent Decomposer output must not take down the whole pipeline
+        (mirrors Sprint 1 'degrade, do not crash' discipline)."""
+        sc = SubClaim(
+            text="This is an opinion",
+            type=SubClaimType.OPINION,
+            verifiable=False,
+            verification_priority="critical",
+        )
+        # Downgraded to "high" by the model_validator, not to "low".
+        # "low" would over-correct and suppress the signal entirely.
+        assert sc.verification_priority == "high"
+
+    def test_verifiable_false_with_low_priority_preserved(self):
+        """Regression guard for the cross-field validator: the degrade
+        path must only fire when verifiable=False AND priority=critical.
+        Every other combination must be untouched."""
+        sc = SubClaim(
+            text="opinion",
+            type=SubClaimType.OPINION,
+            verifiable=False,
+            verification_priority="low",
+        )
+        assert sc.verification_priority == "low"
+
+    def test_verifiable_false_with_high_priority_preserved(self):
+        sc = SubClaim(
+            text="opinion",
+            type=SubClaimType.OPINION,
+            verifiable=False,
+            verification_priority="high",
+        )
+        assert sc.verification_priority == "high"
+
+    def test_verifiable_true_with_critical_priority_preserved(self):
+        sc = SubClaim(
+            text="X caused N deaths",
+            type=SubClaimType.FACTUAL,
+            verifiable=True,
+            verification_priority="critical",
+        )
+        assert sc.verification_priority == "critical"
+
+    def test_verification_priority_pipe_separated_takes_first(self):
+        """LLMs occasionally emit 'critical|high' style values; the existing
+        _first_pipe_value validator must cover this new field as well."""
+        sc = SubClaim(
+            text="X",
+            type=SubClaimType.FACTUAL,
+            verification_priority="critical|high",
+        )
+        assert sc.verification_priority == "critical"
+
+    def test_old_format_subclaim_dict_still_parses(self):
+        """Regression guard: pre-PR-2 LLM outputs (no verification_priority
+        key) must still parse to a SubClaim with the low default. This is the
+        Sprint 1 backwards-compat discipline carried forward."""
+        old_dict = {"text": "X", "type": "factual", "verifiable": True}
+        sc = SubClaim(**old_dict)
+        assert sc.verification_priority == "low"
+
+    def test_decomposer_output_round_trips_verification_priority(self):
+        """End-to-end contract exercise: a DecomposerOutput constructed from
+        a dict containing sub-claims with verification_priority keys must
+        round-trip through model_dump() without losing the field."""
+        out = DecomposerOutput(
+            sub_claims=[
+                SubClaim(
+                    text="Claim A",
+                    type=SubClaimType.FACTUAL,
+                    verification_priority="critical",
+                ),
+                SubClaim(
+                    text="Claim B",
+                    type=SubClaimType.OPINION,
+                    verification_priority="low",
+                ),
+            ],
+            original_claim="Claim A and Claim B",
+            complexity="moderate",
+        )
+        dumped = out.model_dump()
+        assert dumped["sub_claims"][0]["verification_priority"] == "critical"
+        assert dumped["sub_claims"][1]["verification_priority"] == "low"
+
+    def test_analysis_report_validates_with_verification_priority(self):
+        """The production-boundary validator at orchestrator.py must accept
+        an AnalysisReport whose Decomposer sub-claims carry explicit priority
+        values. Regression guard for blind spot #2 (validation marker)."""
+        report = AnalysisReport(
+            claim="Test",
+            decomposition=DecomposerOutput(
+                sub_claims=[
+                    SubClaim(
+                        text="X",
+                        type=SubClaimType.FACTUAL,
+                        verification_priority="high",
+                    ),
+                ],
+                original_claim="Test",
+                complexity="simple",
+            ),
+            origins=TracerOutput(origins=[]),
+            intelligence=MapperOutput(actors=[], relations=[], narrative_summary=""),
+            ttps=ClassifierOutput(ttp_matches=[], primary_tactic="Execute"),
+            bridge=BridgeOutput(
+                universal_needs=["safety"],
+                issue_overlap="",
+                narrative_deconstruction="",
+                perception_gap="",
+                moral_foundations={},
+                reframe="",
+                socratic_dialogue=["R1"],
+            ),
+            audit=AuditorOutput(
+                verdict=AuditVerdict.PASS,
+                findings=[],
+                confidence_adjustment=0.0,
+                veto=False,
+                summary="",
+            ),
+            overall_confidence=0.7,
+        )
+        assert report.decomposition.sub_claims[0].verification_priority == "high"
+
+
 class TestAnalysisInput:
     def test_valid_input(self):
         inp = AnalysisInput(claim="Test claim", context=None, language="en")

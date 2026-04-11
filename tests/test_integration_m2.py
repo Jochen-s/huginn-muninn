@@ -118,6 +118,63 @@ class TestMethodTwoPipeline:
         assert report.overall_confidence > 0.5
         assert not report.degraded
 
+    def test_pipeline_backcompat_legacy_decomposer_defaults_priority(self):
+        """Sprint 2 P2-7 regression guard: the legacy MOCK_DECOMPOSER fixture
+        predates verification_priority. The full integration pipeline must
+        still succeed and every sub-claim must default to "low" -- this is
+        the same backwards-compat discipline Sprint 1 shipped."""
+        client = MagicMock(spec=OllamaClient)
+        client.generate.side_effect = [
+            MOCK_DECOMPOSER, MOCK_TRACER, MOCK_MAPPER,
+            MOCK_CLASSIFIER, MOCK_BRIDGE, MOCK_AUDITOR,
+        ]
+        orch = Orchestrator(client)
+        result = orch.run("Immigration increases crime rates in the United States")
+        report = AnalysisReport(**result)
+        for sc in report.decomposition.sub_claims:
+            assert sc.verification_priority == "low"
+
+    def test_pipeline_with_explicit_verification_priority_triage(self):
+        """End-to-end integration: a realistic Decomposer output that
+        triages three sub-claims at different priorities (critical for the
+        causal death claim, high for a factual harm claim, low for opinion)
+        must round-trip through the full pipeline intact and not be
+        overwritten or downgraded by any downstream agent contract."""
+        triaged_decomposer = json.dumps({
+            "sub_claims": [
+                {
+                    "text": "Policy X caused 200 deaths",
+                    "type": "causal",
+                    "verifiable": True,
+                    "verification_priority": "critical",
+                },
+                {
+                    "text": "Policy X raised costs 15 percent",
+                    "type": "factual",
+                    "verifiable": True,
+                    "verification_priority": "high",
+                },
+                {
+                    "text": "Policy X is the worst of its kind",
+                    "type": "opinion",
+                    "verifiable": False,
+                    "verification_priority": "low",
+                },
+            ],
+            "original_claim": "Policy X caused 200 deaths, raised costs 15%, and is the worst",
+            "complexity": "complex",
+        })
+        client = MagicMock(spec=OllamaClient)
+        client.generate.side_effect = [
+            triaged_decomposer, MOCK_TRACER, MOCK_MAPPER,
+            MOCK_CLASSIFIER, MOCK_BRIDGE, MOCK_AUDITOR,
+        ]
+        orch = Orchestrator(client)
+        result = orch.run("Policy X claim")
+        report = AnalysisReport(**result)
+        priorities = [sc.verification_priority for sc in report.decomposition.sub_claims]
+        assert priorities == ["critical", "high", "low"]
+
     def test_pipeline_with_veto(self):
         veto_auditor = json.dumps({
             "verdict": "fail",

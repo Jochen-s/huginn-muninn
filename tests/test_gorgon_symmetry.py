@@ -154,6 +154,111 @@ class TestGorgonSymmetryInvariance:
             )
 
 
+class TestVerificationPrioritySymmetry:
+    """Sprint 2 PR 2 extension of Charter Commitment 7 to the new
+    verification_priority triage field.
+
+    The load-bearing principle: two structurally equivalent harm-
+    allegations must receive the same verification_priority regardless of
+    which actor category the claim names. If the Decomposer would mark a
+    Russian-Federation harm claim 'critical' and an otherwise-identical
+    Five-Eyes harm claim 'high' (or vice versa), that is a Charter
+    Commitment 7 violation operationalised as asymmetric triage.
+
+    PR 2 ships with no runtime consumer for verification_priority, so the
+    symmetry discipline is enforced at the contract level for now:
+    every SubClaim literal must round-trip bit-equivalently through
+    SubClaim validation regardless of the actor-category string. When a
+    downstream consumer lands (Sprint 3+), this test class is the seam
+    where structural-pattern vs actor-label invariance becomes a runtime
+    invariance assertion."""
+
+    @pytest.mark.parametrize(
+        "priority",
+        ["critical", "high", "low"],
+    )
+    def test_priority_is_actor_category_label_invariant(self, priority):
+        """Contract-level invariance guard. Two SubClaim instances that
+        differ ONLY in the actor-category label embedded in the claim text
+        must accept the same verification_priority without special-casing.
+        This is the contract seam for the eventual Sprint 3 runtime
+        symmetry test."""
+        from huginn_muninn.contracts import SubClaim, SubClaimType
+
+        russian = SubClaim(
+            text="Russian Federation coordinated a disinformation campaign",
+            type=SubClaimType.FACTUAL,
+            verification_priority=priority,
+        )
+        five_eyes = SubClaim(
+            text="Five Eyes coordinated a disinformation campaign",
+            type=SubClaimType.FACTUAL,
+            verification_priority=priority,
+        )
+        commercial = SubClaim(
+            text="Commercial PR firm coordinated a disinformation campaign",
+            type=SubClaimType.FACTUAL,
+            verification_priority=priority,
+        )
+        assert russian.verification_priority == priority
+        assert five_eyes.verification_priority == priority
+        assert commercial.verification_priority == priority
+        # Bit-equivalent round-trip discipline: the model_dump output must
+        # be identical across all three for the priority field.
+        r_dump = russian.model_dump()["verification_priority"]
+        f_dump = five_eyes.model_dump()["verification_priority"]
+        c_dump = commercial.model_dump()["verification_priority"]
+        assert r_dump == f_dump == c_dump == priority
+
+    def test_prompt_does_not_hard_code_actor_category_triage(self):
+        """The Decomposer prompt must not contain any instruction that
+        routes a specific actor category to a specific priority. For
+        example, the prompt must not say 'mark Russian Federation claims
+        critical' or 'mark Western government claims low'. Structural
+        triage only.
+
+        This is the prompt-level mirror of PR 1's
+        test_extension_plan_does_not_name_current_operations: PR 1 ensured
+        the research plan stays at category level; PR 2 ensures the
+        Decomposer prompt does too.
+
+        Word-bounded regex is used for each marker (Klingon K-PR1-05 style):
+        naive substring matching produces false positives like 'pla' in
+        'plausible' or 'china' in 'machina'."""
+        import re
+        from unittest.mock import MagicMock
+
+        from huginn_muninn.agents.decomposer import DecomposerAgent
+        from huginn_muninn.llm import OllamaClient
+
+        client = MagicMock(spec=OllamaClient)
+        agent = DecomposerAgent(client)
+        prompt = agent.build_prompt({"claim": "X"}).lower()
+
+        forbidden_actor_triage_markers = [
+            r"\brussian federation\b",
+            r"\bfive eyes\b",
+            r"\bpla\b",
+            r"\bufwd\b",
+            r"\biranian\b",
+            r"\bisraeli\b",
+            r"\bgulf state\b",
+            r"\bhasbara\b",
+            r"\bunited states\b",
+            r"\bchina\b",
+            r"\brussia\b",
+            r"\biran\b",
+        ]
+        found = [
+            m for m in forbidden_actor_triage_markers if re.search(m, prompt)
+        ]
+        assert found == [], (
+            f"Decomposer prompt contains actor-category triage hardcoding: "
+            f"{found}. Verification priority must be structural, not actor-"
+            f"category-specific."
+        )
+
+
 class TestGorgonSymmetryCharterCompliance:
     """Charter Commitment 7: symmetric actor detection. The fixture must
     contain non-state and multiple state actor categories to prevent the

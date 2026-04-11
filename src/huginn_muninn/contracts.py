@@ -37,6 +37,37 @@ class SubClaim(BaseModel):
     text: str = Field(..., min_length=1)
     type: Annotated[SubClaimType, BeforeValidator(_first_pipe_value)]
     verifiable: bool = True
+    # Sprint 2 P2-7: triage priority for the verification stage. Defaults to
+    # "low" so that failing to triage never inflates verification debt. The
+    # anti-inflation clause ("marking everything critical defeats the triage
+    # purpose") lives in the Decomposer prompt, not in the schema. Older LLM
+    # outputs without this key still parse; the literal discipline is enforced
+    # strictly to catch LLM drift toward synonyms like "urgent" / "immediate".
+    verification_priority: Annotated[
+        Literal["critical", "high", "low"],
+        BeforeValidator(_first_pipe_value),
+    ] = "low"
+
+    @model_validator(mode="after")
+    def _triage_coherence(self) -> "SubClaim":
+        """Sprint 2 PR 2 / Holodeck I-roles mitigation:
+        verifiable=False + verification_priority="critical" is an incoherent
+        combination. A sub-claim the Decomposer has marked as structurally
+        non-verifiable cannot simultaneously be a critical verification
+        target, since there is nothing for the downstream pipeline to
+        verify. Prompt-level discipline is insufficient enforcement; a
+        future model swap or a prompt rewrite could silently break the
+        invariant. The schema-level guard downgrades the incoherent
+        combination to "high" rather than raising, so that a single
+        Decomposer hallucination does not take down the whole pipeline.
+        This mirrors the "degrade, do not crash" discipline of the Sprint 1
+        orchestrator fallback path.
+        """
+        if self.verifiable is False and self.verification_priority == "critical":
+            # Downgrade rather than raise: a single incoherent sub-claim
+            # must not degrade the entire analysis.
+            object.__setattr__(self, "verification_priority", "high")
+        return self
 
 
 class DecomposerOutput(BaseModel):

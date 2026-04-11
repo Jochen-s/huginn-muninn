@@ -91,6 +91,132 @@ class TestDecomposerAgent:
         assert "Test claim here" in prompt
 
 
+class TestDecomposerVerificationPriorityPrompt:
+    """Sprint 2 P2-7: the Decomposer prompt must teach the LLM how to triage.
+
+    These tests are the user-facing surface of the verification_priority
+    feature. They are deliberately strict on the two load-bearing pieces:
+    (1) the literal set must appear so the LLM cannot invent synonyms; and
+    (2) the anti-inflation clause must appear verbatim so the LLM cannot be
+    coaxed by emotional loading of the claim into marking everything critical.
+    If either of these assertions fails, PR 2's triage discipline is broken."""
+
+    def test_prompt_declares_verification_priority_field(self):
+        client = MagicMock(spec=OllamaClient)
+        agent = DecomposerAgent(client)
+        prompt = agent.build_prompt({"claim": "X"})
+        assert "verification_priority" in prompt
+
+    def test_prompt_lists_all_three_literal_values(self):
+        client = MagicMock(spec=OllamaClient)
+        agent = DecomposerAgent(client)
+        prompt = agent.build_prompt({"claim": "X"})
+        assert "critical" in prompt
+        assert "high" in prompt
+        assert "low" in prompt
+
+    def test_prompt_contains_anti_inflation_clause(self):
+        """Load-bearing assertion: the prompt must include the anti-inflation
+        clause. Removing it makes every politically-charged claim get marked
+        critical, which defeats the triage purpose and inflates downstream
+        verification cost.
+
+        Federation #3 strengthening: the OR-conjunction originally used here
+        made the test pass if either 'defeats' or 'triage purpose' survived
+        in any context; that is too loose for a load-bearing assertion. Both
+        must be present for the clause to count as intact."""
+        client = MagicMock(spec=OllamaClient)
+        agent = DecomposerAgent(client)
+        prompt = agent.build_prompt({"claim": "X"})
+        assert "marking everything" in prompt.lower()
+        assert "critical" in prompt.lower()
+        assert "defeats" in prompt.lower()
+        assert "triage purpose" in prompt.lower()
+
+    def test_prompt_disclaims_evidentiary_and_legal_reading(self):
+        """Romulan + Holodeck L-roles mitigation: the prompt must contain
+        an explicit epistemic disclaimer that verification_priority is an
+        internal triage signal, not an evidentiary or legal classification.
+        This prevents downstream readers from interpreting 'critical' as a
+        finding of truth, legal liability, or wrongdoing."""
+        client = MagicMock(spec=OllamaClient)
+        agent = DecomposerAgent(client)
+        prompt = agent.build_prompt({"claim": "X"})
+        lower = prompt.lower()
+        assert "internal triage signal" in lower
+        assert "not an evidentiary rating" in lower
+        assert "not a legal classification" in lower
+
+    def test_prompt_does_not_use_legal_register_triggering_criteria(self):
+        """Romulan #2 mitigation: the prompt must not define 'critical' by
+        reference to 'legal liability' or 'criminal conduct', because those
+        phrases invite defamation exposure and unauthorized-legal-practice
+        concerns per the Romulan review. The rework replaces them with
+        structural language ('material downstream harm', 'falsifiable
+        numeric assertion')."""
+        client = MagicMock(spec=OllamaClient)
+        agent = DecomposerAgent(client)
+        prompt = agent.build_prompt({"claim": "X"})
+        lower = prompt.lower()
+        # Legal-register phrases must be absent as triggering criteria.
+        # The disclaimer line may still reference "not a legal classification"
+        # and the prompt may contain "legal-register" as a warning, so we
+        # assert the TRIGGER phrases "legal liability" and "criminal conduct"
+        # are absent.
+        assert "legal liability" not in lower, (
+            "Prompt must not define 'critical' via 'legal liability' "
+            "(Romulan #2 mitigation: defamation exposure)"
+        )
+        assert "criminal conduct" not in lower, (
+            "Prompt must not define 'critical' via 'criminal conduct' "
+            "(Romulan #2 mitigation: unauthorised legal classification)"
+        )
+
+    def test_prompt_says_default_is_low_when_in_doubt(self):
+        client = MagicMock(spec=OllamaClient)
+        agent = DecomposerAgent(client)
+        prompt = agent.build_prompt({"claim": "X"})
+        assert "when in doubt" in prompt.lower() or "default" in prompt.lower()
+
+    def test_prompt_warns_against_political_loading_bias(self):
+        """Anti-bias discipline carried forward from Sprint 2 PR 1: the prompt
+        must explicitly tell the LLM not to mark a sub-claim critical merely
+        because its topic is politically charged. This is the Decomposer-level
+        mirror of the Gorgon symmetry discipline shipped in PR 1."""
+        client = MagicMock(spec=OllamaClient)
+        agent = DecomposerAgent(client)
+        prompt = agent.build_prompt({"claim": "X"})
+        assert "politically charged" in prompt.lower() or "emotionally loaded" in prompt.lower()
+
+    def test_parse_output_accepts_explicit_priority(self):
+        client = MagicMock(spec=OllamaClient)
+        client.generate.return_value = json.dumps({
+            "sub_claims": [
+                {"text": "X caused N deaths", "type": "factual", "verifiable": True, "verification_priority": "critical"},
+                {"text": "X is divisive", "type": "opinion", "verifiable": False, "verification_priority": "low"},
+            ],
+            "original_claim": "X caused N deaths and X is divisive",
+            "complexity": "moderate",
+        })
+        agent = DecomposerAgent(client)
+        result = agent.run({"claim": "Test"})
+        output = DecomposerOutput(**result)
+        assert output.sub_claims[0].verification_priority == "critical"
+        assert output.sub_claims[1].verification_priority == "low"
+
+    def test_parse_output_accepts_legacy_dict_without_priority(self):
+        """PR 2 must not regress on pre-Sprint-2 Decomposer outputs."""
+        client = MagicMock(spec=OllamaClient)
+        client.generate.return_value = MOCK_DECOMPOSER_RESPONSE
+        agent = DecomposerAgent(client)
+        result = agent.run({"claim": "Immigration increases crime rates"})
+        output = DecomposerOutput(**result)
+        # Legacy mock does not include verification_priority; all sub-claims
+        # must default to "low" via the schema default.
+        for sc in output.sub_claims:
+            assert sc.verification_priority == "low"
+
+
 from huginn_muninn.agents.tracer import TracerAgent
 from huginn_muninn.contracts import TracerOutput
 

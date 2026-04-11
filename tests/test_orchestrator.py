@@ -161,6 +161,121 @@ class TestOrchestrator:
         assert report.audit.frame_capture_risk == "none"
 
 
+class TestVerificationPriorityFallback:
+    """Sprint 2 P2-7 regression guards for the orchestrator integration.
+
+    These tests exist to prevent three specific regressions:
+    (1) The degraded fallback drops the verification_priority default on the
+        lone sub-claim it manufactures (would trigger the PR 1 validation
+        marker blind-spot #2 path in production).
+    (2) The MOCK_RESPONSES fixture's pre-Sprint-2 Decomposer output stops
+        parsing (would mean we broke backwards-compat with every cached or
+        historical Decomposer JSON in the wild).
+    (3) The pipeline produces an AnalysisReport whose sub-claims lose the
+        field after round-tripping through Pydantic validation at the
+        production boundary."""
+
+    def test_degraded_fallback_includes_verification_priority(self):
+        client = MagicMock(spec=OllamaClient)
+        client.generate.side_effect = Exception("total failure")
+        orch = Orchestrator(client)
+        result = orch.run("X is true because Y")
+        report = AnalysisReport(**result)
+        # The degraded sub-claim must carry the explicit "low" default so
+        # that the contract boundary validation does not trip the blind-spot
+        # #2 validation marker path in PR 1.
+        assert report.decomposition.sub_claims[0].verification_priority == "low"
+
+    def test_degraded_fallback_raw_dict_carries_priority_key(self):
+        """Dict-level regression guard: the fallback dict literal at
+        orchestrator.py:_degraded_result must contain the key explicitly,
+        not rely solely on the Pydantic default. This matters because the
+        fallback dict is also observed by the API / CLI serializers before
+        it passes through AnalysisReport validation."""
+        client = MagicMock(spec=OllamaClient)
+        client.generate.side_effect = Exception("total failure")
+        orch = Orchestrator(client)
+        result = orch.run("X is true because Y")
+        sub_claim = result["decomposition"]["sub_claims"][0]
+        assert "verification_priority" in sub_claim
+        assert sub_claim["verification_priority"] == "low"
+
+    def test_legacy_mock_responses_still_parse_with_default(self):
+        """MOCK_RESPONSES predates Sprint 2; its Decomposer entry has no
+        verification_priority key. The full pipeline must still succeed and
+        the resulting AnalysisReport must show "low" as the default."""
+        client = make_mock_client(MOCK_RESPONSES)
+        orch = Orchestrator(client)
+        result = orch.run("X is true because Y")
+        report = AnalysisReport(**result)
+        for sc in report.decomposition.sub_claims:
+            assert sc.verification_priority == "low"
+
+    def test_explicit_priority_round_trips_through_pipeline(self):
+        """An explicit "critical" priority from the Decomposer must survive
+        every downstream contract validation and land in the final report."""
+        responses = {**MOCK_RESPONSES}
+        responses["claim_decomposer"] = {
+            "sub_claims": [
+                {
+                    "text": "X caused N deaths",
+                    "type": "factual",
+                    "verifiable": True,
+                    "verification_priority": "critical",
+                },
+                {
+                    "text": "X is divisive",
+                    "type": "opinion",
+                    "verifiable": False,
+                    "verification_priority": "low",
+                },
+            ],
+            "original_claim": "X caused N deaths and X is divisive",
+            "complexity": "moderate",
+        }
+        client = make_mock_client(responses)
+        orch = Orchestrator(client)
+        result = orch.run("X")
+        report = AnalysisReport(**result)
+        assert report.decomposition.sub_claims[0].verification_priority == "critical"
+        assert report.decomposition.sub_claims[1].verification_priority == "low"
+
+    def test_unknown_priority_literal_triggers_degraded_path(self):
+        """LLM drift guard: if the Decomposer emits an unknown priority
+        literal ("urgent"), the pipeline must either reject it at the agent
+        boundary (AgentError -> degraded) or at the final AnalysisReport
+        validation (blind-spot #2 marker). Under no circumstance may an
+        invalid literal reach the final report silently.
+
+        Federation #1 strengthening: asserting merely `degraded is True`
+        is insufficient because any agent failure sets that flag; the test
+        must also assert that degraded_reason surfaces an agent-boundary
+        failure, not a generic critical-agent-failure mask."""
+        responses = {**MOCK_RESPONSES}
+        responses["claim_decomposer"] = {
+            "sub_claims": [
+                {
+                    "text": "X",
+                    "type": "factual",
+                    "verifiable": True,
+                    "verification_priority": "urgent",  # not in the literal
+                },
+            ],
+            "original_claim": "X",
+            "complexity": "simple",
+        }
+        client = make_mock_client(responses)
+        orch = Orchestrator(client)
+        result = orch.run("X")
+        # Pipeline degrades rather than ships an invalid literal upstream.
+        assert result["degraded"] is True
+        assert result["degraded_reason"] is not None
+        # The decomposer failure shows up in degraded_reason via the agent
+        # boundary (DecomposerAgent.parse_output raises, orchestrator
+        # catches, appends "claim_decomposer" to failures).
+        assert "decomposer" in result["degraded_reason"].lower()
+
+
 class TestHypothesisExpansionScore:
     """P1 #5: deterministic zero-token hypothesis-expansion signal."""
 
@@ -290,3 +405,145 @@ class TestValidationFailureMarker:
         # The degraded result must still satisfy the real contract
         report = RealReport(**result)
         assert report.degraded is True
+
+    def test_priority_does_not_co_vary_with_overall_confidence(self):
+        """Holodeck P-roles mitigation / BG-042 Confidence-Posture
+        Separation: varying verification_priority across critical/high/low
+        must not move overall_confidence for otherwise-identical pipeline
+        inputs. This catches any future regression that wires the triage
+        field into the confidence computation at orchestrator.py:150-153."""
+        from huginn_muninn import orchestrator as orch_module
+
+        confidences = []
+        for priority in ["critical", "high", "low"]:
+            responses = {**MOCK_RESPONSES}
+            responses["claim_decomposer"] = {
+                "sub_claims": [
+                    {
+                        "text": "X happened",
+                        "type": "factual",
+                        "verifiable": True,
+                        "verification_priority": priority,
+                    },
+                ],
+                "original_claim": "X happened",
+                "complexity": "simple",
+            }
+            client = make_mock_client(responses)
+            orch = Orchestrator(client)
+            result = orch.run("X happened")
+            confidences.append(result["overall_confidence"])
+        # All three priorities must yield identical overall_confidence
+        assert len(set(confidences)) == 1, (
+            f"verification_priority moved overall_confidence: {confidences}. "
+            f"BG-042 (Confidence-Posture Separation) violation: priority is "
+            f"epistemic triage, not confidence input."
+        )
+        # And the unchanged value must still be the expected baseline (0.7)
+        assert confidences[0] == 0.7
+
+    def test_auditor_receives_all_sub_claims_regardless_of_priority(self):
+        """Klingon #1 mitigation: the pipeline must pass every sub-claim to
+        the Auditor regardless of its verification_priority. A priority of
+        'low' must not silently collapse a sub-claim before it reaches the
+        Auditor stage. This is the load-bearing invariance guard against
+        the suppression-drift exploit: a future UI collapsing 'low'
+        sub-claims would be downstream; the pipeline itself must never
+        drop a sub-claim based on triage."""
+        import json as _json
+
+        captured: list[dict] = []
+
+        def capturing_auditor(self, input_data):
+            captured.append(input_data)
+            return MOCK_RESPONSES["adversarial_auditor"]
+
+        responses = {**MOCK_RESPONSES}
+        responses["claim_decomposer"] = {
+            "sub_claims": [
+                {
+                    "text": "X1",
+                    "type": "factual",
+                    "verifiable": True,
+                    "verification_priority": "critical",
+                },
+                {
+                    "text": "X2",
+                    "type": "factual",
+                    "verifiable": True,
+                    "verification_priority": "high",
+                },
+                {
+                    "text": "X3",
+                    "type": "factual",
+                    "verifiable": True,
+                    "verification_priority": "low",
+                },
+            ],
+            "original_claim": "X1 and X2 and X3",
+            "complexity": "complex",
+        }
+        client = make_mock_client(responses)
+        orch = Orchestrator(client)
+
+        # Intercept the auditor run to capture what it actually receives.
+        original_run = orch.auditor.run
+
+        def wrapped_run(input_data):
+            captured.append(input_data)
+            return original_run(input_data)
+
+        orch.auditor.run = wrapped_run
+        orch.run("X1 and X2 and X3")
+
+        assert len(captured) == 1, "Auditor must run exactly once per pipeline"
+        auditor_input = captured[0]
+        decomposition = auditor_input["decomposition"]
+        assert len(decomposition["sub_claims"]) == 3, (
+            f"Auditor received {len(decomposition['sub_claims'])} sub-claims, "
+            f"expected 3. Pipeline must not drop sub-claims based on "
+            f"verification_priority."
+        )
+        priorities = [
+            sc["verification_priority"] for sc in decomposition["sub_claims"]
+        ]
+        assert priorities == ["critical", "high", "low"], (
+            f"Auditor received priorities {priorities}, expected "
+            f"['critical', 'high', 'low'] in insertion order."
+        )
+
+    def test_corrupt_verification_priority_triggers_validation_marker(self, monkeypatch):
+        """Codex PR 2 Q3 blind-spot coverage: if the Decomposer parse
+        succeeds but something downstream (a buggy post-processor, a cache
+        write that mutates the dict, a future agent that edits sub-claims)
+        corrupts verification_priority to an unknown literal before the
+        final AnalysisReport validation at orchestrator.py:183-188, the
+        validation marker must fire and the degraded_reason must contain
+        'validation_error'. This is the PR-2-specific version of the
+        generic blind-spot #2 test above."""
+        from huginn_muninn.agents.base import BaseAgent
+
+        client = make_mock_client(MOCK_RESPONSES)
+        orch = Orchestrator(client)
+
+        # Wrap the Decomposer's run() to corrupt verification_priority
+        # after parse but before the orchestrator validates the final
+        # assembly. This simulates a downstream mutation that schema drift
+        # or a buggy normalizer could introduce in production.
+        real_run = orch.decomposer.run
+
+        def corrupting_run(input_data):
+            out = real_run(input_data)
+            for sc in out.get("sub_claims", []):
+                sc["verification_priority"] = "urgent"  # invalid literal
+            return out
+
+        monkeypatch.setattr(orch.decomposer, "run", corrupting_run)
+        result = orch.run("X is true because Y")
+
+        assert result["degraded"] is True
+        assert result["degraded_reason"] is not None
+        assert "validation_error" in result["degraded_reason"].lower(), (
+            f"Expected 'validation_error' in degraded_reason, got: "
+            f"{result['degraded_reason']}"
+        )
