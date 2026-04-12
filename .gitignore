@@ -28,5 +28,8 @@ data/*
 .fleet/
 .codex/
 HANDOFF.md
+docs/linkedin-*.md
+docs/*-draft.md
+docs/plans/
 NUL
 deploy/
