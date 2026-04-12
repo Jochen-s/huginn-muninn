@@ -3,6 +3,24 @@
 All notable changes to Huginn & Muninn are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.11.0] - 2026-04-12 -- "Auditor Exfiltration Guard"
+
+Sprint 4. Closes the audit-description exfiltration channel where suppressed Bridge field content could leak through Auditor free-text fields.
+
+### Added
+- **Audit text scrubbing** in `projection.py`: `_scrub_audit_text()` scans four Auditor free-text fields (`findings[*].description`, `findings[*].recommendation`, `summary`, `frame_capture_evidence`) for references to suppressed field names (underscore, space, and short-form variants, case-insensitive). Matching sentences are replaced with `[audit-content-redacted: references suppressed field]`. Sentence-level granularity preserves non-matching content in the same finding.
+- **`audit_redacted` flag** on `AnalysisResponse` envelope: set to `true` when any audit text was scrubbed. Honest disclosure that scrubbing is best-effort; paraphrased references may survive. Charter Commitment 5 compliance.
+- **16 new tests**: `TestAuditRedacted` (2), `TestScrubAuditText` (8 unit tests covering underscore/space/case-insensitive/short-form matching, sentence preservation, no-match/no-suppression passthrough), `TestAuditExfiltrationGuard` (6 integration tests covering description/recommendation/summary scrubbing, audit_redacted flag, no-scrubbing passthrough).
+
+### Changed
+- `api_version` bumped to `"0.11.0"`.
+- All 10 serialization boundaries now scrub audit text automatically through the existing `project_analysis()` entry point.
+
+### Review discipline
+- 18 zero-regression constraints (expanded from Sprint 3's 16).
+- ZR-17: Audit scrubbing fires at all 10 serialization boundaries (same projection entry point).
+- ZR-18: `audit_redacted` disclosure present in every response where scrubbing occurred (Charter Commitment 5).
+
 ## [0.10.0] - 2026-04-12 -- "First-Class Audit Categories"
 
 Sprint 3 PR 2. Promotes cognitive warfare and frame capture from description-prefix workarounds to first-class AuditFinding categories, and adds gallery rendering for all Sprint 2 Bridge diagnostic fields.

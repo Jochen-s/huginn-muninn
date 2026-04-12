@@ -518,7 +518,8 @@ class AnalysisResponse(BaseModel):
 
     data: dict
     suppressed_fields: list[str] = Field(default_factory=list)
-    api_version: str = "0.9.0"
+    api_version: str = "0.11.0"
+    audit_redacted: bool = False
 
     _FIELD_DEFAULTS: ClassVar[dict[str, object]] = {
         "communication_posture": "direct_correction",
