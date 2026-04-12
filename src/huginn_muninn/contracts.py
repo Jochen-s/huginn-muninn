@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import re
 from enum import Enum
-from typing import Annotated, Literal
+from typing import Annotated, ClassVar, Literal
 
 from pydantic import BaseModel, BeforeValidator, Field, model_validator
 
@@ -164,7 +164,14 @@ class SubClaim(BaseModel):
     verification_priority: Annotated[
         Literal["critical", "high", "low"],
         BeforeValidator(_first_pipe_value),
-    ] = "low"
+    ] = Field(
+        default="low",
+        description=(
+            "Triage priority for human verification workflow. "
+            "Not a legal, clinical, or regulatory determination. "
+            "Internal analytical signal only."
+        ),
+    )
 
     @model_validator(mode="after")
     def _triage_coherence(self) -> "SubClaim":
@@ -358,19 +365,42 @@ class BridgeOutput(BaseModel):
     communication_posture: Annotated[
         Literal["direct_correction", "inoculation_first", "relational_first"],
         BeforeValidator(_first_pipe_value),
-    ] = "direct_correction"
+    ] = Field(
+        default="direct_correction",
+        description=(
+            "ADVISORY ONLY. Selects communicative register for downstream "
+            "human communicators. Must not be used as an automated routing "
+            "gate, content-moderation signal, or input to automated decisions "
+            "with legal or similarly significant effect on individuals without "
+            "human review. See GDPR Art. 22, EU AI Act Annex III."
+        ),
+    )
     # P2-6 (scoped, renamed from apophenia_bait_flag per Holodeck feedback).
     # Content-describing boolean: True iff the claim exhibits structural
     # features (repeated numeric coincidences, rhythmic lexical choices,
     # escalating concept chaining) that predispose readers to over-connect.
     # This is a warning about the CLAIM'S structural pull, never a
     # diagnosis of the reader.
-    pattern_density_warning: bool = False
+    pattern_density_warning: bool = Field(
+        default=False,
+        description=(
+            "Structural warning about the claim content. Not a moderation "
+            "signal. Operators using this in automated pipelines must comply "
+            "with applicable transparency obligations."
+        ),
+    )
     # P2-6 (scoped): structural description of what narrative pattern
     # filled an expertise or information vacuum around the claim. The
     # prompt constrains this strictly to narrative patterns -- never
     # named publishers, individuals, or organisations.
-    vacuum_filled_by: Annotated[str, BeforeValidator(_null_to_empty_str)] = ""
+    vacuum_filled_by: Annotated[str, BeforeValidator(_null_to_empty_str)] = Field(
+        default="",
+        description=(
+            "Narrative pattern description only. Never names publishers, "
+            "individuals, or organisations. Schema-level scrubber enforces "
+            "this constraint."
+        ),
+    )
     # P2-6 (scoped): technique warning, not a new factual assertion.
     # Example: "watch for the fabricated-source-mimicry pattern in
     # similar claims". The prompt constrains this to technique naming.
@@ -383,7 +413,12 @@ class BridgeOutput(BaseModel):
     # cap mirrors the `socratic_dialogue` max_length=3 discipline from
     # Sprint 1 (schema-level protection for renderer assumptions).
     prebunking_note: Annotated[str, BeforeValidator(_null_to_empty_str)] = Field(
-        default="", max_length=500
+        default="",
+        max_length=500,
+        description=(
+            "Technique-recognition cue. Not a new factual assertion. "
+            "One sentence maximum."
+        ),
     )
 
     @model_validator(mode="after")
@@ -470,3 +505,41 @@ class AnalysisReport(BaseModel):
     method: Literal["method_2"] = "method_2"
     degraded: bool = False
     degraded_reason: str | None = None
+
+
+# --- API Response Envelope ---
+
+class AnalysisResponse(BaseModel):
+    """Sprint 3 PR 1: API response envelope.
+
+    Wraps a projected AnalysisReport in a `data` field with envelope
+    metadata. The `data` field is a strict subset of AnalysisReport
+    (zero-regression constraint #3). Envelope metadata (suppressed_fields,
+    api_version) is not subject to the strict-subset constraint."""
+
+    data: dict
+    suppressed_fields: list[str] = Field(default_factory=list)
+    api_version: str = "0.9.0"
+
+    _FIELD_DEFAULTS: ClassVar[dict[str, object]] = {
+        "communication_posture": "direct_correction",
+        "pattern_density_warning": False,
+        "vacuum_filled_by": "",
+        "prebunking_note": "",
+    }
+
+    @classmethod
+    def from_report(
+        cls,
+        report: "AnalysisReport",
+        suppressed: frozenset[str],
+    ) -> "AnalysisResponse":
+        data = report.model_dump(mode="json")
+        suppressed_list = []
+        if suppressed and "bridge" in data:
+            bridge = data["bridge"]
+            for field_name in sorted(suppressed):
+                if field_name in bridge and field_name in cls._FIELD_DEFAULTS:
+                    bridge[field_name] = cls._FIELD_DEFAULTS[field_name]
+                    suppressed_list.append(field_name)
+        return cls(data=data, suppressed_fields=suppressed_list)

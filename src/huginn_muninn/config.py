@@ -6,6 +6,28 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 
+_SUPPRESSIBLE_FIELDS = frozenset({
+    "communication_posture",
+    "pattern_density_warning",
+    "vacuum_filled_by",
+    "prebunking_note",
+})
+
+
+def _parse_suppress_fields() -> tuple[str, ...]:
+    raw = os.environ.get("HUGINN_SUPPRESS_FIELDS", "")
+    if not raw.strip():
+        return ()
+    fields = tuple(f.strip() for f in raw.split(",") if f.strip())
+    for f in fields:
+        if f not in _SUPPRESSIBLE_FIELDS:
+            raise ValueError(
+                f"Unknown suppressed field: {f!r}. "
+                f"Valid fields: {sorted(_SUPPRESSIBLE_FIELDS)}"
+            )
+    return fields
+
+
 @dataclass(frozen=True)
 class Settings:
     """Application settings loaded from environment variables."""
@@ -46,6 +68,9 @@ class Settings:
     )
     llm_api_key: str | None = field(
         default_factory=lambda: os.environ.get("HUGINN_LLM_API_KEY")
+    )
+    suppressed_fields: tuple[str, ...] = field(
+        default_factory=_parse_suppress_fields
     )
 
 

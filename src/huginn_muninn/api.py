@@ -25,6 +25,7 @@ from huginn_muninn.llm import create_client, extract_json_from_response
 from huginn_muninn.model_registry import ModelRegistry
 from huginn_muninn.models import ClaimInput, JobRequest, VerdictOutput
 from huginn_muninn.orchestrator import Orchestrator
+from huginn_muninn.projection import project_analysis
 from huginn_muninn.prompt import build_pass1_prompt, build_pass2_prompt
 from huginn_muninn.search import SearchClient
 from huginn_muninn.webhooks import WebhookDispatcher
@@ -286,6 +287,7 @@ def analyze(req: ClaimRequest):
         result, analysis_id = _run_method2(req.claim, no_cache=req.no_cache)
         if analysis_id is not None:
             result["analysis_id"] = analysis_id
+        result = project_analysis(result)
         return result
     except httpx.ReadTimeout:
         raise HTTPException(504, detail="LLM request timed out")
@@ -305,6 +307,7 @@ def check_and_escalate(req: ClaimRequest):
         should_escalate = verdict.get("escalation", {}).get("should_escalate", False)
         if should_escalate:
             report, analysis_id = _run_method2(req.claim, no_cache=req.no_cache)
+            report = project_analysis(report)
             return {"method_1": verdict, "method_2": report, "escalated": True,
                     "verdict_id": verdict_id, "analysis_id": analysis_id}
         return {"method_1": verdict, "escalated": False, "verdict_id": verdict_id}
@@ -327,9 +330,15 @@ def feedback(req: FeedbackRequest):
 @app.get("/api/history")
 def history(limit: int = Query(default=20, ge=1, le=100)):
     db = app.state.db
+    analyses = db.get_recent_analyses(limit=limit)
+    projected_analyses = []
+    for a in analyses:
+        if "data" in a and isinstance(a["data"], dict):
+            a["data"] = project_analysis(a["data"])
+        projected_analyses.append(a)
     return {
         "verdicts": db.get_recent_verdicts(limit=limit),
-        "analyses": db.get_recent_analyses(limit=limit),
+        "analyses": projected_analyses,
     }
 
 
@@ -360,12 +369,19 @@ def get_job(job_id: str):
     job = app.state.job_store.get(job_id)
     if not job:
         raise HTTPException(404, detail="Job not found")
+    raw_result = job["result"]
+    if raw_result and job["method"] in ("analyze", "check-and-escalate"):
+        if job["method"] == "check-and-escalate" and isinstance(raw_result, dict) and "method_2" in raw_result:
+            raw_result = dict(raw_result)
+            raw_result["method_2"] = project_analysis(raw_result["method_2"])
+        elif job["method"] == "analyze":
+            raw_result = project_analysis(raw_result)
     return {
         "id": job["id"],
         "claim": job["claim"],
         "method": job["method"],
         "status": job["status"].value if hasattr(job["status"], "value") else job["status"],
-        "result": job["result"],
+        "result": raw_result,
         "error": job["error"],
         "created_at": job["created_at"],
         "updated_at": job["updated_at"],
@@ -402,7 +418,10 @@ def create_webhook(req: WebhookCreateRequest):
 def list_webhooks():
     webhooks = app.state.db.list_webhooks()
     for wh in webhooks:
-        wh["secret"] = wh["secret"][:8] + "..."
+        # Sprint 3 PR 1 Klingon fix: never expose any portion of the
+        # HMAC secret. Full secret returned once on POST creation only.
+        wh.pop("secret", None)
+        wh["secret_configured"] = True
     return webhooks
 
 
@@ -411,7 +430,8 @@ def get_webhook(webhook_id: int):
     wh = app.state.db.get_webhook(webhook_id)
     if not wh:
         raise HTTPException(404, detail="Webhook not found")
-    wh["secret"] = wh["secret"][:8] + "..."
+    wh.pop("secret", None)
+    wh["secret_configured"] = True
     return wh
 
 
@@ -429,7 +449,8 @@ def update_webhook(webhook_id: int, req: WebhookUpdateRequest):
     wh = app.state.db.update_webhook(webhook_id, **kwargs)
     if not wh:
         raise HTTPException(404, detail="Webhook not found")
-    wh["secret"] = wh["secret"][:8] + "..."
+    wh.pop("secret", None)
+    wh["secret_configured"] = True
     return wh
 
 
@@ -516,11 +537,18 @@ def get_batch(batch_id: str):
     for jid in batch["job_ids"]:
         job = app.state.job_store.get(jid)
         if job:
+            result = job["result"]
+            if result and job["method"] in ("analyze", "check-and-escalate"):
+                if job["method"] == "check-and-escalate" and isinstance(result, dict) and "method_2" in result:
+                    result = dict(result)
+                    result["method_2"] = project_analysis(result["method_2"])
+                elif job["method"] == "analyze":
+                    result = project_analysis(result)
             results.append({
                 "job_id": jid,
                 "claim": job["claim"],
                 "status": job["status"].value if hasattr(job["status"], "value") else job["status"],
-                "result": job["result"],
+                "result": result,
                 "error": job["error"],
             })
     batch["results"] = results
@@ -543,6 +571,10 @@ def create_comparison(req: CompareRequest):
             method=req.method,
             reconcile=req.reconcile,
         )
+        if req.method == "analyze" and isinstance(result, dict) and "results" in result:
+            for model_name, analysis in result["results"].items():
+                if isinstance(analysis, dict):
+                    result["results"][model_name] = project_analysis(analysis)
         return result
     except Exception as e:
         log.error("Comparison failed: %s", e)

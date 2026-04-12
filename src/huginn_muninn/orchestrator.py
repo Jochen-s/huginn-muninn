@@ -201,7 +201,7 @@ class Orchestrator:
             failures.append(f"validation_error:{type(e).__name__}")
             return self._degraded_result(claim, failures)
 
-        return result
+        return AnalysisReport(**result).model_dump(mode="json")
 
     def _run_agent(self, agent, input_data: dict, failures: list[str]) -> dict | None:
         """Run a single agent with error handling."""

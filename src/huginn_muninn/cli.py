@@ -217,7 +217,8 @@ def analyze(claim: str, model: str, json_output: bool, no_cache: bool):
         click.echo(f"Warning: Analysis degraded -- {result.get('degraded_reason', 'unknown')}", err=True)
 
     if json_output:
-        click.echo(json.dumps(result, indent=2))
+        from huginn_muninn.projection import project_analysis
+        click.echo(json.dumps(project_analysis(result), indent=2))
     else:
         _print_analysis(result)
 
@@ -265,6 +266,20 @@ def _print_analysis(data: dict):
             click.echo("\n  SOCRATIC DIALOGUE:")
             for i, round_text in enumerate(bridge["socratic_dialogue"], 1):
                 click.echo(f"    Round {i}: {round_text}")
+
+        # Sprint 3 PR 1: Sprint 2 Bridge scoped diagnostics
+        posture = bridge.get("communication_posture", "direct_correction")
+        if posture != "direct_correction":
+            label = posture.replace("_", " ").title()
+            click.echo(f"\n  POSTURE: {label}")
+        if bridge.get("pattern_density_warning"):
+            click.echo("  WARNING: High pattern density detected in claim structure")
+        vacuum = bridge.get("vacuum_filled_by", "")
+        if vacuum and vacuum != "[scope:redacted-named-entity]":
+            click.echo(f"  VACUUM FILLED BY: {vacuum}")
+        prebunk = bridge.get("prebunking_note", "")
+        if prebunk and prebunk != "[scope:redacted-named-entity]":
+            click.echo(f"  PREBUNKING NOTE: {prebunk}")
 
     audit = data.get("audit", {})
     if audit:

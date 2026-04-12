@@ -9,6 +9,7 @@ from typing import TYPE_CHECKING
 import httpx
 
 from huginn_muninn.jobs import JobStatus
+from huginn_muninn.projection import project_analysis
 
 if TYPE_CHECKING:
     from huginn_muninn.db import HuginnDB
@@ -133,10 +134,19 @@ class JobRunner:
         url = job.get("callback_url")
         if not url:
             return
+        # Sprint 3 PR 1: project Method 2 results at callback boundary
+        projected = result
+        if result and isinstance(result, dict):
+            method = job.get("method", "")
+            if method == "analyze":
+                projected = project_analysis(result)
+            elif method == "check-and-escalate" and "method_2" in result:
+                projected = dict(result)
+                projected["method_2"] = project_analysis(result["method_2"])
         payload = {
             "job_id": job["id"],
             "status": "completed" if error is None else "failed",
-            "result": result,
+            "result": projected,
             "error": error,
         }
         try:
@@ -159,7 +169,16 @@ class JobRunner:
             payload["error"] = error
             self._webhook_dispatcher.dispatch("job.failed", payload)
         else:
-            payload["result"] = result
+            # Sprint 3 PR 1: project Method 2 results at webhook boundary
+            projected = result
+            if result and isinstance(result, dict):
+                method = job.get("method", "")
+                if method == "analyze":
+                    projected = project_analysis(result)
+                elif method == "check-and-escalate" and "method_2" in result:
+                    projected = dict(result)
+                    projected["method_2"] = project_analysis(result["method_2"])
+            payload["result"] = projected
             self._webhook_dispatcher.dispatch("job.completed", payload)
             event_map = {"check": "verdict.completed", "analyze": "analysis.completed"}
             specific_event = event_map.get(job["method"])

@@ -106,7 +106,11 @@ class TestAnalyzeEndpoint:
             resp = client.post("/api/analyze", json={"claim": "Test claim here"})
         assert resp.status_code == 200
         data = resp.json()
-        assert data["method"] == "method_2"
+        # Sprint 3 PR 1: response is now an AnalysisResponse envelope
+        assert "data" in data
+        assert data["data"]["method"] == "method_2"
+        assert "suppressed_fields" in data
+        assert "api_version" in data
 
 
 class TestCheckAndEscalate:
@@ -246,7 +250,9 @@ class TestWebhookEndpoints:
         resp = client.get("/api/webhooks")
         assert resp.status_code == 200
         data = resp.json()
-        assert data[0]["secret"] == "abcdefgh..."
+        # Sprint 3 PR 1: secret is fully hidden, replaced with boolean
+        assert "secret" not in data[0]
+        assert data[0]["secret_configured"] is True
 
     def test_get_webhook(self, client):
         client.app.state.db.get_webhook.return_value = {
@@ -255,7 +261,8 @@ class TestWebhookEndpoints:
         }
         resp = client.get("/api/webhooks/1")
         assert resp.status_code == 200
-        assert resp.json()["secret"] == "abcdefgh..."
+        assert "secret" not in resp.json()
+        assert resp.json()["secret_configured"] is True
 
     def test_get_webhook_not_found(self, client):
         client.app.state.db.get_webhook.return_value = None

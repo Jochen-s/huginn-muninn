@@ -20,6 +20,7 @@ from huginn_muninn.contracts import (
     AuditorOutput,
     AnalysisInput,
     AnalysisReport,
+    AnalysisResponse,
     _SCOPE_VIOLATION_MARKER,
 )
 
@@ -1102,3 +1103,117 @@ class TestAnalysisReport:
                 ),
                 overall_confidence=1.5,  # Out of bounds!
             )
+
+
+class TestAnalysisResponse:
+    """Sprint 3 PR 1 C1: AnalysisResponse envelope model."""
+
+    def _make_report_dict(self) -> dict:
+        return {
+            "claim": "Test claim",
+            "decomposition": {
+                "sub_claims": [{"text": "X", "type": "factual", "verifiable": True}],
+                "original_claim": "Test claim",
+                "complexity": "simple",
+            },
+            "origins": {"origins": []},
+            "intelligence": {"actors": [], "relations": [], "narrative_summary": ""},
+            "ttps": {"ttp_matches": [], "primary_tactic": "Assess"},
+            "bridge": {
+                "universal_needs": ["safety"],
+                "issue_overlap": "o",
+                "narrative_deconstruction": "d",
+                "perception_gap": "g",
+                "moral_foundations": {},
+                "reframe": "r",
+                "socratic_dialogue": ["R1"],
+                "communication_posture": "inoculation_first",
+                "pattern_density_warning": True,
+                "vacuum_filled_by": "absence of primary research filled by anonymous commentary",
+                "prebunking_note": "watch for fabricated-source-mimicry pattern",
+            },
+            "audit": {
+                "verdict": "pass",
+                "findings": [],
+                "confidence_adjustment": 0.0,
+                "veto": False,
+                "summary": "OK",
+            },
+            "overall_confidence": 0.72,
+            "method": "method_2",
+            "degraded": False,
+            "degraded_reason": None,
+        }
+
+    def test_from_report_unsuppressed_preserves_all_fields(self):
+        report = AnalysisReport(**self._make_report_dict())
+        response = AnalysisResponse.from_report(report, suppressed=frozenset())
+        assert response.data["bridge"]["communication_posture"] == "inoculation_first"
+        assert response.data["bridge"]["vacuum_filled_by"] != ""
+        assert response.suppressed_fields == []
+
+    def test_from_report_suppresses_vacuum_filled_by(self):
+        report = AnalysisReport(**self._make_report_dict())
+        response = AnalysisResponse.from_report(
+            report, suppressed=frozenset({"vacuum_filled_by"})
+        )
+        assert response.data["bridge"]["vacuum_filled_by"] == ""
+        assert response.suppressed_fields == ["vacuum_filled_by"]
+
+    def test_from_report_suppresses_multiple_fields(self):
+        report = AnalysisReport(**self._make_report_dict())
+        response = AnalysisResponse.from_report(
+            report,
+            suppressed=frozenset({"vacuum_filled_by", "prebunking_note", "pattern_density_warning"}),
+        )
+        assert response.data["bridge"]["vacuum_filled_by"] == ""
+        assert response.data["bridge"]["prebunking_note"] == ""
+        assert response.data["bridge"]["pattern_density_warning"] is False
+        assert sorted(response.suppressed_fields) == [
+            "pattern_density_warning", "prebunking_note", "vacuum_filled_by"
+        ]
+
+    def test_suppression_does_not_move_confidence(self):
+        report = AnalysisReport(**self._make_report_dict())
+        unsup = AnalysisResponse.from_report(report, suppressed=frozenset())
+        sup = AnalysisResponse.from_report(
+            report, suppressed=frozenset({"vacuum_filled_by", "prebunking_note"})
+        )
+        assert unsup.data["overall_confidence"] == sup.data["overall_confidence"]
+
+    def test_data_is_strict_subset_of_analysis_report(self):
+        report = AnalysisReport(**self._make_report_dict())
+        response = AnalysisResponse.from_report(report, suppressed=frozenset())
+        assert set(response.data.keys()).issubset(
+            set(AnalysisReport.model_fields.keys())
+        )
+
+    def test_bidirectional_completeness(self):
+        """Zero-regression constraint #15: every Report field appears in
+        data or in the documented exclusion list."""
+        report = AnalysisReport(**self._make_report_dict())
+        response = AnalysisResponse.from_report(report, suppressed=frozenset())
+        report_keys = set(AnalysisReport.model_fields.keys())
+        data_keys = set(response.data.keys())
+        missing = report_keys - data_keys
+        assert missing == set(), (
+            f"AnalysisReport fields missing from AnalysisResponse.data "
+            f"without documented exclusion: {missing}"
+        )
+
+    def test_envelope_has_suppressed_fields_and_api_version(self):
+        report = AnalysisReport(**self._make_report_dict())
+        response = AnalysisResponse.from_report(report, suppressed=frozenset())
+        d = response.model_dump(mode="json")
+        assert "data" in d
+        assert "suppressed_fields" in d
+        assert "api_version" in d
+
+    def test_unsuppressed_default_is_backward_compatible(self):
+        """With suppressed=frozenset(), AnalysisResponse.data must be
+        shape-identical to AnalysisReport.model_dump()."""
+        raw = self._make_report_dict()
+        report = AnalysisReport(**raw)
+        response = AnalysisResponse.from_report(report, suppressed=frozenset())
+        report_dump = report.model_dump(mode="json")
+        assert response.data == report_dump

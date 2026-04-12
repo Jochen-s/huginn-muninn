@@ -3,6 +3,29 @@
 All notable changes to Huginn & Muninn are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.9.0] - 2026-04-12 -- "External Surface Hardening"
+
+Sprint 3 PR 1. Closes the compound defamation-surface blocker from Sprint 2 by projecting all Method 2 analysis results through an `AnalysisResponse` envelope at every external serialization boundary. Adds operator field-suppression configuration, CLI rendering for Sprint 2 Bridge fields, and OpenAPI advisory descriptions.
+
+### Added
+- **`AnalysisResponse` envelope model** in `contracts.py`: wraps projected `AnalysisReport` in a `data` field with `suppressed_fields` disclosure (Charter Commitment 5: transparent uncertainty) and `api_version` metadata. Constructed via `from_report()` classmethod from a validated `AnalysisReport` instance. `data` is a strict subset of `AnalysisReport` (machine-enforced by test). Response-envelope metadata is exempt from the strict-subset constraint.
+- **`project_analysis()` helper** in `projection.py`: single entry point for all 10 serialization boundaries. Handles BG-050 normalization (legacy cache hits get all schema defaults) followed by AnalysisResponse envelope construction.
+- **Operator field suppression** via `HUGINN_SUPPRESS_FIELDS` environment variable: comma-separated list of BridgeOutput field names to replace with safe defaults in all external responses. Valid fields: `communication_posture`, `pattern_density_warning`, `vacuum_filled_by`, `prebunking_note`. Validated against allowlist at startup (unknown names raise ValueError). Defaults to unsuppressed (backward compatible). Suppression takes effect at process startup via frozen Settings singleton.
+- **CLI rendering** for 4 Sprint 2 Bridge fields: `communication_posture` as labeled badge (hidden when default), `pattern_density_warning` as conditional warning, `vacuum_filled_by` and `prebunking_note` as conditional paragraphs. `[scope:redacted-named-entity]` marker handled gracefully. JSON output path (`--json-output`) applies full AnalysisResponse projection.
+- **OpenAPI `Field(description=...)` advisory restrictions** on 5 regulated fields: `communication_posture` (GDPR Art. 22 / EU AI Act Annex III advisory-only), `verification_priority` (not a legal/clinical/regulatory determination), `pattern_density_warning` (not a moderation signal), `vacuum_filled_by` (narrative pattern only), `prebunking_note` (technique-recognition cue).
+- **Operator documentation** in README: field suppression guide, valid fields, s.179 audit limitation disclaimer, Auditor-exfiltration known limitation.
+- **~58 new tests**: `TestSuppressedFieldsConfig` (8), `TestAnalysisResponse` (8), `TestProjectAnalysis` (7), plus 22 previously-erroring tests resolved by `pytest-httpx` installation, plus CLI and API projection tests.
+
+### Changed
+- **10 serialization boundaries now projected** through `AnalysisResponse`: `/api/analyze`, `/api/jobs/{id}`, `/api/batch/{id}`, `/api/check-and-escalate` (method_2 key), `/api/history` (normalize then project), `/api/compare` (post-comparison projection), webhook dispatch, callback dispatch, CLI JSON output. All boundaries project at READ time only; the internal job store retains the full `AnalysisReport`.
+- **Orchestrator return normalized**: `orchestrator.py` now returns `AnalysisReport(**result).model_dump(mode="json")` instead of the raw dict, ensuring all downstream consumers receive schema-valid data with computed defaults populated (Borg AP-1 fix).
+- **Webhook secret prefix leak fixed**: `GET /api/webhooks` and `GET /api/webhooks/{id}` and `PATCH /api/webhooks/{id}` now return `secret_configured: true` instead of exposing the first 8 hex characters of the HMAC secret (Klingon security fix). The full secret is still returned once on `POST /api/webhooks` creation.
+
+### Review discipline
+- **Six-faction fleet review** of the Sprint 3 plan (Federation 67/100, Klingon 34/100 pre-hardening, Romulan 4/10->7/10, Ferengi 7/10 ROI, Borg 7/10, Holodeck 7/10). ~4,800 lines of independent review across 6 reviewers. Highest fleet convergence of any H&M sprint: 6/6 factions independently found the 8th serialization boundary.
+- **Adversarial plan review** found the strict-subset/disclosure contradiction (Medium-High), comparison projection point error, and bidirectional completeness test gap. All mitigated in the final plan.
+- **16 zero-regression constraints** locked (expanded from Sprint 2's 14).
+
 ## [0.8.0] - 2026-04-11 -- "Scoped Diagnostics"
 
 Sprint 2 completion release. Charter and symmetry foundations, verification priority triage, and Bridge Builder scoped diagnostics. Every shipping item is grounded in peer-reviewed literature and enforced by adversarial tests.

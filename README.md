@@ -342,6 +342,36 @@ fallback paths (both normal and degraded) carry every default explicitly, and th
 reader normalises every legacy cached analysis through the current `AnalysisReport` contract so
 fresh runs and cache hits always return the same shape.
 
+## Operator Configuration (v0.9.0)
+
+All API responses, webhook payloads, and callback payloads return an `AnalysisResponse` envelope
+with `{data: <projected analysis>, suppressed_fields: [...], api_version: "0.9.0"}`. The `data`
+field is a strict subset of the internal `AnalysisReport`.
+
+### Field suppression
+
+Operators can suppress sensitive Bridge diagnostic fields from all external responses:
+
+```bash
+export HUGINN_SUPPRESS_FIELDS="vacuum_filled_by,prebunking_note"
+```
+
+**Valid suppressible fields:** `communication_posture`, `pattern_density_warning`, `vacuum_filled_by`, `prebunking_note`.
+
+Suppressed fields are replaced with safe defaults (empty strings, `false`) in all external
+responses. The `suppressed_fields` array in every response discloses which fields were
+suppressed (Charter Commitment 5: transparent uncertainty). Unknown field names cause a startup
+error. Suppression takes effect at process startup; changes require restart.
+
+**Important:** `HUGINN_SUPPRESS_FIELDS` is an operator control mechanism, not a standalone
+compliance control. Operators deploying under UK Online Safety Act, GDPR, or equivalent
+frameworks must implement their own audit logging recording which fields were suppressed, when,
+and why.
+
+**Known limitation:** Field suppression does not prevent the Adversarial Auditor from
+referencing suppressed field content in `AuditFinding.description`. Full Auditor-description
+suppression is planned for a future release.
+
 ---
 
 ## Name the Trick (v5)
