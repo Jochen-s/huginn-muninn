@@ -455,7 +455,7 @@ class AuditVerdict(str, Enum):
 
 
 class AuditFinding(BaseModel):
-    category: Annotated[Literal["bias", "accuracy", "completeness", "manipulation", "quality"], BeforeValidator(_first_pipe_value)]
+    category: Annotated[Literal["bias", "accuracy", "completeness", "manipulation", "quality", "cognitive_warfare", "frame_capture"], BeforeValidator(_first_pipe_value)]
     severity: Annotated[Literal["low", "medium", "high", "critical"], BeforeValidator(_first_pipe_value)]
     description: str
     recommendation: str
@@ -472,10 +472,9 @@ class AuditorOutput(BaseModel):
     # trap" to avoid priming the Auditor against legitimate fact-checking:
     # frame capture is when upstream agents adopt the claim's framing without
     # independent restatement, which is orthogonal to whether the claim was
-    # fact-checked. Cognitive-warfare findings are routed through the existing
-    # AuditFinding.category values ("manipulation" / "quality") with description
-    # prefixes [cognitive_warfare] / [frame_capture] -- the category enum is
-    # intentionally not expanded here to avoid breaking downstream renderers.
+    # fact-checked. Sprint 3 PR 2 expanded AuditFinding.category with
+    # "cognitive_warfare" and "frame_capture" literals; the docs generator
+    # and gallery builder were updated in the same PR to handle both.
     frame_capture_risk: Annotated[
         Literal["none", "possible", "high"],
         BeforeValidator(_first_pipe_value),

@@ -470,8 +470,52 @@ const SHARED_CSS = `
   }
   .finding-severity-low    { color: var(--teal); font-size: 0.75rem; font-weight: 600; }
   .finding-severity-medium { color: var(--amber); font-size: 0.75rem; font-weight: 600; }
-  .finding-severity-high   { color: var(--red); font-size: 0.75rem; font-weight: 600; }
+  .finding-severity-high     { color: var(--red); font-size: 0.75rem; font-weight: 600; }
+  .finding-severity-critical { color: #8B0000; font-size: 0.75rem; font-weight: 700; }
   .finding-description { font-size: 0.875rem; color: #2C3E50; }
+
+  /* Scoped diagnostics (v0.8.0+) */
+  .diagnostics-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 12px;
+  }
+  @media (max-width: 640px) { .diagnostics-grid { grid-template-columns: 1fr; } }
+  .diagnostic-card {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    background: var(--bg);
+  }
+  .diagnostic-card h4 {
+    margin: 0 0 6px;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--gray);
+  }
+  .diagnostic-card p { margin: 0; font-size: 0.9rem; line-height: 1.6; }
+  .diagnostic-note { font-size: 0.78rem; color: var(--gray); font-style: italic; margin-bottom: 4px !important; }
+  .posture-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    background: #F5F5F5;
+    color: #555;
+  }
+  .posture-inoculation_first  { background: #FFF3E0; color: #E65100; }
+  .posture-relational_first   { background: #E3F2FD; color: #1565C0; }
+  .pattern-density-warning {
+    background: #FFF8E1;
+    border-left: 4px solid var(--amber);
+    padding: 10px 14px;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.875rem;
+    margin-top: 8px;
+  }
   .finding-body { padding: 10px 14px; border-top: 1px solid var(--border); }
   .finding-rec {
     font-size: 0.8rem;
@@ -794,9 +838,19 @@ function patternBadge(pt) {
 
 function severityClass(severity) {
   const s = String(severity || '').toLowerCase();
+  if (s === 'critical') return 'finding-severity-critical';
   if (s === 'high') return 'finding-severity-high';
   if (s === 'medium') return 'finding-severity-medium';
   return 'finding-severity-low';
+}
+
+const CATEGORY_LABELS = {
+  bias: 'Bias', accuracy: 'Accuracy', completeness: 'Completeness',
+  manipulation: 'Manipulation', quality: 'Quality',
+  cognitive_warfare: 'Cognitive Influence', frame_capture: 'Frame Adoption',
+};
+function categoryLabel(cat) {
+  return CATEGORY_LABELS[String(cat || '').toLowerCase()] || cat || '';
 }
 
 // ---------------------------------------------------------------------------
@@ -1049,7 +1103,7 @@ function renderFindings(findings) {
   return `<ul class="findings-list">` + findings.map(f => `
     <li class="finding-item">
       <div class="finding-header">
-        <span class="finding-category">${esc(f.category || '')}</span>
+        <span class="finding-category">${esc(categoryLabel(f.category))}</span>
         <span class="${severityClass(f.severity)}">${esc(String(f.severity || '').toUpperCase())}</span>
         <span class="finding-description">${esc(truncate(f.description || '', 120))}</span>
       </div>
@@ -1062,6 +1116,60 @@ function renderFindings(findings) {
         <div class="finding-rec"><strong>Recommendation:</strong> ${esc(f.recommendation)}</div>
       </div>` : '')}
     </li>`).join('') + `</ul>`;
+}
+
+function renderScopedDiagnostics(bridge) {
+  const posture = bridge.communication_posture || 'direct_correction';
+  const densityWarning = bridge.pattern_density_warning || false;
+  const vacuum = bridge.vacuum_filled_by || '';
+  const prebunk = bridge.prebunking_note || '';
+  const scopeMarker = '[scope:redacted-named-entity]';
+
+  const postureLabel = posture.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+  const postureClassMap = { inoculation_first: 'posture-inoculation_first', relational_first: 'posture-relational_first' };
+  const postureCls = postureClassMap[posture] || '';
+  const postureHtml = posture !== 'direct_correction'
+    ? `<div class="diagnostic-card">
+        <h4>Communication Posture</h4>
+        <p><span class="posture-badge ${postureCls}">${esc(postureLabel)}</span></p>
+      </div>`
+    : '';
+
+  const densityHtml = densityWarning
+    ? `<div class="diagnostic-card">
+        <h4>Pattern Density</h4>
+        <div class="pattern-density-warning">High pattern density detected in claim structure. The claim is structured to encourage over-connection between unrelated elements.</div>
+      </div>`
+    : '';
+
+  const vacuumText = vacuum && vacuum !== scopeMarker ? vacuum : '';
+  const vacuumHtml = vacuumText
+    ? `<div class="diagnostic-card">
+        <h4>Credibility Gap</h4>
+        <p class="diagnostic-note">Narrative pattern description; no specific publisher or outlet identified.</p>
+        <p>${esc(vacuumText)}</p>
+      </div>`
+    : '';
+
+  const prebunkText = prebunk && prebunk !== scopeMarker ? prebunk : '';
+  const prebunkHtml = prebunkText
+    ? `<div class="diagnostic-card">
+        <h4>Prebunking Note</h4>
+        <p>${esc(prebunkText)}</p>
+      </div>`
+    : '';
+
+  const cards = [postureHtml, densityHtml, vacuumHtml, prebunkHtml].filter(Boolean).join('\n');
+  if (!cards) return '';
+
+  return `
+  <div class="section">
+    <h2>Response Strategy Signals</h2>
+    <p class="intro-note">Signals guiding how this analysis might be communicated effectively. Advisory to communicators, not a characterisation of the reader.</p>
+    <div class="diagnostics-grid">
+      ${cards}
+    </div>
+  </div>`;
 }
 
 function renderOptionalSection(title, text) {
@@ -1219,6 +1327,8 @@ function buildScenarioPage(scenario, allScenarios) {
     <h2>Reframe</h2>
     <blockquote class="reframe-block">${esc(bridge.reframe)}</blockquote>
   </div>` : ''}
+
+  ${renderScopedDiagnostics(bridge)}
 
   <div class="section">
     <h2>Audit</h2>

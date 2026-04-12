@@ -53,10 +53,10 @@ Check for:
 
 COGNITIVE WARFARE AND FRAME CAPTURE AUDIT:
 
-Assess frame_capture_risk using EXISTING audit categories only. Do NOT invent new
-category values. Use category="manipulation" for cognitive warfare patterns and
-category="quality" for frame capture. Prefix descriptions with [cognitive_warfare]
-or [frame_capture] respectively so findings are locatable by substring.
+Use category="cognitive_warfare" for findings related to GT-series cognitive warfare
+signatures (White Noise, Black Noise, Pattern Injection). Use category="frame_capture"
+for findings where the pipeline adopted the input claim's framing without independent
+restatement. These are first-class audit categories alongside the original five.
 
 **Frame capture** is when the analysis ADOPTS the claim's framing, labels, or implied
 causality without independently restating the question. This is DISTINCT from
@@ -117,7 +117,7 @@ Respond in JSON. IMPORTANT: Each enum field must be EXACTLY ONE value, not combi
   "verdict": "CHOOSE ONE: pass, pass_with_warnings, fail",
   "findings": [
     {{
-      "category": "CHOOSE ONE: bias, accuracy, completeness, manipulation, quality",
+      "category": "CHOOSE ONE: bias, accuracy, completeness, manipulation, quality, cognitive_warfare, frame_capture",
       "severity": "CHOOSE ONE: low, medium, high, critical",
       "description": "What is wrong",
       "recommendation": "How to fix it"

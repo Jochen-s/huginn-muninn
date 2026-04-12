@@ -657,6 +657,88 @@ class TestAuditorOutput:
         assert out.veto
 
 
+class TestAuditFindingCategoryExpansion:
+    """Sprint 3 PR 2: cognitive_warfare and frame_capture are now first-class
+    AuditFinding.category literals, replacing the description-prefix workaround."""
+
+    def test_cognitive_warfare_category_accepted(self):
+        f = AuditFinding(
+            category="cognitive_warfare", severity="high",
+            description="GT-001 White Noise pattern detected",
+            recommendation="Cross-reference with upstream hypothesis_crowding signal",
+        )
+        assert f.category == "cognitive_warfare"
+
+    def test_frame_capture_category_accepted(self):
+        f = AuditFinding(
+            category="frame_capture", severity="medium",
+            description="Analysis adopted claim framing without independent restatement",
+            recommendation="Restate the question independently before evaluating evidence",
+        )
+        assert f.category == "frame_capture"
+
+    def test_cognitive_warfare_pipe_separated(self):
+        f = AuditFinding(
+            category="cognitive_warfare|manipulation", severity="high",
+            description="test", recommendation="test",
+        )
+        assert f.category == "cognitive_warfare"
+
+    def test_frame_capture_pipe_separated(self):
+        f = AuditFinding(
+            category="frame_capture|quality", severity="medium",
+            description="test", recommendation="test",
+        )
+        assert f.category == "frame_capture"
+
+    def test_original_five_categories_still_accepted(self):
+        for cat in ("bias", "accuracy", "completeness", "manipulation", "quality"):
+            f = AuditFinding(
+                category=cat, severity="low",
+                description="test", recommendation="test",
+            )
+            assert f.category == cat
+
+    def test_unknown_category_rejected(self):
+        with pytest.raises(ValidationError):
+            AuditFinding(
+                category="invented_category", severity="low",
+                description="test", recommendation="test",
+            )
+
+    def test_cognitive_warfare_in_full_auditor_output(self):
+        out = AuditorOutput(
+            verdict=AuditVerdict.PASS_WITH_WARNINGS,
+            findings=[
+                AuditFinding(
+                    category="cognitive_warfare", severity="high",
+                    description="GT-003 Pattern Injection signature",
+                    recommendation="Verify source independence",
+                )
+            ],
+            confidence_adjustment=-0.1,
+            veto=False,
+            summary="Cognitive warfare signature detected",
+        )
+        assert out.findings[0].category == "cognitive_warfare"
+
+    def test_frame_capture_in_full_auditor_output(self):
+        out = AuditorOutput(
+            verdict=AuditVerdict.PASS_WITH_WARNINGS,
+            findings=[
+                AuditFinding(
+                    category="frame_capture", severity="medium",
+                    description="Pipeline adopted claim framing",
+                    recommendation="Restate independently",
+                )
+            ],
+            confidence_adjustment=-0.05,
+            veto=False,
+            summary="Frame capture risk noted",
+        )
+        assert out.findings[0].category == "frame_capture"
+
+
 class TestGorgonFieldDefaults:
     """Regression guards for the cognitive-warfare taxonomy fields: every new
     field must have a safe default so older LLM outputs, fallback dicts, and

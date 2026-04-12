@@ -3,6 +3,26 @@
 All notable changes to Huginn & Muninn are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.10.0] - 2026-04-12 -- "First-Class Audit Categories"
+
+Sprint 3 PR 2. Promotes cognitive warfare and frame capture from description-prefix workarounds to first-class AuditFinding categories, and adds gallery rendering for all Sprint 2 Bridge diagnostic fields.
+
+### Added
+- **`cognitive_warfare` and `frame_capture` AuditFinding categories**: First-class Literal values replacing the Sprint 1 description-prefix workaround (`[cognitive_warfare]`/`[frame_capture]` in the `manipulation`/`quality` categories). The Auditor prompt now instructs the LLM to emit these directly. The docs generator (`generate-comprehensive-findings.js`) carries interpretation entries for both: cognitive_warfare maps to GT-series signatures, frame_capture flags pipeline framing adoption orthogonal to factual accuracy.
+- **Gallery rendering for 4 Bridge diagnostic fields**: `renderScopedDiagnostics()` in `gallery/build.js` renders communication_posture as a color-coded badge, pattern_density_warning as a structural observation, vacuum_filled_by as a narrative pattern card with disclaimer, and prebunking_note as a technique-recognition card. Section titled "Response Strategy Signals" with advisory-to-communicators framing. Scope marker `[scope:redacted-named-entity]` suppressed gracefully.
+- **`finding-severity-critical` CSS class**: Completes the severity CSS set in the gallery (was missing; only low/medium/high existed).
+- **Category display-name mapping in gallery**: `cognitive_warfare` renders as "Cognitive Influence", `frame_capture` as "Frame Adoption" in public-facing audit findings. All 7 categories mapped through `categoryLabel()` lookup.
+- **8 new tests** in `TestAuditFindingCategoryExpansion`: both new categories accepted, pipe-separated handling, all original 5 still accepted, unknown rejected, both work in full AuditorOutput context.
+
+### Changed
+- **Auditor prompt updated**: JSON template now lists all 7 category values. Instructions changed from "Do NOT invent new category values; use manipulation with prefix" to "Use cognitive_warfare for GT-series findings and frame_capture for framing-adoption findings."
+- **Gallery posture badge**: Uses CSS class lookup map instead of string interpolation (Klingon security fix). Fallback styling on base `.posture-badge` for unknown values.
+- **Pattern density warning wording**: Changed from "predispose readers to over-connect" to "structured to encourage over-connection" (claim-as-subject, not reader-pathologizing).
+
+### Review discipline
+- **Six-faction fleet review**: Federation 63/100, Klingon 7/10, Romulan 7/10, Ferengi 6/10, Borg 7/10, Holodeck 6/10. Highest convergence finding: 5/6 factions independently identified the auditor prompt contradiction (prompt still using old description-prefix pattern while schema accepted new categories).
+- **10 convergent mitigations applied**: auditor prompt sync, section title rename, vacuum disclaimer, pattern density rewording, posture CSS lookup map + fallback, category display-name mapping, hasContent guard reorder, dead CSS cleanup, docs generator exhaustiveness comment, diagnostic-note styling.
+
 ## [0.9.0] - 2026-04-12 -- "External Surface Hardening"
 
 Sprint 3 PR 1. Closes the compound defamation-surface blocker from Sprint 2 by projecting all Method 2 analysis results through an `AnalysisResponse` envelope at every external serialization boundary. Adds operator field-suppression configuration, CLI rendering for Sprint 2 Bridge fields, and OpenAPI advisory descriptions.
