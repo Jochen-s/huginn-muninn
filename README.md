@@ -1,102 +1,125 @@
 # Huginn & Muninn
 
-**The fact-checker that finds common ground**
+**De-polarize. Find common ground. Then make the tool unnecessary.**
 
-Huginn & Muninn is an open-source AI framework for disinformation analysis that goes beyond
-verdict delivery. Named after Odin's two ravens (Thought and Memory), it is built on a simple
-premise: telling people they are wrong does not work. What works is helping them see how they
-are being manipulated, and what they share with the people they have been taught to fear.
+Odin had two ravens. Muninn (Memory) flew out each day and returned with information. Huginn (Thought) flew out and returned with understanding. Odin feared the loss of Huginn more than Muninn. You can always gather more information. The capacity to think about what it means is harder to replace.
 
-This is not an oracle. It is a cognitive gymnasium. The goal is to teach you a mental framework
-you carry forever, then make the tool unnecessary.
+The AI industry built an ecosystem around Muninn: retrieval, context windows, RAG pipelines, recommendation engines. Huginn, the layer that asks "what does this information mean for the humans it touches," barely exists.
 
-**Quick Links:** [Setup Guide](docs/SETUP-GUIDE.md) | [Scenario Gallery](docs/gallery/index.html) | [Knowledge Graph](docs/gallery/graph.html) | [Changelog](CHANGELOG.md) | [Anti-Weaponization Charter](ANTI-WEAPONIZATION-CHARTER.md)
+This project is an attempt to build it.
+
+Huginn & Muninn is an open-source, local-first AI framework for disinformation analysis. It goes beyond verdict delivery. Telling people they are wrong does not work. What works is helping them see how they are being manipulated, and what they share with the people they have been taught to fear.
+
+This is a cognitive gymnasium. The goal is to teach you a mental framework you carry forever, then make the tool unnecessary.
+
+---
+
+## Why This Exists
+
+It started in a community I care about. People dedicated to human flourishing. One evening, a discussion spiraled into exactly the dynamics I coach founders through: doubling down, zero common ground, manufactured outrage crowding out curiosity. I could name every pattern. What actually helped was simpler. Take a step back. Be curious instead of right.
+
+That planted a question I couldn't let go of. If connecting on a human level is the answer, how do you help people do that when the information environment is designed to make connection harder?
+
+So I spent a year with the research. Six peer-reviewed domains. 370+ sources. 20 test scenarios. Built a framework. Presented it at the PKM Summit in Utrecht. Someone asked: "How do you reach someone who believes in chemtrails without calling them stupid?"
+
+I didn't have the worked answer. That bothered me enough to build one.
+
+The chemtrails exercise is in the article. But the real answer is simpler than any pipeline: be interested in the person standing in front of you. Forget about being interesting. Ask what they're worried about. Ask who profits from the framing. Ask what you actually share underneath the disagreement.
+
+You don't need an AI for that. You just need to see the human.
 
 ---
 
 ## The Three Questions
 
-Every analysis answers three questions. These are designed as a transferable mental model
-that users internalize and apply independently, even without the tool.
+Every analysis answers three questions. These are designed as a transferable mental model you internalize and apply independently, even without the tool.
 
-1. **What is true?**
-   Deconstruct claims. Trace actors and their objectives. Map the evidence landscape.
-   Not declaring truth from authority, but laying out evidence so you can reason for yourself.
+**1. What is true?**
 
-2. **Who benefits from me feeling this way?**
-   The manipulation literacy question. Who profits from your anger, fear, or distrust?
-   What tactics are being used? Once you learn to ask this reflexively, you become resistant
-   to manipulation across every domain. You do not need a tool for this. You need the habit.
+Deconstruct claims. Trace actors and their objectives. Map the evidence. Not declaring truth from authority, but laying out evidence so you can reason for yourself.
 
-3. **What do we share?**
-   The healing question. Not "we're all human" in the abstract, but concrete shared
-   circumstances: "You and the people you disagree with both worry about providing for your
-   families. Polling shows 73% agreement on the underlying concern. The disagreement was
-   manufactured."
+**2. Who benefits from me feeling this way?**
 
-These three questions work as a system. The first grounds you in evidence. The second builds
-manipulation literacy. The third reconnects you to the people you have been taught to fear.
-Each corrects the weaknesses of the others: truth-checking alone creates dependency on
-verdicts, manipulation literacy alone creates cynicism, common humanity alone risks false
-equivalence. Together, they build lasting discernment.
+The manipulation literacy question. Who profits from your anger, fear, or distrust? What tactics are being used? Once you learn to ask this reflexively, you become resistant to manipulation across every domain. You don't need a tool for this. You need the habit.
+
+**3. What do we share?**
+
+The healing question. Not "we're all human" in the abstract, but concrete shared circumstances: "You and the people you disagree with both worry about providing for your families. Polling shows 73% agreement on the underlying concern. The disagreement was manufactured."
+
+These three questions work as a system. Truth-checking alone creates dependency on verdicts. Manipulation literacy alone creates cynicism. Common humanity alone risks false equivalence. Together, they build lasting discernment.
 
 ---
 
 ## Architecture
 
-Two analysis methods, one pipeline:
+Two analysis methods, one pipeline.
 
-```
-METHOD 1: Quick Check (~10 seconds)
---------------------------------------
-Claim
-  |
-  v
-Two-Pass Verification
-  |
-  v
-Verdict + Confidence + Evidence + Common Ground
+**Method 1: Quick Check** (~10 seconds). Two-pass LLM verification. Verdict, confidence, evidence, common ground.
 
+**Method 2: Full Analysis** (30-90 seconds). Six agents, each with a distinct mandate:
 
-METHOD 2: Full Analysis (30-90 seconds)
-------------------------------------------
-Claim
-  |
-  v
-[1] Claim Decomposer
-       Breaks input into verifiable sub-claims
-  |
-  v
-[2] Origin Tracer
-       Tracks claim origins and spread patterns
-  |
-  v
-[3] Network Mapper
-       Maps information flow and actor relationships
-  |
-  v
-[4] TTP Classifier
-       Labels manipulation techniques (DISARM framework)
-  |
-  +-------------------+
-  v                   v
-[5] Bridge Builder  [6] Adversarial Auditor
-   Common humanity       Red-teams the analysis
-   layer (v5)            for bias and errors
-   + Name the Trick
-  +-------------------+
-  |
-  v
-Orchestrator
-  |
-  v
-Comprehensive Report
-  (narrative deconstruction, perception gaps, Socratic dialogue)
-```
+| Agent | What It Does |
+|-------|-------------|
+| **Claim Decomposer** | Breaks input into verifiable sub-claims. Flags hypothesis crowding (v0.7.0) and assigns verification priority (v0.8.0). |
+| **Origin Tracer** | Tracks claim origins, spread patterns, and how narratives migrate between ideological camps over time. |
+| **Network Mapper** | Maps information flow and actor relationships. |
+| **TTP Classifier** | Labels manipulation techniques using the DISARM framework, including cognitive warfare techniques (v0.7.0). |
+| **Bridge Builder** | The common humanity layer. Identifies universal needs, surfaces concrete overlap, deconstructs manufactured narratives, presents scientific consensus with equal depth (v0.4.0), and advises communication approach grounded in 27 peer-reviewed citations (v0.8.0). |
+| **Adversarial Auditor** | Red-teams the entire analysis for bias, errors, and frame capture risk. First-class cognitive warfare and frame capture categories (v0.10.0). Exfiltration-guarded (v0.11.0). |
+
+Everything flows through an orchestrator. Output passes through a regulated envelope (v0.9.0) that projects results through field suppression and scope scrubbing before reaching any external boundary.
 
 ---
 
-## Quick Start: CLI
+## Cognitive Warfare Detection (v0.7.0)
+
+Classical disinformation analysis asks: is this claim true? A newer class of attack doesn't depend on false claims at all. It floods the information space until audiences can't decide which interpretation the evidence supports. Every individual claim can be technically true. The confusion IS the weapon.
+
+v0.7.0 detects three techniques from the Briggs, Danyk, and Weiss (2026) cognitive warfare taxonomy:
+
+| Technique | How It Works |
+|-----------|-------------|
+| **White Noise (GT-001)** | High-volume, low-signal flooding that crowds the hypothesis space. |
+| **Black Noise (GT-002)** | Ecosystem-level source suppression before primary narratives are seeded. |
+| **Pattern Injection (GT-003)** | Synchronized narratives mimicking expert consensus through fabricated sourcing or credential laundering. |
+
+---
+
+## Bridge Builder: Scoped Diagnostics (v0.8.0)
+
+The Bridge Builder went from "here is what is true" to "here is how to communicate this effectively to someone who currently believes otherwise." Every diagnostic field is grounded in peer-reviewed literature:
+
+| Field | What It Does | Research Foundation |
+|-------|-------------|-------------------|
+| `communication_posture` | Advises direct correction, inoculation-first, or relational-first approach | McGuire 1964, van der Linden, Roozenbeek, Costello/Pennycook/Rand 2024 |
+| `pattern_density_warning` | Flags claims whose structural features predispose over-connection | Alter & Oppenheimer 2009, Schwarz 1998 |
+| `vacuum_filled_by` | Describes what filled an information vacuum (pattern-only, no named publishers) | Golebiewski & boyd, Starbird et al. 2019 |
+| `prebunking_note` | One-sentence technique-recognition cue | Roozenbeek et al. 2022 |
+| `consensus_explanation` | 6,000-10,000 character mechanism-level scientific explanation | (v0.4.0) |
+
+A scope scrubber converts editorial policy into a mechanical guarantee. Publisher names are blocked with word-boundary regex and proper-noun-run detection. A model swap cannot accidentally emit content that names and accuses.
+
+---
+
+## External Surface Hardening (v0.9.0-v0.11.0)
+
+The diagnostic fields from v0.8.0 are powerful. They also create a defamation surface. Three releases closed that surface systematically.
+
+**v0.9.0** wrapped every external boundary in a regulated envelope:
+- 10 serialization surfaces projected through a single `project_analysis()` helper
+- Operator field suppression via environment variable (validated against allowlist at startup)
+- OpenAPI advisory descriptions documenting GDPR Art. 22 and EU AI Act Annex III limitations
+- Webhook secret prefix leak fixed
+
+**v0.10.0** promoted cognitive warfare and frame capture from description-prefix workarounds to first-class `AuditFinding` categories. The Auditor prompt now emits these directly instead of encoding them as tagged strings inside other categories. Gallery rendering for all four Bridge diagnostic fields shipped in the same release.
+
+**v0.11.0** closed the remaining exfiltration channel. Suppressed Bridge field content could still leak through Auditor free-text descriptions. A sentence-level scrubber now catches references to suppressed field names (underscore, space, short-form variants, case-insensitive) and replaces matching sentences with a redaction marker. An `audit_redacted` flag on every response discloses when scrubbing fired. Best-effort, honest about its limits.
+
+The engineering discipline: diagnostic power and legal safety shipped in the same pipeline.
+
+---
+
+## Quick Start
 
 **Requirements:** Python 3.12+, [Ollama](https://ollama.ai) running locally
 
@@ -107,467 +130,149 @@ uv pip install -e .
 # Pull a model
 ollama pull qwen3.5:9b
 
-# Method 1: Quick check (~10 seconds)
+# Quick check (~10 seconds)
 huginn check "claim text here"
 
-# Method 2: Full 6-agent analysis (30-90 seconds)
+# Full 6-agent analysis (30-90 seconds)
 huginn analyze "claim text here"
 
 # Auto-choose method based on claim complexity
 huginn analyze "claim text here" --auto-escalate
 ```
 
----
-
-## Quick Start: API
-
-```bash
-# Start the server
-uvicorn huginn_muninn.api:app --host 0.0.0.0 --port 8000
-
-# Quick check
-curl -X POST http://localhost:8000/api/check \
-  -H "Content-Type: application/json" \
-  -d '{"claim": "claim text here"}'
-
-# Full 6-agent analysis
-curl -X POST http://localhost:8000/api/analyze \
-  -H "Content-Type: application/json" \
-  -d '{"claim": "claim text here"}'
-```
-
----
-
-## Quick Start: Docker
-
+**Docker:**
 ```bash
 cp .env.example .env   # Edit OLLAMA_BASE_URL
 docker compose up -d   # Web UI at http://localhost:8000
 ```
 
----
-
-## The Common Humanity Layer
-
-The Bridge Builder agent is what separates Huginn & Muninn from a conventional fact-checker.
-Rather than issuing a verdict and stopping, it identifies the universal human need underneath
-the disputed claim (safety, belonging, fairness, autonomy), then surfaces the concrete overlap
-between opposing positions using primary evidence. It deconstructs how the same underlying
-concern was split into irreconcilable-seeming narratives, and generates a three-round Socratic
-dialogue based on Costello, Pennycook & Rand (Science, 2024).
-
-The output is not a corrected belief. It is a cleared path toward one.
-
-The design follows cognitive apprenticeship principles (Collins, Brown & Newman, 1989):
-the tool models the reasoning process, coaches users through application, then progressively
-withdraws support until users apply the three questions independently. The goal is
-internalization, not dependency.
-
----
-
-## Knowledge Graph: Follow the Breadcrumbs
-
-The same actors, techniques, and playbooks appear across multiple disinformation campaigns.
-The knowledge graph makes these cross-scenario connections visible.
-
-**587 nodes, 1,157 edges** extracted from 20 analyzed scenarios:
-
-| Entity Type | Count | What it captures |
-|---|---|---|
-| Scenario | 20 | Each analyzed claim |
-| Actor | 214 | People, organizations, media outlets, bot networks |
-| Technique (DISARM) | 20 | Classified manipulation tactics |
-| Named Trick | 10 | Plain-language technique reveals (v5) |
-| Claim | 161 | Decomposed sub-claims |
-| Mutation | 137 | How narratives evolve between campaigns |
-| Temporal Era | 25 | Historical periods and power contexts |
-
-Cross-scenario actors are deduplicated: when "Fossil Fuel Industry" appears in both a climate
-denial scenario and a vaccine skepticism scenario, they become a single node connected to both.
-The larger the node, the more scenarios it touches. This is the "follow the breadcrumbs"
-capability: click an actor and see every scenario they touch, every technique they deploy.
-
-[View the interactive knowledge graph](docs/gallery/graph.html)
-
----
-
-## Cognitive Warfare Detection (v0.7.0)
-
-Classical disinformation analysis focuses on whether a claim is true. A more recent class of
-attacks does not depend on individual false claims at all: they operate by overwhelming the
-audience's ability to decide which of several plausible framings the evidence actually supports,
-or by structuring false narratives to mimic the surface features of legitimate expert consensus.
-
-Version 0.7.0 adds a detection layer for this class of attack, derived from Briggs, Danyk, and
-Weiss (2026), cross-referenced against the foundational RAND "Firehose of Falsehood" work and
-the OODA-loop literature. The full integration decision record, including what we explicitly
-did not adopt from the source paper and why, is in [`research/gorgon-trap-integration.md`](research/gorgon-trap-integration.md).
-
-Three new DISARM entries are matched by the TTP Classifier:
-
-| ID | Name | What it detects |
-|----|------|-----------------|
-| **GT-001** | White Noise | High-volume, low-signal flooding that crowds the hypothesis space and makes verification computationally expensive. |
-| **GT-002** | Black Noise | Ecosystem-level suppression of contradicting sources *before* primary narratives are seeded, so counter-evidence is absent rather than rebutted. |
-| **GT-003** | Pattern Injection | Synchronized narratives that mimic the structural markers of expert consensus (fabricated sourcing, credential laundering, investigative-journalism mimicry). |
-
-Each entry is written in actor-neutral language: the same structural signature may be produced
-by a state intelligence service, a commercial PR firm, a grassroots campaign, or a single
-influencer, and the classifier recognises it in all cases.
-
-Three new signals ride on the existing agent outputs:
-
-- **`hypothesis_crowding`** on the Decomposer captures how many plausible competing interpretations
-  the input framing admits (`low` / `medium` / `high`). Deliberately qualitative: the source paper
-  proposes a quantum-cognition formalism for this concept, which we declined to implement
-  literally because there is no concrete Hilbert space, no measurement protocol, and no
-  predictive advantage over classical tools. A qualitative scale captures the useful residue
-  without the false precision. The Decomposer prompt explicitly prevents inflating sub-claim count
-  to justify a higher rating.
-- **`notable_omissions`** on the Origin Tracer lists up to three source *types* that would be
-  expected for the claim's topic and era but are missing from the available context. The prompt
-  requires "missing from context" framing, disallows intent attribution, and forbids invented
-  source names. This captures the Black Noise signal without requiring a full omission-detection
-  search infrastructure, and without encouraging speculation about suppression.
-- **`frame_capture_risk`** on the Adversarial Auditor detects when the pipeline's own analysis
-  has adopted the input claim's framing, labels, or implied causality without independently
-  restating the question. It is gated on upstream signals so it does not degrade into speculative
-  flagging. The term is deliberately chosen over the source paper's "verification trap" wording,
-  which risks priming the Auditor against legitimate fact-checking. A claim can be rigorously
-  fact-checked and have frame-capture issues simultaneously; they are orthogonal concerns.
-
-A deterministic orchestrator helper, `_compute_hypothesis_expansion_score`, derives a bounded
-0.0-1.0 reproducible signal from the Decomposer's existing output (sub-claim count, causal
-ratio, declared complexity) and feeds it to the Auditor's context under `gorgon_signals`.
-This costs zero additional LLM tokens and gives the frame-capture check a reproducible
-signal to gate on rather than forcing the LLM to re-infer the Decomposer's work.
-
-All of the above is additive. Existing callers that do not emit the new fields continue to
-work unchanged; every new field declares a safe default, and the orchestrator's degraded-result
-fallback populates them explicitly.
-
----
-
-## Scoped Diagnostics (v0.8.0)
-
-Version 0.8.0 ships Sprint 2: three PRs that extend the cognitive-warfare detection layer with
-scoped diagnostic fields, each grounded in peer-reviewed literature and each enforced by
-adversarial tests. The full scientific grounding is recorded in
-[`research/bridge-scoped-diagnostics-scientific-grounding.md`](research/bridge-scoped-diagnostics-scientific-grounding.md).
-
-### Communication posture (Bridge Builder, PR 3)
-
-A `communication_posture` field selects the communicative register of the analysis. It is
-orthogonal to numeric confidence: confidence answers "how certain is the analysis?"; posture
-answers "how should this land with a reader who currently holds the counter-narrative?".
-
-- **`direct_correction`** is the default and classical-refutation posture, appropriate when the
-  reader is already open to correction and the analytical frame is shared.
-- **`inoculation_first`** follows the McGuire 1964 inoculation-theory literature and its modern
-  extensions (van der Linden, Leiserowitz, Rosenthal & Maibach 2017 for climate; Roozenbeek &
-  van der Linden 2019/2022 for technique-specific prebunking). It leads with naming the
-  manipulation technique before introducing counter-evidence, appropriate when the reader is
-  still inside the manipulation frame and a direct correction would trigger identity defence.
-- **`relational_first`** follows the Common Humanity (Perry et al. 2018) and Costello protocol
-  (Costello, Pennycook & Rand 2024) literature. It starts from acknowledgment of the kernel of
-  truth before any correction, appropriate when identity stakes dominate and receptive updating
-  requires shared-reality perception (Kappes et al. 2020).
-
-The posture is mechanically separated from `overall_confidence` by runtime invariance tests and
-a grep-style architectural lock on the confidence-computation block. This is the BG-042
-Confidence-Posture Separation pattern: varying posture across all three literals for otherwise-
-identical inputs must not move `overall_confidence`.
-
-### Pattern density warning
-
-A `pattern_density_warning` boolean flags claims whose structural features (repeated numeric
-coincidences, rhythmic lexical choices, escalating concept chains, dense cross-reference webs)
-predispose readers to over-connect. Grounded in the processing-fluency literature
-(Schwarz 1998; Alter & Oppenheimer 2009; Whittlesea & Williams 2001). The field describes the
-claim, never the reader -- the original `apophenia_bait_flag` name was rejected because it
-pathologises the reader rather than naming the claim's engineering.
-
-### Vacuum filled by / prebunking note
-
-Two scoped string fields capture the ecosystem dynamics around the claim:
-
-- **`vacuum_filled_by`** describes, at the narrative-pattern level only, what filled an
-  expertise or information vacuum around the claim. Grounded in the data-voids literature
-  (Golebiewski & boyd 2019; Marwick & Lewis 2017) and the collaborative-disinformation work
-  (Starbird, Arif, Wilson 2019). The prompt enforces a strict scope constraint: the field
-  must name a narrative pattern, never a publisher, an individual, or an organisation. This is
-  the legal-exposure discipline identified in adversarial review: describing a structural
-  signature is analysis; naming a filler is attribution.
-- **`prebunking_note`** is a one-sentence technique-recognition cue a reader can carry
-  forward to identify similar claims. Grounded in Roozenbeek, van der Linden, Goldberg,
-  Rathje & Lewandowsky 2022, which established that the durable effect of prebunking lives in
-  technique-specific recognition, not topic-specific correction. The field is additive to the
-  Inferential Gap Map below; it is not a substitute.
-
-### Inferential Gap Map as the reparative Pattern-Injection response
-
-The Bridge Builder's existing Layer 4 Inferential Gap Map is now explicitly labeled in the
-prompt as the reparative response to Pattern Injection (GT-003). The load-bearing move --
-"X is documented fact; the leap to Y is unsupported because Z" -- is unchanged; the
-labeling makes the intent legible to future editors so the kernel+leap separation cannot
-silently collapse into a generic refutation. Classical refutation fails against Pattern
-Injection because it leaves the injected pattern intact (Lewandowsky et al. 2012 on
-continued-influence; Walter & Tukachinsky 2020 meta-analysis). The kernel-and-leap structure
-is what lets a reader in the manipulation frame step back without having to surrender the
-observation that brought them to the claim.
-
-### Verification priority triage (Decomposer, PR 2)
-
-Each sub-claim carries a `verification_priority` triage label (`critical` / `high` / `low`,
-default `low`) advising downstream verification work on where to spend attention. The
-Decomposer prompt enforces a load-bearing anti-inflation clause: "marking everything critical
-defeats the triage purpose". Triggering criteria are strictly structural (falsifiable numeric
-assertion, material downstream harm) rather than legal-register (the earlier "legal liability /
-criminal conduct" phrasing was removed per adversarial-review convergence on defamation
-exposure). Symmetric-actor invariance tests and a schema-level coherence validator
-(`verifiable=False + critical` silently downgrades to `high`) back the field at the contract
-boundary.
-
-### Actor-category symmetric invariance (PR 1)
-
-Anti-Weaponization Charter Commitment 7 is now operationalised as actor-category symmetry.
-The test suite at [`tests/test_gorgon_symmetry.py`](tests/test_gorgon_symmetry.py) contains
-five adversarial pairs spanning ten actor categories (six state, four non-state). Within each
-pair, the GT-family signatures must classify identically regardless of which actor category
-the claim names. Any divergence is a charter violation. The companion plan is at
-[`research/gorgon-trap-symmetric-actor-extension.md`](research/gorgon-trap-symmetric-actor-extension.md).
-
-All Sprint 2 additions are additive. Every new field declares a safe default, the orchestrator
-fallback paths (both normal and degraded) carry every default explicitly, and the DB cache
-reader normalises every legacy cached analysis through the current `AnalysisReport` contract so
-fresh runs and cache hits always return the same shape.
-
-## Operator Configuration (v0.9.0)
-
-All API responses, webhook payloads, and callback payloads return an `AnalysisResponse` envelope
-with `{data: <projected analysis>, suppressed_fields: [...], api_version: "0.9.0"}`. The `data`
-field is a strict subset of the internal `AnalysisReport`.
-
-### Field suppression
-
-Operators can suppress sensitive Bridge diagnostic fields from all external responses:
-
+**API:**
 ```bash
-export HUGINN_SUPPRESS_FIELDS="vacuum_filled_by,prebunking_note"
+uvicorn huginn_muninn.api:app --host 0.0.0.0 --port 8000
 ```
-
-**Valid suppressible fields:** `communication_posture`, `pattern_density_warning`, `vacuum_filled_by`, `prebunking_note`.
-
-Suppressed fields are replaced with safe defaults (empty strings, `false`) in all external
-responses. The `suppressed_fields` array in every response discloses which fields were
-suppressed (Charter Commitment 5: transparent uncertainty). Unknown field names cause a startup
-error. Suppression takes effect at process startup; changes require restart.
-
-**Important:** `HUGINN_SUPPRESS_FIELDS` is an operator control mechanism, not a standalone
-compliance control. Operators deploying under UK Online Safety Act, GDPR, or equivalent
-frameworks must implement their own audit logging recording which fields were suppressed, when,
-and why.
-
-**Known limitation:** Field suppression does not prevent the Adversarial Auditor from
-referencing suppressed field content in `AuditFinding.description`. Full Auditor-description
-suppression is planned for a future release.
-
----
-
-## Name the Trick (v5)
-
-The Bridge Builder names each manipulation technique like revealing how a magic trick works.
-Before you know the mechanic, the illusion is seamless. The moment someone shows you the
-palm, the misdirection, the force, the spell breaks. You can never be fooled by that trick again.
-
-For each technique identified, the system provides:
-
-| Field | What It Shows |
-|-------|--------------|
-| **Technique** | Human-readable name (e.g., "Scapegoating", "Cherry Picking") |
-| **How it works** | The mechanic explained simply |
-| **Who uses it** | The specific actor deploying this technique |
-| **Historical precedent** | Where the same trick appeared before (tobacco industry, political campaigns) |
-| **Pattern type** | Isolated (one-off), Repeated (seen before), or Systematic (multi-campaign strategy) |
-
-**Asymmetric Weight Principle:** Not all technique uses are equal. A political leader deploying
-scapegoating as a documented, multi-decade strategy gets detailed analysis. A private citizen
-using emotional amplification in a frustrated observation gets a brief honest note. Treating
-them equally would be false equivalence -- one of the techniques the system is designed to detect.
 
 ---
 
 ## Designed Against Dependency
 
-A 2025 follow-up study (Rani et al., arXiv:2510.01537) found that AI dialogue can reduce
-conspiracy beliefs by 21% while simultaneously degrading independent discernment by 15%
-over four weeks. This dependency paradox is a real risk for any AI fact-checking tool.
+A 2025 study (Rani et al.) found that AI dialogue can reduce conspiracy beliefs by 21% while simultaneously degrading independent discernment by 15% over four weeks. This dependency paradox is a real risk for any AI fact-checking tool. I take it seriously enough to have redesigned the entire Bridge Builder around it.
 
-Huginn & Muninn addresses this through four architectural pillars:
+Four architectural pillars address it:
 
-1. **Genuine Socratic method**: The system asks questions that guide reasoning rather than
-   delivering verdicts. Rani et al.'s own data shows "guiding and probing questions" correlate
-   positively with independent detection skills (r=0.29), while directive correction undermines them.
+1. **Genuine Socratic method.** The system asks questions that guide reasoning, not verdicts that replace it. Rani et al.'s own data shows guiding questions correlate positively with independent detection skills (r=0.29). Directive correction undermines them.
+2. **Mandatory fading.** AI support withdraws as user competence grows. Without explicit fading, the learning zone collapses.
+3. **Desirable difficulties.** Users attempt their own analysis before seeing the AI's. Slower short-term performance, better long-term retention (Bjork, 1994).
+4. **System-regulated access.** Research from Wharton shows system-regulated AI access produces 64% learning gains versus 30% for unrestricted access. Users can't be trusted to self-limit AI reliance. The system enforces structure.
 
-2. **Mandatory fading**: AI support progressively withdraws as user competence grows,
-   following Vygotsky's Zone of Proximal Development. Without explicit fading, the ZPD collapses
-   into a "Zone of No Development" (arXiv:2511.12822).
-
-3. **Desirable difficulties**: Spacing, interleaving, retrieval practice, and generation effects
-   (Bjork, 1994) slow short-term performance but improve long-term retention by up to 80%.
-   Users must attempt their own analysis before seeing the AI's.
-
-4. **System-regulated access**: Research from Wharton shows system-regulated AI access
-   produces 64% learning gains versus 30% for unrestricted on-demand access. Users cannot be
-   trusted to self-limit AI reliance; the system enforces structure.
-
-The graduation model: Huginn & Muninn is designed to make itself unnecessary. The three
-questions are yours to keep.
+The graduation model: learn the Three Questions. Apply them yourself. Stop needing the tool. That's the goal.
 
 ---
 
 ## Manufactured Doubt Detection
 
-Huginn & Muninn identifies manufactured doubt using a 28-tactic taxonomy derived from
-Goldberg et al. (2021, Environmental Health, PMC7996119), which documented strategies used
-across the tobacco, fossil fuel, sugar, pesticide, and climate denial industries.
+28 tactics from Goldberg et al. (2021, Environmental Health), documented across the tobacco, fossil fuel, sugar, pesticide, and climate denial industries. Five appeared universally:
 
-Five tactics appeared universally across all five industries:
+1. Attack Study Design (exaggerate methodological flaws)
+2. Gain Reputable Support (recruit credible figures)
+3. Misrepresent Data (cherry-pick, design studies to fail)
+4. Hyperbolic Language ("junk science," absolutist framing)
+5. Influence Government (regulatory capture, revolving door)
 
-| # | Tactic | Description |
-|---|--------|-------------|
-| 1 | Attack Study Design | Exaggerate minor methodological flaws to discredit research |
-| 2 | Gain Reputable Support | Recruit credible figures to defend industry positions |
-| 3 | Misrepresent Data | Cherry-pick findings, design studies intended to fail |
-| 4 | Hyperbolic Language | Loaded buzzwords ("junk science"), absolutist framing |
-| 5 | Influence Government | Regulatory capture, revolving door, pro-industry legislation |
-
-The system distinguishes manufactured doubt from genuine scientific uncertainty through
-structural signatures: manufactured doubt always concludes toward inaction, shows asymmetric
-scrutiny of evidence, and traces back to concentrated funding sources. Genuine uncertainty is
-specific, bounded, and proposes research to resolve itself.
-
----
-
-## Version History
-
-| Version | What Changed |
-|---------|-------------|
-| v1 | Baseline: 3-layer analysis (needs, overlap, deconstruction), Socratic dialogue, perception gap, reframe |
-| v2 | Inferential gap mapping, feasibility assessment, commercial motive analysis, systemic pattern framing in Socratic Round 2 |
-| v3 | Temporal context awareness: tracks how claims migrate between ideological camps over time |
-| v4 | Scientific consensus explanation with equal depth to conspiracy analysis, creating a 360-degree view |
-| v5 | "Name the Trick" technique reveal with mechanics and historical precedents. Asymmetric Weight Principle (pattern gravity). GP-06 Brexit/Farage sanewashing scenario. |
-| v6 | Knowledge graph: cross-scenario entity extraction (587 nodes, 1,157 edges), Cytoscape.js visualization, "follow the breadcrumbs" navigation. |
-
----
-
-## Test Suite Results
-
-The Bridge Builder has been validated across 21 real-world conspiracy and misinformation
-scenarios spanning health & science, geopolitics, environment, events, technology, and media.
-
-| Scenario | Version | Score | Topic |
-|----------|---------|-------|-------|
-| HS-01 | **v5** | **100%** | Chemtrails vs. contrail science |
-| GP-06 | **v5** | **95.8%** | Brexit/Farage sanewashing (asymmetric weight showcase) |
-| HS-02 | v4 | 94.7% | Vaccines-autism vs. epidemiology |
-| HS-04 | v4 | 95.5% | Big Pharma suppression vs. drug development pipeline |
-| EN-01 | v4 | 97.3% | Climate hoax vs. greenhouse physics |
-| EV-03 | v4 | 94.7% | Election fraud vs. election security mechanics |
-| GP-01 | v4 | 94.7% | Global elite control vs. institutional realities |
-
-Evaluation uses 12 weighted checks including technique naming, scientific consensus,
-Socratic dialogue quality, and controlling language detection.
-
-[Browse all 21 scenarios in the Gallery](gallery/)
+The system distinguishes manufactured doubt from genuine scientific uncertainty through structural signatures: manufactured doubt always concludes toward inaction, shows asymmetric scrutiny of evidence, and traces to concentrated funding sources. Genuine uncertainty is specific, bounded, and proposes research to resolve itself.
 
 ---
 
 ## Research Foundation
 
-Huginn & Muninn is grounded in peer-reviewed research. Two comprehensive research waves
-(~370 sources) inform the design. The project maintains an honest assessment of each
-research pillar's strength.
+370+ sources across two research waves. Honest confidence ratings, because transparency matters more than appearance.
 
-| Domain | Key Research | Status | How H&M Uses It |
-|--------|-------------|--------|-----------------|
-| Socratic AI Dialogue | Costello et al. (Science, 2024): 20% durable reduction in conspiracy beliefs. AAAS Newcomb Cleveland Prize 2026. | STRONG (with dependency caveat, addressed by design) | Bridge Builder dialogue protocol with mandatory fading |
-| Inoculation / Prebunking | van der Linden & Roozenbeek (Cambridge); Google/Jigsaw (5.4M users, 5-10% improvement). Meta-analysis 2025 (N=37,075) confirms. | MODERATE-STRONG (lab-to-field gap) | Technique labeling in every output |
-| Perception Gap | More in Common (2019): 2x overestimation of opponent extremism | WEAK (US-only, single study) | Surfaces what the other side actually thinks. Used cautiously. |
-| Manufactured Doubt | Goldberg et al. (2021): 28 tactics across 5 industries | STRONG (well-documented, cross-industry) | 28-tactic detection layer with epistemic asymmetry rules |
-| Narrative Complexity | Peter Coleman (Columbia): adding dimensions collapses false dichotomies | MODERATE (compelling theory, limited RCTs) | Three-layer narrative deconstruction |
-| Cognitive Apprenticeship | Collins, Brown & Newman (1989): 6-stage framework transfer model | STRONG (decades of replication) | Progressive scaffolding with mandatory fading |
+| Domain | Confidence | Key Research |
+|--------|-----------|-------------|
+| Socratic AI Dialogue | **Strong** | Costello et al. (Science, 2024): 20% durable reduction. AAAS Newcomb Cleveland Prize 2026. Dependency caveat addressed by design. |
+| Inoculation / Prebunking | **Moderate-Strong** | van der Linden & Roozenbeek; Google/Jigsaw (5.4M users). Meta-analysis 2025 (N=37,075) confirms. Lab-to-field gap remains. |
+| Manufactured Doubt | **Strong** | Goldberg et al. (2021): 28 tactics, 5 industries. Well-documented, cross-industry. |
+| Cognitive Apprenticeship | **Strong** | Collins, Brown & Newman (1989): decades of replication. |
+| Perception Gap | **Weak** | More in Common (2019): US-only, single study. Used cautiously. |
+| Narrative Complexity | **Moderate** | Peter Coleman (Columbia): compelling theory, limited RCTs. |
 
-**Downgraded pillars** (transparency matters more than appearance):
+**Downgraded pillars:**
+- **Moral Reframing** (Feinberg & Willer): 6+ preregistered replication failures. Experimental only until a successful large-N replication.
+- **Redirect Method** (Moonshot): measures engagement, not belief change. Complementary signal, not a primary mechanism.
 
-- **Moral Reframing** (Feinberg & Willer, 2015-2019): Originally a core pillar, now experimental
-  only. Six or more preregistered replication attempts have failed, including a 2026 study with
-  2,009 participants. The technique may work under specific conditions but not as a general tool.
+Full research corpus in the `research/` directory.
 
-- **Redirect Method** (Moonshot): The 224% figure measures engagement (watch time), not
-  belief or behavior change. Useful as a complementary signal, not a primary mechanism.
-
-Full research corpus available in the `research/` directory.
+**Applied framework notes.** Philosophical foundations are examined in companion essays. The first is [The Sophists and the Three Questions](research/sophists-and-the-three-questions.md), which applies the framework to a claim about its own Socratic inheritance. Web version at `gallery/dist/essays/sophists-and-the-three-questions.html`.
 
 ---
 
-## What Does Not Work
+## Rejection Log
 
-Design decisions informed by explicitly ruling out documented anti-patterns:
+Every rejected feature ships with documented falsification criteria. The decision can be revisited if the evidence changes.
 
-| Anti-pattern | Why It Fails | How H&M Avoids It |
-|-------------|-------------|-------------------|
-| Controlling language ("the truth is...") | Triggers psychological reactance | Autonomy-supportive framing throughout |
-| Identity confrontation | Attacking beliefs is experienced as attacking the person | Never labels users as misled or manipulated |
-| Generic counter-narratives | Personalized content vastly outperforms generic responses | References the user's specific claim and evidence |
-| Forced engagement | Unsolicited corrections trigger doubling-down effects | Dialogue is always opt-in |
-| Directive AI correction | Creates dependency; -15.3% discernment decline (Rani et al. 2025) | Genuine Socratic questioning with progressive fading |
-| False equivalence | "Both sides" framing can legitimize extremism | Epistemic asymmetry detection overrides bridge-building when scientific consensus is clear |
+| Rejected | Why | Revisit When |
+|----------|-----|-------------|
+| Density-matrix entropy | No concrete Hilbert space | Paper with measurable construction |
+| Weaponized Absurdity | Violates Charter 4 + 6 | Peer-reviewed RCT showing superiority to Socratic dialogue |
+| "Victim" framing | Removes agency | Never (philosophical commitment) |
+| `timing_suspicion` | False-positive on legitimate journalism | Labeled corpus with 0% false-positive gate |
+| Self-Poisoning Triad | Charter 1: no surveillance/dossiers | Never (charter commitment) |
+| Moral Reframing | 6+ replication failures | Successful large-N replication |
+
+Intellectual honesty takes longer than shipping features. That's the point.
+
+Full log with falsification criteria: [REJECTIONS.md](REJECTIONS.md).
 
 ---
 
-## The Ego Development Connection
+## Test Suite
 
-Research on psychosocial maturity (Loevinger's ego development model, stages E2-E9)
-suggests that susceptibility to conspiracy theories and authoritarian attitudes peaks at specific
-developmental stages, independent of intelligence or education. Stage E4 (Conformist) shows
-the highest overlap with Adorno's authoritarian character: outgroup rejection, authority
-orientation, binary thinking.
+| Version | Tests |
+|---------|-------|
+| v0.1.0 | 304 |
+| v0.7.0 | 86 (public repo after restructure) |
+| v0.8.0 | 228 |
+| v0.9.0 | 511 |
+| v0.11.0 | 544 |
 
-Huginn & Muninn calibrates its Socratic dialogue to developmental capacity:
-- **E3-E4** (Conformist): Authority-aligned framing, concrete language, social proof
-- **E5** (Self-Aware): Guided perspective-taking and comparison
-- **E6** (Conscientious): Classical Socratic questioning with evidence evaluation
-- **E7+** (Individualistic/Autonomous): Systems thinking, meta-cognitive reflection
-
-This calibration is informed by Bronlet (2025, Frontiers in Psychology), who demonstrated
-LLM-based automated scoring of the Washington University Sentence Completion Test (WUSCT)
-at kappa = 0.779, approaching the 0.80 threshold for reliable measurement.
+20 real-world scenarios validated across health & science, geopolitics, environment, events, technology, and media.
 
 ---
 
 ## Privacy
 
-Your data never leaves your machine. Huginn & Muninn runs entirely on local hardware using
-open-source language models through Ollama. No cloud dependency, no API keys required for
-base usage, no data collection. If you are analyzing sensitive political claims, you should not
-have to trust a third party with that data.
+Your data never leaves your machine. Huginn & Muninn runs entirely on local hardware using open-source models through Ollama. No cloud dependency. No API keys required for base usage. No data collection.
 
-For multi-model support beyond local Ollama, the API supports OpenAI-compatible providers
-(including OpenRouter for access to 300+ models).
+If you are analyzing sensitive political claims, you should not have to trust a third party with that data.
+
+---
+
+## Anti-Weaponization Charter
+
+This matters enough to build before the features.
+
+The [Anti-Weaponization Charter](ANTI-WEAPONIZATION-CHARTER.md) defines 8 non-negotiable commitments. The system cannot manufacture false common ground. It cannot be used as a persuasion engine for any agenda. It acknowledges when moral positions are genuinely irreconcilable. Actor-category symmetry tests (v0.8.0) ensure structurally equivalent attack signatures classify identically regardless of whether the actor is a state or non-state entity. Any divergence is a charter violation.
+
+Not every disagreement is manufactured. Some are real. But the ones that are manufactured deserve to be seen.
 
 ---
 
 ## Contributing
 
-Contributions welcome. Please open an issue first to discuss what you would like to change.
+Contributions welcome. Open an issue first to discuss what you'd like to change.
 
 Areas where contributions are particularly valuable:
-- Cross-cultural validation of the three-question framework
+- Cross-cultural validation of the Three Questions framework
 - Multilingual support (the Socratic dialogue principles are culturally specific)
 - Manufactured doubt detection for non-Western contexts
 - Integration with PKM tools (Obsidian plugin, browser extension)
+
+---
+
+## Built With AI
+
+I built this with Claude (Anthropic). All research synthesis, design decisions, editorial voice, and final calls are mine. Claude helped with code generation, adversarial testing, and literature review.
+
+Transparency matters. If I'm building a tool that teaches people to evaluate information sources, I should be upfront about my own.
 
 ---
 
@@ -579,28 +284,16 @@ MIT. See [LICENSE](LICENSE).
 
 ## Citation
 
-If you reference this work in an academic context, please cite the underlying research
-papers directly:
+If you reference this work in an academic context, please cite the underlying research directly:
 
-> Costello, T. H., Pennycook, G., & Rand, D. G. (2024). Durably reducing conspiracy beliefs
-> through dialogues with AI. *Science*, 385(6714).
+> Costello, T. H., Pennycook, G., & Rand, D. G. (2024). Durably reducing conspiracy beliefs through dialogues with AI. *Science*, 385(6714).
 
-> Goldberg, R. F., Vandenberg, L. N., et al. (2021). The science of spin: targeted strategies
-> to manufacture doubt with detrimental effects on environmental and public health.
-> *Environmental Health*, 20, 33.
+> Goldberg, R. F., Vandenberg, L. N., et al. (2021). The science of spin: targeted strategies to manufacture doubt. *Environmental Health*, 20, 33.
 
-> Collins, A., Brown, J. S., & Newman, S. E. (1989). Cognitive apprenticeship: Teaching the
-> crafts of reading, writing, and mathematics. In L. B. Resnick (Ed.), *Knowing, Learning,
-> and Instruction*.
+> Collins, A., Brown, J. S., & Newman, S. E. (1989). Cognitive apprenticeship: Teaching the crafts of reading, writing, and mathematics.
 
 ---
 
-## Anti-Weaponization Charter
+*Current version: v0.11.0 "Auditor Exfiltration Guard". 544 tests. The mission hasn't changed: de-polarize, find common ground, then make the tool unnecessary.*
 
-Huginn & Muninn includes an [Anti-Weaponization Charter](ANTI-WEAPONIZATION-CHARTER.md)
-that defines what the system will not do: it cannot manufacture false common ground, cannot
-be used as a persuasion engine for any agenda, and acknowledges when moral positions are
-genuinely irreconcilable rather than forcing false synthesis.
-
-"Not every disagreement is manufactured. Some are real. But the ones that are manufactured
-deserve to be seen."
+*Author: Jochen Schmiedbauer*

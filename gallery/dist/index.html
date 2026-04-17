@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Huginn &amp; Muninn -- Scenario Gallery</title>
-  <meta name="description" content="20 real-world conspiracy and misinformation claims analyzed through a 6-agent AI pipeline that finds common ground across ideological divides.">
+  <meta name="description" content="21 real-world conspiracy and misinformation claims analyzed through a 6-agent AI pipeline that finds common ground across ideological divides.">
   <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -70,6 +70,7 @@
     font-size: 0.875rem;
   }
   .site-nav a:hover { color: var(--white); }
+  .site-nav a.active { color: var(--white); font-weight: 600; }
 
   /* Category sections */
   .category-section { padding: 48px 0; border-bottom: 1px solid var(--border); }
@@ -211,27 +212,39 @@
   .metrics-table tr:last-child td { border-bottom: none; }
 
   .section {
-    padding: 32px 0;
+    padding: 40px 0;
     border-bottom: 1px solid var(--border);
   }
   .section:last-child { border-bottom: none; }
 
   .section h2 {
-    font-size: 1.25rem;
-    margin-bottom: 16px;
-    padding-bottom: 8px;
+    font-size: 1.3rem;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
     border-bottom: 2px solid var(--bg);
+    letter-spacing: -0.01em;
   }
 
-  .section p { margin-bottom: 12px; color: #2C3E50; }
+  .section p { margin-bottom: 16px; color: #2C3E50; }
   .section p:last-child { margin-bottom: 0; }
 
   .intro-note {
     color: var(--gray);
     font-size: 0.875rem;
     font-style: italic;
-    margin-bottom: 12px;
+    margin-bottom: 16px;
   }
+
+  /* Prose blocks: long-form text with proper paragraph spacing */
+  .prose {
+    font-size: 0.95rem;
+    line-height: 1.75;
+    color: #34495E;
+  }
+  .prose p {
+    margin-bottom: 16px;
+  }
+  .prose p:last-child { margin-bottom: 0; }
 
   /* Needs pills */
   .needs-list {
@@ -288,28 +301,30 @@
   .technique-text { font-size: 0.9rem; color: #2C3E50; line-height: 1.6; }
 
   /* Socratic dialogue */
-  .dialogue-round { margin-bottom: 20px; }
+  .dialogue-round { margin-bottom: 28px; }
+  .dialogue-round:last-child { margin-bottom: 0; }
   .round-label {
     font-size: 0.75rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
   }
   .round-1 .round-label { color: var(--teal); }
   .round-2 .round-label { color: var(--navy); }
   .round-3 .round-label { color: #6C3483; }
 
   .dialogue-bubble {
-    padding: 16px 18px;
+    padding: 20px 24px;
     border-radius: 8px;
-    font-size: 0.9rem;
-    line-height: 1.65;
-    white-space: pre-wrap;
+    font-size: 0.92rem;
+    line-height: 1.75;
   }
-  .round-1 .dialogue-bubble { background: #EAF7F4; border-left: 3px solid var(--teal); }
-  .round-2 .dialogue-bubble { background: #EAF0F7; border-left: 3px solid var(--navy); }
-  .round-3 .dialogue-bubble { background: #F5EEF8; border-left: 3px solid #6C3483; }
+  .dialogue-bubble p { margin-bottom: 12px; }
+  .dialogue-bubble p:last-child { margin-bottom: 0; }
+  .round-1 .dialogue-bubble { background: #EAF7F4; border-left: 4px solid var(--teal); }
+  .round-2 .dialogue-bubble { background: #EAF0F7; border-left: 4px solid var(--navy); }
+  .round-3 .dialogue-bubble { background: #F5EEF8; border-left: 4px solid #6C3483; }
 
   /* Reframe */
   .reframe-block {
@@ -356,8 +371,52 @@
   }
   .finding-severity-low    { color: var(--teal); font-size: 0.75rem; font-weight: 600; }
   .finding-severity-medium { color: var(--amber); font-size: 0.75rem; font-weight: 600; }
-  .finding-severity-high   { color: var(--red); font-size: 0.75rem; font-weight: 600; }
+  .finding-severity-high     { color: var(--red); font-size: 0.75rem; font-weight: 600; }
+  .finding-severity-critical { color: #8B0000; font-size: 0.75rem; font-weight: 700; }
   .finding-description { font-size: 0.875rem; color: #2C3E50; }
+
+  /* Scoped diagnostics (v0.8.0+) */
+  .diagnostics-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 12px;
+  }
+  @media (max-width: 640px) { .diagnostics-grid { grid-template-columns: 1fr; } }
+  .diagnostic-card {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    background: var(--bg);
+  }
+  .diagnostic-card h4 {
+    margin: 0 0 6px;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--gray);
+  }
+  .diagnostic-card p { margin: 0; font-size: 0.9rem; line-height: 1.6; }
+  .diagnostic-note { font-size: 0.78rem; color: var(--gray); font-style: italic; margin-bottom: 4px !important; }
+  .posture-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    background: #F5F5F5;
+    color: #555;
+  }
+  .posture-inoculation_first  { background: #FFF3E0; color: #E65100; }
+  .posture-relational_first   { background: #E3F2FD; color: #1565C0; }
+  .pattern-density-warning {
+    background: #FFF8E1;
+    border-left: 4px solid var(--amber);
+    padding: 10px 14px;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.875rem;
+    margin-top: 8px;
+  }
   .finding-body { padding: 10px 14px; border-top: 1px solid var(--border); }
   .finding-rec {
     font-size: 0.8rem;
@@ -384,6 +443,117 @@
   .scenario-nav .disabled { color: var(--gray); pointer-events: none; }
 
   /* Responsive */
+  /* Evaluation methodology table */
+  .evaluation-section { background: #FAFBFD; margin: 0 -32px; padding: 40px 32px; border-bottom: 1px solid var(--border); }
+  .eval-summary { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+  .eval-overall { font-size: 2rem; font-weight: 700; color: var(--navy); }
+  .eval-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  .eval-table th { text-align: left; padding: 10px 12px; border-bottom: 2px solid var(--border); color: var(--gray); font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; }
+  .eval-table td { padding: 10px 12px; border-bottom: 1px solid #EEF1F5; }
+  .eval-table td:first-child { font-weight: 600; text-transform: capitalize; }
+  .eval-weight, .eval-score { text-align: center; font-variant-numeric: tabular-nums; }
+  .eval-status { text-align: center; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.04em; }
+  .eval-pass .eval-status { color: var(--green); }
+  .eval-partial .eval-status { color: var(--amber); }
+  .eval-fail .eval-status { color: var(--red); }
+  .eval-desc { color: var(--gray); font-size: 0.8rem; }
+  .eval-note { margin-top: 16px; font-size: 0.82rem; color: var(--gray); line-height: 1.6; }
+
+  /* Essay page styles */
+  .essay-prose {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #2C3E50;
+    max-width: 760px;
+  }
+  .essay-prose h2 {
+    font-size: 1.35rem;
+    margin-top: 40px;
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--bg);
+  }
+  .essay-prose h3 {
+    font-size: 1.1rem;
+    margin-top: 28px;
+    margin-bottom: 10px;
+    color: var(--navy);
+  }
+  .essay-prose h4 {
+    font-size: 1rem;
+    margin-top: 20px;
+    margin-bottom: 8px;
+    color: #34495E;
+  }
+  .essay-prose p { margin-bottom: 18px; }
+  .essay-prose ul, .essay-prose ol { margin: 0 0 18px 24px; }
+  .essay-prose li { margin-bottom: 8px; line-height: 1.75; }
+  .essay-prose strong { color: var(--navy); font-weight: 700; }
+  .essay-prose em { font-style: italic; }
+  .essay-prose hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 36px 0;
+  }
+  .essay-prose blockquote {
+    border-left: 4px solid var(--teal);
+    padding: 8px 20px;
+    margin: 20px 0;
+    background: var(--bg);
+    color: #34495E;
+    font-style: italic;
+  }
+  .essay-prose code {
+    background: var(--bg);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: 'SFMono-Regular', Consolas, monospace;
+    font-size: 0.88em;
+  }
+  .essay-prose .essay-meta {
+    color: var(--gray);
+    font-size: 0.875rem;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .essay-prose .references {
+    font-size: 0.88rem;
+    color: #34495E;
+    line-height: 1.65;
+  }
+  .essay-prose .references p { margin-bottom: 10px; }
+
+  /* Essay card styles (index page) */
+  .essay-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px;
+    transition: box-shadow 0.15s;
+    display: flex;
+    flex-direction: column;
+  }
+  .essay-card:hover { box-shadow: 0 4px 16px rgba(27, 42, 74, 0.12); }
+  .essay-card .card-id { color: #6C3483; }
+  .essay-card h3 {
+    font-size: 1.15rem;
+    margin-bottom: 8px;
+    line-height: 1.35;
+  }
+  .essay-card .essay-summary {
+    color: #34495E;
+    font-size: 0.92rem;
+    line-height: 1.6;
+    flex: 1;
+    margin-bottom: 14px;
+  }
+  .essay-card .essay-date {
+    font-size: 0.8rem;
+    color: var(--gray);
+    margin-bottom: 10px;
+  }
+
   @media (max-width: 640px) {
     .site-header h1 { font-size: 1.5rem; }
     .cards-grid { grid-template-columns: 1fr; }
@@ -391,6 +561,8 @@
     .scenario-nav { flex-direction: column; align-items: flex-start; }
     .metrics-table { font-size: 0.8rem; }
     .metrics-table th, .metrics-table td { padding: 8px 10px; }
+    .essay-prose { font-size: 0.95rem; }
+    .essay-prose h2 { font-size: 1.2rem; }
   }
 
     .stats-bar {
@@ -412,7 +584,7 @@
 <header class="site-header">
   <div class="container">
     <h1>Huginn &amp; Muninn &mdash; Scenario Gallery</h1>
-    <p class="subtitle">20 real-world conspiracy and misinformation claims, analyzed through a 6-agent AI pipeline</p>
+    <p class="subtitle">21 real-world conspiracy and misinformation claims, analyzed through a 6-agent AI pipeline</p>
     <p class="intro">
       Each scenario asks three questions: What legitimate need does this claim serve?
       What manipulation techniques are being used, and by whom?
@@ -423,9 +595,16 @@
   </div>
 </header>
 
+<nav class="site-nav">
+  <div class="container">
+    <a href="index.html" class="active">Gallery</a>
+    <a href="graph.html">Knowledge Graph</a>
+  </div>
+</nav>
+
 <div class="stats-bar">
   <div class="container">
-    <div class="stat-item"><strong>20</strong> scenarios</div>
+    <div class="stat-item"><strong>21</strong> scenarios</div>
     <div class="stat-item"><strong>6</strong> categories</div>
     <div class="stat-item"><strong>6-agent</strong> pipeline</div>
     <div class="stat-item"><strong>3 questions</strong> per claim</div>
@@ -434,6 +613,24 @@
 
 <main>
   
+      <div class="category-section">
+        <div class="container">
+          <div class="category-header">
+            <h2>Essays &amp; Framework Applications</h2>
+            <p class="category-intro">Long-form notes where the Three Questions framework is applied to questions about the framework itself.</p>
+          </div>
+          <div class="cards-grid">
+            
+    <a class="essay-card" href="essays/sophists-and-the-three-questions.html" style="text-decoration:none;color:inherit;">
+      <div class="card-id">Essay</div>
+      <h3>The Sophists and the Three Questions</h3>
+      <div class="essay-date">April 17, 2026</div>
+      <div class="essay-summary">Were the Sophists of 5th century BCE Athens unfairly maligned by their Socratic critics? The Three Questions framework analyzes a claim about its own philosophical roots.</div>
+      <div class="card-link">Read &rarr;</div>
+    </a>
+          </div>
+        </div>
+      </div>
       <div class="category-section">
         <div class="container">
           <div class="category-header">
@@ -696,6 +893,27 @@
         <span class="badge badge-kernel-true">Kernel of Truth</span>
       </div>
       <a class="card-link" href="MD-02.html">Read analysis &rarr;</a>
+    </div>
+          </div>
+        </div>
+      </div>
+      <div class="category-section">
+        <div class="container">
+          <div class="category-header">
+            <h2>Science Controversy</h2>
+            <p class="category-intro">Claims that weaponize legitimate scientific data by cherry-picking findings and suppressing context to manufacture false certainty.</p>
+          </div>
+          <div class="cards-grid">
+            
+    <div class="card">
+      <div class="card-id">SC-01</div>
+      <div class="card-claim">IQ differences between racial groups are primarily genetic, and this scientific finding is being suppressed...</div>
+      <div class="card-meta">
+        <span class="badge badge-version">v5</span>
+        <span class="badge badge-hard">Hard</span>
+        <span class="badge badge-kernel-true">Kernel of Truth</span>
+      </div>
+      <a class="card-link" href="SC-01.html">Read analysis &rarr;</a>
     </div>
           </div>
         </div>

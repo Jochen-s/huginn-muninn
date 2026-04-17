@@ -70,6 +70,7 @@
     font-size: 0.875rem;
   }
   .site-nav a:hover { color: var(--white); }
+  .site-nav a.active { color: var(--white); font-weight: 600; }
 
   /* Category sections */
   .category-section { padding: 48px 0; border-bottom: 1px solid var(--border); }
@@ -211,27 +212,39 @@
   .metrics-table tr:last-child td { border-bottom: none; }
 
   .section {
-    padding: 32px 0;
+    padding: 40px 0;
     border-bottom: 1px solid var(--border);
   }
   .section:last-child { border-bottom: none; }
 
   .section h2 {
-    font-size: 1.25rem;
-    margin-bottom: 16px;
-    padding-bottom: 8px;
+    font-size: 1.3rem;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
     border-bottom: 2px solid var(--bg);
+    letter-spacing: -0.01em;
   }
 
-  .section p { margin-bottom: 12px; color: #2C3E50; }
+  .section p { margin-bottom: 16px; color: #2C3E50; }
   .section p:last-child { margin-bottom: 0; }
 
   .intro-note {
     color: var(--gray);
     font-size: 0.875rem;
     font-style: italic;
-    margin-bottom: 12px;
+    margin-bottom: 16px;
   }
+
+  /* Prose blocks: long-form text with proper paragraph spacing */
+  .prose {
+    font-size: 0.95rem;
+    line-height: 1.75;
+    color: #34495E;
+  }
+  .prose p {
+    margin-bottom: 16px;
+  }
+  .prose p:last-child { margin-bottom: 0; }
 
   /* Needs pills */
   .needs-list {
@@ -288,28 +301,30 @@
   .technique-text { font-size: 0.9rem; color: #2C3E50; line-height: 1.6; }
 
   /* Socratic dialogue */
-  .dialogue-round { margin-bottom: 20px; }
+  .dialogue-round { margin-bottom: 28px; }
+  .dialogue-round:last-child { margin-bottom: 0; }
   .round-label {
     font-size: 0.75rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
   }
   .round-1 .round-label { color: var(--teal); }
   .round-2 .round-label { color: var(--navy); }
   .round-3 .round-label { color: #6C3483; }
 
   .dialogue-bubble {
-    padding: 16px 18px;
+    padding: 20px 24px;
     border-radius: 8px;
-    font-size: 0.9rem;
-    line-height: 1.65;
-    white-space: pre-wrap;
+    font-size: 0.92rem;
+    line-height: 1.75;
   }
-  .round-1 .dialogue-bubble { background: #EAF7F4; border-left: 3px solid var(--teal); }
-  .round-2 .dialogue-bubble { background: #EAF0F7; border-left: 3px solid var(--navy); }
-  .round-3 .dialogue-bubble { background: #F5EEF8; border-left: 3px solid #6C3483; }
+  .dialogue-bubble p { margin-bottom: 12px; }
+  .dialogue-bubble p:last-child { margin-bottom: 0; }
+  .round-1 .dialogue-bubble { background: #EAF7F4; border-left: 4px solid var(--teal); }
+  .round-2 .dialogue-bubble { background: #EAF0F7; border-left: 4px solid var(--navy); }
+  .round-3 .dialogue-bubble { background: #F5EEF8; border-left: 4px solid #6C3483; }
 
   /* Reframe */
   .reframe-block {
@@ -356,8 +371,52 @@
   }
   .finding-severity-low    { color: var(--teal); font-size: 0.75rem; font-weight: 600; }
   .finding-severity-medium { color: var(--amber); font-size: 0.75rem; font-weight: 600; }
-  .finding-severity-high   { color: var(--red); font-size: 0.75rem; font-weight: 600; }
+  .finding-severity-high     { color: var(--red); font-size: 0.75rem; font-weight: 600; }
+  .finding-severity-critical { color: #8B0000; font-size: 0.75rem; font-weight: 700; }
   .finding-description { font-size: 0.875rem; color: #2C3E50; }
+
+  /* Scoped diagnostics (v0.8.0+) */
+  .diagnostics-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 12px;
+  }
+  @media (max-width: 640px) { .diagnostics-grid { grid-template-columns: 1fr; } }
+  .diagnostic-card {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    background: var(--bg);
+  }
+  .diagnostic-card h4 {
+    margin: 0 0 6px;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--gray);
+  }
+  .diagnostic-card p { margin: 0; font-size: 0.9rem; line-height: 1.6; }
+  .diagnostic-note { font-size: 0.78rem; color: var(--gray); font-style: italic; margin-bottom: 4px !important; }
+  .posture-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    background: #F5F5F5;
+    color: #555;
+  }
+  .posture-inoculation_first  { background: #FFF3E0; color: #E65100; }
+  .posture-relational_first   { background: #E3F2FD; color: #1565C0; }
+  .pattern-density-warning {
+    background: #FFF8E1;
+    border-left: 4px solid var(--amber);
+    padding: 10px 14px;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.875rem;
+    margin-top: 8px;
+  }
   .finding-body { padding: 10px 14px; border-top: 1px solid var(--border); }
   .finding-rec {
     font-size: 0.8rem;
@@ -384,6 +443,117 @@
   .scenario-nav .disabled { color: var(--gray); pointer-events: none; }
 
   /* Responsive */
+  /* Evaluation methodology table */
+  .evaluation-section { background: #FAFBFD; margin: 0 -32px; padding: 40px 32px; border-bottom: 1px solid var(--border); }
+  .eval-summary { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+  .eval-overall { font-size: 2rem; font-weight: 700; color: var(--navy); }
+  .eval-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  .eval-table th { text-align: left; padding: 10px 12px; border-bottom: 2px solid var(--border); color: var(--gray); font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; }
+  .eval-table td { padding: 10px 12px; border-bottom: 1px solid #EEF1F5; }
+  .eval-table td:first-child { font-weight: 600; text-transform: capitalize; }
+  .eval-weight, .eval-score { text-align: center; font-variant-numeric: tabular-nums; }
+  .eval-status { text-align: center; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.04em; }
+  .eval-pass .eval-status { color: var(--green); }
+  .eval-partial .eval-status { color: var(--amber); }
+  .eval-fail .eval-status { color: var(--red); }
+  .eval-desc { color: var(--gray); font-size: 0.8rem; }
+  .eval-note { margin-top: 16px; font-size: 0.82rem; color: var(--gray); line-height: 1.6; }
+
+  /* Essay page styles */
+  .essay-prose {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #2C3E50;
+    max-width: 760px;
+  }
+  .essay-prose h2 {
+    font-size: 1.35rem;
+    margin-top: 40px;
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--bg);
+  }
+  .essay-prose h3 {
+    font-size: 1.1rem;
+    margin-top: 28px;
+    margin-bottom: 10px;
+    color: var(--navy);
+  }
+  .essay-prose h4 {
+    font-size: 1rem;
+    margin-top: 20px;
+    margin-bottom: 8px;
+    color: #34495E;
+  }
+  .essay-prose p { margin-bottom: 18px; }
+  .essay-prose ul, .essay-prose ol { margin: 0 0 18px 24px; }
+  .essay-prose li { margin-bottom: 8px; line-height: 1.75; }
+  .essay-prose strong { color: var(--navy); font-weight: 700; }
+  .essay-prose em { font-style: italic; }
+  .essay-prose hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 36px 0;
+  }
+  .essay-prose blockquote {
+    border-left: 4px solid var(--teal);
+    padding: 8px 20px;
+    margin: 20px 0;
+    background: var(--bg);
+    color: #34495E;
+    font-style: italic;
+  }
+  .essay-prose code {
+    background: var(--bg);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: 'SFMono-Regular', Consolas, monospace;
+    font-size: 0.88em;
+  }
+  .essay-prose .essay-meta {
+    color: var(--gray);
+    font-size: 0.875rem;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .essay-prose .references {
+    font-size: 0.88rem;
+    color: #34495E;
+    line-height: 1.65;
+  }
+  .essay-prose .references p { margin-bottom: 10px; }
+
+  /* Essay card styles (index page) */
+  .essay-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px;
+    transition: box-shadow 0.15s;
+    display: flex;
+    flex-direction: column;
+  }
+  .essay-card:hover { box-shadow: 0 4px 16px rgba(27, 42, 74, 0.12); }
+  .essay-card .card-id { color: #6C3483; }
+  .essay-card h3 {
+    font-size: 1.15rem;
+    margin-bottom: 8px;
+    line-height: 1.35;
+  }
+  .essay-card .essay-summary {
+    color: #34495E;
+    font-size: 0.92rem;
+    line-height: 1.6;
+    flex: 1;
+    margin-bottom: 14px;
+  }
+  .essay-card .essay-date {
+    font-size: 0.8rem;
+    color: var(--gray);
+    margin-bottom: 10px;
+  }
+
   @media (max-width: 640px) {
     .site-header h1 { font-size: 1.5rem; }
     .cards-grid { grid-template-columns: 1fr; }
@@ -391,10 +561,19 @@
     .scenario-nav { flex-direction: column; align-items: flex-start; }
     .metrics-table { font-size: 0.8rem; }
     .metrics-table th, .metrics-table td { padding: 8px 10px; }
+    .essay-prose { font-size: 0.95rem; }
+    .essay-prose h2 { font-size: 1.2rem; }
   }
 </style>
 </head>
 <body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a href="index.html">Gallery</a>
+    <a href="graph.html">Knowledge Graph</a>
+  </div>
+</nav>
 
 <header class="scenario-header">
   <div class="content">
@@ -445,35 +624,35 @@
   <div class="section">
     <h2>Inferential Gap</h2>
     <p class="intro-note">Where the evidence ends and the leap begins.</p>
-    <p>The claim &#39;the election was stolen through widespread voter fraud&#39; contains identifiable kernels of truth and identifiable leaps. KERNEL OF TRUTH 1: Small-scale voter fraud occurs. The Heritage Foundation Election Fraud Database documents approximately 1,500 proven instances since 1979. This is real. THE LEAP: From &#39;small-scale fraud occurs&#39; to &#39;fraud occurred at a scale of tens of thousands in multiple states simultaneously in 2020.&#39; This is unsupported because: every specific large-scale fraud allegation was investigated and debunked, court filings presented no evidence meeting legal standards of proof, and Trump&#39;s own AG stated no fraud at a scale to change the outcome was found. KERNEL OF TRUTH 2: COVID-era election changes were implemented quickly, creating genuine procedural concerns. THE LEAP: From &#39;procedures changed rapidly&#39; to &#39;those changes enabled massive coordinated fraud.&#39; This is unsupported because: states that expanded mail voting (both red and blue states) all showed consistent patterns, hand recounts in Georgia matched machine counts, and bipartisan election observers were present throughout. KERNEL OF TRUTH 3: Some election technology had glitches. A software error in Antrim County, Michigan briefly showed incorrect unofficial results before being caught and corrected in the normal canvassing process. THE LEAP: From &#39;one county had a quickly-corrected error&#39; to &#39;Dominion machines were programmed to systematically flip votes nationwide.&#39; This is unsupported because: the Antrim County error was human (a settings misconfiguration, not software manipulation), it was caught within hours through normal procedures, Dominion machines produce paper ballots that can be (and were) hand-audited, and no forensic audit anywhere found evidence of software vote-flipping. KERNEL OF TRUTH 4: Institutional trust was already low before 2020. Decades of broken promises, partisan polarization, and genuine government failures had eroded trust. THE LEAP: From &#39;institutions have sometimes failed us&#39; to &#39;every institution that found no fraud is part of the conspiracy.&#39; This is unfalsifiable, which is itself a diagnostic sign: if no evidence can disprove the claim, it has left the domain of verifiable fact.</p>
+    <div class="prose"><p>The claim &#39;the election was stolen through widespread voter fraud&#39; contains identifiable kernels of truth and identifiable leaps. KERNEL OF TRUTH 1: Small-scale voter fraud occurs. The Heritage Foundation Election Fraud Database documents approximately 1,500 proven instances since 1979. This is real. THE LEAP: From &#39;small-scale fraud occurs&#39; to &#39;fraud occurred at a scale of tens of thousands in multiple states simultaneously in 2020.&#39; This is unsupported because: every specific large-scale fraud allegation was investigated and debunked, court filings presented no evidence meeting legal standards of proof, and Trump&#39;s own AG stated no fraud at a scale to change the outcome was found. KERNEL OF TRUTH 2: COVID-era election changes were implemented quickly, creating genuine procedural concerns. THE LEAP: From &#39;procedures changed rapidly&#39; to &#39;those changes enabled massive coordinated fraud.&#39; This is unsupported because: states that expanded mail voting (both red and blue states) all showed consistent patterns, hand recounts in Georgia matched machine counts, and bipartisan election observers were present throughout. KERNEL OF TRUTH 3: Some election technology had glitches. A software error in Antrim County, Michigan briefly showed incorrect unofficial results before being caught and corrected in the normal canvassing process. THE LEAP: From &#39;one county had a quickly-corrected error&#39; to &#39;Dominion machines were programmed to systematically flip votes nationwide.&#39; This is unsupported because: the Antrim County error was human (a settings misconfiguration, not software manipulation), it was caught within hours through normal procedures, Dominion machines produce paper ballots that can be (and were) hand-audited, and no forensic audit anywhere found evidence of software vote-flipping. KERNEL OF TRUTH 4: Institutional trust was already low before 2020. Decades of broken promises, partisan polarization, and genuine government failures had eroded trust. THE LEAP: From &#39;institutions have sometimes failed us&#39; to &#39;every institution that found no fraud is part of the conspiracy.&#39; This is unfalsifiable, which is itself a diagnostic sign: if no evidence can disprove the claim, it has left the domain of verifiable fact.</p></div>
   </div>
 
   <div class="section">
     <h2>Common Ground</h2>
-    <p>People who believe the election was stolen and people who believe it was legitimate share far more common ground than the polarized framing suggests. Gallup (2023) found that 60% of Americans across party lines believe the government is corrupt. Pew Research (2024) found that 72% of Americans believe elected officials do not care what people like them think. Both sides agree that: (1) Election integrity matters. A 2021 Pew survey found 82% of Americans (including 94% of Republicans and 73% of Democrats) said it is very important that elections are administered well. (2) Voter access matters. Both sides want eligible voters to be able to vote easily, though they disagree on where the greater threat lies (fraud vs. suppression). (3) Transparency in counting matters. Both sides support measures like bipartisan poll watchers, paper ballot trails, and post-election audits. (4) Money in politics is corrosive. Large majorities across party lines support campaign finance reform. (5) Media trustworthiness has declined. Gallup (2022) found trust in mass media at 34%, a historic low, shared across the spectrum. The fundamental disagreement is not about WHETHER elections should be secure, transparent, and accessible. It is about WHETHER the specific fraud claims made about the 2020 election are supported by evidence.</p>
+    <div class="prose"><p>People who believe the election was stolen and people who believe it was legitimate share far more common ground than the polarized framing suggests. Gallup (2023) found that 60% of Americans across party lines believe the government is corrupt. Pew Research (2024) found that 72% of Americans believe elected officials do not care what people like them think. Both sides agree that: (1) Election integrity matters. A 2021 Pew survey found 82% of Americans (including 94% of Republicans and 73% of Democrats) said it is very important that elections are administered well. (2) Voter access matters. Both sides want eligible voters to be able to vote easily, though they disagree on where the greater threat lies (fraud vs. suppression). (3) Transparency in counting matters. Both sides support measures like bipartisan poll watchers, paper ballot trails, and post-election audits. (4) Money in politics is corrosive. Large majorities across party lines support campaign finance reform. (5) Media trustworthiness has declined. Gallup (2022) found trust in mass media at 34%, a historic low, shared across the spectrum. The fundamental disagreement is not about WHETHER elections should be secure, transparent, and accessible. It is about WHETHER the specific fraud claims made about the 2020 election are supported by evidence.</p></div>
   </div>
 
   <div class="section">
     <h2>Narrative Deconstruction</h2>
-    <p>The stolen election narrative follows a three-stage construction pattern that exploits genuine democratic vulnerabilities. Stage 1 (Legitimate concern): American election administration has real weaknesses. It is decentralized across 10,000+ jurisdictions, relies on aging technology in some areas, and voter registration rolls are imperfect. Small-scale fraud cases do occur (the Heritage Foundation database documents approximately 1,500 proven cases since 1979 out of billions of ballots cast). COVID-era changes to mail voting were implemented rapidly and inconsistently. These are real issues that deserve attention. Stage 2 (Inferential leap): From &#39;election systems have imperfections&#39; to &#39;the entire 2020 election was coordinated fraud sufficient to change the outcome.&#39; This leap requires believing that fraud occurred at a scale of tens of thousands of votes across multiple states simultaneously, that it was coordinated across Republican and Democratic election officials, that it evaded detection by observers, audits, recounts, and judicial scrutiny, and that no participant in this massive operation has produced firsthand evidence despite enormous financial and legal incentives to do so. Stage 3 (Capture and redirect): Legitimate election integrity energy was captured and redirected. Instead of channeling concern into bipartisan election reform (paper ballot trails, audit procedures, voter registration maintenance), the narrative channeled it into: (a) personal loyalty to one candidate, (b) rejection of institutional verification (courts, agencies, bipartisan officials), (c) fundraising that enriched political actors rather than funding election security, and (d) ultimately, political violence. The result is that people who genuinely care about election integrity have been directed away from the reforms that would actually improve it.</p>
+    <div class="prose"><p>The stolen election narrative follows a three-stage construction pattern that exploits genuine democratic vulnerabilities. Stage 1 (Legitimate concern): American election administration has real weaknesses. It is decentralized across 10,000+ jurisdictions, relies on aging technology in some areas, and voter registration rolls are imperfect. Small-scale fraud cases do occur (the Heritage Foundation database documents approximately 1,500 proven cases since 1979 out of billions of ballots cast). COVID-era changes to mail voting were implemented rapidly and inconsistently. These are real issues that deserve attention. Stage 2 (Inferential leap): From &#39;election systems have imperfections&#39; to &#39;the entire 2020 election was coordinated fraud sufficient to change the outcome.&#39; This leap requires believing that fraud occurred at a scale of tens of thousands of votes across multiple states simultaneously, that it was coordinated across Republican and Democratic election officials, that it evaded detection by observers, audits, recounts, and judicial scrutiny, and that no participant in this massive operation has produced firsthand evidence despite enormous financial and legal incentives to do so. Stage 3 (Capture and redirect): Legitimate election integrity energy was captured and redirected. Instead of channeling concern into bipartisan election reform (paper ballot trails, audit procedures, voter registration maintenance), the narrative channeled it into: (a) personal loyalty to one candidate, (b) rejection of institutional verification (courts, agencies, bipartisan officials), (c) fundraising that enriched political actors rather than funding election security, and (d) ultimately, political violence. The result is that people who genuinely care about election integrity have been directed away from the reforms that would actually improve it.</p></div>
   </div>
 
   
     <div class="section">
       <h2>Feasibility Assessment</h2>
-      <p>The &#39;stolen election&#39; claim implies specific organizational and logistical requirements. SCALE OF COORDINATION: Biden won the Electoral College 306-232. To reverse the outcome required flipping at least three states. The closest margins: Arizona (10,457 votes), Georgia (11,779), Wisconsin (20,682). Manufacturing or destroying approximately 43,000 net votes across three states, each with different election systems, laws, and bipartisan administration, requires coordination across multiple independent jurisdictions. SECRECY REQUIREMENT: A conspiracy of this scale would require involvement of hundreds to thousands of people across party lines. Georgia&#39;s election was administered by a Republican Secretary of State (Raffensperger) and audited by Republican-controlled bodies. Arizona&#39;s Maricopa County Board of Supervisors is majority-Republican. The conspiracy theory requires that Republican officials in multiple states participated in or failed to detect fraud that benefited their political opponent. No firsthand participant has come forward despite: multiple criminal immunity deals offered to cooperating witnesses, enormous media and book deal incentives, and the protection that comes from being embraced by the political movement alleging fraud. AUDIT RESILIENCE: Georgia conducted three counts (machine count, full hand recount, machine recount). All three produced consistent results within normal margins. Arizona&#39;s Maricopa County was subjected to a months-long audit by Cyber Ninjas (a firm hired by Republican state senators). The Cyber Ninjas audit ultimately found Biden gained 99 votes beyond the certified count, confirming rather than undermining the original result. STATISTICAL VERIFICATION: The &#39;blue shift&#39; (late-counted mail ballots favoring Biden) was predicted weeks before the election by analysts at FiveThirtyEight, Axios, and academic election analysts. It occurred because Trump explicitly told supporters to vote in person while Biden encouraged mail voting. States that counted mail ballots first (like Florida) showed an early Biden lead that shifted toward Trump as in-person votes were counted. The pattern was symmetric and predictable, not anomalous.</p>
+      <div class="prose"><p>The &#39;stolen election&#39; claim implies specific organizational and logistical requirements. SCALE OF COORDINATION: Biden won the Electoral College 306-232. To reverse the outcome required flipping at least three states. The closest margins: Arizona (10,457 votes), Georgia (11,779), Wisconsin (20,682). Manufacturing or destroying approximately 43,000 net votes across three states, each with different election systems, laws, and bipartisan administration, requires coordination across multiple independent jurisdictions. SECRECY REQUIREMENT: A conspiracy of this scale would require involvement of hundreds to thousands of people across party lines. Georgia&#39;s election was administered by a Republican Secretary of State (Raffensperger) and audited by Republican-controlled bodies. Arizona&#39;s Maricopa County Board of Supervisors is majority-Republican. The conspiracy theory requires that Republican officials in multiple states participated in or failed to detect fraud that benefited their political opponent. No firsthand participant has come forward despite: multiple criminal immunity deals offered to cooperating witnesses, enormous media and book deal incentives, and the protection that comes from being embraced by the political movement alleging fraud. AUDIT RESILIENCE: Georgia conducted three counts (machine count, full hand recount, machine recount). All three produced consistent results within normal margins. Arizona&#39;s Maricopa County was subjected to a months-long audit by Cyber Ninjas (a firm hired by Republican state senators). The Cyber Ninjas audit ultimately found Biden gained 99 votes beyond the certified count, confirming rather than undermining the original result. STATISTICAL VERIFICATION: The &#39;blue shift&#39; (late-counted mail ballots favoring Biden) was predicted weeks before the election by analysts at FiveThirtyEight, Axios, and academic election analysts. It occurred because Trump explicitly told supporters to vote in person while Biden encouraged mail voting. States that counted mail ballots first (like Florida) showed an early Biden lead that shifted toward Trump as in-person votes were counted. The pattern was symmetric and predictable, not anomalous.</p></div>
     </div>
 
   
     <div class="section">
       <h2>Commercial Interests</h2>
-      <p>Multiple parties profited financially from the stolen election narrative. SAVE AMERICA PAC: The January 6 Committee documented that Trump raised over $250 million between November 3, 2020 and January 6, 2021 using fundraising emails and texts citing election fraud. FEC filings show much of this money went to Save America PAC general expenses rather than to legal challenges. The committee characterized this as &#39;the big rip-off.&#39; Save America PAC spent funds on Trump properties, staff salaries, and the January 6 rally itself. FOX NEWS: While Fox ultimately paid $787.5 million to settle the Dominion lawsuit, during November-December 2020, amplifying fraud claims was a direct response to audience and revenue loss. Internal emails showed executives worried about losing viewers to Newsmax and OAN. Fox News generated approximately $1.5 billion in advertising revenue in 2020. MIKE LINDELL / MYPILLOW: Lindell&#39;s alignment with the stolen election narrative created a niche customer base. MyPillow sales reportedly increased among Trump supporters even as the company lost retail distribution in major chains. Lindell spent tens of millions on election fraud promotion, which functioned as brand marketing within the MAGA ecosystem. DINESH D&#39;SOUZA / &#39;2000 MULES&#39;: The film grossed an estimated $10-12 million in theatrical and streaming revenue. D&#39;Souza promoted it through paid appearances and political events. NEWSMAX AND OAN: Both networks saw viewership spikes during the period when they most aggressively covered fraud claims. OAN reportedly saw its audience increase 588% in the week following the election. STEVE BANNON AND ADJACENT MEDIA: Bannon&#39;s &#39;War Room&#39; podcast, which heavily promoted stolen election content, grew its audience significantly and monetized through advertising and donations. THE GATEWAY PUNDIT: Traffic to the site spiked during the election fraud period, translating to advertising revenue. Jim Hoft (founder) was indicted in Arizona&#39;s fake electors case. LEGAL FUNDRAISING INDUSTRY: Multiple legal funds and organizations raised money for &#39;election integrity&#39; challenges, generating legal fees. Estimated total direct monetization of the stolen election narrative: $300-500 million in the first year alone, across all actors.</p>
+      <div class="prose"><p>Multiple parties profited financially from the stolen election narrative. SAVE AMERICA PAC: The January 6 Committee documented that Trump raised over $250 million between November 3, 2020 and January 6, 2021 using fundraising emails and texts citing election fraud. FEC filings show much of this money went to Save America PAC general expenses rather than to legal challenges. The committee characterized this as &#39;the big rip-off.&#39; Save America PAC spent funds on Trump properties, staff salaries, and the January 6 rally itself. FOX NEWS: While Fox ultimately paid $787.5 million to settle the Dominion lawsuit, during November-December 2020, amplifying fraud claims was a direct response to audience and revenue loss. Internal emails showed executives worried about losing viewers to Newsmax and OAN. Fox News generated approximately $1.5 billion in advertising revenue in 2020. MIKE LINDELL / MYPILLOW: Lindell&#39;s alignment with the stolen election narrative created a niche customer base. MyPillow sales reportedly increased among Trump supporters even as the company lost retail distribution in major chains. Lindell spent tens of millions on election fraud promotion, which functioned as brand marketing within the MAGA ecosystem. DINESH D&#39;SOUZA / &#39;2000 MULES&#39;: The film grossed an estimated $10-12 million in theatrical and streaming revenue. D&#39;Souza promoted it through paid appearances and political events. NEWSMAX AND OAN: Both networks saw viewership spikes during the period when they most aggressively covered fraud claims. OAN reportedly saw its audience increase 588% in the week following the election. STEVE BANNON AND ADJACENT MEDIA: Bannon&#39;s &#39;War Room&#39; podcast, which heavily promoted stolen election content, grew its audience significantly and monetized through advertising and donations. THE GATEWAY PUNDIT: Traffic to the site spiked during the election fraud period, translating to advertising revenue. Jim Hoft (founder) was indicted in Arizona&#39;s fake electors case. LEGAL FUNDRAISING INDUSTRY: Multiple legal funds and organizations raised money for &#39;election integrity&#39; challenges, generating legal fees. Estimated total direct monetization of the stolen election narrative: $300-500 million in the first year alone, across all actors.</p></div>
     </div>
 
   
     <div class="section">
       <h2>Perception Gap</h2>
-      <p>More in Common&#39;s &#39;Hidden Tribes&#39; research (2019) found Americans overestimate the extremism of political opponents by roughly 2x. Applied to the election fraud debate: Many who believe the election was stolen perceive Biden voters as not caring about election integrity or as actively supporting fraud. In reality, large majorities of Democrats also support election security measures (voter ID requirements are supported by 80% of Americans including 62% of Democrats per Monmouth 2021). Conversely, many who dismiss fraud claims perceive Trump supporters as anti-democratic authoritarians who want to overturn elections. In reality, many Trump supporters are motivated by genuine concern about election fairness and feel their voices are not heard by institutions. A January 2021 Quinnipiac poll found 77% of Republicans believed there was widespread fraud, while 2% of Democrats did. This 75-point perception gap on the same factual question is itself the crisis: not because one side is right and the other wrong (the evidence overwhelmingly shows no widespread fraud), but because 77% of one party lost faith in the most fundamental democratic process. Bridging that gap requires understanding what eroded that trust, not just insisting the election was fair.</p>
+      <div class="prose"><p>More in Common&#39;s &#39;Hidden Tribes&#39; research (2019) found Americans overestimate the extremism of political opponents by roughly 2x. Applied to the election fraud debate: Many who believe the election was stolen perceive Biden voters as not caring about election integrity or as actively supporting fraud. In reality, large majorities of Democrats also support election security measures (voter ID requirements are supported by 80% of Americans including 62% of Democrats per Monmouth 2021). Conversely, many who dismiss fraud claims perceive Trump supporters as anti-democratic authoritarians who want to overturn elections. In reality, many Trump supporters are motivated by genuine concern about election fairness and feel their voices are not heard by institutions. A January 2021 Quinnipiac poll found 77% of Republicans believed there was widespread fraud, while 2% of Democrats did. This 75-point perception gap on the same factual question is itself the crisis: not because one side is right and the other wrong (the evidence overwhelmingly shows no widespread fraud), but because 77% of one party lost faith in the most fundamental democratic process. Bridging that gap requires understanding what eroded that trust, not just insisting the election was fair.</p></div>
     </div>
 
   <div class="section">
@@ -482,15 +661,15 @@
     
     <div class="dialogue-round round-1">
       <div class="round-label">Round 1: Perspective-Getting</div>
-      <div class="dialogue-bubble">Round 1 (Perspective-getting): I hear you saying that something went wrong with the 2020 election and that the outcome doesn&#39;t reflect what voters actually chose. I want you to know that caring about election integrity is not unreasonable. There are real concerns worth taking seriously: election systems in the US are decentralized and uneven, some jurisdictions use aging technology, and the rapid expansion of mail voting during COVID did create genuine procedural questions. Small-scale fraud cases are documented. And institutions have given people reasons to distrust them before. When you see vote counts change dramatically late at night, when rules seem to shift during the process, when the outcome differs from what you expected, the instinct to question is a healthy democratic reflex. What specific evidence was most convincing to you that something went wrong?</div>
+      <div class="dialogue-bubble"><p>Round 1 (Perspective-getting): I hear you saying that something went wrong with the 2020 election and that the outcome doesn&#39;t reflect what voters actually chose. I want you to know that caring about election integrity is not unreasonable. There are real concerns worth taking seriously: election systems in the US are decentralized and uneven, some jurisdictions use aging technology, and the rapid expansion of mail voting during COVID did create genuine procedural questions. Small-scale fraud cases are documented. And institutions have given people reasons to distrust them before. When you see vote counts change dramatically late at night, when rules seem to shift during the process, when the outcome differs from what you expected, the instinct to question is a healthy democratic reflex. What specific evidence was most convincing to you that something went wrong?</p></div>
     </div>
     <div class="dialogue-round round-2">
       <div class="round-label">Round 2: Guided Examination</div>
-      <div class="dialogue-bubble">Round 2 (Counter-evidence as systemic pattern question): That&#39;s worth examining closely. Here&#39;s a pattern that shows up across history that might be relevant: when a claim generates enormous amounts of money for specific people, it&#39;s worth asking whether the claim is being maintained because the evidence supports it or because the revenue depends on it. In the months after the election, over $250 million was raised through emails citing fraud, much of it going not to legal challenges but to a general-purpose PAC. A major cable network amplified claims its own hosts privately called &#39;insane&#39; and &#39;ludicrous&#39; because they were losing viewers to competitors. A documentary making specific fraud claims was pulled from distribution when its own data sources admitted under oath they had no evidence. And here&#39;s something worth sitting with: the election in Georgia was run by a Republican Secretary of State who certified Biden&#39;s win after three separate counts, including a full hand recount. The audit in Arizona was conducted by a firm hired by Republican senators, and it confirmed Biden&#39;s margin. The courts that rejected the cases included judges appointed by Trump. If you were designing a conspiracy, would you expect it to survive scrutiny from people in your own party, at every level, in every state? What would it mean if the institutional checks actually worked the way they&#39;re supposed to?</div>
+      <div class="dialogue-bubble"><p>Round 2 (Counter-evidence as systemic pattern question): That&#39;s worth examining closely. Here&#39;s a pattern that shows up across history that might be relevant: when a claim generates enormous amounts of money for specific people, it&#39;s worth asking whether the claim is being maintained because the evidence supports it or because the revenue depends on it. In the months after the election, over $250 million was raised through emails citing fraud, much of it going not to legal challenges but to a general-purpose PAC. A major cable network amplified claims its own hosts privately called &#39;insane&#39; and &#39;ludicrous&#39; because they were losing viewers to competitors. A documentary making specific fraud claims was pulled from distribution when its own data sources admitted under oath they had no evidence. And here&#39;s something worth sitting with: the election in Georgia was run by a Republican Secretary of State who certified Biden&#39;s win after three separate counts, including a full hand recount. The audit in Arizona was conducted by a firm hired by Republican senators, and it confirmed Biden&#39;s margin. The courts that rejected the cases included judges appointed by Trump. If you were designing a conspiracy, would you expect it to survive scrutiny from people in your own party, at every level, in every state? What would it mean if the institutional checks actually worked the way they&#39;re supposed to?</p></div>
     </div>
     <div class="dialogue-round round-3">
       <div class="round-label">Round 3: Integration</div>
-      <div class="dialogue-bubble">Round 3 (Complexity + common ground): These are hard questions, and there&#39;s no expectation of easy answers. Here&#39;s what the data actually shows about where Americans agree: 82% believe it is very important that elections are well-administered. Large majorities across party lines support paper ballot trails, post-election audits, and bipartisan election observation. Most Americans, regardless of party, believe money in politics is corrosive and that media is untrustworthy. Those are not small agreements. Those are the foundation for actual election reform. The energy that has gone into relitigating 2020 could have been channeled into making 2024 and 2028 more secure, transparent, and trustworthy. Some of it has been: bipartisan legislation in multiple states has improved audit procedures and ballot tracking. That happened because people who disagree about 2020 found shared ground on what elections should look like going forward. What would it look like if you took your concern about election integrity and directed it toward the specific, concrete reforms that both sides actually agree on, rather than toward a claim that every court, audit, and investigation, including those run by your own party, has been unable to substantiate?</div>
+      <div class="dialogue-bubble"><p>Round 3 (Complexity + common ground): These are hard questions, and there&#39;s no expectation of easy answers. Here&#39;s what the data actually shows about where Americans agree: 82% believe it is very important that elections are well-administered. Large majorities across party lines support paper ballot trails, post-election audits, and bipartisan election observation. Most Americans, regardless of party, believe money in politics is corrosive and that media is untrustworthy. Those are not small agreements. Those are the foundation for actual election reform. The energy that has gone into relitigating 2020 could have been channeled into making 2024 and 2028 more secure, transparent, and trustworthy. Some of it has been: bipartisan legislation in multiple states has improved audit procedures and ballot tracking. That happened because people who disagree about 2020 found shared ground on what elections should look like going forward. What would it look like if you took your concern about election integrity and directed it toward the specific, concrete reforms that both sides actually agree on, rather than toward a claim that every court, audit, and investigation, including those run by your own party, has been unable to substantiate?</p></div>
     </div>
   </div>
 
@@ -499,6 +678,8 @@
     <h2>Reframe</h2>
     <blockquote class="reframe-block">You and the people you disagree with about this election share the same foundational value: you both believe your vote should count and that elections should be fair. That is not a trivial agreement. That is the bedrock of democratic life. You both want transparent processes, honest counting, and accountability when something goes wrong. The question is not whether election integrity matters. Everyone agrees it does. The question is whether the specific fraud claims made about 2020 are supported by the evidence when examined by courts, audits, and investigators, including those appointed by Trump himself. And there is a separate question worth asking: who raised money, gained viewers, or built political power by telling you the answer before the evidence was examined?</blockquote>
   </div>
+
+  
 
   <div class="section">
     <h2>Audit</h2>
@@ -510,7 +691,7 @@
     <ul class="findings-list">
     <li class="finding-item">
       <div class="finding-header">
-        <span class="finding-category">accuracy</span>
+        <span class="finding-category">Accuracy</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">The $250 million fundraising figure comes from the January 6 Committee report. While well-documented, precise...</span>
       </div>
@@ -522,7 +703,7 @@
     </li>
     <li class="finding-item">
       <div class="finding-header">
-        <span class="finding-category">completeness</span>
+        <span class="finding-category">Completeness</span>
         <span class="finding-severity-medium">MEDIUM</span>
         <span class="finding-description">The analysis could more explicitly address the international dimension. Foreign actors (Russian state media, foreign...</span>
       </div>
@@ -534,7 +715,7 @@
     </li>
     <li class="finding-item">
       <div class="finding-header">
-        <span class="finding-category">bias</span>
+        <span class="finding-category">Bias</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">The analysis correctly concludes that widespread fraud claims are unsupported by evidence, which is the consensus of...</span>
       </div>
@@ -546,7 +727,7 @@
     </li>
     <li class="finding-item">
       <div class="finding-header">
-        <span class="finding-category">manipulation</span>
+        <span class="finding-category">Manipulation</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">The Bridge Builder appropriately avoids false equivalence. The epistemic asymmetry is real: the evidence overwhelmingly...</span>
       </div>
@@ -558,7 +739,7 @@
     </li>
     <li class="finding-item">
       <div class="finding-header">
-        <span class="finding-category">quality</span>
+        <span class="finding-category">Quality</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">The feasibility check is strong in addressing organizational secrecy and audit resilience but could include more...</span>
       </div>
@@ -570,7 +751,7 @@
     </li>
     <li class="finding-item">
       <div class="finding-header">
-        <span class="finding-category">completeness</span>
+        <span class="finding-category">Completeness</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">The analysis does not address the longer-term consequences of the stolen election narrative on democratic...</span>
       </div>
@@ -582,7 +763,7 @@
     </li>
     <li class="finding-item">
       <div class="finding-header">
-        <span class="finding-category">accuracy</span>
+        <span class="finding-category">Accuracy</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">The Heritage Foundation Election Fraud Database is cited with approximately 1,500 cases since 1979. This number is...</span>
       </div>
@@ -593,6 +774,103 @@
       </div>
     </li></ul>
   </div>
+
+  
+    <div class="section evaluation-section">
+      <h2>Evaluation Methodology</h2>
+      <p class="intro-note">Full transparency on how this scenario was scored. 12 weighted checks, each independently measurable. <a href="https://github.com/Jochen-s/huginn-muninn/blob/main/tests/run_bridge_scenarios.py" target="_blank" rel="noopener">View source code</a></p>
+      <div class="eval-summary">
+        <span class="eval-overall">77.5%</span>
+        <span class="badge badge-warn">Grade B</span>
+      </div>
+      <div style="overflow-x:auto">
+        <table class="eval-table">
+          <thead>
+            <tr>
+              <th>Check</th>
+              <th>Weight</th>
+              <th>Score</th>
+              <th>Status</th>
+              <th>What It Measures</th>
+            </tr>
+          </thead>
+          <tbody><tr class="eval-partial">
+      <td>needs coverage</td>
+      <td class="eval-weight">7%</td>
+      <td class="eval-score">50%</td>
+      <td class="eval-status">PARTIAL</td>
+      <td class="eval-desc">Expected universal human needs matched against identified needs</td>
+    </tr><tr class="eval-pass">
+      <td>issue overlap quality</td>
+      <td class="eval-weight">6%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Common ground text is substantive (&gt;50 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>narrative deconstruction</td>
+      <td class="eval-weight">7%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Narrative deconstruction is substantive (&gt;100 characters)</td>
+    </tr><tr class="eval-fail">
+      <td>consensus explanation</td>
+      <td class="eval-weight">11%</td>
+      <td class="eval-score">0%</td>
+      <td class="eval-status">MISS</td>
+      <td class="eval-desc">Scientific/mainstream explanation &gt;200 chars with 3+ mechanism keywords</td>
+    </tr><tr class="eval-pass">
+      <td>inferential gap</td>
+      <td class="eval-weight">8%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Inferential gap analysis is substantive (&gt;50 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>feasibility check</td>
+      <td class="eval-weight">6%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Feasibility assessment is substantive (&gt;50 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>commercial motives</td>
+      <td class="eval-weight">6%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Commercial motive analysis is substantive (&gt;30 characters)</td>
+    </tr><tr class="eval-fail">
+      <td>technique naming</td>
+      <td class="eval-weight">8%</td>
+      <td class="eval-score">0%</td>
+      <td class="eval-status">MISS</td>
+      <td class="eval-desc">At least 1 technique named with mechanic (&gt;30 chars) and precedent (&gt;20 chars)</td>
+    </tr><tr class="eval-pass">
+      <td>perception gap</td>
+      <td class="eval-weight">5%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Perception gap analysis is substantive (&gt;30 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>socratic dialogue</td>
+      <td class="eval-weight">17%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">3 rounds, ends with question, Round 1 shows perspective-getting</td>
+    </tr><tr class="eval-pass">
+      <td>reframe quality</td>
+      <td class="eval-weight">7%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Reframe &gt;20 chars using shared-value language (we, together, both)</td>
+    </tr><tr class="eval-pass">
+      <td>no controlling language</td>
+      <td class="eval-weight">12%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Zero matches against 9 controlling phrases</td>
+    </tr></tbody>
+        </table>
+      </div>
+      <p class="eval-note">Overall score = weighted sum of individual check scores. Weights reflect the relative importance of each dimension to the project's mission: Socratic dialogue quality (17%) and controlling language detection (12%) are weighted highest because autonomy-supportive framing is the core differentiator.</p>
+    </div>
 
   <div class="scenario-nav">
     <a href="EN-02.html">&larr; EN-02: GMOs are poisoning our food supply and Monsanto...</a>

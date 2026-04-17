@@ -70,6 +70,7 @@
     font-size: 0.875rem;
   }
   .site-nav a:hover { color: var(--white); }
+  .site-nav a.active { color: var(--white); font-weight: 600; }
 
   /* Category sections */
   .category-section { padding: 48px 0; border-bottom: 1px solid var(--border); }
@@ -211,27 +212,39 @@
   .metrics-table tr:last-child td { border-bottom: none; }
 
   .section {
-    padding: 32px 0;
+    padding: 40px 0;
     border-bottom: 1px solid var(--border);
   }
   .section:last-child { border-bottom: none; }
 
   .section h2 {
-    font-size: 1.25rem;
-    margin-bottom: 16px;
-    padding-bottom: 8px;
+    font-size: 1.3rem;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
     border-bottom: 2px solid var(--bg);
+    letter-spacing: -0.01em;
   }
 
-  .section p { margin-bottom: 12px; color: #2C3E50; }
+  .section p { margin-bottom: 16px; color: #2C3E50; }
   .section p:last-child { margin-bottom: 0; }
 
   .intro-note {
     color: var(--gray);
     font-size: 0.875rem;
     font-style: italic;
-    margin-bottom: 12px;
+    margin-bottom: 16px;
   }
+
+  /* Prose blocks: long-form text with proper paragraph spacing */
+  .prose {
+    font-size: 0.95rem;
+    line-height: 1.75;
+    color: #34495E;
+  }
+  .prose p {
+    margin-bottom: 16px;
+  }
+  .prose p:last-child { margin-bottom: 0; }
 
   /* Needs pills */
   .needs-list {
@@ -288,28 +301,30 @@
   .technique-text { font-size: 0.9rem; color: #2C3E50; line-height: 1.6; }
 
   /* Socratic dialogue */
-  .dialogue-round { margin-bottom: 20px; }
+  .dialogue-round { margin-bottom: 28px; }
+  .dialogue-round:last-child { margin-bottom: 0; }
   .round-label {
     font-size: 0.75rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
   }
   .round-1 .round-label { color: var(--teal); }
   .round-2 .round-label { color: var(--navy); }
   .round-3 .round-label { color: #6C3483; }
 
   .dialogue-bubble {
-    padding: 16px 18px;
+    padding: 20px 24px;
     border-radius: 8px;
-    font-size: 0.9rem;
-    line-height: 1.65;
-    white-space: pre-wrap;
+    font-size: 0.92rem;
+    line-height: 1.75;
   }
-  .round-1 .dialogue-bubble { background: #EAF7F4; border-left: 3px solid var(--teal); }
-  .round-2 .dialogue-bubble { background: #EAF0F7; border-left: 3px solid var(--navy); }
-  .round-3 .dialogue-bubble { background: #F5EEF8; border-left: 3px solid #6C3483; }
+  .dialogue-bubble p { margin-bottom: 12px; }
+  .dialogue-bubble p:last-child { margin-bottom: 0; }
+  .round-1 .dialogue-bubble { background: #EAF7F4; border-left: 4px solid var(--teal); }
+  .round-2 .dialogue-bubble { background: #EAF0F7; border-left: 4px solid var(--navy); }
+  .round-3 .dialogue-bubble { background: #F5EEF8; border-left: 4px solid #6C3483; }
 
   /* Reframe */
   .reframe-block {
@@ -356,8 +371,52 @@
   }
   .finding-severity-low    { color: var(--teal); font-size: 0.75rem; font-weight: 600; }
   .finding-severity-medium { color: var(--amber); font-size: 0.75rem; font-weight: 600; }
-  .finding-severity-high   { color: var(--red); font-size: 0.75rem; font-weight: 600; }
+  .finding-severity-high     { color: var(--red); font-size: 0.75rem; font-weight: 600; }
+  .finding-severity-critical { color: #8B0000; font-size: 0.75rem; font-weight: 700; }
   .finding-description { font-size: 0.875rem; color: #2C3E50; }
+
+  /* Scoped diagnostics (v0.8.0+) */
+  .diagnostics-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 12px;
+  }
+  @media (max-width: 640px) { .diagnostics-grid { grid-template-columns: 1fr; } }
+  .diagnostic-card {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    background: var(--bg);
+  }
+  .diagnostic-card h4 {
+    margin: 0 0 6px;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--gray);
+  }
+  .diagnostic-card p { margin: 0; font-size: 0.9rem; line-height: 1.6; }
+  .diagnostic-note { font-size: 0.78rem; color: var(--gray); font-style: italic; margin-bottom: 4px !important; }
+  .posture-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    background: #F5F5F5;
+    color: #555;
+  }
+  .posture-inoculation_first  { background: #FFF3E0; color: #E65100; }
+  .posture-relational_first   { background: #E3F2FD; color: #1565C0; }
+  .pattern-density-warning {
+    background: #FFF8E1;
+    border-left: 4px solid var(--amber);
+    padding: 10px 14px;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.875rem;
+    margin-top: 8px;
+  }
   .finding-body { padding: 10px 14px; border-top: 1px solid var(--border); }
   .finding-rec {
     font-size: 0.8rem;
@@ -384,6 +443,117 @@
   .scenario-nav .disabled { color: var(--gray); pointer-events: none; }
 
   /* Responsive */
+  /* Evaluation methodology table */
+  .evaluation-section { background: #FAFBFD; margin: 0 -32px; padding: 40px 32px; border-bottom: 1px solid var(--border); }
+  .eval-summary { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+  .eval-overall { font-size: 2rem; font-weight: 700; color: var(--navy); }
+  .eval-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  .eval-table th { text-align: left; padding: 10px 12px; border-bottom: 2px solid var(--border); color: var(--gray); font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; }
+  .eval-table td { padding: 10px 12px; border-bottom: 1px solid #EEF1F5; }
+  .eval-table td:first-child { font-weight: 600; text-transform: capitalize; }
+  .eval-weight, .eval-score { text-align: center; font-variant-numeric: tabular-nums; }
+  .eval-status { text-align: center; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.04em; }
+  .eval-pass .eval-status { color: var(--green); }
+  .eval-partial .eval-status { color: var(--amber); }
+  .eval-fail .eval-status { color: var(--red); }
+  .eval-desc { color: var(--gray); font-size: 0.8rem; }
+  .eval-note { margin-top: 16px; font-size: 0.82rem; color: var(--gray); line-height: 1.6; }
+
+  /* Essay page styles */
+  .essay-prose {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #2C3E50;
+    max-width: 760px;
+  }
+  .essay-prose h2 {
+    font-size: 1.35rem;
+    margin-top: 40px;
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--bg);
+  }
+  .essay-prose h3 {
+    font-size: 1.1rem;
+    margin-top: 28px;
+    margin-bottom: 10px;
+    color: var(--navy);
+  }
+  .essay-prose h4 {
+    font-size: 1rem;
+    margin-top: 20px;
+    margin-bottom: 8px;
+    color: #34495E;
+  }
+  .essay-prose p { margin-bottom: 18px; }
+  .essay-prose ul, .essay-prose ol { margin: 0 0 18px 24px; }
+  .essay-prose li { margin-bottom: 8px; line-height: 1.75; }
+  .essay-prose strong { color: var(--navy); font-weight: 700; }
+  .essay-prose em { font-style: italic; }
+  .essay-prose hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 36px 0;
+  }
+  .essay-prose blockquote {
+    border-left: 4px solid var(--teal);
+    padding: 8px 20px;
+    margin: 20px 0;
+    background: var(--bg);
+    color: #34495E;
+    font-style: italic;
+  }
+  .essay-prose code {
+    background: var(--bg);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: 'SFMono-Regular', Consolas, monospace;
+    font-size: 0.88em;
+  }
+  .essay-prose .essay-meta {
+    color: var(--gray);
+    font-size: 0.875rem;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .essay-prose .references {
+    font-size: 0.88rem;
+    color: #34495E;
+    line-height: 1.65;
+  }
+  .essay-prose .references p { margin-bottom: 10px; }
+
+  /* Essay card styles (index page) */
+  .essay-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px;
+    transition: box-shadow 0.15s;
+    display: flex;
+    flex-direction: column;
+  }
+  .essay-card:hover { box-shadow: 0 4px 16px rgba(27, 42, 74, 0.12); }
+  .essay-card .card-id { color: #6C3483; }
+  .essay-card h3 {
+    font-size: 1.15rem;
+    margin-bottom: 8px;
+    line-height: 1.35;
+  }
+  .essay-card .essay-summary {
+    color: #34495E;
+    font-size: 0.92rem;
+    line-height: 1.6;
+    flex: 1;
+    margin-bottom: 14px;
+  }
+  .essay-card .essay-date {
+    font-size: 0.8rem;
+    color: var(--gray);
+    margin-bottom: 10px;
+  }
+
   @media (max-width: 640px) {
     .site-header h1 { font-size: 1.5rem; }
     .cards-grid { grid-template-columns: 1fr; }
@@ -391,10 +561,19 @@
     .scenario-nav { flex-direction: column; align-items: flex-start; }
     .metrics-table { font-size: 0.8rem; }
     .metrics-table th, .metrics-table td { padding: 8px 10px; }
+    .essay-prose { font-size: 0.95rem; }
+    .essay-prose h2 { font-size: 1.2rem; }
   }
 </style>
 </head>
 <body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a href="index.html">Gallery</a>
+    <a href="graph.html">Knowledge Graph</a>
+  </div>
+</nav>
 
 <header class="scenario-header">
   <div class="content">
@@ -445,35 +624,35 @@
   <div class="section">
     <h2>Inferential Gap</h2>
     <p class="intro-note">Where the evidence ends and the leap begins.</p>
-    <p>The kernel of truth is substantial and multi-layered: (1) The permanent federal bureaucracy is real and does exercise significant implementation discretion. Political scientists have documented this for a century (Weber 1922, Wilson 1989, Carpenter 2001). (2) Intelligence agencies have operated outside legal authority. MKUltra, COINTELPRO, warrantless surveillance, and Operation CHAOS are documented facts, not conspiracy theories. (3) Career officials have publicly acknowledged resisting presidential directives they considered dangerous (Miles Taylor op-ed, 2018). (4) The revolving door between government, lobbying, and industry creates networks of influence that are insufficiently transparent (documented by OpenSecrets/Center for Responsive Politics). (5) National security classification enables secrecy that can shield misconduct from democratic oversight. All of this is documented fact. The EXACT inferential leaps occur at these boundaries: Leap 1: &#39;Bureaucracies have institutional inertia&#39; to &#39;Officials secretly coordinate to maintain power.&#39; Institutional behavior does not require conspiracy. Agencies resisting policy changes because of legal obligations, professional norms, or mission commitment is structurally different from secret coordination. The former is observable and predictable from organizational theory; the latter requires evidence of actual coordination that has not been produced. Leap 2: &#39;Intelligence agencies have committed abuses&#39; to &#39;Intelligence agencies control the government.&#39; The Church Committee documented real abuses AND led to real reforms (FISA, intelligence committee oversight, Executive Order 12333). The existence of past abuses does not demonstrate ongoing unaccountable control, particularly when the very mechanism of discovery (congressional investigation) proves the system can self-correct. Leap 3: &#39;Some officials resisted Trump administration policies&#39; to &#39;A permanent shadow government opposes all democratic outcomes.&#39; The Miles Taylor episode involved a small number of senior political appointees (not career civil servants) who disagreed with specific policies. Extrapolating this to a government-wide conspiracy of 2.95 million employees requires evidence that has not been presented. Leap 4: &#39;The revolving door exists&#39; to &#39;A secret cabal coordinates everything.&#39; Washington&#39;s influence networks are well-documented and largely legal, though arguably insufficient regulated. The existence of professional networks and shared institutional cultures does not constitute evidence of a coordinated conspiracy to control the government.</p>
+    <div class="prose"><p>The kernel of truth is substantial and multi-layered: (1) The permanent federal bureaucracy is real and does exercise significant implementation discretion. Political scientists have documented this for a century (Weber 1922, Wilson 1989, Carpenter 2001). (2) Intelligence agencies have operated outside legal authority. MKUltra, COINTELPRO, warrantless surveillance, and Operation CHAOS are documented facts, not conspiracy theories. (3) Career officials have publicly acknowledged resisting presidential directives they considered dangerous (Miles Taylor op-ed, 2018). (4) The revolving door between government, lobbying, and industry creates networks of influence that are insufficiently transparent (documented by OpenSecrets/Center for Responsive Politics). (5) National security classification enables secrecy that can shield misconduct from democratic oversight. All of this is documented fact. The EXACT inferential leaps occur at these boundaries: Leap 1: &#39;Bureaucracies have institutional inertia&#39; to &#39;Officials secretly coordinate to maintain power.&#39; Institutional behavior does not require conspiracy. Agencies resisting policy changes because of legal obligations, professional norms, or mission commitment is structurally different from secret coordination. The former is observable and predictable from organizational theory; the latter requires evidence of actual coordination that has not been produced. Leap 2: &#39;Intelligence agencies have committed abuses&#39; to &#39;Intelligence agencies control the government.&#39; The Church Committee documented real abuses AND led to real reforms (FISA, intelligence committee oversight, Executive Order 12333). The existence of past abuses does not demonstrate ongoing unaccountable control, particularly when the very mechanism of discovery (congressional investigation) proves the system can self-correct. Leap 3: &#39;Some officials resisted Trump administration policies&#39; to &#39;A permanent shadow government opposes all democratic outcomes.&#39; The Miles Taylor episode involved a small number of senior political appointees (not career civil servants) who disagreed with specific policies. Extrapolating this to a government-wide conspiracy of 2.95 million employees requires evidence that has not been presented. Leap 4: &#39;The revolving door exists&#39; to &#39;A secret cabal coordinates everything.&#39; Washington&#39;s influence networks are well-documented and largely legal, though arguably insufficient regulated. The existence of professional networks and shared institutional cultures does not constitute evidence of a coordinated conspiracy to control the government.</p></div>
   </div>
 
   <div class="section">
     <h2>Common Ground</h2>
-    <p>Both people who worry about the &#39;deep state&#39; and people who dismiss the term share substantial common ground that is obscured by the conspiracy framing. Both groups: (1) Want elected officials to be able to implement the policies they were elected to pursue. Gallup polling (2023) shows that trust in government to &#39;handle domestic problems&#39; stands at 37%, down from 73% in 1972. This decline spans partisan affiliation. (2) Want government transparency. A 2023 Pew Research Center survey found that 71% of Americans say government should do more to make information about its activities available to the public. (3) Want accountability for intelligence community overreach. The post-Snowden FISA reform debate (USA FREEDOM Act, 2015) had bipartisan support, with both libertarian-leaning Republicans and civil-liberties Democrats voting for greater surveillance oversight. (4) Want institutional competence. The Government Accountability Office (GAO) identifies tens of billions in waste, fraud, and abuse annually; reducing this is a bipartisan goal. The core disagreement is not about whether unelected officials should have unchecked power (virtually no one argues they should), but about whether the remedy is democratic reform of institutions or dismantling the professional civil service entirely.</p>
+    <div class="prose"><p>Both people who worry about the &#39;deep state&#39; and people who dismiss the term share substantial common ground that is obscured by the conspiracy framing. Both groups: (1) Want elected officials to be able to implement the policies they were elected to pursue. Gallup polling (2023) shows that trust in government to &#39;handle domestic problems&#39; stands at 37%, down from 73% in 1972. This decline spans partisan affiliation. (2) Want government transparency. A 2023 Pew Research Center survey found that 71% of Americans say government should do more to make information about its activities available to the public. (3) Want accountability for intelligence community overreach. The post-Snowden FISA reform debate (USA FREEDOM Act, 2015) had bipartisan support, with both libertarian-leaning Republicans and civil-liberties Democrats voting for greater surveillance oversight. (4) Want institutional competence. The Government Accountability Office (GAO) identifies tens of billions in waste, fraud, and abuse annually; reducing this is a bipartisan goal. The core disagreement is not about whether unelected officials should have unchecked power (virtually no one argues they should), but about whether the remedy is democratic reform of institutions or dismantling the professional civil service entirely.</p></div>
   </div>
 
   <div class="section">
     <h2>Narrative Deconstruction</h2>
-    <p>The &#39;deep state&#39; narrative follows a classic radicalization escalation pattern with three stages. Stage 1 (Factual foundation): The permanent federal bureaucracy is real, large (approximately 2.95 million civilian employees per OPM 2023 data), and genuinely exercises implementation discretion. Career officials at agencies like the EPA, State Department, and DOJ do develop institutional cultures that can resist rapid policy changes. The intelligence community has a documented history of operating outside legal bounds (Church Committee findings, NSA mass surveillance). These are not conspiracy theories; they are the subject of mainstream political science. Stage 2 (Interpretive leap): From &#39;bureaucracies have institutional inertia and some agencies have overstepped their authority&#39; to &#39;there is a coordinated network of officials who secretly agree on goals and actively conspire to undermine elected leaders.&#39; This leap bypasses a critical distinction: institutional behavior (agencies tend to perpetuate their missions because that is how organizations work) is not the same as intentional conspiracy (people meeting secretly to coordinate opposition to democracy). Max Weber identified this dynamic in 1922 without needing a conspiracy theory to explain it. Stage 3 (Conspiratorial capture): The legitimate concern about democratic accountability gets captured by a narrative that (a) is unfalsifiable (any government action can be attributed to the &#39;deep state&#39;), (b) directs anger at career public servants rather than structural problems that could actually be reformed, (c) creates political justification for dismantling oversight mechanisms that protect citizens from government abuse (the ironic result is that attacking the &#39;deep state&#39; can reduce the very accountability mechanisms that citizens actually want), and (d) generates a market for media content, political fundraising, and products that profit from the anxiety.</p>
+    <div class="prose"><p>The &#39;deep state&#39; narrative follows a classic radicalization escalation pattern with three stages. Stage 1 (Factual foundation): The permanent federal bureaucracy is real, large (approximately 2.95 million civilian employees per OPM 2023 data), and genuinely exercises implementation discretion. Career officials at agencies like the EPA, State Department, and DOJ do develop institutional cultures that can resist rapid policy changes. The intelligence community has a documented history of operating outside legal bounds (Church Committee findings, NSA mass surveillance). These are not conspiracy theories; they are the subject of mainstream political science. Stage 2 (Interpretive leap): From &#39;bureaucracies have institutional inertia and some agencies have overstepped their authority&#39; to &#39;there is a coordinated network of officials who secretly agree on goals and actively conspire to undermine elected leaders.&#39; This leap bypasses a critical distinction: institutional behavior (agencies tend to perpetuate their missions because that is how organizations work) is not the same as intentional conspiracy (people meeting secretly to coordinate opposition to democracy). Max Weber identified this dynamic in 1922 without needing a conspiracy theory to explain it. Stage 3 (Conspiratorial capture): The legitimate concern about democratic accountability gets captured by a narrative that (a) is unfalsifiable (any government action can be attributed to the &#39;deep state&#39;), (b) directs anger at career public servants rather than structural problems that could actually be reformed, (c) creates political justification for dismantling oversight mechanisms that protect citizens from government abuse (the ironic result is that attacking the &#39;deep state&#39; can reduce the very accountability mechanisms that citizens actually want), and (d) generates a market for media content, political fundraising, and products that profit from the anxiety.</p></div>
   </div>
 
   
     <div class="section">
       <h2>Feasibility Assessment</h2>
-      <p>The &#39;shadow government&#39; hypothesis implies organizational requirements that can be assessed: COORDINATION PROBLEM: The US federal government comprises 438 agencies and sub-agencies (per USA.gov) with often competing mandates, budgets, and institutional cultures. The DOD and State Department regularly disagree on foreign policy. EPA and DOE have structural tensions around energy regulation. FBI and CIA have a documented history of institutional rivalry. Coordinating these agencies into a unified &#39;shadow government&#39; would require resolving conflicts that elected presidents with full constitutional authority struggle to manage. SECRECY SCALE: The claim implies that millions of federal employees share secret objectives. Yet the government demonstrably cannot keep even small-scale secrets: Snowden (one contractor) exposed NSA surveillance. Chelsea Manning (one private) leaked 700,000 classified documents. Daniel Ellsberg (one analyst) leaked the Pentagon Papers. Reality Winner (one contractor) leaked an NSA report. If a coordinated shadow government existed among millions of employees, the probability of zero successful whistleblowers or defectors is negligible. MOTIVATIONAL COHERENCE: Federal employees span the full political spectrum. OPM Federal Employee Viewpoint Survey data shows diverse political views. GS-level career employees include registered Democrats, Republicans, independents, and non-voters. The claim that these millions of people share a unified secret agenda contradicts observable political diversity within the federal workforce. INSTITUTIONAL ENTROPY: Organizations naturally resist coordination, not because of conspiracy but because of competing priorities, resource constraints, and institutional self-interest. The deep state hypothesis requires an organizational coherence that contradicts everything known about how large bureaucracies actually function.</p>
+      <div class="prose"><p>The &#39;shadow government&#39; hypothesis implies organizational requirements that can be assessed: COORDINATION PROBLEM: The US federal government comprises 438 agencies and sub-agencies (per USA.gov) with often competing mandates, budgets, and institutional cultures. The DOD and State Department regularly disagree on foreign policy. EPA and DOE have structural tensions around energy regulation. FBI and CIA have a documented history of institutional rivalry. Coordinating these agencies into a unified &#39;shadow government&#39; would require resolving conflicts that elected presidents with full constitutional authority struggle to manage. SECRECY SCALE: The claim implies that millions of federal employees share secret objectives. Yet the government demonstrably cannot keep even small-scale secrets: Snowden (one contractor) exposed NSA surveillance. Chelsea Manning (one private) leaked 700,000 classified documents. Daniel Ellsberg (one analyst) leaked the Pentagon Papers. Reality Winner (one contractor) leaked an NSA report. If a coordinated shadow government existed among millions of employees, the probability of zero successful whistleblowers or defectors is negligible. MOTIVATIONAL COHERENCE: Federal employees span the full political spectrum. OPM Federal Employee Viewpoint Survey data shows diverse political views. GS-level career employees include registered Democrats, Republicans, independents, and non-voters. The claim that these millions of people share a unified secret agenda contradicts observable political diversity within the federal workforce. INSTITUTIONAL ENTROPY: Organizations naturally resist coordination, not because of conspiracy but because of competing priorities, resource constraints, and institutional self-interest. The deep state hypothesis requires an organizational coherence that contradicts everything known about how large bureaucracies actually function.</p></div>
     </div>
 
   
     <div class="section">
       <h2>Commercial Interests</h2>
-      <p>Multiple parties profit financially and politically from deep state beliefs: MEDIA ECOSYSTEM: InfoWars (estimated $50-80M peak annual revenue) monetizes deep state content through supplement sales. The Epoch Times subscription model ($17.99/month, claimed 200,000+ subscribers in 2022) heavily promotes deep state narratives. The Daily Wire, Blaze TV, and similar platforms generate subscription and advertising revenue from this content. BOOK AND DOCUMENTARY INDUSTRY: Multiple bestselling books capitalize on the narrative: Jerome Corsi&#39;s &#39;Killing the Deep State&#39; (2018), Lee Smith&#39;s &#39;The Plot Against the President&#39; (2019), and numerous similar titles. Documentary content on platforms like Rumble and alternative media sites generates subscription and ad revenue. POLITICAL FUNDRAISING: &#39;Fight the deep state&#39; messaging has been used extensively in political fundraising emails and campaigns. The Trump campaign and allied PACs have raised hundreds of millions using deep state-adjacent messaging. WinRed (Republican fundraising platform) regularly features &#39;deep state&#39; language in solicitations. CONSULTING AND POLICY: The Heritage Foundation (2022 revenue: approximately $86M per IRS Form 990) used deep state framing to justify Project 2025&#39;s civil service reform proposals. Various policy organizations on both sides fundraise around the tension between professional bureaucracy and political control. SURVIVAL AND PREPAREDNESS INDUSTRY: &#39;Government collapse&#39; and &#39;deep state tyranny&#39; narratives drive sales of survivalist products, gold investments, and emergency preparedness supplies. Companies like MyPatriotSupply and various gold dealers advertise heavily on shows that promote deep state content. RUSSIAN STATE INTERESTS: While not financially profiting in a commercial sense, Russian state media investment in amplifying deep state narratives serves strategic interests in weakening Western democratic cohesion. RT&#39;s annual budget is approximately $300M (funded by Russian government).</p>
+      <div class="prose"><p>Multiple parties profit financially and politically from deep state beliefs: MEDIA ECOSYSTEM: InfoWars (estimated $50-80M peak annual revenue) monetizes deep state content through supplement sales. The Epoch Times subscription model ($17.99/month, claimed 200,000+ subscribers in 2022) heavily promotes deep state narratives. The Daily Wire, Blaze TV, and similar platforms generate subscription and advertising revenue from this content. BOOK AND DOCUMENTARY INDUSTRY: Multiple bestselling books capitalize on the narrative: Jerome Corsi&#39;s &#39;Killing the Deep State&#39; (2018), Lee Smith&#39;s &#39;The Plot Against the President&#39; (2019), and numerous similar titles. Documentary content on platforms like Rumble and alternative media sites generates subscription and ad revenue. POLITICAL FUNDRAISING: &#39;Fight the deep state&#39; messaging has been used extensively in political fundraising emails and campaigns. The Trump campaign and allied PACs have raised hundreds of millions using deep state-adjacent messaging. WinRed (Republican fundraising platform) regularly features &#39;deep state&#39; language in solicitations. CONSULTING AND POLICY: The Heritage Foundation (2022 revenue: approximately $86M per IRS Form 990) used deep state framing to justify Project 2025&#39;s civil service reform proposals. Various policy organizations on both sides fundraise around the tension between professional bureaucracy and political control. SURVIVAL AND PREPAREDNESS INDUSTRY: &#39;Government collapse&#39; and &#39;deep state tyranny&#39; narratives drive sales of survivalist products, gold investments, and emergency preparedness supplies. Companies like MyPatriotSupply and various gold dealers advertise heavily on shows that promote deep state content. RUSSIAN STATE INTERESTS: While not financially profiting in a commercial sense, Russian state media investment in amplifying deep state narratives serves strategic interests in weakening Western democratic cohesion. RT&#39;s annual budget is approximately $300M (funded by Russian government).</p></div>
     </div>
 
   
     <div class="section">
       <h2>Perception Gap</h2>
-      <p>People who worry about the deep state and people who dismiss the concept dramatically overestimate each other&#39;s positions. Research by More in Common (&#39;Hidden Tribes&#39;, 2018) found that Americans across the political spectrum overestimate the extremism of their opponents by roughly 2x. Applied here: deep state believers often perceive government defenders as naive authoritarians who trust government blindly, when polling shows that even government employees themselves express significant criticism of institutional dysfunction (OPM Federal Employee Viewpoint Survey). Conversely, people who dismiss deep state claims often perceive believers as unhinged conspiracy theorists, when surveys show that concerns about unelected bureaucratic power correlate with legitimate democratic values (desire for accountability, transparency, responsive governance). A 2020 Pew Research Center survey found that 75% of Americans want &#39;significant changes&#39; to the political system, and 58% say the system needs &#39;major changes&#39; or &#39;complete reform.&#39; This reform impulse spans partisan lines and reflects genuine democratic concern that the deep state narrative captures and redirects. The perception gap is politically useful: by caricaturing opponents, both sides avoid engaging with the legitimate institutional reform conversation that most Americans actually want to have.</p>
+      <div class="prose"><p>People who worry about the deep state and people who dismiss the concept dramatically overestimate each other&#39;s positions. Research by More in Common (&#39;Hidden Tribes&#39;, 2018) found that Americans across the political spectrum overestimate the extremism of their opponents by roughly 2x. Applied here: deep state believers often perceive government defenders as naive authoritarians who trust government blindly, when polling shows that even government employees themselves express significant criticism of institutional dysfunction (OPM Federal Employee Viewpoint Survey). Conversely, people who dismiss deep state claims often perceive believers as unhinged conspiracy theorists, when surveys show that concerns about unelected bureaucratic power correlate with legitimate democratic values (desire for accountability, transparency, responsive governance). A 2020 Pew Research Center survey found that 75% of Americans want &#39;significant changes&#39; to the political system, and 58% say the system needs &#39;major changes&#39; or &#39;complete reform.&#39; This reform impulse spans partisan lines and reflects genuine democratic concern that the deep state narrative captures and redirects. The perception gap is politically useful: by caricaturing opponents, both sides avoid engaging with the legitimate institutional reform conversation that most Americans actually want to have.</p></div>
     </div>
 
   <div class="section">
@@ -482,15 +661,15 @@
     
     <div class="dialogue-round round-1">
       <div class="round-label">Round 1: Perspective-Getting</div>
-      <div class="dialogue-bubble">Round 1 (Perspective-getting): I hear you saying that there are powerful people in government who were never elected and who can block or undermine what the voters chose. I want you to know that concern is grounded in real history. The CIA ran mind control experiments on American citizens without their knowledge for twenty years. The FBI infiltrated and tried to destroy civil rights organizations. The NSA collected the phone records of millions of Americans in a program that a federal court later ruled was illegal. These are documented facts, confirmed by congressional investigations and federal courts. When you look at that track record and conclude that unelected officials sometimes wield power that exceeds their democratic mandate, you are reading the historical evidence accurately. What is it about the current situation that concerns you most?</div>
+      <div class="dialogue-bubble"><p>Round 1 (Perspective-getting): I hear you saying that there are powerful people in government who were never elected and who can block or undermine what the voters chose. I want you to know that concern is grounded in real history. The CIA ran mind control experiments on American citizens without their knowledge for twenty years. The FBI infiltrated and tried to destroy civil rights organizations. The NSA collected the phone records of millions of Americans in a program that a federal court later ruled was illegal. These are documented facts, confirmed by congressional investigations and federal courts. When you look at that track record and conclude that unelected officials sometimes wield power that exceeds their democratic mandate, you are reading the historical evidence accurately. What is it about the current situation that concerns you most?</p></div>
     </div>
     <div class="dialogue-round round-2">
       <div class="round-label">Round 2: Guided Examination</div>
-      <div class="dialogue-bubble">Round 2 (Counter-evidence as systemic pattern question): That makes sense. I am curious about a pattern, though. When you look at how large organizations actually work, there is something interesting: the federal government has about 2.95 million civilian employees across 438 agencies that regularly disagree with each other. The Pentagon and the State Department fight over foreign policy. The EPA and the Department of Energy have competing mandates. The FBI and CIA have rivalries going back decades. Every major government secret in the past fifty years has been exposed by a single person: one analyst leaked the Pentagon Papers, one contractor exposed NSA surveillance, one private leaked hundreds of thousands of classified documents. If millions of people were coordinating a shadow government, what would you expect the odds to be that not one of them has produced evidence of the coordination itself? And here is another pattern worth considering: every time this kind of fear gains traction, there are organizations that profit from it, whether through media subscriptions, political donations, or products sold on the anxiety. Does someone benefit from you directing your accountability instinct at a shadowy conspiracy rather than at specific, nameable institutional problems that could actually be fixed?</div>
+      <div class="dialogue-bubble"><p>Round 2 (Counter-evidence as systemic pattern question): That makes sense. I am curious about a pattern, though. When you look at how large organizations actually work, there is something interesting: the federal government has about 2.95 million civilian employees across 438 agencies that regularly disagree with each other. The Pentagon and the State Department fight over foreign policy. The EPA and the Department of Energy have competing mandates. The FBI and CIA have rivalries going back decades. Every major government secret in the past fifty years has been exposed by a single person: one analyst leaked the Pentagon Papers, one contractor exposed NSA surveillance, one private leaked hundreds of thousands of classified documents. If millions of people were coordinating a shadow government, what would you expect the odds to be that not one of them has produced evidence of the coordination itself? And here is another pattern worth considering: every time this kind of fear gains traction, there are organizations that profit from it, whether through media subscriptions, political donations, or products sold on the anxiety. Does someone benefit from you directing your accountability instinct at a shadowy conspiracy rather than at specific, nameable institutional problems that could actually be fixed?</p></div>
     </div>
     <div class="dialogue-round round-3">
       <div class="round-label">Round 3: Integration</div>
-      <div class="dialogue-bubble">Round 3 (Complexity + common ground): Those are worth sitting with. Here is what I find interesting: there is actually a rich body of research on exactly the problem you are describing, just without the conspiracy framing. Political scientists have spent decades studying how agencies develop cultures that resist political direction, how the revolving door between government and industry creates influence networks, and how national security classification enables secrecy that shields misconduct. These are real, documented, structural problems. And they have real, documented solutions: stronger inspector general offices, better whistleblower protections, more aggressive congressional oversight, transparent lobbying rules, FOIA reform. The irony is that when the response to bureaucratic overreach is to replace career experts with political loyalists, the result is not more accountability but less. It is the career officials who blow the whistle, who testify before Congress, who refuse illegal orders. What would it look like if the energy going into fighting a secret conspiracy were redirected toward strengthening the specific democratic accountability mechanisms that actually work? Because your instinct that power should answer to the people is exactly the instinct that built every oversight institution we have.</div>
+      <div class="dialogue-bubble"><p>Round 3 (Complexity + common ground): Those are worth sitting with. Here is what I find interesting: there is actually a rich body of research on exactly the problem you are describing, just without the conspiracy framing. Political scientists have spent decades studying how agencies develop cultures that resist political direction, how the revolving door between government and industry creates influence networks, and how national security classification enables secrecy that shields misconduct. These are real, documented, structural problems. And they have real, documented solutions: stronger inspector general offices, better whistleblower protections, more aggressive congressional oversight, transparent lobbying rules, FOIA reform. The irony is that when the response to bureaucratic overreach is to replace career experts with political loyalists, the result is not more accountability but less. It is the career officials who blow the whistle, who testify before Congress, who refuse illegal orders. What would it look like if the energy going into fighting a secret conspiracy were redirected toward strengthening the specific democratic accountability mechanisms that actually work? Because your instinct that power should answer to the people is exactly the instinct that built every oversight institution we have.</p></div>
     </div>
   </div>
 
@@ -499,6 +678,8 @@
     <h2>Reframe</h2>
     <blockquote class="reframe-block">You and the people you disagree with about the deep state share the same fundamental concern: you both want a government that is accountable to the people it serves, that operates transparently, and that cannot abuse its power without consequences. That concern is legitimate. The federal bureaucracy is large, often opaque, and sometimes resistant to change. Intelligence agencies have a documented history of operating outside their legal authority. Career officials do exercise real power over policy implementation. These are facts, not conspiracy theories. The question is not whether unelected officials should have unchecked power. Virtually no one argues they should. The question is whether the most accurate description of the problem is a coordinated secret conspiracy among millions of government workers, or whether what you are observing is the well-documented tendency of large organizations to resist rapid change, protect their institutional interests, and sometimes overstep their authority. Because if it is the latter, there are proven democratic tools to address it: oversight, transparency legislation, whistleblower protections, inspector general investigations, and civil service reform. And if it is the former, those same tools become the first casualties when the response is to concentrate power rather than distribute accountability.</blockquote>
   </div>
+
+  
 
   <div class="section">
     <h2>Audit</h2>
@@ -510,7 +691,7 @@
     <ul class="findings-list">
     <li class="finding-item">
       <div class="finding-header">
-        <span class="finding-category">completeness</span>
+        <span class="finding-category">Completeness</span>
         <span class="finding-severity-medium">MEDIUM</span>
         <span class="finding-description">The analysis could more explicitly address the left-wing variant of &#39;deep state&#39; concerns. While the analysis focuses...</span>
       </div>
@@ -522,7 +703,7 @@
     </li>
     <li class="finding-item">
       <div class="finding-header">
-        <span class="finding-category">accuracy</span>
+        <span class="finding-category">Accuracy</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">The claim that &#39;approximately 2.95 million civilian employees&#39; is based on OPM data that includes the Postal Service....</span>
       </div>
@@ -534,7 +715,7 @@
     </li>
     <li class="finding-item">
       <div class="finding-header">
-        <span class="finding-category">bias</span>
+        <span class="finding-category">Bias</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">The analysis is appropriately balanced in acknowledging real bureaucratic dysfunction while challenging the conspiracy...</span>
       </div>
@@ -546,7 +727,7 @@
     </li>
     <li class="finding-item">
       <div class="finding-header">
-        <span class="finding-category">manipulation</span>
+        <span class="finding-category">Manipulation</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">The Bridge Builder&#39;s reframe effectively redirects from conspiracy to institutional reform, which is appropriate....</span>
       </div>
@@ -558,7 +739,7 @@
     </li>
     <li class="finding-item">
       <div class="finding-header">
-        <span class="finding-category">quality</span>
+        <span class="finding-category">Quality</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">The feasibility check&#39;s &#39;secrecy scale&#39; argument is strong but could acknowledge that not all deep state claims require...</span>
       </div>
@@ -570,7 +751,7 @@
     </li>
     <li class="finding-item">
       <div class="finding-header">
-        <span class="finding-category">completeness</span>
+        <span class="finding-category">Completeness</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">The origins section could reference the Unitary Executive Theory (a legitimate constitutional law debate about...</span>
       </div>
@@ -582,7 +763,7 @@
     </li>
     <li class="finding-item">
       <div class="finding-header">
-        <span class="finding-category">quality</span>
+        <span class="finding-category">Quality</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">The v2 additions (inferential_gap, feasibility_check, commercial_motives) are substantive and well-integrated. The...</span>
       </div>
@@ -593,6 +774,103 @@
       </div>
     </li></ul>
   </div>
+
+  
+    <div class="section evaluation-section">
+      <h2>Evaluation Methodology</h2>
+      <p class="intro-note">Full transparency on how this scenario was scored. 12 weighted checks, each independently measurable. <a href="https://github.com/Jochen-s/huginn-muninn/blob/main/tests/run_bridge_scenarios.py" target="_blank" rel="noopener">View source code</a></p>
+      <div class="eval-summary">
+        <span class="eval-overall">78.7%</span>
+        <span class="badge badge-warn">Grade B</span>
+      </div>
+      <div style="overflow-x:auto">
+        <table class="eval-table">
+          <thead>
+            <tr>
+              <th>Check</th>
+              <th>Weight</th>
+              <th>Score</th>
+              <th>Status</th>
+              <th>What It Measures</th>
+            </tr>
+          </thead>
+          <tbody><tr class="eval-partial">
+      <td>needs coverage</td>
+      <td class="eval-weight">7%</td>
+      <td class="eval-score">67%</td>
+      <td class="eval-status">PARTIAL</td>
+      <td class="eval-desc">Expected universal human needs matched against identified needs</td>
+    </tr><tr class="eval-pass">
+      <td>issue overlap quality</td>
+      <td class="eval-weight">6%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Common ground text is substantive (&gt;50 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>narrative deconstruction</td>
+      <td class="eval-weight">7%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Narrative deconstruction is substantive (&gt;100 characters)</td>
+    </tr><tr class="eval-fail">
+      <td>consensus explanation</td>
+      <td class="eval-weight">11%</td>
+      <td class="eval-score">0%</td>
+      <td class="eval-status">MISS</td>
+      <td class="eval-desc">Scientific/mainstream explanation &gt;200 chars with 3+ mechanism keywords</td>
+    </tr><tr class="eval-pass">
+      <td>inferential gap</td>
+      <td class="eval-weight">8%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Inferential gap analysis is substantive (&gt;50 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>feasibility check</td>
+      <td class="eval-weight">6%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Feasibility assessment is substantive (&gt;50 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>commercial motives</td>
+      <td class="eval-weight">6%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Commercial motive analysis is substantive (&gt;30 characters)</td>
+    </tr><tr class="eval-fail">
+      <td>technique naming</td>
+      <td class="eval-weight">8%</td>
+      <td class="eval-score">0%</td>
+      <td class="eval-status">MISS</td>
+      <td class="eval-desc">At least 1 technique named with mechanic (&gt;30 chars) and precedent (&gt;20 chars)</td>
+    </tr><tr class="eval-pass">
+      <td>perception gap</td>
+      <td class="eval-weight">5%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Perception gap analysis is substantive (&gt;30 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>socratic dialogue</td>
+      <td class="eval-weight">17%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">3 rounds, ends with question, Round 1 shows perspective-getting</td>
+    </tr><tr class="eval-pass">
+      <td>reframe quality</td>
+      <td class="eval-weight">7%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Reframe &gt;20 chars using shared-value language (we, together, both)</td>
+    </tr><tr class="eval-pass">
+      <td>no controlling language</td>
+      <td class="eval-weight">12%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Zero matches against 9 controlling phrases</td>
+    </tr></tbody>
+        </table>
+      </div>
+      <p class="eval-note">Overall score = weighted sum of individual check scores. Weights reflect the relative importance of each dimension to the project's mission: Socratic dialogue quality (17%) and controlling language detection (12%) are weighted highest because autonomy-supportive framing is the core differentiator.</p>
+    </div>
 
   <div class="scenario-nav">
     <a href="GP-02.html">&larr; GP-02: A secret New World Order of elites controls all...</a>

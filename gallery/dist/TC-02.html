@@ -70,6 +70,7 @@
     font-size: 0.875rem;
   }
   .site-nav a:hover { color: var(--white); }
+  .site-nav a.active { color: var(--white); font-weight: 600; }
 
   /* Category sections */
   .category-section { padding: 48px 0; border-bottom: 1px solid var(--border); }
@@ -211,27 +212,39 @@
   .metrics-table tr:last-child td { border-bottom: none; }
 
   .section {
-    padding: 32px 0;
+    padding: 40px 0;
     border-bottom: 1px solid var(--border);
   }
   .section:last-child { border-bottom: none; }
 
   .section h2 {
-    font-size: 1.25rem;
-    margin-bottom: 16px;
-    padding-bottom: 8px;
+    font-size: 1.3rem;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
     border-bottom: 2px solid var(--bg);
+    letter-spacing: -0.01em;
   }
 
-  .section p { margin-bottom: 12px; color: #2C3E50; }
+  .section p { margin-bottom: 16px; color: #2C3E50; }
   .section p:last-child { margin-bottom: 0; }
 
   .intro-note {
     color: var(--gray);
     font-size: 0.875rem;
     font-style: italic;
-    margin-bottom: 12px;
+    margin-bottom: 16px;
   }
+
+  /* Prose blocks: long-form text with proper paragraph spacing */
+  .prose {
+    font-size: 0.95rem;
+    line-height: 1.75;
+    color: #34495E;
+  }
+  .prose p {
+    margin-bottom: 16px;
+  }
+  .prose p:last-child { margin-bottom: 0; }
 
   /* Needs pills */
   .needs-list {
@@ -288,28 +301,30 @@
   .technique-text { font-size: 0.9rem; color: #2C3E50; line-height: 1.6; }
 
   /* Socratic dialogue */
-  .dialogue-round { margin-bottom: 20px; }
+  .dialogue-round { margin-bottom: 28px; }
+  .dialogue-round:last-child { margin-bottom: 0; }
   .round-label {
     font-size: 0.75rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
   }
   .round-1 .round-label { color: var(--teal); }
   .round-2 .round-label { color: var(--navy); }
   .round-3 .round-label { color: #6C3483; }
 
   .dialogue-bubble {
-    padding: 16px 18px;
+    padding: 20px 24px;
     border-radius: 8px;
-    font-size: 0.9rem;
-    line-height: 1.65;
-    white-space: pre-wrap;
+    font-size: 0.92rem;
+    line-height: 1.75;
   }
-  .round-1 .dialogue-bubble { background: #EAF7F4; border-left: 3px solid var(--teal); }
-  .round-2 .dialogue-bubble { background: #EAF0F7; border-left: 3px solid var(--navy); }
-  .round-3 .dialogue-bubble { background: #F5EEF8; border-left: 3px solid #6C3483; }
+  .dialogue-bubble p { margin-bottom: 12px; }
+  .dialogue-bubble p:last-child { margin-bottom: 0; }
+  .round-1 .dialogue-bubble { background: #EAF7F4; border-left: 4px solid var(--teal); }
+  .round-2 .dialogue-bubble { background: #EAF0F7; border-left: 4px solid var(--navy); }
+  .round-3 .dialogue-bubble { background: #F5EEF8; border-left: 4px solid #6C3483; }
 
   /* Reframe */
   .reframe-block {
@@ -356,8 +371,52 @@
   }
   .finding-severity-low    { color: var(--teal); font-size: 0.75rem; font-weight: 600; }
   .finding-severity-medium { color: var(--amber); font-size: 0.75rem; font-weight: 600; }
-  .finding-severity-high   { color: var(--red); font-size: 0.75rem; font-weight: 600; }
+  .finding-severity-high     { color: var(--red); font-size: 0.75rem; font-weight: 600; }
+  .finding-severity-critical { color: #8B0000; font-size: 0.75rem; font-weight: 700; }
   .finding-description { font-size: 0.875rem; color: #2C3E50; }
+
+  /* Scoped diagnostics (v0.8.0+) */
+  .diagnostics-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 12px;
+  }
+  @media (max-width: 640px) { .diagnostics-grid { grid-template-columns: 1fr; } }
+  .diagnostic-card {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    background: var(--bg);
+  }
+  .diagnostic-card h4 {
+    margin: 0 0 6px;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--gray);
+  }
+  .diagnostic-card p { margin: 0; font-size: 0.9rem; line-height: 1.6; }
+  .diagnostic-note { font-size: 0.78rem; color: var(--gray); font-style: italic; margin-bottom: 4px !important; }
+  .posture-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    background: #F5F5F5;
+    color: #555;
+  }
+  .posture-inoculation_first  { background: #FFF3E0; color: #E65100; }
+  .posture-relational_first   { background: #E3F2FD; color: #1565C0; }
+  .pattern-density-warning {
+    background: #FFF8E1;
+    border-left: 4px solid var(--amber);
+    padding: 10px 14px;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.875rem;
+    margin-top: 8px;
+  }
   .finding-body { padding: 10px 14px; border-top: 1px solid var(--border); }
   .finding-rec {
     font-size: 0.8rem;
@@ -384,6 +443,117 @@
   .scenario-nav .disabled { color: var(--gray); pointer-events: none; }
 
   /* Responsive */
+  /* Evaluation methodology table */
+  .evaluation-section { background: #FAFBFD; margin: 0 -32px; padding: 40px 32px; border-bottom: 1px solid var(--border); }
+  .eval-summary { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+  .eval-overall { font-size: 2rem; font-weight: 700; color: var(--navy); }
+  .eval-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  .eval-table th { text-align: left; padding: 10px 12px; border-bottom: 2px solid var(--border); color: var(--gray); font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; }
+  .eval-table td { padding: 10px 12px; border-bottom: 1px solid #EEF1F5; }
+  .eval-table td:first-child { font-weight: 600; text-transform: capitalize; }
+  .eval-weight, .eval-score { text-align: center; font-variant-numeric: tabular-nums; }
+  .eval-status { text-align: center; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.04em; }
+  .eval-pass .eval-status { color: var(--green); }
+  .eval-partial .eval-status { color: var(--amber); }
+  .eval-fail .eval-status { color: var(--red); }
+  .eval-desc { color: var(--gray); font-size: 0.8rem; }
+  .eval-note { margin-top: 16px; font-size: 0.82rem; color: var(--gray); line-height: 1.6; }
+
+  /* Essay page styles */
+  .essay-prose {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #2C3E50;
+    max-width: 760px;
+  }
+  .essay-prose h2 {
+    font-size: 1.35rem;
+    margin-top: 40px;
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--bg);
+  }
+  .essay-prose h3 {
+    font-size: 1.1rem;
+    margin-top: 28px;
+    margin-bottom: 10px;
+    color: var(--navy);
+  }
+  .essay-prose h4 {
+    font-size: 1rem;
+    margin-top: 20px;
+    margin-bottom: 8px;
+    color: #34495E;
+  }
+  .essay-prose p { margin-bottom: 18px; }
+  .essay-prose ul, .essay-prose ol { margin: 0 0 18px 24px; }
+  .essay-prose li { margin-bottom: 8px; line-height: 1.75; }
+  .essay-prose strong { color: var(--navy); font-weight: 700; }
+  .essay-prose em { font-style: italic; }
+  .essay-prose hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 36px 0;
+  }
+  .essay-prose blockquote {
+    border-left: 4px solid var(--teal);
+    padding: 8px 20px;
+    margin: 20px 0;
+    background: var(--bg);
+    color: #34495E;
+    font-style: italic;
+  }
+  .essay-prose code {
+    background: var(--bg);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: 'SFMono-Regular', Consolas, monospace;
+    font-size: 0.88em;
+  }
+  .essay-prose .essay-meta {
+    color: var(--gray);
+    font-size: 0.875rem;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .essay-prose .references {
+    font-size: 0.88rem;
+    color: #34495E;
+    line-height: 1.65;
+  }
+  .essay-prose .references p { margin-bottom: 10px; }
+
+  /* Essay card styles (index page) */
+  .essay-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px;
+    transition: box-shadow 0.15s;
+    display: flex;
+    flex-direction: column;
+  }
+  .essay-card:hover { box-shadow: 0 4px 16px rgba(27, 42, 74, 0.12); }
+  .essay-card .card-id { color: #6C3483; }
+  .essay-card h3 {
+    font-size: 1.15rem;
+    margin-bottom: 8px;
+    line-height: 1.35;
+  }
+  .essay-card .essay-summary {
+    color: #34495E;
+    font-size: 0.92rem;
+    line-height: 1.6;
+    flex: 1;
+    margin-bottom: 14px;
+  }
+  .essay-card .essay-date {
+    font-size: 0.8rem;
+    color: var(--gray);
+    margin-bottom: 10px;
+  }
+
   @media (max-width: 640px) {
     .site-header h1 { font-size: 1.5rem; }
     .cards-grid { grid-template-columns: 1fr; }
@@ -391,10 +561,19 @@
     .scenario-nav { flex-direction: column; align-items: flex-start; }
     .metrics-table { font-size: 0.8rem; }
     .metrics-table th, .metrics-table td { padding: 8px 10px; }
+    .essay-prose { font-size: 0.95rem; }
+    .essay-prose h2 { font-size: 1.2rem; }
   }
 </style>
 </head>
 <body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a href="index.html">Gallery</a>
+    <a href="graph.html">Knowledge Graph</a>
+  </div>
+</nav>
 
 <header class="scenario-header">
   <div class="content">
@@ -445,12 +624,12 @@
 
   <div class="section">
     <h2>Common Ground</h2>
-    <p>There is remarkable, measurable agreement across the political spectrum on the core concern underneath this claim. A 2023 Pew Research study found that 79% of Americans are concerned about how companies use their personal data, and 72% believe they have little to no control over what data is collected about them. A 2023 AP-NORC poll found bipartisan majorities support federal privacy legislation. The bipartisan passage of COPPA 2.0 measures and the near-unanimous congressional opposition to unrestricted TikTok data practices demonstrate that concern about algorithmic influence on information access is not a fringe position -- it is a mainstream, cross-partisan view. People who believe AI is &#39;controlling&#39; them and people who frame it as &#39;algorithmic influence requiring regulation&#39; are worried about the same thing: they want to be the ones deciding what information shapes their worldview, not an algorithm optimized for someone else&#39;s profit. The disagreement is about mechanism and degree, not about whether the concern itself is legitimate.</p>
+    <div class="prose"><p>There is remarkable, measurable agreement across the political spectrum on the core concern underneath this claim. A 2023 Pew Research study found that 79% of Americans are concerned about how companies use their personal data, and 72% believe they have little to no control over what data is collected about them. A 2023 AP-NORC poll found bipartisan majorities support federal privacy legislation. The bipartisan passage of COPPA 2.0 measures and the near-unanimous congressional opposition to unrestricted TikTok data practices demonstrate that concern about algorithmic influence on information access is not a fringe position -- it is a mainstream, cross-partisan view. People who believe AI is &#39;controlling&#39; them and people who frame it as &#39;algorithmic influence requiring regulation&#39; are worried about the same thing: they want to be the ones deciding what information shapes their worldview, not an algorithm optimized for someone else&#39;s profit. The disagreement is about mechanism and degree, not about whether the concern itself is legitimate.</p></div>
   </div>
 
   <div class="section">
     <h2>Narrative Deconstruction</h2>
-    <p>The underlying concern -- that powerful institutions use technology to influence what information people see, and that this undermines individual agency -- is a single, coherent worry shared across political, ideological, and demographic lines. This concern was split into opposing narrative camps through a specific process. On one side, tech industry PR and mainstream institutional voices framed algorithms as neutral tools that &#39;connect people&#39; and &#39;organize information,&#39; minimizing documented harms and casting critics as technophobic or conspiratorial. On the other side, conspiracy media took the same documented harms and escalated them into claims of deliberate, coordinated thought control, which mainstream voices could then dismiss as paranoid. This created a false dichotomy: either you trust that algorithms are basically benign (the corporate/institutional narrative) or you believe in deliberate AI mind control (the conspiracy narrative). The actual position supported by evidence -- that algorithms meaningfully shape information exposure in ways that serve corporate interests, that government surveillance infrastructure exists and has been abused, and that both of these warrant democratic accountability -- gets squeezed out. Tech companies benefit from this split because it allows them to position all criticism on a spectrum anchored by conspiracy theorists, while conspiracy media benefits because real, documented abuses lend credibility to sensationalized claims. The people who lose are those seeking accurate understanding of how algorithmic systems actually affect their cognitive autonomy.</p>
+    <div class="prose"><p>The underlying concern -- that powerful institutions use technology to influence what information people see, and that this undermines individual agency -- is a single, coherent worry shared across political, ideological, and demographic lines. This concern was split into opposing narrative camps through a specific process. On one side, tech industry PR and mainstream institutional voices framed algorithms as neutral tools that &#39;connect people&#39; and &#39;organize information,&#39; minimizing documented harms and casting critics as technophobic or conspiratorial. On the other side, conspiracy media took the same documented harms and escalated them into claims of deliberate, coordinated thought control, which mainstream voices could then dismiss as paranoid. This created a false dichotomy: either you trust that algorithms are basically benign (the corporate/institutional narrative) or you believe in deliberate AI mind control (the conspiracy narrative). The actual position supported by evidence -- that algorithms meaningfully shape information exposure in ways that serve corporate interests, that government surveillance infrastructure exists and has been abused, and that both of these warrant democratic accountability -- gets squeezed out. Tech companies benefit from this split because it allows them to position all criticism on a spectrum anchored by conspiracy theorists, while conspiracy media benefits because real, documented abuses lend credibility to sensationalized claims. The people who lose are those seeking accurate understanding of how algorithmic systems actually affect their cognitive autonomy.</p></div>
   </div>
 
   
@@ -460,7 +639,7 @@
   
     <div class="section">
       <h2>Perception Gap</h2>
-      <p>Both camps significantly misperceive the other. People who voice this claim in its strong form (&#39;AI controls what we think&#39;) tend to perceive tech defenders as either naive or complicit in a control scheme, when in reality many tech employees and supporters share concerns about algorithmic harms but disagree about the mechanism (emergent vs. deliberate). Conversely, institutional voices who dismiss this concern tend to perceive claimants as conspiratorial and technologically illiterate, when survey data shows that concern about algorithmic influence on information access is held by large bipartisan majorities, including the technologically literate. The More in Common perception gap framework applies here: each side overestimates how extreme the other&#39;s position is. A Pew 2023 study found that 56% of Americans believe social media has been mostly bad for democracy -- this is not a fringe conspiracy position but a mainstream concern that gets mischaracterized when expressed in conspiratorial language.</p>
+      <div class="prose"><p>Both camps significantly misperceive the other. People who voice this claim in its strong form (&#39;AI controls what we think&#39;) tend to perceive tech defenders as either naive or complicit in a control scheme, when in reality many tech employees and supporters share concerns about algorithmic harms but disagree about the mechanism (emergent vs. deliberate). Conversely, institutional voices who dismiss this concern tend to perceive claimants as conspiratorial and technologically illiterate, when survey data shows that concern about algorithmic influence on information access is held by large bipartisan majorities, including the technologically literate. The More in Common perception gap framework applies here: each side overestimates how extreme the other&#39;s position is. A Pew 2023 study found that 56% of Americans believe social media has been mostly bad for democracy -- this is not a fringe conspiracy position but a mainstream concern that gets mischaracterized when expressed in conspiratorial language.</p></div>
     </div>
 
   <div class="section">
@@ -469,15 +648,15 @@
     
     <div class="dialogue-round round-1">
       <div class="round-label">Round 1: Perspective-Getting</div>
-      <div class="dialogue-bubble">Round 1 (Perspective-getting): I hear a real concern here, and significant parts of it are grounded in documented evidence. You are right that recommendation algorithms shape what content billions of people see every day -- Facebook&#39;s own internal research confirmed this, and a former employee risked her career to tell Congress about it. You are right that government surveillance programs collect data on citizens at massive scale -- the Snowden documents proved that, and the government effectively confirmed it. And you are right that these systems were not designed with your interests as the primary objective -- they were designed for engagement metrics and intelligence collection. That is a legitimate basis for concern about your autonomy over your own information environment. Where I want to explore further is the specific word &#39;control.&#39; When you say AI is used to &#39;control&#39; what you think -- do you mean that algorithms determine the content you encounter (which is documented), or that someone is deliberately directing your specific thoughts and feelings toward predetermined conclusions? Those are meaningfully different claims with very different evidence behind them.</div>
+      <div class="dialogue-bubble"><p>Round 1 (Perspective-getting): I hear a real concern here, and significant parts of it are grounded in documented evidence. You are right that recommendation algorithms shape what content billions of people see every day -- Facebook&#39;s own internal research confirmed this, and a former employee risked her career to tell Congress about it. You are right that government surveillance programs collect data on citizens at massive scale -- the Snowden documents proved that, and the government effectively confirmed it. And you are right that these systems were not designed with your interests as the primary objective -- they were designed for engagement metrics and intelligence collection. That is a legitimate basis for concern about your autonomy over your own information environment. Where I want to explore further is the specific word &#39;control.&#39; When you say AI is used to &#39;control&#39; what you think -- do you mean that algorithms determine the content you encounter (which is documented), or that someone is deliberately directing your specific thoughts and feelings toward predetermined conclusions? Those are meaningfully different claims with very different evidence behind them.</p></div>
     </div>
     <div class="dialogue-round round-2">
       <div class="round-label">Round 2: Guided Examination</div>
-      <div class="dialogue-bubble">Round 2 (Counter-evidence as question): Here is something interesting about the distinction between &#39;influence&#39; and &#39;control&#39; that might be worth thinking through. Facebook&#39;s emotional contagion study in 2014 showed that changing the emotional valence of News Feed content did affect users&#39; emotional expressions -- that is real algorithmic influence on feelings, documented in a peer-reviewed journal. But the same study showed the effect size was tiny (d=0.001 to 0.02), and users were not even aware it was happening, which means they could not have been &#39;resisting&#39; it -- yet the effect was still marginal. If a deliberate, controlled experiment by the platform itself produced only a tiny effect, what does that suggest about the gap between &#39;influence&#39; (which is real) and &#39;control&#39; (which implies the ability to reliably direct thought)? There is another layer worth considering: who benefits from you believing the mechanism is &#39;control&#39; rather than &#39;influence&#39;? If it is &#39;influence,&#39; the response is regulation, algorithmic transparency, and democratic accountability -- concrete, achievable reforms. If it is &#39;control,&#39; the response is either helplessness (if they control your thoughts, what can you do?) or wholesale rejection of all digital information (which isolates you from the very tools that could help you stay informed). Could the escalation from &#39;influence&#39; to &#39;control&#39; itself be a form of manipulation -- one that turns a solvable problem into an overwhelming one?</div>
+      <div class="dialogue-bubble"><p>Round 2 (Counter-evidence as question): Here is something interesting about the distinction between &#39;influence&#39; and &#39;control&#39; that might be worth thinking through. Facebook&#39;s emotional contagion study in 2014 showed that changing the emotional valence of News Feed content did affect users&#39; emotional expressions -- that is real algorithmic influence on feelings, documented in a peer-reviewed journal. But the same study showed the effect size was tiny (d=0.001 to 0.02), and users were not even aware it was happening, which means they could not have been &#39;resisting&#39; it -- yet the effect was still marginal. If a deliberate, controlled experiment by the platform itself produced only a tiny effect, what does that suggest about the gap between &#39;influence&#39; (which is real) and &#39;control&#39; (which implies the ability to reliably direct thought)? There is another layer worth considering: who benefits from you believing the mechanism is &#39;control&#39; rather than &#39;influence&#39;? If it is &#39;influence,&#39; the response is regulation, algorithmic transparency, and democratic accountability -- concrete, achievable reforms. If it is &#39;control,&#39; the response is either helplessness (if they control your thoughts, what can you do?) or wholesale rejection of all digital information (which isolates you from the very tools that could help you stay informed). Could the escalation from &#39;influence&#39; to &#39;control&#39; itself be a form of manipulation -- one that turns a solvable problem into an overwhelming one?</p></div>
     </div>
     <div class="dialogue-round round-3">
       <div class="round-label">Round 3: Integration</div>
-      <div class="dialogue-bubble">Round 3 (Complexity and common ground): What makes this topic so important is that the concern underneath it -- wanting agency over your own information environment -- is one of the most widely shared values across the entire political spectrum. Seventy-nine percent of Americans share your concern about how companies use data. Bipartisan majorities in Congress have voted for algorithmic accountability measures. The EU passed the AI Act with broad support specifically to address these issues. You are not alone in this worry, and the people you might think disagree with you mostly share the same underlying concern. Here is the fuller picture: AI-powered systems do influence what information you encounter, that influence does serve corporate and sometimes governmental interests rather than yours, and meaningful reforms (algorithmic transparency, data sovereignty, right to explanation) are both possible and already underway in some jurisdictions. Those are documented facts. The question that might be worth sitting with is: does framing this as &#39;control&#39; help you address the problem, or does it actually make the problem feel more hopeless than it needs to be? What would it look like if you channeled the energy behind this concern into supporting the specific, concrete reforms that are already making progress -- reforms backed by the same evidence that makes your concern legitimate in the first place?</div>
+      <div class="dialogue-bubble"><p>Round 3 (Complexity and common ground): What makes this topic so important is that the concern underneath it -- wanting agency over your own information environment -- is one of the most widely shared values across the entire political spectrum. Seventy-nine percent of Americans share your concern about how companies use data. Bipartisan majorities in Congress have voted for algorithmic accountability measures. The EU passed the AI Act with broad support specifically to address these issues. You are not alone in this worry, and the people you might think disagree with you mostly share the same underlying concern. Here is the fuller picture: AI-powered systems do influence what information you encounter, that influence does serve corporate and sometimes governmental interests rather than yours, and meaningful reforms (algorithmic transparency, data sovereignty, right to explanation) are both possible and already underway in some jurisdictions. Those are documented facts. The question that might be worth sitting with is: does framing this as &#39;control&#39; help you address the problem, or does it actually make the problem feel more hopeless than it needs to be? What would it look like if you channeled the energy behind this concern into supporting the specific, concrete reforms that are already making progress -- reforms backed by the same evidence that makes your concern legitimate in the first place?</p></div>
     </div>
   </div>
 
@@ -486,6 +665,8 @@
     <h2>Reframe</h2>
     <blockquote class="reframe-block">People across the political spectrum share a deep concern about maintaining agency over their own information diet and cognitive autonomy. The documented evidence shows that recommendation algorithms do meaningfully shape what information people encounter, and that government surveillance infrastructure does exist and has been misused. The productive question is not whether AI influences us (the evidence says it does) but what democratic accountability structures ensure that influence serves people rather than corporate profit margins or state control objectives. The worry underneath this claim is legitimate and widely shared; the conspiracy framing obscures rather than advances the real conversation about how to protect cognitive autonomy in an algorithmically mediated world.</blockquote>
   </div>
+
+  
 
   <div class="section">
     <h2>Audit</h2>
@@ -497,7 +678,7 @@
     <ul class="findings-list">
     <li class="finding-item">
       <div class="finding-header">
-        <span class="finding-category">quality</span>
+        <span class="finding-category">Quality</span>
         <span class="finding-severity-high">HIGH</span>
         <span class="finding-description">The pipeline appropriately distinguishes between verified and unverified components of this partially-true claim. The...</span>
       </div>
@@ -509,7 +690,7 @@
     </li>
     <li class="finding-item">
       <div class="finding-header">
-        <span class="finding-category">accuracy</span>
+        <span class="finding-category">Accuracy</span>
         <span class="finding-severity-medium">MEDIUM</span>
         <span class="finding-description">The Epstein &amp; Robertson (2015) SEME study is cited with the &#39;20%+&#39; figure for voting preference shift. This figure has...</span>
       </div>
@@ -521,7 +702,7 @@
     </li>
     <li class="finding-item">
       <div class="finding-header">
-        <span class="finding-category">completeness</span>
+        <span class="finding-category">Completeness</span>
         <span class="finding-severity-medium">MEDIUM</span>
         <span class="finding-description">The analysis focuses primarily on Western and Chinese examples. Significant AI surveillance deployments in other...</span>
       </div>
@@ -533,7 +714,7 @@
     </li>
     <li class="finding-item">
       <div class="finding-header">
-        <span class="finding-category">bias</span>
+        <span class="finding-category">Bias</span>
         <span class="finding-severity-medium">MEDIUM</span>
         <span class="finding-description">The Bridge Builder&#39;s Socratic dialogue, while well-calibrated in distinguishing &#39;influence&#39; from &#39;control,&#39; may...</span>
       </div>
@@ -545,7 +726,7 @@
     </li>
     <li class="finding-item">
       <div class="finding-header">
-        <span class="finding-category">completeness</span>
+        <span class="finding-category">Completeness</span>
         <span class="finding-severity-medium">MEDIUM</span>
         <span class="finding-description">The TTP classification focuses exclusively on how the conspiracy layer amplifies real concerns, but does not classify...</span>
       </div>
@@ -557,7 +738,7 @@
     </li>
     <li class="finding-item">
       <div class="finding-header">
-        <span class="finding-category">manipulation</span>
+        <span class="finding-category">Manipulation</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">The Bridge Builder&#39;s common ground section correctly identifies bipartisan agreement on data privacy and algorithmic...</span>
       </div>
@@ -569,7 +750,7 @@
     </li>
     <li class="finding-item">
       <div class="finding-header">
-        <span class="finding-category">quality</span>
+        <span class="finding-category">Quality</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">The mutation tracking in the Origin Tracer is well-executed, particularly the identification of semantic drift from...</span>
       </div>
@@ -581,7 +762,7 @@
     </li>
     <li class="finding-item">
       <div class="finding-header">
-        <span class="finding-category">accuracy</span>
+        <span class="finding-category">Accuracy</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">The Facebook emotional contagion study effect size is correctly cited as small (d=0.001 to 0.02), which is an important...</span>
       </div>
@@ -592,6 +773,103 @@
       </div>
     </li></ul>
   </div>
+
+  
+    <div class="section evaluation-section">
+      <h2>Evaluation Methodology</h2>
+      <p class="intro-note">Full transparency on how this scenario was scored. 12 weighted checks, each independently measurable. <a href="https://github.com/Jochen-s/huginn-muninn/blob/main/tests/run_bridge_scenarios.py" target="_blank" rel="noopener">View source code</a></p>
+      <div class="eval-summary">
+        <span class="eval-overall">56.3%</span>
+        <span class="badge badge-fail">Grade C</span>
+      </div>
+      <div style="overflow-x:auto">
+        <table class="eval-table">
+          <thead>
+            <tr>
+              <th>Check</th>
+              <th>Weight</th>
+              <th>Score</th>
+              <th>Status</th>
+              <th>What It Measures</th>
+            </tr>
+          </thead>
+          <tbody><tr class="eval-fail">
+      <td>needs coverage</td>
+      <td class="eval-weight">7%</td>
+      <td class="eval-score">33%</td>
+      <td class="eval-status">MISS</td>
+      <td class="eval-desc">Expected universal human needs matched against identified needs</td>
+    </tr><tr class="eval-pass">
+      <td>issue overlap quality</td>
+      <td class="eval-weight">6%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Common ground text is substantive (&gt;50 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>narrative deconstruction</td>
+      <td class="eval-weight">7%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Narrative deconstruction is substantive (&gt;100 characters)</td>
+    </tr><tr class="eval-fail">
+      <td>consensus explanation</td>
+      <td class="eval-weight">11%</td>
+      <td class="eval-score">0%</td>
+      <td class="eval-status">MISS</td>
+      <td class="eval-desc">Scientific/mainstream explanation &gt;200 chars with 3+ mechanism keywords</td>
+    </tr><tr class="eval-fail">
+      <td>inferential gap</td>
+      <td class="eval-weight">8%</td>
+      <td class="eval-score">0%</td>
+      <td class="eval-status">MISS</td>
+      <td class="eval-desc">Inferential gap analysis is substantive (&gt;50 characters)</td>
+    </tr><tr class="eval-fail">
+      <td>feasibility check</td>
+      <td class="eval-weight">6%</td>
+      <td class="eval-score">0%</td>
+      <td class="eval-status">MISS</td>
+      <td class="eval-desc">Feasibility assessment is substantive (&gt;50 characters)</td>
+    </tr><tr class="eval-fail">
+      <td>commercial motives</td>
+      <td class="eval-weight">6%</td>
+      <td class="eval-score">0%</td>
+      <td class="eval-status">MISS</td>
+      <td class="eval-desc">Commercial motive analysis is substantive (&gt;30 characters)</td>
+    </tr><tr class="eval-fail">
+      <td>technique naming</td>
+      <td class="eval-weight">8%</td>
+      <td class="eval-score">0%</td>
+      <td class="eval-status">MISS</td>
+      <td class="eval-desc">At least 1 technique named with mechanic (&gt;30 chars) and precedent (&gt;20 chars)</td>
+    </tr><tr class="eval-pass">
+      <td>perception gap</td>
+      <td class="eval-weight">5%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Perception gap analysis is substantive (&gt;30 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>socratic dialogue</td>
+      <td class="eval-weight">17%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">3 rounds, ends with question, Round 1 shows perspective-getting</td>
+    </tr><tr class="eval-pass">
+      <td>reframe quality</td>
+      <td class="eval-weight">7%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Reframe &gt;20 chars using shared-value language (we, together, both)</td>
+    </tr><tr class="eval-pass">
+      <td>no controlling language</td>
+      <td class="eval-weight">12%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Zero matches against 9 controlling phrases</td>
+    </tr></tbody>
+        </table>
+      </div>
+      <p class="eval-note">Overall score = weighted sum of individual check scores. Weights reflect the relative importance of each dimension to the project's mission: Socratic dialogue quality (17%) and controlling language detection (12%) are weighted highest because autonomy-supportive framing is the core differentiator.</p>
+    </div>
 
   <div class="scenario-nav">
     <a href="TC-01.html">&larr; TC-01: Bill Gates wants to microchip everyone through...</a>

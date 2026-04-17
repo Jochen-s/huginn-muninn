@@ -70,6 +70,7 @@
     font-size: 0.875rem;
   }
   .site-nav a:hover { color: var(--white); }
+  .site-nav a.active { color: var(--white); font-weight: 600; }
 
   /* Category sections */
   .category-section { padding: 48px 0; border-bottom: 1px solid var(--border); }
@@ -211,27 +212,39 @@
   .metrics-table tr:last-child td { border-bottom: none; }
 
   .section {
-    padding: 32px 0;
+    padding: 40px 0;
     border-bottom: 1px solid var(--border);
   }
   .section:last-child { border-bottom: none; }
 
   .section h2 {
-    font-size: 1.25rem;
-    margin-bottom: 16px;
-    padding-bottom: 8px;
+    font-size: 1.3rem;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
     border-bottom: 2px solid var(--bg);
+    letter-spacing: -0.01em;
   }
 
-  .section p { margin-bottom: 12px; color: #2C3E50; }
+  .section p { margin-bottom: 16px; color: #2C3E50; }
   .section p:last-child { margin-bottom: 0; }
 
   .intro-note {
     color: var(--gray);
     font-size: 0.875rem;
     font-style: italic;
-    margin-bottom: 12px;
+    margin-bottom: 16px;
   }
+
+  /* Prose blocks: long-form text with proper paragraph spacing */
+  .prose {
+    font-size: 0.95rem;
+    line-height: 1.75;
+    color: #34495E;
+  }
+  .prose p {
+    margin-bottom: 16px;
+  }
+  .prose p:last-child { margin-bottom: 0; }
 
   /* Needs pills */
   .needs-list {
@@ -288,28 +301,30 @@
   .technique-text { font-size: 0.9rem; color: #2C3E50; line-height: 1.6; }
 
   /* Socratic dialogue */
-  .dialogue-round { margin-bottom: 20px; }
+  .dialogue-round { margin-bottom: 28px; }
+  .dialogue-round:last-child { margin-bottom: 0; }
   .round-label {
     font-size: 0.75rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
   }
   .round-1 .round-label { color: var(--teal); }
   .round-2 .round-label { color: var(--navy); }
   .round-3 .round-label { color: #6C3483; }
 
   .dialogue-bubble {
-    padding: 16px 18px;
+    padding: 20px 24px;
     border-radius: 8px;
-    font-size: 0.9rem;
-    line-height: 1.65;
-    white-space: pre-wrap;
+    font-size: 0.92rem;
+    line-height: 1.75;
   }
-  .round-1 .dialogue-bubble { background: #EAF7F4; border-left: 3px solid var(--teal); }
-  .round-2 .dialogue-bubble { background: #EAF0F7; border-left: 3px solid var(--navy); }
-  .round-3 .dialogue-bubble { background: #F5EEF8; border-left: 3px solid #6C3483; }
+  .dialogue-bubble p { margin-bottom: 12px; }
+  .dialogue-bubble p:last-child { margin-bottom: 0; }
+  .round-1 .dialogue-bubble { background: #EAF7F4; border-left: 4px solid var(--teal); }
+  .round-2 .dialogue-bubble { background: #EAF0F7; border-left: 4px solid var(--navy); }
+  .round-3 .dialogue-bubble { background: #F5EEF8; border-left: 4px solid #6C3483; }
 
   /* Reframe */
   .reframe-block {
@@ -356,8 +371,52 @@
   }
   .finding-severity-low    { color: var(--teal); font-size: 0.75rem; font-weight: 600; }
   .finding-severity-medium { color: var(--amber); font-size: 0.75rem; font-weight: 600; }
-  .finding-severity-high   { color: var(--red); font-size: 0.75rem; font-weight: 600; }
+  .finding-severity-high     { color: var(--red); font-size: 0.75rem; font-weight: 600; }
+  .finding-severity-critical { color: #8B0000; font-size: 0.75rem; font-weight: 700; }
   .finding-description { font-size: 0.875rem; color: #2C3E50; }
+
+  /* Scoped diagnostics (v0.8.0+) */
+  .diagnostics-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 12px;
+  }
+  @media (max-width: 640px) { .diagnostics-grid { grid-template-columns: 1fr; } }
+  .diagnostic-card {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    background: var(--bg);
+  }
+  .diagnostic-card h4 {
+    margin: 0 0 6px;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--gray);
+  }
+  .diagnostic-card p { margin: 0; font-size: 0.9rem; line-height: 1.6; }
+  .diagnostic-note { font-size: 0.78rem; color: var(--gray); font-style: italic; margin-bottom: 4px !important; }
+  .posture-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    background: #F5F5F5;
+    color: #555;
+  }
+  .posture-inoculation_first  { background: #FFF3E0; color: #E65100; }
+  .posture-relational_first   { background: #E3F2FD; color: #1565C0; }
+  .pattern-density-warning {
+    background: #FFF8E1;
+    border-left: 4px solid var(--amber);
+    padding: 10px 14px;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.875rem;
+    margin-top: 8px;
+  }
   .finding-body { padding: 10px 14px; border-top: 1px solid var(--border); }
   .finding-rec {
     font-size: 0.8rem;
@@ -384,6 +443,117 @@
   .scenario-nav .disabled { color: var(--gray); pointer-events: none; }
 
   /* Responsive */
+  /* Evaluation methodology table */
+  .evaluation-section { background: #FAFBFD; margin: 0 -32px; padding: 40px 32px; border-bottom: 1px solid var(--border); }
+  .eval-summary { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+  .eval-overall { font-size: 2rem; font-weight: 700; color: var(--navy); }
+  .eval-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  .eval-table th { text-align: left; padding: 10px 12px; border-bottom: 2px solid var(--border); color: var(--gray); font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; }
+  .eval-table td { padding: 10px 12px; border-bottom: 1px solid #EEF1F5; }
+  .eval-table td:first-child { font-weight: 600; text-transform: capitalize; }
+  .eval-weight, .eval-score { text-align: center; font-variant-numeric: tabular-nums; }
+  .eval-status { text-align: center; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.04em; }
+  .eval-pass .eval-status { color: var(--green); }
+  .eval-partial .eval-status { color: var(--amber); }
+  .eval-fail .eval-status { color: var(--red); }
+  .eval-desc { color: var(--gray); font-size: 0.8rem; }
+  .eval-note { margin-top: 16px; font-size: 0.82rem; color: var(--gray); line-height: 1.6; }
+
+  /* Essay page styles */
+  .essay-prose {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #2C3E50;
+    max-width: 760px;
+  }
+  .essay-prose h2 {
+    font-size: 1.35rem;
+    margin-top: 40px;
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--bg);
+  }
+  .essay-prose h3 {
+    font-size: 1.1rem;
+    margin-top: 28px;
+    margin-bottom: 10px;
+    color: var(--navy);
+  }
+  .essay-prose h4 {
+    font-size: 1rem;
+    margin-top: 20px;
+    margin-bottom: 8px;
+    color: #34495E;
+  }
+  .essay-prose p { margin-bottom: 18px; }
+  .essay-prose ul, .essay-prose ol { margin: 0 0 18px 24px; }
+  .essay-prose li { margin-bottom: 8px; line-height: 1.75; }
+  .essay-prose strong { color: var(--navy); font-weight: 700; }
+  .essay-prose em { font-style: italic; }
+  .essay-prose hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 36px 0;
+  }
+  .essay-prose blockquote {
+    border-left: 4px solid var(--teal);
+    padding: 8px 20px;
+    margin: 20px 0;
+    background: var(--bg);
+    color: #34495E;
+    font-style: italic;
+  }
+  .essay-prose code {
+    background: var(--bg);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: 'SFMono-Regular', Consolas, monospace;
+    font-size: 0.88em;
+  }
+  .essay-prose .essay-meta {
+    color: var(--gray);
+    font-size: 0.875rem;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .essay-prose .references {
+    font-size: 0.88rem;
+    color: #34495E;
+    line-height: 1.65;
+  }
+  .essay-prose .references p { margin-bottom: 10px; }
+
+  /* Essay card styles (index page) */
+  .essay-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px;
+    transition: box-shadow 0.15s;
+    display: flex;
+    flex-direction: column;
+  }
+  .essay-card:hover { box-shadow: 0 4px 16px rgba(27, 42, 74, 0.12); }
+  .essay-card .card-id { color: #6C3483; }
+  .essay-card h3 {
+    font-size: 1.15rem;
+    margin-bottom: 8px;
+    line-height: 1.35;
+  }
+  .essay-card .essay-summary {
+    color: #34495E;
+    font-size: 0.92rem;
+    line-height: 1.6;
+    flex: 1;
+    margin-bottom: 14px;
+  }
+  .essay-card .essay-date {
+    font-size: 0.8rem;
+    color: var(--gray);
+    margin-bottom: 10px;
+  }
+
   @media (max-width: 640px) {
     .site-header h1 { font-size: 1.5rem; }
     .cards-grid { grid-template-columns: 1fr; }
@@ -391,10 +561,19 @@
     .scenario-nav { flex-direction: column; align-items: flex-start; }
     .metrics-table { font-size: 0.8rem; }
     .metrics-table th, .metrics-table td { padding: 8px 10px; }
+    .essay-prose { font-size: 0.95rem; }
+    .essay-prose h2 { font-size: 1.2rem; }
   }
 </style>
 </head>
 <body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a href="index.html">Gallery</a>
+    <a href="graph.html">Knowledge Graph</a>
+  </div>
+</nav>
 
 <header class="scenario-header">
   <div class="content">
@@ -445,35 +624,35 @@
   <div class="section">
     <h2>Inferential Gap</h2>
     <p class="intro-note">Where the evidence ends and the leap begins.</p>
-    <p>The kernel of truth in this scenario is unusually large and multi-layered, making the inferential gap narrower and more nuanced than in most conspiracy scenarios. WHAT IS ESTABLISHED FACT: (1) Fluoride at concentrations above 1.5 mg/L is consistently associated with lower IQ in children (NTP 2024, 72 studies, &#39;moderate confidence&#39;). (2) A US federal judge found fluoride at 0.7 mg/L poses an &#39;unreasonable risk&#39; (Chen 2024, under appeal). (3) The Cochrane review (2015) found that evidence supporting fluoridation is mostly at high risk of bias. (4) The CDC acknowledged fluoride&#39;s mechanism is primarily topical, not systemic (1999). (5) Countries using only topical fluoride have comparable dental health to fluoridated countries (WHO data). (6) No individual informed consent is obtained for water fluoridation. (7) The NRC (2006) found EPA&#39;s MCLG of 4 mg/L was not protective. WHERE THE INFERENTIAL LEAPS OCCUR: Leap 1: &#39;Fluoride is harmful above 1.5 mg/L&#39; to &#39;Fluoride is harmful at 0.7 mg/L.&#39; This is the central contested question. The NTP explicitly did not find sufficient evidence to conclude harm at 0.7 mg/L. Judge Chen extrapolated a linear dose-response (no safe threshold), but this extrapolation is contested by toxicologists who note that many dose-response curves are non-linear. The gap between &#39;harmful above 1.5&#39; and &#39;harmful at 0.7&#39; is not a conspiracy leap, but it is an unresolved scientific question that anti-fluoridation advocates treat as settled and pro-fluoridation advocates dismiss too quickly. Leap 2: &#39;Fluoridation is a policy I disagree with&#39; to &#39;Fluoridation is a deliberate poisoning program.&#39; This is the conspiracy leap. It occurs when Layer 3 actors interpret fluoridation policy as intentional harm rather than a well-intentioned policy with contested evidence. The gap requires attributing malicious intent to thousands of water treatment professionals, public health officials, and elected officials across decades and jurisdictions. Leap 3: &#39;Fluorosilicic acid is an industrial byproduct&#39; to &#39;The government is putting toxic waste in your water.&#39; This distortion ignores that the compound is purified to meet NSF/ANSI Standard 60, that it fully dissociates in water into fluoride and silicic acid (both naturally occurring), and that the fluoride ion is identical regardless of source.</p>
+    <div class="prose"><p>The kernel of truth in this scenario is unusually large and multi-layered, making the inferential gap narrower and more nuanced than in most conspiracy scenarios. WHAT IS ESTABLISHED FACT: (1) Fluoride at concentrations above 1.5 mg/L is consistently associated with lower IQ in children (NTP 2024, 72 studies, &#39;moderate confidence&#39;). (2) A US federal judge found fluoride at 0.7 mg/L poses an &#39;unreasonable risk&#39; (Chen 2024, under appeal). (3) The Cochrane review (2015) found that evidence supporting fluoridation is mostly at high risk of bias. (4) The CDC acknowledged fluoride&#39;s mechanism is primarily topical, not systemic (1999). (5) Countries using only topical fluoride have comparable dental health to fluoridated countries (WHO data). (6) No individual informed consent is obtained for water fluoridation. (7) The NRC (2006) found EPA&#39;s MCLG of 4 mg/L was not protective. WHERE THE INFERENTIAL LEAPS OCCUR: Leap 1: &#39;Fluoride is harmful above 1.5 mg/L&#39; to &#39;Fluoride is harmful at 0.7 mg/L.&#39; This is the central contested question. The NTP explicitly did not find sufficient evidence to conclude harm at 0.7 mg/L. Judge Chen extrapolated a linear dose-response (no safe threshold), but this extrapolation is contested by toxicologists who note that many dose-response curves are non-linear. The gap between &#39;harmful above 1.5&#39; and &#39;harmful at 0.7&#39; is not a conspiracy leap, but it is an unresolved scientific question that anti-fluoridation advocates treat as settled and pro-fluoridation advocates dismiss too quickly. Leap 2: &#39;Fluoridation is a policy I disagree with&#39; to &#39;Fluoridation is a deliberate poisoning program.&#39; This is the conspiracy leap. It occurs when Layer 3 actors interpret fluoridation policy as intentional harm rather than a well-intentioned policy with contested evidence. The gap requires attributing malicious intent to thousands of water treatment professionals, public health officials, and elected officials across decades and jurisdictions. Leap 3: &#39;Fluorosilicic acid is an industrial byproduct&#39; to &#39;The government is putting toxic waste in your water.&#39; This distortion ignores that the compound is purified to meet NSF/ANSI Standard 60, that it fully dissociates in water into fluoride and silicic acid (both naturally occurring), and that the fluoride ion is identical regardless of source.</p></div>
   </div>
 
   <div class="section">
     <h2>Common Ground</h2>
-    <p>Fluoridation supporters and opponents share far more common ground than either side typically recognizes. Both groups: (1) Want children to have healthy teeth. There is no disagreement on this goal. The disagreement is about whether systemic water fluoridation is the best method to achieve it, given the availability of topical alternatives. (2) Want safe drinking water. Both sides agree that water quality matters. The CDC and EPA have the same goal as FAN: ensuring that what comes out of the tap is safe. The disagreement is about where the safety threshold lies for fluoride specifically. (3) Want public health decisions to be based on high-quality evidence. The Cochrane Collaboration&#39;s finding that most fluoridation studies were at &#39;high risk of bias&#39; is a concern that should trouble both sides equally. Fluoridation supporters should want better evidence for a policy they champion, and opponents should acknowledge that absence of strong evidence is not the same as evidence of harm. (4) Agree that excessively high fluoride concentrations are harmful. The NRC (2006) found that 4 mg/L is too high. The EPA, ADA, and FAN all agree on this. The disagreement is about whether 0.7 mg/L is safe, not about whether fluoride can be harmful at some concentration. (5) Agree that informed public engagement is better than top-down mandate. Portland&#39;s 2013 referendum, whatever one thinks of its outcome, represents the kind of democratic process both sides can support in principle.</p>
+    <div class="prose"><p>Fluoridation supporters and opponents share far more common ground than either side typically recognizes. Both groups: (1) Want children to have healthy teeth. There is no disagreement on this goal. The disagreement is about whether systemic water fluoridation is the best method to achieve it, given the availability of topical alternatives. (2) Want safe drinking water. Both sides agree that water quality matters. The CDC and EPA have the same goal as FAN: ensuring that what comes out of the tap is safe. The disagreement is about where the safety threshold lies for fluoride specifically. (3) Want public health decisions to be based on high-quality evidence. The Cochrane Collaboration&#39;s finding that most fluoridation studies were at &#39;high risk of bias&#39; is a concern that should trouble both sides equally. Fluoridation supporters should want better evidence for a policy they champion, and opponents should acknowledge that absence of strong evidence is not the same as evidence of harm. (4) Agree that excessively high fluoride concentrations are harmful. The NRC (2006) found that 4 mg/L is too high. The EPA, ADA, and FAN all agree on this. The disagreement is about whether 0.7 mg/L is safe, not about whether fluoride can be harmful at some concentration. (5) Agree that informed public engagement is better than top-down mandate. Portland&#39;s 2013 referendum, whatever one thinks of its outcome, represents the kind of democratic process both sides can support in principle.</p></div>
   </div>
 
   <div class="section">
     <h2>Narrative Deconstruction</h2>
-    <p>This claim is constructed from two logically independent arguments that are strategically bundled together but must be analyzed separately. ARGUMENT 1 -- THE SAFETY CLAIM: &#39;Fluoridation is harmful.&#39; This is an empirical question with a complex evidence base. The strongest evidence for harm comes from studies at concentrations above 1.5 mg/L (NTP 2024: 72 studies, consistent IQ association at that level). The evidence at 0.7 mg/L is weaker and contested: Judge Chen found it persuasive, but the NTP explicitly declined to draw conclusions below 1.5 mg/L. Dental fluorosis at 0.7 mg/L is documented (CDC estimates 58% of adolescents have some degree, mostly very mild) but is cosmetic, not a health harm. The safety claim is neither clearly true nor clearly false at current US levels; it is a genuinely open scientific question. ARGUMENT 2 -- THE CONSENT CLAIM: &#39;Fluoridation is mass medication without informed consent.&#39; This is an ethical argument with genuine philosophical merit. The Nuffield Council placed fluoridation at the &#39;restricting choice&#39; level on its intervention ladder. The bioethics literature genuinely debates whether fluoridation&#39;s therapeutic intent (preventing caries) makes it medication rather than water treatment. The fact that individuals cannot opt out of their tap water supply is not contested by anyone. The consent claim does not depend on whether fluoride is harmful. Even if fluoride at 0.7 mg/L is perfectly safe, the question of whether the government should add a substance to water for its pharmaceutical effect without individual consent is a legitimate ethical question. HOW THE BUNDLING WORKS: By combining the safety claim with the consent claim, advocacy groups create a rhetorical structure where the philosophical strength of the consent argument lends credibility to the more uncertain safety argument, while the emotional force of the safety argument (&#39;they&#39;re damaging your children&#39;s brains&#39;) energizes people who might otherwise find the consent argument too abstract. Conspiracy amplifiers (Layer 3) then bundle both claims into a &#39;government poisoning&#39; narrative that discards the nuance of both.</p>
+    <div class="prose"><p>This claim is constructed from two logically independent arguments that are strategically bundled together but must be analyzed separately. ARGUMENT 1 -- THE SAFETY CLAIM: &#39;Fluoridation is harmful.&#39; This is an empirical question with a complex evidence base. The strongest evidence for harm comes from studies at concentrations above 1.5 mg/L (NTP 2024: 72 studies, consistent IQ association at that level). The evidence at 0.7 mg/L is weaker and contested: Judge Chen found it persuasive, but the NTP explicitly declined to draw conclusions below 1.5 mg/L. Dental fluorosis at 0.7 mg/L is documented (CDC estimates 58% of adolescents have some degree, mostly very mild) but is cosmetic, not a health harm. The safety claim is neither clearly true nor clearly false at current US levels; it is a genuinely open scientific question. ARGUMENT 2 -- THE CONSENT CLAIM: &#39;Fluoridation is mass medication without informed consent.&#39; This is an ethical argument with genuine philosophical merit. The Nuffield Council placed fluoridation at the &#39;restricting choice&#39; level on its intervention ladder. The bioethics literature genuinely debates whether fluoridation&#39;s therapeutic intent (preventing caries) makes it medication rather than water treatment. The fact that individuals cannot opt out of their tap water supply is not contested by anyone. The consent claim does not depend on whether fluoride is harmful. Even if fluoride at 0.7 mg/L is perfectly safe, the question of whether the government should add a substance to water for its pharmaceutical effect without individual consent is a legitimate ethical question. HOW THE BUNDLING WORKS: By combining the safety claim with the consent claim, advocacy groups create a rhetorical structure where the philosophical strength of the consent argument lends credibility to the more uncertain safety argument, while the emotional force of the safety argument (&#39;they&#39;re damaging your children&#39;s brains&#39;) energizes people who might otherwise find the consent argument too abstract. Conspiracy amplifiers (Layer 3) then bundle both claims into a &#39;government poisoning&#39; narrative that discards the nuance of both.</p></div>
   </div>
 
   
     <div class="section">
       <h2>Feasibility Assessment</h2>
-      <p>Unlike scenarios where the conspiracy requires an implausible mechanism, fluoridation&#39;s feasibility is not in question because it is openly practiced. The relevant feasibility questions are different: IS THE SAFETY CONCERN FEASIBLE? The dose-response question is genuinely open. At 0.7 mg/L, a child drinking 1 liter of water ingests 0.7 mg of fluoride. For a 15 kg child, this is 0.047 mg/kg/day from water alone. Adding fluoride from toothpaste (if swallowed), food, beverages, and other sources, total intake may reach 0.05-0.10 mg/kg/day. The NTP found effects above 1.5 mg/L, corresponding to roughly 0.1 mg/kg/day for a child. Some children in fluoridated areas may approach this level from combined sources, particularly in hot climates where water consumption is higher. This is not implausible, which is partly why Judge Chen found the risk &#39;unreasonable.&#39; IS THE CONSENT CONCERN FEASIBLE? This is not a feasibility question but a values question. The consent concern is coherent and well-articulated in the bioethics literature. It does not require any hidden mechanism or conspiracy. IS THE &#39;DELIBERATE POISONING&#39; CLAIM FEASIBLE? This requires believing that water treatment professionals, elected officials, health departments, and dental associations across decades and countries are knowingly harming populations. There is no plausible motivation for this scale of deliberate harm. The &#39;deliberate poisoning&#39; framing fails the same organizational secrecy test that chemtrail claims fail: too many knowing participants with no whistleblower producing evidence of intentional harm (as opposed to policy disagreement about acceptable risk levels).</p>
+      <div class="prose"><p>Unlike scenarios where the conspiracy requires an implausible mechanism, fluoridation&#39;s feasibility is not in question because it is openly practiced. The relevant feasibility questions are different: IS THE SAFETY CONCERN FEASIBLE? The dose-response question is genuinely open. At 0.7 mg/L, a child drinking 1 liter of water ingests 0.7 mg of fluoride. For a 15 kg child, this is 0.047 mg/kg/day from water alone. Adding fluoride from toothpaste (if swallowed), food, beverages, and other sources, total intake may reach 0.05-0.10 mg/kg/day. The NTP found effects above 1.5 mg/L, corresponding to roughly 0.1 mg/kg/day for a child. Some children in fluoridated areas may approach this level from combined sources, particularly in hot climates where water consumption is higher. This is not implausible, which is partly why Judge Chen found the risk &#39;unreasonable.&#39; IS THE CONSENT CONCERN FEASIBLE? This is not a feasibility question but a values question. The consent concern is coherent and well-articulated in the bioethics literature. It does not require any hidden mechanism or conspiracy. IS THE &#39;DELIBERATE POISONING&#39; CLAIM FEASIBLE? This requires believing that water treatment professionals, elected officials, health departments, and dental associations across decades and countries are knowingly harming populations. There is no plausible motivation for this scale of deliberate harm. The &#39;deliberate poisoning&#39; framing fails the same organizational secrecy test that chemtrail claims fail: too many knowing participants with no whistleblower producing evidence of intentional harm (as opposed to policy disagreement about acceptable risk levels).</p></div>
     </div>
 
   
     <div class="section">
       <h2>Commercial Interests</h2>
-      <p>PROFITING FROM FLUORIDE FEARS: (1) Water filtration industry: Berkey filters, reverse osmosis systems, and specialty fluoride-removal filters (activated alumina, bone char) are marketed with explicit fluoride-removal claims. The residential water treatment market is valued at approximately $12 billion in the US (Grand View Research, 2023), with fluoride removal being a marketing differentiator for premium products. (2) InfoWars Store and similar outlets sell water filters with fluoride-focused marketing alongside &#39;fluoride detox&#39; supplements. (3) Alternative health practitioners offer fluoride detoxification protocols including iodine supplements ($15-30/month), boron supplements ($10-20/month), and tamarind extract products. (4) Books: Paul Connett&#39;s &#39;The Case Against Fluoride&#39; (Chelsea Green, 2010), Christopher Bryson&#39;s &#39;The Fluoride Deception&#39; (Seven Stories Press, 2004), and others generate ongoing royalties. (5) Children&#39;s Health Defense generates over $15 million in annual revenue and uses fluoride content alongside vaccine content to drive donations. PROFITING FROM FLUORIDATION: (1) Fluorosilicic acid suppliers: Companies like Mosaic Company (formerly Cargill phosphate division) sell fluorosilicic acid as a byproduct of phosphate fertilizer manufacturing. The product that would otherwise require expensive hazardous waste disposal instead generates revenue. The US fluoridation chemicals market is estimated at $200-350 million annually. (2) Dental industry: While the ADA supports fluoridation, some critics note that moderate dental fluorosis requires cosmetic dental treatment (veneers, bonding), creating an indirect revenue stream. This argument is speculative but is present in anti-fluoridation literature. (3) Public health agencies: CDC&#39;s Division of Oral Health manages fluoridation programs and has institutional investment in the policy, though this is a mission-driven motivation rather than a financial one. IMPORTANT CONTEXT: Unlike many conspiracy scenarios, the commercial motives cut both ways. Both sides have financial interests, and both sides can credibly accuse the other of commercially motivated bias.</p>
+      <div class="prose"><p>PROFITING FROM FLUORIDE FEARS: (1) Water filtration industry: Berkey filters, reverse osmosis systems, and specialty fluoride-removal filters (activated alumina, bone char) are marketed with explicit fluoride-removal claims. The residential water treatment market is valued at approximately $12 billion in the US (Grand View Research, 2023), with fluoride removal being a marketing differentiator for premium products. (2) InfoWars Store and similar outlets sell water filters with fluoride-focused marketing alongside &#39;fluoride detox&#39; supplements. (3) Alternative health practitioners offer fluoride detoxification protocols including iodine supplements ($15-30/month), boron supplements ($10-20/month), and tamarind extract products. (4) Books: Paul Connett&#39;s &#39;The Case Against Fluoride&#39; (Chelsea Green, 2010), Christopher Bryson&#39;s &#39;The Fluoride Deception&#39; (Seven Stories Press, 2004), and others generate ongoing royalties. (5) Children&#39;s Health Defense generates over $15 million in annual revenue and uses fluoride content alongside vaccine content to drive donations. PROFITING FROM FLUORIDATION: (1) Fluorosilicic acid suppliers: Companies like Mosaic Company (formerly Cargill phosphate division) sell fluorosilicic acid as a byproduct of phosphate fertilizer manufacturing. The product that would otherwise require expensive hazardous waste disposal instead generates revenue. The US fluoridation chemicals market is estimated at $200-350 million annually. (2) Dental industry: While the ADA supports fluoridation, some critics note that moderate dental fluorosis requires cosmetic dental treatment (veneers, bonding), creating an indirect revenue stream. This argument is speculative but is present in anti-fluoridation literature. (3) Public health agencies: CDC&#39;s Division of Oral Health manages fluoridation programs and has institutional investment in the policy, though this is a mission-driven motivation rather than a financial one. IMPORTANT CONTEXT: Unlike many conspiracy scenarios, the commercial motives cut both ways. Both sides have financial interests, and both sides can credibly accuse the other of commercially motivated bias.</p></div>
     </div>
 
   
     <div class="section">
       <h2>Perception Gap</h2>
-      <p>The fluoridation debate features a pronounced perception gap in both directions. Pro-fluoridation advocates often perceive opponents as: (a) Anti-science conspiracy theorists who reject evidence, (b) Politically motivated libertarians using health as a pretext, (c) The modern equivalent of &#39;fluoride is a communist plot&#39; believers. In reality, the anti-fluoridation coalition includes chemistry professors (Connett), environmental organizations (Food &amp; Water Watch, which brought the TSCA suit), bioethicists, and parents whose concern is grounded in recent peer-reviewed literature (NTP, Cochrane, NRC). Anti-fluoridation advocates often perceive supporters as: (a) Blindly trusting government without questioning evidence quality, (b) Dismissing legitimate safety research because it threatens institutional orthodoxy, (c) Prioritizing institutional reputation over children&#39;s health. In reality, most fluoridation supporters are motivated by genuine concern for children&#39;s dental health, particularly in low-income communities where dental care access is limited and caries rates are highest. Fluoridation is a relatively inexpensive population-level intervention (approximately $1.50 per person per year) that reaches people regardless of income. The perception gap is particularly damaging because both sides share the value of protecting children&#39;s health but perceive the other as indifferent to children&#39;s wellbeing. A 2024 Gallup poll found that public support for fluoridation has declined from 72% (2001) to 57% (2024), suggesting that the gap is narrowing as more people encounter the newer scientific evidence, but the debate remains polarized at the activist level.</p>
+      <div class="prose"><p>The fluoridation debate features a pronounced perception gap in both directions. Pro-fluoridation advocates often perceive opponents as: (a) Anti-science conspiracy theorists who reject evidence, (b) Politically motivated libertarians using health as a pretext, (c) The modern equivalent of &#39;fluoride is a communist plot&#39; believers. In reality, the anti-fluoridation coalition includes chemistry professors (Connett), environmental organizations (Food &amp; Water Watch, which brought the TSCA suit), bioethicists, and parents whose concern is grounded in recent peer-reviewed literature (NTP, Cochrane, NRC). Anti-fluoridation advocates often perceive supporters as: (a) Blindly trusting government without questioning evidence quality, (b) Dismissing legitimate safety research because it threatens institutional orthodoxy, (c) Prioritizing institutional reputation over children&#39;s health. In reality, most fluoridation supporters are motivated by genuine concern for children&#39;s dental health, particularly in low-income communities where dental care access is limited and caries rates are highest. Fluoridation is a relatively inexpensive population-level intervention (approximately $1.50 per person per year) that reaches people regardless of income. The perception gap is particularly damaging because both sides share the value of protecting children&#39;s health but perceive the other as indifferent to children&#39;s wellbeing. A 2024 Gallup poll found that public support for fluoridation has declined from 72% (2001) to 57% (2024), suggesting that the gap is narrowing as more people encounter the newer scientific evidence, but the debate remains polarized at the activist level.</p></div>
     </div>
 
   <div class="section">
@@ -482,15 +661,15 @@
     
     <div class="dialogue-round round-1">
       <div class="round-label">Round 1: Perspective-Getting</div>
-      <div class="dialogue-bubble">Round 1 (Perspective-getting): I want to understand what drives your concern about fluoridation. I think it&#39;s important to start by acknowledging that your concern isn&#39;t coming from nowhere. The National Toxicology Program, after reviewing 72 studies over six years, concluded that fluoride above 1.5 mg/L is consistently associated with lower IQ in children. A federal judge reviewed weeks of expert testimony and ruled that even the 0.7 mg/L level used in US water systems poses an unreasonable risk. The Cochrane Collaboration, which is the gold standard for medical evidence reviews, found that most of the original studies supporting fluoridation were at high risk of bias. And the CDC itself acknowledged in 1999 that fluoride works primarily on the surface of teeth, not by being swallowed. These aren&#39;t fringe sources; they&#39;re the institutions that public health policy is supposed to be built on. So when you say you&#39;re concerned about fluoride in your water, you&#39;re standing on firmer ground than many people realize. What aspect of the fluoridation question concerns you most: the health question, the consent question, or both?</div>
+      <div class="dialogue-bubble"><p>Round 1 (Perspective-getting): I want to understand what drives your concern about fluoridation. I think it&#39;s important to start by acknowledging that your concern isn&#39;t coming from nowhere. The National Toxicology Program, after reviewing 72 studies over six years, concluded that fluoride above 1.5 mg/L is consistently associated with lower IQ in children. A federal judge reviewed weeks of expert testimony and ruled that even the 0.7 mg/L level used in US water systems poses an unreasonable risk. The Cochrane Collaboration, which is the gold standard for medical evidence reviews, found that most of the original studies supporting fluoridation were at high risk of bias. And the CDC itself acknowledged in 1999 that fluoride works primarily on the surface of teeth, not by being swallowed. These aren&#39;t fringe sources; they&#39;re the institutions that public health policy is supposed to be built on. So when you say you&#39;re concerned about fluoride in your water, you&#39;re standing on firmer ground than many people realize. What aspect of the fluoridation question concerns you most: the health question, the consent question, or both?</p></div>
     </div>
     <div class="dialogue-round round-2">
       <div class="round-label">Round 2: Guided Examination</div>
-      <div class="dialogue-bubble">Round 2 (Counter-evidence as systemic pattern question): That makes sense. Let me ask you to think about something, though. When we look at the evidence carefully, there&#39;s an important pattern worth examining. The NTP found effects above 1.5 mg/L, but explicitly said it could not draw conclusions below that level. US water fluoridation uses 0.7 mg/L, which is less than half the threshold where the NTP found consistent effects. Judge Chen extrapolated from the higher-dose studies to the lower dose, but the science of dose-response tells us that many substances behave differently at different concentrations: caffeine at one cup of coffee is different from caffeine at twenty cups. So there&#39;s a genuine scientific question here: does the effect at 1.5 follow a straight line down to 0.7, or is there a threshold below which the effect disappears? That question is honestly unresolved. But here&#39;s the systemic pattern worth noticing: when that unresolved question gets picked up and amplified, the nuance often disappears. The NTP&#39;s careful statement becomes &#39;the government admits fluoride destroys your brain.&#39; The distinction between 1.5 and 0.7 vanishes. And alongside those simplified messages, you&#39;ll often find someone selling you a water filter or a detox supplement. That doesn&#39;t mean your concern is wrong. It means it&#39;s worth asking: am I getting the full picture from the sources I&#39;m relying on, or am I getting a version that&#39;s been simplified to make me feel something specific?</div>
+      <div class="dialogue-bubble"><p>Round 2 (Counter-evidence as systemic pattern question): That makes sense. Let me ask you to think about something, though. When we look at the evidence carefully, there&#39;s an important pattern worth examining. The NTP found effects above 1.5 mg/L, but explicitly said it could not draw conclusions below that level. US water fluoridation uses 0.7 mg/L, which is less than half the threshold where the NTP found consistent effects. Judge Chen extrapolated from the higher-dose studies to the lower dose, but the science of dose-response tells us that many substances behave differently at different concentrations: caffeine at one cup of coffee is different from caffeine at twenty cups. So there&#39;s a genuine scientific question here: does the effect at 1.5 follow a straight line down to 0.7, or is there a threshold below which the effect disappears? That question is honestly unresolved. But here&#39;s the systemic pattern worth noticing: when that unresolved question gets picked up and amplified, the nuance often disappears. The NTP&#39;s careful statement becomes &#39;the government admits fluoride destroys your brain.&#39; The distinction between 1.5 and 0.7 vanishes. And alongside those simplified messages, you&#39;ll often find someone selling you a water filter or a detox supplement. That doesn&#39;t mean your concern is wrong. It means it&#39;s worth asking: am I getting the full picture from the sources I&#39;m relying on, or am I getting a version that&#39;s been simplified to make me feel something specific?</p></div>
     </div>
     <div class="dialogue-round round-3">
       <div class="round-label">Round 3: Integration</div>
-      <div class="dialogue-bubble">Round 3 (Complexity + common ground): Here&#39;s what I find most important about this debate. There are actually two separate questions bundled into one, and keeping them separate changes everything. Question 1 is scientific: is fluoride at 0.7 mg/L harmful? The honest answer is that we&#39;re not sure, and the fact that we&#39;re not sure after 80 years of fluoridation is itself worth taking seriously. The evidence for harm is suggestive but not conclusive at that concentration. The evidence for benefit is weaker than it was presented for decades, according to Cochrane. This is a genuine area of scientific uncertainty, not a settled question in either direction. Question 2 is ethical: even if fluoride at 0.7 mg/L is safe, should the government add a substance to drinking water for the purpose of preventing a disease in the population without asking each person whether they consent? The Nuffield Council on Bioethics, one of the most respected ethics bodies in the world, explicitly acknowledged this as a real ethical tension, not a fringe concern. They placed fluoridation at the &#39;restricting choice&#39; level on their intervention ladder. Here&#39;s the common ground that both sides tend to miss: if you support fluoridation because you care about children&#39;s teeth, especially in low-income communities where dental care is hardest to access, that compassion is real and well-founded. Dental caries is the most common childhood disease, and it hits poor children hardest. And if you oppose fluoridation because you believe that people deserve a choice about what goes into their bodies, that principle is also real and well-founded. What would it look like if, instead of fighting about whether fluoride is poison or panacea, the conversation shifted to: how do we protect children&#39;s dental health in a way that also respects the autonomy of the people drinking the water? Countries like the Netherlands, Germany, and Sweden found answers to that question. They use topical fluoride, school dental programs, and other targeted interventions instead of water fluoridation, and their children&#39;s teeth are comparable to those in fluoridated countries. That&#39;s not a conspiracy. It&#39;s a policy choice that other democracies made. What would it take for your community to have that conversation honestly?</div>
+      <div class="dialogue-bubble"><p>Round 3 (Complexity + common ground): Here&#39;s what I find most important about this debate. There are actually two separate questions bundled into one, and keeping them separate changes everything. Question 1 is scientific: is fluoride at 0.7 mg/L harmful? The honest answer is that we&#39;re not sure, and the fact that we&#39;re not sure after 80 years of fluoridation is itself worth taking seriously. The evidence for harm is suggestive but not conclusive at that concentration. The evidence for benefit is weaker than it was presented for decades, according to Cochrane. This is a genuine area of scientific uncertainty, not a settled question in either direction. Question 2 is ethical: even if fluoride at 0.7 mg/L is safe, should the government add a substance to drinking water for the purpose of preventing a disease in the population without asking each person whether they consent? The Nuffield Council on Bioethics, one of the most respected ethics bodies in the world, explicitly acknowledged this as a real ethical tension, not a fringe concern. They placed fluoridation at the &#39;restricting choice&#39; level on their intervention ladder. Here&#39;s the common ground that both sides tend to miss: if you support fluoridation because you care about children&#39;s teeth, especially in low-income communities where dental care is hardest to access, that compassion is real and well-founded. Dental caries is the most common childhood disease, and it hits poor children hardest. And if you oppose fluoridation because you believe that people deserve a choice about what goes into their bodies, that principle is also real and well-founded. What would it look like if, instead of fighting about whether fluoride is poison or panacea, the conversation shifted to: how do we protect children&#39;s dental health in a way that also respects the autonomy of the people drinking the water? Countries like the Netherlands, Germany, and Sweden found answers to that question. They use topical fluoride, school dental programs, and other targeted interventions instead of water fluoridation, and their children&#39;s teeth are comparable to those in fluoridated countries. That&#39;s not a conspiracy. It&#39;s a policy choice that other democracies made. What would it take for your community to have that conversation honestly?</p></div>
     </div>
   </div>
 
@@ -499,6 +678,8 @@
     <h2>Reframe</h2>
     <blockquote class="reframe-block">Here is something that both sides of the fluoridation debate rarely acknowledge: you agree on the thing that matters most. You both want children to grow up healthy, with sound teeth and sound minds. You both believe that the government should base its public health decisions on the best available evidence. And you both have legitimate reasons to be dissatisfied with how this debate has been conducted. If you support fluoridation, your position rests on the evidence that fluoride prevents dental decay, and on the value judgment that protecting children in low-income communities justifies a population-level intervention. Those are defensible positions. But the evidence base is weaker than it was presented for decades, and the consent question deserves a serious answer, not a dismissal. If you oppose fluoridation, your concern about what goes into your water and your children&#39;s bodies is a legitimate expression of a principle that the entire medical profession claims to honor: informed consent. And the recent scientific evidence gives you real data to work with, not just ideology. But the distance between &#39;the evidence for harm is uncertain at current levels&#39; and &#39;the government is deliberately poisoning you&#39; is the distance between a citizen engaged in policy debate and a person who has been captured by a narrative that serves someone else&#39;s agenda. The question worth asking together is this: given that the evidence is genuinely uncertain at the concentrations used in the US, what would a decision-making process look like that both respects individual autonomy and protects the children who need help the most?</blockquote>
   </div>
+
+  
 
   <div class="section">
     <h2>Audit</h2>
@@ -510,7 +691,7 @@
     <ul class="findings-list">
     <li class="finding-item">
       <div class="finding-header">
-        <span class="finding-category">completeness</span>
+        <span class="finding-category">Completeness</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">The analysis correctly identifies and separates the safety and consent claims, which is the core test requirement....</span>
       </div>
@@ -522,7 +703,7 @@
     </li>
     <li class="finding-item">
       <div class="finding-header">
-        <span class="finding-category">accuracy</span>
+        <span class="finding-category">Accuracy</span>
         <span class="finding-severity-medium">MEDIUM</span>
         <span class="finding-description">The NTP monograph finding is accurately reported as applying to concentrations at or above 1.5 mg/L. Judge Chen&#39;s...</span>
       </div>
@@ -534,7 +715,7 @@
     </li>
     <li class="finding-item">
       <div class="finding-header">
-        <span class="finding-category">quality</span>
+        <span class="finding-category">Quality</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">The inferential gap analysis is well-structured and correctly identifies Leap 1 (dose extrapolation) as the central...</span>
       </div>
@@ -546,7 +727,7 @@
     </li>
     <li class="finding-item">
       <div class="finding-header">
-        <span class="finding-category">bias</span>
+        <span class="finding-category">Bias</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">The analysis maintains appropriate balance between the pro- and anti-fluoridation positions, which is critical for this...</span>
       </div>
@@ -558,7 +739,7 @@
     </li>
     <li class="finding-item">
       <div class="finding-header">
-        <span class="finding-category">manipulation</span>
+        <span class="finding-category">Manipulation</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">The Socratic dialogue successfully avoids being dismissive of the anti-fluoridation position while still encouraging...</span>
       </div>
@@ -570,7 +751,7 @@
     </li>
     <li class="finding-item">
       <div class="finding-header">
-        <span class="finding-category">completeness</span>
+        <span class="finding-category">Completeness</span>
         <span class="finding-severity-medium">MEDIUM</span>
         <span class="finding-description">The analysis does not address the equity dimension as prominently as it deserves. Fluoridation&#39;s strongest...</span>
       </div>
@@ -582,7 +763,7 @@
     </li>
     <li class="finding-item">
       <div class="finding-header">
-        <span class="finding-category">accuracy</span>
+        <span class="finding-category">Accuracy</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">The commercial motives section correctly identifies that financial interests exist on both sides (water filter industry...</span>
       </div>
@@ -594,7 +775,7 @@
     </li>
     <li class="finding-item">
       <div class="finding-header">
-        <span class="finding-category">quality</span>
+        <span class="finding-category">Quality</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">The TTP classification appropriately identifies the primary tactic as &#39;Inform&#39; rather than &#39;Execute,&#39; reflecting this...</span>
       </div>
@@ -605,6 +786,103 @@
       </div>
     </li></ul>
   </div>
+
+  
+    <div class="section evaluation-section">
+      <h2>Evaluation Methodology</h2>
+      <p class="intro-note">Full transparency on how this scenario was scored. 12 weighted checks, each independently measurable. <a href="https://github.com/Jochen-s/huginn-muninn/blob/main/tests/run_bridge_scenarios.py" target="_blank" rel="noopener">View source code</a></p>
+      <div class="eval-summary">
+        <span class="eval-overall">76.3%</span>
+        <span class="badge badge-warn">Grade B</span>
+      </div>
+      <div style="overflow-x:auto">
+        <table class="eval-table">
+          <thead>
+            <tr>
+              <th>Check</th>
+              <th>Weight</th>
+              <th>Score</th>
+              <th>Status</th>
+              <th>What It Measures</th>
+            </tr>
+          </thead>
+          <tbody><tr class="eval-fail">
+      <td>needs coverage</td>
+      <td class="eval-weight">7%</td>
+      <td class="eval-score">33%</td>
+      <td class="eval-status">MISS</td>
+      <td class="eval-desc">Expected universal human needs matched against identified needs</td>
+    </tr><tr class="eval-pass">
+      <td>issue overlap quality</td>
+      <td class="eval-weight">6%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Common ground text is substantive (&gt;50 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>narrative deconstruction</td>
+      <td class="eval-weight">7%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Narrative deconstruction is substantive (&gt;100 characters)</td>
+    </tr><tr class="eval-fail">
+      <td>consensus explanation</td>
+      <td class="eval-weight">11%</td>
+      <td class="eval-score">0%</td>
+      <td class="eval-status">MISS</td>
+      <td class="eval-desc">Scientific/mainstream explanation &gt;200 chars with 3+ mechanism keywords</td>
+    </tr><tr class="eval-pass">
+      <td>inferential gap</td>
+      <td class="eval-weight">8%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Inferential gap analysis is substantive (&gt;50 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>feasibility check</td>
+      <td class="eval-weight">6%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Feasibility assessment is substantive (&gt;50 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>commercial motives</td>
+      <td class="eval-weight">6%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Commercial motive analysis is substantive (&gt;30 characters)</td>
+    </tr><tr class="eval-fail">
+      <td>technique naming</td>
+      <td class="eval-weight">8%</td>
+      <td class="eval-score">0%</td>
+      <td class="eval-status">MISS</td>
+      <td class="eval-desc">At least 1 technique named with mechanic (&gt;30 chars) and precedent (&gt;20 chars)</td>
+    </tr><tr class="eval-pass">
+      <td>perception gap</td>
+      <td class="eval-weight">5%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Perception gap analysis is substantive (&gt;30 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>socratic dialogue</td>
+      <td class="eval-weight">17%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">3 rounds, ends with question, Round 1 shows perspective-getting</td>
+    </tr><tr class="eval-pass">
+      <td>reframe quality</td>
+      <td class="eval-weight">7%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Reframe &gt;20 chars using shared-value language (we, together, both)</td>
+    </tr><tr class="eval-pass">
+      <td>no controlling language</td>
+      <td class="eval-weight">12%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Zero matches against 9 controlling phrases</td>
+    </tr></tbody>
+        </table>
+      </div>
+      <p class="eval-note">Overall score = weighted sum of individual check scores. Weights reflect the relative importance of each dimension to the project's mission: Socratic dialogue quality (17%) and controlling language detection (12%) are weighted highest because autonomy-supportive framing is the core differentiator.</p>
+    </div>
 
   <div class="scenario-nav">
     <a href="HS-04.html">&larr; HS-04: Big Pharma is suppressing natural cures for...</a>

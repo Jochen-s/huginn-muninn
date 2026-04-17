@@ -70,6 +70,7 @@
     font-size: 0.875rem;
   }
   .site-nav a:hover { color: var(--white); }
+  .site-nav a.active { color: var(--white); font-weight: 600; }
 
   /* Category sections */
   .category-section { padding: 48px 0; border-bottom: 1px solid var(--border); }
@@ -211,27 +212,39 @@
   .metrics-table tr:last-child td { border-bottom: none; }
 
   .section {
-    padding: 32px 0;
+    padding: 40px 0;
     border-bottom: 1px solid var(--border);
   }
   .section:last-child { border-bottom: none; }
 
   .section h2 {
-    font-size: 1.25rem;
-    margin-bottom: 16px;
-    padding-bottom: 8px;
+    font-size: 1.3rem;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
     border-bottom: 2px solid var(--bg);
+    letter-spacing: -0.01em;
   }
 
-  .section p { margin-bottom: 12px; color: #2C3E50; }
+  .section p { margin-bottom: 16px; color: #2C3E50; }
   .section p:last-child { margin-bottom: 0; }
 
   .intro-note {
     color: var(--gray);
     font-size: 0.875rem;
     font-style: italic;
-    margin-bottom: 12px;
+    margin-bottom: 16px;
   }
+
+  /* Prose blocks: long-form text with proper paragraph spacing */
+  .prose {
+    font-size: 0.95rem;
+    line-height: 1.75;
+    color: #34495E;
+  }
+  .prose p {
+    margin-bottom: 16px;
+  }
+  .prose p:last-child { margin-bottom: 0; }
 
   /* Needs pills */
   .needs-list {
@@ -288,28 +301,30 @@
   .technique-text { font-size: 0.9rem; color: #2C3E50; line-height: 1.6; }
 
   /* Socratic dialogue */
-  .dialogue-round { margin-bottom: 20px; }
+  .dialogue-round { margin-bottom: 28px; }
+  .dialogue-round:last-child { margin-bottom: 0; }
   .round-label {
     font-size: 0.75rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
   }
   .round-1 .round-label { color: var(--teal); }
   .round-2 .round-label { color: var(--navy); }
   .round-3 .round-label { color: #6C3483; }
 
   .dialogue-bubble {
-    padding: 16px 18px;
+    padding: 20px 24px;
     border-radius: 8px;
-    font-size: 0.9rem;
-    line-height: 1.65;
-    white-space: pre-wrap;
+    font-size: 0.92rem;
+    line-height: 1.75;
   }
-  .round-1 .dialogue-bubble { background: #EAF7F4; border-left: 3px solid var(--teal); }
-  .round-2 .dialogue-bubble { background: #EAF0F7; border-left: 3px solid var(--navy); }
-  .round-3 .dialogue-bubble { background: #F5EEF8; border-left: 3px solid #6C3483; }
+  .dialogue-bubble p { margin-bottom: 12px; }
+  .dialogue-bubble p:last-child { margin-bottom: 0; }
+  .round-1 .dialogue-bubble { background: #EAF7F4; border-left: 4px solid var(--teal); }
+  .round-2 .dialogue-bubble { background: #EAF0F7; border-left: 4px solid var(--navy); }
+  .round-3 .dialogue-bubble { background: #F5EEF8; border-left: 4px solid #6C3483; }
 
   /* Reframe */
   .reframe-block {
@@ -356,8 +371,52 @@
   }
   .finding-severity-low    { color: var(--teal); font-size: 0.75rem; font-weight: 600; }
   .finding-severity-medium { color: var(--amber); font-size: 0.75rem; font-weight: 600; }
-  .finding-severity-high   { color: var(--red); font-size: 0.75rem; font-weight: 600; }
+  .finding-severity-high     { color: var(--red); font-size: 0.75rem; font-weight: 600; }
+  .finding-severity-critical { color: #8B0000; font-size: 0.75rem; font-weight: 700; }
   .finding-description { font-size: 0.875rem; color: #2C3E50; }
+
+  /* Scoped diagnostics (v0.8.0+) */
+  .diagnostics-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 12px;
+  }
+  @media (max-width: 640px) { .diagnostics-grid { grid-template-columns: 1fr; } }
+  .diagnostic-card {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    background: var(--bg);
+  }
+  .diagnostic-card h4 {
+    margin: 0 0 6px;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--gray);
+  }
+  .diagnostic-card p { margin: 0; font-size: 0.9rem; line-height: 1.6; }
+  .diagnostic-note { font-size: 0.78rem; color: var(--gray); font-style: italic; margin-bottom: 4px !important; }
+  .posture-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    background: #F5F5F5;
+    color: #555;
+  }
+  .posture-inoculation_first  { background: #FFF3E0; color: #E65100; }
+  .posture-relational_first   { background: #E3F2FD; color: #1565C0; }
+  .pattern-density-warning {
+    background: #FFF8E1;
+    border-left: 4px solid var(--amber);
+    padding: 10px 14px;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.875rem;
+    margin-top: 8px;
+  }
   .finding-body { padding: 10px 14px; border-top: 1px solid var(--border); }
   .finding-rec {
     font-size: 0.8rem;
@@ -384,6 +443,117 @@
   .scenario-nav .disabled { color: var(--gray); pointer-events: none; }
 
   /* Responsive */
+  /* Evaluation methodology table */
+  .evaluation-section { background: #FAFBFD; margin: 0 -32px; padding: 40px 32px; border-bottom: 1px solid var(--border); }
+  .eval-summary { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+  .eval-overall { font-size: 2rem; font-weight: 700; color: var(--navy); }
+  .eval-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  .eval-table th { text-align: left; padding: 10px 12px; border-bottom: 2px solid var(--border); color: var(--gray); font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; }
+  .eval-table td { padding: 10px 12px; border-bottom: 1px solid #EEF1F5; }
+  .eval-table td:first-child { font-weight: 600; text-transform: capitalize; }
+  .eval-weight, .eval-score { text-align: center; font-variant-numeric: tabular-nums; }
+  .eval-status { text-align: center; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.04em; }
+  .eval-pass .eval-status { color: var(--green); }
+  .eval-partial .eval-status { color: var(--amber); }
+  .eval-fail .eval-status { color: var(--red); }
+  .eval-desc { color: var(--gray); font-size: 0.8rem; }
+  .eval-note { margin-top: 16px; font-size: 0.82rem; color: var(--gray); line-height: 1.6; }
+
+  /* Essay page styles */
+  .essay-prose {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #2C3E50;
+    max-width: 760px;
+  }
+  .essay-prose h2 {
+    font-size: 1.35rem;
+    margin-top: 40px;
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--bg);
+  }
+  .essay-prose h3 {
+    font-size: 1.1rem;
+    margin-top: 28px;
+    margin-bottom: 10px;
+    color: var(--navy);
+  }
+  .essay-prose h4 {
+    font-size: 1rem;
+    margin-top: 20px;
+    margin-bottom: 8px;
+    color: #34495E;
+  }
+  .essay-prose p { margin-bottom: 18px; }
+  .essay-prose ul, .essay-prose ol { margin: 0 0 18px 24px; }
+  .essay-prose li { margin-bottom: 8px; line-height: 1.75; }
+  .essay-prose strong { color: var(--navy); font-weight: 700; }
+  .essay-prose em { font-style: italic; }
+  .essay-prose hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 36px 0;
+  }
+  .essay-prose blockquote {
+    border-left: 4px solid var(--teal);
+    padding: 8px 20px;
+    margin: 20px 0;
+    background: var(--bg);
+    color: #34495E;
+    font-style: italic;
+  }
+  .essay-prose code {
+    background: var(--bg);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: 'SFMono-Regular', Consolas, monospace;
+    font-size: 0.88em;
+  }
+  .essay-prose .essay-meta {
+    color: var(--gray);
+    font-size: 0.875rem;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .essay-prose .references {
+    font-size: 0.88rem;
+    color: #34495E;
+    line-height: 1.65;
+  }
+  .essay-prose .references p { margin-bottom: 10px; }
+
+  /* Essay card styles (index page) */
+  .essay-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px;
+    transition: box-shadow 0.15s;
+    display: flex;
+    flex-direction: column;
+  }
+  .essay-card:hover { box-shadow: 0 4px 16px rgba(27, 42, 74, 0.12); }
+  .essay-card .card-id { color: #6C3483; }
+  .essay-card h3 {
+    font-size: 1.15rem;
+    margin-bottom: 8px;
+    line-height: 1.35;
+  }
+  .essay-card .essay-summary {
+    color: #34495E;
+    font-size: 0.92rem;
+    line-height: 1.6;
+    flex: 1;
+    margin-bottom: 14px;
+  }
+  .essay-card .essay-date {
+    font-size: 0.8rem;
+    color: var(--gray);
+    margin-bottom: 10px;
+  }
+
   @media (max-width: 640px) {
     .site-header h1 { font-size: 1.5rem; }
     .cards-grid { grid-template-columns: 1fr; }
@@ -391,10 +561,19 @@
     .scenario-nav { flex-direction: column; align-items: flex-start; }
     .metrics-table { font-size: 0.8rem; }
     .metrics-table th, .metrics-table td { padding: 8px 10px; }
+    .essay-prose { font-size: 0.95rem; }
+    .essay-prose h2 { font-size: 1.2rem; }
   }
 </style>
 </head>
 <body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a href="index.html">Gallery</a>
+    <a href="graph.html">Knowledge Graph</a>
+  </div>
+</nav>
 
 <header class="scenario-header">
   <div class="content">
@@ -445,35 +624,35 @@
   <div class="section">
     <h2>Inferential Gap</h2>
     <p class="intro-note">Where the evidence ends and the leap begins.</p>
-    <p>The kernel of truth in this claim is substantial and multi-layered: (1) Monsanto engaged in documented scientific misconduct, including ghostwriting papers on glyphosate safety and coordinating with EPA officials. This is established in court documents and FOIA releases. (2) Glyphosate has a legitimate scientific debate about cancer risk. IARC classified it as Group 2A (&#39;probably carcinogenic&#39;), while EPA, EFSA, and other agencies concluded it is not likely carcinogenic at typical exposure levels. Reasonable scientists disagree on the interpretation. (3) Monsanto&#39;s seed patent enforcement was aggressive and caused real hardship to farmers. (4) Regulatory capture is a real phenomenon: the revolving door between Monsanto and FDA is documented. The EXACT inferential leaps from these truths to &#39;GMOs are poisoning our food supply&#39; are: Leap 1: &#39;Monsanto manipulated glyphosate science&#39; to &#39;all GMO safety science is corrupted.&#39; This is unsupported because the GMO safety consensus comes from over 3,000 studies conducted by hundreds of independent research groups in dozens of countries, reviewed by the NAS, EFSA, WHO, and 280+ scientific institutions. Monsanto&#39;s ghostwriting was confined to specific glyphosate reviews, not the entire body of GMO safety research. Leap 2: &#39;Glyphosate may be carcinogenic&#39; to &#39;GMOs are poisoning us.&#39; This is unsupported because glyphosate is an herbicide used alongside GMO crops, not a property of the GMO food itself. Consumers eating GMO food are not consuming glyphosate at the same levels as agricultural workers spraying it. Furthermore, the IARC classification is a hazard assessment, not a risk assessment; other Group 2A substances include red meat and very hot beverages. Leap 3: &#39;Monsanto behaved unethically&#39; to &#39;Monsanto&#39;s products must be harmful.&#39; This is a character inference, not evidence. A company can engage in misconduct while also selling products that are independently verified as safe by parties with no connection to the company. Leap 4: &#39;Some FDA scientists had concerns in 1992&#39; to &#39;the FDA knows GMOs are dangerous.&#39; This is unsupported because the FDA memos contained a range of views; some scientists recommended additional testing, others supported the substantial equivalence approach. Three decades of subsequent research have not validated the concerns expressed in those memos.</p>
+    <div class="prose"><p>The kernel of truth in this claim is substantial and multi-layered: (1) Monsanto engaged in documented scientific misconduct, including ghostwriting papers on glyphosate safety and coordinating with EPA officials. This is established in court documents and FOIA releases. (2) Glyphosate has a legitimate scientific debate about cancer risk. IARC classified it as Group 2A (&#39;probably carcinogenic&#39;), while EPA, EFSA, and other agencies concluded it is not likely carcinogenic at typical exposure levels. Reasonable scientists disagree on the interpretation. (3) Monsanto&#39;s seed patent enforcement was aggressive and caused real hardship to farmers. (4) Regulatory capture is a real phenomenon: the revolving door between Monsanto and FDA is documented. The EXACT inferential leaps from these truths to &#39;GMOs are poisoning our food supply&#39; are: Leap 1: &#39;Monsanto manipulated glyphosate science&#39; to &#39;all GMO safety science is corrupted.&#39; This is unsupported because the GMO safety consensus comes from over 3,000 studies conducted by hundreds of independent research groups in dozens of countries, reviewed by the NAS, EFSA, WHO, and 280+ scientific institutions. Monsanto&#39;s ghostwriting was confined to specific glyphosate reviews, not the entire body of GMO safety research. Leap 2: &#39;Glyphosate may be carcinogenic&#39; to &#39;GMOs are poisoning us.&#39; This is unsupported because glyphosate is an herbicide used alongside GMO crops, not a property of the GMO food itself. Consumers eating GMO food are not consuming glyphosate at the same levels as agricultural workers spraying it. Furthermore, the IARC classification is a hazard assessment, not a risk assessment; other Group 2A substances include red meat and very hot beverages. Leap 3: &#39;Monsanto behaved unethically&#39; to &#39;Monsanto&#39;s products must be harmful.&#39; This is a character inference, not evidence. A company can engage in misconduct while also selling products that are independently verified as safe by parties with no connection to the company. Leap 4: &#39;Some FDA scientists had concerns in 1992&#39; to &#39;the FDA knows GMOs are dangerous.&#39; This is unsupported because the FDA memos contained a range of views; some scientists recommended additional testing, others supported the substantial equivalence approach. Three decades of subsequent research have not validated the concerns expressed in those memos.</p></div>
   </div>
 
   <div class="section">
     <h2>Common Ground</h2>
-    <p>People who fear GMOs and scientists who study food safety share more common ground than the polarized debate suggests. Both groups: (1) Want rigorous, independent food safety testing. The 2016 NAS report recommended enhanced post-market surveillance of GE crops, a recommendation supported by both pro-safety and anti-GMO advocates. (2) Want transparency in corporate influence on regulation. The Monsanto Papers revealed that even scientists who support the GMO safety consensus were disturbed by Monsanto&#39;s ghostwriting and regulatory manipulation. A 2017 Pew Research survey found that 88% of AAAS scientists considered GM foods safe, but many of those same scientists support stronger disclosure of industry funding relationships. (3) Want to protect farmers from exploitative corporate practices. Both anti-Monsanto activists and agricultural economists have criticized seed patent enforcement practices and market concentration in the seed industry (top 4 companies control over 60% of global seed sales). (4) Want honest labeling. A 2015 ABC News poll found 93% of Americans supported mandatory GMO labeling. Even many scientists who consider GMOs safe support consumer right-to-know labeling, seeing it as a transparency issue rather than a safety issue. The Pew Research Center (2016) found that 39% of Americans believe GMO foods are worse for health than non-GMO foods, but this belief does not correlate with rejection of science generally; these individuals have average or above-average trust in medical scientists on other topics. The disagreement is not about whether food should be safe or corporations should be honest. It is about whether the specific mechanism claimed (GMOs as poison) accurately describes the risk.</p>
+    <div class="prose"><p>People who fear GMOs and scientists who study food safety share more common ground than the polarized debate suggests. Both groups: (1) Want rigorous, independent food safety testing. The 2016 NAS report recommended enhanced post-market surveillance of GE crops, a recommendation supported by both pro-safety and anti-GMO advocates. (2) Want transparency in corporate influence on regulation. The Monsanto Papers revealed that even scientists who support the GMO safety consensus were disturbed by Monsanto&#39;s ghostwriting and regulatory manipulation. A 2017 Pew Research survey found that 88% of AAAS scientists considered GM foods safe, but many of those same scientists support stronger disclosure of industry funding relationships. (3) Want to protect farmers from exploitative corporate practices. Both anti-Monsanto activists and agricultural economists have criticized seed patent enforcement practices and market concentration in the seed industry (top 4 companies control over 60% of global seed sales). (4) Want honest labeling. A 2015 ABC News poll found 93% of Americans supported mandatory GMO labeling. Even many scientists who consider GMOs safe support consumer right-to-know labeling, seeing it as a transparency issue rather than a safety issue. The Pew Research Center (2016) found that 39% of Americans believe GMO foods are worse for health than non-GMO foods, but this belief does not correlate with rejection of science generally; these individuals have average or above-average trust in medical scientists on other topics. The disagreement is not about whether food should be safe or corporations should be honest. It is about whether the specific mechanism claimed (GMOs as poison) accurately describes the risk.</p></div>
   </div>
 
   <div class="section">
     <h2>Narrative Deconstruction</h2>
-    <p>The &#39;GMOs are poisoning us and Monsanto knows it&#39; narrative is constructed by fusing two distinct stories into one. This fusion is the narrative&#39;s primary source of power, and understanding the fusion is the key to understanding the manipulation. Story 1 (Documented corporate misconduct): Monsanto ghostwrote scientific papers. Monsanto influenced EPA regulatory processes. Monsanto aggressively sued farmers over seed patents. Monsanto employed a &#39;revolving door&#39; with regulatory agencies. Bayer settled Roundup cancer claims for $10.9 billion. These are documented facts supported by court evidence and investigative journalism. Story 2 (Unsupported health claim): GMO foods are poisoning consumers. The scientific consensus, based on over 3,000 studies reviewed by the NAS, EFSA, WHO, and 280+ institutions worldwide, is that approved GMO foods are not less safe than conventional alternatives. The fusion works because Monsanto is responsible for BOTH Roundup (glyphosate, the subject of legitimate health concerns) AND a large share of GMO seeds (which are independently assessed as safe by the scientific consensus). When Monsanto&#39;s misconduct on glyphosate is established, it becomes psychologically natural to conclude that Monsanto&#39;s GMO products must also be harmful, and that the safety consensus must also be corrupted. This inferential leap feels logical but is not supported by the evidence, because the GMO safety consensus comes from hundreds of independent research groups worldwide, not from Monsanto. The split was performed by multiple actors with different motivations: the organic food industry benefits commercially from consumer fear of GMOs, anti-corporate activists find GMOs to be an effective symbol of corporate agricultural overreach, and supplement sellers profit from &#39;detox&#39; products marketed against GMO and glyphosate fears. Each actor amplifies the fusion because it serves their specific interest.</p>
+    <div class="prose"><p>The &#39;GMOs are poisoning us and Monsanto knows it&#39; narrative is constructed by fusing two distinct stories into one. This fusion is the narrative&#39;s primary source of power, and understanding the fusion is the key to understanding the manipulation. Story 1 (Documented corporate misconduct): Monsanto ghostwrote scientific papers. Monsanto influenced EPA regulatory processes. Monsanto aggressively sued farmers over seed patents. Monsanto employed a &#39;revolving door&#39; with regulatory agencies. Bayer settled Roundup cancer claims for $10.9 billion. These are documented facts supported by court evidence and investigative journalism. Story 2 (Unsupported health claim): GMO foods are poisoning consumers. The scientific consensus, based on over 3,000 studies reviewed by the NAS, EFSA, WHO, and 280+ institutions worldwide, is that approved GMO foods are not less safe than conventional alternatives. The fusion works because Monsanto is responsible for BOTH Roundup (glyphosate, the subject of legitimate health concerns) AND a large share of GMO seeds (which are independently assessed as safe by the scientific consensus). When Monsanto&#39;s misconduct on glyphosate is established, it becomes psychologically natural to conclude that Monsanto&#39;s GMO products must also be harmful, and that the safety consensus must also be corrupted. This inferential leap feels logical but is not supported by the evidence, because the GMO safety consensus comes from hundreds of independent research groups worldwide, not from Monsanto. The split was performed by multiple actors with different motivations: the organic food industry benefits commercially from consumer fear of GMOs, anti-corporate activists find GMOs to be an effective symbol of corporate agricultural overreach, and supplement sellers profit from &#39;detox&#39; products marketed against GMO and glyphosate fears. Each actor amplifies the fusion because it serves their specific interest.</p></div>
   </div>
 
   
     <div class="section">
       <h2>Feasibility Assessment</h2>
-      <p>The claim that &#39;GMOs are poisoning our food supply&#39; implies a specific mechanism: that genetic modification introduces toxins or allergens into food that cause systematic health harm. Assessing the feasibility: DETECTION: If GMO foods were causing the health effects claimed (cancer, organ damage, infertility, autoimmune disease), this would be detectable in epidemiological data. GMO foods entered the US food supply beginning in 1996. Over 90% of US corn, soybeans, and cotton are now genetically modified. After nearly 30 years of mass consumption by hundreds of millions of people, no epidemiological signal has been detected linking GMO food consumption to any health outcome. By comparison, the cancer risk from tobacco was detectable within 15-20 years of mass adoption despite tobacco industry obstruction of research. MECHANISM: Genetic modification inserts specific, known genes into crop genomes. The proteins produced by these genes (e.g., Bt protein from Bacillus thuringiensis, CP4 EPSPS from Agrobacterium for glyphosate tolerance) have been individually studied for toxicity and allergenicity. The Bt protein, for example, acts on specific insect gut receptors that humans do not possess. For GMOs to be systematically poisonous, the inserted genes would need to produce novel toxins not detected by standard composition analysis, which compares GM crops to conventional counterparts across hundreds of measured compounds. GLOBAL SCALE: GMO crops are grown in 29 countries and consumed in many more. The claim requires that regulatory agencies across these countries, with different political systems, different corporate interests, and different scientific traditions, have all failed to detect the same harm. This includes agencies in countries with no Monsanto presence and no commercial relationship with the company. COUNTER-INDICATOR: Countries that have restricted or banned GMO cultivation (much of the EU) show no measurable improvement in the health outcomes attributed to GMO consumption (cancer rates, autoimmune conditions, fertility) compared to countries with high GMO consumption. This is inconsistent with the hypothesis.</p>
+      <div class="prose"><p>The claim that &#39;GMOs are poisoning our food supply&#39; implies a specific mechanism: that genetic modification introduces toxins or allergens into food that cause systematic health harm. Assessing the feasibility: DETECTION: If GMO foods were causing the health effects claimed (cancer, organ damage, infertility, autoimmune disease), this would be detectable in epidemiological data. GMO foods entered the US food supply beginning in 1996. Over 90% of US corn, soybeans, and cotton are now genetically modified. After nearly 30 years of mass consumption by hundreds of millions of people, no epidemiological signal has been detected linking GMO food consumption to any health outcome. By comparison, the cancer risk from tobacco was detectable within 15-20 years of mass adoption despite tobacco industry obstruction of research. MECHANISM: Genetic modification inserts specific, known genes into crop genomes. The proteins produced by these genes (e.g., Bt protein from Bacillus thuringiensis, CP4 EPSPS from Agrobacterium for glyphosate tolerance) have been individually studied for toxicity and allergenicity. The Bt protein, for example, acts on specific insect gut receptors that humans do not possess. For GMOs to be systematically poisonous, the inserted genes would need to produce novel toxins not detected by standard composition analysis, which compares GM crops to conventional counterparts across hundreds of measured compounds. GLOBAL SCALE: GMO crops are grown in 29 countries and consumed in many more. The claim requires that regulatory agencies across these countries, with different political systems, different corporate interests, and different scientific traditions, have all failed to detect the same harm. This includes agencies in countries with no Monsanto presence and no commercial relationship with the company. COUNTER-INDICATOR: Countries that have restricted or banned GMO cultivation (much of the EU) show no measurable improvement in the health outcomes attributed to GMO consumption (cancer rates, autoimmune conditions, fertility) compared to countries with high GMO consumption. This is inconsistent with the hypothesis.</p></div>
     </div>
 
   
     <div class="section">
       <h2>Commercial Interests</h2>
-      <p>Multiple parties profit financially from the belief that GMOs are poisoning the food supply: ORGANIC FOOD INDUSTRY: The US organic food market was valued at $67.6 billion in 2023 (Organic Trade Association). USDA organic certification prohibits GMO ingredients by definition, making anti-GMO sentiment a direct revenue driver. The organic price premium averages 20-30% above conventional products. Every consumer who switches from conventional to organic due to GMO fears represents a revenue increase for organic producers. Specific actors: (a) Non-GMO Project: $3.4 million annual revenue from verification fees (2019 tax filings), with its &#39;Butterfly&#39; label on over 60,000 products. (b) Stonyfield Farm founder Gary Hirshberg: funded anti-GMO campaigns and co-founded Just Label It. (c) Dr. Bronner&#39;s: donated over $1.8 million to anti-GMO ballot initiatives. (d) Whole Foods Market: built significant brand identity around non-GMO product lines before Amazon acquisition. SUPPLEMENT AND DETOX INDUSTRY: Companies sell &#39;GMO detox&#39; products, heavy metal chelation supplements, and &#39;clean eating&#39; programs that capitalize on food contamination fears. Mercola.com generates estimated $7-14 million annually from supplement sales, with anti-GMO content driving significant traffic. Natural News similarly monetizes fear-based content through supplement sales. CONTENT PRODUCERS: Jeffrey Smith&#39;s books and documentaries, Seralini&#39;s publications (which received funding from organic food interests including Auchan and Carrefour supermarket chains), Vandana Shiva&#39;s speaking fees ($40,000+), and multiple documentary filmmakers generate revenue from anti-GMO content. LEGAL INDUSTRY: Plaintiff law firms earned billions from Roundup litigation. While these cases addressed glyphosate specifically, the broader anti-Monsanto narrative (including the GMO conflation) helped build public sympathy for jury verdicts. Baum Hedlund attorneys earned substantial contingency fees from the litigation. CONVENTIONAL AGRICULTURE / MONSANTO-BAYER: On the other side, Monsanto&#39;s Roundup generated approximately $4.8 billion annually at peak, and their seed business generated billions more. The company had clear commercial motivation to suppress unfavorable glyphosate research, which they did through documented means. Bayer has spent over $16 billion on Roundup-related legal costs and settlements since acquiring Monsanto.</p>
+      <div class="prose"><p>Multiple parties profit financially from the belief that GMOs are poisoning the food supply: ORGANIC FOOD INDUSTRY: The US organic food market was valued at $67.6 billion in 2023 (Organic Trade Association). USDA organic certification prohibits GMO ingredients by definition, making anti-GMO sentiment a direct revenue driver. The organic price premium averages 20-30% above conventional products. Every consumer who switches from conventional to organic due to GMO fears represents a revenue increase for organic producers. Specific actors: (a) Non-GMO Project: $3.4 million annual revenue from verification fees (2019 tax filings), with its &#39;Butterfly&#39; label on over 60,000 products. (b) Stonyfield Farm founder Gary Hirshberg: funded anti-GMO campaigns and co-founded Just Label It. (c) Dr. Bronner&#39;s: donated over $1.8 million to anti-GMO ballot initiatives. (d) Whole Foods Market: built significant brand identity around non-GMO product lines before Amazon acquisition. SUPPLEMENT AND DETOX INDUSTRY: Companies sell &#39;GMO detox&#39; products, heavy metal chelation supplements, and &#39;clean eating&#39; programs that capitalize on food contamination fears. Mercola.com generates estimated $7-14 million annually from supplement sales, with anti-GMO content driving significant traffic. Natural News similarly monetizes fear-based content through supplement sales. CONTENT PRODUCERS: Jeffrey Smith&#39;s books and documentaries, Seralini&#39;s publications (which received funding from organic food interests including Auchan and Carrefour supermarket chains), Vandana Shiva&#39;s speaking fees ($40,000+), and multiple documentary filmmakers generate revenue from anti-GMO content. LEGAL INDUSTRY: Plaintiff law firms earned billions from Roundup litigation. While these cases addressed glyphosate specifically, the broader anti-Monsanto narrative (including the GMO conflation) helped build public sympathy for jury verdicts. Baum Hedlund attorneys earned substantial contingency fees from the litigation. CONVENTIONAL AGRICULTURE / MONSANTO-BAYER: On the other side, Monsanto&#39;s Roundup generated approximately $4.8 billion annually at peak, and their seed business generated billions more. The company had clear commercial motivation to suppress unfavorable glyphosate research, which they did through documented means. Bayer has spent over $16 billion on Roundup-related legal costs and settlements since acquiring Monsanto.</p></div>
     </div>
 
   
     <div class="section">
       <h2>Perception Gap</h2>
-      <p>Anti-GMO consumers and food scientists dramatically misperceive each other&#39;s positions. Anti-GMO consumers often believe that pro-GMO scientists are indifferent to corporate misconduct and blindly trust industry. In reality, the 2016 NAS report committee explicitly acknowledged problems with industry influence and recommended stronger independent testing. Many food scientists who support the GMO safety consensus are simultaneously critical of Monsanto&#39;s behavior. Conversely, scientists and science communicators often perceive anti-GMO consumers as &#39;anti-science.&#39; A 2016 Pew survey found that only 37% of US adults believed GMOs were safe, but the same respondents showed normal or above-average trust in medical scientists on other health topics. Anti-GMO beliefs do not correlate with general science rejection. The gap is quantifiable: a 2018 study (Fernbach et al., Nature Human Behaviour) found that the strongest opponents of GMOs had the LOWEST objective understanding of genetics and food science, but the HIGHEST confidence in their understanding. This is not stupidity; it is a specific knowledge calibration failure that leaves people vulnerable to confident-sounding misinformation. Both groups underestimate their agreement on the underlying issues: food safety, corporate accountability, and farmer welfare.</p>
+      <div class="prose"><p>Anti-GMO consumers and food scientists dramatically misperceive each other&#39;s positions. Anti-GMO consumers often believe that pro-GMO scientists are indifferent to corporate misconduct and blindly trust industry. In reality, the 2016 NAS report committee explicitly acknowledged problems with industry influence and recommended stronger independent testing. Many food scientists who support the GMO safety consensus are simultaneously critical of Monsanto&#39;s behavior. Conversely, scientists and science communicators often perceive anti-GMO consumers as &#39;anti-science.&#39; A 2016 Pew survey found that only 37% of US adults believed GMOs were safe, but the same respondents showed normal or above-average trust in medical scientists on other health topics. Anti-GMO beliefs do not correlate with general science rejection. The gap is quantifiable: a 2018 study (Fernbach et al., Nature Human Behaviour) found that the strongest opponents of GMOs had the LOWEST objective understanding of genetics and food science, but the HIGHEST confidence in their understanding. This is not stupidity; it is a specific knowledge calibration failure that leaves people vulnerable to confident-sounding misinformation. Both groups underestimate their agreement on the underlying issues: food safety, corporate accountability, and farmer welfare.</p></div>
     </div>
 
   <div class="section">
@@ -482,15 +661,15 @@
     
     <div class="dialogue-round round-1">
       <div class="round-label">Round 1: Perspective-Getting</div>
-      <div class="dialogue-bubble">Round 1 (Perspective-getting): I hear you saying that the food supply is being poisoned by GMOs and that Monsanto knows about it and has covered it up. I want to start by acknowledging that this concern is not coming from nowhere. Monsanto really did ghostwrite sections of scientific papers about glyphosate safety. Court documents proved it. They really did coordinate with EPA officials to influence the regulatory review of Roundup. Bayer settled over 100,000 cancer claims for $10.9 billion. Those are facts. And beyond Monsanto specifically, there is a real pattern of corporate influence in food regulation: the revolving door between industry and agencies, undisclosed funding of academic research, aggressive patent enforcement against farmers. When you look at that track record and then hear that the same company&#39;s GMO products are safe, being skeptical makes sense. What was the moment or piece of evidence that made you most concerned about GMOs specifically?</div>
+      <div class="dialogue-bubble"><p>Round 1 (Perspective-getting): I hear you saying that the food supply is being poisoned by GMOs and that Monsanto knows about it and has covered it up. I want to start by acknowledging that this concern is not coming from nowhere. Monsanto really did ghostwrite sections of scientific papers about glyphosate safety. Court documents proved it. They really did coordinate with EPA officials to influence the regulatory review of Roundup. Bayer settled over 100,000 cancer claims for $10.9 billion. Those are facts. And beyond Monsanto specifically, there is a real pattern of corporate influence in food regulation: the revolving door between industry and agencies, undisclosed funding of academic research, aggressive patent enforcement against farmers. When you look at that track record and then hear that the same company&#39;s GMO products are safe, being skeptical makes sense. What was the moment or piece of evidence that made you most concerned about GMOs specifically?</p></div>
     </div>
     <div class="dialogue-round round-2">
       <div class="round-label">Round 2: Guided Examination</div>
-      <div class="dialogue-bubble">Round 2 (Counter-evidence as systemic pattern question): That resonates with a lot of people. Here is something worth examining though. There is a pattern that shows up across many different industries where legitimate corporate misconduct gets attached to a broader claim that goes beyond what the misconduct actually proves. Consider: Monsanto&#39;s documented misconduct was specifically about influencing the regulatory review of glyphosate, one herbicide. The claim that GMO foods themselves are harmful comes from a different body of evidence, reviewed by different institutions. When the National Academies spent two years reviewing nearly 900 studies on GMO crops in 2016, those reviewers had no commercial relationship with Monsanto. When EFSA in Europe assessed GMO safety, that was a different continent with different corporate interests and different regulatory traditions. Here is the pattern question worth considering: when we learn that a company cheated in one area, our instinct is to conclude they must be cheating everywhere, and that everything associated with them must be tainted. But what if that instinct, however natural, is exactly what other commercial interests count on you feeling? The organic food industry generates $67.6 billion annually in the US alone, and by definition, every dollar spent on organic because of GMO fears is revenue they would not otherwise earn. Does the existence of a commercial interest in your fear change how you evaluate the specific evidence?</div>
+      <div class="dialogue-bubble"><p>Round 2 (Counter-evidence as systemic pattern question): That resonates with a lot of people. Here is something worth examining though. There is a pattern that shows up across many different industries where legitimate corporate misconduct gets attached to a broader claim that goes beyond what the misconduct actually proves. Consider: Monsanto&#39;s documented misconduct was specifically about influencing the regulatory review of glyphosate, one herbicide. The claim that GMO foods themselves are harmful comes from a different body of evidence, reviewed by different institutions. When the National Academies spent two years reviewing nearly 900 studies on GMO crops in 2016, those reviewers had no commercial relationship with Monsanto. When EFSA in Europe assessed GMO safety, that was a different continent with different corporate interests and different regulatory traditions. Here is the pattern question worth considering: when we learn that a company cheated in one area, our instinct is to conclude they must be cheating everywhere, and that everything associated with them must be tainted. But what if that instinct, however natural, is exactly what other commercial interests count on you feeling? The organic food industry generates $67.6 billion annually in the US alone, and by definition, every dollar spent on organic because of GMO fears is revenue they would not otherwise earn. Does the existence of a commercial interest in your fear change how you evaluate the specific evidence?</p></div>
     </div>
     <div class="dialogue-round round-3">
       <div class="round-label">Round 3: Integration</div>
-      <div class="dialogue-bubble">Round 3 (Complexity + common ground): Those are important tensions to hold simultaneously. Here is what makes this issue genuinely complicated: Monsanto really did bad things, and the scientific consensus on GMO food safety really does hold up under independent review. Both of those can be true at the same time, and recognizing that is not letting Monsanto off the hook; it is being precise about what they are actually guilty of. The space where everyone actually agrees is larger than the debate suggests. Farmers who grow GMO crops and farmers who grow organic both want fair markets and freedom from corporate exploitation. Scientists who study GMO safety and consumers who question it both want independent research free from industry influence. The 2016 National Academies report recommended stronger post-market surveillance and more independent funding for food safety research, which is exactly what most GMO skeptics have been asking for. What would it look like if the energy going into the &#39;GMOs are poison&#39; debate were redirected toward the goals that both sides actually share: independent food safety research, corporate accountability for documented misconduct, and fair treatment of farmers regardless of what seeds they choose to plant?</div>
+      <div class="dialogue-bubble"><p>Round 3 (Complexity + common ground): Those are important tensions to hold simultaneously. Here is what makes this issue genuinely complicated: Monsanto really did bad things, and the scientific consensus on GMO food safety really does hold up under independent review. Both of those can be true at the same time, and recognizing that is not letting Monsanto off the hook; it is being precise about what they are actually guilty of. The space where everyone actually agrees is larger than the debate suggests. Farmers who grow GMO crops and farmers who grow organic both want fair markets and freedom from corporate exploitation. Scientists who study GMO safety and consumers who question it both want independent research free from industry influence. The 2016 National Academies report recommended stronger post-market surveillance and more independent funding for food safety research, which is exactly what most GMO skeptics have been asking for. What would it look like if the energy going into the &#39;GMOs are poison&#39; debate were redirected toward the goals that both sides actually share: independent food safety research, corporate accountability for documented misconduct, and fair treatment of farmers regardless of what seeds they choose to plant?</p></div>
     </div>
   </div>
 
@@ -499,6 +678,8 @@
     <h2>Reframe</h2>
     <blockquote class="reframe-block">You and the scientists you disagree with about GMOs share the same core concerns: you both want the food your family eats to be safe, you both want corporations held accountable when they manipulate science, and you both believe regulatory agencies should be independent from the industries they oversee. Those concerns are not fringe or irrational. Monsanto really did ghostwrite scientific papers. The revolving door between industry and regulators is real. The $10.9 billion settlement happened. The question worth sitting with is whether Monsanto&#39;s documented misconduct on glyphosate regulation is sufficient evidence that the GMO foods assessed as safe by hundreds of independent research groups in dozens of countries are actually poisonous, or whether the anger at a corporation that genuinely misbehaved has been channeled toward a specific conclusion that the independent evidence does not support, and whether that channeling might be serving the commercial interests of the $67.6 billion organic food industry just as much as the original misconduct served Monsanto&#39;s interests.</blockquote>
   </div>
+
+  
 
   <div class="section">
     <h2>Audit</h2>
@@ -510,7 +691,7 @@
     <ul class="findings-list">
     <li class="finding-item">
       <div class="finding-header">
-        <span class="finding-category">quality</span>
+        <span class="finding-category">Quality</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">The analysis correctly separates the two distinct tracks (corporate misconduct vs. GMO food safety) and maps the...</span>
       </div>
@@ -522,7 +703,7 @@
     </li>
     <li class="finding-item">
       <div class="finding-header">
-        <span class="finding-category">accuracy</span>
+        <span class="finding-category">Accuracy</span>
         <span class="finding-severity-medium">MEDIUM</span>
         <span class="finding-description">The IARC classification nuance deserves additional emphasis. The analysis correctly distinguishes hazard from risk...</span>
       </div>
@@ -534,7 +715,7 @@
     </li>
     <li class="finding-item">
       <div class="finding-header">
-        <span class="finding-category">completeness</span>
+        <span class="finding-category">Completeness</span>
         <span class="finding-severity-medium">MEDIUM</span>
         <span class="finding-description">The analysis does not address Golden Rice and other humanitarian GMO applications in depth. Opponents of the claim...</span>
       </div>
@@ -546,7 +727,7 @@
     </li>
     <li class="finding-item">
       <div class="finding-header">
-        <span class="finding-category">bias</span>
+        <span class="finding-category">Bias</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">The analysis appropriately gives weight to Monsanto&#39;s documented misconduct rather than dismissing it. The credibility...</span>
       </div>
@@ -558,7 +739,7 @@
     </li>
     <li class="finding-item">
       <div class="finding-header">
-        <span class="finding-category">manipulation</span>
+        <span class="finding-category">Manipulation</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">The Socratic dialogue&#39;s Round 2 introduces the organic industry&#39;s commercial motive as a systemic pattern rather than...</span>
       </div>
@@ -570,7 +751,7 @@
     </li>
     <li class="finding-item">
       <div class="finding-header">
-        <span class="finding-category">completeness</span>
+        <span class="finding-category">Completeness</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">The analysis does not address the gene editing distinction (CRISPR vs. traditional transgenics). Much of the current...</span>
       </div>
@@ -582,7 +763,7 @@
     </li>
     <li class="finding-item">
       <div class="finding-header">
-        <span class="finding-category">accuracy</span>
+        <span class="finding-category">Accuracy</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">The Fernbach et al. (2018) finding about the Dunning-Kruger pattern in GMO opponents is accurately cited. However, the...</span>
       </div>
@@ -593,6 +774,103 @@
       </div>
     </li></ul>
   </div>
+
+  
+    <div class="section evaluation-section">
+      <h2>Evaluation Methodology</h2>
+      <p class="intro-note">Full transparency on how this scenario was scored. 12 weighted checks, each independently measurable. <a href="https://github.com/Jochen-s/huginn-muninn/blob/main/tests/run_bridge_scenarios.py" target="_blank" rel="noopener">View source code</a></p>
+      <div class="eval-summary">
+        <span class="eval-overall">76.3%</span>
+        <span class="badge badge-warn">Grade B</span>
+      </div>
+      <div style="overflow-x:auto">
+        <table class="eval-table">
+          <thead>
+            <tr>
+              <th>Check</th>
+              <th>Weight</th>
+              <th>Score</th>
+              <th>Status</th>
+              <th>What It Measures</th>
+            </tr>
+          </thead>
+          <tbody><tr class="eval-fail">
+      <td>needs coverage</td>
+      <td class="eval-weight">7%</td>
+      <td class="eval-score">33%</td>
+      <td class="eval-status">MISS</td>
+      <td class="eval-desc">Expected universal human needs matched against identified needs</td>
+    </tr><tr class="eval-pass">
+      <td>issue overlap quality</td>
+      <td class="eval-weight">6%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Common ground text is substantive (&gt;50 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>narrative deconstruction</td>
+      <td class="eval-weight">7%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Narrative deconstruction is substantive (&gt;100 characters)</td>
+    </tr><tr class="eval-fail">
+      <td>consensus explanation</td>
+      <td class="eval-weight">11%</td>
+      <td class="eval-score">0%</td>
+      <td class="eval-status">MISS</td>
+      <td class="eval-desc">Scientific/mainstream explanation &gt;200 chars with 3+ mechanism keywords</td>
+    </tr><tr class="eval-pass">
+      <td>inferential gap</td>
+      <td class="eval-weight">8%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Inferential gap analysis is substantive (&gt;50 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>feasibility check</td>
+      <td class="eval-weight">6%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Feasibility assessment is substantive (&gt;50 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>commercial motives</td>
+      <td class="eval-weight">6%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Commercial motive analysis is substantive (&gt;30 characters)</td>
+    </tr><tr class="eval-fail">
+      <td>technique naming</td>
+      <td class="eval-weight">8%</td>
+      <td class="eval-score">0%</td>
+      <td class="eval-status">MISS</td>
+      <td class="eval-desc">At least 1 technique named with mechanic (&gt;30 chars) and precedent (&gt;20 chars)</td>
+    </tr><tr class="eval-pass">
+      <td>perception gap</td>
+      <td class="eval-weight">5%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Perception gap analysis is substantive (&gt;30 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>socratic dialogue</td>
+      <td class="eval-weight">17%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">3 rounds, ends with question, Round 1 shows perspective-getting</td>
+    </tr><tr class="eval-pass">
+      <td>reframe quality</td>
+      <td class="eval-weight">7%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Reframe &gt;20 chars using shared-value language (we, together, both)</td>
+    </tr><tr class="eval-pass">
+      <td>no controlling language</td>
+      <td class="eval-weight">12%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Zero matches against 9 controlling phrases</td>
+    </tr></tbody>
+        </table>
+      </div>
+      <p class="eval-note">Overall score = weighted sum of individual check scores. Weights reflect the relative importance of each dimension to the project's mission: Socratic dialogue quality (17%) and controlling language detection (12%) are weighted highest because autonomy-supportive framing is the core differentiator.</p>
+    </div>
 
   <div class="scenario-nav">
     <a href="EN-01.html">&larr; EN-01: Climate change is a hoax invented by scientists...</a>

@@ -70,6 +70,7 @@
     font-size: 0.875rem;
   }
   .site-nav a:hover { color: var(--white); }
+  .site-nav a.active { color: var(--white); font-weight: 600; }
 
   /* Category sections */
   .category-section { padding: 48px 0; border-bottom: 1px solid var(--border); }
@@ -211,27 +212,39 @@
   .metrics-table tr:last-child td { border-bottom: none; }
 
   .section {
-    padding: 32px 0;
+    padding: 40px 0;
     border-bottom: 1px solid var(--border);
   }
   .section:last-child { border-bottom: none; }
 
   .section h2 {
-    font-size: 1.25rem;
-    margin-bottom: 16px;
-    padding-bottom: 8px;
+    font-size: 1.3rem;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
     border-bottom: 2px solid var(--bg);
+    letter-spacing: -0.01em;
   }
 
-  .section p { margin-bottom: 12px; color: #2C3E50; }
+  .section p { margin-bottom: 16px; color: #2C3E50; }
   .section p:last-child { margin-bottom: 0; }
 
   .intro-note {
     color: var(--gray);
     font-size: 0.875rem;
     font-style: italic;
-    margin-bottom: 12px;
+    margin-bottom: 16px;
   }
+
+  /* Prose blocks: long-form text with proper paragraph spacing */
+  .prose {
+    font-size: 0.95rem;
+    line-height: 1.75;
+    color: #34495E;
+  }
+  .prose p {
+    margin-bottom: 16px;
+  }
+  .prose p:last-child { margin-bottom: 0; }
 
   /* Needs pills */
   .needs-list {
@@ -288,28 +301,30 @@
   .technique-text { font-size: 0.9rem; color: #2C3E50; line-height: 1.6; }
 
   /* Socratic dialogue */
-  .dialogue-round { margin-bottom: 20px; }
+  .dialogue-round { margin-bottom: 28px; }
+  .dialogue-round:last-child { margin-bottom: 0; }
   .round-label {
     font-size: 0.75rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
   }
   .round-1 .round-label { color: var(--teal); }
   .round-2 .round-label { color: var(--navy); }
   .round-3 .round-label { color: #6C3483; }
 
   .dialogue-bubble {
-    padding: 16px 18px;
+    padding: 20px 24px;
     border-radius: 8px;
-    font-size: 0.9rem;
-    line-height: 1.65;
-    white-space: pre-wrap;
+    font-size: 0.92rem;
+    line-height: 1.75;
   }
-  .round-1 .dialogue-bubble { background: #EAF7F4; border-left: 3px solid var(--teal); }
-  .round-2 .dialogue-bubble { background: #EAF0F7; border-left: 3px solid var(--navy); }
-  .round-3 .dialogue-bubble { background: #F5EEF8; border-left: 3px solid #6C3483; }
+  .dialogue-bubble p { margin-bottom: 12px; }
+  .dialogue-bubble p:last-child { margin-bottom: 0; }
+  .round-1 .dialogue-bubble { background: #EAF7F4; border-left: 4px solid var(--teal); }
+  .round-2 .dialogue-bubble { background: #EAF0F7; border-left: 4px solid var(--navy); }
+  .round-3 .dialogue-bubble { background: #F5EEF8; border-left: 4px solid #6C3483; }
 
   /* Reframe */
   .reframe-block {
@@ -356,8 +371,52 @@
   }
   .finding-severity-low    { color: var(--teal); font-size: 0.75rem; font-weight: 600; }
   .finding-severity-medium { color: var(--amber); font-size: 0.75rem; font-weight: 600; }
-  .finding-severity-high   { color: var(--red); font-size: 0.75rem; font-weight: 600; }
+  .finding-severity-high     { color: var(--red); font-size: 0.75rem; font-weight: 600; }
+  .finding-severity-critical { color: #8B0000; font-size: 0.75rem; font-weight: 700; }
   .finding-description { font-size: 0.875rem; color: #2C3E50; }
+
+  /* Scoped diagnostics (v0.8.0+) */
+  .diagnostics-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 12px;
+  }
+  @media (max-width: 640px) { .diagnostics-grid { grid-template-columns: 1fr; } }
+  .diagnostic-card {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    background: var(--bg);
+  }
+  .diagnostic-card h4 {
+    margin: 0 0 6px;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--gray);
+  }
+  .diagnostic-card p { margin: 0; font-size: 0.9rem; line-height: 1.6; }
+  .diagnostic-note { font-size: 0.78rem; color: var(--gray); font-style: italic; margin-bottom: 4px !important; }
+  .posture-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    background: #F5F5F5;
+    color: #555;
+  }
+  .posture-inoculation_first  { background: #FFF3E0; color: #E65100; }
+  .posture-relational_first   { background: #E3F2FD; color: #1565C0; }
+  .pattern-density-warning {
+    background: #FFF8E1;
+    border-left: 4px solid var(--amber);
+    padding: 10px 14px;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.875rem;
+    margin-top: 8px;
+  }
   .finding-body { padding: 10px 14px; border-top: 1px solid var(--border); }
   .finding-rec {
     font-size: 0.8rem;
@@ -384,6 +443,117 @@
   .scenario-nav .disabled { color: var(--gray); pointer-events: none; }
 
   /* Responsive */
+  /* Evaluation methodology table */
+  .evaluation-section { background: #FAFBFD; margin: 0 -32px; padding: 40px 32px; border-bottom: 1px solid var(--border); }
+  .eval-summary { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+  .eval-overall { font-size: 2rem; font-weight: 700; color: var(--navy); }
+  .eval-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  .eval-table th { text-align: left; padding: 10px 12px; border-bottom: 2px solid var(--border); color: var(--gray); font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; }
+  .eval-table td { padding: 10px 12px; border-bottom: 1px solid #EEF1F5; }
+  .eval-table td:first-child { font-weight: 600; text-transform: capitalize; }
+  .eval-weight, .eval-score { text-align: center; font-variant-numeric: tabular-nums; }
+  .eval-status { text-align: center; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.04em; }
+  .eval-pass .eval-status { color: var(--green); }
+  .eval-partial .eval-status { color: var(--amber); }
+  .eval-fail .eval-status { color: var(--red); }
+  .eval-desc { color: var(--gray); font-size: 0.8rem; }
+  .eval-note { margin-top: 16px; font-size: 0.82rem; color: var(--gray); line-height: 1.6; }
+
+  /* Essay page styles */
+  .essay-prose {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #2C3E50;
+    max-width: 760px;
+  }
+  .essay-prose h2 {
+    font-size: 1.35rem;
+    margin-top: 40px;
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--bg);
+  }
+  .essay-prose h3 {
+    font-size: 1.1rem;
+    margin-top: 28px;
+    margin-bottom: 10px;
+    color: var(--navy);
+  }
+  .essay-prose h4 {
+    font-size: 1rem;
+    margin-top: 20px;
+    margin-bottom: 8px;
+    color: #34495E;
+  }
+  .essay-prose p { margin-bottom: 18px; }
+  .essay-prose ul, .essay-prose ol { margin: 0 0 18px 24px; }
+  .essay-prose li { margin-bottom: 8px; line-height: 1.75; }
+  .essay-prose strong { color: var(--navy); font-weight: 700; }
+  .essay-prose em { font-style: italic; }
+  .essay-prose hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 36px 0;
+  }
+  .essay-prose blockquote {
+    border-left: 4px solid var(--teal);
+    padding: 8px 20px;
+    margin: 20px 0;
+    background: var(--bg);
+    color: #34495E;
+    font-style: italic;
+  }
+  .essay-prose code {
+    background: var(--bg);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: 'SFMono-Regular', Consolas, monospace;
+    font-size: 0.88em;
+  }
+  .essay-prose .essay-meta {
+    color: var(--gray);
+    font-size: 0.875rem;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .essay-prose .references {
+    font-size: 0.88rem;
+    color: #34495E;
+    line-height: 1.65;
+  }
+  .essay-prose .references p { margin-bottom: 10px; }
+
+  /* Essay card styles (index page) */
+  .essay-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px;
+    transition: box-shadow 0.15s;
+    display: flex;
+    flex-direction: column;
+  }
+  .essay-card:hover { box-shadow: 0 4px 16px rgba(27, 42, 74, 0.12); }
+  .essay-card .card-id { color: #6C3483; }
+  .essay-card h3 {
+    font-size: 1.15rem;
+    margin-bottom: 8px;
+    line-height: 1.35;
+  }
+  .essay-card .essay-summary {
+    color: #34495E;
+    font-size: 0.92rem;
+    line-height: 1.6;
+    flex: 1;
+    margin-bottom: 14px;
+  }
+  .essay-card .essay-date {
+    font-size: 0.8rem;
+    color: var(--gray);
+    margin-bottom: 10px;
+  }
+
   @media (max-width: 640px) {
     .site-header h1 { font-size: 1.5rem; }
     .cards-grid { grid-template-columns: 1fr; }
@@ -391,10 +561,19 @@
     .scenario-nav { flex-direction: column; align-items: flex-start; }
     .metrics-table { font-size: 0.8rem; }
     .metrics-table th, .metrics-table td { padding: 8px 10px; }
+    .essay-prose { font-size: 0.95rem; }
+    .essay-prose h2 { font-size: 1.2rem; }
   }
 </style>
 </head>
 <body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a href="index.html">Gallery</a>
+    <a href="graph.html">Knowledge Graph</a>
+  </div>
+</nav>
 
 <header class="scenario-header">
   <div class="content">
@@ -445,35 +624,35 @@
   <div class="section">
     <h2>Inferential Gap</h2>
     <p class="intro-note">Where the evidence ends and the leap begins.</p>
-    <p>The kernel of truth is substantial and multi-layered. Here is the precise boundary between documented fact and unsupported claim: DOCUMENTED FACTS: (1) Child trafficking is real. The ILO estimated 4.8 million people in forced sexual exploitation globally in 2021. The DOJ prosecutes hundreds of trafficking cases annually. (2) Powerful people have been convicted of child exploitation. Jeffrey Epstein pleaded guilty (2008) and was federally indicted (2019). Ghislaine Maxwell was convicted on 5 of 6 trafficking-related counts (2021). (3) Institutions have systematically covered up child abuse. The Pennsylvania Grand Jury documented 300+ predator priests. Penn State administrators concealed Sandusky&#39;s abuse for years. The BBC protected Jimmy Savile for decades. (4) The justice system sometimes provides preferential treatment to wealthy defendants. The Acosta-Epstein plea deal was ruled illegal by a federal judge. EXACT INFERENTIAL LEAPS: Leap 1: &#39;Epstein trafficked minors with help from powerful people&#39; to &#39;A coordinated cabal of ALL elites runs trafficking rings.&#39; Epstein&#39;s network, while extensive, was a specific criminal enterprise with specific participants. Generalizing from one documented network to a universal conspiracy requires evidence that does not exist. Leap 2: &#39;Podesta&#39;s emails discuss food and dinner plans&#39; to &#39;The emails contain coded trafficking communications.&#39; The &#39;food code&#39; was fabricated by 4chan users. It has no basis in law enforcement terminology. The emails read as normal political campaign correspondence to anyone not applying the invented cipher. Leap 3: &#39;A pizza restaurant in D.C. is connected to Democratic political circles&#39; to &#39;The restaurant operates a child trafficking ring in its basement.&#39; Comet Ping Pong has no basement. D.C. Metropolitan Police investigated and found no evidence. The restaurant owner&#39;s social connections to politicians are unremarkable in Washington D.C., where political and social networks overlap extensively. Leap 4: &#39;Institutions have failed to protect children in specific documented cases&#39; to &#39;ALL institutions are deliberately complicit in protecting elite traffickers.&#39; This generalizes specific institutional failures (which are real and serious) into a universal conspiracy (which requires evidence of coordination that does not exist).</p>
+    <div class="prose"><p>The kernel of truth is substantial and multi-layered. Here is the precise boundary between documented fact and unsupported claim: DOCUMENTED FACTS: (1) Child trafficking is real. The ILO estimated 4.8 million people in forced sexual exploitation globally in 2021. The DOJ prosecutes hundreds of trafficking cases annually. (2) Powerful people have been convicted of child exploitation. Jeffrey Epstein pleaded guilty (2008) and was federally indicted (2019). Ghislaine Maxwell was convicted on 5 of 6 trafficking-related counts (2021). (3) Institutions have systematically covered up child abuse. The Pennsylvania Grand Jury documented 300+ predator priests. Penn State administrators concealed Sandusky&#39;s abuse for years. The BBC protected Jimmy Savile for decades. (4) The justice system sometimes provides preferential treatment to wealthy defendants. The Acosta-Epstein plea deal was ruled illegal by a federal judge. EXACT INFERENTIAL LEAPS: Leap 1: &#39;Epstein trafficked minors with help from powerful people&#39; to &#39;A coordinated cabal of ALL elites runs trafficking rings.&#39; Epstein&#39;s network, while extensive, was a specific criminal enterprise with specific participants. Generalizing from one documented network to a universal conspiracy requires evidence that does not exist. Leap 2: &#39;Podesta&#39;s emails discuss food and dinner plans&#39; to &#39;The emails contain coded trafficking communications.&#39; The &#39;food code&#39; was fabricated by 4chan users. It has no basis in law enforcement terminology. The emails read as normal political campaign correspondence to anyone not applying the invented cipher. Leap 3: &#39;A pizza restaurant in D.C. is connected to Democratic political circles&#39; to &#39;The restaurant operates a child trafficking ring in its basement.&#39; Comet Ping Pong has no basement. D.C. Metropolitan Police investigated and found no evidence. The restaurant owner&#39;s social connections to politicians are unremarkable in Washington D.C., where political and social networks overlap extensively. Leap 4: &#39;Institutions have failed to protect children in specific documented cases&#39; to &#39;ALL institutions are deliberately complicit in protecting elite traffickers.&#39; This generalizes specific institutional failures (which are real and serious) into a universal conspiracy (which requires evidence of coordination that does not exist).</p></div>
   </div>
 
   <div class="section">
     <h2>Common Ground</h2>
-    <p>People who believe Pizzagate and people who reject it share far more common ground than either side typically acknowledges. Both groups: (1) Agree that child trafficking is a serious crime that deserves aggressive prosecution. The National Human Trafficking Hotline received over 51,000 reports in 2022. (2) Agree that Jeffrey Epstein&#39;s case demonstrated unacceptable institutional failure, including a plea deal later ruled illegal, apparent failures of jail oversight, and insufficient accountability for co-conspirators. (3) Agree that wealthy and powerful people sometimes receive preferential treatment in the justice system. Gallup polling (2023) shows that 67% of Americans believe the justice system favors the wealthy. (4) Agree that institutional cover-ups of child abuse (Catholic Church, Penn State, BBC) are real and represent profound moral failures. (5) Agree that more resources should be devoted to protecting children from exploitation. The disagreement is narrow but critical: whether a specific set of claims about specific people, places, and events (Comet Ping Pong, Podesta emails, the &#39;food code&#39;) is supported by evidence. That narrow disagreement has been inflated into an identity-defining tribal boundary (&#39;you either believe children are being trafficked or you&#39;re part of the cover-up&#39;) that prevents the two sides from acting on their shared commitment.</p>
+    <div class="prose"><p>People who believe Pizzagate and people who reject it share far more common ground than either side typically acknowledges. Both groups: (1) Agree that child trafficking is a serious crime that deserves aggressive prosecution. The National Human Trafficking Hotline received over 51,000 reports in 2022. (2) Agree that Jeffrey Epstein&#39;s case demonstrated unacceptable institutional failure, including a plea deal later ruled illegal, apparent failures of jail oversight, and insufficient accountability for co-conspirators. (3) Agree that wealthy and powerful people sometimes receive preferential treatment in the justice system. Gallup polling (2023) shows that 67% of Americans believe the justice system favors the wealthy. (4) Agree that institutional cover-ups of child abuse (Catholic Church, Penn State, BBC) are real and represent profound moral failures. (5) Agree that more resources should be devoted to protecting children from exploitation. The disagreement is narrow but critical: whether a specific set of claims about specific people, places, and events (Comet Ping Pong, Podesta emails, the &#39;food code&#39;) is supported by evidence. That narrow disagreement has been inflated into an identity-defining tribal boundary (&#39;you either believe children are being trafficked or you&#39;re part of the cover-up&#39;) that prevents the two sides from acting on their shared commitment.</p></div>
   </div>
 
   <div class="section">
     <h2>Narrative Deconstruction</h2>
-    <p>The Pizzagate narrative was constructed by fusing a real moral foundation with a fabricated specific claim, then weaponizing the moral foundation to make the fabricated claim unfalsifiable. The construction follows a precise sequence: Stage 1 (Legitimate grievance): Real cases of institutional child abuse (Epstein, Catholic Church, Savile, Penn State) create justified distrust of institutions and powerful people. This is not paranoia; these are documented facts. Anyone paying attention to these cases has legitimate reason to believe that powerful people can exploit children and that institutions sometimes protect them rather than the victims. Stage 2 (Partisan weaponization): In the final weeks of the 2016 presidential election, anonymous actors on 4chan took this legitimate grievance and attached it to specific political targets (the Democratic Party, Hillary Clinton, John Podesta) using fabricated &#39;evidence&#39; (the invented food code, the nonexistent basement). The timing was not coincidental. The claim was designed to damage one political faction using the emotional power of child protection. Stage 3 (Unfalsifiability trap): The narrative was structured so that any counter-evidence strengthened it. Police investigated and found nothing? The police are compromised. Journalists debunked it? The media is complicit. The restaurant has no basement? They moved the children. This logical structure makes the claim immune to disconfirmation and traps believers in an escalating commitment where admitting error feels like abandoning children. Stage 4 (Scale expansion via QAnon): The transition from Pizzagate to QAnon (2017) expanded the scope from a specific restaurant to a global satanic cabal, making the theory even more resistant to specific debunking and more emotionally compelling. The #SaveTheChildren hijacking (2020) recruited new believers by exploiting universal parental concern. The result is that legitimate concern about child trafficking gets captured by a narrative that (a) directs attention away from how trafficking actually works, (b) overwhelms real anti-trafficking organizations with false tips, (c) serves partisan political purposes, and (d) creates commercial opportunities for merchandise and content sellers.</p>
+    <div class="prose"><p>The Pizzagate narrative was constructed by fusing a real moral foundation with a fabricated specific claim, then weaponizing the moral foundation to make the fabricated claim unfalsifiable. The construction follows a precise sequence: Stage 1 (Legitimate grievance): Real cases of institutional child abuse (Epstein, Catholic Church, Savile, Penn State) create justified distrust of institutions and powerful people. This is not paranoia; these are documented facts. Anyone paying attention to these cases has legitimate reason to believe that powerful people can exploit children and that institutions sometimes protect them rather than the victims. Stage 2 (Partisan weaponization): In the final weeks of the 2016 presidential election, anonymous actors on 4chan took this legitimate grievance and attached it to specific political targets (the Democratic Party, Hillary Clinton, John Podesta) using fabricated &#39;evidence&#39; (the invented food code, the nonexistent basement). The timing was not coincidental. The claim was designed to damage one political faction using the emotional power of child protection. Stage 3 (Unfalsifiability trap): The narrative was structured so that any counter-evidence strengthened it. Police investigated and found nothing? The police are compromised. Journalists debunked it? The media is complicit. The restaurant has no basement? They moved the children. This logical structure makes the claim immune to disconfirmation and traps believers in an escalating commitment where admitting error feels like abandoning children. Stage 4 (Scale expansion via QAnon): The transition from Pizzagate to QAnon (2017) expanded the scope from a specific restaurant to a global satanic cabal, making the theory even more resistant to specific debunking and more emotionally compelling. The #SaveTheChildren hijacking (2020) recruited new believers by exploiting universal parental concern. The result is that legitimate concern about child trafficking gets captured by a narrative that (a) directs attention away from how trafficking actually works, (b) overwhelms real anti-trafficking organizations with false tips, (c) serves partisan political purposes, and (d) creates commercial opportunities for merchandise and content sellers.</p></div>
   </div>
 
   
     <div class="section">
       <h2>Feasibility Assessment</h2>
-      <p>The Pizzagate/QAnon narrative implies specific organizational requirements that can be assessed. COMET PING PONG SPECIFICS: The claim requires a restaurant with no basement to have a basement; this is a physical impossibility that was confirmed when Welch himself entered the restaurant armed and found nothing. Building permits, architectural plans, and physical inspection all confirm the absence of a basement. SECRECY SCALE: The QAnon expansion of the narrative requires thousands of elite participants across entertainment, politics, media, and law enforcement to coordinate trafficking activities without a single participant, employee, victim, or witness producing physical evidence despite the most intense public scrutiny any conspiracy theory has ever received. By comparison, Epstein&#39;s actual trafficking network, which involved dozens of participants over two decades, was eventually exposed through conventional investigation and witness testimony. The more participants a conspiracy requires, the faster it will be exposed; this is demonstrated empirically by studies of conspiracy sustainability (Grimes, 2016, PLOS ONE, which calculated that a conspiracy involving more than approximately 1,000 active participants would be exposed within 3-4 years based on historical data). OPERATIONAL LOGISTICS: The #SaveTheChildren variant of the narrative claims 800,000 children go missing in the US annually. The actual NCMEC data shows that 99%+ of missing children reports are resolved (runaways who return home, family custody disputes, communication failures). The number of children abducted by strangers is approximately 115 per year (NISMART-2 study), each of which receives intensive law enforcement investigation. FINANCIAL MOTIVATION: The actual drivers of trafficking are poverty, vulnerability, addiction, and family instability. The profile of actual traffickers (as documented in DOJ prosecutions) is predominantly individuals exploiting personal relationships, not organized elite networks.</p>
+      <div class="prose"><p>The Pizzagate/QAnon narrative implies specific organizational requirements that can be assessed. COMET PING PONG SPECIFICS: The claim requires a restaurant with no basement to have a basement; this is a physical impossibility that was confirmed when Welch himself entered the restaurant armed and found nothing. Building permits, architectural plans, and physical inspection all confirm the absence of a basement. SECRECY SCALE: The QAnon expansion of the narrative requires thousands of elite participants across entertainment, politics, media, and law enforcement to coordinate trafficking activities without a single participant, employee, victim, or witness producing physical evidence despite the most intense public scrutiny any conspiracy theory has ever received. By comparison, Epstein&#39;s actual trafficking network, which involved dozens of participants over two decades, was eventually exposed through conventional investigation and witness testimony. The more participants a conspiracy requires, the faster it will be exposed; this is demonstrated empirically by studies of conspiracy sustainability (Grimes, 2016, PLOS ONE, which calculated that a conspiracy involving more than approximately 1,000 active participants would be exposed within 3-4 years based on historical data). OPERATIONAL LOGISTICS: The #SaveTheChildren variant of the narrative claims 800,000 children go missing in the US annually. The actual NCMEC data shows that 99%+ of missing children reports are resolved (runaways who return home, family custody disputes, communication failures). The number of children abducted by strangers is approximately 115 per year (NISMART-2 study), each of which receives intensive law enforcement investigation. FINANCIAL MOTIVATION: The actual drivers of trafficking are poverty, vulnerability, addiction, and family instability. The profile of actual traffickers (as documented in DOJ prosecutions) is predominantly individuals exploiting personal relationships, not organized elite networks.</p></div>
     </div>
 
   
     <div class="section">
       <h2>Commercial Interests</h2>
-      <p>Multiple parties profit financially from Pizzagate/QAnon beliefs, often while claiming to protect children. QANON MERCHANDISE: T-shirts, hats, flags, bumper stickers, and other branded merchandise sold through Amazon, Etsy, Redbubble, and dedicated online stores. Market size is difficult to isolate but the &#39;Patriot economy&#39; (overlapping MAGA and QAnon merchandise) has been estimated in the hundreds of millions annually. SUBSCRIPTION CONTENT: QAnon &#39;decoders&#39; and commentators monetize through Patreon, SubscribeStar, YouTube Super Chats, and direct donation requests. Prominent QAnon influencers have generated six-figure incomes from subscription content. SELF-PUBLISHED BOOKS: Multiple QAnon-themed books have reached Amazon bestseller lists, including titles about the &#39;deep state,&#39; &#39;adrenochrome,&#39; and elite trafficking. Authors receive 35-70% royalty on Amazon Kindle Direct Publishing. CONFERENCES AND EVENTS: QAnon-adjacent conferences and speaking events charge admission ($50-500+ per ticket). The &#39;Patriot Roundup&#39; and similar events feature paid speakers who promote trafficking conspiracy narratives. INFOWARS STORE: Alex Jones&#39;s supplement business (estimated $50-80M peak annual revenue per court filings) marketed products partly on fears of elite corruption and environmental contamination. Post-Sandy Hook litigation and bankruptcy have reduced but not eliminated this revenue stream. FILM AND DOCUMENTARY: &#39;Sound of Freedom&#39; (2023), while based on a real anti-trafficking operative&#39;s story, became a cultural touchstone for QAnon-adjacent audiences. The film grossed $250M+ worldwide. Its marketing was amplified by QAnon communities who framed attending the film as an act of resistance against elite trafficking. Tim Ballard, the film&#39;s subject and founder of Operation Underground Railroad (OUR), was subsequently accused of sexual misconduct by multiple women (Vice News, 2023). OUR has also faced scrutiny over inflated rescue claims. GRIFT PIPELINE: The pattern across all these revenue streams is consistent: genuine concern about child safety is the emotional entry point, and commercial products are positioned as expressions of that concern. Purchasing merchandise, subscribing to decoders, or attending events feels like taking action to protect children, creating a self-reinforcing cycle where commercial engagement deepens belief commitment.</p>
+      <div class="prose"><p>Multiple parties profit financially from Pizzagate/QAnon beliefs, often while claiming to protect children. QANON MERCHANDISE: T-shirts, hats, flags, bumper stickers, and other branded merchandise sold through Amazon, Etsy, Redbubble, and dedicated online stores. Market size is difficult to isolate but the &#39;Patriot economy&#39; (overlapping MAGA and QAnon merchandise) has been estimated in the hundreds of millions annually. SUBSCRIPTION CONTENT: QAnon &#39;decoders&#39; and commentators monetize through Patreon, SubscribeStar, YouTube Super Chats, and direct donation requests. Prominent QAnon influencers have generated six-figure incomes from subscription content. SELF-PUBLISHED BOOKS: Multiple QAnon-themed books have reached Amazon bestseller lists, including titles about the &#39;deep state,&#39; &#39;adrenochrome,&#39; and elite trafficking. Authors receive 35-70% royalty on Amazon Kindle Direct Publishing. CONFERENCES AND EVENTS: QAnon-adjacent conferences and speaking events charge admission ($50-500+ per ticket). The &#39;Patriot Roundup&#39; and similar events feature paid speakers who promote trafficking conspiracy narratives. INFOWARS STORE: Alex Jones&#39;s supplement business (estimated $50-80M peak annual revenue per court filings) marketed products partly on fears of elite corruption and environmental contamination. Post-Sandy Hook litigation and bankruptcy have reduced but not eliminated this revenue stream. FILM AND DOCUMENTARY: &#39;Sound of Freedom&#39; (2023), while based on a real anti-trafficking operative&#39;s story, became a cultural touchstone for QAnon-adjacent audiences. The film grossed $250M+ worldwide. Its marketing was amplified by QAnon communities who framed attending the film as an act of resistance against elite trafficking. Tim Ballard, the film&#39;s subject and founder of Operation Underground Railroad (OUR), was subsequently accused of sexual misconduct by multiple women (Vice News, 2023). OUR has also faced scrutiny over inflated rescue claims. GRIFT PIPELINE: The pattern across all these revenue streams is consistent: genuine concern about child safety is the emotional entry point, and commercial products are positioned as expressions of that concern. Purchasing merchandise, subscribing to decoders, or attending events feels like taking action to protect children, creating a self-reinforcing cycle where commercial engagement deepens belief commitment.</p></div>
     </div>
 
   
     <div class="section">
       <h2>Perception Gap</h2>
-      <p>Both sides of the Pizzagate divide dramatically misperceive the other. People who believe Pizzagate-adjacent claims perceive those who reject the conspiracy as: (a) indifferent to child suffering, (b) naive about institutional corruption, (c) protecting elite pedophiles through their denial. In reality, most people who reject Pizzagate are deeply concerned about child safety and support aggressive prosecution of trafficking; they simply evaluate the specific Pizzagate claims as unsupported by evidence. Conversely, people who reject Pizzagate often perceive believers as: (a) irrational, (b) politically motivated, (c) unable to distinguish reality from fantasy. In reality, research by Amarasingam and Argentino (2020) found that many QAnon adherents are motivated primarily by genuine child safety concerns, often triggered by personal experiences of abuse or proximity to abuse. A 2021 PRRI survey found that 15% of Americans agreed that &#39;the government, media, and financial worlds in the US are controlled by a group of Satan-worshipping pedophiles who run a global child sex trafficking operation.&#39; But the same survey found broad bipartisan agreement on the underlying values: child protection, institutional accountability, and justice for victims. More in Common&#39;s &#39;Hidden Tribes&#39; research (2018) documented that Americans overestimate the extremism of their opponents by roughly 2x across multiple issues. Applied to this domain, both sides likely overestimate how much the other side disagrees with their core values (protecting children, holding the powerful accountable) while underestimating agreement on these fundamentals.</p>
+      <div class="prose"><p>Both sides of the Pizzagate divide dramatically misperceive the other. People who believe Pizzagate-adjacent claims perceive those who reject the conspiracy as: (a) indifferent to child suffering, (b) naive about institutional corruption, (c) protecting elite pedophiles through their denial. In reality, most people who reject Pizzagate are deeply concerned about child safety and support aggressive prosecution of trafficking; they simply evaluate the specific Pizzagate claims as unsupported by evidence. Conversely, people who reject Pizzagate often perceive believers as: (a) irrational, (b) politically motivated, (c) unable to distinguish reality from fantasy. In reality, research by Amarasingam and Argentino (2020) found that many QAnon adherents are motivated primarily by genuine child safety concerns, often triggered by personal experiences of abuse or proximity to abuse. A 2021 PRRI survey found that 15% of Americans agreed that &#39;the government, media, and financial worlds in the US are controlled by a group of Satan-worshipping pedophiles who run a global child sex trafficking operation.&#39; But the same survey found broad bipartisan agreement on the underlying values: child protection, institutional accountability, and justice for victims. More in Common&#39;s &#39;Hidden Tribes&#39; research (2018) documented that Americans overestimate the extremism of their opponents by roughly 2x across multiple issues. Applied to this domain, both sides likely overestimate how much the other side disagrees with their core values (protecting children, holding the powerful accountable) while underestimating agreement on these fundamentals.</p></div>
     </div>
 
   <div class="section">
@@ -482,15 +661,15 @@
     
     <div class="dialogue-round round-1">
       <div class="round-label">Round 1: Perspective-Getting</div>
-      <div class="dialogue-bubble">Round 1 (Perspective-getting): I hear you saying that powerful people are hurting children and getting away with it, and that the system is rigged to protect them. I want to acknowledge something important: you are not wrong about the core of that concern. Jeffrey Epstein ran a trafficking network involving minors for over a decade, and the system gave him a sweetheart plea deal that a federal judge later ruled was illegal. The Catholic Church moved predator priests between parishes for decades rather than reporting them. The BBC protected Jimmy Savile while he abused hundreds of victims over 50 years. Penn State administrators knew about Sandusky and did nothing. These are not conspiracy theories; they are documented facts established through journalism and court proceedings. When you look at that record and conclude that powerful people can harm children and institutions can look the other way, that conclusion is supported by evidence. What specifically was it that first made you concerned about what was happening with the Podesta emails and Comet Ping Pong?</div>
+      <div class="dialogue-bubble"><p>Round 1 (Perspective-getting): I hear you saying that powerful people are hurting children and getting away with it, and that the system is rigged to protect them. I want to acknowledge something important: you are not wrong about the core of that concern. Jeffrey Epstein ran a trafficking network involving minors for over a decade, and the system gave him a sweetheart plea deal that a federal judge later ruled was illegal. The Catholic Church moved predator priests between parishes for decades rather than reporting them. The BBC protected Jimmy Savile while he abused hundreds of victims over 50 years. Penn State administrators knew about Sandusky and did nothing. These are not conspiracy theories; they are documented facts established through journalism and court proceedings. When you look at that record and conclude that powerful people can harm children and institutions can look the other way, that conclusion is supported by evidence. What specifically was it that first made you concerned about what was happening with the Podesta emails and Comet Ping Pong?</p></div>
     </div>
     <div class="dialogue-round round-2">
       <div class="round-label">Round 2: Guided Examination</div>
-      <div class="dialogue-bubble">Round 2 (Counter-evidence as systemic pattern question): That makes sense given what you have seen. I want to explore a pattern with you though. When we look at how the real cases were actually exposed -- Epstein, the Catholic Church, Savile -- they all share something: they were broken open by conventional investigation. Julie K. Brown spent years building sources for her Miami Herald series that reopened the Epstein case. The Boston Globe Spotlight team spent months verifying documents and interviewing victims. BBC journalists built their case through witness testimony and institutional records. In every real case, the evidence was specific, verifiable, and eventually led to arrests and convictions. Now consider the Pizzagate claims specifically: the &#39;food code&#39; was created by anonymous users on a forum known for fabricating content for entertainment and political purposes. The building alleged to have a basement has no basement. The man who went there with a rifle to investigate found nothing. After years of intense public attention, no law enforcement agency, journalist, or investigator has produced physical evidence supporting the specific claims. Meanwhile, who benefited from the narrative? There is a pattern worth examining across many movements: when genuine concern gets captured by a specific story, it is worth asking whether the story directs your energy toward solving the real problem or toward something else entirely. The people selling QAnon merchandise, running paid decoder channels, and building media careers on these claims -- are they catching traffickers, or are they profiting from your concern?</div>
+      <div class="dialogue-bubble"><p>Round 2 (Counter-evidence as systemic pattern question): That makes sense given what you have seen. I want to explore a pattern with you though. When we look at how the real cases were actually exposed -- Epstein, the Catholic Church, Savile -- they all share something: they were broken open by conventional investigation. Julie K. Brown spent years building sources for her Miami Herald series that reopened the Epstein case. The Boston Globe Spotlight team spent months verifying documents and interviewing victims. BBC journalists built their case through witness testimony and institutional records. In every real case, the evidence was specific, verifiable, and eventually led to arrests and convictions. Now consider the Pizzagate claims specifically: the &#39;food code&#39; was created by anonymous users on a forum known for fabricating content for entertainment and political purposes. The building alleged to have a basement has no basement. The man who went there with a rifle to investigate found nothing. After years of intense public attention, no law enforcement agency, journalist, or investigator has produced physical evidence supporting the specific claims. Meanwhile, who benefited from the narrative? There is a pattern worth examining across many movements: when genuine concern gets captured by a specific story, it is worth asking whether the story directs your energy toward solving the real problem or toward something else entirely. The people selling QAnon merchandise, running paid decoder channels, and building media careers on these claims -- are they catching traffickers, or are they profiting from your concern?</p></div>
     </div>
     <div class="dialogue-round round-3">
       <div class="round-label">Round 3: Integration</div>
-      <div class="dialogue-bubble">Round 3 (Complexity + common ground): Those are uncomfortable questions, and I respect that sitting with them is hard. Here is what I think we can agree on: the system has failed children in real, documented ways, and that failure demands accountability and reform. The question is what the most effective response looks like. The Polaris Project, which operates the National Human Trafficking Hotline, reported that the surge of conspiracy-related tips in 2020 overwhelmed their ability to process reports from actual victims. NCMEC has consistently said that the vast majority of child exploitation involves people known to the victim -- family members, coaches, clergy, online predators -- not stranger abduction by political elites. The DOJ prosecutes hundreds of trafficking cases annually, and those cases depend on specific evidence, witness cooperation, and sustained investigative work. What would it look like to take the energy and concern you have about child safety and direct it toward the interventions that actually catch traffickers and protect children? Organizations like Thorn build technology to detect exploitation material online. NCMEC operates tip lines for real cases. Local organizations support survivors. Your instinct to protect children is exactly right. The question is whether the story you have been given about where the threat comes from is leading you toward the places where you can actually make a difference.</div>
+      <div class="dialogue-bubble"><p>Round 3 (Complexity + common ground): Those are uncomfortable questions, and I respect that sitting with them is hard. Here is what I think we can agree on: the system has failed children in real, documented ways, and that failure demands accountability and reform. The question is what the most effective response looks like. The Polaris Project, which operates the National Human Trafficking Hotline, reported that the surge of conspiracy-related tips in 2020 overwhelmed their ability to process reports from actual victims. NCMEC has consistently said that the vast majority of child exploitation involves people known to the victim -- family members, coaches, clergy, online predators -- not stranger abduction by political elites. The DOJ prosecutes hundreds of trafficking cases annually, and those cases depend on specific evidence, witness cooperation, and sustained investigative work. What would it look like to take the energy and concern you have about child safety and direct it toward the interventions that actually catch traffickers and protect children? Organizations like Thorn build technology to detect exploitation material online. NCMEC operates tip lines for real cases. Local organizations support survivors. Your instinct to protect children is exactly right. The question is whether the story you have been given about where the threat comes from is leading you toward the places where you can actually make a difference.</p></div>
     </div>
   </div>
 
@@ -499,6 +678,8 @@
     <h2>Reframe</h2>
     <blockquote class="reframe-block">You and the people you disagree with about Pizzagate share the same fundamental commitment: you both believe that children deserve protection, that powerful people who harm children should face justice, and that institutions that cover up abuse have failed in their most basic duty. That commitment is not just legitimate; it is one of the most important things a society can share. Here is what is also true: Jeffrey Epstein was real. The Catholic Church cover-ups were real. Jimmy Savile was real. Penn State was real. The system has failed to protect children in specific, documented, devastating ways. Your anger about that is justified. The question worth sitting with is this: does the specific story you have been told about Comet Ping Pong and the Podesta emails lead you toward the most effective way to protect children? Or does it channel your legitimate anger into a direction that happens to serve the political and commercial interests of the people who shaped the story? Because the people who actually catch traffickers -- the investigators, the prosecutors, the hotline operators at Polaris Project -- they say that the conspiracy narrative makes their job harder, not easier. That is worth weighing.</blockquote>
   </div>
+
+  
 
   <div class="section">
     <h2>Audit</h2>
@@ -510,7 +691,7 @@
     <ul class="findings-list">
     <li class="finding-item">
       <div class="finding-header">
-        <span class="finding-category">accuracy</span>
+        <span class="finding-category">Accuracy</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">The analysis correctly separates documented trafficking facts from fabricated Pizzagate claims. The Epstein timeline,...</span>
       </div>
@@ -522,7 +703,7 @@
     </li>
     <li class="finding-item">
       <div class="finding-header">
-        <span class="finding-category">completeness</span>
+        <span class="finding-category">Completeness</span>
         <span class="finding-severity-medium">MEDIUM</span>
         <span class="finding-description">The analysis does not address the Wayfair conspiracy theory (June 2020), which alleged that overpriced furniture on...</span>
       </div>
@@ -534,7 +715,7 @@
     </li>
     <li class="finding-item">
       <div class="finding-header">
-        <span class="finding-category">manipulation</span>
+        <span class="finding-category">Manipulation</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">The Bridge Builder&#39;s Socratic dialogue effectively avoids identity-confrontation and uses systemic pattern analysis...</span>
       </div>
@@ -546,7 +727,7 @@
     </li>
     <li class="finding-item">
       <div class="finding-header">
-        <span class="finding-category">completeness</span>
+        <span class="finding-category">Completeness</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">The analysis mentions Tim Ballard and Sound of Freedom but could expand on how the film&#39;s commercial success and...</span>
       </div>
@@ -558,7 +739,7 @@
     </li>
     <li class="finding-item">
       <div class="finding-header">
-        <span class="finding-category">bias</span>
+        <span class="finding-category">Bias</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">The analysis is appropriately balanced in acknowledging the real institutional failures that form the kernel of truth....</span>
       </div>
@@ -570,7 +751,7 @@
     </li>
     <li class="finding-item">
       <div class="finding-header">
-        <span class="finding-category">quality</span>
+        <span class="finding-category">Quality</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">The feasibility check effectively uses the Grimes (2016) conspiracy sustainability model to assess organizational...</span>
       </div>
@@ -582,7 +763,7 @@
     </li>
     <li class="finding-item">
       <div class="finding-header">
-        <span class="finding-category">accuracy</span>
+        <span class="finding-category">Accuracy</span>
         <span class="finding-severity-medium">MEDIUM</span>
         <span class="finding-description">The commercial motives section mentions Sound of Freedom grossing &#39;$250M+ worldwide.&#39; The actual worldwide gross was...</span>
       </div>
@@ -593,6 +774,103 @@
       </div>
     </li></ul>
   </div>
+
+  
+    <div class="section evaluation-section">
+      <h2>Evaluation Methodology</h2>
+      <p class="intro-note">Full transparency on how this scenario was scored. 12 weighted checks, each independently measurable. <a href="https://github.com/Jochen-s/huginn-muninn/blob/main/tests/run_bridge_scenarios.py" target="_blank" rel="noopener">View source code</a></p>
+      <div class="eval-summary">
+        <span class="eval-overall">78.7%</span>
+        <span class="badge badge-warn">Grade B</span>
+      </div>
+      <div style="overflow-x:auto">
+        <table class="eval-table">
+          <thead>
+            <tr>
+              <th>Check</th>
+              <th>Weight</th>
+              <th>Score</th>
+              <th>Status</th>
+              <th>What It Measures</th>
+            </tr>
+          </thead>
+          <tbody><tr class="eval-partial">
+      <td>needs coverage</td>
+      <td class="eval-weight">7%</td>
+      <td class="eval-score">67%</td>
+      <td class="eval-status">PARTIAL</td>
+      <td class="eval-desc">Expected universal human needs matched against identified needs</td>
+    </tr><tr class="eval-pass">
+      <td>issue overlap quality</td>
+      <td class="eval-weight">6%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Common ground text is substantive (&gt;50 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>narrative deconstruction</td>
+      <td class="eval-weight">7%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Narrative deconstruction is substantive (&gt;100 characters)</td>
+    </tr><tr class="eval-fail">
+      <td>consensus explanation</td>
+      <td class="eval-weight">11%</td>
+      <td class="eval-score">0%</td>
+      <td class="eval-status">MISS</td>
+      <td class="eval-desc">Scientific/mainstream explanation &gt;200 chars with 3+ mechanism keywords</td>
+    </tr><tr class="eval-pass">
+      <td>inferential gap</td>
+      <td class="eval-weight">8%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Inferential gap analysis is substantive (&gt;50 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>feasibility check</td>
+      <td class="eval-weight">6%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Feasibility assessment is substantive (&gt;50 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>commercial motives</td>
+      <td class="eval-weight">6%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Commercial motive analysis is substantive (&gt;30 characters)</td>
+    </tr><tr class="eval-fail">
+      <td>technique naming</td>
+      <td class="eval-weight">8%</td>
+      <td class="eval-score">0%</td>
+      <td class="eval-status">MISS</td>
+      <td class="eval-desc">At least 1 technique named with mechanic (&gt;30 chars) and precedent (&gt;20 chars)</td>
+    </tr><tr class="eval-pass">
+      <td>perception gap</td>
+      <td class="eval-weight">5%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Perception gap analysis is substantive (&gt;30 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>socratic dialogue</td>
+      <td class="eval-weight">17%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">3 rounds, ends with question, Round 1 shows perspective-getting</td>
+    </tr><tr class="eval-pass">
+      <td>reframe quality</td>
+      <td class="eval-weight">7%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Reframe &gt;20 chars using shared-value language (we, together, both)</td>
+    </tr><tr class="eval-pass">
+      <td>no controlling language</td>
+      <td class="eval-weight">12%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Zero matches against 9 controlling phrases</td>
+    </tr></tbody>
+        </table>
+      </div>
+      <p class="eval-note">Overall score = weighted sum of individual check scores. Weights reflect the relative importance of each dimension to the project's mission: Socratic dialogue quality (17%) and controlling language detection (12%) are weighted highest because autonomy-supportive framing is the core differentiator.</p>
+    </div>
 
   <div class="scenario-nav">
     <a href="EV-03.html">&larr; EV-03: The 2020 US presidential election was stolen...</a>

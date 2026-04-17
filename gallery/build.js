@@ -100,6 +100,19 @@ const KERNEL_MAP = {
   'SC-01': true,
 };
 
+// Essays: long-form framework applications and philosophical notes.
+// Each entry references a markdown file in research/ and gets rendered as a standalone page.
+const ESSAYS_REGISTRY = [
+  {
+    slug: 'sophists-and-the-three-questions',
+    title: 'The Sophists and the Three Questions',
+    subtitle: 'Applying the framework to a claim about the framework\u2019s own philosophical inheritance.',
+    date: 'April 17, 2026',
+    source: 'research/sophists-and-the-three-questions.md',
+    summary: 'Were the Sophists of 5th century BCE Athens unfairly maligned by their Socratic critics? The Three Questions framework analyzes a claim about its own philosophical roots.',
+  },
+];
+
 // ---------------------------------------------------------------------------
 // Shared CSS
 // ---------------------------------------------------------------------------
@@ -558,6 +571,101 @@ const SHARED_CSS = `
   .eval-desc { color: var(--gray); font-size: 0.8rem; }
   .eval-note { margin-top: 16px; font-size: 0.82rem; color: var(--gray); line-height: 1.6; }
 
+  /* Essay page styles */
+  .essay-prose {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #2C3E50;
+    max-width: 760px;
+  }
+  .essay-prose h2 {
+    font-size: 1.35rem;
+    margin-top: 40px;
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--bg);
+  }
+  .essay-prose h3 {
+    font-size: 1.1rem;
+    margin-top: 28px;
+    margin-bottom: 10px;
+    color: var(--navy);
+  }
+  .essay-prose h4 {
+    font-size: 1rem;
+    margin-top: 20px;
+    margin-bottom: 8px;
+    color: #34495E;
+  }
+  .essay-prose p { margin-bottom: 18px; }
+  .essay-prose ul, .essay-prose ol { margin: 0 0 18px 24px; }
+  .essay-prose li { margin-bottom: 8px; line-height: 1.75; }
+  .essay-prose strong { color: var(--navy); font-weight: 700; }
+  .essay-prose em { font-style: italic; }
+  .essay-prose hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 36px 0;
+  }
+  .essay-prose blockquote {
+    border-left: 4px solid var(--teal);
+    padding: 8px 20px;
+    margin: 20px 0;
+    background: var(--bg);
+    color: #34495E;
+    font-style: italic;
+  }
+  .essay-prose code {
+    background: var(--bg);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: 'SFMono-Regular', Consolas, monospace;
+    font-size: 0.88em;
+  }
+  .essay-prose .essay-meta {
+    color: var(--gray);
+    font-size: 0.875rem;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .essay-prose .references {
+    font-size: 0.88rem;
+    color: #34495E;
+    line-height: 1.65;
+  }
+  .essay-prose .references p { margin-bottom: 10px; }
+
+  /* Essay card styles (index page) */
+  .essay-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px;
+    transition: box-shadow 0.15s;
+    display: flex;
+    flex-direction: column;
+  }
+  .essay-card:hover { box-shadow: 0 4px 16px rgba(27, 42, 74, 0.12); }
+  .essay-card .card-id { color: #6C3483; }
+  .essay-card h3 {
+    font-size: 1.15rem;
+    margin-bottom: 8px;
+    line-height: 1.35;
+  }
+  .essay-card .essay-summary {
+    color: #34495E;
+    font-size: 0.92rem;
+    line-height: 1.6;
+    flex: 1;
+    margin-bottom: 14px;
+  }
+  .essay-card .essay-date {
+    font-size: 0.8rem;
+    color: var(--gray);
+    margin-bottom: 10px;
+  }
+
   @media (max-width: 640px) {
     .site-header h1 { font-size: 1.5rem; }
     .cards-grid { grid-template-columns: 1fr; }
@@ -565,6 +673,8 @@ const SHARED_CSS = `
     .scenario-nav { flex-direction: column; align-items: flex-start; }
     .metrics-table { font-size: 0.8rem; }
     .metrics-table th, .metrics-table td { padding: 8px 10px; }
+    .essay-prose { font-size: 0.95rem; }
+    .essay-prose h2 { font-size: 1.2rem; }
   }
 `;
 
@@ -939,11 +1049,28 @@ function buildCard(scenario) {
     </div>`;
 }
 
-function buildIndex(scenarios) {
+function buildIndex(scenarios, essays) {
   const groups = groupByCategory(scenarios);
   const totalCount = scenarios.length;
 
   let categorySections = '';
+
+  if (essays && essays.length > 0) {
+    const essayCards = essays.map(buildEssayCard).join('');
+    categorySections += `
+      <div class="category-section">
+        <div class="container">
+          <div class="category-header">
+            <h2>Essays &amp; Framework Applications</h2>
+            <p class="category-intro">Long-form notes where the Three Questions framework is applied to questions about the framework itself.</p>
+          </div>
+          <div class="cards-grid">
+            ${essayCards}
+          </div>
+        </div>
+      </div>`;
+  }
+
   for (const cat of CATEGORY_ORDER) {
     const items = groups[cat];
     if (!items || items.length === 0) continue;
@@ -1362,6 +1489,232 @@ function buildScenarioPage(scenario, allScenarios) {
 
 </body>
 </html>`;
+}
+
+// ---------------------------------------------------------------------------
+// Essays: markdown renderer + standalone page builder
+// ---------------------------------------------------------------------------
+
+// Minimal, deliberately-scoped markdown converter for the essay prose style
+// used in research/. Handles: ATX headers, paragraphs, bullet/numbered lists,
+// **bold**, *italic*, `code`, horizontal rules, blockquotes, [links](url).
+// Intentionally does NOT support: tables, images, nested lists beyond one level,
+// code fences. Essay content is authored to this subset.
+function renderMarkdown(src) {
+  const lines = src.replace(/\r\n/g, '\n').split('\n');
+  const out = [];
+  let i = 0;
+  let inList = false;
+  let listTag = 'ul';
+
+  function flushList() {
+    if (inList) {
+      out.push(`</${listTag}>`);
+      inList = false;
+    }
+  }
+
+  function inline(text) {
+    let s = text
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+    s = s.replace(/`([^`]+)`/g, '<code>$1</code>');
+    // Bold: ** + any chars + ** where closing ** is NOT followed by another *.
+    // This lets `**A *B*** ` be parsed as bold(A, italic(B)) by consuming the
+    // italic-close star into the bold content, leaving just the bold closer.
+    s = s.replace(/\*\*([\s\S]+?)\*\*(?!\*)/g, (_, inner) => {
+      const withItalic = inner.replace(/\*([^*\n]+)\*/g, '<em>$1</em>');
+      return `<strong>${withItalic}</strong>`;
+    });
+    // Italics outside bold (also underscore-delimited for disambiguation).
+    s = s.replace(/\*([^*\n]+)\*/g, '<em>$1</em>');
+    s = s.replace(/(^|[^A-Za-z0-9_])_([^_\n]+)_(?=[^A-Za-z0-9_]|$)/g, '$1<em>$2</em>');
+    s = s.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_, txt, url) => {
+      const safeUrl = url.replace(/"/g, '&quot;');
+      return `<a href="${safeUrl}">${txt}</a>`;
+    });
+    return s;
+  }
+
+  while (i < lines.length) {
+    const raw = lines[i];
+    const line = raw.replace(/\s+$/, '');
+
+    if (!line.trim()) {
+      // Blank line: keep list open if the next non-blank line is still a list
+      // item of the same kind (CommonMark loose-list behavior).
+      let j = i + 1;
+      while (j < lines.length && !lines[j].trim()) j++;
+      const nextTrim = j < lines.length ? lines[j].trim() : '';
+      const nextIsBullet = /^[-*]\s+/.test(nextTrim);
+      const nextIsNumbered = /^\d+\.\s+/.test(nextTrim);
+      const keepOpen = inList && ((listTag === 'ul' && nextIsBullet) || (listTag === 'ol' && nextIsNumbered));
+      if (!keepOpen) flushList();
+      i++;
+      continue;
+    }
+
+    if (/^---+$/.test(line.trim())) {
+      flushList();
+      out.push('<hr>');
+      i++;
+      continue;
+    }
+
+    const hMatch = line.match(/^(#{1,6})\s+(.*)$/);
+    if (hMatch) {
+      flushList();
+      const level = hMatch[1].length;
+      out.push(`<h${level}>${inline(hMatch[2])}</h${level}>`);
+      i++;
+      continue;
+    }
+
+    if (line.startsWith('> ')) {
+      flushList();
+      const quoted = [];
+      while (i < lines.length && lines[i].startsWith('> ')) {
+        quoted.push(lines[i].slice(2));
+        i++;
+      }
+      out.push(`<blockquote>${inline(quoted.join(' '))}</blockquote>`);
+      continue;
+    }
+
+    const bulletMatch = line.match(/^[-*]\s+(.*)$/);
+    if (bulletMatch) {
+      if (!inList || listTag !== 'ul') {
+        flushList();
+        out.push('<ul>');
+        inList = true;
+        listTag = 'ul';
+      }
+      out.push(`<li>${inline(bulletMatch[1])}</li>`);
+      i++;
+      continue;
+    }
+
+    const numMatch = line.match(/^\d+\.\s+(.*)$/);
+    if (numMatch) {
+      if (!inList || listTag !== 'ol') {
+        flushList();
+        out.push('<ol>');
+        inList = true;
+        listTag = 'ol';
+      }
+      out.push(`<li>${inline(numMatch[1])}</li>`);
+      i++;
+      continue;
+    }
+
+    flushList();
+    const para = [line];
+    i++;
+    while (i < lines.length && lines[i].trim() && !/^(#{1,6}\s|[-*]\s|\d+\.\s|---+$|> )/.test(lines[i].trim())) {
+      para.push(lines[i]);
+      i++;
+    }
+    out.push(`<p>${inline(para.join(' '))}</p>`);
+  }
+
+  flushList();
+  return out.join('\n');
+}
+
+function splitReferences(html) {
+  const marker = /<h2>References<\/h2>/i;
+  const m = html.match(marker);
+  if (!m) return { body: html, references: '' };
+  const idx = m.index;
+  return { body: html.slice(0, idx), references: html.slice(idx) };
+}
+
+function loadEssays() {
+  const loaded = [];
+  for (const entry of ESSAYS_REGISTRY) {
+    const srcPath = path.resolve(__dirname, '..', entry.source);
+    if (!fs.existsSync(srcPath)) {
+      console.warn(`  Essay source not found: ${srcPath}`);
+      continue;
+    }
+    const md = fs.readFileSync(srcPath, 'utf8');
+    const withoutTitle = md.replace(/^#\s+[^\n]+\n+/, '');
+    const bodyHtml = renderMarkdown(withoutTitle);
+    loaded.push({ ...entry, bodyHtml });
+  }
+  return loaded;
+}
+
+function buildEssayPage(essay) {
+  const { body, references } = splitReferences(essay.bodyHtml);
+  const referencesBlock = references
+    ? `<div class="essay-prose references">${references}</div>`
+    : '';
+
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>${esc(essay.title)} | Huginn &amp; Muninn</title>
+  <meta name="description" content="${esc(essay.summary)}">
+  <style>${SHARED_CSS}</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a href="../index.html">Gallery</a>
+    <a href="../graph.html">Knowledge Graph</a>
+  </div>
+</nav>
+
+<header class="scenario-header">
+  <div class="container">
+    <a href="../index.html" class="back-link">&larr; Back to Gallery</a>
+    <h1>${esc(essay.title)}</h1>
+    <div class="header-meta">
+      <span class="badge badge-version">Essay</span>
+      <span class="badge" style="background:#EAF0F7;color:var(--navy);">${esc(essay.date)}</span>
+    </div>
+  </div>
+</header>
+
+<main class="content">
+  <section class="section">
+    <div class="essay-prose">
+      <div class="essay-meta">${esc(essay.subtitle)}</div>
+      ${body}
+    </div>
+    ${referencesBlock}
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>
+      Built with <a href="https://github.com/jschmiedbauer/huginn-muninn">Huginn &amp; Muninn</a> &mdash;
+      an open-source de-polarization research project. &nbsp;|&nbsp;
+      MIT License &nbsp;|&nbsp;
+      Analysis powered by Claude (Anthropic)
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>`;
+}
+
+function buildEssayCard(essay) {
+  return `
+    <a class="essay-card" href="essays/${esc(essay.slug)}.html" style="text-decoration:none;color:inherit;">
+      <div class="card-id">Essay</div>
+      <h3>${esc(essay.title)}</h3>
+      <div class="essay-date">${esc(essay.date)}</div>
+      <div class="essay-summary">${esc(essay.summary)}</div>
+      <div class="card-link">Read &rarr;</div>
+    </a>`;
 }
 
 // ---------------------------------------------------------------------------
@@ -1985,8 +2338,15 @@ function main() {
   }
   console.log();
 
+  const essays = loadEssays();
+  if (essays.length > 0) {
+    console.log(`Found ${essays.length} essay(s):`);
+    for (const e of essays) console.log(`  ${e.slug} (${e.title})`);
+    console.log();
+  }
+
   // Write index
-  const indexHtml = buildIndex(scenarios);
+  const indexHtml = buildIndex(scenarios, essays);
   const indexPath = path.join(DIST_DIR, 'index.html');
   fs.writeFileSync(indexPath, indexHtml, 'utf8');
   console.log(`Written: index.html (${(indexHtml.length / 1024).toFixed(1)} KB)`);
@@ -2001,6 +2361,20 @@ function main() {
     written++;
   }
 
+  // Write essay pages
+  let essaysWritten = 0;
+  if (essays.length > 0) {
+    const essaysDir = path.join(DIST_DIR, 'essays');
+    if (!fs.existsSync(essaysDir)) fs.mkdirSync(essaysDir, { recursive: true });
+    for (const essay of essays) {
+      const html = buildEssayPage(essay);
+      const outPath = path.join(essaysDir, `${essay.slug}.html`);
+      fs.writeFileSync(outPath, html, 'utf8');
+      console.log(`Written: essays/${essay.slug}.html (${(html.length / 1024).toFixed(1)} KB)`);
+      essaysWritten++;
+    }
+  }
+
   // Write knowledge graph page
   const graphHtml = buildGraphPage();
   const graphPath = path.join(DIST_DIR, 'graph.html');
@@ -2008,7 +2382,7 @@ function main() {
   console.log(`Written: graph.html (${(graphHtml.length / 1024).toFixed(1)} KB)`);
 
   console.log();
-  console.log(`Done. Generated index.html + ${written} scenario pages + graph.html.`);
+  console.log(`Done. Generated index.html + ${written} scenario pages + ${essaysWritten} essay pages + graph.html.`);
   console.log(`Open: ${path.join(DIST_DIR, 'index.html')}`);
 }
 

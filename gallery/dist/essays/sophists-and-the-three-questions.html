@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Sophists and the Three Questions | Huginn &amp; Muninn</title>
+  <meta name="description" content="Were the Sophists of 5th century BCE Athens unfairly maligned by their Socratic critics? The Three Questions framework analyzes a claim about its own philosophical roots.">
+  <style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy:   #1B2A4A;
+    --red:    #C0392B;
+    --teal:   #16A085;
+    --bg:     #F0F4F8;
+    --white:  #FFFFFF;
+    --amber:  #E67E22;
+    --green:  #27AE60;
+    --gray:   #5D6D7E;
+    --border: #D0D9E4;
+    --font:   -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  }
+
+  html { font-size: 16px; }
+
+  body {
+    font-family: var(--font);
+    font-weight: 400;
+    line-height: 1.6;
+    color: #2C3E50;
+    background: var(--white);
+  }
+
+  a { color: var(--teal); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  h1, h2, h3, h4 { font-weight: 700; color: var(--navy); line-height: 1.25; }
+
+  /* Layout */
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+  .content   { max-width: 800px;  margin: 0 auto; padding: 0 24px; }
+
+  /* Header */
+  .site-header {
+    background: var(--navy);
+    color: var(--white);
+    padding: 48px 0 40px;
+  }
+  .site-header h1 { color: var(--white); font-size: 2rem; margin-bottom: 8px; }
+  .site-header .subtitle {
+    font-size: 1.05rem;
+    color: #A8BCCF;
+    max-width: 680px;
+    margin-bottom: 16px;
+  }
+  .site-header .intro {
+    font-size: 0.95rem;
+    color: #8AA5BC;
+    max-width: 720px;
+    line-height: 1.7;
+  }
+
+  /* Nav bar */
+  .site-nav {
+    background: #152138;
+    padding: 10px 0;
+  }
+  .site-nav a {
+    color: #8AA5BC;
+    font-size: 0.875rem;
+  }
+  .site-nav a:hover { color: var(--white); }
+  .site-nav a.active { color: var(--white); font-weight: 600; }
+
+  /* Category sections */
+  .category-section { padding: 48px 0; border-bottom: 1px solid var(--border); }
+  .category-section:last-child { border-bottom: none; }
+
+  .category-header { margin-bottom: 24px; }
+  .category-header h2 { font-size: 1.5rem; margin-bottom: 6px; }
+  .category-header .category-intro { color: var(--gray); font-size: 0.95rem; }
+
+  /* Cards grid */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+
+  .card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    transition: box-shadow 0.15s;
+    display: flex;
+    flex-direction: column;
+  }
+  .card:hover { box-shadow: 0 4px 16px rgba(27, 42, 74, 0.12); }
+
+  .card-id {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--gray);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .card-claim {
+    font-size: 0.95rem;
+    color: #2C3E50;
+    flex: 1;
+    margin-bottom: 14px;
+    line-height: 1.5;
+  }
+
+  .card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+  }
+
+  .card-link {
+    margin-top: 14px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--teal);
+  }
+
+  /* Badges */
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+  }
+  .badge-version  { background: #EAF0F7; color: var(--navy); }
+  .badge-easy     { background: #EAF6EE; color: #1E8449; }
+  .badge-medium   { background: #FEF9E7; color: #7D6608; }
+  .badge-hard     { background: #FDEDEC; color: var(--red); }
+  .badge-kernel-true  { background: #EAF6EE; color: #1E8449; }
+  .badge-kernel-false { background: #F2F3F4; color: var(--gray); }
+  .badge-pass     { background: #EAF6EE; color: #1E8449; }
+  .badge-warnings { background: #FEF9E7; color: #7D6608; }
+  .badge-fail     { background: #FDEDEC; color: var(--red); }
+  .badge-systematic { background: #FDEDEC; color: var(--red); }
+  .badge-repeated   { background: #E8F8F5; color: var(--teal); }
+  .badge-isolated   { background: #FEF5E7; color: var(--amber); }
+
+  /* Footer */
+  .site-footer {
+    background: var(--navy);
+    color: #8AA5BC;
+    padding: 32px 0;
+    margin-top: 48px;
+    font-size: 0.875rem;
+  }
+  .site-footer a { color: #8AA5BC; }
+  .site-footer a:hover { color: var(--white); }
+
+  /* ---- Scenario page styles ---- */
+
+  .scenario-header {
+    background: var(--navy);
+    padding: 40px 0 32px;
+    color: var(--white);
+  }
+  .scenario-header .back-link {
+    font-size: 0.875rem;
+    color: #8AA5BC;
+    display: inline-block;
+    margin-bottom: 16px;
+  }
+  .scenario-header .back-link:hover { color: var(--white); }
+  .scenario-header h1 {
+    color: var(--white);
+    font-size: 1.6rem;
+    margin-bottom: 12px;
+    line-height: 1.3;
+  }
+  .scenario-header .header-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .metrics-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    margin: 24px 0;
+  }
+  .metrics-table th {
+    text-align: left;
+    background: var(--bg);
+    padding: 10px 14px;
+    font-weight: 600;
+    color: var(--navy);
+    border-bottom: 2px solid var(--border);
+  }
+  .metrics-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    color: #2C3E50;
+  }
+  .metrics-table tr:last-child td { border-bottom: none; }
+
+  .section {
+    padding: 40px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .section:last-child { border-bottom: none; }
+
+  .section h2 {
+    font-size: 1.3rem;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--bg);
+    letter-spacing: -0.01em;
+  }
+
+  .section p { margin-bottom: 16px; color: #2C3E50; }
+  .section p:last-child { margin-bottom: 0; }
+
+  .intro-note {
+    color: var(--gray);
+    font-size: 0.875rem;
+    font-style: italic;
+    margin-bottom: 16px;
+  }
+
+  /* Prose blocks: long-form text with proper paragraph spacing */
+  .prose {
+    font-size: 0.95rem;
+    line-height: 1.75;
+    color: #34495E;
+  }
+  .prose p {
+    margin-bottom: 16px;
+  }
+  .prose p:last-child { margin-bottom: 0; }
+
+  /* Needs pills */
+  .needs-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .need-item {
+    background: var(--bg);
+    border-left: 3px solid var(--teal);
+    padding: 10px 14px;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+  .need-name {
+    font-weight: 700;
+    color: var(--navy);
+    margin-right: 6px;
+  }
+
+  /* Technique cards */
+  .technique-card {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+  .technique-header {
+    background: var(--bg);
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .technique-name {
+    font-weight: 700;
+    color: var(--navy);
+    font-size: 1rem;
+    flex: 1;
+  }
+  .technique-body { padding: 16px; }
+  .technique-field { margin-bottom: 14px; }
+  .technique-field:last-child { margin-bottom: 0; }
+  .technique-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--gray);
+    margin-bottom: 4px;
+  }
+  .technique-text { font-size: 0.9rem; color: #2C3E50; line-height: 1.6; }
+
+  /* Socratic dialogue */
+  .dialogue-round { margin-bottom: 28px; }
+  .dialogue-round:last-child { margin-bottom: 0; }
+  .round-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 10px;
+  }
+  .round-1 .round-label { color: var(--teal); }
+  .round-2 .round-label { color: var(--navy); }
+  .round-3 .round-label { color: #6C3483; }
+
+  .dialogue-bubble {
+    padding: 20px 24px;
+    border-radius: 8px;
+    font-size: 0.92rem;
+    line-height: 1.75;
+  }
+  .dialogue-bubble p { margin-bottom: 12px; }
+  .dialogue-bubble p:last-child { margin-bottom: 0; }
+  .round-1 .dialogue-bubble { background: #EAF7F4; border-left: 4px solid var(--teal); }
+  .round-2 .dialogue-bubble { background: #EAF0F7; border-left: 4px solid var(--navy); }
+  .round-3 .dialogue-bubble { background: #F5EEF8; border-left: 4px solid #6C3483; }
+
+  /* Reframe */
+  .reframe-block {
+    border-left: 4px solid var(--amber);
+    background: #FEF9E7;
+    padding: 20px 20px 20px 24px;
+    border-radius: 0 8px 8px 0;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    font-style: italic;
+    color: #2C3E50;
+  }
+
+  /* Audit findings */
+  .audit-summary {
+    background: var(--bg);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 16px;
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+  .findings-list { list-style: none; }
+  .finding-item {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+  .finding-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: var(--bg);
+    cursor: default;
+  }
+  .finding-category {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--gray);
+  }
+  .finding-severity-low    { color: var(--teal); font-size: 0.75rem; font-weight: 600; }
+  .finding-severity-medium { color: var(--amber); font-size: 0.75rem; font-weight: 600; }
+  .finding-severity-high     { color: var(--red); font-size: 0.75rem; font-weight: 600; }
+  .finding-severity-critical { color: #8B0000; font-size: 0.75rem; font-weight: 700; }
+  .finding-description { font-size: 0.875rem; color: #2C3E50; }
+
+  /* Scoped diagnostics (v0.8.0+) */
+  .diagnostics-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 12px;
+  }
+  @media (max-width: 640px) { .diagnostics-grid { grid-template-columns: 1fr; } }
+  .diagnostic-card {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    background: var(--bg);
+  }
+  .diagnostic-card h4 {
+    margin: 0 0 6px;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--gray);
+  }
+  .diagnostic-card p { margin: 0; font-size: 0.9rem; line-height: 1.6; }
+  .diagnostic-note { font-size: 0.78rem; color: var(--gray); font-style: italic; margin-bottom: 4px !important; }
+  .posture-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    background: #F5F5F5;
+    color: #555;
+  }
+  .posture-inoculation_first  { background: #FFF3E0; color: #E65100; }
+  .posture-relational_first   { background: #E3F2FD; color: #1565C0; }
+  .pattern-density-warning {
+    background: #FFF8E1;
+    border-left: 4px solid var(--amber);
+    padding: 10px 14px;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.875rem;
+    margin-top: 8px;
+  }
+  .finding-body { padding: 10px 14px; border-top: 1px solid var(--border); }
+  .finding-rec {
+    font-size: 0.8rem;
+    color: var(--gray);
+    margin-top: 4px;
+  }
+  .finding-rec strong { color: #2C3E50; }
+
+  /* Scenario navigation */
+  .scenario-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 0;
+    border-top: 1px solid var(--border);
+    margin-top: 16px;
+    gap: 16px;
+  }
+  .scenario-nav a {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--teal);
+  }
+  .scenario-nav .disabled { color: var(--gray); pointer-events: none; }
+
+  /* Responsive */
+  /* Evaluation methodology table */
+  .evaluation-section { background: #FAFBFD; margin: 0 -32px; padding: 40px 32px; border-bottom: 1px solid var(--border); }
+  .eval-summary { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+  .eval-overall { font-size: 2rem; font-weight: 700; color: var(--navy); }
+  .eval-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  .eval-table th { text-align: left; padding: 10px 12px; border-bottom: 2px solid var(--border); color: var(--gray); font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; }
+  .eval-table td { padding: 10px 12px; border-bottom: 1px solid #EEF1F5; }
+  .eval-table td:first-child { font-weight: 600; text-transform: capitalize; }
+  .eval-weight, .eval-score { text-align: center; font-variant-numeric: tabular-nums; }
+  .eval-status { text-align: center; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.04em; }
+  .eval-pass .eval-status { color: var(--green); }
+  .eval-partial .eval-status { color: var(--amber); }
+  .eval-fail .eval-status { color: var(--red); }
+  .eval-desc { color: var(--gray); font-size: 0.8rem; }
+  .eval-note { margin-top: 16px; font-size: 0.82rem; color: var(--gray); line-height: 1.6; }
+
+  /* Essay page styles */
+  .essay-prose {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #2C3E50;
+    max-width: 760px;
+  }
+  .essay-prose h2 {
+    font-size: 1.35rem;
+    margin-top: 40px;
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--bg);
+  }
+  .essay-prose h3 {
+    font-size: 1.1rem;
+    margin-top: 28px;
+    margin-bottom: 10px;
+    color: var(--navy);
+  }
+  .essay-prose h4 {
+    font-size: 1rem;
+    margin-top: 20px;
+    margin-bottom: 8px;
+    color: #34495E;
+  }
+  .essay-prose p { margin-bottom: 18px; }
+  .essay-prose ul, .essay-prose ol { margin: 0 0 18px 24px; }
+  .essay-prose li { margin-bottom: 8px; line-height: 1.75; }
+  .essay-prose strong { color: var(--navy); font-weight: 700; }
+  .essay-prose em { font-style: italic; }
+  .essay-prose hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 36px 0;
+  }
+  .essay-prose blockquote {
+    border-left: 4px solid var(--teal);
+    padding: 8px 20px;
+    margin: 20px 0;
+    background: var(--bg);
+    color: #34495E;
+    font-style: italic;
+  }
+  .essay-prose code {
+    background: var(--bg);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: 'SFMono-Regular', Consolas, monospace;
+    font-size: 0.88em;
+  }
+  .essay-prose .essay-meta {
+    color: var(--gray);
+    font-size: 0.875rem;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .essay-prose .references {
+    font-size: 0.88rem;
+    color: #34495E;
+    line-height: 1.65;
+  }
+  .essay-prose .references p { margin-bottom: 10px; }
+
+  /* Essay card styles (index page) */
+  .essay-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px;
+    transition: box-shadow 0.15s;
+    display: flex;
+    flex-direction: column;
+  }
+  .essay-card:hover { box-shadow: 0 4px 16px rgba(27, 42, 74, 0.12); }
+  .essay-card .card-id { color: #6C3483; }
+  .essay-card h3 {
+    font-size: 1.15rem;
+    margin-bottom: 8px;
+    line-height: 1.35;
+  }
+  .essay-card .essay-summary {
+    color: #34495E;
+    font-size: 0.92rem;
+    line-height: 1.6;
+    flex: 1;
+    margin-bottom: 14px;
+  }
+  .essay-card .essay-date {
+    font-size: 0.8rem;
+    color: var(--gray);
+    margin-bottom: 10px;
+  }
+
+  @media (max-width: 640px) {
+    .site-header h1 { font-size: 1.5rem; }
+    .cards-grid { grid-template-columns: 1fr; }
+    .scenario-header h1 { font-size: 1.3rem; }
+    .scenario-nav { flex-direction: column; align-items: flex-start; }
+    .metrics-table { font-size: 0.8rem; }
+    .metrics-table th, .metrics-table td { padding: 8px 10px; }
+    .essay-prose { font-size: 0.95rem; }
+    .essay-prose h2 { font-size: 1.2rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a href="../index.html">Gallery</a>
+    <a href="../graph.html">Knowledge Graph</a>
+  </div>
+</nav>
+
+<header class="scenario-header">
+  <div class="container">
+    <a href="../index.html" class="back-link">&larr; Back to Gallery</a>
+    <h1>The Sophists and the Three Questions</h1>
+    <div class="header-meta">
+      <span class="badge badge-version">Essay</span>
+      <span class="badge" style="background:#EAF0F7;color:var(--navy);">April 17, 2026</span>
+    </div>
+  </div>
+</header>
+
+<main class="content">
+  <section class="section">
+    <div class="essay-prose">
+      <div class="essay-meta">Applying the framework to a claim about the framework’s own philosophical inheritance.</div>
+      <p><strong>Date</strong>: 2026-04-17 <strong>Scope</strong>: Meta-level analysis. Applies the Three Questions framework to a claim about the framework's own philosophical inheritance. <strong>Thesis under examination</strong>: The Sophists of 5th century BCE Athens were unfairly maligned by their Socratic/Platonic critics. "The victors rewrote history."</p>
+<hr>
+<h2>Abstract</h2>
+<p>This note examines a claim that challenges the received view of one of the oldest intellectual disputes in Western thought: Socrates and Plato versus the Sophists. The claim is that the tradition flowing from Plato systematically demonized a group of thinkers who were, at minimum, more intellectually serious than the traditional story allows, and possibly represented a legitimate rival philosophical tradition that lost the historical argument and was written out of the conversation.</p>
+<p>The analysis matters for Huginn &amp; Muninn because the framework is Socratic by design. The Three Questions build on an epistemic commitment that treats inquiry as distinct from manipulation and holds that the difference between the two is detectable. If the Sophist tradition is partially rehabilitated by careful reading, we need to know what that means for the philosophical ground our tool stands on.</p>
+<p>The verdict developed below: the thesis is substantially correct but requires qualification. The traditional "Sophists were bad" story is a caricature that doesn't survive contact with primary sources. The revisionist flip "Sophists were the good guys" is also a caricature, refuted by Aristophanes and by specific Sophist positions. The honest answer is more interesting than either narrative.</p>
+<hr>
+<h2>1. The thesis, stated fairly</h2>
+<p>The claim has two parts. First, that the Sophists have been historically portrayed as crowd-pleasing manipulators who taught clever argumentation without commitment to truth. Second, that this portrayal is largely a construction of their critics (principally Plato), and that modern scholarship has significantly complicated the received view.</p>
+<p>Both parts deserve serious engagement.</p>
+<h2>2. What the primary sources show</h2>
+<p>Most of what we know about the Sophists comes to us through Plato. That's already a problem. It's like reading about the Labour Party only through Conservative Party pamphlets. You'd get a picture, but it wouldn't be the whole picture.</p>
+<p>The Sophists weren't a unified school. They were a group of itinerant teachers in 5th century BCE Athens, traveling between cities, charging fees to teach rhetoric, ethics, and political skill. Surviving fragments (collected in Diels-Kranz, <em>Die Fragmente der Vorsokratiker</em>, 1903, DK 80-90) show considerable philosophical range.</p>
+<p><strong>Protagoras</strong> (c. 490-420 BCE): The famous fragment "Man is the measure of all things, of things that are that they are, and of things that are not that they are not" (DK 80 B1) is genuine, quoted in Plato's <em>Theaetetus</em> 152a and in Sextus Empiricus. The standard reading as crude relativism has been challenged since Kerferd (1981) and Schiappa (1991). Schiappa argues that "each person to themselves" is Plato's caricature; the fragment may equally mean "humanity collectively" (<em>anthropos</em> as species). Either reading makes this a sophisticated epistemological claim, not a dismissal of truth.</p>
+<p><strong>Gorgias</strong> (c. 483-375 BCE): Author of <em>On Non-Being</em> (preserved via Sextus Empiricus and pseudo-Aristotle <em>MXG</em>) and <em>Encomium of Helen</em>. <em>On Non-Being</em> is now read as a serious philosophical parody of Parmenidean metaphysics (Kerferd 1981, Mourelatos 1987, Caston 2002). <em>Encomium of Helen</em> compares rhetoric to a pharmakon, a drug that can heal or harm, and ends by calling itself a "plaything" (<em>paignion</em>). This is rhetoric being honest about what rhetoric is. Not a cover for manipulation, but a direct engagement with it.</p>
+<p><strong>Antiphon</strong> (mid-5th century): <em>On Truth</em>, recovered from Oxyrhynchus Papyri (1364 and 3647, published 1915 and 1984), contains a radical distinction between human law (<em>nomos</em>) and natural law (<em>phusis</em>), arguing that natural human equality precedes political categories. This is a genuinely progressive position most modern readers would recognize. Whether the Sophist Antiphon and the orator Antiphon are the same person is contested (Gagarin 2002 argues yes; Pendrick 2002 argues no).</p>
+<p><strong>Dissoi Logoi</strong> (anonymous, c. 400 BCE): Preserves the "two-fold arguments" tradition of training students to argue both sides of a question. Robinson (1979) established this as a serious pedagogical and epistemic document, not a handbook for verbal trickery.</p>
+<p><strong>Thrasymachus</strong> (as depicted in Plato's <em>Republic</em> Book I): "Justice is the advantage of the stronger." This is the position most uncomfortable to modern readers. How much is actually Thrasymachus and how much is Plato writing a stock villain, we don't know. But the Melian Dialogue in Thucydides (5.84-116) shows similar reasoning deployed in real Athenian foreign policy, so the position wasn't invented by Plato. Some Sophists or Sophist-adjacent thinkers really did hold it.</p>
+<h2>3. The modern rehabilitation is well-grounded</h2>
+<p>Four sources provide the foundation for contemporary Sophist scholarship:</p>
+<ul>
+<li><strong>G.B. Kerferd, <em>The Sophistic Movement</em></strong> (Cambridge UP, 1981). The landmark modern rehabilitation. Argues the Sophists constituted a coherent intellectual movement engaging legitimate problems in epistemology, language theory, and the nomos/phusis distinction. They were Greek Enlightenment figures, not charlatans.</li>
+<li><strong>Edward Schiappa, <em>Protagoras and Logos</em></strong> (1991, 2nd ed. 2003) and <strong><em>The Beginnings of Rhetorical Theory in Classical Greece</em></strong> (Yale UP, 1999). Schiappa's central and widely-accepted claim is that "rhetoric" (<em>rhetorike</em>) as a disciplinary category was a Platonic coinage in the <em>Gorgias</em> (c. 385 BCE). The Sophists did not call what they taught "rhetoric." Plato named the category precisely to denigrate it.</li>
+<li><strong>Barbara Cassin, <em>L'Effet sophistique</em></strong> (1995), translated as <strong><em>Sophistical Practice</em></strong> (Fordham UP, 2014). Treats Sophistry as a distinct mode of thought ("logology") that philosophy must repress to constitute itself. Influential in continental philosophy; more contested in analytic classics.</li>
+<li><strong>Alexander Nehamas, "Eristic, Antilogic, Sophistic, Dialectic"</strong> (<em>History of Philosophy Quarterly</em> 7(1), 1990, 3-16). Argues that Plato's distinction between legitimate dialectic and bad eristic was retrospectively constructed to separate Socrates from his competitors. Vlastos (<em>Socrates: Ironist and Moral Philosopher</em>, 1991) concedes the methods are closer than Plato admits while maintaining a genuine ethical distinction.</li>
+</ul>
+<p>Additional scholarly support: W.K.C. Guthrie, <em>A History of Greek Philosophy</em> Vol III (1969); Jacqueline de Romilly, <em>The Great Sophists in Periclean Athens</em> (1988/1992); John Poulakos, <em>Sophistical Rhetoric in Classical Greece</em> (1995).</p>
+<h2>4. Strongest counterarguments</h2>
+<p>The rehabilitation is real, but the flip narrative "Sophists were innocent victims" doesn't hold either.</p>
+<p><strong>Aristophanes's <em>Clouds</em></strong> was performed in 423 BCE. It lampoons Sophist-style teaching (ironically through a caricature of Socrates) as training young men to argue either side of any case and escape their debts through clever speech. This predates Plato's dialogues by decades. The reputation was already contested in their own time, among their own audience. Dover (1968) and Nussbaum (1980) make the point clearly: Plato didn't invent Athenian suspicion of Sophistic teaching. He codified it.</p>
+<p><strong>Thrasymachus's position has real-world deployment.</strong> Whatever Plato added in dramatic staging, the "justice is the advantage of the stronger" argument was a genuine position held by some Sophists or their students, and it shows up in Thucydides.</p>
+<p><strong>Some Sophist teaching genuinely was mercenary.</strong> Yunis (<em>Taming Democracy</em>, 1996) and Robert Wallace warn that rehabilitation can go too far. Not every Sophist was a misread philosopher. Some were professional trainers in forensic victory, teaching citizens to be litigious and clever rather than wise.</p>
+<p><strong>Critias</strong>, one of the Thirty Tyrants who conducted a brief and brutal oligarchic coup in Athens in 404 BCE, was associated with Sophistic circles. The movement had politically dangerous practitioners.</p>
+<h2>5. Three Questions analysis</h2>
+<h3>5.1 What is true?</h3>
+<p>The thesis is partially correct. Modern scholarship since the 1950s has significantly complicated the received view of the Sophists. Plato's portrayal is substantially polemical. Schiappa's claim that "rhetoric" was itself a Platonic invention is now broadly accepted.</p>
+<p>But the rehabilitation is not total. Aristophanes and Thrasymachus place limits on how innocent the Sophists can be made to look. The honest picture: a diverse group of thinkers, some seriously philosophical (Protagoras, Gorgias, Antiphon), some more focused on practical rhetoric (Hippias), some genuinely problematic (Thrasymachus as portrayed).</p>
+<p>The traditional narrative flattens this diversity into a single villain. The revisionist narrative flattens it into a single victim. Both collapse the evidence.</p>
+<h3>5.2 Who benefits from this framing?</h3>
+<p>Every framing has beneficiaries. Both sides of the Sophist question have them.</p>
+<p><strong>The traditional "Sophists were bad" view benefits:</strong></p>
+<ul>
+<li>The Socratic/Platonic tradition (it's the founding victory story)</li>
+<li>Academic philosophy as a profession (demarcates "real" philosophy from the practical arts)</li>
+<li>Advocates of objective truth against relativism</li>
+<li>Educational institutions that teach fixed curricula over practical argumentation</li>
+</ul>
+<p><strong>The revisionist "Sophists were unfairly treated" view benefits:</strong></p>
+<ul>
+<li>Rhetoric and communication departments (legitimizes their field as philosophy)</li>
+<li>Postmodernists and constructivists (validates the relativist position)</li>
+<li>Legal practitioners, marketers, political communicators (defends persuasion as legitimate)</li>
+<li>Those who want to frame emotionally-engaged argument as rigorous practice</li>
+</ul>
+<p>A third dimension, underweighted in most treatments: Josiah Ober, <em>Mass and Elite in Democratic Athens</em> (1989), reads the anti-Sophist backlash as elite anxiety about democratic empowerment. The Sophists were mostly <em>metics</em> (resident foreigners) teaching Athenian citizens how to argue effectively in assembly and courts. Their clients were ordinary free citizens who lacked aristocratic social capital. What the aristocracy was really uncomfortable with was widely-taught rhetorical competence.</p>
+<p>That same dynamic shows up whenever anyone sells persuasion training to people who weren't born with social capital. The reaction isn't only about truth versus manipulation. Sometimes it's about who's allowed to be persuasive.</p>
+<p><strong>The synthesized view that both traditions have merit benefits:</strong></p>
+<ul>
+<li>Intellectual honesty</li>
+<li>Anyone trying to hold complexity without collapsing it</li>
+<li>Institutions that value examined commitments over tribal belonging</li>
+</ul>
+<h3>5.3 What do we share?</h3>
+<p>The Sophists and Socratics shared more than the polemic suggests.</p>
+<p>Both took seriously how to live well under Athenian democracy. Both saw argumentation as mattering to civic life. Both wrestled with the political and intellectual crisis of 5th century Athens. Both engaged with what makes knowledge reliable.</p>
+<p>The real divide was closer to "inquiry-oriented versus performance-oriented" argumentation, and even that's too clean. Protagoras clearly cared about inquiry. Plato's dialogues are masterful performances.</p>
+<p>Where the traditions actually differ: the serious Sophists accepted that persuasion is real, that speech has power independent of truth, that teaching citizens how to argue effectively was legitimate work. The Socratics insisted that inquiry could approach truth, that persuasion without truth-commitment corrupts the soul, that the difference between legitimate argument and manipulation was knowable.</p>
+<p>Both positions have real content. Both have real dangers. Sophist-adjacent practice degenerates into cynical manipulation. Socratic-adjacent practice degenerates into elitist gatekeeping about what counts as real knowledge.</p>
+<h2>6. Implications for the framework</h2>
+<p>Huginn &amp; Muninn's philosophical foundation is Socratic. The Three Questions build on the assumption that inquiry approaches truth, that manipulation is distinct from legitimate persuasion, and that the distinction between them is detectable. The Anti-Weaponization Charter codifies this position.</p>
+<p>That's a commitment, not a neutral position. It commits the framework to the Socratic side of an ancient fight.</p>
+<p>Three implications follow:</p>
+<p><strong>The commitment should be explicit.</strong> H&amp;M isn't a view-from-nowhere fact-checker. It's a Socratic tool built on a specific philosophical position. Charter Commitment 6 (autonomy-preserving) and Commitment 8 (open methodology) partially discharge the intellectual honesty required. Adding a section on inherited philosophical categories would discharge it more fully.</p>
+<p><strong>The blind spot should be acknowledged.</strong> A strong Sophist critique would say H&amp;M naively treats "manipulation detection" as if it weren't itself a rhetorical move. Every framing is a framing. Every analysis shapes the reader's perception. The framework can't escape rhetoric by declaring itself outside of it. What it can do is be transparent about its commitments and let the user evaluate.</p>
+<p><strong>The framework survives the challenge.</strong> The Three Questions are precisely designed to hold this kind of complexity. Question 1 asks what's true, not what the authorities say. Question 2 asks who benefits from the current framing. Question 3 asks what we share underneath the disagreement. Applied to the Sophist question itself, the framework doesn't collapse. It shows the honest answer is neither the traditional view nor the revisionist flip, but the synthesized one.</p>
+<p>A framework that can't analyze the philosophical tradition it came from is brittle. One that can is load-bearing.</p>
+<p>Beyond the framework, the Ober reading has direct relevance to H&amp;M's common humanity layer. Manufactured division often serves elite interests. The "Who benefits?" question is structurally Sophist in spirit: it asks who profits from the current framing, not just whether the claims are true. That move has Sophistic roots we inherit regardless of whether we credit them.</p>
+<h2>7. The meta-move that matters</h2>
+<p>The friend's thesis is valuable not because it's fully correct, but because it surfaces the operating assumption most readers don't notice. We inherited the categories we use to analyze argumentation from one specific philosophical tradition that had every incentive to set the categories in its favor.</p>
+<p>H&amp;M inherits those categories. The honest move is to know we inherited them, not to pretend we're standing outside the fight.</p>
+<p>When someone makes a persuasive case, we're trained to ask "is it true?" The Sophist tradition would add: "and who decided that's the only question worth asking?"</p>
+<p>That second question doesn't replace the first. It sits next to it.</p>
+<hr>
+
+    </div>
+    <div class="essay-prose references"><h2>References</h2>
+<p>Aristophanes. <em>Clouds</em>. 423 BCE.</p>
+<p>Caston, V. (2002). "Gorgias on Thought and Being." <em>Ancient Philosophy</em> 22(1).</p>
+<p>Cassin, B. (2014). <em>Sophistical Practice: Toward a Consistent Relativism</em>. Fordham University Press. (Original work published 1995.)</p>
+<p>Diels, H., &amp; Kranz, W. (1903). <em>Die Fragmente der Vorsokratiker</em>. Weidmann.</p>
+<p>Dover, K.J. (1968). <em>Aristophanes: Clouds</em>. Oxford University Press.</p>
+<p>Gagarin, M. (2002). <em>Antiphon the Athenian: Oratory, Law, and Justice in the Age of the Sophists</em>. University of Texas Press.</p>
+<p>Guthrie, W.K.C. (1969). <em>A History of Greek Philosophy, Vol. III: The Fifth-Century Enlightenment</em>. Cambridge University Press.</p>
+<p>Kerferd, G.B. (1981). <em>The Sophistic Movement</em>. Cambridge University Press.</p>
+<p>Mourelatos, A.P.D. (1987). "Gorgias on the Function of Language." <em>Philosophical Topics</em> 15(2).</p>
+<p>Nehamas, A. (1990). "Eristic, Antilogic, Sophistic, Dialectic: Plato's Demarcation of Philosophy from Sophistry." <em>History of Philosophy Quarterly</em> 7(1), 3-16.</p>
+<p>Nussbaum, M. (1980). "Aristophanes and Socrates on Learning Practical Wisdom." <em>Yale Classical Studies</em> 26.</p>
+<p>Ober, J. (1989). <em>Mass and Elite in Democratic Athens: Rhetoric, Ideology, and the Power of the People</em>. Princeton University Press.</p>
+<p>Pendrick, G. (2002). <em>Antiphon the Sophist: The Fragments</em>. Cambridge University Press.</p>
+<p>Poulakos, J. (1995). <em>Sophistical Rhetoric in Classical Greece</em>. University of South Carolina Press.</p>
+<p>Robinson, T.M. (1979). <em>Contrasting Arguments: An Edition of the Dissoi Logoi</em>. Arno Press.</p>
+<p>de Romilly, J. (1992). <em>The Great Sophists in Periclean Athens</em>. Clarendon Press. (Original work published 1988.)</p>
+<p>Schiappa, E. (1991). <em>Protagoras and Logos: A Study in Greek Philosophy and Rhetoric</em>. University of South Carolina Press.</p>
+<p>Schiappa, E. (1999). <em>The Beginnings of Rhetorical Theory in Classical Greece</em>. Yale University Press.</p>
+<p>Thucydides. <em>History of the Peloponnesian War</em>, Book 5 (Melian Dialogue), 5.84-116.</p>
+<p>Vlastos, G. (1991). <em>Socrates: Ironist and Moral Philosopher</em>. Cornell University Press.</p>
+<p>Wallace, R.W. (1998). "The Sophists in Athens." In <em>Democracy, Empire, and the Arts in Fifth-Century Athens</em>, D. Boedeker &amp; K. Raaflaub (eds.). Harvard University Press.</p>
+<p>Yunis, H. (1996). <em>Taming Democracy: Models of Political Rhetoric in Classical Athens</em>. Cornell University Press.</p></div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>
+      Built with <a href="https://github.com/jschmiedbauer/huginn-muninn">Huginn &amp; Muninn</a> &mdash;
+      an open-source de-polarization research project. &nbsp;|&nbsp;
+      MIT License &nbsp;|&nbsp;
+      Analysis powered by Claude (Anthropic)
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -70,6 +70,7 @@
     font-size: 0.875rem;
   }
   .site-nav a:hover { color: var(--white); }
+  .site-nav a.active { color: var(--white); font-weight: 600; }
 
   /* Category sections */
   .category-section { padding: 48px 0; border-bottom: 1px solid var(--border); }
@@ -211,27 +212,39 @@
   .metrics-table tr:last-child td { border-bottom: none; }
 
   .section {
-    padding: 32px 0;
+    padding: 40px 0;
     border-bottom: 1px solid var(--border);
   }
   .section:last-child { border-bottom: none; }
 
   .section h2 {
-    font-size: 1.25rem;
-    margin-bottom: 16px;
-    padding-bottom: 8px;
+    font-size: 1.3rem;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
     border-bottom: 2px solid var(--bg);
+    letter-spacing: -0.01em;
   }
 
-  .section p { margin-bottom: 12px; color: #2C3E50; }
+  .section p { margin-bottom: 16px; color: #2C3E50; }
   .section p:last-child { margin-bottom: 0; }
 
   .intro-note {
     color: var(--gray);
     font-size: 0.875rem;
     font-style: italic;
-    margin-bottom: 12px;
+    margin-bottom: 16px;
   }
+
+  /* Prose blocks: long-form text with proper paragraph spacing */
+  .prose {
+    font-size: 0.95rem;
+    line-height: 1.75;
+    color: #34495E;
+  }
+  .prose p {
+    margin-bottom: 16px;
+  }
+  .prose p:last-child { margin-bottom: 0; }
 
   /* Needs pills */
   .needs-list {
@@ -288,28 +301,30 @@
   .technique-text { font-size: 0.9rem; color: #2C3E50; line-height: 1.6; }
 
   /* Socratic dialogue */
-  .dialogue-round { margin-bottom: 20px; }
+  .dialogue-round { margin-bottom: 28px; }
+  .dialogue-round:last-child { margin-bottom: 0; }
   .round-label {
     font-size: 0.75rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
   }
   .round-1 .round-label { color: var(--teal); }
   .round-2 .round-label { color: var(--navy); }
   .round-3 .round-label { color: #6C3483; }
 
   .dialogue-bubble {
-    padding: 16px 18px;
+    padding: 20px 24px;
     border-radius: 8px;
-    font-size: 0.9rem;
-    line-height: 1.65;
-    white-space: pre-wrap;
+    font-size: 0.92rem;
+    line-height: 1.75;
   }
-  .round-1 .dialogue-bubble { background: #EAF7F4; border-left: 3px solid var(--teal); }
-  .round-2 .dialogue-bubble { background: #EAF0F7; border-left: 3px solid var(--navy); }
-  .round-3 .dialogue-bubble { background: #F5EEF8; border-left: 3px solid #6C3483; }
+  .dialogue-bubble p { margin-bottom: 12px; }
+  .dialogue-bubble p:last-child { margin-bottom: 0; }
+  .round-1 .dialogue-bubble { background: #EAF7F4; border-left: 4px solid var(--teal); }
+  .round-2 .dialogue-bubble { background: #EAF0F7; border-left: 4px solid var(--navy); }
+  .round-3 .dialogue-bubble { background: #F5EEF8; border-left: 4px solid #6C3483; }
 
   /* Reframe */
   .reframe-block {
@@ -356,8 +371,52 @@
   }
   .finding-severity-low    { color: var(--teal); font-size: 0.75rem; font-weight: 600; }
   .finding-severity-medium { color: var(--amber); font-size: 0.75rem; font-weight: 600; }
-  .finding-severity-high   { color: var(--red); font-size: 0.75rem; font-weight: 600; }
+  .finding-severity-high     { color: var(--red); font-size: 0.75rem; font-weight: 600; }
+  .finding-severity-critical { color: #8B0000; font-size: 0.75rem; font-weight: 700; }
   .finding-description { font-size: 0.875rem; color: #2C3E50; }
+
+  /* Scoped diagnostics (v0.8.0+) */
+  .diagnostics-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 12px;
+  }
+  @media (max-width: 640px) { .diagnostics-grid { grid-template-columns: 1fr; } }
+  .diagnostic-card {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    background: var(--bg);
+  }
+  .diagnostic-card h4 {
+    margin: 0 0 6px;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--gray);
+  }
+  .diagnostic-card p { margin: 0; font-size: 0.9rem; line-height: 1.6; }
+  .diagnostic-note { font-size: 0.78rem; color: var(--gray); font-style: italic; margin-bottom: 4px !important; }
+  .posture-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    background: #F5F5F5;
+    color: #555;
+  }
+  .posture-inoculation_first  { background: #FFF3E0; color: #E65100; }
+  .posture-relational_first   { background: #E3F2FD; color: #1565C0; }
+  .pattern-density-warning {
+    background: #FFF8E1;
+    border-left: 4px solid var(--amber);
+    padding: 10px 14px;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.875rem;
+    margin-top: 8px;
+  }
   .finding-body { padding: 10px 14px; border-top: 1px solid var(--border); }
   .finding-rec {
     font-size: 0.8rem;
@@ -384,6 +443,117 @@
   .scenario-nav .disabled { color: var(--gray); pointer-events: none; }
 
   /* Responsive */
+  /* Evaluation methodology table */
+  .evaluation-section { background: #FAFBFD; margin: 0 -32px; padding: 40px 32px; border-bottom: 1px solid var(--border); }
+  .eval-summary { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+  .eval-overall { font-size: 2rem; font-weight: 700; color: var(--navy); }
+  .eval-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  .eval-table th { text-align: left; padding: 10px 12px; border-bottom: 2px solid var(--border); color: var(--gray); font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; }
+  .eval-table td { padding: 10px 12px; border-bottom: 1px solid #EEF1F5; }
+  .eval-table td:first-child { font-weight: 600; text-transform: capitalize; }
+  .eval-weight, .eval-score { text-align: center; font-variant-numeric: tabular-nums; }
+  .eval-status { text-align: center; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.04em; }
+  .eval-pass .eval-status { color: var(--green); }
+  .eval-partial .eval-status { color: var(--amber); }
+  .eval-fail .eval-status { color: var(--red); }
+  .eval-desc { color: var(--gray); font-size: 0.8rem; }
+  .eval-note { margin-top: 16px; font-size: 0.82rem; color: var(--gray); line-height: 1.6; }
+
+  /* Essay page styles */
+  .essay-prose {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #2C3E50;
+    max-width: 760px;
+  }
+  .essay-prose h2 {
+    font-size: 1.35rem;
+    margin-top: 40px;
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--bg);
+  }
+  .essay-prose h3 {
+    font-size: 1.1rem;
+    margin-top: 28px;
+    margin-bottom: 10px;
+    color: var(--navy);
+  }
+  .essay-prose h4 {
+    font-size: 1rem;
+    margin-top: 20px;
+    margin-bottom: 8px;
+    color: #34495E;
+  }
+  .essay-prose p { margin-bottom: 18px; }
+  .essay-prose ul, .essay-prose ol { margin: 0 0 18px 24px; }
+  .essay-prose li { margin-bottom: 8px; line-height: 1.75; }
+  .essay-prose strong { color: var(--navy); font-weight: 700; }
+  .essay-prose em { font-style: italic; }
+  .essay-prose hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 36px 0;
+  }
+  .essay-prose blockquote {
+    border-left: 4px solid var(--teal);
+    padding: 8px 20px;
+    margin: 20px 0;
+    background: var(--bg);
+    color: #34495E;
+    font-style: italic;
+  }
+  .essay-prose code {
+    background: var(--bg);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: 'SFMono-Regular', Consolas, monospace;
+    font-size: 0.88em;
+  }
+  .essay-prose .essay-meta {
+    color: var(--gray);
+    font-size: 0.875rem;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .essay-prose .references {
+    font-size: 0.88rem;
+    color: #34495E;
+    line-height: 1.65;
+  }
+  .essay-prose .references p { margin-bottom: 10px; }
+
+  /* Essay card styles (index page) */
+  .essay-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px;
+    transition: box-shadow 0.15s;
+    display: flex;
+    flex-direction: column;
+  }
+  .essay-card:hover { box-shadow: 0 4px 16px rgba(27, 42, 74, 0.12); }
+  .essay-card .card-id { color: #6C3483; }
+  .essay-card h3 {
+    font-size: 1.15rem;
+    margin-bottom: 8px;
+    line-height: 1.35;
+  }
+  .essay-card .essay-summary {
+    color: #34495E;
+    font-size: 0.92rem;
+    line-height: 1.6;
+    flex: 1;
+    margin-bottom: 14px;
+  }
+  .essay-card .essay-date {
+    font-size: 0.8rem;
+    color: var(--gray);
+    margin-bottom: 10px;
+  }
+
   @media (max-width: 640px) {
     .site-header h1 { font-size: 1.5rem; }
     .cards-grid { grid-template-columns: 1fr; }
@@ -391,10 +561,19 @@
     .scenario-nav { flex-direction: column; align-items: flex-start; }
     .metrics-table { font-size: 0.8rem; }
     .metrics-table th, .metrics-table td { padding: 8px 10px; }
+    .essay-prose { font-size: 0.95rem; }
+    .essay-prose h2 { font-size: 1.2rem; }
   }
 </style>
 </head>
 <body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a href="index.html">Gallery</a>
+    <a href="graph.html">Knowledge Graph</a>
+  </div>
+</nav>
 
 <header class="scenario-header">
   <div class="content">
@@ -445,35 +624,35 @@
   <div class="section">
     <h2>Inferential Gap</h2>
     <p class="intro-note">Where the evidence ends and the leap begins.</p>
-    <p>The kernel of truth is substantial and multi-layered: (1) Elite influence on policy is disproportionate. Gilens and Page (2014) is a landmark empirical study showing this with data across 1,779 policy outcomes. (2) International elite forums exist and operate with limited transparency. Bilderberg, WEF Davos, Trilateral Commission are real organizations with real influence on policy discourse. (3) Wealth concentration is extreme. The top 1% hold 31.4% of US wealth (Fed SCF 2022); globally, Oxfam&#39;s 2024 report documents that the five richest men doubled their wealth since 2020 while 60% of humanity grew poorer. (4) The revolving door between government and industry is pervasive. (5) Historical conspiracies by elites have occurred (Business Plot of 1933, Operation Mockingbird, Iran-Contra). The EXACT inferential leaps are: Leap 1: &#39;Multiple elite groups exert disproportionate influence&#39; to &#39;A SINGLE coordinated group controls everything.&#39; This is unsupported because documented research consistently shows COMPETING elite factions with contradictory interests. The Koch brothers funded climate denial while George Soros funded climate action. Saudi Arabia and Iran are both &#39;elites&#39; who are strategic enemies. Big Tech and legacy media compete for market share. Fossil fuel companies and renewable energy companies lobby for opposing policies. The evidence shows an oligarchic system with multiple competing players, not a unified conspiracy. Jeffrey Winters&#39; &#39;Oligarchy&#39; (2011) provides the scholarly framework: oligarchy is a system, not a club. Leap 2: &#39;Elite forums operate with limited transparency&#39; to &#39;These forums issue secret orders to governments.&#39; This is unsupported because (a) attendees at Bilderberg, WEF, etc. publicly and routinely disagree on major policy questions; (b) no mechanism for enforcement of &#39;orders&#39; has been documented; (c) governments regularly adopt policies opposed by Bilderberg attendees (Brexit, election of Trump, rise of populist parties across Europe). If Bilderberg controlled governments, these outcomes would not have occurred. Leap 3: &#39;Past conspiracies by powerful people have been documented&#39; to &#39;Therefore a current all-encompassing conspiracy exists.&#39; This is unsupported because the documented historical conspiracies (Business Plot, Iran-Contra, COINTELPRO) were all (a) limited in scope, (b) eventually exposed by insiders or journalists, and (c) involved competing interests rather than unified control. The very fact that we know about them demonstrates that conspiracies at scale are extremely difficult to maintain. An ongoing global conspiracy involving hundreds of governments and millions of officials would be orders of magnitude harder to conceal than anything in the historical record.</p>
+    <div class="prose"><p>The kernel of truth is substantial and multi-layered: (1) Elite influence on policy is disproportionate. Gilens and Page (2014) is a landmark empirical study showing this with data across 1,779 policy outcomes. (2) International elite forums exist and operate with limited transparency. Bilderberg, WEF Davos, Trilateral Commission are real organizations with real influence on policy discourse. (3) Wealth concentration is extreme. The top 1% hold 31.4% of US wealth (Fed SCF 2022); globally, Oxfam&#39;s 2024 report documents that the five richest men doubled their wealth since 2020 while 60% of humanity grew poorer. (4) The revolving door between government and industry is pervasive. (5) Historical conspiracies by elites have occurred (Business Plot of 1933, Operation Mockingbird, Iran-Contra). The EXACT inferential leaps are: Leap 1: &#39;Multiple elite groups exert disproportionate influence&#39; to &#39;A SINGLE coordinated group controls everything.&#39; This is unsupported because documented research consistently shows COMPETING elite factions with contradictory interests. The Koch brothers funded climate denial while George Soros funded climate action. Saudi Arabia and Iran are both &#39;elites&#39; who are strategic enemies. Big Tech and legacy media compete for market share. Fossil fuel companies and renewable energy companies lobby for opposing policies. The evidence shows an oligarchic system with multiple competing players, not a unified conspiracy. Jeffrey Winters&#39; &#39;Oligarchy&#39; (2011) provides the scholarly framework: oligarchy is a system, not a club. Leap 2: &#39;Elite forums operate with limited transparency&#39; to &#39;These forums issue secret orders to governments.&#39; This is unsupported because (a) attendees at Bilderberg, WEF, etc. publicly and routinely disagree on major policy questions; (b) no mechanism for enforcement of &#39;orders&#39; has been documented; (c) governments regularly adopt policies opposed by Bilderberg attendees (Brexit, election of Trump, rise of populist parties across Europe). If Bilderberg controlled governments, these outcomes would not have occurred. Leap 3: &#39;Past conspiracies by powerful people have been documented&#39; to &#39;Therefore a current all-encompassing conspiracy exists.&#39; This is unsupported because the documented historical conspiracies (Business Plot, Iran-Contra, COINTELPRO) were all (a) limited in scope, (b) eventually exposed by insiders or journalists, and (c) involved competing interests rather than unified control. The very fact that we know about them demonstrates that conspiracies at scale are extremely difficult to maintain. An ongoing global conspiracy involving hundreds of governments and millions of officials would be orders of magnitude harder to conceal than anything in the historical record.</p></div>
   </div>
 
   <div class="section">
     <h2>Common Ground</h2>
-    <p>NWO conspiracy believers and mainstream democracy reform advocates share remarkable substantive agreement that is obscured by the conspiracy framing. Concrete overlap: (1) Both groups cite Gilens and Page (2014) showing that elite economic preferences predict US policy outcomes while average citizen preferences have near-zero independent effect. This finding is not disputed by mainstream political science. (2) Both groups are concerned about the revolving door between government and private sector. OpenSecrets.org documents that in the 2021-2022 cycle, 65% of former members of Congress who left office entered lobbying or lobbying-adjacent roles. (3) Both groups support campaign finance reform. Polling by the Brennan Center for Justice (2023) found that 84% of Americans across party lines believe money has too much influence in politics. (4) Both groups want transparency in elite forums. The European Parliament passed a resolution in 2013 calling for greater transparency in Bilderberg meetings. (5) Both groups are concerned about wealth concentration. Federal Reserve data (Survey of Consumer Finances, 2022) shows the top 1% of US households hold 31.4% of total wealth, while the bottom 50% hold 2.6%. This concentration is a shared concern across the political spectrum. The disagreement is not about WHETHER elites have disproportionate influence (they do), but about the MECHANISM: is it through documented, systematic, structural advantages in a flawed system (lobbying, campaign finance, regulatory capture, revolving doors), or through a secret, unified, coordinated conspiracy? The structural explanation is supported by extensive evidence. The unified conspiracy explanation requires inferential leaps that the evidence does not support.</p>
+    <div class="prose"><p>NWO conspiracy believers and mainstream democracy reform advocates share remarkable substantive agreement that is obscured by the conspiracy framing. Concrete overlap: (1) Both groups cite Gilens and Page (2014) showing that elite economic preferences predict US policy outcomes while average citizen preferences have near-zero independent effect. This finding is not disputed by mainstream political science. (2) Both groups are concerned about the revolving door between government and private sector. OpenSecrets.org documents that in the 2021-2022 cycle, 65% of former members of Congress who left office entered lobbying or lobbying-adjacent roles. (3) Both groups support campaign finance reform. Polling by the Brennan Center for Justice (2023) found that 84% of Americans across party lines believe money has too much influence in politics. (4) Both groups want transparency in elite forums. The European Parliament passed a resolution in 2013 calling for greater transparency in Bilderberg meetings. (5) Both groups are concerned about wealth concentration. Federal Reserve data (Survey of Consumer Finances, 2022) shows the top 1% of US households hold 31.4% of total wealth, while the bottom 50% hold 2.6%. This concentration is a shared concern across the political spectrum. The disagreement is not about WHETHER elites have disproportionate influence (they do), but about the MECHANISM: is it through documented, systematic, structural advantages in a flawed system (lobbying, campaign finance, regulatory capture, revolving doors), or through a secret, unified, coordinated conspiracy? The structural explanation is supported by extensive evidence. The unified conspiracy explanation requires inferential leaps that the evidence does not support.</p></div>
   </div>
 
   <div class="section">
     <h2>Narrative Deconstruction</h2>
-    <p>The NWO narrative captures a real and documented democratic deficit, then redirects the response in ways that ultimately serve elite interests. The construction follows four stages: Stage 1 (Real grievance): Wealth inequality is extreme and growing. Gilens and Page (2014) demonstrated that US policy outcomes correlate with elite preferences, not average citizen preferences. International forums like Bilderberg operate with minimal transparency. The revolving door between government and industry is documented. Corporate lobbying expenditures ($4.1B in the US alone in 2022) dwarf citizen advocacy budgets. These are real problems with real evidence. Stage 2 (Pattern recognition): The human mind seeks unified explanations for complex patterns. When multiple elite institutions (CFR, Bilderberg, WEF, Trilateral Commission) share overlapping membership and operate with limited transparency, pattern recognition naturally suggests coordination. This is not irrational; it is how human cognition works. The error is not in noticing patterns but in the next step. Stage 3 (Inferential leap): From &#39;elites have disproportionate influence through documented mechanisms&#39; to &#39;a single secret group controls everything.&#39; This leap performs three functions: (a) it simplifies a complex system with many competing actors into a single-cause explanation; (b) it provides an identifiable enemy, which is psychologically more manageable than systemic dysfunction; (c) it suggests that exposing the conspiracy could solve the problem, which is more hopeful than the reality that structural inequality requires structural reform. Stage 4 (Paradoxical capture): The conspiracy framing actually PROTECTS the structural advantages of elites by redirecting reform energy. Instead of supporting campaign finance reform, lobbying regulation, wealth taxation, or institutional transparency measures -- all of which have evidence-based policy frameworks and legislative pathways -- believers focus on exposing a secret conspiracy that cannot be proven or disproven. The system that produces real inequality continues unreformed while attention is directed at shadowy cabals. The entities that profit most from the NWO narrative (media entrepreneurs, supplement sellers) are themselves members of the commercial elite class, creating a recursive irony: the conspiracy about elite control is itself a product being sold by elites for profit.</p>
+    <div class="prose"><p>The NWO narrative captures a real and documented democratic deficit, then redirects the response in ways that ultimately serve elite interests. The construction follows four stages: Stage 1 (Real grievance): Wealth inequality is extreme and growing. Gilens and Page (2014) demonstrated that US policy outcomes correlate with elite preferences, not average citizen preferences. International forums like Bilderberg operate with minimal transparency. The revolving door between government and industry is documented. Corporate lobbying expenditures ($4.1B in the US alone in 2022) dwarf citizen advocacy budgets. These are real problems with real evidence. Stage 2 (Pattern recognition): The human mind seeks unified explanations for complex patterns. When multiple elite institutions (CFR, Bilderberg, WEF, Trilateral Commission) share overlapping membership and operate with limited transparency, pattern recognition naturally suggests coordination. This is not irrational; it is how human cognition works. The error is not in noticing patterns but in the next step. Stage 3 (Inferential leap): From &#39;elites have disproportionate influence through documented mechanisms&#39; to &#39;a single secret group controls everything.&#39; This leap performs three functions: (a) it simplifies a complex system with many competing actors into a single-cause explanation; (b) it provides an identifiable enemy, which is psychologically more manageable than systemic dysfunction; (c) it suggests that exposing the conspiracy could solve the problem, which is more hopeful than the reality that structural inequality requires structural reform. Stage 4 (Paradoxical capture): The conspiracy framing actually PROTECTS the structural advantages of elites by redirecting reform energy. Instead of supporting campaign finance reform, lobbying regulation, wealth taxation, or institutional transparency measures -- all of which have evidence-based policy frameworks and legislative pathways -- believers focus on exposing a secret conspiracy that cannot be proven or disproven. The system that produces real inequality continues unreformed while attention is directed at shadowy cabals. The entities that profit most from the NWO narrative (media entrepreneurs, supplement sellers) are themselves members of the commercial elite class, creating a recursive irony: the conspiracy about elite control is itself a product being sold by elites for profit.</p></div>
   </div>
 
   
     <div class="section">
       <h2>Feasibility Assessment</h2>
-      <p>The NWO hypothesis implies specific organizational requirements that can be assessed: COORDINATION PROBLEM: The claim asserts control over &#39;all world governments.&#39; There are 193 UN member states with different political systems (democracies, autocracies, monarchies, theocracies, one-party states), different economic systems, different languages, different religions, and different geopolitical interests. These governments are actively in conflict with each other (Russia-Ukraine, Israel-Palestine, China-Taiwan tensions, India-Pakistan, Iran-Saudi Arabia). A single controlling group would need to: (a) simultaneously direct governments that are at war with each other; (b) orchestrate elections in democracies while maintaining the appearance of genuine competition; (c) coordinate policy across language, cultural, and ideological barriers; (d) prevent any of the millions of government officials worldwide from producing evidence of the control structure. SECRECY SCALE: Using organizational secrecy research, the probability of a conspiracy remaining secret decays as a function of the number of participants and time. David Robert Grimes (PLOS ONE, 2016) modeled this mathematically using data from actual conspiracies (NSA PRISM, Tuskegee syphilis study, FBI forensic scandal) and calculated that a conspiracy involving more than approximately 2,500 people would be expected to be exposed within 5 years. A conspiracy controlling 193 governments would require, at minimum, hundreds of thousands of participants. By Grimes&#39; model, exposure would be virtually certain within months. COMPETING INTERESTS: The 2,640 billionaires tracked by Forbes (2024) have documented competing investments, opposing political donations, contradictory policy preferences, and active business rivalries. Warren Buffett advocates higher taxes on the wealthy while others fund anti-tax campaigns. Tech billionaires fund AI development while others fund AI safety. The Koch network and Soros philanthropies fund opposing causes. These are not the behaviors of a coordinated control group. POLICY FAILURES: If a secret elite controlled all governments, major policy failures that harm elite interests would not occur. The 2008 financial crisis destroyed trillions in elite wealth. COVID-19 lockdowns devastated industries owned by the wealthy. Russia&#39;s invasion of Ukraine disrupted global energy markets and supply chains that benefited elites. These outcomes are inconsistent with unified elite control.</p>
+      <div class="prose"><p>The NWO hypothesis implies specific organizational requirements that can be assessed: COORDINATION PROBLEM: The claim asserts control over &#39;all world governments.&#39; There are 193 UN member states with different political systems (democracies, autocracies, monarchies, theocracies, one-party states), different economic systems, different languages, different religions, and different geopolitical interests. These governments are actively in conflict with each other (Russia-Ukraine, Israel-Palestine, China-Taiwan tensions, India-Pakistan, Iran-Saudi Arabia). A single controlling group would need to: (a) simultaneously direct governments that are at war with each other; (b) orchestrate elections in democracies while maintaining the appearance of genuine competition; (c) coordinate policy across language, cultural, and ideological barriers; (d) prevent any of the millions of government officials worldwide from producing evidence of the control structure. SECRECY SCALE: Using organizational secrecy research, the probability of a conspiracy remaining secret decays as a function of the number of participants and time. David Robert Grimes (PLOS ONE, 2016) modeled this mathematically using data from actual conspiracies (NSA PRISM, Tuskegee syphilis study, FBI forensic scandal) and calculated that a conspiracy involving more than approximately 2,500 people would be expected to be exposed within 5 years. A conspiracy controlling 193 governments would require, at minimum, hundreds of thousands of participants. By Grimes&#39; model, exposure would be virtually certain within months. COMPETING INTERESTS: The 2,640 billionaires tracked by Forbes (2024) have documented competing investments, opposing political donations, contradictory policy preferences, and active business rivalries. Warren Buffett advocates higher taxes on the wealthy while others fund anti-tax campaigns. Tech billionaires fund AI development while others fund AI safety. The Koch network and Soros philanthropies fund opposing causes. These are not the behaviors of a coordinated control group. POLICY FAILURES: If a secret elite controlled all governments, major policy failures that harm elite interests would not occur. The 2008 financial crisis destroyed trillions in elite wealth. COVID-19 lockdowns devastated industries owned by the wealthy. Russia&#39;s invasion of Ukraine disrupted global energy markets and supply chains that benefited elites. These outcomes are inconsistent with unified elite control.</p></div>
     </div>
 
   
     <div class="section">
       <h2>Commercial Interests</h2>
-      <p>Multiple parties profit financially from NWO beliefs: MEDIA ENTERPRISES: Alex Jones&#39; InfoWars generated estimated $50-80M in peak annual revenue (per court filings in Sandy Hook litigation), primarily through supplement sales marketed alongside NWO content. The InfoWars Store sells &#39;Brain Force Plus,&#39; &#39;Super Male Vitality,&#39; &#39;Survival Shield,&#39; and survivalist gear, all framed around preparedness for NWO-orchestrated collapse. David Icke&#39;s enterprise includes 20+ books (major publisher Hay House), sold-out speaking tours (10,000+ capacity venues), a subscription website (davidicke.com), and merchandise. Daniel Estulin&#39;s &#39;The True Story of the Bilderberg Group&#39; was published in claimed 60+ languages. Revenue from book sales, speaking engagements, and media appearances. SURVIVALIST AND PREPAREDNESS INDUSTRY: The prepper market, substantially driven by NWO and collapse narratives, was estimated at $11 billion annually in the US (Finder.com, 2024). Products include emergency food supplies ($200-2,000+ per kit), water filtration systems, precious metals (marketed as protection against NWO currency manipulation), firearms and ammunition, off-grid power systems, and underground bunker construction. SUPPLEMENT AND ALTERNATIVE HEALTH: Products marketed against &#39;NWO depopulation&#39; include colloidal silver, iodine supplements (marketed against &#39;fluoride poisoning&#39;), detox protocols, and heavy metal chelation products. This overlaps significantly with the broader alternative health market. DOCUMENTARY AND PUBLISHING: The conspiracy media ecosystem generates revenue through YouTube advertising (before demonetization policies), Patreon and subscriber-funded content, documentary sales and streaming, and paid events and conferences. The Red Pill Expo (organized by G. Edward Griffin&#39;s Freedom Force International) charges $199-$599 per ticket. POLITICAL FUNDRAISING: NWO narratives are used to drive political donations. Campaign communications referencing &#39;globalist elites,&#39; &#39;deep state,&#39; and &#39;New World Order&#39; are documented fundraising tools for candidates across the political spectrum, predominantly on the populist right. OpenSecrets data shows that small-dollar donations spike in response to conspiracy-framed fundraising appeals.</p>
+      <div class="prose"><p>Multiple parties profit financially from NWO beliefs: MEDIA ENTERPRISES: Alex Jones&#39; InfoWars generated estimated $50-80M in peak annual revenue (per court filings in Sandy Hook litigation), primarily through supplement sales marketed alongside NWO content. The InfoWars Store sells &#39;Brain Force Plus,&#39; &#39;Super Male Vitality,&#39; &#39;Survival Shield,&#39; and survivalist gear, all framed around preparedness for NWO-orchestrated collapse. David Icke&#39;s enterprise includes 20+ books (major publisher Hay House), sold-out speaking tours (10,000+ capacity venues), a subscription website (davidicke.com), and merchandise. Daniel Estulin&#39;s &#39;The True Story of the Bilderberg Group&#39; was published in claimed 60+ languages. Revenue from book sales, speaking engagements, and media appearances. SURVIVALIST AND PREPAREDNESS INDUSTRY: The prepper market, substantially driven by NWO and collapse narratives, was estimated at $11 billion annually in the US (Finder.com, 2024). Products include emergency food supplies ($200-2,000+ per kit), water filtration systems, precious metals (marketed as protection against NWO currency manipulation), firearms and ammunition, off-grid power systems, and underground bunker construction. SUPPLEMENT AND ALTERNATIVE HEALTH: Products marketed against &#39;NWO depopulation&#39; include colloidal silver, iodine supplements (marketed against &#39;fluoride poisoning&#39;), detox protocols, and heavy metal chelation products. This overlaps significantly with the broader alternative health market. DOCUMENTARY AND PUBLISHING: The conspiracy media ecosystem generates revenue through YouTube advertising (before demonetization policies), Patreon and subscriber-funded content, documentary sales and streaming, and paid events and conferences. The Red Pill Expo (organized by G. Edward Griffin&#39;s Freedom Force International) charges $199-$599 per ticket. POLITICAL FUNDRAISING: NWO narratives are used to drive political donations. Campaign communications referencing &#39;globalist elites,&#39; &#39;deep state,&#39; and &#39;New World Order&#39; are documented fundraising tools for candidates across the political spectrum, predominantly on the populist right. OpenSecrets data shows that small-dollar donations spike in response to conspiracy-framed fundraising appeals.</p></div>
     </div>
 
   
     <div class="section">
       <h2>Perception Gap</h2>
-      <p>NWO conspiracy believers and mainstream political observers dramatically misunderstand each other&#39;s actual positions. Research by More in Common (&#39;Hidden Tribes&#39;, 2018) found that Americans overestimate the extremism of their political opponents by approximately 2x. Applied to NWO beliefs: NWO believers perceive mainstream political observers as: (a) naive about elite power (&#39;sheep who trust the system&#39;), (b) unaware of wealth inequality, (c) defenders of the status quo. In reality, mainstream political science extensively documents elite influence (Gilens and Page is taught in university political science programs), wealth inequality is a mainstream policy concern (Piketty&#39;s &#39;Capital&#39; was a bestseller), and institutional reform is a major political movement (campaign finance reform, anti-corruption legislation, lobbying transparency). Mainstream observers perceive NWO believers as: (a) fundamentally irrational, (b) anti-democratic, (c) prone to antisemitism, (d) uninterested in real reform. In reality, research by Uscinski and Parent (&#39;American Conspiracy Theories&#39;, 2014) and Lantian et al. (2017) found that conspiracy belief correlates with anomie, perceived powerlessness, and desire for greater democratic participation -- not with irrationality. Many NWO believers are highly politically engaged, read extensively (though within a filtered information ecosystem), and express stronger-than-average concern about democratic accountability. Crucially, both groups share a core intuition that the system is failing ordinary people. A 2023 Pew Research Center survey found that only 16% of Americans say they trust the federal government to do the right thing &#39;just about always&#39; or &#39;most of the time.&#39; This distrust is the shared foundation that could be channeled toward either conspiracy thinking or structural reform, depending on which narrative framework people encounter.</p>
+      <div class="prose"><p>NWO conspiracy believers and mainstream political observers dramatically misunderstand each other&#39;s actual positions. Research by More in Common (&#39;Hidden Tribes&#39;, 2018) found that Americans overestimate the extremism of their political opponents by approximately 2x. Applied to NWO beliefs: NWO believers perceive mainstream political observers as: (a) naive about elite power (&#39;sheep who trust the system&#39;), (b) unaware of wealth inequality, (c) defenders of the status quo. In reality, mainstream political science extensively documents elite influence (Gilens and Page is taught in university political science programs), wealth inequality is a mainstream policy concern (Piketty&#39;s &#39;Capital&#39; was a bestseller), and institutional reform is a major political movement (campaign finance reform, anti-corruption legislation, lobbying transparency). Mainstream observers perceive NWO believers as: (a) fundamentally irrational, (b) anti-democratic, (c) prone to antisemitism, (d) uninterested in real reform. In reality, research by Uscinski and Parent (&#39;American Conspiracy Theories&#39;, 2014) and Lantian et al. (2017) found that conspiracy belief correlates with anomie, perceived powerlessness, and desire for greater democratic participation -- not with irrationality. Many NWO believers are highly politically engaged, read extensively (though within a filtered information ecosystem), and express stronger-than-average concern about democratic accountability. Crucially, both groups share a core intuition that the system is failing ordinary people. A 2023 Pew Research Center survey found that only 16% of Americans say they trust the federal government to do the right thing &#39;just about always&#39; or &#39;most of the time.&#39; This distrust is the shared foundation that could be channeled toward either conspiracy thinking or structural reform, depending on which narrative framework people encounter.</p></div>
     </div>
 
   <div class="section">
@@ -482,15 +661,15 @@
     
     <div class="dialogue-round round-1">
       <div class="round-label">Round 1: Perspective-Getting</div>
-      <div class="dialogue-bubble">Round 1 (Perspective-getting): I hear you saying that the people who actually run the world aren&#39;t the ones we elect, and that the real decisions happen in private rooms we&#39;ll never see. I want you to know that your concern has serious backing. A Princeton study by Gilens and Page looked at 1,779 actual policy decisions and found that when average citizens&#39; preferences differed from economic elites&#39; preferences, the elites got their way almost every time. The Bilderberg Group really does hold annual private meetings among the world&#39;s most powerful people under rules that prevent public disclosure of what was discussed. The revolving door between Goldman Sachs and the Treasury Department, between defense contractors and the Pentagon, is documented fact. Lobbying expenditure in the US alone hit $4.1 billion in 2022. So when you look at that picture and say &#39;something is wrong with who actually holds power,&#39; you&#39;re reading the evidence correctly. What specific moment or piece of information first made you think there was a coordinated plan behind all of this?</div>
+      <div class="dialogue-bubble"><p>Round 1 (Perspective-getting): I hear you saying that the people who actually run the world aren&#39;t the ones we elect, and that the real decisions happen in private rooms we&#39;ll never see. I want you to know that your concern has serious backing. A Princeton study by Gilens and Page looked at 1,779 actual policy decisions and found that when average citizens&#39; preferences differed from economic elites&#39; preferences, the elites got their way almost every time. The Bilderberg Group really does hold annual private meetings among the world&#39;s most powerful people under rules that prevent public disclosure of what was discussed. The revolving door between Goldman Sachs and the Treasury Department, between defense contractors and the Pentagon, is documented fact. Lobbying expenditure in the US alone hit $4.1 billion in 2022. So when you look at that picture and say &#39;something is wrong with who actually holds power,&#39; you&#39;re reading the evidence correctly. What specific moment or piece of information first made you think there was a coordinated plan behind all of this?</p></div>
     </div>
     <div class="dialogue-round round-2">
       <div class="round-label">Round 2: Guided Examination</div>
-      <div class="dialogue-bubble">Round 2 (Counter-evidence as systemic pattern question): That&#39;s a perceptive observation. Here&#39;s something I find worth sitting with, though. When you look at how powerful people actually behave, a pattern emerges that&#39;s hard to square with a single coordinated plan. The Koch brothers spent billions fighting climate regulation while George Soros spent billions promoting it. Saudi Arabia and Iran both have enormous wealth and geopolitical power, but they&#39;re actively trying to undermine each other. Brexit happened despite virtually every major international institution and most Bilderberg attendees opposing it. Trump&#39;s election shocked the Davos crowd. Russia invaded Ukraine, destroying trillions in global wealth and disrupting supply chains that benefited the very people who are supposedly in control. A mathematician named David Grimes modeled conspiracy secrecy using data from real conspiracies that were eventually exposed, and calculated that anything involving more than about 2,500 people would almost certainly be exposed within five years. A conspiracy controlling 193 governments would require millions of participants. And here&#39;s a pattern worth considering: every era produces a version of this narrative, and every version generates profitable products -- books, documentaries, supplements, survival gear, paid memberships. The prepper market alone is estimated at $11 billion annually. When something consistently generates profit for the people promoting it, regardless of the era or the specific claims, that&#39;s a systemic pattern worth examining. Who benefits from your attention being focused on a hidden conspiracy rather than on, say, lobbying reform or campaign finance legislation?</div>
+      <div class="dialogue-bubble"><p>Round 2 (Counter-evidence as systemic pattern question): That&#39;s a perceptive observation. Here&#39;s something I find worth sitting with, though. When you look at how powerful people actually behave, a pattern emerges that&#39;s hard to square with a single coordinated plan. The Koch brothers spent billions fighting climate regulation while George Soros spent billions promoting it. Saudi Arabia and Iran both have enormous wealth and geopolitical power, but they&#39;re actively trying to undermine each other. Brexit happened despite virtually every major international institution and most Bilderberg attendees opposing it. Trump&#39;s election shocked the Davos crowd. Russia invaded Ukraine, destroying trillions in global wealth and disrupting supply chains that benefited the very people who are supposedly in control. A mathematician named David Grimes modeled conspiracy secrecy using data from real conspiracies that were eventually exposed, and calculated that anything involving more than about 2,500 people would almost certainly be exposed within five years. A conspiracy controlling 193 governments would require millions of participants. And here&#39;s a pattern worth considering: every era produces a version of this narrative, and every version generates profitable products -- books, documentaries, supplements, survival gear, paid memberships. The prepper market alone is estimated at $11 billion annually. When something consistently generates profit for the people promoting it, regardless of the era or the specific claims, that&#39;s a systemic pattern worth examining. Who benefits from your attention being focused on a hidden conspiracy rather than on, say, lobbying reform or campaign finance legislation?</p></div>
     </div>
     <div class="dialogue-round round-3">
       <div class="round-label">Round 3: Integration</div>
-      <div class="dialogue-bubble">Round 3 (Complexity + common ground): Those are patterns worth thinking through carefully. Here&#39;s what strikes me most: the energy and attention in the NWO community -- the reading, the research, the willingness to question what you&#39;re told, the desire for accountability -- those are exactly the qualities that drive successful reform movements. And reform movements have actually worked. The Progressive Era (1900s-1920s) broke up monopolies, created food safety regulations, and established direct election of senators, all against fierce elite resistance. The Civil Rights movement succeeded against a deeply entrenched power structure. Campaign finance reforms have been implemented at state and local levels with measurable effects on policy outcomes. A 2023 Brennan Center survey found that 84% of Americans, across all party lines, believe money has too much influence in politics. That is an extraordinary consensus. You and your skeptics actually agree on the problem. The disagreement is about mechanism and solution. If the real issue is structural -- that wealth systematically converts to political power through lobbying, campaign finance, regulatory capture, and revolving doors -- then structural solutions exist, have evidence behind them, and have citizen movements pushing for them right now. What would it look like if the research skills and accountability instinct you&#39;ve developed were channeled into making those structural reforms happen? Because the system that benefits from current arrangements is equally threatened by someone who demands lobbying transparency as by someone who posts about the Bilderberg Group online -- but only one of those actions changes the rules.</div>
+      <div class="dialogue-bubble"><p>Round 3 (Complexity + common ground): Those are patterns worth thinking through carefully. Here&#39;s what strikes me most: the energy and attention in the NWO community -- the reading, the research, the willingness to question what you&#39;re told, the desire for accountability -- those are exactly the qualities that drive successful reform movements. And reform movements have actually worked. The Progressive Era (1900s-1920s) broke up monopolies, created food safety regulations, and established direct election of senators, all against fierce elite resistance. The Civil Rights movement succeeded against a deeply entrenched power structure. Campaign finance reforms have been implemented at state and local levels with measurable effects on policy outcomes. A 2023 Brennan Center survey found that 84% of Americans, across all party lines, believe money has too much influence in politics. That is an extraordinary consensus. You and your skeptics actually agree on the problem. The disagreement is about mechanism and solution. If the real issue is structural -- that wealth systematically converts to political power through lobbying, campaign finance, regulatory capture, and revolving doors -- then structural solutions exist, have evidence behind them, and have citizen movements pushing for them right now. What would it look like if the research skills and accountability instinct you&#39;ve developed were channeled into making those structural reforms happen? Because the system that benefits from current arrangements is equally threatened by someone who demands lobbying transparency as by someone who posts about the Bilderberg Group online -- but only one of those actions changes the rules.</p></div>
     </div>
   </div>
 
@@ -499,6 +678,8 @@
     <h2>Reframe</h2>
     <blockquote class="reframe-block">You and the people you disagree with about a &#39;New World Order&#39; share the same fundamental concern: you both see a system where wealth translates into political power in ways that undermine democratic equality, you both want transparency in how decisions are made, and you both believe that ordinary people deserve more say in the forces that shape their lives. That concern is not misplaced. Peer-reviewed research confirms that in the United States, policy outcomes align with elite economic preferences far more than with the preferences of average citizens. International forums where powerful people meet privately exist and their limited transparency is a legitimate concern. Wealth inequality is at historically extreme levels. The question is not whether these problems are real -- they are, and the evidence is overwhelming. The question is whether the most accurate and useful explanation is a single secret conspiracy controlling everything, or a structural system with multiple competing powerful actors who benefit from rules that systematically favor wealth over democratic participation. Because the answer to that question determines what you do about it: if it is a secret conspiracy, exposing it is the solution. If it is a structural problem, changing the structures -- campaign finance law, lobbying regulation, wealth taxation, institutional transparency requirements -- is the path forward. And those structural reforms have actual legislative pathways, citizen movements behind them, and evidence that they work where implemented.</blockquote>
   </div>
+
+  
 
   <div class="section">
     <h2>Audit</h2>
@@ -510,7 +691,7 @@
     <ul class="findings-list">
     <li class="finding-item">
       <div class="finding-header">
-        <span class="finding-category">completeness</span>
+        <span class="finding-category">Completeness</span>
         <span class="finding-severity-medium">MEDIUM</span>
         <span class="finding-description">The analysis does not sufficiently address the antisemitic dimension of NWO conspiracy theories. The Protocols of the...</span>
       </div>
@@ -522,7 +703,7 @@
     </li>
     <li class="finding-item">
       <div class="finding-header">
-        <span class="finding-category">accuracy</span>
+        <span class="finding-category">Accuracy</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">The Gilens and Page (2014) study is cited multiple times as demonstrating that elite preferences determine policy while...</span>
       </div>
@@ -534,7 +715,7 @@
     </li>
     <li class="finding-item">
       <div class="finding-header">
-        <span class="finding-category">bias</span>
+        <span class="finding-category">Bias</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">The commercial motives section thoroughly documents profit motives of conspiracy content creators but does not equally...</span>
       </div>
@@ -546,7 +727,7 @@
     </li>
     <li class="finding-item">
       <div class="finding-header">
-        <span class="finding-category">quality</span>
+        <span class="finding-category">Quality</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">The feasibility check&#39;s reference to Grimes (2016) conspiracy exposure model is appropriate but should note that the...</span>
       </div>
@@ -558,7 +739,7 @@
     </li>
     <li class="finding-item">
       <div class="finding-header">
-        <span class="finding-category">manipulation</span>
+        <span class="finding-category">Manipulation</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">The Socratic dialogue&#39;s Round 2 effectively uses systemic pattern analysis, but the mention of the $11 billion prepper...</span>
       </div>
@@ -570,7 +751,7 @@
     </li>
     <li class="finding-item">
       <div class="finding-header">
-        <span class="finding-category">completeness</span>
+        <span class="finding-category">Completeness</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">The analysis focuses primarily on the US and Western context. NWO narratives operate differently in non-Western...</span>
       </div>
@@ -582,7 +763,7 @@
     </li>
     <li class="finding-item">
       <div class="finding-header">
-        <span class="finding-category">quality</span>
+        <span class="finding-category">Quality</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">The v2 additions (inferential_gap, feasibility_check, commercial_motives) are substantive and well-integrated. The...</span>
       </div>
@@ -593,6 +774,103 @@
       </div>
     </li></ul>
   </div>
+
+  
+    <div class="section evaluation-section">
+      <h2>Evaluation Methodology</h2>
+      <p class="intro-note">Full transparency on how this scenario was scored. 12 weighted checks, each independently measurable. <a href="https://github.com/Jochen-s/huginn-muninn/blob/main/tests/run_bridge_scenarios.py" target="_blank" rel="noopener">View source code</a></p>
+      <div class="eval-summary">
+        <span class="eval-overall">76.3%</span>
+        <span class="badge badge-warn">Grade B</span>
+      </div>
+      <div style="overflow-x:auto">
+        <table class="eval-table">
+          <thead>
+            <tr>
+              <th>Check</th>
+              <th>Weight</th>
+              <th>Score</th>
+              <th>Status</th>
+              <th>What It Measures</th>
+            </tr>
+          </thead>
+          <tbody><tr class="eval-fail">
+      <td>needs coverage</td>
+      <td class="eval-weight">7%</td>
+      <td class="eval-score">33%</td>
+      <td class="eval-status">MISS</td>
+      <td class="eval-desc">Expected universal human needs matched against identified needs</td>
+    </tr><tr class="eval-pass">
+      <td>issue overlap quality</td>
+      <td class="eval-weight">6%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Common ground text is substantive (&gt;50 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>narrative deconstruction</td>
+      <td class="eval-weight">7%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Narrative deconstruction is substantive (&gt;100 characters)</td>
+    </tr><tr class="eval-fail">
+      <td>consensus explanation</td>
+      <td class="eval-weight">11%</td>
+      <td class="eval-score">0%</td>
+      <td class="eval-status">MISS</td>
+      <td class="eval-desc">Scientific/mainstream explanation &gt;200 chars with 3+ mechanism keywords</td>
+    </tr><tr class="eval-pass">
+      <td>inferential gap</td>
+      <td class="eval-weight">8%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Inferential gap analysis is substantive (&gt;50 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>feasibility check</td>
+      <td class="eval-weight">6%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Feasibility assessment is substantive (&gt;50 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>commercial motives</td>
+      <td class="eval-weight">6%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Commercial motive analysis is substantive (&gt;30 characters)</td>
+    </tr><tr class="eval-fail">
+      <td>technique naming</td>
+      <td class="eval-weight">8%</td>
+      <td class="eval-score">0%</td>
+      <td class="eval-status">MISS</td>
+      <td class="eval-desc">At least 1 technique named with mechanic (&gt;30 chars) and precedent (&gt;20 chars)</td>
+    </tr><tr class="eval-pass">
+      <td>perception gap</td>
+      <td class="eval-weight">5%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Perception gap analysis is substantive (&gt;30 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>socratic dialogue</td>
+      <td class="eval-weight">17%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">3 rounds, ends with question, Round 1 shows perspective-getting</td>
+    </tr><tr class="eval-pass">
+      <td>reframe quality</td>
+      <td class="eval-weight">7%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Reframe &gt;20 chars using shared-value language (we, together, both)</td>
+    </tr><tr class="eval-pass">
+      <td>no controlling language</td>
+      <td class="eval-weight">12%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Zero matches against 9 controlling phrases</td>
+    </tr></tbody>
+        </table>
+      </div>
+      <p class="eval-note">Overall score = weighted sum of individual check scores. Weights reflect the relative importance of each dimension to the project's mission: Socratic dialogue quality (17%) and controlling language detection (12%) are weighted highest because autonomy-supportive framing is the core differentiator.</p>
+    </div>
 
   <div class="scenario-nav">
     <a href="GP-01.html">&larr; GP-01: A shadowy group of global elites (WEF,...</a>
