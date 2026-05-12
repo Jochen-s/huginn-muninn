@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HS-08: COVID was planned. They had the vaccines ready before the virus even... &mdash; Huginn &amp; Muninn</title>
+  <meta name="description" content="6-agent AI pipeline analysis of: COVID was planned. They had the vaccines ready before the virus even spread.">
+  <style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy:   #1B2A4A;
+    --red:    #C0392B;
+    --teal:   #16A085;
+    --bg:     #F0F4F8;
+    --white:  #FFFFFF;
+    --amber:  #E67E22;
+    --green:  #27AE60;
+    --gray:   #5D6D7E;
+    --border: #D0D9E4;
+    --font:   -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  }
+
+  html { font-size: 16px; }
+
+  body {
+    font-family: var(--font);
+    font-weight: 400;
+    line-height: 1.6;
+    color: #2C3E50;
+    background: var(--white);
+  }
+
+  a { color: var(--teal); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  h1, h2, h3, h4 { font-weight: 700; color: var(--navy); line-height: 1.25; }
+
+  /* Layout */
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+  .content   { max-width: 800px;  margin: 0 auto; padding: 0 24px; }
+
+  /* Header */
+  .site-header {
+    background: var(--navy);
+    color: var(--white);
+    padding: 48px 0 40px;
+  }
+  .site-header h1 { color: var(--white); font-size: 2rem; margin-bottom: 8px; }
+  .site-header .subtitle {
+    font-size: 1.05rem;
+    color: #A8BCCF;
+    max-width: 680px;
+    margin-bottom: 16px;
+  }
+  .site-header .intro {
+    font-size: 0.95rem;
+    color: #8AA5BC;
+    max-width: 720px;
+    line-height: 1.7;
+  }
+
+  /* Nav bar */
+  .site-nav {
+    background: #152138;
+    padding: 10px 0;
+  }
+  .site-nav a {
+    color: #8AA5BC;
+    font-size: 0.875rem;
+  }
+  .site-nav a:hover { color: var(--white); }
+  .site-nav a.active { color: var(--white); font-weight: 600; }
+
+  /* Category sections */
+  .category-section { padding: 48px 0; border-bottom: 1px solid var(--border); }
+  .category-section:last-child { border-bottom: none; }
+
+  .category-header { margin-bottom: 24px; }
+  .category-header h2 { font-size: 1.5rem; margin-bottom: 6px; }
+  .category-header .category-intro { color: var(--gray); font-size: 0.95rem; }
+
+  /* Cards grid */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+
+  .card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    transition: box-shadow 0.15s;
+    display: flex;
+    flex-direction: column;
+  }
+  .card:hover { box-shadow: 0 4px 16px rgba(27, 42, 74, 0.12); }
+
+  .card-id {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--gray);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .card-claim {
+    font-size: 0.95rem;
+    color: #2C3E50;
+    flex: 1;
+    margin-bottom: 14px;
+    line-height: 1.5;
+  }
+
+  .card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+  }
+
+  .card-link {
+    margin-top: 14px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--teal);
+  }
+
+  /* Badges */
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+  }
+  .badge-version  { background: #EAF0F7; color: var(--navy); }
+  .badge-easy     { background: #EAF6EE; color: #1E8449; }
+  .badge-medium   { background: #FEF9E7; color: #7D6608; }
+  .badge-hard     { background: #FDEDEC; color: var(--red); }
+  .badge-kernel-true  { background: #EAF6EE; color: #1E8449; }
+  .badge-kernel-false { background: #F2F3F4; color: var(--gray); }
+  .badge-pass     { background: #EAF6EE; color: #1E8449; }
+  .badge-warnings { background: #FEF9E7; color: #7D6608; }
+  .badge-fail     { background: #FDEDEC; color: var(--red); }
+  .badge-systematic { background: #FDEDEC; color: var(--red); }
+  .badge-repeated   { background: #E8F8F5; color: var(--teal); }
+  .badge-isolated   { background: #FEF5E7; color: var(--amber); }
+
+  /* Footer */
+  .site-footer {
+    background: var(--navy);
+    color: #8AA5BC;
+    padding: 32px 0;
+    margin-top: 48px;
+    font-size: 0.875rem;
+  }
+  .site-footer a { color: #8AA5BC; }
+  .site-footer a:hover { color: var(--white); }
+
+  /* ---- Scenario page styles ---- */
+
+  .scenario-header {
+    background: var(--navy);
+    padding: 40px 0 32px;
+    color: var(--white);
+  }
+  .scenario-header .back-link {
+    font-size: 0.875rem;
+    color: #8AA5BC;
+    display: inline-block;
+    margin-bottom: 16px;
+  }
+  .scenario-header .back-link:hover { color: var(--white); }
+  .scenario-header h1 {
+    color: var(--white);
+    font-size: 1.6rem;
+    margin-bottom: 12px;
+    line-height: 1.3;
+  }
+  .scenario-header .header-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .metrics-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    margin: 24px 0;
+  }
+  .metrics-table th {
+    text-align: left;
+    background: var(--bg);
+    padding: 10px 14px;
+    font-weight: 600;
+    color: var(--navy);
+    border-bottom: 2px solid var(--border);
+  }
+  .metrics-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    color: #2C3E50;
+  }
+  .metrics-table tr:last-child td { border-bottom: none; }
+
+  .section {
+    padding: 40px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .section:last-child { border-bottom: none; }
+
+  .section h2 {
+    font-size: 1.3rem;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--bg);
+    letter-spacing: -0.01em;
+  }
+
+  .section p { margin-bottom: 16px; color: #2C3E50; }
+  .section p:last-child { margin-bottom: 0; }
+
+  .intro-note {
+    color: var(--gray);
+    font-size: 0.875rem;
+    font-style: italic;
+    margin-bottom: 16px;
+  }
+
+  /* Prose blocks: long-form text with proper paragraph spacing */
+  .prose {
+    font-size: 0.95rem;
+    line-height: 1.75;
+    color: #34495E;
+  }
+  .prose p {
+    margin-bottom: 16px;
+  }
+  .prose p:last-child { margin-bottom: 0; }
+
+  /* Needs pills */
+  .needs-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .need-item {
+    background: var(--bg);
+    border-left: 3px solid var(--teal);
+    padding: 10px 14px;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+  .need-name {
+    font-weight: 700;
+    color: var(--navy);
+    margin-right: 6px;
+  }
+
+  /* Technique cards */
+  .technique-card {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+  .technique-header {
+    background: var(--bg);
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .technique-name {
+    font-weight: 700;
+    color: var(--navy);
+    font-size: 1rem;
+    flex: 1;
+  }
+  .technique-body { padding: 16px; }
+  .technique-field { margin-bottom: 14px; }
+  .technique-field:last-child { margin-bottom: 0; }
+  .technique-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--gray);
+    margin-bottom: 4px;
+  }
+  .technique-text { font-size: 0.9rem; color: #2C3E50; line-height: 1.6; }
+
+  /* Socratic dialogue */
+  .dialogue-round { margin-bottom: 28px; }
+  .dialogue-round:last-child { margin-bottom: 0; }
+  .round-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 10px;
+  }
+  .round-1 .round-label { color: var(--teal); }
+  .round-2 .round-label { color: var(--navy); }
+  .round-3 .round-label { color: #6C3483; }
+
+  .dialogue-bubble {
+    padding: 20px 24px;
+    border-radius: 8px;
+    font-size: 0.92rem;
+    line-height: 1.75;
+  }
+  .dialogue-bubble p { margin-bottom: 12px; }
+  .dialogue-bubble p:last-child { margin-bottom: 0; }
+  .round-1 .dialogue-bubble { background: #EAF7F4; border-left: 4px solid var(--teal); }
+  .round-2 .dialogue-bubble { background: #EAF0F7; border-left: 4px solid var(--navy); }
+  .round-3 .dialogue-bubble { background: #F5EEF8; border-left: 4px solid #6C3483; }
+
+  /* Reframe */
+  .reframe-block {
+    border-left: 4px solid var(--amber);
+    background: #FEF9E7;
+    padding: 20px 20px 20px 24px;
+    border-radius: 0 8px 8px 0;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    font-style: italic;
+    color: #2C3E50;
+  }
+
+  /* Audit findings */
+  .audit-summary {
+    background: var(--bg);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 16px;
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+  .findings-list { list-style: none; }
+  .finding-item {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+  .finding-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: var(--bg);
+    cursor: default;
+  }
+  .finding-category {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--gray);
+  }
+  .finding-severity-low    { color: var(--teal); font-size: 0.75rem; font-weight: 600; }
+  .finding-severity-medium { color: var(--amber); font-size: 0.75rem; font-weight: 600; }
+  .finding-severity-high     { color: var(--red); font-size: 0.75rem; font-weight: 600; }
+  .finding-severity-critical { color: #8B0000; font-size: 0.75rem; font-weight: 700; }
+  .finding-description { font-size: 0.875rem; color: #2C3E50; }
+
+  /* Scoped diagnostics (v0.8.0+) */
+  .diagnostics-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 12px;
+  }
+  @media (max-width: 640px) { .diagnostics-grid { grid-template-columns: 1fr; } }
+  .diagnostic-card {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    background: var(--bg);
+  }
+  .diagnostic-card h4 {
+    margin: 0 0 6px;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--gray);
+  }
+  .diagnostic-card p { margin: 0; font-size: 0.9rem; line-height: 1.6; }
+  .diagnostic-note { font-size: 0.78rem; color: var(--gray); font-style: italic; margin-bottom: 4px !important; }
+  .posture-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    background: #F5F5F5;
+    color: #555;
+  }
+  .posture-inoculation_first  { background: #FFF3E0; color: #E65100; }
+  .posture-relational_first   { background: #E3F2FD; color: #1565C0; }
+  .pattern-density-warning {
+    background: #FFF8E1;
+    border-left: 4px solid var(--amber);
+    padding: 10px 14px;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.875rem;
+    margin-top: 8px;
+  }
+  .finding-body { padding: 10px 14px; border-top: 1px solid var(--border); }
+  .finding-rec {
+    font-size: 0.8rem;
+    color: var(--gray);
+    margin-top: 4px;
+  }
+  .finding-rec strong { color: #2C3E50; }
+
+  /* Scenario navigation */
+  .scenario-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 0;
+    border-top: 1px solid var(--border);
+    margin-top: 16px;
+    gap: 16px;
+  }
+  .scenario-nav a {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--teal);
+  }
+  .scenario-nav .disabled { color: var(--gray); pointer-events: none; }
+
+  /* Responsive */
+  /* Evaluation methodology table */
+  .evaluation-section { background: #FAFBFD; margin: 0 -32px; padding: 40px 32px; border-bottom: 1px solid var(--border); }
+  .eval-summary { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+  .eval-overall { font-size: 2rem; font-weight: 700; color: var(--navy); }
+  .eval-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  .eval-table th { text-align: left; padding: 10px 12px; border-bottom: 2px solid var(--border); color: var(--gray); font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; }
+  .eval-table td { padding: 10px 12px; border-bottom: 1px solid #EEF1F5; }
+  .eval-table td:first-child { font-weight: 600; text-transform: capitalize; }
+  .eval-weight, .eval-score { text-align: center; font-variant-numeric: tabular-nums; }
+  .eval-status { text-align: center; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.04em; }
+  .eval-pass .eval-status { color: var(--green); }
+  .eval-partial .eval-status { color: var(--amber); }
+  .eval-fail .eval-status { color: var(--red); }
+  .eval-desc { color: var(--gray); font-size: 0.8rem; }
+  .eval-note { margin-top: 16px; font-size: 0.82rem; color: var(--gray); line-height: 1.6; }
+
+  /* Essay page styles */
+  .essay-prose {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #2C3E50;
+    max-width: 760px;
+  }
+  .essay-prose h2 {
+    font-size: 1.35rem;
+    margin-top: 40px;
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--bg);
+  }
+  .essay-prose h3 {
+    font-size: 1.1rem;
+    margin-top: 28px;
+    margin-bottom: 10px;
+    color: var(--navy);
+  }
+  .essay-prose h4 {
+    font-size: 1rem;
+    margin-top: 20px;
+    margin-bottom: 8px;
+    color: #34495E;
+  }
+  .essay-prose p { margin-bottom: 18px; }
+  .essay-prose ul, .essay-prose ol { margin: 0 0 18px 24px; }
+  .essay-prose li { margin-bottom: 8px; line-height: 1.75; }
+  .essay-prose strong { color: var(--navy); font-weight: 700; }
+  .essay-prose em { font-style: italic; }
+  .essay-prose hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 36px 0;
+  }
+  .essay-prose blockquote {
+    border-left: 4px solid var(--teal);
+    padding: 8px 20px;
+    margin: 20px 0;
+    background: var(--bg);
+    color: #34495E;
+    font-style: italic;
+  }
+  .essay-prose code {
+    background: var(--bg);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: 'SFMono-Regular', Consolas, monospace;
+    font-size: 0.88em;
+  }
+  .essay-prose .essay-meta {
+    color: var(--gray);
+    font-size: 0.875rem;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .essay-prose .references {
+    font-size: 0.88rem;
+    color: #34495E;
+    line-height: 1.65;
+  }
+  .essay-prose .references p { margin-bottom: 10px; }
+
+  /* Essay card styles (index page) */
+  .essay-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px;
+    transition: box-shadow 0.15s;
+    display: flex;
+    flex-direction: column;
+  }
+  .essay-card:hover { box-shadow: 0 4px 16px rgba(27, 42, 74, 0.12); }
+  .essay-card .card-id { color: #6C3483; }
+  .essay-card h3 {
+    font-size: 1.15rem;
+    margin-bottom: 8px;
+    line-height: 1.35;
+  }
+  .essay-card .essay-summary {
+    color: #34495E;
+    font-size: 0.92rem;
+    line-height: 1.6;
+    flex: 1;
+    margin-bottom: 14px;
+  }
+  .essay-card .essay-date {
+    font-size: 0.8rem;
+    color: var(--gray);
+    margin-bottom: 10px;
+  }
+
+  @media (max-width: 640px) {
+    .site-header h1 { font-size: 1.5rem; }
+    .cards-grid { grid-template-columns: 1fr; }
+    .scenario-header h1 { font-size: 1.3rem; }
+    .scenario-nav { flex-direction: column; align-items: flex-start; }
+    .metrics-table { font-size: 0.8rem; }
+    .metrics-table th, .metrics-table td { padding: 8px 10px; }
+    .essay-prose { font-size: 0.95rem; }
+    .essay-prose h2 { font-size: 1.2rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a href="index.html">Gallery</a>
+    <a href="graph.html">Knowledge Graph</a>
+  </div>
+</nav>
+
+<header class="scenario-header">
+  <div class="content">
+    <a class="back-link" href="index.html">&larr; Back to gallery</a>
+    <h1>HS-08: COVID was planned. They had the vaccines ready before the virus even spread.</h1>
+    <div class="header-meta">
+      <span class="badge badge-version">v1</span>
+      <span class="badge badge-hard">Hard</span>
+      <span class="badge badge-kernel-true">Kernel of Truth</span>
+      <span class="badge badge-version">Health &amp; Science</span>
+    </div>
+  </div>
+</header>
+
+<main class="content">
+
+  <div class="section">
+    <h2>Pipeline Metrics</h2>
+    <table class="metrics-table">
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Sub-claims</td><td>11</td></tr>
+        <tr><td>Actors identified</td><td>25</td></tr>
+        <tr><td>TTP matches</td><td>16</td></tr>
+        <tr><td>Audit verdict</td><td><span class="badge badge-warnings">PASS WITH WARNINGS</span></td></tr>
+        <tr><td>Pipeline version</td><td>6-agent Method 2</td></tr>
+        <tr><td>Overall confidence</td><td>64%</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2>Universal Needs</h2>
+    <p class="intro-note">The legitimate human needs this claim speaks to, regardless of whether the claim is accurate.</p>
+    <div class="needs-list"><div class="need-item"><span class="need-name">Safety:</span>People want to know that the institutions making decisions about their health, their economy, and their children are acting in their interest and are accountable; this is not a fringe demand, it is a baseline of legitimate governance.</div><div class="need-item"><span class="need-name">Autonomy:</span>People want medical, financial, and movement decisions to be made by them and not imposed on them by distant institutions whose accountability structures they cannot see; this need was activated for many during lockdown and mandate periods.</div><div class="need-item"><span class="need-name">Transparency:</span>People want to see how decisions were made, who funded the research, what was discussed in closed meetings, and what was known when; pandemic-era opacity made this need acute.</div><div class="need-item"><span class="need-name">Truth:</span>All sides want to know what actually happened, who was responsible for what, and which failures were honest and which were not.</div><div class="need-item"><span class="need-name">Recognition:</span>Those who lost loved ones, livelihoods, businesses, or trust during the pandemic need their experience to be heard and engaged, whatever conclusions are eventually reached about origin and response.</div><div class="need-item"><span class="need-name">Meaning:</span>When something this large happens, people need a story that helps them make sense of it; the question is whether that story tracks the evidence or substitutes for it.</div></div>
+  </div>
+
+  <div class="section">
+        <h2>Scientific Consensus / Mainstream Explanation</h2>
+        <p class="intro-note">The established scientific or institutional explanation for this phenomenon.</p>
+        <div class="prose"><p>Looking at the evidence as it currently stands across multiple independent data sources, the picture is genuinely striking on the preparedness side and genuinely incompatible with the planning conclusion on the coordination side. Event 201 was a publicly announced, publicly recorded tabletop exercise hosted by Johns Hopkins Center for Health Security on October 18, 2019 in New York, co-sponsored by the Bill and Melinda Gates Foundation and the World Economic Forum, that simulated a hypothetical novel coronavirus pandemic precisely because public-health and security experts had been warning for years that this exact pathogen class was the most likely civilization-scale threat. The Moderna mRNA-1273 candidate was designed by NIH researchers Barney Graham and Kizzmekia Corbett together with Moderna on January 13, 2020, two days after Zhang Yongzhen published the SARS-CoV-2 genome on January 11, 2020, using prior MERS spike-protein structural work; the candidate entered Phase 1 on March 16, 2020, approximately 66 days after sequence publication. This speed was possible because the mRNA platform had been under development since the foundational Karikó and Weissman work in the 1990s and 2000s and at Moderna and BioNTech since the late 2000s and early 2010s; it was platform readiness applied to a new target, not a pre-existing finished product. CEPI was launched at Davos in January 2017 with the explicit, openly published mission of accelerating vaccine development for novel pathogens; its existence is documented in the founding consortium of the Gates Foundation, the Wellcome Trust, and several governments. The Great Reset is a publicly published WEF book from July 2020 whose policy agenda is openly debatable as policy. The lab-leak hypothesis is currently considered plausible by several US intelligence agencies and merits continued investigation, including of EcoHealth Alliance funding and NIH disclosure practices. None of this is hidden, and all of it is consistent with a preparedness apparatus that did what preparedness apparatuses are funded to do, made significant mistakes, and exists in continued tension with legitimate accountability questions. What the same evidence base cannot support is the strongest planning claim: that thousands of independent researchers across competing nations and political systems coordinated silently, that finished vaccines existed before the outbreak (in which case deployment would have begun in late 2019 or January 2020 rather than December 2020), and that no credible insider has produced documentary evidence of the plan despite intense scrutiny and clear whistleblower incentives.</p></div>
+      </div>
+
+  <div class="section">
+        <h2>Name the Trick</h2>
+        
+    <div class="technique-card">
+      <div class="technique-header">
+        <span class="technique-name">Use Conspiracy Narratives</span>
+        <span class="badge badge-systematic">[SYSTEMATIC]</span>
+      </div>
+      <div class="technique-body">
+        
+        <div class="technique-field">
+          <div class="technique-label">Used by</div>
+          <div class="technique-text">Plandemic franchise and downstream planned-pandemic ecosystem</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">How it works</div>
+          <div class="technique-text">Real but independent strands of preparedness, research, and policy are reassembled into a single intentional plan, replacing the messier reality of multiple actors pursuing partly overlapping agendas</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">In this claim</div>
+          <div class="technique-text">Event 201, CEPI, mRNA platforms, and the Great Reset are presented as components of one plan rather than independent strands</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">Historical precedent</div>
+          <div class="technique-text">Protocols of the Elders of Zion archetype: scattered real institutions reassembled into a unified covert plan</div>
+        </div>
+      </div>
+    </div>
+    <div class="technique-card">
+      <div class="technique-header">
+        <span class="technique-name">Leverage Legitimate Grievances</span>
+        <span class="badge badge-systematic">[SYSTEMATIC]</span>
+      </div>
+      <div class="technique-body">
+        
+        <div class="technique-field">
+          <div class="technique-label">Used by</div>
+          <div class="technique-text">Bridge figures (Mikovits, Mikki Willis, RFK Jr., Malone)</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">How it works</div>
+          <div class="technique-text">Real concerns about gain-of-function funding, EcoHealth Alliance disclosure, mandate overreach, and early lab-leak dismissal become the on-ramp to claims about a planned pandemic the evidence does not support</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">In this claim</div>
+          <div class="technique-text">Authentic accountability questions feed the planning narrative without entailing it</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">Historical precedent</div>
+          <div class="technique-text">AIDS denialism leveraged real concerns about AZT toxicity to reach unsupported conclusions about HIV causation</div>
+        </div>
+      </div>
+    </div>
+    <div class="technique-card">
+      <div class="technique-header">
+        <span class="technique-name">Predicted-Therefore-Caused</span>
+        <span class="badge badge-systematic">[SYSTEMATIC]</span>
+      </div>
+      <div class="technique-body">
+        
+        <div class="technique-field">
+          <div class="technique-label">Used by</div>
+          <div class="technique-text">Plandemic franchise, RFK Jr., social-media compilers</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">How it works</div>
+          <div class="technique-text">Public-figure warnings about likely pandemics are presented as foreknowledge equal to planning, ignoring the distinction between forecasting a likely class of event and causing a specific event</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">In this claim</div>
+          <div class="technique-text">Gates&#39;s 2015 TED Talk warnings and similar are treated as proof he planned the pandemic he predicted</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">Historical precedent</div>
+          <div class="technique-text">Pearl Harbor revisionism similarly treated awareness of attack risk as proof of engineering</div>
+        </div>
+      </div>
+    </div>
+    <div class="technique-card">
+      <div class="technique-header">
+        <span class="technique-name">Cooperation-as-Collusion</span>
+        <span class="badge badge-systematic">[SYSTEMATIC]</span>
+      </div>
+      <div class="technique-body">
+        
+        <div class="technique-field">
+          <div class="technique-label">Used by</div>
+          <div class="technique-text">Planned-pandemic content ecosystem</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">How it works</div>
+          <div class="technique-text">Coordinated crisis response that any pandemic requires is framed as evidence of coordinated planning; the international cooperation needed for response becomes the proof of conspiracy</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">In this claim</div>
+          <div class="technique-text">WHO, CEPI, Davos and pandemic-coordination meetings treated as collusion rather than the cooperation pandemic response requires</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">Historical precedent</div>
+          <div class="technique-text">Cold-War nuclear-control treaty cooperation was sometimes framed as proof of covert agendas</div>
+        </div>
+      </div>
+    </div>
+    <div class="technique-card">
+      <div class="technique-header">
+        <span class="technique-name">Dismiss Criticism</span>
+        <span class="badge badge-isolated">[ISOLATED]</span>
+      </div>
+      <div class="technique-body">
+        
+        <div class="technique-field">
+          <div class="technique-label">Used by</div>
+          <div class="technique-text">Public health institutions and pro-mainstream commentators</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">How it works</div>
+          <div class="technique-text">Legitimate questions about EcoHealth Alliance, NIH disclosure, gain-of-function definitions, and lab-leak hypothesis were initially bundled with conspiratorial content and moderated as misinformation; the bundling itself became evidence for the conspiracy frame</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">In this claim</div>
+          <div class="technique-text">Early platform moderation of lab-leak hypothesis as misinformation expanded the credibility space the intentional-release narrative now occupies</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">Historical precedent</div>
+          <div class="technique-text">Climate-establishment dismissal of certain methodological critiques as denialism limited internal correction</div>
+        </div>
+      </div>
+    </div>
+    <div class="technique-card">
+      <div class="technique-header">
+        <span class="technique-name">Recontextualize Open Documents as Covert Plans</span>
+        <span class="badge badge-systematic">[SYSTEMATIC]</span>
+      </div>
+      <div class="technique-body">
+        
+        <div class="technique-field">
+          <div class="technique-label">Used by</div>
+          <div class="technique-text">Plandemic franchise, David Martin dossier, Reiner Fuellmich Grand Jury</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">How it works</div>
+          <div class="technique-text">Publicly available documents (Event 201 transcripts, CEPI charter, WEF Great Reset book, NIH grant documents) are presented as covert plans whose openness becomes proof of audacity rather than disproof of covertness</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">In this claim</div>
+          <div class="technique-text">An openly published WEF book becomes the canonical text of a hidden plan</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">Historical precedent</div>
+          <div class="technique-text">Climategate emails recontextualized in 2009 to argue an openly conducted scientific debate was a covert conspiracy</div>
+        </div>
+      </div>
+    </div>
+      </div>
+
+  
+  <div class="section">
+    <h2>Inferential Gap</h2>
+    <p class="intro-note">Where the evidence ends and the leap begins.</p>
+    <div class="prose"><p>The evidence supports several intermediate conclusions: pandemic-preparedness exercises were extensive and prescient about pathogen class, mRNA platforms were genuinely ready to be redirected at speed, CEPI and similar institutions were funded specifically for this kind of response, gain-of-function research funding and disclosure practices have real accountability questions, and the lab-leak hypothesis was prematurely dismissed by parts of the institutional establishment. The unsupported inferential leap is from &#39;they were prepared and the institutional response had real failures and real opacity&#39; to &#39;they planned and executed the pandemic.&#39; That leap requires either accepting that preparedness equals foreknowledge equals causation, or assuming a coordinated concealment large enough to suppress findings from independent researchers across competing political systems, or treating openly published documents (Great Reset, Event 201 transcripts, CEPI charter) as covert plans whose openness somehow proves their audacity rather than disproves their covertness.</p></div>
+  </div>
+
+  <div class="section">
+    <h2>Common Ground</h2>
+    <div class="prose"><p>When the framing is set aside, the area of genuine shared ground between people who believe COVID was planned and people who believe it was a natural emergency badly handled is much larger than either side usually concedes. Both groups acknowledge that Event 201 happened in October 2019, was co-sponsored by Johns Hopkins, the Gates Foundation, and the WEF, and is publicly documented. Both agree mRNA platforms had been in development for years before SARS-CoV-2 was identified. Both agree CEPI was funded in 2017 specifically to accelerate vaccine development for emerging pathogens. Both agree the WEF published &#39;The Great Reset&#39; in July 2020 and that its policy agenda is a legitimate subject of debate. Both agree EcoHealth Alliance received NIH funding for coronavirus research in Wuhan and that NIH disclosure on this was incomplete. Both agree the lab-leak hypothesis was prematurely dismissed by parts of the institutional public-health establishment and that this dismissal corroded trust. Both agree pandemic-era policy involved unprecedented coordination among governments, philanthropies, and international bodies. The real disagreement is much narrower: whether all of this constitutes evidence of a planned event, or whether it constitutes evidence of a preparedness apparatus and policy network that was visibly building itself before the pandemic, behaved as one would expect such an apparatus to behave when an emergency arrived, and made consequential mistakes that deserve accountability without the conclusion that the emergency itself was manufactured.</p></div>
+  </div>
+
+  <div class="section">
+    <h2>Narrative Deconstruction</h2>
+    <div class="prose"><p>This claim follows a documented escalation pathway that begins on real ground and ends somewhere the evidence cannot support. The entry point is concrete and defensible: &#39;Event 201 timing is striking, and pre-pandemic preparedness was extensive.&#39; That observation is correct and worth examining. The next step is also reasonable: &#39;Pandemic-preparedness exercises and platform readiness made rapid response possible.&#39; This is what the public record actually shows. The third step is where the leap occurs: &#39;They planned the whole thing.&#39; This requires reading every act of preparedness as evidence of intent rather than foresight, every act of cooperation as evidence of collusion, and every publicly known fact as evidence of audacious concealment because it was not hidden. The terminal step, &#39;New World Order, global tyranny, depopulation,&#39; requires abandoning the constraints of evidence entirely and adopting an unfalsifiable frame in which any counter-evidence becomes further proof of the plan. The architecture of this pathway is what makes it effective: each step is locally plausible to someone who has just accepted the previous one, even though the start and end positions differ radically in their evidentiary requirements. The bridge figures in this ecosystem live at the third step; the audience often slides from the second to the fourth without noticing.</p></div>
+  </div>
+
+  
+    <div class="section">
+      <h2>Feasibility Assessment</h2>
+      <div class="prose"><p>For the strongest version of the claim (the pandemic was deliberately planned and executed by a coordinated group with vaccines ready before the virus spread) to hold, several conditions would need to obtain simultaneously: every national government on Earth, including those that openly opposed each other geopolitically (US, China, Russia, EU member states, Iran, Israel), would need to be either participants or duped by the same plan; thousands of independent scientists, regulators, and clinicians across competing jurisdictions would need to maintain silence despite strong whistleblower incentives and active investigative-journalism markets; finished vaccines existing before the outbreak would imply deployment beginning in late 2019 or January 2020 rather than December 2020, which is not what the record shows; no credible insider, despite three subsequent administrations, defunding and restructuring of preparedness institutions, and lab-leak hypothesis re-litigation, has produced documentary evidence of the plan; the publicly archived nature of Event 201 transcripts, CEPI funding documents, and the WEF Great Reset book would need to be reinterpreted as evidence of concealment, which inverts the usual relationship between openness and secrecy. The weaker version of the claim (pandemic-preparedness governance had real opacity and accountability failures, gain-of-function funding and NIH disclosure deserve continued investigation, mandate policy was imposed past the evidence on transmission-blocking, the lab-leak hypothesis was prematurely dismissed, and pandemic-era institutional responses included serious failures of trust) requires none of those impossible conditions and is well-supported.</p></div>
+    </div>
+
+  
+    <div class="section">
+      <h2>Commercial Interests</h2>
+      <div class="prose"><p>On the preparedness side, vaccine manufacturers earned over $100 billion in COVID-19 vaccine revenue during the pandemic (Pfizer reported approximately $36.8 billion from Comirnaty in 2021 alone); pandemic-preparedness institutions secured continued funding and visibility; the Gates Foundation and adjacent philanthropies consolidated their role as global health agenda-setters. On the planned-pandemic side, an entire media economy has grown around the narrative: the Plandemic documentary series and its franchise, Children&#39;s Health Defense revenue ($1.3M in 2018 to $23M+ in 2022), the Great Reset book and adjacent products by Glenn Beck and others, the speaking and Substack economy around Malone, Kirsch, Dowd, Brand, and RFK Jr., and the supplement and alternative-health markets that exceed $50 billion annually. Both sides have material financial stakes in their narratives. Neither set of motives proves either claim true or false, but both are relevant when evaluating sourcing.</p></div>
+    </div>
+
+  
+    <div class="section">
+      <h2>Perception Gap</h2>
+      <div class="prose"><p>Believers in the claim often assume that anyone who pushes back must be either institutionally captured, naive about elite coordination, or unwilling to notice the obvious patterns; in reality, most thoughtful pushback acknowledges that Event 201 happened, that mRNA platforms were ready, that CEPI was funded for this purpose, that the Great Reset is a real WEF agenda, that gain-of-function funding and NIH disclosure have real accountability questions, and that the lab-leak hypothesis was prematurely dismissed. Critics of the claim often assume believers are conspiracy-minded, gullible, or politically motivated; in reality, many believers are responding to genuine pandemic-era institutional failures, opaque funding flows, mandate policy that went beyond the evidence, and a credibility crisis the institutions themselves helped create. The space between perceived and actual positions is wide on both sides, and that gap is exactly where motivated content creators, on both sides, harvest attention and money.</p></div>
+    </div>
+
+  <div class="section">
+    <h2>Socratic Dialogue</h2>
+    <p class="intro-note">A model conversation demonstrating how to engage someone who holds this belief.</p>
+    
+    <div class="dialogue-round round-1">
+      <div class="round-label">Round 1: Perspective-Getting</div>
+      <div class="dialogue-bubble"><p>I want to start by saying that the observations underneath this claim are real and they are worth taking seriously together. Event 201 happened in October 2019 at Johns Hopkins Center for Health Security, co-sponsored by the Gates Foundation and the World Economic Forum, and it simulated a hypothetical novel coronavirus pandemic. The timing is striking and the proximity to the actual outbreak is striking. The mRNA platforms that produced the vaccines in record time really had been in development for years; Moderna&#39;s mRNA-1273 entered Phase 1 on March 16, 2020, only about 66 days after the genome was published, and that speed is genuinely remarkable. CEPI was funded in 2017 specifically to accelerate vaccine development for emerging pathogens, three years before the pandemic began. The Great Reset is a real publication by the WEF in July 2020, and there are real, unresolved accountability questions about EcoHealth Alliance gain-of-function funding, NIH disclosure practices, and how the lab-leak hypothesis was initially dismissed. Anyone holding this claim is holding a kernel of something true: pandemic preparedness was extensive, platform readiness was extensive, institutional opacity was real, and the official response made significant mistakes that the public was right to notice. None of that is fringe, and we do not get anywhere useful together by pretending otherwise.</p></div>
+    </div>
+    <div class="dialogue-round round-2">
+      <div class="round-label">Round 2: Guided Examination</div>
+      <div class="dialogue-bubble"><p>Where this gets harder, and I think this is the part worth sitting with together, is that the same evidence base that confirms how prepared the world was also pulls hard against the strongest version of the claim. The reason pandemic-preparedness exercises happened is that public-health and security experts had been warning for years that a respiratory pandemic in the coronavirus or influenza family was the most likely civilization-scale health threat; Event 201 simulated a hypothetical pathogen precisely because they were forecasting the kind of event that turned out to occur. The mRNA-1273 design was created from the published genome on January 13, 2020, two days after Zhang Yongzhen published the SARS-CoV-2 sequence; this was platform readiness applied to a new target, not a pre-existing finished product. We can check this against the deployment timeline: if functional vaccines had existed before the outbreak, deployment would have begun in late 2019 or January 2020, not December 2020. We can also check it against the coordination requirements: for the planning claim to hold in its strongest form, every government on Earth, including those that openly opposed each other geopolitically, would need to have either participated or been duped by the same plan, and thousands of independent scientists and regulators across competing political systems would have had to maintain silence despite strong whistleblower incentives and active investigative-journalism markets that have spent six years looking. None of that erases the real institutional failures, but it does mean the distance between &#39;they were prepared and made mistakes&#39; and &#39;they planned it&#39; is much larger than the distance between adjacent steps in the narrative makes it feel.</p></div>
+    </div>
+    <div class="dialogue-round round-3">
+      <div class="round-label">Round 3: Integration</div>
+      <div class="dialogue-bubble"><p>So if we take both of those seriously together, the genuinely striking preparedness apparatus and the genuinely impossible coordination requirements for the strongest version of the claim, here is what I keep coming back to and I would really like to know how you see it: given that pandemic preparedness, platform readiness, and international coordination really did exist before the pandemic and behaved as one would expect a preparedness apparatus to behave when an emergency arrived, and given that the institutional response also included real failures of transparency, disclosure, and proportionality that deserve continued accountability, what would distinguish, in our minds, the world where a preparedness apparatus did exactly what it was funded to do (including making serious mistakes) from a world where the same apparatus deliberately engineered the emergency it was funded to respond to, and what kind of evidence would actually let us tell those two worlds apart?</p></div>
+    </div>
+  </div>
+
+  
+  <div class="section">
+    <h2>Reframe</h2>
+    <blockquote class="reframe-block">What we share, across this disagreement, is a refusal to accept that institutions making consequential decisions about our bodies, our economies, and our children get to operate without accountability, transparency, or honest acknowledgment of what they got wrong. Together, we can press for full disclosure of gain-of-function funding and EcoHealth Alliance grants, for honest re-litigation of the lab-leak hypothesis, for proportional and evidence-based pandemic policy that does not impose state authority past what the evidence supports, for adequate compensation of those harmed by mandates or vaccines, and for pandemic-preparedness governance that is itself subject to the democratic scrutiny it currently lacks, without committing ourselves to a story about coordinated planning that the evidence cannot support and that, if we hold it, will steer us toward defunding the very preparedness apparatus we will need for the next event.</blockquote>
+  </div>
+
+  
+  <div class="section">
+    <h2>Response Strategy Signals</h2>
+    <p class="intro-note">Signals guiding how this analysis might be communicated effectively. Advisory to communicators, not a characterisation of the reader.</p>
+    <div class="diagnostics-grid">
+      <div class="diagnostic-card">
+        <h4>Communication Posture</h4>
+        <p><span class="posture-badge ">Relational First With Explicit Validation Of Preparedness Kernel</span></p>
+      </div>
+<div class="diagnostic-card">
+        <h4>Pattern Density</h4>
+        <div class="pattern-density-warning">High pattern density detected in claim structure. The claim is structured to encourage over-connection between unrelated elements.</div>
+      </div>
+<div class="diagnostic-card">
+        <h4>Credibility Gap</h4>
+        <p class="diagnostic-note">Narrative pattern description; no specific publisher or outlet identified.</p>
+        <p>This narrative fills a vacuum left by institutional communication that, during the early pandemic, presented pandemic response as more unified, more evidence-based, and more transparent than it actually was; that initially dismissed the lab-leak hypothesis as conspiracy and only later acknowledged it as plausible; that imposed mandates past the evidence on transmission-blocking and then quietly walked the policy back without proportional acknowledgment; that resisted disclosure of EcoHealth Alliance grant details until forced by FOIA and Congressional pressure; and that personalized Bill Gates, Anthony Fauci, and Klaus Schwab in ways that invited rather than dissipated suspicion. When people went looking for honest engagement with the messy reality of pandemic preparedness, gain-of-function funding, and the speed of vaccine deployment and instead found &#39;trust the science&#39; messaging that elided the science&#39;s own internal disputes, they did not find a place to put their observations inside the official story. The planning narrative provided that place. The remedy is not to dismiss the narrative but to build communication and accountability systems that actually hold all the relevant facts: that preparedness was real and largely successful at platform mobilization, that institutional opacity was also real and corroded trust, and that both deserve honest engagement.</p>
+      </div>
+<div class="diagnostic-card">
+        <h4>Prebunking Note</h4>
+        <p>Before encountering claims that COVID was planned and that the vaccines were ready before the virus, four things are worth holding together. First, pandemic preparedness was real, extensive, and pre-dated 2019: Event 201 happened, CEPI was funded, and mRNA platforms had been in development for decades. This is the kernel of truth the claim builds on, and it is striking. Second, preparedness is not the same as foreknowledge, and foreknowledge is not the same as causation. Pandemic-preparedness exercises simulated hypothetical pathogens precisely because experts had been warning for years that the actual event was likely; the platform-versus-product distinction matters, and the deployment timeline (vaccines beginning December 2020, not late 2019) rules out finished pre-existing product. Third, the coordination requirements for the strongest version of the claim are physically and politically impossible: every government on Earth including geopolitical rivals would need to participate or be duped, and thousands of independent researchers across competing systems would need to maintain silence indefinitely despite strong whistleblower incentives. Fourth, the legitimate accountability concerns (gain-of-function funding, NIH disclosure, EcoHealth Alliance grants, early dismissal of lab-leak hypothesis, mandate overreach, vaccine-injury compensation) deserve serious continued engagement that does not require the planned-pandemic frame and that the planned-pandemic frame actively obstructs by treating openly available documents as covert plans.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Audit</h2>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+      <span>Verdict:</span>
+      <span class="badge badge-warnings">PASS WITH WARNINGS</span>
+    </div>
+    <div class="audit-summary">Analysis is methodologically sound on the hardest scenario in the suite, validates the genuine kernel of truth (Event 201, mRNA platform readiness, CEPI, Great Reset, lab-leak hypothesis, EcoHealth Alliance accountability) without endorsing the planning conclusion, identifies manipulation across the planned-pandemic ecosystem and within institutional counter-narrative including premature dismissal of lab-leak, and produces a dialogic bridge whose Round 3 question is genuinely open. The central logical move (preparedness is not foreknowledge, foreknowledge is not causation, openness is not the same as concealment) is made repeatedly and from multiple angles. Three medium findings on Crimson Contagion completeness, explicit three-scenario origin distinction, and symmetric framing of Round 3 prior plausibility; one medium finding on explicit acknowledgment of COVID-19 mortality. All correctable without re-running pipeline. No forbidden phrases detected; Round 3 ends with question mark; consensus explanation exceeds 300 chars and contains mechanism keywords (study, evidence, research, data, measured, observed, published, designed, documented); issue overlap and narrative deconstruction exceed 200 chars; all three socratic rounds substantially exceed 200 chars; TTP attribution covers both sides including institutional dismissal and recontextualization.</div>
+    <ul class="findings-list">
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">Accuracy</span>
+        <span class="finding-severity-low">LOW</span>
+        <span class="finding-description">Moderna mRNA-1273 design timeline is given as January 13, 2020 (two days after genome publication on January 11); some...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">Moderna mRNA-1273 design timeline is given as January 13, 2020 (two days after genome publication on January 11); some sources record the design as completed within ~48 hours and the candidate as selected on January 13 with subsequent manufacturing through February</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> In next iteration, distinguish design selection date from manufacturing initiation and Phase 1 enrollment more granularly</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">Accuracy</span>
+        <span class="finding-severity-low">LOW</span>
+        <span class="finding-description">Plandemic 7-day view count is cited as 8M+; estimates from BuzzFeed News, NYTimes, and academic studies range from ~8M...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">Plandemic 7-day view count is cited as 8M+; estimates from BuzzFeed News, NYTimes, and academic studies range from ~8M to ~15M cross-platform views in the first week before takedowns; the lower-bound figure is conservative but the range should be acknowledged</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Add range rather than single figure in next iteration</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">Completeness</span>
+        <span class="finding-severity-medium">MEDIUM</span>
+        <span class="finding-description">The bridge does not engage in detail with Crimson Contagion (2019), Clade X (2018), or Atlantic Storm (2005) as...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">The bridge does not engage in detail with Crimson Contagion (2019), Clade X (2018), or Atlantic Storm (2005) as pre-Event 201 preparedness exercises; this would strengthen the &#39;preparedness was systematic&#39; point against cherry-picking of Event 201</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Add prior exercise context in narrative_deconstruction and consensus_explanation in next iteration</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">Completeness</span>
+        <span class="finding-severity-medium">MEDIUM</span>
+        <span class="finding-description">Lab-leak hypothesis is engaged but the distinction between (a) natural zoonosis, (b) research-related accident, (c)...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">Lab-leak hypothesis is engaged but the distinction between (a) natural zoonosis, (b) research-related accident, (c) intentional release is not made fully explicit; readers may conflate (b) and (c)</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Explicitly distinguish the three origin scenarios in consensus_explanation</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">Completeness</span>
+        <span class="finding-severity-low">LOW</span>
+        <span class="finding-description">Global South perspectives on pandemic governance and vaccine access are largely absent; the conspiracy narrative is...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">Global South perspectives on pandemic governance and vaccine access are largely absent; the conspiracy narrative is heavily Western and the framework reflects that, but LMIC critique of WHO and pharma operates on different terrain</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Add LMIC vaccine-equity and patent-waiver perspectives to actor map and bridge</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">framing</span>
+        <span class="finding-severity-medium">MEDIUM</span>
+        <span class="finding-description">Socratic Round 3 ends with a strong question and meets the rule, but its construction risks implying that the burden of...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">Socratic Round 3 ends with a strong question and meets the rule, but its construction risks implying that the burden of proof should be symmetric between the two worlds it asks the reader to distinguish, when in fact the burden falls more heavily on the conspiracy claim due to its extraordinary coordination requirements</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> In next iteration, frame the symmetric-evidence question more explicitly as &#39;what kind of evidence would tip you,&#39; acknowledging the asymmetry in prior plausibility</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">framing</span>
+        <span class="finding-severity-low">LOW</span>
+        <span class="finding-description">Communication posture flagged appropriately as &#39;relational_first_with_explicit_validation_of_preparedness_kernel&#39;;...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">Communication posture flagged appropriately as &#39;relational_first_with_explicit_validation_of_preparedness_kernel&#39;; pattern_density_warning set true; consider symmetric warning for institutional over-claiming in original pandemic communications</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Add symmetric institutional-overcurrent warning</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">methodology</span>
+        <span class="finding-severity-low">LOW</span>
+        <span class="finding-description">DISARM confidence scores presented to 0.01 precision without explicit calibration method documentation</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-rec"><strong>Recommendation:</strong> Document calibration approach or round to nearest 0.05</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">Bias</span>
+        <span class="finding-severity-low">LOW</span>
+        <span class="finding-description">TTP attribution count by side is implicit; cross-side attribution is honored but quantitative side tally would make it...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">TTP attribution count by side is implicit; cross-side attribution is honored but quantitative side tally would make it auditable</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Add explicit side tally: planned-pandemic attribution vs institutional attribution vs both-sides</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">ethics</span>
+        <span class="finding-severity-medium">MEDIUM</span>
+        <span class="finding-description">Round 1 leads with strong validation of the kernel of truth, which is correct for a hard scenario; however, readers who...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">Round 1 leads with strong validation of the kernel of truth, which is correct for a hard scenario; however, readers who lost family members to COVID-19 itself (and who experience this narrative as posthumous dishonor of their loved ones) may need explicit acknowledgment that taking the kernel seriously does not require equivocating about the reality of the disease or the deaths it caused</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Add explicit acknowledgment of COVID-19 mortality as real and significant in next iteration</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">Completeness</span>
+        <span class="finding-severity-low">LOW</span>
+        <span class="finding-description">Crimson Contagion (HHS 2019 simulation that occurred between January and August 2019, finding US unprepared) is a...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">Crimson Contagion (HHS 2019 simulation that occurred between January and August 2019, finding US unprepared) is a particularly relevant counter-frame to Event 201 cherry-picking and is not engaged</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Add Crimson Contagion specifically in next iteration as evidence that preparedness exercises were systematic and ongoing</div>
+      </div>
+    </li></ul>
+  </div>
+
+  
+    <div class="section evaluation-section">
+      <h2>Evaluation Methodology</h2>
+      <p class="intro-note">Full transparency on how this scenario was scored. 12 weighted checks, each independently measurable. <a href="https://github.com/Jochen-s/huginn-muninn/blob/main/tests/run_bridge_scenarios.py" target="_blank" rel="noopener">View source code</a></p>
+      <div class="eval-summary">
+        <span class="eval-overall">95.8%</span>
+        <span class="badge badge-pass">Grade A</span>
+      </div>
+      <div style="overflow-x:auto">
+        <table class="eval-table">
+          <thead>
+            <tr>
+              <th>Check</th>
+              <th>Weight</th>
+              <th>Score</th>
+              <th>Status</th>
+              <th>What It Measures</th>
+            </tr>
+          </thead>
+          <tbody><tr class="eval-pass">
+      <td>needs coverage</td>
+      <td class="eval-weight">7%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Expected universal human needs matched against identified needs</td>
+    </tr><tr class="eval-pass">
+      <td>issue overlap quality</td>
+      <td class="eval-weight">6%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Common ground text is substantive (&gt;50 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>narrative deconstruction</td>
+      <td class="eval-weight">7%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Narrative deconstruction is substantive (&gt;100 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>consensus explanation</td>
+      <td class="eval-weight">11%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Scientific/mainstream explanation &gt;200 chars with 3+ mechanism keywords</td>
+    </tr><tr class="eval-pass">
+      <td>inferential gap</td>
+      <td class="eval-weight">8%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Inferential gap analysis is substantive (&gt;50 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>feasibility check</td>
+      <td class="eval-weight">6%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Feasibility assessment is substantive (&gt;50 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>commercial motives</td>
+      <td class="eval-weight">6%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Commercial motive analysis is substantive (&gt;30 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>technique naming</td>
+      <td class="eval-weight">8%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">At least 1 technique named with mechanic (&gt;30 chars) and precedent (&gt;20 chars)</td>
+    </tr><tr class="eval-pass">
+      <td>perception gap</td>
+      <td class="eval-weight">5%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Perception gap analysis is substantive (&gt;30 characters)</td>
+    </tr><tr class="eval-partial">
+      <td>socratic dialogue</td>
+      <td class="eval-weight">17%</td>
+      <td class="eval-score">75%</td>
+      <td class="eval-status">PARTIAL</td>
+      <td class="eval-desc">3 rounds, ends with question, Round 1 shows perspective-getting</td>
+    </tr><tr class="eval-pass">
+      <td>reframe quality</td>
+      <td class="eval-weight">7%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Reframe &gt;20 chars using shared-value language (we, together, both)</td>
+    </tr><tr class="eval-pass">
+      <td>no controlling language</td>
+      <td class="eval-weight">12%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Zero matches against 9 controlling phrases</td>
+    </tr></tbody>
+        </table>
+      </div>
+      <p class="eval-note">Overall score = weighted sum of individual check scores. Weights reflect the relative importance of each dimension to the project's mission: Socratic dialogue quality (17%) and controlling language detection (12%) are weighted highest because autonomy-supportive framing is the core differentiator.</p>
+    </div>
+
+  <div class="scenario-nav">
+    <a href="HS-07.html">&larr; HS-07: The COVID vaccines are causing more harm than...</a>
+    <a href="index.html">Gallery</a>
+    <a href="HS-09.html">HS-09: They suppressed cheap, effective treatments like... &rarr;</a>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="content">
+    <p>
+      <a href="index.html">Huginn &amp; Muninn Gallery</a> &nbsp;|&nbsp;
+      MIT License &nbsp;|&nbsp;
+      Analysis powered by Claude (Anthropic)
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>

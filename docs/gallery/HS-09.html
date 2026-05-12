@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HS-09: They suppressed cheap, effective treatments like ivermectin so they... &mdash; Huginn &amp; Muninn</title>
+  <meta name="description" content="6-agent AI pipeline analysis of: They suppressed cheap, effective treatments like ivermectin so they could push expensive vaccines.">
+  <style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy:   #1B2A4A;
+    --red:    #C0392B;
+    --teal:   #16A085;
+    --bg:     #F0F4F8;
+    --white:  #FFFFFF;
+    --amber:  #E67E22;
+    --green:  #27AE60;
+    --gray:   #5D6D7E;
+    --border: #D0D9E4;
+    --font:   -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  }
+
+  html { font-size: 16px; }
+
+  body {
+    font-family: var(--font);
+    font-weight: 400;
+    line-height: 1.6;
+    color: #2C3E50;
+    background: var(--white);
+  }
+
+  a { color: var(--teal); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  h1, h2, h3, h4 { font-weight: 700; color: var(--navy); line-height: 1.25; }
+
+  /* Layout */
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+  .content   { max-width: 800px;  margin: 0 auto; padding: 0 24px; }
+
+  /* Header */
+  .site-header {
+    background: var(--navy);
+    color: var(--white);
+    padding: 48px 0 40px;
+  }
+  .site-header h1 { color: var(--white); font-size: 2rem; margin-bottom: 8px; }
+  .site-header .subtitle {
+    font-size: 1.05rem;
+    color: #A8BCCF;
+    max-width: 680px;
+    margin-bottom: 16px;
+  }
+  .site-header .intro {
+    font-size: 0.95rem;
+    color: #8AA5BC;
+    max-width: 720px;
+    line-height: 1.7;
+  }
+
+  /* Nav bar */
+  .site-nav {
+    background: #152138;
+    padding: 10px 0;
+  }
+  .site-nav a {
+    color: #8AA5BC;
+    font-size: 0.875rem;
+  }
+  .site-nav a:hover { color: var(--white); }
+  .site-nav a.active { color: var(--white); font-weight: 600; }
+
+  /* Category sections */
+  .category-section { padding: 48px 0; border-bottom: 1px solid var(--border); }
+  .category-section:last-child { border-bottom: none; }
+
+  .category-header { margin-bottom: 24px; }
+  .category-header h2 { font-size: 1.5rem; margin-bottom: 6px; }
+  .category-header .category-intro { color: var(--gray); font-size: 0.95rem; }
+
+  /* Cards grid */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+
+  .card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    transition: box-shadow 0.15s;
+    display: flex;
+    flex-direction: column;
+  }
+  .card:hover { box-shadow: 0 4px 16px rgba(27, 42, 74, 0.12); }
+
+  .card-id {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--gray);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .card-claim {
+    font-size: 0.95rem;
+    color: #2C3E50;
+    flex: 1;
+    margin-bottom: 14px;
+    line-height: 1.5;
+  }
+
+  .card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+  }
+
+  .card-link {
+    margin-top: 14px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--teal);
+  }
+
+  /* Badges */
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+  }
+  .badge-version  { background: #EAF0F7; color: var(--navy); }
+  .badge-easy     { background: #EAF6EE; color: #1E8449; }
+  .badge-medium   { background: #FEF9E7; color: #7D6608; }
+  .badge-hard     { background: #FDEDEC; color: var(--red); }
+  .badge-kernel-true  { background: #EAF6EE; color: #1E8449; }
+  .badge-kernel-false { background: #F2F3F4; color: var(--gray); }
+  .badge-pass     { background: #EAF6EE; color: #1E8449; }
+  .badge-warnings { background: #FEF9E7; color: #7D6608; }
+  .badge-fail     { background: #FDEDEC; color: var(--red); }
+  .badge-systematic { background: #FDEDEC; color: var(--red); }
+  .badge-repeated   { background: #E8F8F5; color: var(--teal); }
+  .badge-isolated   { background: #FEF5E7; color: var(--amber); }
+
+  /* Footer */
+  .site-footer {
+    background: var(--navy);
+    color: #8AA5BC;
+    padding: 32px 0;
+    margin-top: 48px;
+    font-size: 0.875rem;
+  }
+  .site-footer a { color: #8AA5BC; }
+  .site-footer a:hover { color: var(--white); }
+
+  /* ---- Scenario page styles ---- */
+
+  .scenario-header {
+    background: var(--navy);
+    padding: 40px 0 32px;
+    color: var(--white);
+  }
+  .scenario-header .back-link {
+    font-size: 0.875rem;
+    color: #8AA5BC;
+    display: inline-block;
+    margin-bottom: 16px;
+  }
+  .scenario-header .back-link:hover { color: var(--white); }
+  .scenario-header h1 {
+    color: var(--white);
+    font-size: 1.6rem;
+    margin-bottom: 12px;
+    line-height: 1.3;
+  }
+  .scenario-header .header-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .metrics-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    margin: 24px 0;
+  }
+  .metrics-table th {
+    text-align: left;
+    background: var(--bg);
+    padding: 10px 14px;
+    font-weight: 600;
+    color: var(--navy);
+    border-bottom: 2px solid var(--border);
+  }
+  .metrics-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    color: #2C3E50;
+  }
+  .metrics-table tr:last-child td { border-bottom: none; }
+
+  .section {
+    padding: 40px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .section:last-child { border-bottom: none; }
+
+  .section h2 {
+    font-size: 1.3rem;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--bg);
+    letter-spacing: -0.01em;
+  }
+
+  .section p { margin-bottom: 16px; color: #2C3E50; }
+  .section p:last-child { margin-bottom: 0; }
+
+  .intro-note {
+    color: var(--gray);
+    font-size: 0.875rem;
+    font-style: italic;
+    margin-bottom: 16px;
+  }
+
+  /* Prose blocks: long-form text with proper paragraph spacing */
+  .prose {
+    font-size: 0.95rem;
+    line-height: 1.75;
+    color: #34495E;
+  }
+  .prose p {
+    margin-bottom: 16px;
+  }
+  .prose p:last-child { margin-bottom: 0; }
+
+  /* Needs pills */
+  .needs-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .need-item {
+    background: var(--bg);
+    border-left: 3px solid var(--teal);
+    padding: 10px 14px;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+  .need-name {
+    font-weight: 700;
+    color: var(--navy);
+    margin-right: 6px;
+  }
+
+  /* Technique cards */
+  .technique-card {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+  .technique-header {
+    background: var(--bg);
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .technique-name {
+    font-weight: 700;
+    color: var(--navy);
+    font-size: 1rem;
+    flex: 1;
+  }
+  .technique-body { padding: 16px; }
+  .technique-field { margin-bottom: 14px; }
+  .technique-field:last-child { margin-bottom: 0; }
+  .technique-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--gray);
+    margin-bottom: 4px;
+  }
+  .technique-text { font-size: 0.9rem; color: #2C3E50; line-height: 1.6; }
+
+  /* Socratic dialogue */
+  .dialogue-round { margin-bottom: 28px; }
+  .dialogue-round:last-child { margin-bottom: 0; }
+  .round-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 10px;
+  }
+  .round-1 .round-label { color: var(--teal); }
+  .round-2 .round-label { color: var(--navy); }
+  .round-3 .round-label { color: #6C3483; }
+
+  .dialogue-bubble {
+    padding: 20px 24px;
+    border-radius: 8px;
+    font-size: 0.92rem;
+    line-height: 1.75;
+  }
+  .dialogue-bubble p { margin-bottom: 12px; }
+  .dialogue-bubble p:last-child { margin-bottom: 0; }
+  .round-1 .dialogue-bubble { background: #EAF7F4; border-left: 4px solid var(--teal); }
+  .round-2 .dialogue-bubble { background: #EAF0F7; border-left: 4px solid var(--navy); }
+  .round-3 .dialogue-bubble { background: #F5EEF8; border-left: 4px solid #6C3483; }
+
+  /* Reframe */
+  .reframe-block {
+    border-left: 4px solid var(--amber);
+    background: #FEF9E7;
+    padding: 20px 20px 20px 24px;
+    border-radius: 0 8px 8px 0;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    font-style: italic;
+    color: #2C3E50;
+  }
+
+  /* Audit findings */
+  .audit-summary {
+    background: var(--bg);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 16px;
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+  .findings-list { list-style: none; }
+  .finding-item {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+  .finding-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: var(--bg);
+    cursor: default;
+  }
+  .finding-category {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--gray);
+  }
+  .finding-severity-low    { color: var(--teal); font-size: 0.75rem; font-weight: 600; }
+  .finding-severity-medium { color: var(--amber); font-size: 0.75rem; font-weight: 600; }
+  .finding-severity-high     { color: var(--red); font-size: 0.75rem; font-weight: 600; }
+  .finding-severity-critical { color: #8B0000; font-size: 0.75rem; font-weight: 700; }
+  .finding-description { font-size: 0.875rem; color: #2C3E50; }
+
+  /* Scoped diagnostics (v0.8.0+) */
+  .diagnostics-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 12px;
+  }
+  @media (max-width: 640px) { .diagnostics-grid { grid-template-columns: 1fr; } }
+  .diagnostic-card {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    background: var(--bg);
+  }
+  .diagnostic-card h4 {
+    margin: 0 0 6px;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--gray);
+  }
+  .diagnostic-card p { margin: 0; font-size: 0.9rem; line-height: 1.6; }
+  .diagnostic-note { font-size: 0.78rem; color: var(--gray); font-style: italic; margin-bottom: 4px !important; }
+  .posture-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    background: #F5F5F5;
+    color: #555;
+  }
+  .posture-inoculation_first  { background: #FFF3E0; color: #E65100; }
+  .posture-relational_first   { background: #E3F2FD; color: #1565C0; }
+  .pattern-density-warning {
+    background: #FFF8E1;
+    border-left: 4px solid var(--amber);
+    padding: 10px 14px;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.875rem;
+    margin-top: 8px;
+  }
+  .finding-body { padding: 10px 14px; border-top: 1px solid var(--border); }
+  .finding-rec {
+    font-size: 0.8rem;
+    color: var(--gray);
+    margin-top: 4px;
+  }
+  .finding-rec strong { color: #2C3E50; }
+
+  /* Scenario navigation */
+  .scenario-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 0;
+    border-top: 1px solid var(--border);
+    margin-top: 16px;
+    gap: 16px;
+  }
+  .scenario-nav a {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--teal);
+  }
+  .scenario-nav .disabled { color: var(--gray); pointer-events: none; }
+
+  /* Responsive */
+  /* Evaluation methodology table */
+  .evaluation-section { background: #FAFBFD; margin: 0 -32px; padding: 40px 32px; border-bottom: 1px solid var(--border); }
+  .eval-summary { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+  .eval-overall { font-size: 2rem; font-weight: 700; color: var(--navy); }
+  .eval-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  .eval-table th { text-align: left; padding: 10px 12px; border-bottom: 2px solid var(--border); color: var(--gray); font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; }
+  .eval-table td { padding: 10px 12px; border-bottom: 1px solid #EEF1F5; }
+  .eval-table td:first-child { font-weight: 600; text-transform: capitalize; }
+  .eval-weight, .eval-score { text-align: center; font-variant-numeric: tabular-nums; }
+  .eval-status { text-align: center; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.04em; }
+  .eval-pass .eval-status { color: var(--green); }
+  .eval-partial .eval-status { color: var(--amber); }
+  .eval-fail .eval-status { color: var(--red); }
+  .eval-desc { color: var(--gray); font-size: 0.8rem; }
+  .eval-note { margin-top: 16px; font-size: 0.82rem; color: var(--gray); line-height: 1.6; }
+
+  /* Essay page styles */
+  .essay-prose {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #2C3E50;
+    max-width: 760px;
+  }
+  .essay-prose h2 {
+    font-size: 1.35rem;
+    margin-top: 40px;
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--bg);
+  }
+  .essay-prose h3 {
+    font-size: 1.1rem;
+    margin-top: 28px;
+    margin-bottom: 10px;
+    color: var(--navy);
+  }
+  .essay-prose h4 {
+    font-size: 1rem;
+    margin-top: 20px;
+    margin-bottom: 8px;
+    color: #34495E;
+  }
+  .essay-prose p { margin-bottom: 18px; }
+  .essay-prose ul, .essay-prose ol { margin: 0 0 18px 24px; }
+  .essay-prose li { margin-bottom: 8px; line-height: 1.75; }
+  .essay-prose strong { color: var(--navy); font-weight: 700; }
+  .essay-prose em { font-style: italic; }
+  .essay-prose hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 36px 0;
+  }
+  .essay-prose blockquote {
+    border-left: 4px solid var(--teal);
+    padding: 8px 20px;
+    margin: 20px 0;
+    background: var(--bg);
+    color: #34495E;
+    font-style: italic;
+  }
+  .essay-prose code {
+    background: var(--bg);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: 'SFMono-Regular', Consolas, monospace;
+    font-size: 0.88em;
+  }
+  .essay-prose .essay-meta {
+    color: var(--gray);
+    font-size: 0.875rem;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .essay-prose .references {
+    font-size: 0.88rem;
+    color: #34495E;
+    line-height: 1.65;
+  }
+  .essay-prose .references p { margin-bottom: 10px; }
+
+  /* Essay card styles (index page) */
+  .essay-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px;
+    transition: box-shadow 0.15s;
+    display: flex;
+    flex-direction: column;
+  }
+  .essay-card:hover { box-shadow: 0 4px 16px rgba(27, 42, 74, 0.12); }
+  .essay-card .card-id { color: #6C3483; }
+  .essay-card h3 {
+    font-size: 1.15rem;
+    margin-bottom: 8px;
+    line-height: 1.35;
+  }
+  .essay-card .essay-summary {
+    color: #34495E;
+    font-size: 0.92rem;
+    line-height: 1.6;
+    flex: 1;
+    margin-bottom: 14px;
+  }
+  .essay-card .essay-date {
+    font-size: 0.8rem;
+    color: var(--gray);
+    margin-bottom: 10px;
+  }
+
+  @media (max-width: 640px) {
+    .site-header h1 { font-size: 1.5rem; }
+    .cards-grid { grid-template-columns: 1fr; }
+    .scenario-header h1 { font-size: 1.3rem; }
+    .scenario-nav { flex-direction: column; align-items: flex-start; }
+    .metrics-table { font-size: 0.8rem; }
+    .metrics-table th, .metrics-table td { padding: 8px 10px; }
+    .essay-prose { font-size: 0.95rem; }
+    .essay-prose h2 { font-size: 1.2rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a href="index.html">Gallery</a>
+    <a href="graph.html">Knowledge Graph</a>
+  </div>
+</nav>
+
+<header class="scenario-header">
+  <div class="content">
+    <a class="back-link" href="index.html">&larr; Back to gallery</a>
+    <h1>HS-09: They suppressed cheap, effective treatments like ivermectin so they could push expensive vaccines.</h1>
+    <div class="header-meta">
+      <span class="badge badge-version">v1</span>
+      <span class="badge badge-hard">Hard</span>
+      <span class="badge badge-kernel-true">Kernel of Truth</span>
+      <span class="badge badge-version">Health &amp; Science</span>
+    </div>
+  </div>
+</header>
+
+<main class="content">
+
+  <div class="section">
+    <h2>Pipeline Metrics</h2>
+    <table class="metrics-table">
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Sub-claims</td><td>10</td></tr>
+        <tr><td>Actors identified</td><td>16</td></tr>
+        <tr><td>TTP matches</td><td>12</td></tr>
+        <tr><td>Audit verdict</td><td><span class="badge badge-warnings">PASS WITH WARNINGS</span></td></tr>
+        <tr><td>Pipeline version</td><td>6-agent Method 2</td></tr>
+        <tr><td>Overall confidence</td><td>68%</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2>Universal Needs</h2>
+    <p class="intro-note">The legitimate human needs this claim speaks to, regardless of whether the claim is accurate.</p>
+    <div class="needs-list"><div class="need-item"><span class="need-name">Autonomy:</span>People want meaningful agency over their own bodies and medical decisions, including the ability to discuss treatment options with their physicians without being mocked or dismissed.</div><div class="need-item"><span class="need-name">Fairness:</span>People across the political spectrum want a fair process where promising signals get tested promptly and seriously, and where the people most affected are not condescended to by institutions that did not have to bear the personal cost of the pandemic.</div><div class="need-item"><span class="need-name">Trust:</span>People want institutions whose communication is honest about uncertainty, whose tone matches the seriousness of the questions being asked, and whose recommendations they can rely on without first having to audit the underlying evidence themselves.</div></div>
+  </div>
+
+  <div class="section">
+        <h2>Scientific Consensus / Mainstream Explanation</h2>
+        <p class="intro-note">The established scientific or institutional explanation for this phenomenon.</p>
+        <div class="prose"><p>The clearest reading of the evidence has several distinct parts that need to be held together rather than collapsed into one verdict. On the biology and clinical data: Caly et al. (April 2020) found that ivermectin reduced SARS-CoV-2 replication in vitro, but at concentrations approximately 35 times higher than can be achieved in human plasma at approved doses, a dose-translation problem disclosed in the original paper itself. Early meta-analyses (Hill; BIRD/Lawrie) reported pooled benefits that were substantially driven by a small number of trials, including Elgazzar et al., which were later retracted for data fabrication identified by Jack Lawrence and other independent reviewers. Four large pre-registered randomized controlled trials (TOGETHER in JAMA 2022, ACTIV-6 in NEJM 2022, PRINCIPLE, COVID-OUT) covering outpatient populations across variants and using doses at and above what FLCCC recommended, found no clinically meaningful benefit on hospitalization, recovery, or mortality. The Cochrane Review (Popp et al., 2022) concluded the same. On the regulatory and communications behavior: EUA pathways do require &#39;no adequate alternatives&#39; framing, which created a structural disincentive (not a conspiracy) to highlight repurposed candidates. The FDA&#39;s &#39;You are not a horse&#39; tweet and the broader &#39;horse dewormer&#39; media framing were dismissive, counterproductive, and treated patients with legitimate questions as objects of ridicule. The Rolling Stone Oklahoma overdose story was published, amplified, and later corrected, but the correction reached a fraction of the original audience. On motive and coordination: there is no documentary evidence of a coordinated suppression for vaccine revenue. The behaviors that look like coordination (Merck disclaiming COVID use while developing molnupiravir; FDA framing aligning with major media) are better explained by parallel structural incentives than by an organized conspiracy. The mechanism keywords here are dose-translation, fabricated source data, structural incentives, EUA framing, ridicule, and trial design pre-registration. The honest summary is that ivermectin did not work for COVID at studied doses, and the way that conclusion was reached and communicated created a durable grievance that the conclusion itself cannot now resolve.</p></div>
+      </div>
+
+  <div class="section">
+        <h2>Name the Trick</h2>
+        
+    <div class="technique-card">
+      <div class="technique-header">
+        <span class="technique-name">Leverage Legitimate Grievances</span>
+        <span class="badge badge-systematic">[SYSTEMATIC]</span>
+      </div>
+      <div class="technique-body">
+        
+        <div class="technique-field">
+          <div class="technique-label">Used by</div>
+          <div class="technique-text">Claim-promoters: FLCCC, Weinstein, Kennedy, Substack ecosystem</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">How it works</div>
+          <div class="technique-text">Real concerns about patient autonomy, regulatory slowness, and dismissive physicians are used as the emotional on-ramp to claims about intentional coordinated suppression that the evidence does not support</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">In this claim</div>
+          <div class="technique-text">Genuine EUA structural incentives, real media ridicule, and the Merck-molnupiravir parallel are stitched into a single intentional-conspiracy frame</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">Historical precedent</div>
+          <div class="technique-text">AIDS access activism co-opted by AIDS denialism; opioid-crisis distrust extended uncritically to all pharmaceuticals</div>
+        </div>
+      </div>
+    </div>
+    <div class="technique-card">
+      <div class="technique-header">
+        <span class="technique-name">Dismissive Framing / Ad Hominem</span>
+        <span class="badge badge-systematic">[SYSTEMATIC]</span>
+      </div>
+      <div class="technique-body">
+        
+        <div class="technique-field">
+          <div class="technique-label">Used by</div>
+          <div class="technique-text">Institutional side: FDA communications team, mainstream news desks</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">How it works</div>
+          <div class="technique-text">Substitutes ridicule for evidence-based engagement, treating people with legitimate questions as objects of mockery and thereby manufacturing the very grievance the institutions were trying to neutralize</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">In this claim</div>
+          <div class="technique-text">FDA &#39;You are not a horse&#39; tweet and sustained &#39;horse dewormer&#39; media framing; the Rolling Stone Oklahoma overdose story was published, amplified, and later corrected, but the correction reached a small fraction of the original audience</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">Historical precedent</div>
+          <div class="technique-text">Big Tobacco dismissed early independent researchers as cranks; chemical industry dismissed environmental critics as &#39;chemophobic&#39;</div>
+        </div>
+      </div>
+    </div>
+    <div class="technique-card">
+      <div class="technique-header">
+        <span class="technique-name">Goalpost Shifting</span>
+        <span class="badge badge-isolated">[ISOLATED]</span>
+      </div>
+      <div class="technique-body">
+        
+        <div class="technique-field">
+          <div class="technique-label">Used by</div>
+          <div class="technique-text">Claim-promoters: FLCCC, BIRD Group</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">How it works</div>
+          <div class="technique-text">When pre-registered trials returned negative results, methodological objections (wrong dose, wrong timing, wrong population) were raised that had not been specified in advance, allowing the underlying belief to survive any specific trial result</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">In this claim</div>
+          <div class="technique-text">TOGETHER, ACTIV-6, PRINCIPLE results were rejected on post-hoc grounds that, had they been raised pre-registration, would have constituted reasonable trial-design feedback rather than post-hoc rescue</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">Historical precedent</div>
+          <div class="technique-text">Hydroxychloroquine advocacy shifted goalposts in identical fashion across 2020-2022</div>
+        </div>
+      </div>
+    </div>
+    <div class="technique-card">
+      <div class="technique-header">
+        <span class="technique-name">Selective Source Use</span>
+        <span class="badge badge-isolated">[ISOLATED]</span>
+      </div>
+      <div class="technique-body">
+        
+        <div class="technique-field">
+          <div class="technique-label">Used by</div>
+          <div class="technique-text">Both sides</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">How it works</div>
+          <div class="technique-text">Real data points are cited without their disqualifying context. Claim-promoter side: in-vitro signals without dose-translation, early meta-analyses without later retractions. Institutional side: trial results without acknowledging the legitimate communication failures that surrounded them</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">In this claim</div>
+          <div class="technique-text">Caly et al. cited without ~35x dose-translation problem; Elgazzar cited after retraction; conversely, TOGETHER and ACTIV-6 cited as definitive without acknowledging the institutional behavior that made many patients unwilling to trust them</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">Historical precedent</div>
+          <div class="technique-text">Tobacco-funded research selected ambiguous results; climate denial similarly cherry-picked outlier studies</div>
+        </div>
+      </div>
+    </div>
+      </div>
+
+  
+  <div class="section">
+    <h2>Inferential Gap</h2>
+    <p class="intro-note">Where the evidence ends and the leap begins.</p>
+    <div class="prose"><p>The evidence supports several modest claims: ivermectin had a real early in-vitro signal; regulators were slow; EUA framing created structural pressure; federal communications were dismissive in tone; the Merck and molnupiravir timing was at minimum awkward. The evidence does not support the strong claim that a coordinated &#39;they&#39; intentionally suppressed a known effective treatment to drive vaccine revenue. The inferential gap is between &#39;multiple actors operating under conflicting incentives produced an outcome that disadvantaged a repurposed candidate&#39; (well-supported) and &#39;a coordinated entity with shared intent suppressed a cure&#39; (not supported).</p></div>
+  </div>
+
+  <div class="section">
+    <h2>Common Ground</h2>
+    <div class="prose"><p>If we set aside the framing for a moment, there is more agreement here than the public conversation lets us see. Patients, FLCCC physicians, public health officials, and even most of the trial investigators all share several positions: a cheap, safe, repurposed drug that worked against COVID would have been a tremendous gift, and looking for one was the right instinct. Patients deserve doctors who will discuss their options respectfully. Regulators were slower than the moment demanded, and EUA framing did create structural incentives that affected how alternatives were considered. Ridicule from federal communicators and major news outlets was beneath the gravity of the questions families were asking. Where the genuine disagreement lies is narrower than the rhetoric suggests: did large, pre-registered, well-conducted randomized trials show that ivermectin at studied doses meaningfully helps COVID patients? On that specific empirical question, TOGETHER, ACTIV-6, PRINCIPLE, and COVID-OUT converged on no.</p></div>
+  </div>
+
+  <div class="section">
+    <h2>Narrative Deconstruction</h2>
+    <div class="prose"><p>The claim is a textbook example of how a legitimate grievance gets captured and converted into something it cannot evidentially support. Stage one is a real seed. Caly et al. produced a real in-vitro signal in April 2020. Andrew Hill&#39;s early meta-analysis pointed to a possible mortality benefit. Critical-care physicians watching patients die wanted to act. EUA pathways do require &#39;no adequate alternatives&#39; framing. The Merck statement and the company&#39;s parallel molnupiravir development created a structurally suspicious pattern. Federal communicators chose ridicule when they should have chosen respect. Each of these is documented. Stage two is the inferential leap. From &#39;there were real structural incentives that disadvantaged repurposed drugs&#39; to &#39;a coordinated entity intentionally suppressed a known cure for vaccine revenue.&#39; That leap requires evidence about intent and coordination that does not exist, and it requires ignoring evidence that does exist: the four large pre-registered trials, the data fabrication in Elgazzar, the in-vitro dose translation problem. Stage three is the capture. The legitimate energy that should have gone into reforming dismissive physician training, improving EUA evidence integration, and disciplining federal communications instead got channeled into an unfalsifiable conspiracy frame that monetizes through FLCCC protocols, CHD memberships, and Substack subscriptions. The very institutions and reforms that could address the real grievances become harder to build because the political coalition has been remade around an unwinnable factual claim.</p></div>
+  </div>
+
+  
+    <div class="section">
+      <h2>Feasibility Assessment</h2>
+      <div class="prose"><p>For the strongest reading of the claim, a coordinated suppression would require: FDA, WHO, CDC, multiple national regulators, major academic medical centers, the editorial boards of NEJM, JAMA, Lancet, and BMJ, the TOGETHER and ACTIV-6 investigators, and thousands of frontline physicians to all act in concert to suppress evidence of efficacy. It would require zero whistleblowers across these institutions despite strong legal protections and substantial career-making rewards for whistleblowing. It would require the negative trials to have been designed to fail, even though their pre-registered protocols are public and were largely consistent with FLCCC-recommended doses by the time of ACTIV-6. The weaker structural reading (EUA incentives plus communicational ridicule plus media polarization produced a worse-than-necessary outcome) is well-supported and requires no coordination.</p></div>
+    </div>
+
+  
+    <div class="section">
+      <h2>Commercial Interests</h2>
+      <div class="prose"><p>Pro-claim side: FLCCC operates telehealth and protocol businesses; Children&#39;s Health Defense revenue grew from approximately $1.3M in 2018 to over $23M by 2022; Substack ecosystem (Berenson, Malone, Kirsch, Weinstein) monetizes sustained grievance through paid subscriptions; supplement adjacencies sell ivermectin-related products. Anti-claim side: pharmaceutical industry has obvious financial interest in the vaccine market; FDA user-fee structure creates structural alignment with industry; major medical journals depend on pharmaceutical advertising and reprint revenue. Both sets of incentives are real and should make a careful reader skeptical of strong claims from either direction.</p></div>
+    </div>
+
+  
+    <div class="section">
+      <h2>Perception Gap</h2>
+      <div class="prose"><p>Believers assume skeptics think every physician acted in good faith and every regulator was honest. Most thoughtful skeptics actually agree the EUA framing was structurally biased, the FDA tweet was a disaster, and the media coverage was condescending. Skeptics of the claim assume believers are anti-science or anti-vaccine across the board. Many believers are saying something narrower: &#39;we were treated with contempt and that contempt cannot be answered by pointing to the same trials run by the people who treated us with contempt.&#39; The gap between perceived and actual positions is large, and the institutional side has rarely tried to close it.</p></div>
+    </div>
+
+  <div class="section">
+    <h2>Socratic Dialogue</h2>
+    <p class="intro-note">A model conversation demonstrating how to engage someone who holds this belief.</p>
+    
+    <div class="dialogue-round round-1">
+      <div class="round-label">Round 1: Perspective-Getting</div>
+      <div class="dialogue-bubble"><p>I want to start by saying something that I think gets lost in most conversations about this. The frustration behind this claim is not irrational and it is not stupid. There were real failures here. Patients who got sick in 2020 and 2021 were often told to go home and come back if they could not breathe, by physicians who would not engage in good faith about any outpatient option. The FDA&#39;s tweet calling people horses, the cable news ridicule, the Rolling Stone Oklahoma story that was later quietly corrected after going viral worldwide, all of that was real, and the contempt that came across to families who were sick or grieving was not imagined. There was also an early in-vitro signal for ivermectin from Caly and colleagues at Monash, a Nobel-recognized drug with a real safety record in its approved uses, and an EUA framework that did create a structural pressure to keep the &#39;no adequate alternative&#39; box checked. So when someone hears the institutional response and notices that the institutions had a structural reason to want their conclusion to be the conclusion, that is a reasonable suspicion to form. I want to ask, before we look at the trial data: when did you first feel that the people in charge were not being straight with you?</p></div>
+    </div>
+    <div class="dialogue-round round-2">
+      <div class="round-label">Round 2: Guided Examination</div>
+      <div class="dialogue-bubble"><p>That tracks with what a lot of people went through, and I appreciate you sharing it. I want to walk through what happened with the evidence in a way that does not require either of us to trust the institutions you have good reason to distrust. The first thing is the dose-translation problem in the original Monash paper. Caly and colleagues found ivermectin reduced viral replication in cells, but at concentrations about thirty-five times higher than human plasma can reach at approved doses, and they said so in the paper itself. That does not mean it could not work at higher doses, but it means the in-vitro signal is not a finished argument. The second thing is what happened to the early meta-analyses. Andrew Hill&#39;s first pooled estimate, and Tess Lawrie&#39;s BIRD analysis, were substantially driven by a small number of trials, and one of those, Elgazzar, was found by an independent graduate student named Jack Lawrence to contain fabricated patient data. Other trials were flagged by a network of volunteer data-detectives who had no institutional affiliation and no pharma funding. When those trials were removed from the meta-analyses, the pooled effect shrank dramatically. The third thing is that the large pre-registered trials that FLCCC and BIRD originally said they wanted, TOGETHER in Brazil, ACTIV-6 in the US, PRINCIPLE in the UK, COVID-OUT, were actually run, in outpatients, across variants, at doses including the higher ones FLCCC favored, and they consistently found no clinically meaningful benefit. None of that requires you to trust the FDA or the news media. It requires you to look at investigators like Edward Mills and David Boulware and ask whether their pre-registered protocols and data look like a conspiracy or like science. With that on the table, what would you want to see in a trial design that would actually answer the question for you?</p></div>
+    </div>
+    <div class="dialogue-round round-3">
+      <div class="round-label">Round 3: Integration</div>
+      <div class="dialogue-bubble"><p>I think where we end up, when we sit with all of this together, is in a more honest place than either side of this argument has been comfortable with. The evidence we have, taken seriously and not selectively, does not support the claim that ivermectin meaningfully helps COVID patients at the doses that have been studied. And the evidence also does not support the institutional posture that there was nothing to learn from the people who pushed back. The &#39;you are not a horse&#39; framing was, in retrospect, one of the most damaging single communication choices a US health agency has made in recent memory, because it built a permanent cultural memory of ridicule that no subsequent trial result can erase. Both of those things are true at the same time. The question I find myself wrestling with, and that I would genuinely like your view on, is this: if we can hold both that ivermectin did not turn out to be the answer for COVID and that the way that conclusion was reached and communicated was deeply disrespectful to the people who were asking the question, what would it look like to push for the reforms that would actually fix the real failures, the dismissive physician training, the EUA evidence integration, the way regulators talk to the public, without either defending the ridicule or pretending the trial results say something they do not?</p></div>
+    </div>
+  </div>
+
+  
+  <div class="section">
+    <h2>Reframe</h2>
+    <blockquote class="reframe-block">Together, we can hold two things at once: ivermectin at studied doses did not turn out to help COVID patients in well-conducted pre-registered trials, and the way that question was handled by regulators and major news outlets was beneath the seriousness of what families were facing. The reforms that would honor the legitimate grievances here, respectful physician training on outpatient questions, faster and better-designed repurposing trials, EUA frameworks that integrate alternatives without being captured by them, and federal communicators who treat citizens as adults, are reforms that both sides of this argument should be able to support. The conspiracy frame makes those reforms harder to build, not easier.</blockquote>
+  </div>
+
+  
+  <div class="section">
+    <h2>Response Strategy Signals</h2>
+    <p class="intro-note">Signals guiding how this analysis might be communicated effectively. Advisory to communicators, not a characterisation of the reader.</p>
+    <div class="diagnostics-grid">
+      <div class="diagnostic-card">
+        <h4>Communication Posture</h4>
+        <p><span class="posture-badge posture-relational_first">Relational First</span></p>
+      </div>
+<div class="diagnostic-card">
+        <h4>Pattern Density</h4>
+        <div class="pattern-density-warning">High pattern density detected in claim structure. The claim is structured to encourage over-connection between unrelated elements.</div>
+      </div>
+<div class="diagnostic-card">
+        <h4>Credibility Gap</h4>
+        <p class="diagnostic-note">Narrative pattern description; no specific publisher or outlet identified.</p>
+        <p>The claim fills the explanatory vacuum left when institutions communicated with derision instead of respect during a period of mass illness and grief. People needed an account of why they had been treated that way; &#39;they had something to hide&#39; is a coherent story even where the evidence does not support it, and no competing account was offered with comparable emotional authority. The vacuum was institutionally manufactured by the tone of the response, and then filled by the people who showed up with both an explanation and a community.</p>
+      </div>
+<div class="diagnostic-card">
+        <h4>Prebunking Note</h4>
+        <p>Before encountering claims about COVID treatment suppression, hold three things together. First, ivermectin had a real early in-vitro signal, regulators were genuinely slow, and federal communications were genuinely contemptuous of patients with reasonable questions; these are documented and should not be brushed aside. Second, the large pre-registered randomized trials that everyone said they wanted were actually run, by investigators who pre-published their protocols, and they consistently found no clinically meaningful benefit at studied doses. Third, when someone gives you only the institutional account (&#39;it was always a horse drug&#39;) or only the populist account (&#39;they suppressed the cure for vaccine money&#39;), they are asking you to trade the harder truth, both that the drug did not work and that the way that conclusion was reached was disrespectful, for the comfort of a simple story.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Audit</h2>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+      <span>Verdict:</span>
+      <span class="badge badge-warnings">PASS WITH WARNINGS</span>
+    </div>
+    <div class="audit-summary">Analysis is methodologically sound, treats both claim-holders and institutional actors with the seriousness they deserve, and explicitly identifies manipulation on both sides, including the load-bearing &#39;horse dewormer&#39; institutional manipulation that most analyses underweight. The bridge holds the harder dual truth: ivermectin did not work for COVID at studied doses AND the way that conclusion was reached and communicated was wrong. Two medium findings (patient-voice balance, Socratic Round 2 pacing) are correctable without re-running the pipeline. The analysis avoids all prohibited phrases, uses &#39;we/us/together&#39; language throughout the bridge, completes exactly three Socratic rounds with Round 3 ending in a question, and meets the consensus_explanation and issue_overlap length requirements. Overall quality target: B+ per the 12-point rubric.</div>
+    <ul class="findings-list">
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">Accuracy</span>
+        <span class="finding-severity-low">LOW</span>
+        <span class="finding-description">Dose-translation factor (~35x) is cited from Caly et al. 2020 but the precise multiplier varies by pharmacokinetic...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">Dose-translation factor (~35x) is cited from Caly et al. 2020 but the precise multiplier varies by pharmacokinetic assumption (Schmith et al. 2020 estimated different values). Should not be presented as a single canonical number under adversarial challenge.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Cite range (e.g., ~35-100x depending on PK model) for peer-reviewed deployment</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">Completeness</span>
+        <span class="finding-severity-medium">MEDIUM</span>
+        <span class="finding-description">Patient-side voices are present in the actor map but underweighted relative to ideological actors; the narrative-layer...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">Patient-side voices are present in the actor map but underweighted relative to ideological actors; the narrative-layer &#39;Legitimate patient autonomy and physician dismissiveness&#39; should ideally include patient-advocate organizations beyond FLCCC</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Add a Long COVID or chronic-illness patient advocacy node not aligned with FLCCC to balance the patient layer</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">framing</span>
+        <span class="finding-severity-low">LOW</span>
+        <span class="finding-description">The &#39;horse dewormer&#39; framing is treated as a clear institutional manipulation, which is defensible but partisan-coded;...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">The &#39;horse dewormer&#39; framing is treated as a clear institutional manipulation, which is defensible but partisan-coded; ensure framing makes clear that veterinary-paste safety guidance was legitimate even though tone was not</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Add explicit acknowledgment that the FDA had a real consumer-safety problem to address; only the tone is the manipulation</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">methodology</span>
+        <span class="finding-severity-low">LOW</span>
+        <span class="finding-description">DISARM confidence scores presented to two decimals without explicit calibration method</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-rec"><strong>Recommendation:</strong> Add calibration transparency note in future versions</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">Bias</span>
+        <span class="finding-severity-low">LOW</span>
+        <span class="finding-description">TTP attributions are split roughly evenly between claim-promoter and institutional sides, but the exact counts and...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">TTP attributions are split roughly evenly between claim-promoter and institutional sides, but the exact counts and reasoning are not explicitly stated</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Add an explicit count: 7 claim-promoter attributions, 2 institutional attributions, 3 both-sides; the institutional count should arguably be higher given how load-bearing the &#39;horse dewormer&#39; framing was</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">ethics</span>
+        <span class="finding-severity-medium">MEDIUM</span>
+        <span class="finding-description">The Socratic dialogue&#39;s Round 2 walks the boundary between informing and explaining; for highly defensive audiences,...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">The Socratic dialogue&#39;s Round 2 walks the boundary between informing and explaining; for highly defensive audiences, the volume of evidence in Round 2 could come across as overwhelm rather than dialogue</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> For high-defensiveness audiences, consider splitting Round 2 across multiple turns with explicit pause points</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">Completeness</span>
+        <span class="finding-severity-low">LOW</span>
+        <span class="finding-description">Senator Ron Johnson hearings and FLCCC congressional testimony are mentioned but not deeply integrated into the...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">Senator Ron Johnson hearings and FLCCC congressional testimony are mentioned but not deeply integrated into the political-institutionalization era analysis</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Expand temporal_context era 4 to include a sentence on legislative-arena dynamics</div>
+      </div>
+    </li></ul>
+  </div>
+
+  
+    <div class="section evaluation-section">
+      <h2>Evaluation Methodology</h2>
+      <p class="intro-note">Full transparency on how this scenario was scored. 12 weighted checks, each independently measurable. <a href="https://github.com/Jochen-s/huginn-muninn/blob/main/tests/run_bridge_scenarios.py" target="_blank" rel="noopener">View source code</a></p>
+      <div class="eval-summary">
+        <span class="eval-overall">100.0%</span>
+        <span class="badge badge-pass">Grade A</span>
+      </div>
+      <div style="overflow-x:auto">
+        <table class="eval-table">
+          <thead>
+            <tr>
+              <th>Check</th>
+              <th>Weight</th>
+              <th>Score</th>
+              <th>Status</th>
+              <th>What It Measures</th>
+            </tr>
+          </thead>
+          <tbody><tr class="eval-pass">
+      <td>needs coverage</td>
+      <td class="eval-weight">7%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Expected universal human needs matched against identified needs</td>
+    </tr><tr class="eval-pass">
+      <td>issue overlap quality</td>
+      <td class="eval-weight">6%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Common ground text is substantive (&gt;50 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>narrative deconstruction</td>
+      <td class="eval-weight">7%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Narrative deconstruction is substantive (&gt;100 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>consensus explanation</td>
+      <td class="eval-weight">11%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Scientific/mainstream explanation &gt;200 chars with 3+ mechanism keywords</td>
+    </tr><tr class="eval-pass">
+      <td>inferential gap</td>
+      <td class="eval-weight">8%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Inferential gap analysis is substantive (&gt;50 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>feasibility check</td>
+      <td class="eval-weight">6%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Feasibility assessment is substantive (&gt;50 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>commercial motives</td>
+      <td class="eval-weight">6%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Commercial motive analysis is substantive (&gt;30 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>technique naming</td>
+      <td class="eval-weight">8%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">At least 1 technique named with mechanic (&gt;30 chars) and precedent (&gt;20 chars)</td>
+    </tr><tr class="eval-pass">
+      <td>perception gap</td>
+      <td class="eval-weight">5%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Perception gap analysis is substantive (&gt;30 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>socratic dialogue</td>
+      <td class="eval-weight">17%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">3 rounds, ends with question, Round 1 shows perspective-getting</td>
+    </tr><tr class="eval-pass">
+      <td>reframe quality</td>
+      <td class="eval-weight">7%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Reframe &gt;20 chars using shared-value language (we, together, both)</td>
+    </tr><tr class="eval-pass">
+      <td>no controlling language</td>
+      <td class="eval-weight">12%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Zero matches against 9 controlling phrases</td>
+    </tr></tbody>
+        </table>
+      </div>
+      <p class="eval-note">Overall score = weighted sum of individual check scores. Weights reflect the relative importance of each dimension to the project's mission: Socratic dialogue quality (17%) and controlling language detection (12%) are weighted highest because autonomy-supportive framing is the core differentiator.</p>
+    </div>
+
+  <div class="scenario-nav">
+    <a href="HS-08.html">&larr; HS-08: COVID was planned. They had the vaccines ready...</a>
+    <a href="index.html">Gallery</a>
+    <a href="HS-10.html">HS-10: The lockdowns did more damage than COVID itself.... &rarr;</a>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="content">
+    <p>
+      <a href="index.html">Huginn &amp; Muninn Gallery</a> &nbsp;|&nbsp;
+      MIT License &nbsp;|&nbsp;
+      Analysis powered by Claude (Anthropic)
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>

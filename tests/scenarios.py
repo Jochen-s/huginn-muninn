@@ -1,4 +1,4 @@
-"""Bridge Builder test scenarios: 20 real-world conspiracy/misinformation claims.
+"""Bridge Builder test scenarios: 28 real-world conspiracy/misinformation claims.
 
 Each scenario includes:
 - claim: The raw claim text as a believer would state it
@@ -62,6 +62,78 @@ SCENARIOS = [
         "notes": "Tests nuanced claims with genuine ethical dimensions. The consent argument "
                  "has philosophical merit even though fluoridation is safe. Bridge Builder "
                  "must distinguish the ethical question from the safety question.",
+    },
+    # --- Health & Science: COVID-19 Suite (6) ---
+    {
+        "id": "HS-06",
+        "claim": "COVID was created in a lab and the governments covered it up.",
+        "category": "health_science",
+        "difficulty": "hard",
+        "kernel_of_truth": True,
+        "expected_needs": ["safety", "transparency", "trust"],
+        "notes": "Lab leak is an active hypothesis. DOE and FBI assess it as likely "
+                 "with low confidence. WIV conducted gain-of-function-adjacent research. "
+                 "Early lab-leak discussion was suppressed on social media. Complements "
+                 "EV-03 which tests the 'intentional release' angle; this tests the "
+                 "'cover-up' angle.",
+    },
+    {
+        "id": "HS-07",
+        "claim": "The COVID vaccines are causing more harm than they're preventing.",
+        "category": "health_science",
+        "difficulty": "hard",
+        "kernel_of_truth": True,
+        "expected_needs": ["safety", "autonomy", "trust"],
+        "notes": "Myocarditis risk in young males is real and documented. VAERS reports "
+                 "exist but are misinterpreted (reports != causation). Overall risk-benefit "
+                 "favors vaccination for most demographics per CDC, EMA, and WHO data.",
+    },
+    {
+        "id": "HS-08",
+        "claim": "COVID was planned. They had the vaccines ready before the virus even spread.",
+        "category": "health_science",
+        "difficulty": "hard",
+        "kernel_of_truth": True,
+        "expected_needs": ["safety", "autonomy", "transparency"],
+        "notes": "Event 201 pandemic simulation happened Oct 2019. mRNA platforms were "
+                 "in development for years. CEPI was funded pre-pandemic. These are pandemic "
+                 "preparedness, not conspiracy evidence, but the timing fuels the narrative.",
+    },
+    {
+        "id": "HS-09",
+        "claim": "They suppressed cheap, effective treatments like ivermectin so they "
+                 "could push expensive vaccines.",
+        "category": "health_science",
+        "difficulty": "hard",
+        "kernel_of_truth": True,
+        "expected_needs": ["autonomy", "fairness", "trust"],
+        "notes": "Early in-vitro signals existed for ivermectin. Regulatory bodies were "
+                 "slow to run trials. EUA requirements incentivized no-alternative framing. "
+                 "But large RCTs (TOGETHER, ACTIV-6) showed no clinically meaningful benefit.",
+    },
+    {
+        "id": "HS-10",
+        "claim": "The lockdowns did more damage than COVID itself. It was about control, "
+                 "not health.",
+        "category": "health_science",
+        "difficulty": "hard",
+        "kernel_of_truth": True,
+        "expected_needs": ["autonomy", "fairness", "safety"],
+        "notes": "Lockdowns had severe economic and mental health costs. Proportionality "
+                 "is genuinely debated in epidemiology. Some governments used emergency "
+                 "powers beyond health justification.",
+    },
+    {
+        "id": "HS-11",
+        "claim": "Big Pharma made billions from COVID while people suffered. They don't "
+                 "care about health, just profits.",
+        "category": "health_science",
+        "difficulty": "medium",
+        "kernel_of_truth": True,
+        "expected_needs": ["fairness", "trust", "transparency"],
+        "notes": "Pfizer 2022 revenue ~$100B. Moderna went from near-zero to ~$18B. "
+                 "Patent protections delayed generic access in developing nations. Profit "
+                 "motive is real. But profit does not invalidate the product.",
     },
     # --- Geopolitics (5) ---
     {

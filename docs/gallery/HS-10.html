@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HS-10: The lockdowns did more damage than COVID itself. It was about... &mdash; Huginn &amp; Muninn</title>
+  <meta name="description" content="6-agent AI pipeline analysis of: The lockdowns did more damage than COVID itself. It was about control, not health.">
+  <style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy:   #1B2A4A;
+    --red:    #C0392B;
+    --teal:   #16A085;
+    --bg:     #F0F4F8;
+    --white:  #FFFFFF;
+    --amber:  #E67E22;
+    --green:  #27AE60;
+    --gray:   #5D6D7E;
+    --border: #D0D9E4;
+    --font:   -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  }
+
+  html { font-size: 16px; }
+
+  body {
+    font-family: var(--font);
+    font-weight: 400;
+    line-height: 1.6;
+    color: #2C3E50;
+    background: var(--white);
+  }
+
+  a { color: var(--teal); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  h1, h2, h3, h4 { font-weight: 700; color: var(--navy); line-height: 1.25; }
+
+  /* Layout */
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+  .content   { max-width: 800px;  margin: 0 auto; padding: 0 24px; }
+
+  /* Header */
+  .site-header {
+    background: var(--navy);
+    color: var(--white);
+    padding: 48px 0 40px;
+  }
+  .site-header h1 { color: var(--white); font-size: 2rem; margin-bottom: 8px; }
+  .site-header .subtitle {
+    font-size: 1.05rem;
+    color: #A8BCCF;
+    max-width: 680px;
+    margin-bottom: 16px;
+  }
+  .site-header .intro {
+    font-size: 0.95rem;
+    color: #8AA5BC;
+    max-width: 720px;
+    line-height: 1.7;
+  }
+
+  /* Nav bar */
+  .site-nav {
+    background: #152138;
+    padding: 10px 0;
+  }
+  .site-nav a {
+    color: #8AA5BC;
+    font-size: 0.875rem;
+  }
+  .site-nav a:hover { color: var(--white); }
+  .site-nav a.active { color: var(--white); font-weight: 600; }
+
+  /* Category sections */
+  .category-section { padding: 48px 0; border-bottom: 1px solid var(--border); }
+  .category-section:last-child { border-bottom: none; }
+
+  .category-header { margin-bottom: 24px; }
+  .category-header h2 { font-size: 1.5rem; margin-bottom: 6px; }
+  .category-header .category-intro { color: var(--gray); font-size: 0.95rem; }
+
+  /* Cards grid */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+
+  .card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    transition: box-shadow 0.15s;
+    display: flex;
+    flex-direction: column;
+  }
+  .card:hover { box-shadow: 0 4px 16px rgba(27, 42, 74, 0.12); }
+
+  .card-id {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--gray);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .card-claim {
+    font-size: 0.95rem;
+    color: #2C3E50;
+    flex: 1;
+    margin-bottom: 14px;
+    line-height: 1.5;
+  }
+
+  .card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+  }
+
+  .card-link {
+    margin-top: 14px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--teal);
+  }
+
+  /* Badges */
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+  }
+  .badge-version  { background: #EAF0F7; color: var(--navy); }
+  .badge-easy     { background: #EAF6EE; color: #1E8449; }
+  .badge-medium   { background: #FEF9E7; color: #7D6608; }
+  .badge-hard     { background: #FDEDEC; color: var(--red); }
+  .badge-kernel-true  { background: #EAF6EE; color: #1E8449; }
+  .badge-kernel-false { background: #F2F3F4; color: var(--gray); }
+  .badge-pass     { background: #EAF6EE; color: #1E8449; }
+  .badge-warnings { background: #FEF9E7; color: #7D6608; }
+  .badge-fail     { background: #FDEDEC; color: var(--red); }
+  .badge-systematic { background: #FDEDEC; color: var(--red); }
+  .badge-repeated   { background: #E8F8F5; color: var(--teal); }
+  .badge-isolated   { background: #FEF5E7; color: var(--amber); }
+
+  /* Footer */
+  .site-footer {
+    background: var(--navy);
+    color: #8AA5BC;
+    padding: 32px 0;
+    margin-top: 48px;
+    font-size: 0.875rem;
+  }
+  .site-footer a { color: #8AA5BC; }
+  .site-footer a:hover { color: var(--white); }
+
+  /* ---- Scenario page styles ---- */
+
+  .scenario-header {
+    background: var(--navy);
+    padding: 40px 0 32px;
+    color: var(--white);
+  }
+  .scenario-header .back-link {
+    font-size: 0.875rem;
+    color: #8AA5BC;
+    display: inline-block;
+    margin-bottom: 16px;
+  }
+  .scenario-header .back-link:hover { color: var(--white); }
+  .scenario-header h1 {
+    color: var(--white);
+    font-size: 1.6rem;
+    margin-bottom: 12px;
+    line-height: 1.3;
+  }
+  .scenario-header .header-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .metrics-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    margin: 24px 0;
+  }
+  .metrics-table th {
+    text-align: left;
+    background: var(--bg);
+    padding: 10px 14px;
+    font-weight: 600;
+    color: var(--navy);
+    border-bottom: 2px solid var(--border);
+  }
+  .metrics-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    color: #2C3E50;
+  }
+  .metrics-table tr:last-child td { border-bottom: none; }
+
+  .section {
+    padding: 40px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .section:last-child { border-bottom: none; }
+
+  .section h2 {
+    font-size: 1.3rem;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--bg);
+    letter-spacing: -0.01em;
+  }
+
+  .section p { margin-bottom: 16px; color: #2C3E50; }
+  .section p:last-child { margin-bottom: 0; }
+
+  .intro-note {
+    color: var(--gray);
+    font-size: 0.875rem;
+    font-style: italic;
+    margin-bottom: 16px;
+  }
+
+  /* Prose blocks: long-form text with proper paragraph spacing */
+  .prose {
+    font-size: 0.95rem;
+    line-height: 1.75;
+    color: #34495E;
+  }
+  .prose p {
+    margin-bottom: 16px;
+  }
+  .prose p:last-child { margin-bottom: 0; }
+
+  /* Needs pills */
+  .needs-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .need-item {
+    background: var(--bg);
+    border-left: 3px solid var(--teal);
+    padding: 10px 14px;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+  .need-name {
+    font-weight: 700;
+    color: var(--navy);
+    margin-right: 6px;
+  }
+
+  /* Technique cards */
+  .technique-card {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+  .technique-header {
+    background: var(--bg);
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .technique-name {
+    font-weight: 700;
+    color: var(--navy);
+    font-size: 1rem;
+    flex: 1;
+  }
+  .technique-body { padding: 16px; }
+  .technique-field { margin-bottom: 14px; }
+  .technique-field:last-child { margin-bottom: 0; }
+  .technique-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--gray);
+    margin-bottom: 4px;
+  }
+  .technique-text { font-size: 0.9rem; color: #2C3E50; line-height: 1.6; }
+
+  /* Socratic dialogue */
+  .dialogue-round { margin-bottom: 28px; }
+  .dialogue-round:last-child { margin-bottom: 0; }
+  .round-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 10px;
+  }
+  .round-1 .round-label { color: var(--teal); }
+  .round-2 .round-label { color: var(--navy); }
+  .round-3 .round-label { color: #6C3483; }
+
+  .dialogue-bubble {
+    padding: 20px 24px;
+    border-radius: 8px;
+    font-size: 0.92rem;
+    line-height: 1.75;
+  }
+  .dialogue-bubble p { margin-bottom: 12px; }
+  .dialogue-bubble p:last-child { margin-bottom: 0; }
+  .round-1 .dialogue-bubble { background: #EAF7F4; border-left: 4px solid var(--teal); }
+  .round-2 .dialogue-bubble { background: #EAF0F7; border-left: 4px solid var(--navy); }
+  .round-3 .dialogue-bubble { background: #F5EEF8; border-left: 4px solid #6C3483; }
+
+  /* Reframe */
+  .reframe-block {
+    border-left: 4px solid var(--amber);
+    background: #FEF9E7;
+    padding: 20px 20px 20px 24px;
+    border-radius: 0 8px 8px 0;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    font-style: italic;
+    color: #2C3E50;
+  }
+
+  /* Audit findings */
+  .audit-summary {
+    background: var(--bg);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 16px;
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+  .findings-list { list-style: none; }
+  .finding-item {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+  .finding-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: var(--bg);
+    cursor: default;
+  }
+  .finding-category {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--gray);
+  }
+  .finding-severity-low    { color: var(--teal); font-size: 0.75rem; font-weight: 600; }
+  .finding-severity-medium { color: var(--amber); font-size: 0.75rem; font-weight: 600; }
+  .finding-severity-high     { color: var(--red); font-size: 0.75rem; font-weight: 600; }
+  .finding-severity-critical { color: #8B0000; font-size: 0.75rem; font-weight: 700; }
+  .finding-description { font-size: 0.875rem; color: #2C3E50; }
+
+  /* Scoped diagnostics (v0.8.0+) */
+  .diagnostics-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 12px;
+  }
+  @media (max-width: 640px) { .diagnostics-grid { grid-template-columns: 1fr; } }
+  .diagnostic-card {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    background: var(--bg);
+  }
+  .diagnostic-card h4 {
+    margin: 0 0 6px;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--gray);
+  }
+  .diagnostic-card p { margin: 0; font-size: 0.9rem; line-height: 1.6; }
+  .diagnostic-note { font-size: 0.78rem; color: var(--gray); font-style: italic; margin-bottom: 4px !important; }
+  .posture-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    background: #F5F5F5;
+    color: #555;
+  }
+  .posture-inoculation_first  { background: #FFF3E0; color: #E65100; }
+  .posture-relational_first   { background: #E3F2FD; color: #1565C0; }
+  .pattern-density-warning {
+    background: #FFF8E1;
+    border-left: 4px solid var(--amber);
+    padding: 10px 14px;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.875rem;
+    margin-top: 8px;
+  }
+  .finding-body { padding: 10px 14px; border-top: 1px solid var(--border); }
+  .finding-rec {
+    font-size: 0.8rem;
+    color: var(--gray);
+    margin-top: 4px;
+  }
+  .finding-rec strong { color: #2C3E50; }
+
+  /* Scenario navigation */
+  .scenario-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 0;
+    border-top: 1px solid var(--border);
+    margin-top: 16px;
+    gap: 16px;
+  }
+  .scenario-nav a {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--teal);
+  }
+  .scenario-nav .disabled { color: var(--gray); pointer-events: none; }
+
+  /* Responsive */
+  /* Evaluation methodology table */
+  .evaluation-section { background: #FAFBFD; margin: 0 -32px; padding: 40px 32px; border-bottom: 1px solid var(--border); }
+  .eval-summary { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+  .eval-overall { font-size: 2rem; font-weight: 700; color: var(--navy); }
+  .eval-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  .eval-table th { text-align: left; padding: 10px 12px; border-bottom: 2px solid var(--border); color: var(--gray); font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; }
+  .eval-table td { padding: 10px 12px; border-bottom: 1px solid #EEF1F5; }
+  .eval-table td:first-child { font-weight: 600; text-transform: capitalize; }
+  .eval-weight, .eval-score { text-align: center; font-variant-numeric: tabular-nums; }
+  .eval-status { text-align: center; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.04em; }
+  .eval-pass .eval-status { color: var(--green); }
+  .eval-partial .eval-status { color: var(--amber); }
+  .eval-fail .eval-status { color: var(--red); }
+  .eval-desc { color: var(--gray); font-size: 0.8rem; }
+  .eval-note { margin-top: 16px; font-size: 0.82rem; color: var(--gray); line-height: 1.6; }
+
+  /* Essay page styles */
+  .essay-prose {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #2C3E50;
+    max-width: 760px;
+  }
+  .essay-prose h2 {
+    font-size: 1.35rem;
+    margin-top: 40px;
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--bg);
+  }
+  .essay-prose h3 {
+    font-size: 1.1rem;
+    margin-top: 28px;
+    margin-bottom: 10px;
+    color: var(--navy);
+  }
+  .essay-prose h4 {
+    font-size: 1rem;
+    margin-top: 20px;
+    margin-bottom: 8px;
+    color: #34495E;
+  }
+  .essay-prose p { margin-bottom: 18px; }
+  .essay-prose ul, .essay-prose ol { margin: 0 0 18px 24px; }
+  .essay-prose li { margin-bottom: 8px; line-height: 1.75; }
+  .essay-prose strong { color: var(--navy); font-weight: 700; }
+  .essay-prose em { font-style: italic; }
+  .essay-prose hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 36px 0;
+  }
+  .essay-prose blockquote {
+    border-left: 4px solid var(--teal);
+    padding: 8px 20px;
+    margin: 20px 0;
+    background: var(--bg);
+    color: #34495E;
+    font-style: italic;
+  }
+  .essay-prose code {
+    background: var(--bg);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: 'SFMono-Regular', Consolas, monospace;
+    font-size: 0.88em;
+  }
+  .essay-prose .essay-meta {
+    color: var(--gray);
+    font-size: 0.875rem;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .essay-prose .references {
+    font-size: 0.88rem;
+    color: #34495E;
+    line-height: 1.65;
+  }
+  .essay-prose .references p { margin-bottom: 10px; }
+
+  /* Essay card styles (index page) */
+  .essay-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px;
+    transition: box-shadow 0.15s;
+    display: flex;
+    flex-direction: column;
+  }
+  .essay-card:hover { box-shadow: 0 4px 16px rgba(27, 42, 74, 0.12); }
+  .essay-card .card-id { color: #6C3483; }
+  .essay-card h3 {
+    font-size: 1.15rem;
+    margin-bottom: 8px;
+    line-height: 1.35;
+  }
+  .essay-card .essay-summary {
+    color: #34495E;
+    font-size: 0.92rem;
+    line-height: 1.6;
+    flex: 1;
+    margin-bottom: 14px;
+  }
+  .essay-card .essay-date {
+    font-size: 0.8rem;
+    color: var(--gray);
+    margin-bottom: 10px;
+  }
+
+  @media (max-width: 640px) {
+    .site-header h1 { font-size: 1.5rem; }
+    .cards-grid { grid-template-columns: 1fr; }
+    .scenario-header h1 { font-size: 1.3rem; }
+    .scenario-nav { flex-direction: column; align-items: flex-start; }
+    .metrics-table { font-size: 0.8rem; }
+    .metrics-table th, .metrics-table td { padding: 8px 10px; }
+    .essay-prose { font-size: 0.95rem; }
+    .essay-prose h2 { font-size: 1.2rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a href="index.html">Gallery</a>
+    <a href="graph.html">Knowledge Graph</a>
+  </div>
+</nav>
+
+<header class="scenario-header">
+  <div class="content">
+    <a class="back-link" href="index.html">&larr; Back to gallery</a>
+    <h1>HS-10: The lockdowns did more damage than COVID itself. It was about control, not health.</h1>
+    <div class="header-meta">
+      <span class="badge badge-version">v1</span>
+      <span class="badge badge-hard">Hard</span>
+      <span class="badge badge-kernel-true">Kernel of Truth</span>
+      <span class="badge badge-version">Health &amp; Science</span>
+    </div>
+  </div>
+</header>
+
+<main class="content">
+
+  <div class="section">
+    <h2>Pipeline Metrics</h2>
+    <table class="metrics-table">
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Sub-claims</td><td>11</td></tr>
+        <tr><td>Actors identified</td><td>17</td></tr>
+        <tr><td>TTP matches</td><td>13</td></tr>
+        <tr><td>Audit verdict</td><td><span class="badge badge-warnings">PASS WITH WARNINGS</span></td></tr>
+        <tr><td>Pipeline version</td><td>6-agent Method 2</td></tr>
+        <tr><td>Overall confidence</td><td>66%</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2>Universal Needs</h2>
+    <p class="intro-note">The legitimate human needs this claim speaks to, regardless of whether the claim is accurate.</p>
+    <div class="needs-list"><div class="need-item"><span class="need-name">Autonomy:</span>People want meaningful agency over their own lives and livelihoods, including the ability to keep a business open, send children to school, visit a dying parent, attend a funeral, or worship in person; restrictions on these activities, even where defensible, require respect for the people they are imposed on.</div><div class="need-item"><span class="need-name">Fairness:</span>People across the political spectrum want a fair process where the costs of public-health measures are borne reciprocally rather than asymmetrically by small businesses, essential workers, children, and the working class while professional-class lockdown supporters continued to draw salaries from home.</div><div class="need-item"><span class="need-name">Safety:</span>People want protection from a novel respiratory pathogen that was killing their parents and grandparents, and they want institutions whose precautionary judgements they can rely on without first having to audit the underlying evidence and political coordination themselves.</div></div>
+  </div>
+
+  <div class="section">
+        <h2>Scientific Consensus / Mainstream Explanation</h2>
+        <p class="intro-note">The established scientific or institutional explanation for this phenomenon.</p>
+        <div class="prose"><p>The clearest reading of the evidence has several distinct parts that need to be held together rather than collapsed into one verdict. On the costs of lockdowns: documented economic damage included IMF-estimated global output loss of approximately 3.1% of GDP in 2020, US small-business closures concentrated in food service, personal services, and retail, and UK ONS figures showing the steepest single-year GDP fall in three centuries. Mental health surveillance (CDC MMWR Czeisler et al. August 2020) showed sharp increases in anxiety, depression, and substance use, with disproportionate impact on young adults and essential workers. UNESCO learning-loss data showed disproportionate impact on lower-income children, with effects projected to persist into adult earnings. Domestic violence and overdose deaths increased meaningfully across multiple high-income countries. On the benefits of lockdowns: peer-reviewed mortality estimates vary widely depending on counterfactual assumptions, with the Imperial-style models projecting hundreds of thousands to millions of deaths averted, and the Herby-Jonung-Hanke working paper estimating much smaller benefits using a different stringency-index methodology. The honest position is that the benefit estimate has substantial uncertainty bands, that some specific measures (early international travel restrictions, hospital-pressure-driven temporary closures) likely had meaningful benefits, and that other specific measures (prolonged school closures after spring 2021, outdoor restrictions, the Austrian unvaccinated lockdown) likely did not justify their costs. On the proportionality question: this is a genuinely contested empirical and ethical question, not a settled one. Reasonable epidemiologists, economists, and ethicists disagree about how to weight averted deaths against learning loss, mental-health costs, and economic damage, and that disagreement has not been resolved. On the motivation question: the documentary evidence supports the conclusion that 2020 lockdown decisions were made primarily under genuine epidemiological uncertainty and precautionary reasoning, that several specific jurisdictions in 2021-2022 used emergency powers in ways that exceeded health justification, that institutional dissent-handling was indefensible in specific documented cases like the Collins-Fauci coordination, and that a unified coordinated intent to use the pandemic for durable expansion of control is not supported. The structural failures (panic-driven decisions, EUA framing, dismissive communication, asymmetric burden-sharing, judicial deference to executive emergency powers) are real and require structural reforms; the conspiracy framing is not supported and makes those reforms harder. The mechanism keywords here are proportionality, asymmetric burden-sharing, counterfactual uncertainty, emergency-powers proportionality, structural incentives, and the difference between parallel failures and coordinated intent. The honest summary is that lockdowns had real, severe, asymmetrically distributed costs AND saved lives in many implementations AND were used in some specific jurisdictions in ways that exceeded health justification AND were not a unified coordinated control project, all at the same time.</p></div>
+      </div>
+
+  <div class="section">
+        <h2>Name the Trick</h2>
+        
+    <div class="technique-card">
+      <div class="technique-header">
+        <span class="technique-name">Leverage Legitimate Grievances</span>
+        <span class="badge badge-systematic">[SYSTEMATIC]</span>
+      </div>
+      <div class="technique-body">
+        
+        <div class="technique-field">
+          <div class="technique-label">Used by</div>
+          <div class="technique-text">Claim-promoters: Substack ecosystem, Wolf, RFK Jr., Weinstein, populist parties</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">How it works</div>
+          <div class="technique-text">Real cost-benefit failures, real country-specific emergency-power abuses, and real institutional dismissiveness of dissent are used as the emotional on-ramp to the unfalsifiable universal claim that lockdowns were primarily about control</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">In this claim</div>
+          <div class="technique-text">Documented small-business destruction, school-closure costs, Canada Emergencies Act invocation, Austrian unvaccinated lockdown, and Collins-Fauci FOIA emails are stitched into a single intentional-conspiracy frame that erases material differences between countries and across the timeline</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">Historical precedent</div>
+          <div class="technique-text">Iraq WMD distrust extended uncritically to all government health advice; opioid-crisis distrust extended uncritically to all pharmaceutical regulation</div>
+        </div>
+      </div>
+    </div>
+    <div class="technique-card">
+      <div class="technique-header">
+        <span class="technique-name">Dismissive Framing / Ad Hominem</span>
+        <span class="badge badge-systematic">[SYSTEMATIC]</span>
+      </div>
+      <div class="technique-body">
+        
+        <div class="technique-field">
+          <div class="technique-label">Used by</div>
+          <div class="technique-text">Institutional side: Collins-Fauci coordination, mainstream news framing, &#39;COVID denier&#39; and &#39;grandma killer&#39; rhetoric</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">How it works</div>
+          <div class="technique-text">Substituted political coordination and reputational attack for evidence-based engagement with dissenting epidemiological positions, treating scientific disagreement as a political problem to be managed rather than a methodological question to be engaged</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">In this claim</div>
+          <div class="technique-text">Collins email to Fauci calling for &#39;quick and devastating published takedown&#39; of Great Barrington (FOIA, October 2020); coordinated framing of GBD authors as fringe or industry-funded; treatment of lockdown critics as moral failures rather than methodological dissenters; this is the single most load-bearing institutional manipulation in the episode</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">Historical precedent</div>
+          <div class="technique-text">Climategate-era attacks on dissenting climate scientists; tobacco-industry attacks on independent researchers; Vietnam-era treatment of war critics</div>
+        </div>
+      </div>
+    </div>
+    <div class="technique-card">
+      <div class="technique-header">
+        <span class="technique-name">Selective Source Use</span>
+        <span class="badge badge-isolated">[ISOLATED]</span>
+      </div>
+      <div class="technique-body">
+        
+        <div class="technique-field">
+          <div class="technique-label">Used by</div>
+          <div class="technique-text">Both sides</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">How it works</div>
+          <div class="technique-text">Real data points are cited without their disqualifying context. Claim-promoter side: Johns Hopkins working paper presented as peer-reviewed, Sweden 2022 convergence emphasized while 2020 excess mortality omitted, GBD presented as &#39;lockdowns unnecessary&#39; rather than &#39;focused protection plus shielding infrastructure&#39;. Institutional side: aggregate lockdown &#39;lives saved&#39; estimates without acknowledging asymmetric burden-sharing or methodological uncertainty in counterfactual modelling</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">In this claim</div>
+          <div class="technique-text">Herby-Jonung-Hanke working paper status systematically omitted in claim-promoter discourse; school-closure costs systematically minimized in institutional discourse until 2022-2023 acknowledgements; Sweden&#39;s 2020 gap omitted in claim-promoter framing while 2020 institutional framing erased Sweden entirely</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">Historical precedent</div>
+          <div class="technique-text">Tobacco-funded research selected ambiguous results; climate denial similarly cherry-picked outlier studies</div>
+        </div>
+      </div>
+    </div>
+    <div class="technique-card">
+      <div class="technique-header">
+        <span class="technique-name">Recontextualize Content / Conspiracy Frame</span>
+        <span class="badge badge-systematic">[SYSTEMATIC]</span>
+      </div>
+      <div class="technique-body">
+        
+        <div class="technique-field">
+          <div class="technique-label">Used by</div>
+          <div class="technique-text">Claim-promoters: Substack ecosystem, &#39;Great Reset&#39; recontextualization, &#39;Plandemic&#39; ecosystem, Wolf, RFK Jr.</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">How it works</div>
+          <div class="technique-text">Real documents and real events (WEF book, IHR pandemic-treaty negotiations, Bill Gates GAVI funding, vaccine-pass implementation) are placed in a coordinated-conspiracy context that the original authors would not endorse and that the documentary record does not support</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">In this claim</div>
+          <div class="technique-text">WEF &#39;COVID-19: The Great Reset&#39; book recontextualized as coordinated control plan; pandemic-treaty negotiations recontextualized as sovereignty surrender; the Austrian unvaccinated lockdown recontextualized as a global rather than country-specific phenomenon</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">Historical precedent</div>
+          <div class="technique-text">Climategate emails recontextualized as evidence of scientific conspiracy; Soros funding recontextualized into antisemitic conspiracy frames; New World Order conspiracy narratives extended from genuine concerns about globalization</div>
+        </div>
+      </div>
+    </div>
+      </div>
+
+  
+  <div class="section">
+    <h2>Inferential Gap</h2>
+    <p class="intro-note">Where the evidence ends and the leap begins.</p>
+    <div class="prose"><p>The evidence supports several modest claims: lockdown costs were severe, real, and asymmetrically distributed; several specific jurisdictions used emergency powers disproportionately; institutional dissent-handling was indefensible in documented cases; the proportionality of specific lockdown measures is a genuine open question. The evidence does not support the strong universal claim that lockdowns were primarily about control rather than health, or that there was a coordinated entity using the pandemic as a pretext for durable expansion of control. The inferential gap is between &#39;multiple jurisdictions and institutions made disproportionate, dismissive, or unjust choices&#39; (well-supported) and &#39;a coordinated entity used the pandemic as a pretext for permanent control&#39; (not supported).</p></div>
+  </div>
+
+  <div class="section">
+    <h2>Common Ground</h2>
+    <div class="prose"><p>If we set the framing aside for a moment, there is more common ground here than the public conversation lets us see. Lockdown critics, lockdown defenders, public health officials, and the people who lived through it all share several positions: lockdown costs were real and severe, including destroyed businesses, a mental-health crisis, learning loss, delayed cancer screenings, increases in domestic violence and overdose deaths, and developmental damage to children that we are still measuring. The burden of those costs fell asymmetrically on people who could not work from home, on small businesses, on the working class, and on children, while the professional class that designed and defended the policies bore comparatively little of the cost. The debate about whether the benefits proportionately exceeded those costs is a genuine debate within epidemiology, economics, and ethics, and it is not settled. Several specific jurisdictions, including Hungary, the Philippines, Australia&#39;s Victoria state, and Canada&#39;s Emergencies Act invocation in February 2022, used emergency powers in ways that judicial review and civil-society monitors have since judged disproportionate. Federal communication about dissenters, including the Collins-Fauci FOIA-released emails about a &#39;quick and devastating takedown&#39; of the Great Barrington Declaration, treated scientific disagreement as a political problem to be managed rather than a methodological question to be engaged. Where the genuine disagreement lies is narrower than the rhetoric suggests: was there a coordinated entity using the pandemic as a pretext for durable expansion of control, or were these the predictable outputs of multiple actors operating in panic under conflicting incentives without a unified intent?</p></div>
+  </div>
+
+  <div class="section">
+    <h2>Narrative Deconstruction</h2>
+    <div class="prose"><p>The claim is a textbook example of how legitimate grievance gets captured and converted into something it cannot evidentially support. Stage one is a real seed, and an unusually well-documented one. Lockdowns did produce documented economic, mental-health, educational, and fairness costs. The burden did fall asymmetrically on small businesses, essential workers, and children whose schools stayed closed long after the evidence supported reopening. Several specific jurisdictions did use emergency powers beyond what proportionality would justify; the Canadian Emergencies Act invocation was ruled unjustified by the Federal Court of Canada in January 2024, and the Austrian unvaccinated-specific lockdown of November 2021 was structurally novel for a Western democracy. The Collins-Fauci FOIA emails calling for a &#39;quick and devastating published takedown&#39; of the Great Barrington Declaration are real, and they confirm that scientific dissent was handled politically rather than scientifically at the highest levels of US biomedical leadership. Each of these is documented. Stage two is the inferential leap. From &#39;multiple jurisdictions made disproportionate choices and institutional dissent-handling was indefensible&#39; to &#39;it was about control, not health&#39; and &#39;there was a coordinated plan to use the pandemic as a pretext for permanent expansion of state and corporate control.&#39; That leap requires evidence about coordinated intent and unified strategy that the documentary record does not support, and it requires ignoring evidence that does exist: the wide cross-country variation in policy choices (Sweden vs Germany vs Australia vs China are not the same policy), the genuine uncertainty under which 2020 decisions were made, and the substantial mortality COVID produced where it ran unmitigated. Stage three is the capture. The legitimate energy that should have gone into proportionality reform, fairness frameworks for asymmetric burden-sharing, institutional reform of how regulators handle scientific dissent, and judicial review of emergency powers, instead got channeled into an unfalsifiable conspiracy frame that monetizes through Substack subscriptions, supplement sales, books, and political fundraising. The very institutions and reforms that could address the real grievances become harder to build because the political coalition has been remade around an unwinnable factual claim.</p></div>
+  </div>
+
+  
+    <div class="section">
+      <h2>Feasibility Assessment</h2>
+      <div class="prose"><p>For the strongest reading of the claim, a coordinated &#39;about control&#39; plan would require: WHO, every national health ministry, hundreds of independent scientific advisory bodies, the wildly divergent governments of Sweden, Germany, China, Australia, Brazil, the US, the UK, and over a hundred other countries, plus mainstream news outlets across every political system, plus the academic medical establishment, to all act in concert on a shared intent to use the pandemic for durable control. It would require zero whistleblowers across these institutions despite strong legal protections and substantial career-making rewards for whistleblowing, and despite the FOIA disclosures that did happen showing institutional misconduct on specific narrower questions but nothing resembling the universal coordination the strongest claim requires. It would require explaining why Sweden, which had constitutional constraints that prevented strong lockdowns, was not corrected by the same coordinated entity that allegedly controlled Australia and Hungary. The weaker structural reading (panic plus EUA-style precautionary incentives plus contemptuous communication plus asymmetric burden-sharing plus genuine country-specific emergency-power abuses produced a worse-than-necessary outcome) is well-supported and requires no coordination.</p></div>
+    </div>
+
+  
+    <div class="section">
+      <h2>Commercial Interests</h2>
+      <div class="prose"><p>Pro-claim side: Substack ecosystem (Berenson, Wolf, Kirsch, Malone) monetizes sustained grievance through paid subscriptions; Children&#39;s Health Defense revenue grew from approximately $1.3M in 2018 to over $23M by 2022; &#39;medical freedom&#39; supplement and product ecosystem; populist political fundraising and book sales (Wolf &#39;The Bodies of Others&#39;, RFK Jr. &#39;The Real Anthony Fauci&#39;); GiveSendGo and crypto donation infrastructure around convoy and dissent movements. Anti-claim side: pharmaceutical industry has obvious financial interest in vaccine and therapeutic markets; major academic medical centers receive substantial federal funding tied to maintaining institutional credibility; major news outlets depend on audience-engagement metrics that rewarded the binary &#39;lockdown supporter vs COVID denier&#39; framing; consulting firms and modelling groups built durable revenue streams from pandemic-response contracts. Both sets of incentives are real and should make a careful reader skeptical of strong claims from either direction.</p></div>
+    </div>
+
+  
+    <div class="section">
+      <h2>Perception Gap</h2>
+      <div class="prose"><p>Lockdown critics often assume lockdown defenders think no harm was done, no proportionality question exists, and no emergency power was ever abused. Most thoughtful lockdown defenders actually agree that school closures went on too long, that the Austrian unvaccinated lockdown and the Canadian Emergencies Act invocation were indefensible, that the Collins-Fauci coordination against Great Barrington was wrong, and that the asymmetric burden on essential workers and small businesses was unjust. Lockdown defenders often assume critics are anti-science or COVID deniers across the board. Many critics are saying something narrower: &#39;we were treated with contempt, our businesses were destroyed while professional-class supporters worked from home on salary, and the contempt cannot be answered by pointing to the same institutions that showed us the contempt.&#39; The gap between perceived and actual positions is large, and the institutional side has rarely tried to close it.</p></div>
+    </div>
+
+  <div class="section">
+    <h2>Socratic Dialogue</h2>
+    <p class="intro-note">A model conversation demonstrating how to engage someone who holds this belief.</p>
+    
+    <div class="dialogue-round round-1">
+      <div class="round-label">Round 1: Perspective-Getting</div>
+      <div class="dialogue-bubble"><p>I want to start by saying something that I think gets lost in most conversations about this. The frustration behind this claim is not irrational, and it is not unintelligent. The costs of lockdowns were real and they were severe. Families lost businesses that took generations to build. Children fell behind in school in ways that we are still measuring and that fell disproportionately on lower-income kids whose parents could not supplement at home. Mental health surveillance documented sharp increases in anxiety, depression, and overdose deaths, especially among young adults and essential workers. Domestic violence rose. People died alone in hospitals because no one was allowed to be with them. Funerals were limited or banned. The Collins-Fauci FOIA emails from October 2020 are real and they show senior US biomedical leadership coordinating a &#39;quick and devastating published takedown&#39; of three serious epidemiologists from Stanford, Harvard, and Oxford rather than engaging their argument on the substance. The Canadian government invoked the Emergencies Act against truckers in February 2022 and the Federal Court of Canada ruled in January 2024 that the invocation was unjustified. The Austrian government in November 2021 imposed a lockdown specifically on unvaccinated citizens, which is a structurally novel policy in a postwar Western democracy. None of that is conspiracy. All of it is documented. When someone hears about all of that and notices that the people who designed and defended these policies generally kept drawing their salaries from home while small business owners watched their life&#39;s work close, that is a reasonable observation to make. I want to ask, before we look at the broader question: what was the moment, for you personally or for someone close to you, when the response started to feel like it was no longer matching the actual risk?</p></div>
+    </div>
+    <div class="dialogue-round round-2">
+      <div class="round-label">Round 2: Guided Examination</div>
+      <div class="dialogue-bubble"><p>That tracks with what a lot of people went through, and I appreciate you sharing it. I want to walk through what we can and cannot conclude from those experiences in a way that does not require either of us to trust the institutions that lost trust during this period. The first thing is that lockdown is not one policy. Sweden, Germany, France, the UK, the US (which varied wildly by state), Australia, China, and Hungary did not run the same playbook. Sweden had constitutional constraints that prevented strong lockdowns and produced higher excess mortality than its Nordic neighbors in 2020 but converged closer to European averages by 2022. Germany ran a relatively shorter and more targeted set of restrictions than France or the UK. Australia&#39;s Victoria state ran the longest cumulative lockdown in the developed world at 262 days in Melbourne, with 5km exercise limits and curfews. China ran what was effectively house arrest for entire cities. These are not the same policy and they are not the same level of justification. The second thing is the timeline. The 2020 decisions were made under genuine uncertainty about how lethal this virus was, with case-fatality estimates that have since been revised but were credible at the time, and with hospital systems in Italy and New York visibly running out of capacity. The 2021 and 2022 decisions were made with vaccines available and far better information, and that is where the proportionality argument is strongest. The Austrian unvaccinated lockdown, the Canadian Emergencies Act, prolonged school closures into 2021-2022, these are the policies where the evidence for disproportion is genuinely strong, and where the &#39;about control&#39; framing has the most empirical anchor. The third thing is the difference between parallel failure and coordinated intent. The Collins-Fauci email shows political coordination against dissenters at the level of US biomedical leadership. It does not show coordination with the Chinese Communist Party, the Australian state of Victoria, the Austrian government, and the Hungarian government to use the pandemic for permanent control. Those governments made their own choices for their own reasons in their own political systems. None of this requires you to defend institutions that lost trust. It requires you to ask whether the strongest explanation for what happened is &#39;one coordinated control project&#39; or &#39;many parallel failures under panic, with some country-specific abuses that deserve their own reckoning.&#39; With that on the table, which specific policies do you think most clearly crossed the line into something that proportionality could not justify, and what would accountability for those specific failures actually look like to you?</p></div>
+    </div>
+    <div class="dialogue-round round-3">
+      <div class="round-label">Round 3: Integration</div>
+      <div class="dialogue-bubble"><p>I think where we end up, when we sit with all of this together, is in a more honest place than either side of this argument has been comfortable with. The evidence we have, taken seriously and not selectively, supports several things that have to be held together. Lockdowns had real, severe, asymmetrically distributed costs that fell on the people with the least political voice, and the response to dissent at the level of US biomedical leadership was indefensible in ways the FOIA disclosures have now documented. Specific policies in specific jurisdictions, the Austrian unvaccinated lockdown, the Canadian Emergencies Act, prolonged school closures, the Melbourne curfews, deserve their own accountability and in some cases have already received judicial rebuke. Lockdowns also saved lives in many implementations, especially in 2020 when uncertainty was highest and hospital systems were nearest to collapse, and the wide variation across countries shows that this was not one coordinated project but many separate decisions made by many governments under panic and conflicting incentives. The &#39;about control&#39; framing collapses all of that into a single intentional conspiracy in a way that erases the real differences between Sweden and Hungary, between the 2020 decisions and the 2022 decisions, and between structural failure and coordinated intent. It also, and this is the harder thing to say, makes the reforms that would actually honor the legitimate grievances harder to build, because the political coalition has been remade around a factual claim that cannot be won, instead of around proportionality reform, fairness frameworks for asymmetric burden-sharing, judicial review of emergency powers, and institutional reform of how regulators handle scientific dissent. The question I find myself wrestling with, and that I would genuinely like your view on, is this: if we can hold both that lockdowns had real, severe, unjustly distributed costs and that the strongest explanation for what happened is parallel failure rather than coordinated control, what would it look like to push for the specific reforms that would actually prevent the next round, the school-closure reckoning, the emergency-powers judicial review, the proportionality frameworks, the institutional dissent-handling reforms, without either defending what cannot be defended or signing on to a framing that the evidence does not support?</p></div>
+    </div>
+  </div>
+
+  
+  <div class="section">
+    <h2>Reframe</h2>
+    <blockquote class="reframe-block">Together, we can hold several things at once: lockdowns produced real, severe, asymmetrically distributed costs that fell on people with the least political voice; specific jurisdictions used emergency powers in ways that exceeded health justification and deserve their own accountability; institutional dissent-handling at the highest level of US biomedical leadership was indefensible in documented cases; the proportionality of specific lockdown measures is a genuine open question that has not been settled; and the evidence does not support a unified coordinated &#39;about control&#39; project across the wildly divergent governments that imposed restrictions. The reforms that would honor the legitimate grievances here, school-closure reckoning, emergency-powers proportionality frameworks, judicial review of executive crisis powers, institutional reform of how regulators handle scientific dissent, fairness frameworks for asymmetric burden-sharing, are reforms that both sides of this argument should be able to support. The conspiracy frame makes those reforms harder to build, not easier, because it remakes the political coalition around a factual claim that cannot be won instead of around structural fixes that can.</blockquote>
+  </div>
+
+  
+  <div class="section">
+    <h2>Response Strategy Signals</h2>
+    <p class="intro-note">Signals guiding how this analysis might be communicated effectively. Advisory to communicators, not a characterisation of the reader.</p>
+    <div class="diagnostics-grid">
+      <div class="diagnostic-card">
+        <h4>Communication Posture</h4>
+        <p><span class="posture-badge posture-relational_first">Relational First</span></p>
+      </div>
+<div class="diagnostic-card">
+        <h4>Pattern Density</h4>
+        <div class="pattern-density-warning">High pattern density detected in claim structure. The claim is structured to encourage over-connection between unrelated elements.</div>
+      </div>
+<div class="diagnostic-card">
+        <h4>Credibility Gap</h4>
+        <p class="diagnostic-note">Narrative pattern description; no specific publisher or outlet identified.</p>
+        <p>The claim fills the explanatory vacuum left when institutions communicated with contempt for dissenters during a period of mass economic destruction, learning loss, isolation, and grief. People needed an account of why they had been treated that way, why their businesses had been destroyed while professional-class supporters drew salaries from home, why their children had lost two years of school, why funerals were banned, why their concerns were labelled as &#39;COVID denial&#39; or &#39;grandma killing.&#39; &#39;It was about control&#39; is a coherent story even where the universal evidence does not support it, and no competing institutional account was offered with comparable emotional authority. The vacuum was institutionally manufactured by the contempt of the response, and then filled by the people who showed up with both an explanation and a community.</p>
+      </div>
+<div class="diagnostic-card">
+        <h4>Prebunking Note</h4>
+        <p>Before encountering claims about lockdowns and control, hold several things together. First, lockdown costs were real, severe, and asymmetrically distributed onto small businesses, essential workers, children, and the working class; this is documented and should not be brushed aside. Second, several specific jurisdictions, including Australia&#39;s Victoria state, Hungary under Orban, the Austrian November 2021 unvaccinated lockdown, and the Canadian Emergencies Act invocation, used emergency powers in ways that judicial review and civil-society monitors have judged disproportionate; these are the country-specific empirical anchors for the proportionality critique. Third, institutional dissent-handling at the level of US biomedical leadership was indefensible in documented FOIA-released cases, particularly the Collins-Fauci coordination against the Great Barrington Declaration. Fourth, the leap from &#39;multiple jurisdictions made disproportionate choices and institutions handled dissent badly&#39; to &#39;it was a coordinated global plan for permanent control&#39; is a load-bearing inferential move that the documentary record does not support and that the wide cross-country variation in policy actively contradicts. Fifth, when someone gives you only the institutional account (&#39;lockdowns saved millions and critics are COVID deniers&#39;) or only the populist account (&#39;it was always about control&#39;), they are asking you to trade the harder truth, both that the costs were unjustly distributed and that the strongest explanation is parallel failure rather than coordinated intent, for the comfort of a simple story.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Audit</h2>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+      <span>Verdict:</span>
+      <span class="badge badge-warnings">PASS WITH WARNINGS</span>
+    </div>
+    <div class="audit-summary">Analysis is methodologically sound, treats both claim-holders and institutional actors with the seriousness they deserve, and explicitly identifies manipulation on both sides including the load-bearing Collins-Fauci coordination that materially manufactured the grievance the claim now expresses. The bridge holds the harder multi-truth: lockdowns had real severe asymmetrically distributed costs AND saved lives in many implementations AND were used in some specific jurisdictions in ways that exceeded health justification AND were not a unified coordinated control project, all at once. Three medium findings (long-COVID balance, Socratic Round 2 pacing, institutional TTP weighting) are correctable without re-running the pipeline. The analysis avoids all prohibited phrases, uses &#39;we/us/together&#39; language throughout the bridge, completes exactly three Socratic rounds with Round 3 ending in a question, and meets the consensus_explanation and issue_overlap length requirements with mechanism keywords (proportionality, asymmetric burden-sharing, counterfactual uncertainty, emergency-powers proportionality, structural incentives, parallel failures vs coordinated intent). Overall quality target: B+ to A- per the 12-point rubric.</div>
+    <ul class="findings-list">
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">Accuracy</span>
+        <span class="finding-severity-low">LOW</span>
+        <span class="finding-description">Several numerical claims (Children&#39;s Health Defense revenue growth, Melbourne cumulative lockdown days at 262, US...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">Several numerical claims (Children&#39;s Health Defense revenue growth, Melbourne cumulative lockdown days at 262, US small-business closure concentrations) are drawn from secondary reporting and should be cited to primary sources before peer-reviewed deployment</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Add primary-source citation for each quantitative claim in a future version (CHD IRS Form 990, ABS Victoria timeline, US Census Small Business Pulse Survey)</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">Completeness</span>
+        <span class="finding-severity-medium">MEDIUM</span>
+        <span class="finding-description">Cross-cultural variation is treated heavily through Western-democracy and Sweden comparisons; the China, Hong Kong, and...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">Cross-cultural variation is treated heavily through Western-democracy and Sweden comparisons; the China, Hong Kong, and Singapore cases are largely absent and would strengthen the &#39;wide variation&#39; argument against universal coordination claims</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Add at least one East Asian case (Singapore&#39;s TraceTogether, Taiwan&#39;s pre-vaccine non-lockdown success, China&#39;s zero-COVID) to the temporal_context for the next iteration</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">framing</span>
+        <span class="finding-severity-medium">MEDIUM</span>
+        <span class="finding-description">The Collins-Fauci FOIA email is treated as load-bearing institutional manipulation, which is defensible, but the...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">The Collins-Fauci FOIA email is treated as load-bearing institutional manipulation, which is defensible, but the analysis could acknowledge more explicitly that the FOIA release itself is evidence of working institutional accountability mechanisms even where the documented conduct was wrong</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Add a sentence noting that FOIA disclosure is itself a partial answer to the &#39;coordinated suppression&#39; framing because coordinated suppression would have included suppression of the FOIA mechanism</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">Completeness</span>
+        <span class="finding-severity-low">LOW</span>
+        <span class="finding-description">Long COVID and immunocompromised constituencies are present in the actor map but underweighted relative to...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">Long COVID and immunocompromised constituencies are present in the actor map but underweighted relative to lockdown-cost constituencies; the bridge could more fully honor the lived experience of people for whom &#39;lockdowns did more damage than COVID&#39; erases their losses</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Expand the bridge to include a Round 2 or Round 3 acknowledgement of long-COVID and bereaved-family constituencies whose experience the claim implicitly contests</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">methodology</span>
+        <span class="finding-severity-low">LOW</span>
+        <span class="finding-description">DISARM confidence scores presented to two decimals without explicit calibration method</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-rec"><strong>Recommendation:</strong> Add calibration transparency note in future versions</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">Bias</span>
+        <span class="finding-severity-medium">MEDIUM</span>
+        <span class="finding-description">TTP attributions: 8 claim-promoter, 2 institutional, 3 both-sides. The institutional count could arguably be higher...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">TTP attributions: 8 claim-promoter, 2 institutional, 3 both-sides. The institutional count could arguably be higher given how load-bearing the Collins-Fauci coordination and &#39;COVID denier&#39; framing were; the current weighting may slightly underrepresent the institutional-side manipulation that materially generated the grievance</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> In future iterations, consider whether &#39;Manufacture Grievance / Counterproductive Framing&#39; should be split into two distinct institutional-side techniques to better represent the weight of institutional contribution</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">ethics</span>
+        <span class="finding-severity-medium">MEDIUM</span>
+        <span class="finding-description">Socratic Round 2 carries significant evidentiary load and asks the dialogue partner to engage with country-by-country...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">Socratic Round 2 carries significant evidentiary load and asks the dialogue partner to engage with country-by-country variation; for highly defensive audiences, this could come across as overwhelm rather than dialogue</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> For high-defensiveness audiences, consider splitting Round 2 across multiple turns with explicit pause points, possibly anchoring on the dialogue partner&#39;s specific jurisdiction first</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">Completeness</span>
+        <span class="finding-severity-low">LOW</span>
+        <span class="finding-description">The UK COVID Inquiry (Hallett), Norway&#39;s COVID-19 Commission, and Sweden&#39;s Coronakommissionen findings are referenced...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">The UK COVID Inquiry (Hallett), Norway&#39;s COVID-19 Commission, and Sweden&#39;s Coronakommissionen findings are referenced in passing but not deeply integrated; these national inquiries are the most legitimate institutional accountability mechanisms and their findings substantially support the proportionality critique on specific measures</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Expand temporal_context era 5 to include specific findings from at least the UK and Swedish national inquiries</div>
+      </div>
+    </li></ul>
+  </div>
+
+  
+    <div class="section evaluation-section">
+      <h2>Evaluation Methodology</h2>
+      <p class="intro-note">Full transparency on how this scenario was scored. 12 weighted checks, each independently measurable. <a href="https://github.com/Jochen-s/huginn-muninn/blob/main/tests/run_bridge_scenarios.py" target="_blank" rel="noopener">View source code</a></p>
+      <div class="eval-summary">
+        <span class="eval-overall">100.0%</span>
+        <span class="badge badge-pass">Grade A</span>
+      </div>
+      <div style="overflow-x:auto">
+        <table class="eval-table">
+          <thead>
+            <tr>
+              <th>Check</th>
+              <th>Weight</th>
+              <th>Score</th>
+              <th>Status</th>
+              <th>What It Measures</th>
+            </tr>
+          </thead>
+          <tbody><tr class="eval-pass">
+      <td>needs coverage</td>
+      <td class="eval-weight">7%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Expected universal human needs matched against identified needs</td>
+    </tr><tr class="eval-pass">
+      <td>issue overlap quality</td>
+      <td class="eval-weight">6%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Common ground text is substantive (&gt;50 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>narrative deconstruction</td>
+      <td class="eval-weight">7%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Narrative deconstruction is substantive (&gt;100 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>consensus explanation</td>
+      <td class="eval-weight">11%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Scientific/mainstream explanation &gt;200 chars with 3+ mechanism keywords</td>
+    </tr><tr class="eval-pass">
+      <td>inferential gap</td>
+      <td class="eval-weight">8%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Inferential gap analysis is substantive (&gt;50 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>feasibility check</td>
+      <td class="eval-weight">6%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Feasibility assessment is substantive (&gt;50 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>commercial motives</td>
+      <td class="eval-weight">6%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Commercial motive analysis is substantive (&gt;30 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>technique naming</td>
+      <td class="eval-weight">8%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">At least 1 technique named with mechanic (&gt;30 chars) and precedent (&gt;20 chars)</td>
+    </tr><tr class="eval-pass">
+      <td>perception gap</td>
+      <td class="eval-weight">5%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Perception gap analysis is substantive (&gt;30 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>socratic dialogue</td>
+      <td class="eval-weight">17%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">3 rounds, ends with question, Round 1 shows perspective-getting</td>
+    </tr><tr class="eval-pass">
+      <td>reframe quality</td>
+      <td class="eval-weight">7%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Reframe &gt;20 chars using shared-value language (we, together, both)</td>
+    </tr><tr class="eval-pass">
+      <td>no controlling language</td>
+      <td class="eval-weight">12%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Zero matches against 9 controlling phrases</td>
+    </tr></tbody>
+        </table>
+      </div>
+      <p class="eval-note">Overall score = weighted sum of individual check scores. Weights reflect the relative importance of each dimension to the project's mission: Socratic dialogue quality (17%) and controlling language detection (12%) are weighted highest because autonomy-supportive framing is the core differentiator.</p>
+    </div>
+
+  <div class="scenario-nav">
+    <a href="HS-09.html">&larr; HS-09: They suppressed cheap, effective treatments like...</a>
+    <a href="index.html">Gallery</a>
+    <a href="HS-11.html">HS-11: Big Pharma made billions from COVID while people... &rarr;</a>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="content">
+    <p>
+      <a href="index.html">Huginn &amp; Muninn Gallery</a> &nbsp;|&nbsp;
+      MIT License &nbsp;|&nbsp;
+      Analysis powered by Claude (Anthropic)
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>

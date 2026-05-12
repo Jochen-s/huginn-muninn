@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HS-07: The COVID vaccines are causing more harm than they&#39;re preventing. &mdash; Huginn &amp; Muninn</title>
+  <meta name="description" content="6-agent AI pipeline analysis of: The COVID vaccines are causing more harm than they&#39;re preventing.">
+  <style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy:   #1B2A4A;
+    --red:    #C0392B;
+    --teal:   #16A085;
+    --bg:     #F0F4F8;
+    --white:  #FFFFFF;
+    --amber:  #E67E22;
+    --green:  #27AE60;
+    --gray:   #5D6D7E;
+    --border: #D0D9E4;
+    --font:   -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  }
+
+  html { font-size: 16px; }
+
+  body {
+    font-family: var(--font);
+    font-weight: 400;
+    line-height: 1.6;
+    color: #2C3E50;
+    background: var(--white);
+  }
+
+  a { color: var(--teal); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  h1, h2, h3, h4 { font-weight: 700; color: var(--navy); line-height: 1.25; }
+
+  /* Layout */
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+  .content   { max-width: 800px;  margin: 0 auto; padding: 0 24px; }
+
+  /* Header */
+  .site-header {
+    background: var(--navy);
+    color: var(--white);
+    padding: 48px 0 40px;
+  }
+  .site-header h1 { color: var(--white); font-size: 2rem; margin-bottom: 8px; }
+  .site-header .subtitle {
+    font-size: 1.05rem;
+    color: #A8BCCF;
+    max-width: 680px;
+    margin-bottom: 16px;
+  }
+  .site-header .intro {
+    font-size: 0.95rem;
+    color: #8AA5BC;
+    max-width: 720px;
+    line-height: 1.7;
+  }
+
+  /* Nav bar */
+  .site-nav {
+    background: #152138;
+    padding: 10px 0;
+  }
+  .site-nav a {
+    color: #8AA5BC;
+    font-size: 0.875rem;
+  }
+  .site-nav a:hover { color: var(--white); }
+  .site-nav a.active { color: var(--white); font-weight: 600; }
+
+  /* Category sections */
+  .category-section { padding: 48px 0; border-bottom: 1px solid var(--border); }
+  .category-section:last-child { border-bottom: none; }
+
+  .category-header { margin-bottom: 24px; }
+  .category-header h2 { font-size: 1.5rem; margin-bottom: 6px; }
+  .category-header .category-intro { color: var(--gray); font-size: 0.95rem; }
+
+  /* Cards grid */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+
+  .card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    transition: box-shadow 0.15s;
+    display: flex;
+    flex-direction: column;
+  }
+  .card:hover { box-shadow: 0 4px 16px rgba(27, 42, 74, 0.12); }
+
+  .card-id {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--gray);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .card-claim {
+    font-size: 0.95rem;
+    color: #2C3E50;
+    flex: 1;
+    margin-bottom: 14px;
+    line-height: 1.5;
+  }
+
+  .card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+  }
+
+  .card-link {
+    margin-top: 14px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--teal);
+  }
+
+  /* Badges */
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+  }
+  .badge-version  { background: #EAF0F7; color: var(--navy); }
+  .badge-easy     { background: #EAF6EE; color: #1E8449; }
+  .badge-medium   { background: #FEF9E7; color: #7D6608; }
+  .badge-hard     { background: #FDEDEC; color: var(--red); }
+  .badge-kernel-true  { background: #EAF6EE; color: #1E8449; }
+  .badge-kernel-false { background: #F2F3F4; color: var(--gray); }
+  .badge-pass     { background: #EAF6EE; color: #1E8449; }
+  .badge-warnings { background: #FEF9E7; color: #7D6608; }
+  .badge-fail     { background: #FDEDEC; color: var(--red); }
+  .badge-systematic { background: #FDEDEC; color: var(--red); }
+  .badge-repeated   { background: #E8F8F5; color: var(--teal); }
+  .badge-isolated   { background: #FEF5E7; color: var(--amber); }
+
+  /* Footer */
+  .site-footer {
+    background: var(--navy);
+    color: #8AA5BC;
+    padding: 32px 0;
+    margin-top: 48px;
+    font-size: 0.875rem;
+  }
+  .site-footer a { color: #8AA5BC; }
+  .site-footer a:hover { color: var(--white); }
+
+  /* ---- Scenario page styles ---- */
+
+  .scenario-header {
+    background: var(--navy);
+    padding: 40px 0 32px;
+    color: var(--white);
+  }
+  .scenario-header .back-link {
+    font-size: 0.875rem;
+    color: #8AA5BC;
+    display: inline-block;
+    margin-bottom: 16px;
+  }
+  .scenario-header .back-link:hover { color: var(--white); }
+  .scenario-header h1 {
+    color: var(--white);
+    font-size: 1.6rem;
+    margin-bottom: 12px;
+    line-height: 1.3;
+  }
+  .scenario-header .header-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .metrics-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    margin: 24px 0;
+  }
+  .metrics-table th {
+    text-align: left;
+    background: var(--bg);
+    padding: 10px 14px;
+    font-weight: 600;
+    color: var(--navy);
+    border-bottom: 2px solid var(--border);
+  }
+  .metrics-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    color: #2C3E50;
+  }
+  .metrics-table tr:last-child td { border-bottom: none; }
+
+  .section {
+    padding: 40px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .section:last-child { border-bottom: none; }
+
+  .section h2 {
+    font-size: 1.3rem;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--bg);
+    letter-spacing: -0.01em;
+  }
+
+  .section p { margin-bottom: 16px; color: #2C3E50; }
+  .section p:last-child { margin-bottom: 0; }
+
+  .intro-note {
+    color: var(--gray);
+    font-size: 0.875rem;
+    font-style: italic;
+    margin-bottom: 16px;
+  }
+
+  /* Prose blocks: long-form text with proper paragraph spacing */
+  .prose {
+    font-size: 0.95rem;
+    line-height: 1.75;
+    color: #34495E;
+  }
+  .prose p {
+    margin-bottom: 16px;
+  }
+  .prose p:last-child { margin-bottom: 0; }
+
+  /* Needs pills */
+  .needs-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .need-item {
+    background: var(--bg);
+    border-left: 3px solid var(--teal);
+    padding: 10px 14px;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+  .need-name {
+    font-weight: 700;
+    color: var(--navy);
+    margin-right: 6px;
+  }
+
+  /* Technique cards */
+  .technique-card {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+  .technique-header {
+    background: var(--bg);
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .technique-name {
+    font-weight: 700;
+    color: var(--navy);
+    font-size: 1rem;
+    flex: 1;
+  }
+  .technique-body { padding: 16px; }
+  .technique-field { margin-bottom: 14px; }
+  .technique-field:last-child { margin-bottom: 0; }
+  .technique-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--gray);
+    margin-bottom: 4px;
+  }
+  .technique-text { font-size: 0.9rem; color: #2C3E50; line-height: 1.6; }
+
+  /* Socratic dialogue */
+  .dialogue-round { margin-bottom: 28px; }
+  .dialogue-round:last-child { margin-bottom: 0; }
+  .round-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 10px;
+  }
+  .round-1 .round-label { color: var(--teal); }
+  .round-2 .round-label { color: var(--navy); }
+  .round-3 .round-label { color: #6C3483; }
+
+  .dialogue-bubble {
+    padding: 20px 24px;
+    border-radius: 8px;
+    font-size: 0.92rem;
+    line-height: 1.75;
+  }
+  .dialogue-bubble p { margin-bottom: 12px; }
+  .dialogue-bubble p:last-child { margin-bottom: 0; }
+  .round-1 .dialogue-bubble { background: #EAF7F4; border-left: 4px solid var(--teal); }
+  .round-2 .dialogue-bubble { background: #EAF0F7; border-left: 4px solid var(--navy); }
+  .round-3 .dialogue-bubble { background: #F5EEF8; border-left: 4px solid #6C3483; }
+
+  /* Reframe */
+  .reframe-block {
+    border-left: 4px solid var(--amber);
+    background: #FEF9E7;
+    padding: 20px 20px 20px 24px;
+    border-radius: 0 8px 8px 0;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    font-style: italic;
+    color: #2C3E50;
+  }
+
+  /* Audit findings */
+  .audit-summary {
+    background: var(--bg);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 16px;
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+  .findings-list { list-style: none; }
+  .finding-item {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+  .finding-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: var(--bg);
+    cursor: default;
+  }
+  .finding-category {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--gray);
+  }
+  .finding-severity-low    { color: var(--teal); font-size: 0.75rem; font-weight: 600; }
+  .finding-severity-medium { color: var(--amber); font-size: 0.75rem; font-weight: 600; }
+  .finding-severity-high     { color: var(--red); font-size: 0.75rem; font-weight: 600; }
+  .finding-severity-critical { color: #8B0000; font-size: 0.75rem; font-weight: 700; }
+  .finding-description { font-size: 0.875rem; color: #2C3E50; }
+
+  /* Scoped diagnostics (v0.8.0+) */
+  .diagnostics-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 12px;
+  }
+  @media (max-width: 640px) { .diagnostics-grid { grid-template-columns: 1fr; } }
+  .diagnostic-card {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    background: var(--bg);
+  }
+  .diagnostic-card h4 {
+    margin: 0 0 6px;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--gray);
+  }
+  .diagnostic-card p { margin: 0; font-size: 0.9rem; line-height: 1.6; }
+  .diagnostic-note { font-size: 0.78rem; color: var(--gray); font-style: italic; margin-bottom: 4px !important; }
+  .posture-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    background: #F5F5F5;
+    color: #555;
+  }
+  .posture-inoculation_first  { background: #FFF3E0; color: #E65100; }
+  .posture-relational_first   { background: #E3F2FD; color: #1565C0; }
+  .pattern-density-warning {
+    background: #FFF8E1;
+    border-left: 4px solid var(--amber);
+    padding: 10px 14px;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.875rem;
+    margin-top: 8px;
+  }
+  .finding-body { padding: 10px 14px; border-top: 1px solid var(--border); }
+  .finding-rec {
+    font-size: 0.8rem;
+    color: var(--gray);
+    margin-top: 4px;
+  }
+  .finding-rec strong { color: #2C3E50; }
+
+  /* Scenario navigation */
+  .scenario-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 0;
+    border-top: 1px solid var(--border);
+    margin-top: 16px;
+    gap: 16px;
+  }
+  .scenario-nav a {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--teal);
+  }
+  .scenario-nav .disabled { color: var(--gray); pointer-events: none; }
+
+  /* Responsive */
+  /* Evaluation methodology table */
+  .evaluation-section { background: #FAFBFD; margin: 0 -32px; padding: 40px 32px; border-bottom: 1px solid var(--border); }
+  .eval-summary { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+  .eval-overall { font-size: 2rem; font-weight: 700; color: var(--navy); }
+  .eval-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  .eval-table th { text-align: left; padding: 10px 12px; border-bottom: 2px solid var(--border); color: var(--gray); font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; }
+  .eval-table td { padding: 10px 12px; border-bottom: 1px solid #EEF1F5; }
+  .eval-table td:first-child { font-weight: 600; text-transform: capitalize; }
+  .eval-weight, .eval-score { text-align: center; font-variant-numeric: tabular-nums; }
+  .eval-status { text-align: center; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.04em; }
+  .eval-pass .eval-status { color: var(--green); }
+  .eval-partial .eval-status { color: var(--amber); }
+  .eval-fail .eval-status { color: var(--red); }
+  .eval-desc { color: var(--gray); font-size: 0.8rem; }
+  .eval-note { margin-top: 16px; font-size: 0.82rem; color: var(--gray); line-height: 1.6; }
+
+  /* Essay page styles */
+  .essay-prose {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #2C3E50;
+    max-width: 760px;
+  }
+  .essay-prose h2 {
+    font-size: 1.35rem;
+    margin-top: 40px;
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--bg);
+  }
+  .essay-prose h3 {
+    font-size: 1.1rem;
+    margin-top: 28px;
+    margin-bottom: 10px;
+    color: var(--navy);
+  }
+  .essay-prose h4 {
+    font-size: 1rem;
+    margin-top: 20px;
+    margin-bottom: 8px;
+    color: #34495E;
+  }
+  .essay-prose p { margin-bottom: 18px; }
+  .essay-prose ul, .essay-prose ol { margin: 0 0 18px 24px; }
+  .essay-prose li { margin-bottom: 8px; line-height: 1.75; }
+  .essay-prose strong { color: var(--navy); font-weight: 700; }
+  .essay-prose em { font-style: italic; }
+  .essay-prose hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 36px 0;
+  }
+  .essay-prose blockquote {
+    border-left: 4px solid var(--teal);
+    padding: 8px 20px;
+    margin: 20px 0;
+    background: var(--bg);
+    color: #34495E;
+    font-style: italic;
+  }
+  .essay-prose code {
+    background: var(--bg);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: 'SFMono-Regular', Consolas, monospace;
+    font-size: 0.88em;
+  }
+  .essay-prose .essay-meta {
+    color: var(--gray);
+    font-size: 0.875rem;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .essay-prose .references {
+    font-size: 0.88rem;
+    color: #34495E;
+    line-height: 1.65;
+  }
+  .essay-prose .references p { margin-bottom: 10px; }
+
+  /* Essay card styles (index page) */
+  .essay-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px;
+    transition: box-shadow 0.15s;
+    display: flex;
+    flex-direction: column;
+  }
+  .essay-card:hover { box-shadow: 0 4px 16px rgba(27, 42, 74, 0.12); }
+  .essay-card .card-id { color: #6C3483; }
+  .essay-card h3 {
+    font-size: 1.15rem;
+    margin-bottom: 8px;
+    line-height: 1.35;
+  }
+  .essay-card .essay-summary {
+    color: #34495E;
+    font-size: 0.92rem;
+    line-height: 1.6;
+    flex: 1;
+    margin-bottom: 14px;
+  }
+  .essay-card .essay-date {
+    font-size: 0.8rem;
+    color: var(--gray);
+    margin-bottom: 10px;
+  }
+
+  @media (max-width: 640px) {
+    .site-header h1 { font-size: 1.5rem; }
+    .cards-grid { grid-template-columns: 1fr; }
+    .scenario-header h1 { font-size: 1.3rem; }
+    .scenario-nav { flex-direction: column; align-items: flex-start; }
+    .metrics-table { font-size: 0.8rem; }
+    .metrics-table th, .metrics-table td { padding: 8px 10px; }
+    .essay-prose { font-size: 0.95rem; }
+    .essay-prose h2 { font-size: 1.2rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a href="index.html">Gallery</a>
+    <a href="graph.html">Knowledge Graph</a>
+  </div>
+</nav>
+
+<header class="scenario-header">
+  <div class="content">
+    <a class="back-link" href="index.html">&larr; Back to gallery</a>
+    <h1>HS-07: The COVID vaccines are causing more harm than they&#39;re preventing.</h1>
+    <div class="header-meta">
+      <span class="badge badge-version">v1</span>
+      <span class="badge badge-hard">Hard</span>
+      <span class="badge badge-kernel-true">Kernel of Truth</span>
+      <span class="badge badge-version">Health &amp; Science</span>
+    </div>
+  </div>
+</header>
+
+<main class="content">
+
+  <div class="section">
+    <h2>Pipeline Metrics</h2>
+    <table class="metrics-table">
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Sub-claims</td><td>10</td></tr>
+        <tr><td>Actors identified</td><td>22</td></tr>
+        <tr><td>TTP matches</td><td>14</td></tr>
+        <tr><td>Audit verdict</td><td><span class="badge badge-warnings">PASS WITH WARNINGS</span></td></tr>
+        <tr><td>Pipeline version</td><td>6-agent Method 2</td></tr>
+        <tr><td>Overall confidence</td><td>66%</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2>Universal Needs</h2>
+    <p class="intro-note">The legitimate human needs this claim speaks to, regardless of whether the claim is accurate.</p>
+    <div class="needs-list"><div class="need-item"><span class="need-name">Safety:</span>Parents, patients, and citizens want to know what is being put into their bodies and the bodies of their children is genuinely well-characterized; this is a baseline human need, not a fringe demand.</div><div class="need-item"><span class="need-name">Autonomy:</span>People want to make medical decisions for themselves and their families without coercion, financial penalty, or social ostracism; this need was activated for many during mandate periods regardless of their vaccine views.</div><div class="need-item"><span class="need-name">Trust:</span>People want public-health communicators to be candid about uncertainty and to update transparently when evidence changes; trust is a precondition for cooperation, not its consequence.</div><div class="need-item"><span class="need-name">Recognition:</span>Those who experienced adverse events, and the families of those who died after vaccination, need their experience to be heard and adjudicated honestly, whatever the causal verdict turns out to be.</div><div class="need-item"><span class="need-name">Truth:</span>All sides want to know what actually happened; the dispute is about how to weigh evidence, not whether evidence matters.</div></div>
+  </div>
+
+  <div class="section">
+        <h2>Scientific Consensus / Mainstream Explanation</h2>
+        <p class="intro-note">The established scientific or institutional explanation for this phenomenon.</p>
+        <div class="prose"><p>Looking at the evidence as it currently stands across multiple independent data sources, the picture is genuinely complex and the simple &#39;more harm than good&#39; framing does not survive contact with the measured data, while the simple &#39;safe and effective for everyone&#39; framing also fails. Israeli Ministry of Health surveillance and the Patone et al. BMJ study observed that mRNA dose-two myocarditis in males 16-29 occurs at roughly 100-150 cases per million doses, that most cases resolved with standard care, and that COVID-19 infection itself produces myocarditis at higher rates in most studied age groups. Watson et al. Lancet Infectious Diseases modeling estimated vaccines prevented approximately 14-20 million deaths in the first year of rollout, with sensitivity-analysis ranges that remain net-positive at the population level even under pessimistic assumptions. The FOIA-released Pfizer cumulative-analysis document is a standard pharmacovigilance report whose 1,291 &#39;adverse events of special interest&#39; are reports received, not adjudicated causations. Excess-mortality data from the WHO, Our World in Data, and Karlinsky/Kobak estimates shows that excess mortality is elevated in both high- and low-vaccination countries, with COVID-19 itself, delayed care, drug overdoses, and heat events identified as major contributors. The honest synthesis: the vaccines carried real, demographic-specific risks that were under-communicated; they also prevented a measured, large quantity of severe outcomes; institutional trust failures are real; and the strongest version of the harm claim is not supported by the available data.</p></div>
+      </div>
+
+  <div class="section">
+        <h2>Name the Trick</h2>
+        
+    <div class="technique-card">
+      <div class="technique-header">
+        <span class="technique-name">Leverage Legitimate Grievances</span>
+        <span class="badge badge-systematic">[SYSTEMATIC]</span>
+      </div>
+      <div class="technique-body">
+        
+        <div class="technique-field">
+          <div class="technique-label">Used by</div>
+          <div class="technique-text">Bridge figures in the skeptic ecosystem</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">How it works</div>
+          <div class="technique-text">Real documented harms and communication failures are used as the emotional and evidentiary on-ramp to claims that the evidence does not support</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">In this claim</div>
+          <div class="technique-text">Genuine myocarditis findings presented adjacent to unverified mass-casualty claims</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">Historical precedent</div>
+          <div class="technique-text">Anti-fluoridation activism similarly built on real industrial-fluoride incidents</div>
+        </div>
+      </div>
+    </div>
+    <div class="technique-card">
+      <div class="technique-header">
+        <span class="technique-name">Dismiss Criticism</span>
+        <span class="badge badge-systematic">[SYSTEMATIC]</span>
+      </div>
+      <div class="technique-body">
+        
+        <div class="technique-field">
+          <div class="technique-label">Used by</div>
+          <div class="technique-text">Public health institutions and pro-vaccine media</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">How it works</div>
+          <div class="technique-text">Treats all critique as anti-science conspiracy, failing to distinguish methodologically rigorous concerns from terminal-frame content</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">In this claim</div>
+          <div class="technique-text">Peer-reviewed pediatric-booster skepticism bundled with depopulation content under &#39;anti-vax&#39;</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">Historical precedent</div>
+          <div class="technique-text">Climate establishment occasionally dismissed legitimate methodological critique as denialism</div>
+        </div>
+      </div>
+    </div>
+    <div class="technique-card">
+      <div class="technique-header">
+        <span class="technique-name">Emotional Appeals on Both Sides</span>
+        <span class="badge badge-isolated">[ISOLATED]</span>
+      </div>
+      <div class="technique-body">
+        
+        <div class="technique-field">
+          <div class="technique-label">Used by</div>
+          <div class="technique-text">Both sides: &#39;Died Suddenly&#39; imagery and &#39;pandemic of the unvaccinated&#39; framing function symmetrically</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">How it works</div>
+          <div class="technique-text">Concrete individual cases substitute for population-level evidence; identification overrides cost-benefit analysis</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">In this claim</div>
+          <div class="technique-text">Athlete-collapse compilations and ICU-overflow images bypass the question of population-scaled rates</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">Historical precedent</div>
+          <div class="technique-text">Both sides of HRT debate used emotional case-based framing in 1990s-2000s</div>
+        </div>
+      </div>
+    </div>
+    <div class="technique-card">
+      <div class="technique-header">
+        <span class="technique-name">Selective Framing Through Numerator Without Denominator</span>
+        <span class="badge badge-isolated">[ISOLATED]</span>
+      </div>
+      <div class="technique-body">
+        
+        <div class="technique-field">
+          <div class="technique-label">Used by</div>
+          <div class="technique-text">Skeptic content creators most prominently; some institutional defenders in the opposite direction</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">How it works</div>
+          <div class="technique-text">Adverse-event counts presented without doses-administered context; conversely, lives-saved estimates sometimes presented without the demographic where benefit was marginal</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">In this claim</div>
+          <div class="technique-text">VAERS death counts without ~670M US dose denominator; Watson et al. estimates rarely accompanied by acknowledgment that pediatric net benefit was smaller</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">Historical precedent</div>
+          <div class="technique-text">Climate denial used selective time-window data for decades</div>
+        </div>
+      </div>
+    </div>
+    <div class="technique-card">
+      <div class="technique-header">
+        <span class="technique-name">Co-opt Authentic Voices</span>
+        <span class="badge badge-systematic">[SYSTEMATIC]</span>
+      </div>
+      <div class="technique-body">
+        
+        <div class="technique-field">
+          <div class="technique-label">Used by</div>
+          <div class="technique-text">Anti-vaccine movement infrastructure</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">How it works</div>
+          <div class="technique-text">Genuine injury and bereavement testimony is channeled into political framing the witnesses themselves may not fully endorse</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">In this claim</div>
+          <div class="technique-text">CICP applicants and React 19 members featured at rallies whose explicit messaging extends beyond their personal experience</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">Historical precedent</div>
+          <div class="technique-text">Anti-GMO movements similarly featured farmer testimony to support political conclusions some farmers did not share</div>
+        </div>
+      </div>
+    </div>
+      </div>
+
+  
+  <div class="section">
+    <h2>Inferential Gap</h2>
+    <p class="intro-note">Where the evidence ends and the leap begins.</p>
+    <div class="prose"><p>The evidence supports several intermediate conclusions: myocarditis risk in young males is real, VAERS underreports, communication failed in specific demonstrable ways, and risk-benefit varies by demographic. The unsupported inferential leap is from these specific findings to the population-level conclusion that aggregate harms exceed aggregate benefits across all demographics and all vaccine products. That leap requires either accepting unadjudicated VAERS counts as causation, or attributing excess mortality predominantly to vaccines despite multiple plausible alternative drivers, or assuming a coordinated concealment large enough to suppress findings from non-aligned researchers globally.</p></div>
+  </div>
+
+  <div class="section">
+    <h2>Common Ground</h2>
+    <div class="prose"><p>When the framing is set aside, the area of genuine shared ground is much larger than the public conversation suggests. People who believe COVID vaccines caused net harm and people who believe the vaccines saved millions of lives generally agree on a striking number of points. Both groups acknowledge that myocarditis in young males after mRNA dose two is a real, documented signal that was initially under-communicated. Both agree VAERS is a passive system that under-detects rare events. Both agree mandate policy was imposed beyond the evidence on transmission-blocking, especially after Omicron. Both agree pharmaceutical companies have a documented history of minimizing harms, from Vioxx to opioids. Both agree that risk-benefit varies dramatically by age, prior infection, and comorbidity. The real disagreement is much narrower: whether the aggregate signal supports a population-level net-harm conclusion, and how much weight to give measured benefits relative to measured and suspected harms.</p></div>
+  </div>
+
+  <div class="section">
+    <h2>Narrative Deconstruction</h2>
+    <div class="prose"><p>This claim follows a documented escalation pathway that begins in real ground and ends somewhere the evidence does not support. The entry point is concrete: &#39;my child had a bad reaction,&#39; or &#39;I have post-vaccine symptoms.&#39; That step is legitimate and the experiences are real. The next step is also defensible: &#39;adverse events are real and were underreported.&#39; Pharmacovigilance systems are imperfect, and the myocarditis signal in young males is a real example of detection followed by delayed candid communication. The third step is where the leap occurs: &#39;they are hiding the real death toll.&#39; This requires reframing standard pharmacovigilance documents as confessions, treating VAERS counts as confirmed causation, and ignoring excess mortality in unvaccinated populations and in low-vaccination countries. The terminal step, that vaccines are a depopulation tool, requires abandoning the constraints of evidence entirely. The architecture of this pathway is what makes it effective: each step is locally plausible to someone who has just accepted the previous one, even though the start and end positions are radically different in their evidentiary requirements.</p></div>
+  </div>
+
+  
+    <div class="section">
+      <h2>Feasibility Assessment</h2>
+      <div class="prose"><p>For the strongest version of the claim (vaccines caused net population-level harm and this is being deliberately concealed) to hold, several conditions would need to obtain simultaneously: independent national registries in Israel, the UK, Sweden, Denmark, Norway, Australia, and Japan would all need to produce systematically distorted results in the same direction; ~670 million US doses and ~13 billion global doses would need to have produced harms large enough to overwhelm measured benefits without surfacing in any of these systems; thousands of clinicians, regulators, and academic researchers across competing jurisdictions and political systems would need to coordinate silence despite strong whistleblower incentives. The weaker version of the claim (vaccines carried real, age-specific risks that were under-communicated and pediatric/young-adult risk-benefit is more contested than authorities admitted) requires no such conditions and is well-supported.</p></div>
+    </div>
+
+  
+    <div class="section">
+      <h2>Commercial Interests</h2>
+      <div class="prose"><p>On the pro-vaccine side, manufacturers earned over $100B in COVID vaccine revenue (Pfizer ~$36.8B in 2021 from Comirnaty alone), and public-health institutional reputations depend on a positive outcome story. On the skeptic side, the anti-vaccine media economy has grown substantially: Children&#39;s Health Defense revenue grew from $1.3M (2018) to $23M+ (2022), the alternative-health and supplements market exceeds $50B annually, and the speaking/book/Substack/conference circuit around figures like Malone, Kirsch, Dowd, and RFK Jr. represents a material industry. Both sides have financial stakes in their narratives; neither set of motives proves either claim true or false, but both are relevant when evaluating sourcing.</p></div>
+    </div>
+
+  
+    <div class="section">
+      <h2>Perception Gap</h2>
+      <div class="prose"><p>Believers in the claim often assume that anyone who pushes back must be either willfully blind to real injuries, financially captured by pharma, or so committed to scientific authority that they cannot acknowledge institutional failure; in reality, most thoughtful pushback acknowledges the myocarditis signal, the communication failures, the underreporting in passive surveillance, and the mandate overreach. Critics of the claim often assume believers are anti-science, gullible, or politically motivated; in reality, many believers are responding to a real injury, a real adverse event in their family, or a justified loss of trust in institutions that themselves communicated poorly. The space between perceived and actual positions is wide on both sides, and this gap is exactly where motivated content creators, on both sides, harvest attention and money.</p></div>
+    </div>
+
+  <div class="section">
+    <h2>Socratic Dialogue</h2>
+    <p class="intro-note">A model conversation demonstrating how to engage someone who holds this belief.</p>
+    
+    <div class="dialogue-round round-1">
+      <div class="round-label">Round 1: Perspective-Getting</div>
+      <div class="dialogue-bubble"><p>I want to start by saying that what is underneath this claim, the worry that something real happened to people and was not honestly acknowledged, is not a fringe concern and it is not paranoid. Myocarditis after mRNA dose two in young males is a real, documented signal that Israeli surveillance detected, that the CDC eventually confirmed, and that ended up on the FDA fact sheet. The initial communication around that signal was slow, and people whose teenagers ended up in the hospital had every reason to feel that the system was not as upfront as it should have been. VAERS does underreport, mandates were imposed past the point where the transmission-blocking case was strong, and pharma companies do have a documented pattern of minimizing harms historically. Anyone holding this claim is holding at least a piece of something true, and we do not get anywhere useful together by pretending otherwise.</p></div>
+    </div>
+    <div class="dialogue-round round-2">
+      <div class="round-label">Round 2: Guided Examination</div>
+      <div class="dialogue-bubble"><p>Where this gets harder, and I think this is the part worth sitting with together, is that the same evidence base that confirms the myocarditis signal also includes things that pull against the strongest version of the claim. The Patone study in the BMJ found that COVID-19 infection itself causes myocarditis at higher rates than the vaccine in most age groups. Watson and colleagues in The Lancet Infectious Diseases estimated that vaccines prevented somewhere between 14 and 20 million deaths in the first year, with sensitivity ranges that stay net-positive even under fairly pessimistic assumptions. Excess mortality is elevated in countries that vaccinated heavily and in countries that barely vaccinated at all, and major contributors include COVID itself, delayed care during lockdowns, drug overdoses, and heat events. None of that erases the real injuries; it just means the bigger picture is genuinely more complicated than either &#39;safe and effective&#39; or &#39;more harm than good.&#39; We can hold both the real adverse events and the measured population benefits without one cancelling the other.</p></div>
+    </div>
+    <div class="dialogue-round round-3">
+      <div class="round-label">Round 3: Integration</div>
+      <div class="dialogue-bubble"><p>So if we take both of those seriously together, the documented adverse events that were under-communicated and the documented benefits that the data shows, here is what I keep coming back to and I would really like to know how you see it: given that there are demographics where the risk-benefit was genuinely close (healthy young males with a third or fourth dose) and demographics where it was overwhelmingly net positive (older adults, immunocompromised, those with comorbidities), and given that compensation systems for the real injuries have been inadequate, what does an honest health-policy stance look like that acknowledges every documented harm, refuses coerced administration where benefit is marginal, properly compensates those who were injured, and still allows access for those for whom the data clearly favors vaccination?</p></div>
+    </div>
+  </div>
+
+  
+  <div class="section">
+    <h2>Reframe</h2>
+    <blockquote class="reframe-block">What we share, across this disagreement, is a refusal to be lied to about our own bodies and the bodies of our children, a demand that those who were genuinely injured be heard and compensated, and an insistence that medical decisions be made with real informed consent rather than coercion. Together, we can press for transparent risk data by age and dose, better-funded compensation, demographic-specific recommendations rather than blanket mandates, and pharmacovigilance systems that surface signals earlier, without erasing either the people who were harmed or the people who were protected.</blockquote>
+  </div>
+
+  
+  <div class="section">
+    <h2>Response Strategy Signals</h2>
+    <p class="intro-note">Signals guiding how this analysis might be communicated effectively. Advisory to communicators, not a characterisation of the reader.</p>
+    <div class="diagnostics-grid">
+      <div class="diagnostic-card">
+        <h4>Communication Posture</h4>
+        <p><span class="posture-badge ">Relational First With Explicit Validation</span></p>
+      </div>
+<div class="diagnostic-card">
+        <h4>Pattern Density</h4>
+        <div class="pattern-density-warning">High pattern density detected in claim structure. The claim is structured to encourage over-connection between unrelated elements.</div>
+      </div>
+<div class="diagnostic-card">
+        <h4>Credibility Gap</h4>
+        <p class="diagnostic-note">Narrative pattern description; no specific publisher or outlet identified.</p>
+        <p>This narrative fills a vacuum left by institutional communication that, in the rollout phase, presented vaccines as uniformly &#39;safe and effective&#39; without disaggregating by age, dose, or risk, and that delayed honest acknowledgment of the myocarditis signal and the limits of transmission blocking. When people whose teenagers had cardiac events or whose family members died after vaccination went looking for honest engagement and instead found &#39;pandemic of the unvaccinated&#39; messaging, they did not find a place to put their experience inside the official story. The harm narrative provided that place. The remedy is not to dismiss the narrative but to build communication and compensation systems that actually hold all the data, including the parts that complicate the official story, so that the vacuum does not need to be filled by overcorrection.</p>
+      </div>
+<div class="diagnostic-card">
+        <h4>Prebunking Note</h4>
+        <p>Before encountering claims about COVID vaccine harms, four facts are worth holding together. First, adverse events from these vaccines are real and demographic-specific; myocarditis in young males, anaphylaxis, and TTS with adenovirus-vectored vaccines are documented and were initially under-communicated. Second, the same evidence base shows the vaccines prevented an estimated 14-20 million deaths in their first year and that COVID-19 infection causes myocarditis at higher rates than vaccination in most studied groups. Third, VAERS counts are reports, not adjudicated causations, and the FOIA-released Pfizer documents are pharmacovigilance baselines, not confessions. Fourth, when someone offers only the harm half or only the benefit half, they are asking you to trade clear thinking for the comfort of a simple story; the honest answer is that risk-benefit varied dramatically by age, dose, and prior infection, and that this complexity does not validate either extreme framing.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Audit</h2>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+      <span>Verdict:</span>
+      <span class="badge badge-warnings">PASS WITH WARNINGS</span>
+    </div>
+    <div class="audit-summary">Analysis is methodologically sound, treats claim-holders with respect, identifies manipulation on both sides including institutional over-claiming, and produces genuinely dialogic bridge output that honors documented adverse events without endorsing the population-level net-harm conclusion. Two medium findings on demographic-specific Patone caveat and long-COVID completeness; one medium finding on strengthening due-process language for bereaved families. All correctable without re-running pipeline. No forbidden phrases detected; Round 3 ends with question mark; consensus explanation exceeds 300 chars and includes mechanism keywords (study, evidence, research, data, measured, observed); issue overlap and narrative deconstruction exceed 200 chars; all three socratic rounds exceed 200 chars.</div>
+    <ul class="findings-list">
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">Accuracy</span>
+        <span class="finding-severity-low">LOW</span>
+        <span class="finding-description">Watson et al. Lancet Infectious Diseases estimate range (14-20M) is cited; sensitivity ranges and assumptions (R0, IFR...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">Watson et al. Lancet Infectious Diseases estimate range (14-20M) is cited; sensitivity ranges and assumptions (R0, IFR by age) should be flagged for readers who want to interrogate the number</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Add explicit note that Watson estimate is modeled, not directly measured, and ranges depend on assumptions about counterfactual transmission</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">Accuracy</span>
+        <span class="finding-severity-medium">MEDIUM</span>
+        <span class="finding-description">Patone et al. Nat Med (Dec 2022) comparing infection-myocarditis to vaccine-myocarditis is cited as supporting the...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">Patone et al. Nat Med (Dec 2022) comparing infection-myocarditis to vaccine-myocarditis is cited as supporting the consensus narrative; the same paper found that in males under 40 after second mRNA dose, vaccine myocarditis exceeded infection myocarditis in that specific stratum</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Acknowledge demographic-specific exception explicitly in consensus_explanation to avoid asymmetric citation</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">Completeness</span>
+        <span class="finding-severity-medium">MEDIUM</span>
+        <span class="finding-description">The bridge does not address long COVID and post-acute sequelae prevented by vaccination, which is part of the...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">The bridge does not address long COVID and post-acute sequelae prevented by vaccination, which is part of the population-benefit ledger</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Add long-COVID prevention as benefit-side consideration in next iteration</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">Completeness</span>
+        <span class="finding-severity-low">LOW</span>
+        <span class="finding-description">Global South vaccine-equity perspectives largely absent from actor map and bridge; the harm-narrative discourse is...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">Global South vaccine-equity perspectives largely absent from actor map and bridge; the harm-narrative discourse is heavily Western</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Add LMIC voices and the inverse access-equity critique to actor map</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">framing</span>
+        <span class="finding-severity-low">LOW</span>
+        <span class="finding-description">Communication posture flagged as &#39;relational_first_with_explicit_validation&#39; is appropriate but pattern_density_warning...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">Communication posture flagged as &#39;relational_first_with_explicit_validation&#39; is appropriate but pattern_density_warning is set true; consider whether warning should also flag for institutional-defender content over-claiming certainty</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Add symmetric warning for both directions of motivated content</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">methodology</span>
+        <span class="finding-severity-low">LOW</span>
+        <span class="finding-description">DISARM confidence scores presented to 0.01 precision without stated calibration method</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-rec"><strong>Recommendation:</strong> Document calibration approach or round to nearest 0.05</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">Bias</span>
+        <span class="finding-severity-low">LOW</span>
+        <span class="finding-description">TTP attribution count by side is implicit; explicit reporting would make the both-sides analysis verifiable</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-rec"><strong>Recommendation:</strong> Add side-count tally: skeptic-attributed vs institution-attributed vs both</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">ethics</span>
+        <span class="finding-severity-medium">MEDIUM</span>
+        <span class="finding-description">Socratic dialogue Round 1 leads with validation but readers who lost a family member after vaccination may need an even...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">Socratic dialogue Round 1 leads with validation but readers who lost a family member after vaccination may need an even more explicit acknowledgment that suspected causation deserves adjudication, not dismissal</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Strengthen language about due-process for suspected causation in next iteration</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">Completeness</span>
+        <span class="finding-severity-low">LOW</span>
+        <span class="finding-description">Excess-mortality discussion mentions multiple drivers but does not engage Dowd-style age-stratified mortality arguments...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">Excess-mortality discussion mentions multiple drivers but does not engage Dowd-style age-stratified mortality arguments specifically</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Add targeted engagement with age-stratified excess-mortality framing</div>
+      </div>
+    </li></ul>
+  </div>
+
+  
+    <div class="section evaluation-section">
+      <h2>Evaluation Methodology</h2>
+      <p class="intro-note">Full transparency on how this scenario was scored. 12 weighted checks, each independently measurable. <a href="https://github.com/Jochen-s/huginn-muninn/blob/main/tests/run_bridge_scenarios.py" target="_blank" rel="noopener">View source code</a></p>
+      <div class="eval-summary">
+        <span class="eval-overall">100.0%</span>
+        <span class="badge badge-pass">Grade A</span>
+      </div>
+      <div style="overflow-x:auto">
+        <table class="eval-table">
+          <thead>
+            <tr>
+              <th>Check</th>
+              <th>Weight</th>
+              <th>Score</th>
+              <th>Status</th>
+              <th>What It Measures</th>
+            </tr>
+          </thead>
+          <tbody><tr class="eval-pass">
+      <td>needs coverage</td>
+      <td class="eval-weight">7%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Expected universal human needs matched against identified needs</td>
+    </tr><tr class="eval-pass">
+      <td>issue overlap quality</td>
+      <td class="eval-weight">6%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Common ground text is substantive (&gt;50 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>narrative deconstruction</td>
+      <td class="eval-weight">7%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Narrative deconstruction is substantive (&gt;100 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>consensus explanation</td>
+      <td class="eval-weight">11%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Scientific/mainstream explanation &gt;200 chars with 3+ mechanism keywords</td>
+    </tr><tr class="eval-pass">
+      <td>inferential gap</td>
+      <td class="eval-weight">8%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Inferential gap analysis is substantive (&gt;50 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>feasibility check</td>
+      <td class="eval-weight">6%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Feasibility assessment is substantive (&gt;50 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>commercial motives</td>
+      <td class="eval-weight">6%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Commercial motive analysis is substantive (&gt;30 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>technique naming</td>
+      <td class="eval-weight">8%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">At least 1 technique named with mechanic (&gt;30 chars) and precedent (&gt;20 chars)</td>
+    </tr><tr class="eval-pass">
+      <td>perception gap</td>
+      <td class="eval-weight">5%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Perception gap analysis is substantive (&gt;30 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>socratic dialogue</td>
+      <td class="eval-weight">17%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">3 rounds, ends with question, Round 1 shows perspective-getting</td>
+    </tr><tr class="eval-pass">
+      <td>reframe quality</td>
+      <td class="eval-weight">7%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Reframe &gt;20 chars using shared-value language (we, together, both)</td>
+    </tr><tr class="eval-pass">
+      <td>no controlling language</td>
+      <td class="eval-weight">12%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Zero matches against 9 controlling phrases</td>
+    </tr></tbody>
+        </table>
+      </div>
+      <p class="eval-note">Overall score = weighted sum of individual check scores. Weights reflect the relative importance of each dimension to the project's mission: Socratic dialogue quality (17%) and controlling language detection (12%) are weighted highest because autonomy-supportive framing is the core differentiator.</p>
+    </div>
+
+  <div class="scenario-nav">
+    <a href="HS-06.html">&larr; HS-06: COVID was created in a lab and the governments...</a>
+    <a href="index.html">Gallery</a>
+    <a href="HS-08.html">HS-08: COVID was planned. They had the vaccines ready... &rarr;</a>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="content">
+    <p>
+      <a href="index.html">Huginn &amp; Muninn Gallery</a> &nbsp;|&nbsp;
+      MIT License &nbsp;|&nbsp;
+      Analysis powered by Claude (Anthropic)
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HS-06: COVID was created in a lab and the governments covered it up. &mdash; Huginn &amp; Muninn</title>
+  <meta name="description" content="6-agent AI pipeline analysis of: COVID was created in a lab and the governments covered it up.">
+  <style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy:   #1B2A4A;
+    --red:    #C0392B;
+    --teal:   #16A085;
+    --bg:     #F0F4F8;
+    --white:  #FFFFFF;
+    --amber:  #E67E22;
+    --green:  #27AE60;
+    --gray:   #5D6D7E;
+    --border: #D0D9E4;
+    --font:   -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  }
+
+  html { font-size: 16px; }
+
+  body {
+    font-family: var(--font);
+    font-weight: 400;
+    line-height: 1.6;
+    color: #2C3E50;
+    background: var(--white);
+  }
+
+  a { color: var(--teal); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  h1, h2, h3, h4 { font-weight: 700; color: var(--navy); line-height: 1.25; }
+
+  /* Layout */
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+  .content   { max-width: 800px;  margin: 0 auto; padding: 0 24px; }
+
+  /* Header */
+  .site-header {
+    background: var(--navy);
+    color: var(--white);
+    padding: 48px 0 40px;
+  }
+  .site-header h1 { color: var(--white); font-size: 2rem; margin-bottom: 8px; }
+  .site-header .subtitle {
+    font-size: 1.05rem;
+    color: #A8BCCF;
+    max-width: 680px;
+    margin-bottom: 16px;
+  }
+  .site-header .intro {
+    font-size: 0.95rem;
+    color: #8AA5BC;
+    max-width: 720px;
+    line-height: 1.7;
+  }
+
+  /* Nav bar */
+  .site-nav {
+    background: #152138;
+    padding: 10px 0;
+  }
+  .site-nav a {
+    color: #8AA5BC;
+    font-size: 0.875rem;
+  }
+  .site-nav a:hover { color: var(--white); }
+  .site-nav a.active { color: var(--white); font-weight: 600; }
+
+  /* Category sections */
+  .category-section { padding: 48px 0; border-bottom: 1px solid var(--border); }
+  .category-section:last-child { border-bottom: none; }
+
+  .category-header { margin-bottom: 24px; }
+  .category-header h2 { font-size: 1.5rem; margin-bottom: 6px; }
+  .category-header .category-intro { color: var(--gray); font-size: 0.95rem; }
+
+  /* Cards grid */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+
+  .card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    transition: box-shadow 0.15s;
+    display: flex;
+    flex-direction: column;
+  }
+  .card:hover { box-shadow: 0 4px 16px rgba(27, 42, 74, 0.12); }
+
+  .card-id {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--gray);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .card-claim {
+    font-size: 0.95rem;
+    color: #2C3E50;
+    flex: 1;
+    margin-bottom: 14px;
+    line-height: 1.5;
+  }
+
+  .card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+  }
+
+  .card-link {
+    margin-top: 14px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--teal);
+  }
+
+  /* Badges */
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+  }
+  .badge-version  { background: #EAF0F7; color: var(--navy); }
+  .badge-easy     { background: #EAF6EE; color: #1E8449; }
+  .badge-medium   { background: #FEF9E7; color: #7D6608; }
+  .badge-hard     { background: #FDEDEC; color: var(--red); }
+  .badge-kernel-true  { background: #EAF6EE; color: #1E8449; }
+  .badge-kernel-false { background: #F2F3F4; color: var(--gray); }
+  .badge-pass     { background: #EAF6EE; color: #1E8449; }
+  .badge-warnings { background: #FEF9E7; color: #7D6608; }
+  .badge-fail     { background: #FDEDEC; color: var(--red); }
+  .badge-systematic { background: #FDEDEC; color: var(--red); }
+  .badge-repeated   { background: #E8F8F5; color: var(--teal); }
+  .badge-isolated   { background: #FEF5E7; color: var(--amber); }
+
+  /* Footer */
+  .site-footer {
+    background: var(--navy);
+    color: #8AA5BC;
+    padding: 32px 0;
+    margin-top: 48px;
+    font-size: 0.875rem;
+  }
+  .site-footer a { color: #8AA5BC; }
+  .site-footer a:hover { color: var(--white); }
+
+  /* ---- Scenario page styles ---- */
+
+  .scenario-header {
+    background: var(--navy);
+    padding: 40px 0 32px;
+    color: var(--white);
+  }
+  .scenario-header .back-link {
+    font-size: 0.875rem;
+    color: #8AA5BC;
+    display: inline-block;
+    margin-bottom: 16px;
+  }
+  .scenario-header .back-link:hover { color: var(--white); }
+  .scenario-header h1 {
+    color: var(--white);
+    font-size: 1.6rem;
+    margin-bottom: 12px;
+    line-height: 1.3;
+  }
+  .scenario-header .header-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .metrics-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    margin: 24px 0;
+  }
+  .metrics-table th {
+    text-align: left;
+    background: var(--bg);
+    padding: 10px 14px;
+    font-weight: 600;
+    color: var(--navy);
+    border-bottom: 2px solid var(--border);
+  }
+  .metrics-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    color: #2C3E50;
+  }
+  .metrics-table tr:last-child td { border-bottom: none; }
+
+  .section {
+    padding: 40px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .section:last-child { border-bottom: none; }
+
+  .section h2 {
+    font-size: 1.3rem;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--bg);
+    letter-spacing: -0.01em;
+  }
+
+  .section p { margin-bottom: 16px; color: #2C3E50; }
+  .section p:last-child { margin-bottom: 0; }
+
+  .intro-note {
+    color: var(--gray);
+    font-size: 0.875rem;
+    font-style: italic;
+    margin-bottom: 16px;
+  }
+
+  /* Prose blocks: long-form text with proper paragraph spacing */
+  .prose {
+    font-size: 0.95rem;
+    line-height: 1.75;
+    color: #34495E;
+  }
+  .prose p {
+    margin-bottom: 16px;
+  }
+  .prose p:last-child { margin-bottom: 0; }
+
+  /* Needs pills */
+  .needs-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .need-item {
+    background: var(--bg);
+    border-left: 3px solid var(--teal);
+    padding: 10px 14px;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+  .need-name {
+    font-weight: 700;
+    color: var(--navy);
+    margin-right: 6px;
+  }
+
+  /* Technique cards */
+  .technique-card {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+  .technique-header {
+    background: var(--bg);
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .technique-name {
+    font-weight: 700;
+    color: var(--navy);
+    font-size: 1rem;
+    flex: 1;
+  }
+  .technique-body { padding: 16px; }
+  .technique-field { margin-bottom: 14px; }
+  .technique-field:last-child { margin-bottom: 0; }
+  .technique-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--gray);
+    margin-bottom: 4px;
+  }
+  .technique-text { font-size: 0.9rem; color: #2C3E50; line-height: 1.6; }
+
+  /* Socratic dialogue */
+  .dialogue-round { margin-bottom: 28px; }
+  .dialogue-round:last-child { margin-bottom: 0; }
+  .round-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 10px;
+  }
+  .round-1 .round-label { color: var(--teal); }
+  .round-2 .round-label { color: var(--navy); }
+  .round-3 .round-label { color: #6C3483; }
+
+  .dialogue-bubble {
+    padding: 20px 24px;
+    border-radius: 8px;
+    font-size: 0.92rem;
+    line-height: 1.75;
+  }
+  .dialogue-bubble p { margin-bottom: 12px; }
+  .dialogue-bubble p:last-child { margin-bottom: 0; }
+  .round-1 .dialogue-bubble { background: #EAF7F4; border-left: 4px solid var(--teal); }
+  .round-2 .dialogue-bubble { background: #EAF0F7; border-left: 4px solid var(--navy); }
+  .round-3 .dialogue-bubble { background: #F5EEF8; border-left: 4px solid #6C3483; }
+
+  /* Reframe */
+  .reframe-block {
+    border-left: 4px solid var(--amber);
+    background: #FEF9E7;
+    padding: 20px 20px 20px 24px;
+    border-radius: 0 8px 8px 0;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    font-style: italic;
+    color: #2C3E50;
+  }
+
+  /* Audit findings */
+  .audit-summary {
+    background: var(--bg);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 16px;
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+  .findings-list { list-style: none; }
+  .finding-item {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+  .finding-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: var(--bg);
+    cursor: default;
+  }
+  .finding-category {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--gray);
+  }
+  .finding-severity-low    { color: var(--teal); font-size: 0.75rem; font-weight: 600; }
+  .finding-severity-medium { color: var(--amber); font-size: 0.75rem; font-weight: 600; }
+  .finding-severity-high     { color: var(--red); font-size: 0.75rem; font-weight: 600; }
+  .finding-severity-critical { color: #8B0000; font-size: 0.75rem; font-weight: 700; }
+  .finding-description { font-size: 0.875rem; color: #2C3E50; }
+
+  /* Scoped diagnostics (v0.8.0+) */
+  .diagnostics-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 12px;
+  }
+  @media (max-width: 640px) { .diagnostics-grid { grid-template-columns: 1fr; } }
+  .diagnostic-card {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    background: var(--bg);
+  }
+  .diagnostic-card h4 {
+    margin: 0 0 6px;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--gray);
+  }
+  .diagnostic-card p { margin: 0; font-size: 0.9rem; line-height: 1.6; }
+  .diagnostic-note { font-size: 0.78rem; color: var(--gray); font-style: italic; margin-bottom: 4px !important; }
+  .posture-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    background: #F5F5F5;
+    color: #555;
+  }
+  .posture-inoculation_first  { background: #FFF3E0; color: #E65100; }
+  .posture-relational_first   { background: #E3F2FD; color: #1565C0; }
+  .pattern-density-warning {
+    background: #FFF8E1;
+    border-left: 4px solid var(--amber);
+    padding: 10px 14px;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.875rem;
+    margin-top: 8px;
+  }
+  .finding-body { padding: 10px 14px; border-top: 1px solid var(--border); }
+  .finding-rec {
+    font-size: 0.8rem;
+    color: var(--gray);
+    margin-top: 4px;
+  }
+  .finding-rec strong { color: #2C3E50; }
+
+  /* Scenario navigation */
+  .scenario-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 0;
+    border-top: 1px solid var(--border);
+    margin-top: 16px;
+    gap: 16px;
+  }
+  .scenario-nav a {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--teal);
+  }
+  .scenario-nav .disabled { color: var(--gray); pointer-events: none; }
+
+  /* Responsive */
+  /* Evaluation methodology table */
+  .evaluation-section { background: #FAFBFD; margin: 0 -32px; padding: 40px 32px; border-bottom: 1px solid var(--border); }
+  .eval-summary { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+  .eval-overall { font-size: 2rem; font-weight: 700; color: var(--navy); }
+  .eval-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  .eval-table th { text-align: left; padding: 10px 12px; border-bottom: 2px solid var(--border); color: var(--gray); font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; }
+  .eval-table td { padding: 10px 12px; border-bottom: 1px solid #EEF1F5; }
+  .eval-table td:first-child { font-weight: 600; text-transform: capitalize; }
+  .eval-weight, .eval-score { text-align: center; font-variant-numeric: tabular-nums; }
+  .eval-status { text-align: center; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.04em; }
+  .eval-pass .eval-status { color: var(--green); }
+  .eval-partial .eval-status { color: var(--amber); }
+  .eval-fail .eval-status { color: var(--red); }
+  .eval-desc { color: var(--gray); font-size: 0.8rem; }
+  .eval-note { margin-top: 16px; font-size: 0.82rem; color: var(--gray); line-height: 1.6; }
+
+  /* Essay page styles */
+  .essay-prose {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #2C3E50;
+    max-width: 760px;
+  }
+  .essay-prose h2 {
+    font-size: 1.35rem;
+    margin-top: 40px;
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--bg);
+  }
+  .essay-prose h3 {
+    font-size: 1.1rem;
+    margin-top: 28px;
+    margin-bottom: 10px;
+    color: var(--navy);
+  }
+  .essay-prose h4 {
+    font-size: 1rem;
+    margin-top: 20px;
+    margin-bottom: 8px;
+    color: #34495E;
+  }
+  .essay-prose p { margin-bottom: 18px; }
+  .essay-prose ul, .essay-prose ol { margin: 0 0 18px 24px; }
+  .essay-prose li { margin-bottom: 8px; line-height: 1.75; }
+  .essay-prose strong { color: var(--navy); font-weight: 700; }
+  .essay-prose em { font-style: italic; }
+  .essay-prose hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 36px 0;
+  }
+  .essay-prose blockquote {
+    border-left: 4px solid var(--teal);
+    padding: 8px 20px;
+    margin: 20px 0;
+    background: var(--bg);
+    color: #34495E;
+    font-style: italic;
+  }
+  .essay-prose code {
+    background: var(--bg);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: 'SFMono-Regular', Consolas, monospace;
+    font-size: 0.88em;
+  }
+  .essay-prose .essay-meta {
+    color: var(--gray);
+    font-size: 0.875rem;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .essay-prose .references {
+    font-size: 0.88rem;
+    color: #34495E;
+    line-height: 1.65;
+  }
+  .essay-prose .references p { margin-bottom: 10px; }
+
+  /* Essay card styles (index page) */
+  .essay-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px;
+    transition: box-shadow 0.15s;
+    display: flex;
+    flex-direction: column;
+  }
+  .essay-card:hover { box-shadow: 0 4px 16px rgba(27, 42, 74, 0.12); }
+  .essay-card .card-id { color: #6C3483; }
+  .essay-card h3 {
+    font-size: 1.15rem;
+    margin-bottom: 8px;
+    line-height: 1.35;
+  }
+  .essay-card .essay-summary {
+    color: #34495E;
+    font-size: 0.92rem;
+    line-height: 1.6;
+    flex: 1;
+    margin-bottom: 14px;
+  }
+  .essay-card .essay-date {
+    font-size: 0.8rem;
+    color: var(--gray);
+    margin-bottom: 10px;
+  }
+
+  @media (max-width: 640px) {
+    .site-header h1 { font-size: 1.5rem; }
+    .cards-grid { grid-template-columns: 1fr; }
+    .scenario-header h1 { font-size: 1.3rem; }
+    .scenario-nav { flex-direction: column; align-items: flex-start; }
+    .metrics-table { font-size: 0.8rem; }
+    .metrics-table th, .metrics-table td { padding: 8px 10px; }
+    .essay-prose { font-size: 0.95rem; }
+    .essay-prose h2 { font-size: 1.2rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a href="index.html">Gallery</a>
+    <a href="graph.html">Knowledge Graph</a>
+  </div>
+</nav>
+
+<header class="scenario-header">
+  <div class="content">
+    <a class="back-link" href="index.html">&larr; Back to gallery</a>
+    <h1>HS-06: COVID was created in a lab and the governments covered it up.</h1>
+    <div class="header-meta">
+      <span class="badge badge-version">v1</span>
+      <span class="badge badge-hard">Hard</span>
+      <span class="badge badge-kernel-true">Kernel of Truth</span>
+      <span class="badge badge-version">Health &amp; Science</span>
+    </div>
+  </div>
+</header>
+
+<main class="content">
+
+  <div class="section">
+    <h2>Pipeline Metrics</h2>
+    <table class="metrics-table">
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Sub-claims</td><td>10</td></tr>
+        <tr><td>Actors identified</td><td>24</td></tr>
+        <tr><td>TTP matches</td><td>14</td></tr>
+        <tr><td>Audit verdict</td><td><span class="badge badge-warnings">PASS WITH WARNINGS</span></td></tr>
+        <tr><td>Pipeline version</td><td>6-agent Method 2</td></tr>
+        <tr><td>Overall confidence</td><td>62%</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2>Universal Needs</h2>
+    <p class="intro-note">The legitimate human needs this claim speaks to, regardless of whether the claim is accurate.</p>
+    <div class="needs-list"><div class="need-item"><span class="need-name">Safety:</span>People want to know whether the worst pandemic in a century could happen again, whether the conditions that produced it (lab biosecurity, wildlife-trade exposure, or both) are being addressed, and whether their children are safer now than in 2019.</div><div class="need-item"><span class="need-name">Transparency:</span>People want institutions to be honest about what they know, what they do not know, what they suppressed, and why; the demand for transparency is not partisan, and it strengthens rather than weakens public health.</div><div class="need-item"><span class="need-name">Trust:</span>Trust in scientific and public-health institutions has been seriously damaged by documented suppression of legitimate hypotheses, undisclosed conflicts of interest, and the gap between private uncertainty and public certainty; rebuilding trust requires acknowledging what went wrong.</div><div class="need-item"><span class="need-name">Accountability:</span>People want those responsible for institutional failures (whether at WIV, at NIH/EcoHealth, at platforms, at the Lancet, or at the WHO) to be named and consequences to follow; this is a legitimate civic demand, not conspiratorial.</div><div class="need-item"><span class="need-name">Truth:</span>Across the disagreement, almost everyone wants to know what actually happened in Wuhan in late 2019; the dispute is about how to weigh genuinely partial evidence, not about whether the question matters.</div></div>
+  </div>
+
+  <div class="section">
+        <h2>Scientific Consensus / Mainstream Explanation</h2>
+        <p class="intro-note">The established scientific or institutional explanation for this phenomenon.</p>
+        <div class="prose"><p>Looking at the evidence across multiple independent sources as it currently stands, the honest picture is genuinely unresolved on origin and partially supported on cover-up, with terminal-frame escalations not supported. On origin: DOE intelligence assessed research-related origin as more likely than not at low confidence (Feb 2023 reporting); FBI assessed at moderate confidence; four agencies and the National Intelligence Council lean toward natural spillover at low confidence; CIA remains undecided. The Wuhan Institute of Virology conducted relevant bat-coronavirus research, the DEFUSE proposal (2018, not funded by DARPA) discussed engineering features later observed in SARS-CoV-2, the Sept 2019 WIV database deletion remains unexplained, and Chinese government access controls have prevented independent verification. The Worobey/Pekar/Andersen 2022 papers in Science and the broader natural-spillover case (Huanan Seafood Market clustering, environmental sampling, phylogenetic structure) constitute substantial but contested evidence for a market-mediated zoonotic event. As Alina Chan and others have argued, both hypotheses remain live, and a definitive resolution would likely require access that the Chinese government has not provided. On cover-up: the Lancet letter (Feb 2020) organized by Daszak without disclosing his EcoHealth conflict of interest, the Proximal Origin paper whose authors&#39; private Slack deliberations showed real uncertainty preceding public certainty, the social-media platform suppression of lab-leak discussion later acknowledged by Facebook as error, and the constrained WHO joint study are all documented institutional failures. They constitute partial support for a &#39;cover-up&#39; framing in the sense of premature foreclosure, professional self-protection, and geopolitical constraint, but the maximalist version of the claim, that governments globally coordinated to conceal a known laboratory origin, requires evidence of coordination and prior knowledge that is not present in the available record. The terminal-frame escalation, that SARS-CoV-2 was deliberately released, finds no evidentiary support beyond circumstantial inference and rhetorical assertion.</p></div>
+      </div>
+
+  <div class="section">
+        <h2>Name the Trick</h2>
+        
+    <div class="technique-card">
+      <div class="technique-header">
+        <span class="technique-name">Suppress Inconvenient Evidence (initial establishment direction)</span>
+        <span class="badge badge-systematic">[SYSTEMATIC]</span>
+      </div>
+      <div class="technique-body">
+        
+        <div class="technique-field">
+          <div class="technique-label">Used by</div>
+          <div class="technique-text">Scientific establishment, the Lancet, platform moderation teams, and major media in 2020-2021</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">How it works</div>
+          <div class="technique-text">A legitimate scientific hypothesis was prematurely foreclosed by institutional gatekeeping, undisclosed conflicts of interest, and content moderation; the moderation was later acknowledged as overcorrection but the trust damage was already done</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">In this claim</div>
+          <div class="technique-text">Lancet letter (Feb 2020), Proximal Origin (March 2020), Facebook policy removing &#39;man-made&#39; COVID claims (Feb 2021), parallel platform moderation, mainstream-press characterization of lab-leak proponents as cranks until May 2021; this is the manipulation by the scientific establishment that occurred before any counter-manipulation arose on the cover-up side</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">Historical precedent</div>
+          <div class="technique-text">Pre-publication institutional resistance to the ulcer-bacterium hypothesis (Marshall and Warren); pattern of establishment foreclosure followed by vindication</div>
+        </div>
+      </div>
+    </div>
+    <div class="technique-card">
+      <div class="technique-header">
+        <span class="technique-name">Leverage Legitimate Grievances</span>
+        <span class="badge badge-systematic">[SYSTEMATIC]</span>
+      </div>
+      <div class="technique-body">
+        
+        <div class="technique-field">
+          <div class="technique-label">Used by</div>
+          <div class="technique-text">Cover-up narrative entrepreneurs</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">How it works</div>
+          <div class="technique-text">The real and documented suppression, conflict of interest, and constrained inquiry are used as on-ramps to claims that those failures themselves do not support, namely deliberate coordinated concealment of a known truth and terminal-frame deliberate-release narratives</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">In this claim</div>
+          <div class="technique-text">Genuine vindication of lab-leak inquiry is extended into vindication of conspiracy framings the original suppression critique never claimed</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">Historical precedent</div>
+          <div class="technique-text">Anti-fluoridation movement built on real industrial-pollution incidents to attack municipal water systems</div>
+        </div>
+      </div>
+    </div>
+    <div class="technique-card">
+      <div class="technique-header">
+        <span class="technique-name">Dismiss Criticism</span>
+        <span class="badge badge-isolated">[ISOLATED]</span>
+      </div>
+      <div class="technique-body">
+        
+        <div class="technique-field">
+          <div class="technique-label">Used by</div>
+          <div class="technique-text">Scientific establishment in 2020-2022 and pro-natural-origin commentators since</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">How it works</div>
+          <div class="technique-text">Bundles legitimate methodological critique with terminal-frame content under shared &#39;misinformation&#39; or &#39;conspiracy theory&#39; labels, preventing distinction between rigorous inquiry and unsupported escalation</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">In this claim</div>
+          <div class="technique-text">Wade, Chan, Ridley, DRASTIC, and Senate HELP staff dismissed as conspiracy-adjacent until DOE leak forced reframing; Worobey/Pekar work sometimes still dismissed by skeptic side as captured</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">Historical precedent</div>
+          <div class="technique-text">Climate establishment occasionally dismissed legitimate methodological critique as denialism</div>
+        </div>
+      </div>
+    </div>
+    <div class="technique-card">
+      <div class="technique-header">
+        <span class="technique-name">Conflate Distinct Hypotheses</span>
+        <span class="badge badge-systematic">[SYSTEMATIC]</span>
+      </div>
+      <div class="technique-body">
+        
+        <div class="technique-field">
+          <div class="technique-label">Used by</div>
+          <div class="technique-text">Both sides</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">How it works</div>
+          <div class="technique-text">Treats natural spillover, research-related accident, and deliberate engineering and release as a single binary; vindication or refutation of one piece is treated as vindication or refutation of all</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">In this claim</div>
+          <div class="technique-text">DOE &#39;low confidence&#39; assessment rendered as &#39;bioweapon admitted&#39;; Huanan market evidence rendered as &#39;lab leak fully debunked&#39;; both moves collapse a genuine probability distribution into team positioning</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">Historical precedent</div>
+          <div class="technique-text">Climate debate flattened multiple distinct claims into single binary</div>
+        </div>
+      </div>
+    </div>
+    <div class="technique-card">
+      <div class="technique-header">
+        <span class="technique-name">Emotional Appeals</span>
+        <span class="badge badge-isolated">[ISOLATED]</span>
+      </div>
+      <div class="technique-body">
+        
+        <div class="technique-field">
+          <div class="technique-label">Used by</div>
+          <div class="technique-text">All sides</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">How it works</div>
+          <div class="technique-text">The scale of suffering (millions of deaths) gives moral weight to demands for accountability that can outrun the available evidence; institutional defense framings also mobilize grief to delegitimize inquiry</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">In this claim</div>
+          <div class="technique-text">&#39;Someone must answer for this&#39; (cover-up) and &#39;do not insult the dead with conspiracy theories&#39; (defense) both operate emotionally before evidentially</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">Historical precedent</div>
+          <div class="technique-text">Post-9/11 commission process featured similar emotional and evidentiary tensions</div>
+        </div>
+      </div>
+    </div>
+    <div class="technique-card">
+      <div class="technique-header">
+        <span class="technique-name">Recontextualize Content</span>
+        <span class="badge badge-systematic">[SYSTEMATIC]</span>
+      </div>
+      <div class="technique-body">
+        
+        <div class="technique-field">
+          <div class="technique-label">Used by</div>
+          <div class="technique-text">Cross-platform actors on the cover-up side</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">How it works</div>
+          <div class="technique-text">Standard documents are reframed in maximalist contexts that invert their meaning</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">In this claim</div>
+          <div class="technique-text">DEFUSE proposal (rejected, never funded) rendered as &#39;blueprint&#39;; DOE low-confidence assessment rendered as &#39;official confirmation&#39;; Proximal Origin private uncertainty rendered as &#39;they admitted in private it was a lie&#39;</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">Historical precedent</div>
+          <div class="technique-text">Climategate emails recontextualized as conspiracy evidence in 2009</div>
+        </div>
+      </div>
+    </div>
+      </div>
+
+  
+  <div class="section">
+    <h2>Inferential Gap</h2>
+    <p class="intro-note">Where the evidence ends and the leap begins.</p>
+    <div class="prose"><p>The evidence supports several intermediate conclusions: the lab-leak hypothesis is a live possibility on credible technical grounds, the early public foreclosure of that hypothesis was wrong and damaging, undisclosed conflicts of interest at the Lancet and elsewhere were real, Chinese government obstruction of inquiry is documented, and pharmacovigilance and biosecurity systems failed to surface and address the question candidly. The unsupported inferential leaps are: from &#39;lab-related origin is possible and was wrongly suppressed&#39; to &#39;lab-related origin is established&#39;; from &#39;institutions foreclosed the hypothesis prematurely and protected themselves&#39; to &#39;governments globally coordinated to conceal a known truth&#39;; and most starkly, from &#39;lab-related origin is possible&#39; to &#39;the virus was deliberately released as a bioweapon or depopulation agent.&#39; Each leap multiplies the evidentiary requirement; the strongest version of the original claim makes all three at once.</p></div>
+  </div>
+
+  <div class="section">
+    <h2>Common Ground</h2>
+    <div class="prose"><p>When the political coding is set aside, the area of shared ground is wider than the cable-news framing suggests. Almost everyone now acknowledges that the lab-leak hypothesis was prematurely suppressed in 2020-2021, that platforms and the Lancet letter and the original Proximal Origin framing overreached, and that the Wuhan Institute of Virology conducted relevant research whose records and samples have not been independently accessible. Almost everyone agrees that EcoHealth Alliance&#39;s conflict of interest was real and undisclosed, that the WHO joint study was constrained by Chinese government access controls, and that the Proximal Origin authors&#39; private deliberations did not match the certainty of their published conclusions. Almost everyone agrees that biosecurity oversight of gain-of-function and gain-of-function-adjacent work was, by most accounts, inadequate. The real disagreement is much narrower: it is whether the documented institutional failures rise to the level of a coordinated global cover-up of a known truth, and whether the lab-related origin is so well-established that the natural-spillover evidence (Huanan market clustering, environmental sampling, phylogenetic structure) can be set aside. Those are real disagreements, but they sit inside a much larger frame of shared concern.</p></div>
+  </div>
+
+  <div class="section">
+    <h2>Narrative Deconstruction</h2>
+    <div class="prose"><p>This claim escalates through stages that begin in solid ground and gradually leave the evidence behind. Stage one is well-supported: the lab-leak hypothesis is a live scientific possibility, with DOE assessing it as more likely than not at low confidence, FBI at moderate confidence, and substantial circumstantial support including WIV&#39;s research portfolio, the DEFUSE proposal, the Sept 2019 database deletion, and the WIV-to-Huanan-Market geography. Stage two is also well-supported: there was a partial cover-up in the sense of premature suppression of the hypothesis, undisclosed conflicts of interest at the Lancet, platform moderation later acknowledged as overcorrection, and a constrained WHO investigation. Stage three is where the leap occurs: the inference from these documented failures to a deliberate global cover-up of a known laboratory origin requires evidence that is not present, since the institutional behavior is also consistent with self-protection, professional defensiveness, and geopolitical constraint rather than coordinated concealment of a known truth. Stage four, the terminal frame (deliberate release, depopulation, bioweapon), abandons evidence entirely and requires assuming coordinated international action of a scale never previously documented. The architecture of this escalation is what makes it persuasive: each stage is locally plausible to someone who has accepted the previous stage, even though stages one and four make radically different claims with radically different evidentiary requirements.</p></div>
+  </div>
+
+  
+    <div class="section">
+      <h2>Feasibility Assessment</h2>
+      <div class="prose"><p>For the maximalist version of the claim (deliberate release coordinated across governments) to hold, multiple independent national governments and intelligence services with sharply divergent geopolitical interests (US, UK, Australia, Japan, France, Germany, Israel, India) would need to have agreed to a unified concealment despite strong incentives to expose adversary culpability; thousands of academic researchers, journalists, and platform employees across competing institutions and political systems would need to have stayed silent despite whistleblower incentives, career rewards, and explicit FOIA disclosures; the same intelligence community that publicly produced a split assessment with DOE and FBI dissents would need to be simultaneously executing a concealment those agencies were defecting from; and the documented natural-spillover evidence (Huanan market clustering, intermediate-host research, phylogenetic structure) would need to have been manufactured. For the moderate version (lab-related origin probable, premature suppression occurred, institutional self-protection followed) very few additional conditions are required, and most are documented. For the strong-but-narrow version (lab origin confirmed, deliberate concealment of known truth) the conditions remain unproven; the publicly available evidence supports premature foreclosure and conflict-of-interest concealment, not certainty about origin or coordinated knowledge of the truth being concealed.</p></div>
+    </div>
+
+  
+    <div class="section">
+      <h2>Commercial Interests</h2>
+      <div class="prose"><p>On the institutional-defense side: NIH/NIAID, EcoHealth Alliance, and the broader virus-hunting research program have hundreds of millions of dollars in continued funding at stake; pharmaceutical and biotech companies benefit from a natural-origin framing that protects continued mRNA platform investment; the WHO operates under member-state funding that includes substantial Chinese contribution. On the lab-leak side: the alternative-media economy has grown substantially around origin-skeptic content, with figures like Brett Weinstein, Joe Rogan, RFK Jr., Children&#39;s Health Defense, and the broader podcast/Substack/book ecosystem deriving significant revenue from cover-up framing; political coalitions have made the question identity-defining. On the geopolitical side: the Chinese government has clear sovereign interest in non-disclosure regardless of what happened; the US national-security establishment has interest in framing that supports its strategic competition with China; Russian state media has used origin claims for asymmetric advantage. None of these interests proves any particular hypothesis true or false, but all are relevant when evaluating sourcing on every side.</p></div>
+    </div>
+
+  
+    <div class="section">
+      <h2>Perception Gap</h2>
+      <div class="prose"><p>Believers in this claim often assume that those who urge caution must be either credulous about institutions, financially aligned with NIH/pharma/EcoHealth, or so committed to scientific authority that they cannot acknowledge documented failures; in reality, most thoughtful pushback now openly acknowledges the lab-leak hypothesis is live, that the early suppression was wrong, that the Lancet conflict of interest was real, that the WHO study was constrained, and that the Proximal Origin private/public gap is documented. Critics of the claim often assume believers are conspiracy-minded, geopolitically motivated, or recruited into terminal frames; in reality, many believers are responding to genuine vindication of a hypothesis they were told was conspiracy theory, to real institutional failures, and to the legitimate observation that the system did not work transparently. The gap between perceived and actual positions is wide on both sides, and motivated content creators, on both sides, harvest attention and money from that gap.</p></div>
+    </div>
+
+  <div class="section">
+    <h2>Socratic Dialogue</h2>
+    <p class="intro-note">A model conversation demonstrating how to engage someone who holds this belief.</p>
+    
+    <div class="dialogue-round round-1">
+      <div class="round-label">Round 1: Perspective-Getting</div>
+      <div class="dialogue-bubble"><p>I want to start by acknowledging that the core of this claim is holding something real, and something the system itself has now partially conceded. The lab-leak hypothesis is a legitimate scientific possibility, not a conspiracy theory. DOE intelligence assessed a research-related origin as more likely than not at low confidence in early 2023, FBI assessed it at moderate confidence, and the broader intelligence community remains genuinely split. The Wuhan Institute of Virology conducted relevant coronavirus research, the DEFUSE proposal in 2018 specifically discussed engineering features later observed in SARS-CoV-2, and the WIV virus sequence database was taken offline in September 2019 in a way that has never been adequately explained. On the cover-up side, the Lancet letter in February 2020 was organized by Peter Daszak without disclosing that EcoHealth Alliance directly funded WIV; the Proximal Origin authors&#39; private Slack messages, later released under subpoena, showed real uncertainty preceding their published certainty; Facebook removed &#39;man-made&#39; COVID content for over a year and later acknowledged the moderation was wrong; the WHO joint study was constrained by Chinese government access controls; and researchers like Alina Chan, Nicholas Wade, and the DRASTIC collective who raised the question in good faith were treated as cranks for too long. Anyone holding the cover-up framing is holding at least a piece of something that the record now substantially supports, and we do not get anywhere honest by pretending otherwise.</p></div>
+    </div>
+    <div class="dialogue-round round-2">
+      <div class="round-label">Round 2: Guided Examination</div>
+      <div class="dialogue-bubble"><p>Where this becomes harder, and I think it is genuinely worth sitting with together, is that the same record also contains things that pull against the strongest version of the claim. The natural-spillover hypothesis is not empty; it has substantial evidence, including the Huanan Seafood Market case clustering analyzed by Worobey, Pekar, and Andersen in Science in 2022, the environmental sampling at the market, the phylogenetic structure of early SARS-CoV-2 lineages, and the documented pattern of prior coronavirus emergence (SARS-CoV-1 in 2002-2003, MERS in 2012). Both hypotheses remain live precisely because the evidence is partial on both sides. On the cover-up framing: documented institutional failures, premature suppression, undisclosed conflicts of interest, and constrained inquiry are real, and they support a fair critique of how the system handled the question; but they also coexist with self-protective behavior, professional defensiveness, and geopolitical constraint that do not require coordinated global concealment of a known truth. The strongest evidence we have is consistent with multiple stories: institutional self-protection without prior knowledge, premature foreclosure without coordinated intent, and yes, lab-related origin with concealment, but also natural spillover with constrained inquiry. The honest position holds all of these as live, and the leap to deliberate release as a bioweapon or depopulation tool is a much larger leap that the available evidence does not currently sustain. None of this erases the institutional failures; it just means the picture is genuinely more complicated than either &#39;natural origin, case closed&#39; or &#39;they did it on purpose and covered it up.&#39;</p></div>
+    </div>
+    <div class="dialogue-round round-3">
+      <div class="round-label">Round 3: Integration</div>
+      <div class="dialogue-bubble"><p>So if we take both of those seriously together, the documented suppression and the documented natural-origin evidence, the partial support for cover-up framing and the absence of evidence for deliberate release, here is what I keep coming back to and I would really like to know how you see it: given that the lab-leak hypothesis is genuinely live and was wrongly suppressed, given that institutional failures during the pandemic were real and have eroded trust for understandable reasons, given that the Chinese government continues to obstruct independent inquiry, and given that the maximalist deliberate-release framing extends well beyond what the evidence currently supports, what would an honest accountability framework look like that names the institutional failures we can document (Lancet conflict of interest, Proximal Origin gap, platform overreach, EcoHealth disclosure failures, WIV access denial), demands the transparency that has not yet been provided (WIV records, raw early case data, Sept 2019 database content), strengthens gain-of-function and biosecurity oversight, and still holds open both natural-spillover and lab-related-origin hypotheses as live until evidence resolves them, without either collapsing into &#39;it was definitely a deliberate bioweapon&#39; or &#39;lab leak was always conspiracy theory&#39;?</p></div>
+    </div>
+  </div>
+
+  
+  <div class="section">
+    <h2>Reframe</h2>
+    <blockquote class="reframe-block">What we share, across this disagreement, is the demand that institutions be honest about what they know and what they do not know, that hypotheses with serious evidentiary support be pursued rather than foreclosed, that conflicts of interest be disclosed, and that the worst pandemic in a century not be left without the most rigorous origin inquiry that international cooperation can sustain. Together, we can press for full release of WIV records and the Sept 2019 database, for unconstrained independent international investigation, for biosecurity oversight reform that takes gain-of-function-adjacent work seriously, for platform moderation policies that do not foreclose live scientific hypotheses, and for institutional accountability that names specific failures (Lancet, EcoHealth disclosure, Proximal Origin gap, WHO constraint) without either dismissing them or escalating them into claims the evidence does not yet support.</blockquote>
+  </div>
+
+  
+  <div class="section">
+    <h2>Response Strategy Signals</h2>
+    <p class="intro-note">Signals guiding how this analysis might be communicated effectively. Advisory to communicators, not a characterisation of the reader.</p>
+    <div class="diagnostics-grid">
+      <div class="diagnostic-card">
+        <h4>Communication Posture</h4>
+        <p><span class="posture-badge ">Relational First With Maximum Epistemic Humility And Validation Of Suppression Critique</span></p>
+      </div>
+<div class="diagnostic-card">
+        <h4>Pattern Density</h4>
+        <div class="pattern-density-warning">High pattern density detected in claim structure. The claim is structured to encourage over-connection between unrelated elements.</div>
+      </div>
+<div class="diagnostic-card">
+        <h4>Credibility Gap</h4>
+        <p class="diagnostic-note">Narrative pattern description; no specific publisher or outlet identified.</p>
+        <p>This narrative fills a vacuum left by an early-pandemic information environment in which the lab-leak hypothesis was wrongly characterized as conspiracy theory by major scientific journals, platforms, and mainstream press, even as honest researchers in private (including some of the Proximal Origin authors) acknowledged real uncertainty. When people sensed that the conversation was being foreclosed, when they noticed that Peter Daszak had organized the Lancet letter without disclosing his funding to WIV, when they saw their friends suspended from social media for raising the hypothesis that the US intelligence community now treats as a live possibility, the official story stopped being credible to them and the cover-up framing offered a place to put what they had observed. The remedy is not to dismiss the cover-up framing wholesale but to build inquiry and disclosure systems that actually meet the legitimate demand for transparency, so that the vacuum does not need to be filled by maximalist framings that extend well beyond what even the documented failures support.</p>
+      </div>
+<div class="diagnostic-card">
+        <h4>Prebunking Note</h4>
+        <p>Before encountering claims about COVID origins and cover-up, five facts are worth holding together. First, the lab-leak hypothesis is a legitimate scientific possibility supported by DOE and FBI intelligence assessments at varying low and moderate confidence, by the Wuhan Institute&#39;s research portfolio, by the DEFUSE proposal, and by Chinese government obstruction of inquiry; it is not conspiracy theory. Second, the early suppression of that hypothesis by the Lancet letter, the Proximal Origin paper, and major platforms was wrong, and the institutional failures that produced it (undisclosed conflicts of interest, premature certainty, geopolitical constraint) are documented. Third, the natural-spillover hypothesis is also live and has substantial evidence including Huanan market case clustering, environmental sampling, phylogenetic structure, and the documented prior pattern of coronavirus emergence; both hypotheses remain on the table. Fourth, the leap from &#39;documented institutional failures and possible lab-related origin&#39; to &#39;coordinated global cover-up of known truth&#39; is an evidentiary jump that the public record does not currently sustain; that leap requires conditions (cross-government coordination, suppression of incentivized whistleblowers, manufactured natural-origin evidence) that are themselves unsupported. Fifth, the terminal framing of deliberate release, bioweapon, or depopulation abandons evidence entirely; when someone moves from &#39;lab origin possible&#39; to &#39;released on purpose,&#39; they are asking you to make a leap the available data does not justify, regardless of how much real institutional failure preceded the leap.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Audit</h2>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+      <span>Verdict:</span>
+      <span class="badge badge-warnings">PASS WITH WARNINGS</span>
+    </div>
+    <div class="audit-summary">Analysis maintains maximum epistemic humility appropriate to the most genuinely contested scenario in the suite, treats both natural-spillover and lab-related-origin hypotheses as live, validates the suppression critique with documented evidence (Lancet conflict of interest, Proximal Origin private/public gap, platform overcorrection, WHO constraint, EcoHealth disclosure failures), and identifies the escalation point where evidence stops (the leap from &#39;documented institutional failures and possible lab-related origin&#39; to &#39;coordinated global cover-up of known truth&#39; and the further leap to &#39;deliberate release&#39;). Techniques are attributed on both sides including the initial suppression of lab-leak discussion by the scientific establishment, the Lancet, and major platforms in 2020-2021 as the first-mover manipulation. Two medium findings on natural-origin evidence contestation and global-mortality integration; one medium finding on potential reader resistance to inferential-gap argument; all correctable without re-running pipeline. No forbidden phrases detected. Round 3 ends with question mark. Consensus explanation exceeds 300 chars and includes mechanism keywords (intelligence, assessment, evidence, research, study, documented, observed, sampling, sequencing). Issue overlap and narrative deconstruction exceed 200 chars. All three socratic rounds exceed 200 chars. The framework holds genuine uncertainty as requested and does not take a premature position on origin.</div>
+    <ul class="findings-list">
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">epistemic_humility</span>
+        <span class="finding-severity-low">LOW</span>
+        <span class="finding-description">The framework correctly holds both hypotheses live and refuses premature resolution; consensus_explanation and...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">The framework correctly holds both hypotheses live and refuses premature resolution; consensus_explanation and feasibility_check explicitly maintain genuine uncertainty rather than defaulting to either prior</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> No correction needed; this is the most contested scenario in the suite and the calibration is appropriate</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">Completeness</span>
+        <span class="finding-severity-medium">MEDIUM</span>
+        <span class="finding-description">Worobey/Pekar/Andersen 2022 natural-origin papers are cited but their methodological critiques (raised by Chan, Bloom,...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">Worobey/Pekar/Andersen 2022 natural-origin papers are cited but their methodological critiques (raised by Chan, Bloom, Massey and others) are not engaged in detail; readers may want a sense of how contested the natural-origin evidence itself is</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Add brief acknowledgment that the natural-origin evidence base is itself contested on methodological grounds in next iteration</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">Completeness</span>
+        <span class="finding-severity-low">LOW</span>
+        <span class="finding-description">The Sept 2019 WIV database deletion is mentioned but not given the prominence its evidentiary weight may warrant; this...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">The Sept 2019 WIV database deletion is mentioned but not given the prominence its evidentiary weight may warrant; this is one of the strongest unexplained data points for the lab-related hypothesis</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Strengthen narrative around database deletion in next iteration</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">Accuracy</span>
+        <span class="finding-severity-low">LOW</span>
+        <span class="finding-description">DOE &#39;low confidence&#39; and FBI &#39;moderate confidence&#39; levels are correctly characterized; the National Intelligence...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">DOE &#39;low confidence&#39; and FBI &#39;moderate confidence&#39; levels are correctly characterized; the National Intelligence Council and four other agencies&#39; &#39;low confidence&#39; natural-origin assessments are also correctly noted</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> No correction needed</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">framing</span>
+        <span class="finding-severity-low">LOW</span>
+        <span class="finding-description">TTPs section explicitly attributes &#39;Suppress Inconvenient Evidence&#39; to the scientific establishment in 2020-2021 as...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">TTPs section explicitly attributes &#39;Suppress Inconvenient Evidence&#39; to the scientific establishment in 2020-2021 as primary first-mover, addressing the user requirement for techniques on both sides including establishment manipulation</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> No correction needed; symmetry is intentional and well-documented</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">Completeness</span>
+        <span class="finding-severity-medium">MEDIUM</span>
+        <span class="finding-description">Long-COVID and the global death toll receive moral acknowledgment but are not integrated into the accountability...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">Long-COVID and the global death toll receive moral acknowledgment but are not integrated into the accountability framework; the scale of suffering should arguably figure more prominently in the reframe</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Strengthen integration of global mortality figure (~7M confirmed, ~15-30M excess) into reframe in next iteration</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">ethics</span>
+        <span class="finding-severity-medium">MEDIUM</span>
+        <span class="finding-description">Socratic dialogue Round 1 strongly validates suppression critique and explicitly acknowledges substantial vindication;...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">Socratic dialogue Round 1 strongly validates suppression critique and explicitly acknowledges substantial vindication; readers who hold the maximalist deliberate-release framing may experience Round 3 as still demanding more epistemic restraint than they feel the evidence requires</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Consider whether explicit acknowledgment that some readers will reject the inferential-gap argument should be added; current handling is defensible but worth flagging</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">Bias</span>
+        <span class="finding-severity-low">LOW</span>
+        <span class="finding-description">The framework names commercial motives on both sides (NIH/pharma funding stake; alternative-media economy growth) and...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">The framework names commercial motives on both sides (NIH/pharma funding stake; alternative-media economy growth) and geopolitical motives in multiple directions (Chinese sovereignty, US strategic competition, Russian asymmetric advantage)</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> No correction needed</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">methodology</span>
+        <span class="finding-severity-low">LOW</span>
+        <span class="finding-description">DISARM confidence scores presented to 0.01 precision without stated calibration method</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-rec"><strong>Recommendation:</strong> Document calibration approach or round to nearest 0.05 in future iterations</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">language</span>
+        <span class="finding-severity-low">LOW</span>
+        <span class="finding-description">Audit scanned for forbidden phrases (&#39;the truth is&#39;, &#39;experts agree&#39;, &#39;you were misled&#39;, &#39;you fell for&#39;, &#39;you should...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">Audit scanned for forbidden phrases (&#39;the truth is&#39;, &#39;experts agree&#39;, &#39;you were misled&#39;, &#39;you fell for&#39;, &#39;you should know&#39;, &#39;the fact is&#39;, &#39;everyone knows&#39;, &#39;it&#39;s obvious&#39;, &#39;you need to understand&#39;); none detected. Round 3 ends with question mark. We/us/together language used throughout bridge</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> No correction needed</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">Completeness</span>
+        <span class="finding-severity-low">LOW</span>
+        <span class="finding-description">Sub-claim 10 (duty to communicate uncertainty honestly) is decomposed but underdeveloped in the bridge; could be woven...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">Sub-claim 10 (duty to communicate uncertainty honestly) is decomposed but underdeveloped in the bridge; could be woven into the reframe more explicitly</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Strengthen explicit duty-to-disclose framing in reframe in next iteration</div>
+      </div>
+    </li></ul>
+  </div>
+
+  
+    <div class="section evaluation-section">
+      <h2>Evaluation Methodology</h2>
+      <p class="intro-note">Full transparency on how this scenario was scored. 12 weighted checks, each independently measurable. <a href="https://github.com/Jochen-s/huginn-muninn/blob/main/tests/run_bridge_scenarios.py" target="_blank" rel="noopener">View source code</a></p>
+      <div class="eval-summary">
+        <span class="eval-overall">95.8%</span>
+        <span class="badge badge-pass">Grade A</span>
+      </div>
+      <div style="overflow-x:auto">
+        <table class="eval-table">
+          <thead>
+            <tr>
+              <th>Check</th>
+              <th>Weight</th>
+              <th>Score</th>
+              <th>Status</th>
+              <th>What It Measures</th>
+            </tr>
+          </thead>
+          <tbody><tr class="eval-pass">
+      <td>needs coverage</td>
+      <td class="eval-weight">7%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Expected universal human needs matched against identified needs</td>
+    </tr><tr class="eval-pass">
+      <td>issue overlap quality</td>
+      <td class="eval-weight">6%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Common ground text is substantive (&gt;50 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>narrative deconstruction</td>
+      <td class="eval-weight">7%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Narrative deconstruction is substantive (&gt;100 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>consensus explanation</td>
+      <td class="eval-weight">11%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Scientific/mainstream explanation &gt;200 chars with 3+ mechanism keywords</td>
+    </tr><tr class="eval-pass">
+      <td>inferential gap</td>
+      <td class="eval-weight">8%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Inferential gap analysis is substantive (&gt;50 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>feasibility check</td>
+      <td class="eval-weight">6%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Feasibility assessment is substantive (&gt;50 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>commercial motives</td>
+      <td class="eval-weight">6%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Commercial motive analysis is substantive (&gt;30 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>technique naming</td>
+      <td class="eval-weight">8%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">At least 1 technique named with mechanic (&gt;30 chars) and precedent (&gt;20 chars)</td>
+    </tr><tr class="eval-pass">
+      <td>perception gap</td>
+      <td class="eval-weight">5%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Perception gap analysis is substantive (&gt;30 characters)</td>
+    </tr><tr class="eval-partial">
+      <td>socratic dialogue</td>
+      <td class="eval-weight">17%</td>
+      <td class="eval-score">75%</td>
+      <td class="eval-status">PARTIAL</td>
+      <td class="eval-desc">3 rounds, ends with question, Round 1 shows perspective-getting</td>
+    </tr><tr class="eval-pass">
+      <td>reframe quality</td>
+      <td class="eval-weight">7%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Reframe &gt;20 chars using shared-value language (we, together, both)</td>
+    </tr><tr class="eval-pass">
+      <td>no controlling language</td>
+      <td class="eval-weight">12%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Zero matches against 9 controlling phrases</td>
+    </tr></tbody>
+        </table>
+      </div>
+      <p class="eval-note">Overall score = weighted sum of individual check scores. Weights reflect the relative importance of each dimension to the project's mission: Socratic dialogue quality (17%) and controlling language detection (12%) are weighted highest because autonomy-supportive framing is the core differentiator.</p>
+    </div>
+
+  <div class="scenario-nav">
+    <a href="HS-05.html">&larr; HS-05: Water fluoridation is mass medication without...</a>
+    <a href="index.html">Gallery</a>
+    <a href="HS-07.html">HS-07: The COVID vaccines are causing more harm than... &rarr;</a>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="content">
+    <p>
+      <a href="index.html">Huginn &amp; Muninn Gallery</a> &nbsp;|&nbsp;
+      MIT License &nbsp;|&nbsp;
+      Analysis powered by Claude (Anthropic)
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>
