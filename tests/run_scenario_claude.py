@@ -91,7 +91,10 @@ def _tracer_template(claim: str, decomposition: dict) -> dict:
             "You are an origin tracer for information analysis. Your job is "
             "to identify where claims first appeared, how they propagated, "
             "and how the narrative mutated as it spread. Track the chain from "
-            "original source to current form."
+            "original source to current form. "
+            "Report only what is evident in the claim text or sources you can "
+            "identify. Do not attribute motive, intent, or suppression where "
+            "none is explicitly visible."
         ),
         "user": f"""Trace the origins and propagation of these sub-claims from the claim: "<claim>{safe_claim}</claim>"
 
@@ -105,7 +108,7 @@ For each sub-claim, identify:
 3. Any mutations in the narrative as it spread
 4. The epistemic tradition and geographic region of each source
 
-EPISTEMIC DIVERSITY: Consider sources beyond Western academic and institutional traditions. Include Global South academic institutions, regional bodies, community knowledge, and indigenous knowledge systems where relevant. These are additional sources to consider, not a trust list.
+EPISTEMIC DIVERSITY: Consider sources beyond Western academic and institutional traditions. Include Global South academic institutions, regional bodies, community knowledge, and indigenous knowledge systems where relevant. These are additional sources to consider, not a trust list. Source absence from any registry does not indicate unreliability.
 
 Respond in JSON. IMPORTANT: Each enum field must be EXACTLY ONE value, not combined.
 
@@ -129,6 +132,7 @@ Respond in JSON. IMPORTANT: Each enum field must be EXACTLY ONE value, not combi
       "original": "original statement from source",
       "mutated": "how it was changed",
       "mutation_type": "CHOOSE ONE: distortion, amplification, recontextualization, fabrication, ideological_migration, inversion",
+      "relay_type": "CHOOSE ONE: knowing, unknowing, ambiguous",
       "source": "where the mutation occurred"
     }}
   ],
@@ -141,12 +145,26 @@ Respond in JSON. IMPORTANT: Each enum field must be EXACTLY ONE value, not combi
       "power_context": "who held power and how that shaped the narrative",
       "irony_or_inversion": "any paradoxes or reversals in this era"
     }}
-  ]
+  ],
+  "notable_omissions": ["source type string", "..."]
 }}
 
 Source tiers: 1=scientific/governmental, 2=established journalism, 3=regional/specialized, 4=social media/unknown
 Epistemic traditions: western_academic, western_institutional, global_south_academic, global_south_institutional, community_experiential, indigenous_knowledge, unclassified (DEFAULT when unclear)
-Mutation types: distortion=facts changed, amplification=signal boosted, recontextualization=moved to new context, fabrication=invented, ideological_migration=claim moved between political camps, inversion=claim now applies to its original proponents""",
+Mutation types: distortion=facts changed, amplification=signal boosted, recontextualization=moved to new context, fabrication=invented, ideological_migration=claim moved between political camps, inversion=claim now applies to its original proponents
+
+relay_type (per mutation):
+- knowing: mutation was clearly intentional based on explicit context in the claim or identified sources
+- unknowing: mutation appears to result from honest misunderstanding or error, based on explicit context
+- ambiguous: intent is not clearly visible; DEFAULT to this when in doubt. Do not speculate about mental states.
+
+notable_omissions rules:
+- List SOURCE TYPES (e.g., "peer-reviewed primary research on this topic", "contemporaneous official statements", "regional news coverage from the era") that would be expected for this claim's topic and time period but are MISSING from the claim text or context you identified.
+- Phrasing must reflect absence relative to expectation. Do NOT use language such as censored, suppressed, hidden, blocked, or deliberately omitted.
+- Do NOT invent specific source names, journal titles, or author names. Report only source type categories.
+- Return an empty list when no clear omissions are evident. Default behavior is an empty list.
+- Only add an entry when there is a specific, topic-anchored absence you can articulate.
+- Maximum 3 entries. If you identify more than 3 candidates, select the 3 most salient.""",
     }
 
 
@@ -290,7 +308,7 @@ Produce a four-layer Common Humanity analysis:
 Layer 1 - Universal Human Needs: What fundamental need is at stake (safety, belonging, fairness, dignity, autonomy)?
 Layer 2 - Issue-Specific Overlap: Where do opposing positions concretely agree? Cite evidence (polling, policy, stated positions).
 Layer 3 - Narrative Deconstruction: How was the same underlying concern split into opposing narratives? Who performed the split and why?
-Layer 4 - Inferential Gap Map: Where does the claim contain a kernel of truth, and what is the EXACT inferential leap from that truth to the conspiracy framing? Be specific: "X is documented fact; the leap to Y is unsupported because Z." If the claim is entirely false, state that clearly. If parts are true, map the precise boundary. If the claim invokes a 'default hypothesis' or burden-of-proof argument (claiming the alternative should be assumed true unless disproved), explicitly engage with why the standard scientific burden places the positive claim as requiring positive evidence.
+Layer 4 - Inferential Gap Map [REPARATIVE PATTERN-INJECTION RESPONSE -- load-bearing]: Where does the claim contain a kernel of truth, and what is the EXACT inferential leap from that truth to the conspiracy framing? Be specific: "X is documented fact; the leap to Y is unsupported because Z." If the claim is entirely false, state that clearly. If parts are true, map the precise boundary. This layer is the primary repair channel when upstream has detected Pattern Injection (Gorgon Trap GT-003) or a general fabricated-consensus signature: separating the kernel from the leap is what allows a reader in the manipulation frame to step back without having to surrender the kernel. Preserve the kernel+leap structure; do not collapse this layer into a generic refutation. If the claim invokes a 'default hypothesis' or burden-of-proof argument (claiming the alternative should be assumed true unless disproved), explicitly engage with why the standard scientific burden places the positive claim as requiring positive evidence.
 
 Also produce:
 
@@ -338,7 +356,29 @@ E) Technique Reveal ("Name the Trick"): For each manipulation technique identifi
 - historical_precedent: Where the same trick was used before
 - pattern_type: "isolated" (one-off), "repeated" (seen before), or "systematic" (multi-campaign strategy)
 
-ASYMMETRIC WEIGHT: Do NOT treat all technique uses equally. A systematic multi-campaign playbook deserves detailed analysis. An isolated framing choice deserves a brief note. Treating them equally is itself a false equivalence.
+CRITICAL -- Asymmetric Weight Principle (Pattern Gravity):
+Do NOT treat all technique uses as equivalent. A private citizen using emotional amplification in a frustrated observation is categorically different from a political leader deploying scapegoating as a documented, multi-campaign strategy to gain power. Factors that increase weight:
+- Pattern scope: multi-campaign > single instance
+- Power asymmetry: political leader with media access > private citizen
+- Documented intent: strategic deployment > imprecise framing
+- Consequences: policy outcomes affecting millions > dinner table argument
+Name the tricks on ALL sides (honesty builds credibility), but weight the analysis proportionally. A systematic playbook deserves detailed analysis. An isolated framing choice deserves a brief note. Treating them equally IS itself a false equivalence.
+
+F) Communication Posture (epistemic/communicative separation -- BG-042):
+Select the single best communicative register for this analysis by choosing ONE of three values. The posture is ORTHOGONAL to analytical confidence: it describes how the message should LAND with a reader who currently holds the counter-narrative, not how certain the analysis is. Confidence lives in the Auditor; posture lives here.
+- "direct_correction" -- classical refutation. Appropriate when the reader is already open to correction and the frame is shared. This is the default.
+- "inoculation_first" -- technique-naming prebunk (Roozenbeek & van der Linden 2022; McGuire 1964). Appropriate when the reader is still inside the manipulation frame and a direct correction would trigger identity defence. Lead with naming the technique, then introduce counter-evidence WITHIN THE SAME RESPONSE. Use this when the upstream Classifier has flagged Gorgon Trap GT-family TTPs or high manipulation-vector density.
+- "relational_first" -- Common Humanity / acknowledgment-first (Perry et al.; Costello 2024 Round 1 acknowledgment move). Appropriate when identity stakes dominate and any correction will be read as attack unless the kernel of truth is acknowledged first. Use this when perception_gap is high, moral_foundations diverge sharply, or the upstream pipeline signals identity-targeting dynamics.
+POSTURE SCOPE (load-bearing): the posture instructs a downstream communicator about how to PRESENT this analysis to an end reader. It does NOT alter the structure, order, or completeness of the analytical layers above. Produce narrative_deconstruction, consensus_explanation, inferential_gap, feasibility_check, and commercial_motives in FULL regardless of posture. No posture ever licenses abbreviating, deferring, or omitting the Inferential Gap Map or any other analytical content.
+
+G) Pattern Density Warning (content-describing, not reader-diagnosing):
+Set pattern_density_warning to true only when the claim exhibits structural features that predispose readers to over-connect: repeated numeric coincidences, rhythmic lexical choices, escalating concept chains, or dense cross-reference to a constellation of related claims. False by default. This is a warning about the CLAIM'S structural persuasive pull, never a diagnosis of the reader as pathological. Use this signal ESPECIALLY when the upstream Decomposer has flagged hypothesis_crowding=high or complexity_explosion_flag=true. If the claim's pattern density is fully explained by a conventional rhetorical form (protest chants, religious liturgy, legal cumulative argument, poetry, mnemonic structures in educational content), set this to false. The flag targets engineered mnemonic bonding, not every rhetorical form that uses repetition.
+
+H) Vacuum Filled By (narrative pattern only -- NOT named publishers):
+If an expertise or information vacuum around the claim was filled by a recognisable narrative pattern, describe the PATTERN structurally. Acceptable: "the absence of peer-reviewed primary research was filled by synchronised fake-expert commentary"; "a contemporaneous-news vacuum was filled by repeated numeric coincidences stacking toward a single conclusion". UNACCEPTABLE: naming specific publishers, individuals, organisations, think-tanks, or campaigns; conflating authentic grassroots voice with engineered campaigns. If no vacuum-filling pattern is detected, leave the field as an empty string. This is a strict scope constraint; violations are treated as a regression.
+
+I) Prebunking Note (technique warning, NOT a new factual assertion):
+A one-sentence technique-recognition cue that a reader can carry forward to recognise similar claims. Examples: "watch for the fabricated-source-mimicry pattern when evaluating similar claims"; "this is the tobacco-industry's manufactured-doubt template applied to a new topic". UNACCEPTABLE: introducing new factual claims about any specific actor, adding conclusions not supported by the upstream analysis, or turning this field into an editorial. If no useful prebunking cue applies, leave the field as an empty string. The field is additive to the Inferential Gap Map; it is NOT a substitute.
 
 Respond in JSON:
 {{
@@ -366,7 +406,11 @@ Respond in JSON:
     "Round 1: Perspective-getting...",
     "Round 2: Counter-evidence as question (NAME the technique)...",
     "Round 3: Complexity + common ground..."
-  ]
+  ],
+  "communication_posture": "CHOOSE ONE: direct_correction, inoculation_first, relational_first",
+  "pattern_density_warning": false,
+  "vacuum_filled_by": "Narrative pattern that filled an expertise/information vacuum, or empty string. NEVER name publishers or individuals.",
+  "prebunking_note": "Technique-recognition cue for similar future claims, or empty string. NEVER introduce new factual claims."
 }}
 
 Critical constraints:
@@ -409,11 +453,83 @@ def _auditor_template(claim: str, decomposition: dict, origins: dict, intelligen
 </analysis>
 
 Check for:
-1. **Bias**: Are sources one-sided? Is the framing balanced?
+1. **Bias**: Are sources one-sided? Is the framing balanced? Does the analysis favor one perspective?
 2. **Accuracy**: Are claims supported by evidence? Are source tiers appropriate?
-3. **Completeness**: Are important perspectives missing?
-4. **Manipulation**: Could this analysis itself be used to manipulate?
-5. **Quality**: Is the reasoning sound?
+3. **Completeness**: Are important perspectives missing? Are there blind spots?
+4. **Manipulation**: Could this analysis itself be used to manipulate? Does the Bridge Builder manufacture false common ground?
+5. **Quality**: Is the reasoning sound? Are causal claims justified?
+
+COGNITIVE WARFARE AND FRAME CAPTURE AUDIT:
+
+Use category="cognitive_warfare" for findings related to GT-series cognitive warfare
+signatures (White Noise, Black Noise, Pattern Injection). Use category="frame_capture"
+for findings where the pipeline adopted the input claim's framing without independent
+restatement. These are first-class audit categories alongside the original five.
+
+**Frame capture** is when the analysis ADOPTS the claim's framing, labels, or implied
+causality without independently restating the question. This is DISTINCT from
+fact-checking, which remains central to your job. Frame capture is NOT a reason to
+suppress verification of concrete factual claims. A claim can be rigorously
+fact-checked AND have frame capture issues simultaneously.
+
+**Trigger gate**: Explicitly assess frame_capture_risk only when upstream signals
+indicate possible cognitive warfare: hypothesis_crowding="high" in the Decomposer
+output, OR notable_omissions is non-empty in the Tracer output, OR the Classifier
+matched any TTP with id starting "GT-". Otherwise default frame_capture_risk to
+"none".
+
+**Evidence requirement**: When flagging frame_capture_risk as "possible" or "high",
+cite the SPECIFIC frame element in frame_capture_evidence: a label, a causal link,
+a categorization, or a framing device that was imported from the input claim and
+used by upstream agents without independent restatement. Do NOT flag on
+pattern-recognition alone; every flag must name a specific imported element.
+
+**Rarity signal**: These are advanced audit categories. In most ordinary runs,
+frame_capture_risk will be "none". Flag sparingly and only with explicit upstream
+signals.
+
+EVIDENCE CERTAINTY FRAMEWORK (ECF):
+Rate the analysis as a whole across five dimensions (0.0-1.0):
+- evidence_quality: strength of underlying evidence (studies > anecdotes)
+- source_reliability: editorial standards, correction policies, peer review
+- claim_testability: can the claim be checked against observable data?
+- expert_consensus: do domain experts agree? genuine debate vs manufactured?
+- internal_coherence: do the claim's sub-claims support each other?
+
+Anchor to upstream signals: use the Tracer source_tier distribution as a
+prior for source_reliability. Use the Decomposer sub-claim verifiable count
+for claim_testability. Default 0.5 when uncertain. Do not invent precision.
+
+VETO is a RARE NUCLEAR OPTION. You should almost never use it.
+
+For MOST issues, use verdict=pass_with_warnings with detailed findings. This lets
+the reader see the analysis AND your critique together. Only veto when the analysis
+is so broken that showing it would actively mislead the reader even with your
+warnings attached.
+
+VETO CRITERIA -- ALL THREE must be true simultaneously:
+1. The flaw makes the ENTIRE analysis misleading (not just one section)
+2. The issue cannot be adequately addressed by noting it in findings
+3. A reader seeing the analysis WITH your findings would still be deceived
+
+EXAMPLES OF WHAT TO VETO:
+- Every agent's output contradicts the others (total incoherence)
+- The analysis actively promotes the disinformation it should analyze
+- All sources are fabricated (not just some dates being wrong)
+
+EXAMPLES OF WHAT IS **NOT** A VETO (use pass_with_warnings + findings):
+- Some dates, timelines, or attributions are inaccurate -> severity=high finding
+- Bridge Builder common ground seems forced or naive -> category=manipulation finding
+- Missing an important actor or perspective -> category=completeness finding
+- One agent hallucinated details -> severity=high finding
+- The original claim is false or debunked -> NOT relevant (false claims are valid analysis targets)
+- Individual factual errors in origin tracing -> severity=high finding
+- Bridge section equates unequal positions -> category=manipulation finding
+
+IMPORTANT: This pipeline ANALYZES narrative networks around claims. False,
+debunked, and conspiratorial claims are VALID analysis targets. The analysis
+examines HOW narratives spread and WHO amplifies them; it does not endorse
+the claim. Do NOT veto because the claim being analyzed is wrong.
 
 Respond in JSON. IMPORTANT: Each enum field must be EXACTLY ONE value, not combined.
 
@@ -428,9 +544,29 @@ Respond in JSON. IMPORTANT: Each enum field must be EXACTLY ONE value, not combi
     }}
   ],
   "confidence_adjustment": -1.0 to 1.0,
-  "veto": false,
-  "summary": "Overall assessment in one sentence"
-}}""",
+  "veto": true or false,
+  "summary": "Overall assessment in one sentence",
+  "frame_capture_risk": "CHOOSE ONE: none, possible, high (default: none)",
+  "frame_capture_evidence": "Specific imported frame element, or empty string if none",
+  "confidence_profile": {{
+    "evidence_quality": 0.0-1.0,
+    "source_reliability": 0.0-1.0,
+    "claim_testability": 0.0-1.0,
+    "expert_consensus": 0.0-1.0,
+    "internal_coherence": 0.0-1.0
+  }},
+  "cnqs": null
+}}
+
+DECISION GUIDE:
+- No issues found -> verdict=pass, findings=[], veto=false
+- Minor issues -> verdict=pass_with_warnings, list findings, veto=false
+- Serious issues -> verdict=fail, list findings, veto=false (reader sees analysis + your critique)
+- Catastrophic (meets ALL THREE veto criteria) -> verdict=fail, veto=true
+
+confidence_profile and cnqs are optional structured signals. Emit confidence_profile
+when you have rated the ECF dimensions. Leave cnqs as null unless you are explicitly
+evaluating an institutional counter-narrative response (a rare special case).""",
     }
 
 

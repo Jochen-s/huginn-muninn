@@ -1759,6 +1759,9 @@ function buildEssayCard(essay) {
 // Confidence Methodology page
 // ---------------------------------------------------------------------------
 
+// SYNC WARNING: This methodology content must stay in sync with
+// docs/confidence-methodology.md. If you change weights, thresholds,
+// or dimensions here, update the markdown doc as well.
 function buildMethodologyPage() {
   return `<!DOCTYPE html>
 <html lang="en">

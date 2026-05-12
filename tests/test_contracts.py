@@ -1633,3 +1633,112 @@ class TestConvergenceMatrix:
         from huginn_muninn.contracts import ConvergenceMatrix, _ADVISORY_ONLY_DESCRIPTION
         desc = ConvergenceMatrix.model_fields["convergence_strength"].description
         assert desc == _ADVISORY_ONLY_DESCRIPTION
+
+
+class TestAuditorConfidenceProfilePropagation:
+    """Sprint 5: Auditor emits a ConfidenceProfile that propagates through
+    the AuditorOutput contract. Verifies the schema-side of the end-to-end
+    wiring; the orchestrator-side propagation is covered in
+    test_orchestrator.py::TestConfidenceProfilePropagation."""
+
+    def test_auditor_output_parses_with_confidence_profile(self):
+        """Auditor output with confidence_profile parses correctly."""
+        raw = {
+            "verdict": "pass_with_warnings",
+            "findings": [],
+            "confidence_adjustment": 0.05,
+            "veto": False,
+            "summary": "Good",
+            "frame_capture_risk": "none",
+            "frame_capture_evidence": "",
+            "confidence_profile": {
+                "evidence_quality": 0.8,
+                "source_reliability": 0.7,
+                "claim_testability": 0.6,
+                "expert_consensus": 0.9,
+                "internal_coherence": 0.75,
+            },
+            "cnqs": None,
+        }
+        from huginn_muninn.contracts import AuditorOutput
+        out = AuditorOutput(**raw)
+        assert out.confidence_profile is not None
+        assert out.confidence_profile.ecf_level in ("HIGH", "MODERATE", "LOW", "VERY_LOW")
+        assert out.confidence_profile.composite > 0
+
+    def test_auditor_output_without_profile_still_works(self):
+        raw = {
+            "verdict": "pass", "findings": [], "confidence_adjustment": 0.0,
+            "veto": False, "summary": "OK",
+        }
+        from huginn_muninn.contracts import AuditorOutput
+        out = AuditorOutput(**raw)
+        assert out.confidence_profile is None
+
+
+class TestPipeValueLogging:
+    """Sprint 6: pipe-value sanitization emits a WARNING log."""
+
+    def test_pipe_sanitizer_logs_debug(self, caplog):
+        import logging
+        from huginn_muninn.contracts import _first_pipe_value
+        with caplog.at_level(logging.DEBUG, logger="huginn_muninn.contracts"):
+            _first_pipe_value("a|b|c")
+        assert "Pipe-separated value sanitized" in caplog.text
+
+
+class TestScopeScrubberUnicodeHardening:
+    """Sprint 6: Unicode confusables must not bypass the named-publisher blocklist."""
+
+    def test_fullwidth_bbc_triggers_scrub(self):
+        from huginn_muninn.contracts import _looks_like_named_entity
+        import unicodedata
+        text = unicodedata.normalize("NFKC", "ＢＢＣ reported")
+        assert _looks_like_named_entity(text)
+
+    def test_zero_width_joiner_in_publisher_triggers_scrub(self):
+        from huginn_muninn.contracts import _looks_like_named_entity
+        text = "B‍B‍C reported"
+        assert _looks_like_named_entity(text)
+
+    def test_normal_bbc_still_triggers(self):
+        from huginn_muninn.contracts import _looks_like_named_entity
+        assert _looks_like_named_entity("bbc reported")
+
+    def test_clean_text_not_affected_by_normalization(self):
+        from huginn_muninn.contracts import _looks_like_named_entity
+        assert not _looks_like_named_entity("absence of primary research")
+
+
+class TestCNQSCriticalFailureCap:
+    """Sprint 6: CNQS composite must cap at 0.3 when has_critical_failure."""
+
+    def test_critical_failure_caps_composite(self):
+        from huginn_muninn.contracts import CounterNarrativeQualityScore
+        cnqs = CounterNarrativeQualityScore(
+            respect_for_audience=1,
+            acknowledgment_of_uncertainty=5,
+            proportionality_of_response=5,
+            institutional_interest_transparency=5,
+            alternative_explanation_quality=5,
+            factual_accuracy=5,
+            tone_calibration=5,
+            cognitive_load_management=5,
+        )
+        assert cnqs.has_critical_failure is True
+        assert cnqs.composite <= 0.3
+
+    def test_no_critical_failure_composite_uncapped(self):
+        from huginn_muninn.contracts import CounterNarrativeQualityScore
+        cnqs = CounterNarrativeQualityScore(
+            respect_for_audience=4,
+            acknowledgment_of_uncertainty=4,
+            proportionality_of_response=4,
+            institutional_interest_transparency=4,
+            alternative_explanation_quality=4,
+            factual_accuracy=4,
+            tone_calibration=4,
+            cognitive_load_management=4,
+        )
+        assert cnqs.has_critical_failure is False
+        assert cnqs.composite > 0.3

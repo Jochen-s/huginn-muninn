@@ -255,7 +255,8 @@ Full log with falsification criteria: [REJECTIONS.md](REJECTIONS.md).
 | v0.8.0 | 228 |
 | v0.9.0 | 511 |
 | v0.11.0 | 544 |
-| v0.12.0 | 340 (monorepo) |
+| v0.12.0 | 340 |
+| v0.13.0 | 355 |
 
 28 real-world scenarios validated across health & science, geopolitics, environment, events, technology, and media.
 
@@ -317,6 +318,6 @@ If you reference this work in an academic context, please cite the underlying re
 
 ---
 
-*Current version: v0.12.0 "Epistemic Equity". 340 tests. The mission hasn't changed: de-polarize, find common ground, then make the tool unnecessary.*
+*Current version: v0.13.0 "Pipeline Hardening". 355 tests. The mission hasn't changed: de-polarize, find common ground, then make the tool unnecessary.*
 
 *Author: Jochen Schmiedbauer*

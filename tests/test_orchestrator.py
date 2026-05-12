@@ -144,11 +144,11 @@ class TestOrchestrator:
         assert result["degraded"] is True
 
     def test_confidence_no_failures(self):
-        """Base confidence 0.7 with no failures and no adjustment."""
+        """Base confidence 0.8 (tier-2 source, simple complexity, no adjustment)."""
         client = make_mock_client(MOCK_RESPONSES)
         orch = Orchestrator(client)
         result = orch.run("X is true because Y")
-        assert result["overall_confidence"] == 0.7
+        assert result["overall_confidence"] == 0.8
 
     def test_pre_gorgon_mock_responses_still_parse(self):
         """Regression guard: MOCK_RESPONSES lacks the cognitive-warfare fields.
@@ -307,12 +307,12 @@ class TestSourceQualityBase:
     def test_tier1_source_scores_high(self):
         origins = {"origins": [{"sub_claim": "X", "source_tier": 1}]}
         base = _compute_source_quality_base(origins, {"complexity": "simple"})
-        assert base == 0.9
+        assert base == 0.95
 
     def test_tier4_source_scores_low(self):
         origins = {"origins": [{"sub_claim": "X", "source_tier": 4}]}
         base = _compute_source_quality_base(origins, {"complexity": "simple"})
-        assert base == 0.3
+        assert base == 0.2
 
     def test_mixed_tiers_averaged(self):
         origins = {"origins": [
@@ -320,36 +320,41 @@ class TestSourceQualityBase:
             {"sub_claim": "Y", "source_tier": 4},
         ]}
         base = _compute_source_quality_base(origins, {"complexity": "simple"})
-        assert base == 0.6  # (0.9 + 0.3) / 2
+        assert base == 0.575  # (0.95 + 0.20) / 2
 
     def test_multi_actor_dampens_confidence(self):
         origins = {"origins": [{"sub_claim": "X", "source_tier": 1}]}
         simple = _compute_source_quality_base(origins, {"complexity": "simple"})
         multi = _compute_source_quality_base(origins, {"complexity": "multi_actor"})
         assert multi < simple
-        assert multi == 0.63  # 0.9 * 0.7
+        assert multi == 0.665  # 0.95 * 0.7
 
     def test_complex_dampens_confidence(self):
         origins = {"origins": [{"sub_claim": "X", "source_tier": 2}]}
         simple = _compute_source_quality_base(origins, {"complexity": "simple"})
         cplx = _compute_source_quality_base(origins, {"complexity": "complex"})
         assert cplx < simple
-        assert cplx == 0.56  # 0.7 * 0.8
+        assert cplx == 0.64  # 0.80 * 0.8
 
     def test_unknown_complexity_defaults_to_no_dampening(self):
         origins = {"origins": [{"sub_claim": "X", "source_tier": 2}]}
         base = _compute_source_quality_base(origins, {"complexity": "weird"})
-        assert base == 0.7  # 0.7 * 1.0 (default dampener)
+        assert base == 0.8  # 0.80 * 1.0 (default dampener)
 
     def test_missing_source_tier_defaults_to_tier4(self):
         origins = {"origins": [{"sub_claim": "X"}]}
         base = _compute_source_quality_base(origins, {"complexity": "simple"})
-        assert base == 0.3  # tier 4 default
+        assert base == 0.2  # tier 4 default
 
     def test_non_dict_origin_entry_defaults_to_tier4(self):
         origins = {"origins": ["not-a-dict"]}
         base = _compute_source_quality_base(origins, {"complexity": "simple"})
-        assert base == 0.3
+        assert base == 0.2
+
+    def test_tier_gap_increases_with_lower_quality(self):
+        """Non-linear: gap T3-T4 should be larger than T1-T2."""
+        from huginn_muninn.orchestrator import _SOURCE_TIER_SCORES
+        assert (_SOURCE_TIER_SCORES[3] - _SOURCE_TIER_SCORES[4]) > (_SOURCE_TIER_SCORES[1] - _SOURCE_TIER_SCORES[2])
 
     def test_bounded_at_one(self):
         origins = {"origins": [{"sub_claim": "X", "source_tier": 1}]}
@@ -515,7 +520,7 @@ class TestValidationFailureMarker:
             f"BG-042 violation: posture is communicative register, not "
             f"confidence input."
         )
-        assert confidences[0] == 0.7  # unchanged baseline
+        assert confidences[0] == 0.8  # unchanged baseline
 
     def test_communication_posture_not_referenced_in_confidence_computation(self):
         """Architectural grep-style lock (Klingon + Codex + Sprint 2 PR 3
@@ -609,8 +614,8 @@ class TestValidationFailureMarker:
             f"BG-042 (Confidence-Posture Separation) violation: priority is "
             f"epistemic triage, not confidence input."
         )
-        # And the unchanged value must still be the expected baseline (0.7)
-        assert confidences[0] == 0.7
+        # And the unchanged value must still be the expected baseline (0.8)
+        assert confidences[0] == 0.8
 
     def test_cnqs_does_not_co_vary_with_overall_confidence(self):
         """BG-054 Orthogonal-Score Invariance: CNQS composite is orthogonal
@@ -637,7 +642,7 @@ class TestValidationFailureMarker:
             f"CNQS moved overall_confidence: {confidences}. "
             f"BG-054 violation: CNQS is orthogonal to confidence."
         )
-        assert confidences[0] == 0.7
+        assert confidences[0] == 0.8
 
     def test_confidence_profile_does_not_move_overall_confidence(self):
         """BG-054: ConfidenceProfile on AuditorOutput is metadata; the
@@ -666,7 +671,7 @@ class TestValidationFailureMarker:
             f"ConfidenceProfile moved overall_confidence: {confidences}. "
             f"BG-054 violation."
         )
-        assert confidences[0] == 0.7
+        assert confidences[0] == 0.8
 
     def test_auditor_receives_all_sub_claims_regardless_of_priority(self):
         """Klingon #1 mitigation: the pipeline must pass every sub-claim to
@@ -773,3 +778,74 @@ class TestValidationFailureMarker:
             f"Expected 'validation_error' in degraded_reason, got: "
             f"{result['degraded_reason']}"
         )
+
+
+class TestConfidenceProfilePropagation:
+    """Sprint 5: confidence_profile emitted by the Auditor must reach the
+    top-level AnalysisReport.confidence_profile so downstream consumers
+    (gallery renderer, API envelope) see a populated ECF rather than the
+    historical None. Pairs with
+    test_contracts.py::TestAuditorConfidenceProfilePropagation which
+    covers the schema side."""
+
+    def test_confidence_profile_from_audit_reaches_report(self):
+        """confidence_profile in audit dict propagates to top-level report."""
+        responses = {**MOCK_RESPONSES}
+        responses["adversarial_auditor"] = {
+            "verdict": "pass_with_warnings",
+            "findings": [],
+            "confidence_adjustment": 0.05,
+            "veto": False,
+            "summary": "Good",
+            "frame_capture_risk": "none",
+            "frame_capture_evidence": "",
+            "confidence_profile": {
+                "evidence_quality": 0.8,
+                "source_reliability": 0.7,
+                "claim_testability": 0.6,
+                "expert_consensus": 0.9,
+                "internal_coherence": 0.75,
+            },
+        }
+        client = make_mock_client(responses)
+        orch = Orchestrator(client)
+        result = orch.run("X is true because Y")
+
+        assert result["degraded"] is False
+        assert result["confidence_profile"] is not None
+        assert result["confidence_profile"]["evidence_quality"] == 0.8
+        assert result["confidence_profile"]["ecf_level"] in (
+            "HIGH", "MODERATE", "LOW", "VERY_LOW",
+        )
+        assert result["confidence_profile"]["composite"] > 0
+        report = AnalysisReport(**result)
+        assert report.confidence_profile is not None
+        assert report.confidence_profile.composite == (
+            result["confidence_profile"]["composite"]
+        )
+
+    def test_no_profile_in_audit_leaves_report_profile_none(self):
+        """When the Auditor omits confidence_profile (legacy path or
+        unchanged mock fixture), the top-level report field stays None
+        rather than fabricating a value."""
+        client = make_mock_client(MOCK_RESPONSES)
+        orch = Orchestrator(client)
+        result = orch.run("X is true because Y")
+
+        assert result["degraded"] is False
+        assert result.get("confidence_profile") is None
+
+    def test_auditor_failure_fallback_keeps_profile_none(self):
+        """If the Auditor fails entirely, the orchestrator fallback path
+        sets confidence_profile=None on the audit dict. That None must
+        not be promoted to a non-None top-level value."""
+
+        def fail(*_a, **_kw):
+            raise AgentError("auditor down")
+
+        client = make_mock_client(MOCK_RESPONSES)
+        orch = Orchestrator(client)
+        orch.auditor.run = fail
+        result = orch.run("X is true because Y")
+
+        assert result.get("confidence_profile") is None

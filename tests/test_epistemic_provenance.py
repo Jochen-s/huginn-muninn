@@ -202,6 +202,26 @@ class TestEpistemicDiversityGap:
         assert t.epistemic_diversity_gap is not None
         assert "90%" in t.epistemic_diversity_gap
 
+    def test_classified_monoculture_under_unclassified_dominance(self):
+        """K4: 2 western_academic + 8 unclassified should flag classified gap."""
+        origins = [self._make_origin("western_academic")] * 2
+        origins += [self._make_origin("unclassified")] * 8
+        t = TracerOutput(origins=origins)
+        assert t.epistemic_diversity_gap is not None
+        assert "western_academic" in t.epistemic_diversity_gap
+
+    def test_diverse_classified_under_unclassified_no_gap(self):
+        """Mixed classified traditions under unclassified dominance: no gap."""
+        origins = [
+            self._make_origin("western_academic"),
+            self._make_origin("global_south_academic"),
+            self._make_origin("unclassified"),
+            self._make_origin("unclassified"),
+            self._make_origin("unclassified"),
+        ]
+        t = TracerOutput(origins=origins)
+        assert t.epistemic_diversity_gap is None
+
 
 # ---------------------------------------------------------------------------
 # Regional Source Registry

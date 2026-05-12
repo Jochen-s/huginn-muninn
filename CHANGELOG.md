@@ -3,28 +3,38 @@
 All notable changes to Huginn & Muninn are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/).
 
-## [0.12.0] - 2026-05-12 -- "Epistemic Equity"
+## [0.13.0] - 2026-05-12 -- "Pipeline Hardening"
 
-Sprint 5. The pipeline now tracks where knowledge comes from, not just what it says. Three features: a regional source registry for non-Western perspectives, epistemic provenance on every traced origin, and a plain-language methodology page explaining how confidence scores work. Cumulative: 340 tests.
+Sprint 6. Closes all deferred items from Sprints 4 and 5. The Auditor now produces a five-dimensional Evidence Certainty Framework profile end-to-end, the scope scrubber blocks Unicode homoglyph evasion, and source tier scoring reflects actual quality gradients. Cumulative: 355 tests.
 
 ### Added
-- **Regional Source Registry** (`data/regional_sources.json`): 21 institutions across 5 regions (Africa, Asia-Pacific, Latin America, MENA, Indigenous Knowledge Systems). Advisory framing throughout: the registry is "sources to consider," never "trusted sources." Governance metadata tracks curator, inclusion criteria, and review date. A bias warning in the registry itself states that static source lists encode creator bias. Loaded via `load_regional_sources()` with `lru_cache` and graceful fallback when the file is missing or malformed.
-- **Epistemic Provenance tracking** on `OriginEntry`: new `EpistemicProvenance` model with 7 tradition types (`western_academic`, `western_institutional`, `global_south_academic`, `global_south_institutional`, `community_experiential`, `indigenous_knowledge`, `unclassified`). Default is `unclassified` to prevent false Western-academic attribution when the LLM is uncertain. `BeforeValidator(_first_pipe_value)` applied to the `tradition` field. Length limits on `region` (256) and `language_of_origin` (10).
-- **Bidirectional epistemic diversity gap detection** on `TracerOutput`: `model_validator` fires when 80%+ of classified origins share a single tradition. Bidirectional: triggers on any tradition, not just Western. Ignores `unclassified` entries to prevent false positives. Gap message includes the percentage and dominant tradition.
-- **Confidence Score Transparency page** (`confidence-methodology.html`): plain-language methodology document built into the gallery. Explains the three-factor confidence calculation, all five ECF dimensions with weights, ECF levels, source tier system with examples, and what the score is NOT (not a truth score, not a censorship signal, not a legal determination, not a replacement for human judgment). CNQS section marked [Beta] with all 8 dimensions explained.
-- **Source tier breakdown** in gallery: each scenario page now shows source tier counts (T1: N, T2: N, etc.) alongside the confidence score.
-- **"How is this score calculated?" link** on every gallery scenario page, pointing to the methodology document.
-- **27 new tests** in `test_epistemic_provenance.py`: EpistemicProvenance model validation (5), OriginEntry provenance integration (3), bidirectional gap detection (9), regional source registry schema and framing (10).
-- Tracer prompts updated (both production and runner) with epistemic diversity instructions, provenance schema, and tradition taxonomy.
+- **Auditor ConfidenceProfile end-to-end**: Auditor prompt now requests 5 ECF dimensions (evidence_quality, source_reliability, claim_testability, expert_consensus, internal_coherence). Orchestrator propagates confidence_profile and cnqs from AuditorOutput to AnalysisReport top-level.
+- **Unicode/homoglyph scope scrubber hardening**: NFKC normalization and zero-width character stripping on all scope-scrubbed text. Blocks fullwidth character substitution and zero-width joiner evasion of the publisher blocklist.
+- **CNQS critical failure cap**: Composite score capped at 0.3 when any dimension scores 1 (the Likert floor). A single disqualifying failure overrides otherwise high scores.
+- **Non-linear source tier scoring**: Tier scores changed from linear (0.9/0.7/0.5/0.3) to non-linear (0.95/0.80/0.50/0.20). The quality gap between unverified and commentary sources is now larger than between peer-reviewed and journalism.
+- **Gap detection sub-count**: When "unclassified" dominates the tradition distribution, the detector re-checks the classified subset for monoculture (2+ classified sources, 80%+ threshold).
+- **Pipe-value sanitization telemetry**: DEBUG log when LLM returns pipe-separated enum values. INFO log when epistemic diversity gap detection fires.
+- **Runner-production prompt parity**: All runner templates synced with production agents (Tracer: relay_type + notable_omissions; Auditor: 7 categories + ECF + CNQS + veto criteria; Bridge: OARS + diagnostic fields).
+- **15 new tests**: Auditor ECF propagation (5), Unicode hardening (4), CNQS cap (2), non-linear tiers (1), gap edge case (2), pipe logging (1).
 
 ### Changed
-- `language_of_origin` default changed from `"en"` to `""`. The previous default was a Western-centric assumption that contradicted the feature's intent.
-- Region key names in the Tracer prompt are now sanitized (alphanumeric + underscore only) and passed through `sanitize_for_prompt()` before injection.
-- `load_regional_sources()` now catches `JSONDecodeError` and `UnicodeDecodeError`, returning empty fallback instead of crashing.
+- Tier fallback default for unknown source_tier changed from 0.3 to 0.20 (matches tier 4).
+- Methodology files carry SYNC WARNING comments linking gallery/build.js and docs/confidence-methodology.md.
 
 ### Review discipline
-- 3-faction fleet review (Federation, Klingon, Ferengi). 5 mitigations applied from convergent findings.
-- 6 acceptance criteria verified: default unclassified, bidirectional gap detection, advisory framing, methodology explains ECF dimensions, methodology states what score is NOT, gallery link present.
+- 4-faction fleet review (Federation 74/100, Klingon 6/10, Ferengi 7/10) + Codex adversarial (7/10, SHIP_WITH_MITIGATIONS). 7 mitigations applied.
+
+## [0.12.0] - 2026-05-12 -- "Epistemic Equity"
+
+Sprint 5. The pipeline now tracks where knowledge comes from, not just what it says. Regional source registry, epistemic provenance tracking, and confidence score transparency. Cumulative: 340 tests.
+
+### Added
+- **Regional Source Registry** (`data/regional_sources.json`): 21 institutions across 5 regions. Advisory framing throughout.
+- **Epistemic Provenance tracking** on `OriginEntry`: 7 tradition types, default "unclassified."
+- **Bidirectional epistemic diversity gap detection**: fires when 80%+ of classified origins share a single tradition.
+- **Confidence Score Transparency page**: plain-language methodology document in gallery.
+- **Source tier breakdown** and methodology link on every gallery scenario page.
+- **27 new tests** covering provenance, gap detection, and registry validation.
 
 ## [0.11.0] - 2026-04-12 -- "Auditor Exfiltration Guard"
 

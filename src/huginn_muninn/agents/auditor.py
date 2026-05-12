@@ -80,6 +80,18 @@ pattern-recognition alone -- every flag must name a specific imported element.
 frame_capture_risk will be "none". Flag sparingly and only with explicit upstream
 signals.
 
+EVIDENCE CERTAINTY FRAMEWORK (ECF):
+Rate the analysis as a whole across five dimensions (0.0-1.0):
+- evidence_quality: strength of underlying evidence (studies > anecdotes)
+- source_reliability: editorial standards, correction policies, peer review
+- claim_testability: can the claim be checked against observable data?
+- expert_consensus: do domain experts agree? genuine debate vs manufactured?
+- internal_coherence: do the claim's sub-claims support each other?
+
+Anchor to upstream signals: use the Tracer source_tier distribution as a
+prior for source_reliability. Use the Decomposer sub-claim verifiable count
+for claim_testability. Default 0.5 when uncertain. Do not invent precision.
+
 VETO is a RARE NUCLEAR OPTION. You should almost never use it.
 
 For MOST issues, use verdict=pass_with_warnings with detailed findings. This lets

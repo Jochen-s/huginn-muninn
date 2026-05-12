@@ -1,17 +1,22 @@
 """Inter-agent Pydantic contracts for Method 2 pipeline."""
 from __future__ import annotations
 
+import logging
 import re
+import unicodedata
 from collections import Counter
 from enum import Enum
 from typing import Annotated, ClassVar, Literal
 
 from pydantic import BaseModel, BeforeValidator, Field, model_validator
 
+_log = logging.getLogger(__name__)
+
 
 def _first_pipe_value(v: object) -> object:
     """Take first value when LLM returns pipe-separated enum like 'a|b'."""
     if isinstance(v, str) and "|" in v:
+        _log.debug("Pipe-separated value sanitized: %r -> %r", v, v.split("|")[0].strip())
         return v.split("|")[0].strip()
     return v
 
@@ -106,6 +111,9 @@ def _looks_like_named_entity(text: str) -> bool:
     """
     if not text or not isinstance(text, str):
         return False
+    # (0) Normalize Unicode to defeat homoglyph/confusable evasion.
+    text = unicodedata.normalize("NFKC", text)
+    text = re.sub("[​-‏⁠﻿]", "", text)
     # (1) Explicit blocklist hit (word-boundary aware).
     if _BLOCKLIST_RE.search(text):
         return True
@@ -298,14 +306,21 @@ class TracerOutput(BaseModel):
         counts = Counter(traditions)
         dominant, dominant_count = counts.most_common(1)[0]
         if dominant == "unclassified":
+            classified = [t for t in traditions if t != "unclassified"]
+            if len(classified) >= 2:
+                sub_counts = Counter(classified)
+                sub_dominant, sub_count = sub_counts.most_common(1)[0]
+                if sub_count / len(classified) >= 0.8:
+                    pct = round(sub_count / len(classified) * 100)
+                    gap_msg = f"{pct}% of classified sources are {sub_dominant}"
+                    _log.info("Epistemic diversity gap detected: %s", gap_msg)
+                    object.__setattr__(self, "epistemic_diversity_gap", gap_msg)
             return self
         if dominant_count / total >= 0.8:
             pct = round(dominant_count / total * 100)
-            object.__setattr__(
-                self,
-                "epistemic_diversity_gap",
-                f"{pct}% of sources classified as {dominant}",
-            )
+            gap_msg = f"{pct}% of sources classified as {dominant}"
+            _log.info("Epistemic diversity gap detected: %s", gap_msg)
+            object.__setattr__(self, "epistemic_diversity_gap", gap_msg)
         return self
 
 
@@ -633,8 +648,12 @@ class CounterNarrativeQualityScore(BaseModel):
             self.alternative_explanation_quality, self.factual_accuracy,
             self.tone_calibration, self.cognitive_load_management,
         ]
-        object.__setattr__(self, "composite", round(sum(dims) / (len(dims) * 5), 3))
-        object.__setattr__(self, "has_critical_failure", any(d == 1 for d in dims))
+        comp = round(sum(dims) / (len(dims) * 5), 3)
+        critical = any(d == 1 for d in dims)
+        if critical:
+            comp = min(comp, 0.3)
+        object.__setattr__(self, "composite", comp)
+        object.__setattr__(self, "has_critical_failure", critical)
         return self
 
 

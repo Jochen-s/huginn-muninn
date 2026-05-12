@@ -18,7 +18,7 @@ from huginn_muninn.llm import LLMClient
 log = logging.getLogger(__name__)
 
 
-_SOURCE_TIER_SCORES: dict[int, float] = {1: 0.9, 2: 0.7, 3: 0.5, 4: 0.3}
+_SOURCE_TIER_SCORES: dict[int, float] = {1: 0.95, 2: 0.80, 3: 0.50, 4: 0.20}
 
 _CONFIDENCE_COMPLEXITY_DAMPENER: dict[str, float] = {
     "simple": 1.0,
@@ -40,7 +40,7 @@ def _compute_source_quality_base(origins: dict, decomposition: dict) -> float:
         return 0.5
     scores = [
         _SOURCE_TIER_SCORES.get(
-            e.get("source_tier", 4) if isinstance(e, dict) else 4, 0.3
+            e.get("source_tier", 4) if isinstance(e, dict) else 4, 0.20
         )
         for e in entries
     ]
@@ -215,6 +215,8 @@ class Orchestrator:
             "method": "method_2",
             "degraded": degraded,
             "degraded_reason": degraded_reason,
+            "confidence_profile": audit.get("confidence_profile"),
+            "cnqs": audit.get("cnqs"),
         }
 
         # Validate against the contract at the production boundary. If the
