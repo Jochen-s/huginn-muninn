@@ -140,6 +140,8 @@
     white-space: nowrap;
   }
   .badge-version  { background: #EAF0F7; color: var(--navy); }
+  .methodology-link { font-size: 0.85em; color: var(--accent); text-decoration: none; margin-left: 0.3em; }
+  .methodology-link:hover { text-decoration: underline; }
   .badge-easy     { background: #EAF6EE; color: #1E8449; }
   .badge-medium   { background: #FEF9E7; color: #7D6608; }
   .badge-hard     { background: #FDEDEC; color: var(--red); }
@@ -605,7 +607,8 @@
         <tr><td>TTP matches</td><td>9</td></tr>
         <tr><td>Audit verdict</td><td><span class="badge badge-warnings">PASS WITH WARNINGS</span></td></tr>
         <tr><td>Pipeline version</td><td>v5</td></tr>
-        <tr><td>Overall confidence</td><td>90%</td></tr>
+        <tr><td>Overall confidence</td><td>90% <a href="confidence-methodology.html" class="methodology-link" title="How is this score calculated?">[?]</a></td></tr>
+        <tr><td>Source tiers</td><td>T4: 10</td></tr>
       </tbody>
     </table>
   </div>

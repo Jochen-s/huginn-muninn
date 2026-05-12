@@ -264,6 +264,8 @@ const SHARED_CSS = `
     white-space: nowrap;
   }
   .badge-version  { background: #EAF0F7; color: var(--navy); }
+  .methodology-link { font-size: 0.85em; color: var(--accent); text-decoration: none; margin-left: 0.3em; }
+  .methodology-link:hover { text-decoration: underline; }
   .badge-easy     { background: #EAF6EE; color: #1E8449; }
   .badge-medium   { background: #FEF9E7; color: #7D6608; }
   .badge-hard     { background: #FDEDEC; color: var(--red); }
@@ -1184,6 +1186,23 @@ function buildIndex(scenarios, essays) {
 // Scenario page helpers
 // ---------------------------------------------------------------------------
 
+function renderSourceTierBreakdown(data) {
+  const origins = data?.origins?.origins;
+  if (!origins || origins.length === 0) return '';
+  const tierLabels = { 1: 'Primary/Institutional', 2: 'Quality Journalism', 3: 'Secondary/Commentary', 4: 'Unverified/Social' };
+  const counts = { 1: 0, 2: 0, 3: 0, 4: 0 };
+  for (const o of origins) {
+    const tier = o.source_tier || 4;
+    counts[tier] = (counts[tier] || 0) + 1;
+  }
+  const parts = [];
+  for (let t = 1; t <= 4; t++) {
+    if (counts[t] > 0) parts.push(`T${t}: ${counts[t]}`);
+  }
+  if (parts.length === 0) return '';
+  return `<tr><td>Source tiers</td><td>${parts.join(', ')}</td></tr>`;
+}
+
 function renderUniversalNeeds(needs) {
   if (!needs || needs.length === 0) return '<p class="intro-note">No universal needs data available.</p>';
   const items = needs.map(n => {
@@ -1422,8 +1441,9 @@ function buildScenarioPage(scenario, allScenarios) {
         <tr><td>Audit verdict</td><td>${verdictBadge(audit.verdict)}</td></tr>
         <tr><td>Pipeline version</td><td>${esc(data.pipeline || 'v' + version)}</td></tr>
         ${data.overall_confidence != null
-          ? `<tr><td>Overall confidence</td><td>${(data.overall_confidence * 100).toFixed(0)}%</td></tr>`
+          ? `<tr><td>Overall confidence</td><td>${(data.overall_confidence * 100).toFixed(0)}% <a href="confidence-methodology.html" class="methodology-link" title="How is this score calculated?">[?]</a></td></tr>`
           : ''}
+        ${renderSourceTierBreakdown(data)}
       </tbody>
     </table>
   </div>
@@ -1733,6 +1753,139 @@ function buildEssayCard(essay) {
       <div class="essay-summary">${esc(essay.summary)}</div>
       <div class="card-link">Read &rarr;</div>
     </a>`;
+}
+
+// ---------------------------------------------------------------------------
+// Confidence Methodology page
+// ---------------------------------------------------------------------------
+
+function buildMethodologyPage() {
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How Confidence Scores Work | Huginn &amp; Muninn</title>
+  <meta name="description" content="Plain-language explanation of how Huginn and Muninn calculates confidence scores for claim analysis.">
+  <style>${SHARED_CSS}
+  .methodology h2 { margin-top: 2em; border-bottom: 2px solid var(--accent); padding-bottom: 0.3em; }
+  .methodology h3 { margin-top: 1.5em; }
+  .methodology table { width: 100%; border-collapse: collapse; margin: 1em 0; }
+  .methodology th, .methodology td { border: 1px solid var(--border); padding: 0.5em 0.75em; text-align: left; }
+  .methodology th { background: var(--surface); font-weight: 600; }
+  .methodology .not-list li { margin-bottom: 0.5em; }
+  .methodology .beta-badge { background: #FFF3CD; color: #856404; padding: 2px 8px; border-radius: 4px; font-size: 0.85em; font-weight: 600; }
+  </style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a href="index.html">Gallery</a>
+    <a href="graph.html">Knowledge Graph</a>
+  </div>
+</nav>
+
+<header class="scenario-header">
+  <div class="container">
+    <a href="index.html" class="back-link">&larr; Back to Gallery</a>
+    <h1>How Confidence Scores Work</h1>
+    <div class="header-meta">
+      <span class="badge badge-version">Methodology</span>
+    </div>
+  </div>
+</header>
+
+<main class="content methodology">
+  <section class="section">
+    <h2>What the Confidence Score Means</h2>
+    <p>The overall confidence score (0.0 to 1.0, shown as a percentage) reflects how well-sourced the claim's origins are. It is <strong>not</strong> a truth score. A high score means the claim draws on verifiable, well-documented sources. A low score means the claim relies on unverifiable or low-quality sources.</p>
+
+    <h2>How the Score is Calculated</h2>
+    <p>Three factors determine the confidence score:</p>
+    <ol>
+      <li><strong>Source quality base:</strong> The average quality of the sources the Origin Tracer identified. Peer-reviewed journals and government data score high. Anonymous social media posts score low.</li>
+      <li><strong>Complexity adjustment:</strong> Multi-actor claims with many moving parts get dampened because complexity breeds uncertainty. A simple factual claim starts from a higher base than a claim involving dozens of actors and nested causal chains.</li>
+      <li><strong>Auditor adjustment:</strong> The Adversarial Auditor reviews the entire pipeline's work and adjusts the score up or down based on quality, completeness, and bias checks.</li>
+    </ol>
+
+    <h2>The Five Dimensions (Evidence Certainty Framework)</h2>
+    <p>Each claim is also assessed across five dimensions. These are weighted to produce a composite score:</p>
+    <table>
+      <thead><tr><th>Dimension</th><th>Weight</th><th>What It Measures</th></tr></thead>
+      <tbody>
+        <tr><td>Evidence Quality</td><td>30%</td><td>How strong is the underlying evidence? Are there controlled studies, systematic reviews, or only anecdotes?</td></tr>
+        <tr><td>Source Reliability</td><td>20%</td><td>How credible are the sources? Do they have editorial standards, correction policies, or peer review?</td></tr>
+        <tr><td>Claim Testability</td><td>15%</td><td>Can the claim be checked against observable data? Or is it unfalsifiable by design?</td></tr>
+        <tr><td>Expert Consensus</td><td>20%</td><td>Do domain experts agree on this topic? Is there genuine scientific debate, or manufactured controversy?</td></tr>
+        <tr><td>Internal Coherence</td><td>15%</td><td>Is the claim logically consistent? Do its sub-claims support each other, or contradict?</td></tr>
+      </tbody>
+    </table>
+
+    <h2>ECF Levels</h2>
+    <table>
+      <thead><tr><th>Level</th><th>Composite Score</th><th>What It Means</th></tr></thead>
+      <tbody>
+        <tr><td>HIGH</td><td>0.75 or above</td><td>Strong evidence from credible sources, expert agreement, testable claims</td></tr>
+        <tr><td>MODERATE</td><td>0.50 to 0.74</td><td>Mixed evidence, some credible sources, genuine debate among experts</td></tr>
+        <tr><td>LOW</td><td>0.25 to 0.49</td><td>Weak evidence, limited credible sources, claims difficult to verify</td></tr>
+        <tr><td>VERY LOW</td><td>Below 0.25</td><td>No credible evidence identified, untestable claims, no expert support</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Source Tier System</h2>
+    <p>Every source identified by the Origin Tracer is classified into one of four tiers:</p>
+    <table>
+      <thead><tr><th>Tier</th><th>Label</th><th>Examples</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Primary/Institutional</td><td>Peer-reviewed journals (Nature, The Lancet), government health agencies (WHO, CDC), official statistics</td></tr>
+        <tr><td>2</td><td>Quality Journalism</td><td>Major news organizations with editorial standards and corrections policies (Reuters, AP News, BBC)</td></tr>
+        <tr><td>3</td><td>Secondary/Commentary</td><td>Established blogs, opinion outlets, think tanks with disclosed funding</td></tr>
+        <tr><td>4</td><td>Unverified/Social</td><td>Social media posts, anonymous blogs, forums, unattributed content</td></tr>
+      </tbody>
+    </table>
+    <p>The confidence score starts from the average tier score of all identified sources. Tier 1 sources contribute 0.9, Tier 2 contributes 0.7, Tier 3 contributes 0.5, and Tier 4 contributes 0.3.</p>
+
+    <h2>What the Score is NOT</h2>
+    <ul class="not-list">
+      <li><strong>Not a truth score.</strong> A high confidence score does not mean the claim is true. It means the claim is well-sourced. Well-sourced claims can still be wrong. Poorly-sourced claims can still be correct.</li>
+      <li><strong>Not a censorship signal.</strong> This score must never be used as an automated content-moderation trigger, takedown signal, or input to automated decisions affecting content visibility.</li>
+      <li><strong>Not a legal determination.</strong> This analysis is informational. It does not constitute legal advice or regulatory compliance.</li>
+      <li><strong>Not a replacement for human judgment.</strong> The score is advisory. It provides structured information to help humans form their own assessments.</li>
+    </ul>
+    <p>This framework complies with the advisory-only principle: all scoring fields carry explicit warnings that they must not be used for automated content moderation without human review (per GDPR Art. 22, EU AI Act Annex III, UK OSA s.179).</p>
+
+    <h2>Counter-Narrative Quality Score <span class="beta-badge">Beta</span></h2>
+    <p>Some analyses include a Counter-Narrative Quality Score (CNQS). This is an experimental framework that evaluates how well institutions (governments, health agencies, media organizations) have responded to a claim. It does <strong>not</strong> evaluate whether the claim is true.</p>
+    <p>The CNQS has eight dimensions, each scored 1 to 5:</p>
+    <ol>
+      <li><strong>Respect for Audience:</strong> Does the institutional response treat the audience as capable adults, or talk down to them?</li>
+      <li><strong>Acknowledgment of Uncertainty:</strong> Does the response honestly acknowledge what is not yet known?</li>
+      <li><strong>Proportionality of Response:</strong> Is the response proportionate to the actual risk, or overblown/dismissive?</li>
+      <li><strong>Institutional Interest Transparency:</strong> Does the response disclose the institution's own interests and potential conflicts?</li>
+      <li><strong>Alternative Explanation Quality:</strong> Does the response offer substantive alternative explanations, or just dismiss the claim?</li>
+      <li><strong>Factual Accuracy:</strong> Are the facts cited in the response accurate and verifiable?</li>
+      <li><strong>Tone Calibration:</strong> Is the tone appropriate for the audience and context?</li>
+      <li><strong>Cognitive Load Management:</strong> Is the response clear and digestible, or overwhelming?</li>
+    </ol>
+    <p>A score of 1 on any dimension triggers a "critical failure" flag, indicating a fundamental problem with the institutional response.</p>
+    <p>The CNQS is marked <span class="beta-badge">Beta</span> because the scoring framework is new and has not yet been empirically validated against real-world outcomes. Treat it as a structured conversation starter, not a definitive assessment.</p>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>
+      Built with <a href="https://github.com/jschmiedbauer/huginn-muninn">Huginn &amp; Muninn</a> &mdash;
+      an open-source de-polarization research project. &nbsp;|&nbsp;
+      MIT License &nbsp;|&nbsp;
+      Analysis powered by Claude (Anthropic)
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>`;
 }
 
 // ---------------------------------------------------------------------------
@@ -2399,8 +2552,14 @@ function main() {
   fs.writeFileSync(graphPath, graphHtml, 'utf8');
   console.log(`Written: graph.html (${(graphHtml.length / 1024).toFixed(1)} KB)`);
 
+  // Write confidence methodology page
+  const methodologyHtml = buildMethodologyPage();
+  const methodologyPath = path.join(DIST_DIR, 'confidence-methodology.html');
+  fs.writeFileSync(methodologyPath, methodologyHtml, 'utf8');
+  console.log(`Written: confidence-methodology.html (${(methodologyHtml.length / 1024).toFixed(1)} KB)`);
+
   console.log();
-  console.log(`Done. Generated index.html + ${written} scenario pages + ${essaysWritten} essay pages + graph.html.`);
+  console.log(`Done. Generated index.html + ${written} scenario pages + ${essaysWritten} essay pages + graph.html + confidence-methodology.html.`);
   console.log(`Open: ${path.join(DIST_DIR, 'index.html')}`);
 }
 

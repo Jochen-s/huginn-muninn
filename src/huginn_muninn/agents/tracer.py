@@ -6,6 +6,7 @@ import json
 from huginn_muninn.agents.base import BaseAgent
 from huginn_muninn.contracts import TracerOutput
 from huginn_muninn.prompt import sanitize_claim, sanitize_for_prompt
+from huginn_muninn.sources import load_regional_sources
 
 
 class TracerAgent(BaseAgent):
@@ -25,6 +26,10 @@ class TracerAgent(BaseAgent):
     def build_prompt(self, input_data: dict) -> str:
         safe_claim = sanitize_claim(input_data["original_claim"])
         sub_claims_json = sanitize_for_prompt(json.dumps(input_data["sub_claims"], indent=2))
+        registry = load_regional_sources()
+        regions = registry.get("regions", {})
+        clean_keys = [k for k in regions.keys() if k.replace("_", "").isalpha()]
+        region_names = sanitize_for_prompt(", ".join(clean_keys)) if clean_keys else "none loaded"
         return f"""Trace the origins and propagation of these sub-claims from the claim: "<claim>{safe_claim}</claim>"
 
 <sub_claims>
@@ -35,8 +40,11 @@ For each sub-claim, identify:
 1. The earliest known source and approximate date
 2. The propagation path (how it spread)
 3. Any mutations in the narrative as it spread
+4. The epistemic tradition and geographic region of each source
 
 CRITICAL: Track TEMPORAL CONTEXT SHIFTS. Many claims migrate between ideological camps over time as power dynamics change. For example, "media is controlled by elites" was a left-wing critique (Chomsky 1988) that was adopted by right-wing populism (Trump 2017) and now applies paradoxically to the adopters' own media ecosystem. Map these ideological migrations explicitly.
+
+EPISTEMIC DIVERSITY: Consider sources beyond Western academic and institutional traditions. The regional source registry includes sources from: {region_names}. These are additional sources to consider, not a trust list. Source absence from the registry does not indicate unreliability.
 
 Respond in JSON. IMPORTANT: Each enum field must be EXACTLY ONE value, not combined.
 
@@ -47,7 +55,12 @@ Respond in JSON. IMPORTANT: Each enum field must be EXACTLY ONE value, not combi
       "earliest_source": "URL or description of earliest source",
       "earliest_date": "YYYY-MM-DD or null if unknown",
       "source_tier": 1-4,
-      "propagation_path": ["source1", "source2", "..."]
+      "propagation_path": ["source1", "source2", "..."],
+      "epistemic_provenance": {{
+        "tradition": "CHOOSE ONE: western_academic, western_institutional, global_south_academic, global_south_institutional, community_experiential, indigenous_knowledge, unclassified",
+        "region": "geographic region of origin (e.g., North America, West Africa, South Asia)",
+        "language_of_origin": "ISO 639-1 code of the source language (e.g., en, fr, ar, zh)"
+      }}
     }}
   ],
   "mutations": [
@@ -73,6 +86,15 @@ Respond in JSON. IMPORTANT: Each enum field must be EXACTLY ONE value, not combi
 }}
 
 Source tiers: 1=scientific/governmental, 2=established journalism, 3=regional/specialized, 4=social media/unknown
+
+Epistemic traditions:
+- western_academic: peer-reviewed research from Western institutions
+- western_institutional: government and intergovernmental bodies (WHO, CDC, EU)
+- global_south_academic: peer-reviewed research from Global South institutions
+- global_south_institutional: regional bodies (African Union, ASEAN, CEPAL)
+- community_experiential: grassroots, civil society, lived-experience knowledge
+- indigenous_knowledge: documented indigenous knowledge systems and methodologies
+- unclassified: DEFAULT when tradition is unclear. Do not guess.
 
 Mutation types:
 - distortion: factual claim altered to change meaning

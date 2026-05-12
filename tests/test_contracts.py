@@ -1225,6 +1225,8 @@ class TestAnalysisResponse:
             "method": "method_2",
             "degraded": False,
             "degraded_reason": None,
+            "confidence_profile": None,
+            "cnqs": None,
         }
 
     def test_from_report_unsuppressed_preserves_all_fields(self):
@@ -1299,3 +1301,335 @@ class TestAnalysisResponse:
         response = AnalysisResponse.from_report(report, suppressed=frozenset())
         report_dump = report.model_dump(mode="json")
         assert response.data == report_dump
+
+    def test_suppression_of_confidence_profile(self):
+        raw = self._make_report_dict()
+        raw["confidence_profile"] = {
+            "evidence_quality": 0.8, "source_reliability": 0.7,
+            "claim_testability": 0.6, "expert_consensus": 0.5,
+            "internal_coherence": 0.9,
+        }
+        raw["audit"]["confidence_profile"] = raw["confidence_profile"]
+        report = AnalysisReport(**raw)
+        response = AnalysisResponse.from_report(
+            report, suppressed=frozenset({"confidence_profile"})
+        )
+        assert response.data["confidence_profile"] is None
+        assert response.data["audit"]["confidence_profile"] is None
+        assert "confidence_profile" in response.suppressed_fields
+
+    def test_suppression_of_cnqs(self):
+        raw = self._make_report_dict()
+        raw["cnqs"] = {"respect_for_audience": 4, "factual_accuracy": 2}
+        raw["audit"]["cnqs"] = raw["cnqs"]
+        report = AnalysisReport(**raw)
+        response = AnalysisResponse.from_report(
+            report, suppressed=frozenset({"cnqs"})
+        )
+        assert response.data["cnqs"] is None
+        assert response.data["audit"]["cnqs"] is None
+        assert "cnqs" in response.suppressed_fields
+
+
+class TestConfidenceProfile:
+    """Sprint 4 Phase 2: Evidence Certainty Framework model."""
+
+    def test_default_values(self):
+        from huginn_muninn.contracts import ConfidenceProfile
+        p = ConfidenceProfile()
+        assert p.evidence_quality == 0.5
+        assert p.source_reliability == 0.5
+        assert p.composite == 0.5
+        assert p.ecf_level == "MODERATE"
+
+    def test_composite_calculation(self):
+        from huginn_muninn.contracts import ConfidenceProfile
+        p = ConfidenceProfile(
+            evidence_quality=1.0, source_reliability=1.0,
+            claim_testability=1.0, expert_consensus=1.0,
+            internal_coherence=1.0,
+        )
+        assert p.composite == 1.0
+        assert p.ecf_level == "HIGH"
+
+    def test_very_low_composite(self):
+        from huginn_muninn.contracts import ConfidenceProfile
+        p = ConfidenceProfile(
+            evidence_quality=0.1, source_reliability=0.1,
+            claim_testability=0.1, expert_consensus=0.1,
+            internal_coherence=0.1,
+        )
+        assert p.composite == 0.1
+        assert p.ecf_level == "VERY_LOW"
+
+    def test_low_level_boundary(self):
+        from huginn_muninn.contracts import ConfidenceProfile
+        p = ConfidenceProfile(
+            evidence_quality=0.25, source_reliability=0.25,
+            claim_testability=0.25, expert_consensus=0.25,
+            internal_coherence=0.25,
+        )
+        assert p.composite == 0.25
+        assert p.ecf_level == "LOW"
+
+    def test_moderate_level_boundary(self):
+        from huginn_muninn.contracts import ConfidenceProfile
+        p = ConfidenceProfile(
+            evidence_quality=0.5, source_reliability=0.5,
+            claim_testability=0.5, expert_consensus=0.5,
+            internal_coherence=0.5,
+        )
+        assert p.composite == 0.5
+        assert p.ecf_level == "MODERATE"
+
+    def test_weights_sum_to_one(self):
+        from huginn_muninn.contracts import ConfidenceProfile
+        assert sum(ConfidenceProfile._WEIGHTS.values()) == 1.0
+
+    def test_serializes_composite_in_model_dump(self):
+        from huginn_muninn.contracts import ConfidenceProfile
+        p = ConfidenceProfile(evidence_quality=0.9)
+        d = p.model_dump(mode="json")
+        assert "composite" in d
+        assert "ecf_level" in d
+        assert isinstance(d["composite"], float)
+
+    def test_rejects_out_of_range(self):
+        from huginn_muninn.contracts import ConfidenceProfile
+        with pytest.raises(Exception):
+            ConfidenceProfile(evidence_quality=1.5)
+
+    def test_evidence_quality_weighted_highest(self):
+        from huginn_muninn.contracts import ConfidenceProfile
+        w = ConfidenceProfile._WEIGHTS
+        assert w["evidence_quality"] == max(w.values())
+
+    def test_analysis_report_parses_with_profile(self):
+        raw = TestAnalysisResponse()._make_report_dict()
+        raw["confidence_profile"] = {
+            "evidence_quality": 0.8, "source_reliability": 0.6,
+            "claim_testability": 0.7, "expert_consensus": 0.4,
+            "internal_coherence": 0.9,
+        }
+        report = AnalysisReport(**raw)
+        assert report.confidence_profile is not None
+        assert report.confidence_profile.ecf_level in ("HIGH", "MODERATE", "LOW", "VERY_LOW")
+
+    def test_analysis_report_parses_without_profile(self):
+        raw = TestAnalysisResponse()._make_report_dict()
+        report = AnalysisReport(**raw)
+        assert report.confidence_profile is None
+
+
+class TestCounterNarrativeQualityScore:
+    """Sprint 4 Phase 2: CNQS model (experimental)."""
+
+    def test_default_values(self):
+        from huginn_muninn.contracts import CounterNarrativeQualityScore
+        c = CounterNarrativeQualityScore()
+        assert c.respect_for_audience == 3
+        assert c.composite == 0.6
+        assert c.has_critical_failure is False
+
+    def test_critical_failure_detection(self):
+        from huginn_muninn.contracts import CounterNarrativeQualityScore
+        c = CounterNarrativeQualityScore(factual_accuracy=1)
+        assert c.has_critical_failure is True
+
+    def test_no_critical_failure_at_two(self):
+        from huginn_muninn.contracts import CounterNarrativeQualityScore
+        c = CounterNarrativeQualityScore(factual_accuracy=2)
+        assert c.has_critical_failure is False
+
+    def test_composite_all_fives(self):
+        from huginn_muninn.contracts import CounterNarrativeQualityScore
+        c = CounterNarrativeQualityScore(
+            respect_for_audience=5, acknowledgment_of_uncertainty=5,
+            proportionality_of_response=5, institutional_interest_transparency=5,
+            alternative_explanation_quality=5, factual_accuracy=5,
+            tone_calibration=5, cognitive_load_management=5,
+        )
+        assert c.composite == 1.0
+
+    def test_composite_all_ones(self):
+        from huginn_muninn.contracts import CounterNarrativeQualityScore
+        c = CounterNarrativeQualityScore(
+            respect_for_audience=1, acknowledgment_of_uncertainty=1,
+            proportionality_of_response=1, institutional_interest_transparency=1,
+            alternative_explanation_quality=1, factual_accuracy=1,
+            tone_calibration=1, cognitive_load_management=1,
+        )
+        assert c.composite == 0.2
+        assert c.has_critical_failure is True
+
+    def test_evaluated_source_scrubbed(self):
+        from huginn_muninn.contracts import CounterNarrativeQualityScore, _SCOPE_VIOLATION_MARKER
+        c = CounterNarrativeQualityScore(evaluated_source="The New York Times response")
+        assert c.evaluated_source == _SCOPE_VIOLATION_MARKER
+
+    def test_evaluated_source_clean_passes(self):
+        from huginn_muninn.contracts import CounterNarrativeQualityScore
+        c = CounterNarrativeQualityScore(
+            evaluated_source="national public health authority communication"
+        )
+        assert c.evaluated_source == "national public health authority communication"
+
+    def test_evaluated_source_none_becomes_empty(self):
+        from huginn_muninn.contracts import CounterNarrativeQualityScore
+        c = CounterNarrativeQualityScore(evaluated_source=None)
+        assert c.evaluated_source == ""
+
+    def test_serializes_composite_in_model_dump(self):
+        from huginn_muninn.contracts import CounterNarrativeQualityScore
+        c = CounterNarrativeQualityScore()
+        d = c.model_dump(mode="json")
+        assert "composite" in d
+        assert "has_critical_failure" in d
+
+    def test_rejects_out_of_range(self):
+        from huginn_muninn.contracts import CounterNarrativeQualityScore
+        with pytest.raises(Exception):
+            CounterNarrativeQualityScore(respect_for_audience=6)
+
+    def test_rejects_zero(self):
+        from huginn_muninn.contracts import CounterNarrativeQualityScore
+        with pytest.raises(Exception):
+            CounterNarrativeQualityScore(respect_for_audience=0)
+
+    def test_experimental_status(self):
+        from huginn_muninn.contracts import CounterNarrativeQualityScore
+        assert CounterNarrativeQualityScore._CNQS_STATUS == "experimental"
+
+
+class TestConvergenceMatrix:
+    """Sprint 4 Phase 3: Cross-ideological convergence mapping."""
+
+    def test_empty_groups_allowed(self):
+        from huginn_muninn.contracts import ConvergenceMatrix
+        m = ConvergenceMatrix()
+        assert m.groups == []
+
+    def test_two_groups_preserved(self):
+        from huginn_muninn.contracts import ConvergenceGroup, ConvergenceMatrix
+        m = ConvergenceMatrix(groups=[
+            ConvergenceGroup(label="left coalition", political_position="left"),
+            ConvergenceGroup(label="right coalition", political_position="right"),
+        ])
+        assert len(m.groups) == 2
+
+    def test_convergence_type_pipe_separated(self):
+        from huginn_muninn.contracts import ConvergenceMatrix
+        m = ConvergenceMatrix(convergence_type="antagonist|visionary")
+        assert m.convergence_type == "antagonist"
+
+    def test_convergence_strength_pipe_separated(self):
+        from huginn_muninn.contracts import ConvergenceMatrix
+        m = ConvergenceMatrix(convergence_strength="HIGH|LOW")
+        assert m.convergence_strength == "HIGH"
+
+    def test_political_position_pipe_separated(self):
+        from huginn_muninn.contracts import ConvergenceGroup
+        g = ConvergenceGroup(political_position="left|right")
+        assert g.political_position == "left"
+
+    def test_amplification_risk_max_length(self):
+        from huginn_muninn.contracts import ConvergenceMatrix
+        with pytest.raises(Exception):
+            ConvergenceMatrix(amplification_risk="x" * 501)
+
+    def test_amplification_risk_within_limit(self):
+        from huginn_muninn.contracts import ConvergenceMatrix
+        m = ConvergenceMatrix(amplification_risk="x" * 500)
+        assert len(m.amplification_risk) == 500
+
+    def test_scope_scrub_on_label_named_publisher(self):
+        from huginn_muninn.contracts import ConvergenceGroup, _SCOPE_VIOLATION_MARKER
+        g = ConvergenceGroup(label="Fox News audience")
+        assert g.label == _SCOPE_VIOLATION_MARKER
+
+    def test_scope_scrub_on_framing_named_publisher(self):
+        from huginn_muninn.contracts import ConvergenceGroup, _SCOPE_VIOLATION_MARKER
+        g = ConvergenceGroup(framing="The RT audience frames this as Western aggression")
+        assert g.framing == _SCOPE_VIOLATION_MARKER
+
+    def test_scope_scrub_preserves_clean_label(self):
+        from huginn_muninn.contracts import ConvergenceGroup
+        g = ConvergenceGroup(label="anti-lockdown libertarian coalition")
+        assert g.label == "anti-lockdown libertarian coalition"
+
+    def test_scope_scrub_preserves_clean_grievance(self):
+        from huginn_muninn.contracts import ConvergenceGroup
+        g = ConvergenceGroup(core_grievance="bodily autonomy and medical freedom")
+        assert g.core_grievance == "bodily autonomy and medical freedom"
+
+    def test_mapper_output_one_group_degrades_to_none(self):
+        from huginn_muninn.contracts import ConvergenceGroup, ConvergenceMatrix, MapperOutput
+        m = MapperOutput(
+            actors=[],
+            narrative_summary="test",
+            convergence_matrix=ConvergenceMatrix(groups=[
+                ConvergenceGroup(label="single group"),
+            ]),
+        )
+        assert m.convergence_matrix is None
+
+    def test_mapper_output_zero_groups_degrades_to_none(self):
+        from huginn_muninn.contracts import ConvergenceMatrix, MapperOutput
+        m = MapperOutput(
+            actors=[],
+            narrative_summary="test",
+            convergence_matrix=ConvergenceMatrix(groups=[]),
+        )
+        assert m.convergence_matrix is None
+
+    def test_mapper_output_two_groups_preserved(self):
+        from huginn_muninn.contracts import ConvergenceGroup, ConvergenceMatrix, MapperOutput
+        m = MapperOutput(
+            actors=[],
+            narrative_summary="test",
+            convergence_matrix=ConvergenceMatrix(groups=[
+                ConvergenceGroup(label="group a", political_position="left"),
+                ConvergenceGroup(label="group b", political_position="right"),
+            ]),
+        )
+        assert m.convergence_matrix is not None
+        assert len(m.convergence_matrix.groups) == 2
+
+    def test_mapper_output_none_convergence_backward_compat(self):
+        from huginn_muninn.contracts import MapperOutput
+        m = MapperOutput(actors=[], narrative_summary="test")
+        assert m.convergence_matrix is None
+
+    def test_serializes_in_model_dump(self):
+        from huginn_muninn.contracts import ConvergenceGroup, ConvergenceMatrix
+        m = ConvergenceMatrix(
+            groups=[
+                ConvergenceGroup(label="group a", political_position="left"),
+                ConvergenceGroup(label="group b", political_position="right"),
+            ],
+            convergence_type="antagonist",
+            convergence_strength="HIGH",
+        )
+        d = m.model_dump(mode="json")
+        assert "groups" in d
+        assert "convergence_type" in d
+        assert len(d["groups"]) == 2
+
+    def test_scope_scrub_on_proposed_solution(self):
+        from huginn_muninn.contracts import ConvergenceGroup, _SCOPE_VIOLATION_MARKER
+        g = ConvergenceGroup(proposed_solution="The BBC should lead the response")
+        assert g.proposed_solution == _SCOPE_VIOLATION_MARKER
+
+    def test_scope_scrub_on_bridge_narratives(self):
+        from huginn_muninn.contracts import ConvergenceMatrix, _SCOPE_VIOLATION_MARKER
+        m = ConvergenceMatrix(bridge_narratives=[
+            "shared distrust of institutions",
+            "The Fox News pipeline bridged sentiment",
+        ])
+        assert m.bridge_narratives[0] == "shared distrust of institutions"
+        assert m.bridge_narratives[1] == _SCOPE_VIOLATION_MARKER
+
+    def test_advisory_only_on_convergence_strength(self):
+        from huginn_muninn.contracts import ConvergenceMatrix, _ADVISORY_ONLY_DESCRIPTION
+        desc = ConvergenceMatrix.model_fields["convergence_strength"].description
+        assert desc == _ADVISORY_ONLY_DESCRIPTION

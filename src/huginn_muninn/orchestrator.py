@@ -18,6 +18,38 @@ from huginn_muninn.llm import LLMClient
 log = logging.getLogger(__name__)
 
 
+_SOURCE_TIER_SCORES: dict[int, float] = {1: 0.9, 2: 0.7, 3: 0.5, 4: 0.3}
+
+_CONFIDENCE_COMPLEXITY_DAMPENER: dict[str, float] = {
+    "simple": 1.0,
+    "moderate": 0.9,
+    "complex": 0.8,
+    "multi_actor": 0.7,
+}
+
+
+def _compute_source_quality_base(origins: dict, decomposition: dict) -> float:
+    """Derive confidence base from upstream signal quality. Deterministic.
+
+    When the Tracer returns valid origins with source tiers, the base reflects
+    the mean quality of those sources dampened by claim complexity. When the
+    Tracer fails (empty origins), falls back to 0.5 (unknown quality).
+    """
+    entries = origins.get("origins", [])
+    if not entries:
+        return 0.5
+    scores = [
+        _SOURCE_TIER_SCORES.get(
+            e.get("source_tier", 4) if isinstance(e, dict) else 4, 0.3
+        )
+        for e in entries
+    ]
+    tier_mean = sum(scores) / len(scores)
+    complexity = decomposition.get("complexity", "simple")
+    dampener = _CONFIDENCE_COMPLEXITY_DAMPENER.get(complexity, 1.0)
+    return round(min(1.0, tier_mean * dampener), 3)
+
+
 # Zero-token deterministic helper: computes a hypothesis-space expansion score
 # from existing Decomposer output fields. Not an entropy calculation and not a
 # quantum formalism -- literal density-matrix math was deliberately avoided as
@@ -85,7 +117,7 @@ class Orchestrator:
 
         # Stage 3: Intelligence mapping
         intelligence = self._run_agent(self.mapper, {**context}, failures)
-        intelligence = intelligence or {"actors": [], "relations": [], "narrative_summary": ""}
+        intelligence = intelligence or {"actors": [], "relations": [], "narrative_summary": "", "convergence_matrix": None}
         context["intelligence"] = intelligence
 
         # Stage 4: TTP Classifier + Bridge Builder (sequential; async deferred)
@@ -152,10 +184,12 @@ class Orchestrator:
             "summary": "Auditor agent failed; results unverified",
             "frame_capture_risk": "none",
             "frame_capture_evidence": "",
+            "confidence_profile": None,
+            "cnqs": None,
         }
 
         # Compute overall confidence
-        base_confidence = 0.7
+        base_confidence = _compute_source_quality_base(origins, decomposition)
         confidence_adj = audit.get("confidence_adjustment", 0.0)
         failure_penalty = len(failures) * 0.1
         overall = max(0.0, min(1.0, base_confidence + confidence_adj - failure_penalty))
@@ -239,7 +273,7 @@ class Orchestrator:
                 "complexity_explosion_flag": False,
             },
             "origins": {"origins": [], "mutations": [], "notable_omissions": []},
-            "intelligence": {"actors": [], "relations": [], "narrative_summary": ""},
+            "intelligence": {"actors": [], "relations": [], "narrative_summary": "", "convergence_matrix": None},
             "ttps": {"ttp_matches": [], "primary_tactic": "Assess"},
             "bridge": {
                 "universal_needs": ["unknown"], "issue_overlap": "", "narrative_deconstruction": "",
@@ -261,8 +295,12 @@ class Orchestrator:
                 "veto": False, "summary": "Pipeline degraded due to critical agent failure",
                 "frame_capture_risk": "none",
                 "frame_capture_evidence": "",
+                "confidence_profile": None,
+                "cnqs": None,
             },
             "overall_confidence": 0.0,
+            "confidence_profile": None,
+            "cnqs": None,
             "method": "method_2",
             "degraded": True,
             "degraded_reason": f"Critical agent failure: {', '.join(failures)}. Use Method 1 (huginn check) for this claim.",

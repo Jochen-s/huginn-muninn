@@ -30,6 +30,8 @@ _FIELD_PATTERNS: dict[str, list[str]] = {
     "prebunking_note": ["prebunking_note", "prebunking note"],
     "communication_posture": ["communication_posture", "communication posture"],
     "pattern_density_warning": ["pattern_density_warning", "pattern density warning"],
+    "confidence_profile": ["confidence_profile", "confidence profile", "ecf_level"],
+    "cnqs": ["cnqs", "counter_narrative_quality", "counter-narrative quality"],
 }
 
 # Sentence boundary: split after sentence-ending punctuation followed by whitespace.

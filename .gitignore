@@ -22,14 +22,27 @@ Thumbs.db
 *.db
 data/*
 !data/disarm_techniques.json
+!data/regional_sources.json
 
 # Internal
 .claude/
-.fleet/
-.codex/
 HANDOFF.md
-docs/linkedin-*.md
-docs/*-draft.md
-docs/plans/
 NUL
 deploy/
+
+# Internal docs -- plans, drafts, presentations, generators
+docs/plans/
+docs/*.docx
+docs/*-draft.md
+docs/linkedin-*.md
+docs/RELEASE-EVOLUTION.md
+docs/bridge-builders-field-guide.md
+docs/engagement-playbook-*.md
+docs/linkedin-article-proposal.md
+docs/*-brief*.js
+docs/*-one-pager*.js
+docs/*-research-foundation*.js
+docs/*-test-suite-findings*.js
+docs/huginn-muninn-pkm-summit-brief.js
+docs/huginn-muninn-presentation-brief-v2.js
+docs/linkedin-post-*.md

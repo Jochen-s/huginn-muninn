@@ -1,0 +1,195 @@
+{
+  "metadata": {
+    "purpose": "Additional sources to consider for epistemic diversity. NOT a trust list.",
+    "curator": "community",
+    "inclusion_criteria": "Established institutions or knowledge systems with documented methodologies",
+    "last_reviewed": "2026-05-12",
+    "review_frequency": "quarterly"
+  },
+  "regions": {
+    "africa": {
+      "academic": [
+        {
+          "name": "African Academy of Sciences",
+          "url": "https://www.aasciences.africa",
+          "description": "Pan-African peer-reviewed science policy and research body",
+          "tradition": "global_south_academic",
+          "languages": ["English", "French"]
+        },
+        {
+          "name": "CODESRIA (Council for the Development of Social Science Research in Africa)",
+          "url": "https://www.codesria.org",
+          "description": "Social science network producing journals and policy analysis grounded in African contexts",
+          "tradition": "global_south_academic",
+          "languages": ["English", "French", "Arabic"]
+        }
+      ],
+      "institutional": [
+        {
+          "name": "African Union Commission",
+          "url": "https://au.int",
+          "description": "Continental policy body producing data and reports on governance, health, and development",
+          "tradition": "global_south_institutional",
+          "languages": ["English", "French", "Arabic", "Portuguese", "Swahili"]
+        },
+        {
+          "name": "UNECA (UN Economic Commission for Africa)",
+          "url": "https://www.uneca.org",
+          "description": "Regional UN body generating economic data and development reports for Africa",
+          "tradition": "global_south_institutional",
+          "languages": ["English", "French"]
+        }
+      ],
+      "community": [
+        {
+          "name": "Pambazuka News",
+          "url": "https://www.pambazuka.org",
+          "description": "Pan-African platform for civil society analysis and grassroots perspectives",
+          "tradition": "community_experiential",
+          "languages": ["English", "French", "Portuguese"]
+        }
+      ]
+    },
+    "asia_pacific": {
+      "academic": [
+        {
+          "name": "Asian Development Bank Institute",
+          "url": "https://www.adbi.org",
+          "description": "Research arm of ADB producing working papers on development economics and governance in Asia",
+          "tradition": "global_south_academic",
+          "languages": ["English", "Japanese"]
+        },
+        {
+          "name": "Third World Network",
+          "url": "https://www.twn.my",
+          "description": "Independent research network covering trade and development from a Global South lens",
+          "tradition": "global_south_academic",
+          "languages": ["English"]
+        }
+      ],
+      "institutional": [
+        {
+          "name": "ASEAN Secretariat",
+          "url": "https://asean.org",
+          "description": "Regional policy documents and data on Southeast Asian economic, political, and social affairs",
+          "tradition": "global_south_institutional",
+          "languages": ["English"]
+        }
+      ],
+      "community": [
+        {
+          "name": "Asia Pacific Forum on Women, Law and Development",
+          "url": "https://apwld.org",
+          "description": "Feminist research network producing experiential knowledge on rights and development",
+          "tradition": "community_experiential",
+          "languages": ["English"]
+        },
+        {
+          "name": "Traditional Knowledge Digital Library (India)",
+          "url": "https://www.tkdl.res.in",
+          "description": "Government-documented repository of traditional knowledge systems (Ayurveda, Yoga, Unani, Siddha)",
+          "tradition": "indigenous_knowledge",
+          "languages": ["English", "Hindi", "Sanskrit"]
+        }
+      ]
+    },
+    "latin_america": {
+      "academic": [
+        {
+          "name": "CLACSO (Latin American Social Sciences Council)",
+          "url": "https://www.clacso.org",
+          "description": "Network of 700+ research centers publishing social science from Latin American perspectives",
+          "tradition": "global_south_academic",
+          "languages": ["Spanish", "Portuguese"]
+        },
+        {
+          "name": "SciELO (Scientific Electronic Library Online)",
+          "url": "https://www.scielo.org",
+          "description": "Open-access peer-reviewed journals from Latin America, the Caribbean, and Iberia",
+          "tradition": "global_south_academic",
+          "languages": ["Spanish", "Portuguese", "English"]
+        }
+      ],
+      "institutional": [
+        {
+          "name": "CEPAL/ECLAC (UN Economic Commission for Latin America and the Caribbean)",
+          "url": "https://www.cepal.org",
+          "description": "UN regional body producing statistical data and development policy for Latin America and the Caribbean",
+          "tradition": "global_south_institutional",
+          "languages": ["Spanish", "Portuguese", "English"]
+        }
+      ],
+      "community": [
+        {
+          "name": "NACLA (North American Congress on Latin America)",
+          "url": "https://nacla.org",
+          "description": "Independent platform covering social movements and economic justice in the Americas",
+          "tradition": "community_experiential",
+          "languages": ["English", "Spanish"]
+        }
+      ]
+    },
+    "middle_east_north_africa": {
+      "academic": [
+        {
+          "name": "Arab Council for the Social Sciences",
+          "url": "https://www.theacss.org",
+          "description": "Regional body promoting independent social science research across Arab contexts",
+          "tradition": "global_south_academic",
+          "languages": ["Arabic", "English", "French"]
+        }
+      ],
+      "institutional": [
+        {
+          "name": "ESCWA (UN Economic and Social Commission for Western Asia)",
+          "url": "https://www.unescwa.org",
+          "description": "UN regional body producing socioeconomic data and development indicators for MENA",
+          "tradition": "global_south_institutional",
+          "languages": ["Arabic", "English", "French"]
+        },
+        {
+          "name": "SESRIC (Statistical, Economic and Social Research and Training Centre for Islamic Countries)",
+          "url": "https://www.sesric.org",
+          "description": "Intergovernmental body providing statistical data for OIC member states",
+          "tradition": "global_south_institutional",
+          "languages": ["English", "Arabic", "French"]
+        }
+      ],
+      "community": [
+        {
+          "name": "Jadaliyya (Arab Studies Institute)",
+          "url": "https://www.jadaliyya.com",
+          "description": "Independent scholarship and analysis on the Arab world produced by regional researchers",
+          "tradition": "community_experiential",
+          "languages": ["Arabic", "English"]
+        }
+      ]
+    },
+    "indigenous_knowledge_systems": {
+      "documented_methodologies": [
+        {
+          "name": "Maori Data Sovereignty Network (Te Mana Raraunga)",
+          "url": "https://www.temanararaunga.maori.nz",
+          "description": "Maori-governed framework with documented principles for indigenous data sovereignty",
+          "tradition": "indigenous_knowledge",
+          "languages": ["Maori", "English"]
+        },
+        {
+          "name": "Local Contexts (Traditional Knowledge Labels)",
+          "url": "https://localcontexts.org",
+          "description": "Collaborative framework with indigenous communities to label and govern traditional knowledge usage",
+          "tradition": "indigenous_knowledge",
+          "languages": ["English", "multiple indigenous languages"]
+        },
+        {
+          "name": "First Nations Information Governance Centre (Canada)",
+          "url": "https://fnigc.ca",
+          "description": "Indigenous-governed body applying OCAP principles (Ownership, Control, Access, Possession) to First Nations data",
+          "tradition": "indigenous_knowledge",
+          "languages": ["English", "French"]
+        }
+      ]
+    }
+  },
+  "note": "This registry is advisory. Source presence does NOT confer trust or authority. Source absence does NOT indicate unreliability. Epistemic diversity means considering multiple knowledge traditions, not ranking them. Static registries encode creator bias -- treat these as starting points for further investigation, not ground truth."
+}

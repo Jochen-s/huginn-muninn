@@ -7,7 +7,11 @@ import pytest
 from huginn_muninn.agents.base import AgentError
 from huginn_muninn.contracts import AnalysisReport
 from huginn_muninn.llm import OllamaClient
-from huginn_muninn.orchestrator import Orchestrator, _compute_hypothesis_expansion_score
+from huginn_muninn.orchestrator import (
+    Orchestrator,
+    _compute_hypothesis_expansion_score,
+    _compute_source_quality_base,
+)
 
 
 MOCK_RESPONSES = {
@@ -125,7 +129,8 @@ class TestOrchestrator:
         assert len(report.decomposition.sub_claims) == 1
 
     def test_confidence_with_many_failures(self):
-        """5 failures (0.5 penalty) + audit fallback (-0.1) from base 0.7 = 0.1."""
+        """5 failures (0.5 penalty) + audit fallback (-0.1) from base 0.5
+        (empty origins, tracer failed) = -0.1, clamped to 0.0."""
         client = MagicMock(spec=OllamaClient)
         # Only decomposer succeeds, all others fail
         client.generate.side_effect = [
@@ -135,7 +140,7 @@ class TestOrchestrator:
         ]
         orch = Orchestrator(client)
         result = orch.run("X is true because Y")
-        assert result["overall_confidence"] == 0.1
+        assert result["overall_confidence"] == 0.0
         assert result["degraded"] is True
 
     def test_confidence_no_failures(self):
@@ -286,6 +291,70 @@ class TestVerificationPriorityFallback:
         # boundary (DecomposerAgent.parse_output raises, orchestrator
         # catches, appends "claim_decomposer" to failures).
         assert "decomposer" in result["degraded_reason"].lower()
+
+
+class TestSourceQualityBase:
+    """Sprint 4 Phase 1.0: source-quality-derived confidence base."""
+
+    def test_empty_origins_returns_fallback(self):
+        base = _compute_source_quality_base({"origins": []}, {"complexity": "simple"})
+        assert base == 0.5
+
+    def test_missing_origins_key_returns_fallback(self):
+        base = _compute_source_quality_base({}, {"complexity": "simple"})
+        assert base == 0.5
+
+    def test_tier1_source_scores_high(self):
+        origins = {"origins": [{"sub_claim": "X", "source_tier": 1}]}
+        base = _compute_source_quality_base(origins, {"complexity": "simple"})
+        assert base == 0.9
+
+    def test_tier4_source_scores_low(self):
+        origins = {"origins": [{"sub_claim": "X", "source_tier": 4}]}
+        base = _compute_source_quality_base(origins, {"complexity": "simple"})
+        assert base == 0.3
+
+    def test_mixed_tiers_averaged(self):
+        origins = {"origins": [
+            {"sub_claim": "X", "source_tier": 1},
+            {"sub_claim": "Y", "source_tier": 4},
+        ]}
+        base = _compute_source_quality_base(origins, {"complexity": "simple"})
+        assert base == 0.6  # (0.9 + 0.3) / 2
+
+    def test_multi_actor_dampens_confidence(self):
+        origins = {"origins": [{"sub_claim": "X", "source_tier": 1}]}
+        simple = _compute_source_quality_base(origins, {"complexity": "simple"})
+        multi = _compute_source_quality_base(origins, {"complexity": "multi_actor"})
+        assert multi < simple
+        assert multi == 0.63  # 0.9 * 0.7
+
+    def test_complex_dampens_confidence(self):
+        origins = {"origins": [{"sub_claim": "X", "source_tier": 2}]}
+        simple = _compute_source_quality_base(origins, {"complexity": "simple"})
+        cplx = _compute_source_quality_base(origins, {"complexity": "complex"})
+        assert cplx < simple
+        assert cplx == 0.56  # 0.7 * 0.8
+
+    def test_unknown_complexity_defaults_to_no_dampening(self):
+        origins = {"origins": [{"sub_claim": "X", "source_tier": 2}]}
+        base = _compute_source_quality_base(origins, {"complexity": "weird"})
+        assert base == 0.7  # 0.7 * 1.0 (default dampener)
+
+    def test_missing_source_tier_defaults_to_tier4(self):
+        origins = {"origins": [{"sub_claim": "X"}]}
+        base = _compute_source_quality_base(origins, {"complexity": "simple"})
+        assert base == 0.3  # tier 4 default
+
+    def test_non_dict_origin_entry_defaults_to_tier4(self):
+        origins = {"origins": ["not-a-dict"]}
+        base = _compute_source_quality_base(origins, {"complexity": "simple"})
+        assert base == 0.3
+
+    def test_bounded_at_one(self):
+        origins = {"origins": [{"sub_claim": "X", "source_tier": 1}]}
+        base = _compute_source_quality_base(origins, {"complexity": "simple"})
+        assert 0.0 <= base <= 1.0
 
 
 class TestHypothesisExpansionScore:
@@ -541,6 +610,62 @@ class TestValidationFailureMarker:
             f"epistemic triage, not confidence input."
         )
         # And the unchanged value must still be the expected baseline (0.7)
+        assert confidences[0] == 0.7
+
+    def test_cnqs_does_not_co_vary_with_overall_confidence(self):
+        """BG-054 Orthogonal-Score Invariance: CNQS composite is orthogonal
+        to overall_confidence. Varying CNQS scores for otherwise-identical
+        inputs must not move overall_confidence. CNQS evaluates institutional
+        counter-narrative quality, which is orthogonal to the pipeline's
+        epistemic confidence in its own analysis."""
+        confidences = []
+        for cnqs_data in [
+            None,
+            {"respect_for_audience": 5, "factual_accuracy": 5},
+            {"respect_for_audience": 1, "factual_accuracy": 1},
+        ]:
+            responses = {**MOCK_RESPONSES}
+            audit = {**MOCK_RESPONSES["adversarial_auditor"]}
+            if cnqs_data:
+                audit["cnqs"] = cnqs_data
+            responses["adversarial_auditor"] = audit
+            client = make_mock_client(responses)
+            orch = Orchestrator(client)
+            result = orch.run("X is true because Y")
+            confidences.append(result["overall_confidence"])
+        assert len(set(confidences)) == 1, (
+            f"CNQS moved overall_confidence: {confidences}. "
+            f"BG-054 violation: CNQS is orthogonal to confidence."
+        )
+        assert confidences[0] == 0.7
+
+    def test_confidence_profile_does_not_move_overall_confidence(self):
+        """BG-054: ConfidenceProfile on AuditorOutput is metadata; the
+        pipeline's overall_confidence still derives from the source-quality
+        formula + confidence_adjustment, not from the profile composite."""
+        confidences = []
+        for profile in [
+            None,
+            {"evidence_quality": 0.9, "source_reliability": 0.9,
+             "claim_testability": 0.9, "expert_consensus": 0.9,
+             "internal_coherence": 0.9},
+            {"evidence_quality": 0.1, "source_reliability": 0.1,
+             "claim_testability": 0.1, "expert_consensus": 0.1,
+             "internal_coherence": 0.1},
+        ]:
+            responses = {**MOCK_RESPONSES}
+            audit = {**MOCK_RESPONSES["adversarial_auditor"]}
+            if profile:
+                audit["confidence_profile"] = profile
+            responses["adversarial_auditor"] = audit
+            client = make_mock_client(responses)
+            orch = Orchestrator(client)
+            result = orch.run("X is true because Y")
+            confidences.append(result["overall_confidence"])
+        assert len(set(confidences)) == 1, (
+            f"ConfidenceProfile moved overall_confidence: {confidences}. "
+            f"BG-054 violation."
+        )
         assert confidences[0] == 0.7
 
     def test_auditor_receives_all_sub_claims_regardless_of_priority(self):

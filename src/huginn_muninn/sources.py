@@ -53,3 +53,15 @@ def load_framing_techniques() -> list[dict]:
     path = _DATA_DIR / "disarm_techniques.json"
     data = json.loads(path.read_text(encoding="utf-8"))
     return data["common_framing_techniques"]
+
+
+@lru_cache(maxsize=1)
+def load_regional_sources() -> dict:
+    """Load regional source registry (advisory, not authoritative)."""
+    path = _DATA_DIR / "regional_sources.json"
+    if not path.exists():
+        return {"regions": {}, "metadata": {}}
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, UnicodeDecodeError):
+        return {"regions": {}, "metadata": {}}

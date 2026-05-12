@@ -11,6 +11,8 @@ _SUPPRESSIBLE_FIELDS = frozenset({
     "pattern_density_warning",
     "vacuum_filled_by",
     "prebunking_note",
+    "confidence_profile",
+    "cnqs",
 })
 
 

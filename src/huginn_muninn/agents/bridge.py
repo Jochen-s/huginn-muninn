@@ -58,9 +58,29 @@ B) A feasibility assessment: If the claim implies a physical, logistical, or org
 C) A commercial motive analysis: Who profits financially from people believing this claim? Name specific organizations, products, or revenue streams where known.
 
 D) A 3-round Socratic dialogue script following the Costello protocol:
-- Round 1: Perspective-getting (summarize their view, acknowledge the kernel of truth)
-- Round 2: Personalized counter-evidence as question (address THEIR specific evidence). IMPORTANT: NAME THE MANIPULATION TECHNIQUE explicitly, like revealing a magic trick. Say "There's a pattern here called [technique name] -- it works by [simple mechanic]." Reference where the same pattern appeared before in other contexts (e.g., the same scapegoating technique used by the tobacco industry, or the same false dichotomy used in prior political campaigns). Frame around systemic patterns, not individual bad actors. Ask about patterns the person can verify themselves.
-- Round 3: Complexity + common ground (add dimensions, present shared data, close with reflection question that redirects toward actionable shared goals)
+
+DIALOGUE STRUCTURE (mandatory, OARS Protocol):
+
+Round 1 -- PURE AFFECTIVE VALIDATION:
+Use Open questions, Affirmations, Reflections, and Summaries (OARS from Motivational Interviewing).
+Validate the EMOTIONAL EXPERIENCE first. Use words like: understand, hear, see, feel, concern, worry, frustration, makes sense, legitimate, valid.
+Do NOT introduce evidence, statistics, studies, or factual corrections in Round 1.
+Do NOT say "but" or "however" in Round 1. Stay entirely in the listener role.
+CRITICAL: Validate the EMOTION, never the factual claim.
+"I understand your fear for your children's safety" = correct.
+"You're right that vaccines cause autism" = catastrophically wrong.
+"I hear your concern about what's in vaccines" = ALSO wrong (this launders the claim by sanitizing it into a reasonable-sounding worry).
+"I hear your worry that vaccines might harm your child" = correct (names the emotion without endorsing or sanitizing the factual claim).
+The distinction: feelings are always valid; false factual claims are not.
+
+TRANSITION -- Permission Bridge:
+Before Round 2, include a permission bridge: "Would it be okay if I shared what the research shows?" or similar. This respects autonomy.
+
+Round 2 -- EVIDENCE-BASED EXAMINATION:
+Now introduce complexity, data, and alternative perspectives. NAME THE MANIPULATION TECHNIQUE explicitly, like revealing a magic trick. Say "There's a pattern here called [technique name] -- it works by [simple mechanic]." Reference where the same pattern appeared before in other contexts (e.g., the same scapegoating technique used by the tobacco industry, or the same false dichotomy used in prior political campaigns). Frame around systemic patterns, not individual bad actors. Ask about patterns the person can verify themselves.
+
+Round 3 -- INTEGRATION WITH QUESTION:
+Add dimensions, present shared data, close with reflection question that redirects toward actionable shared goals.
 
 E) Technique Reveal ("Name the Trick"): For each manipulation technique identified by the upstream TTP Classifier AND any additional framing techniques you detect, name it in plain language like revealing how a magic trick works. Once someone sees the palm, they see it everywhere. For each technique provide:
 - technique: Human-readable name (e.g., "Cherry Picking", "Emotional Amplification", "Scapegoating")

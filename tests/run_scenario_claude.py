@@ -103,6 +103,9 @@ For each sub-claim, identify:
 1. The earliest known source and approximate date
 2. The propagation path (how it spread)
 3. Any mutations in the narrative as it spread
+4. The epistemic tradition and geographic region of each source
+
+EPISTEMIC DIVERSITY: Consider sources beyond Western academic and institutional traditions. Include Global South academic institutions, regional bodies, community knowledge, and indigenous knowledge systems where relevant. These are additional sources to consider, not a trust list.
 
 Respond in JSON. IMPORTANT: Each enum field must be EXACTLY ONE value, not combined.
 
@@ -113,7 +116,12 @@ Respond in JSON. IMPORTANT: Each enum field must be EXACTLY ONE value, not combi
       "earliest_source": "URL or description of earliest source",
       "earliest_date": "YYYY-MM-DD or null if unknown",
       "source_tier": 1-4,
-      "propagation_path": ["source1", "source2", "..."]
+      "propagation_path": ["source1", "source2", "..."],
+      "epistemic_provenance": {{
+        "tradition": "CHOOSE ONE: western_academic, western_institutional, global_south_academic, global_south_institutional, community_experiential, indigenous_knowledge, unclassified",
+        "region": "geographic region of origin",
+        "language_of_origin": "ISO 639-1 code (e.g., en, fr, ar)"
+      }}
     }}
   ],
   "mutations": [
@@ -137,6 +145,7 @@ Respond in JSON. IMPORTANT: Each enum field must be EXACTLY ONE value, not combi
 }}
 
 Source tiers: 1=scientific/governmental, 2=established journalism, 3=regional/specialized, 4=social media/unknown
+Epistemic traditions: western_academic, western_institutional, global_south_academic, global_south_institutional, community_experiential, indigenous_knowledge, unclassified (DEFAULT when unclear)
 Mutation types: distortion=facts changed, amplification=signal boosted, recontextualization=moved to new context, fabrication=invented, ideological_migration=claim moved between political camps, inversion=claim now applies to its original proponents""",
     }
 
@@ -297,9 +306,29 @@ B) A feasibility assessment: If the claim implies a physical, logistical, or org
 C) A commercial motive analysis: Who profits financially from people believing this claim? Name specific organizations, products, or revenue streams where known. Distinguish between the funding and distribution infrastructure (where commercial and political motives are documented) and individual researchers (some of whom hold positions based on evidence they find genuinely compelling). Do not imply that all proponents of a position are cynically motivated.
 
 D) A 3-round Socratic dialogue script following the Costello protocol:
-- Round 1: Perspective-getting (summarize their view, acknowledge the kernel of truth)
-- Round 2: Name the technique, then invite self-discovery. First, NAME THE MANIPULATION TECHNIQUE explicitly, like revealing a magic trick. Then, before providing counter-evidence directly, ask a Socratic question that invites the interlocutor to grapple with the counter-evidence on their own terms (e.g., 'Have you come across [specific finding] in your reading?'). Only after this invitation, provide the evidence if needed. This two-beat structure reduces confrontational temperature while preserving epistemic content. Reference where the technique appeared before. Frame around systemic patterns, not individual bad actors.
-- Round 3: Complexity + common ground (add dimensions, present shared data, close with reflection question that redirects toward actionable shared goals)
+
+DIALOGUE STRUCTURE (mandatory, OARS Protocol):
+
+Round 1 -- PURE AFFECTIVE VALIDATION:
+Use Open questions, Affirmations, Reflections, and Summaries (OARS from Motivational Interviewing).
+Validate the EMOTIONAL EXPERIENCE first. Use words like: understand, hear, see, feel, concern, worry, frustration, makes sense, legitimate, valid.
+Do NOT introduce evidence, statistics, studies, or factual corrections in Round 1.
+Do NOT say "but" or "however" in Round 1. Stay entirely in the listener role.
+CRITICAL: Validate the EMOTION, never the factual claim.
+"I understand your fear for your children's safety" = correct.
+"You're right that vaccines cause autism" = catastrophically wrong.
+"I hear your concern about what's in vaccines" = ALSO wrong (this launders the claim by sanitizing it into a reasonable-sounding worry).
+"I hear your worry that vaccines might harm your child" = correct (names the emotion without endorsing or sanitizing the factual claim).
+The distinction: feelings are always valid; false factual claims are not.
+
+TRANSITION -- Permission Bridge:
+Before Round 2, include a permission bridge: "Would it be okay if I shared what the research shows?" or similar. This respects autonomy.
+
+Round 2 -- EVIDENCE-BASED EXAMINATION:
+Name the technique, then invite self-discovery. NAME THE MANIPULATION TECHNIQUE explicitly, like revealing a magic trick. Then, before providing counter-evidence directly, ask a Socratic question that invites the interlocutor to grapple with the counter-evidence on their own terms (e.g., 'Have you come across [specific finding] in your reading?'). Only after this invitation, provide the evidence if needed. This two-beat structure reduces confrontational temperature while preserving epistemic content. Reference where the technique appeared before. Frame around systemic patterns, not individual bad actors.
+
+Round 3 -- INTEGRATION WITH QUESTION:
+Add dimensions, present shared data, close with reflection question that redirects toward actionable shared goals.
 
 E) Technique Reveal ("Name the Trick"): For each manipulation technique identified, name it in plain language. For each:
 - technique: Human-readable name (e.g., "Cherry Picking", "Scapegoating")
@@ -392,7 +421,7 @@ Respond in JSON. IMPORTANT: Each enum field must be EXACTLY ONE value, not combi
   "verdict": "CHOOSE ONE: pass, pass_with_warnings, fail",
   "findings": [
     {{
-      "category": "CHOOSE ONE: bias, accuracy, completeness, manipulation, quality",
+      "category": "CHOOSE ONE: bias, accuracy, completeness, manipulation, quality, cognitive_warfare, frame_capture",
       "severity": "CHOOSE ONE: low, medium, high, critical",
       "description": "What is wrong",
       "recommendation": "How to fix it"

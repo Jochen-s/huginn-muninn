@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import re
+from collections import Counter
 from enum import Enum
 from typing import Annotated, ClassVar, Literal
 
@@ -132,6 +133,14 @@ def _scrub_scope_violation(text: str) -> str:
     return text
 
 
+_ADVISORY_ONLY_DESCRIPTION = (
+    "ADVISORY ONLY. Analytical aid for human judgment. Must not be used "
+    "as automated content-moderation signal, takedown trigger, or input "
+    "to automated decisions affecting content visibility without human review. "
+    "See GDPR Art. 22, EU AI Act Annex III, UK OSA s.179."
+)
+
+
 # --- Analysis Input ---
 
 class AnalysisInput(BaseModel):
@@ -213,12 +222,30 @@ class DecomposerOutput(BaseModel):
 
 # --- Origin Tracer ---
 
+class EpistemicProvenance(BaseModel):
+    """Tracks the epistemic tradition and geographic origin of a source.
+    Default "unclassified" prevents false Western-academic attribution."""
+
+    tradition: Annotated[
+        Literal[
+            "western_academic", "western_institutional",
+            "global_south_academic", "global_south_institutional",
+            "community_experiential", "indigenous_knowledge",
+            "unclassified",
+        ],
+        BeforeValidator(_first_pipe_value),
+    ] = "unclassified"
+    region: str = Field(default="", max_length=256)
+    language_of_origin: str = Field(default="", max_length=10)
+
+
 class OriginEntry(BaseModel):
     sub_claim: str
     earliest_source: str
     earliest_date: str | None = None
     source_tier: int = Field(..., ge=1, le=4)
     propagation_path: list[str] = Field(default_factory=list)
+    epistemic_provenance: EpistemicProvenance | None = None
 
 
 class NarrativeMutation(BaseModel):
@@ -252,6 +279,34 @@ class TracerOutput(BaseModel):
     # hallucination sprawl. Empty default; the "missing from context" framing
     # (vs. speculative "suppressed") lives in the Tracer prompt, not the schema.
     notable_omissions: list[str] = Field(default_factory=list, max_length=3)
+    epistemic_diversity_gap: str | None = None
+
+    @model_validator(mode="after")
+    def _detect_epistemic_diversity_gap(self) -> "TracerOutput":
+        """Sprint 5 Phase 5: flag when 80%+ of origins share a single
+        epistemic tradition. Bidirectional: fires on ANY tradition, not
+        just Western."""
+        provenances = [
+            o.epistemic_provenance
+            for o in self.origins
+            if o.epistemic_provenance is not None
+        ]
+        if len(provenances) < 2:
+            return self
+        traditions = [p.tradition for p in provenances]
+        total = len(traditions)
+        counts = Counter(traditions)
+        dominant, dominant_count = counts.most_common(1)[0]
+        if dominant == "unclassified":
+            return self
+        if dominant_count / total >= 0.8:
+            pct = round(dominant_count / total * 100)
+            object.__setattr__(
+                self,
+                "epistemic_diversity_gap",
+                f"{pct}% of sources classified as {dominant}",
+            )
+        return self
 
 
 # --- Intelligence Mapper ---
@@ -271,10 +326,62 @@ class ActorRelation(BaseModel):
     confidence: float = Field(..., ge=0.0, le=1.0)
 
 
+class ConvergenceGroup(BaseModel):
+    """A political/ideological group that holds the same claim."""
+    label: str = ""
+    political_position: Annotated[
+        Literal["left", "center-left", "center", "center-right", "right", "cross-cutting"],
+        BeforeValidator(_first_pipe_value),
+    ] = "cross-cutting"
+    framing: str = ""
+    core_grievance: str = ""
+    proposed_solution: str = ""
+
+    @model_validator(mode="after")
+    def _scrub_named_entities(self) -> "ConvergenceGroup":
+        for field_name in ("label", "framing", "core_grievance", "proposed_solution"):
+            val = getattr(self, field_name)
+            scrubbed = _scrub_scope_violation(val)
+            if scrubbed != val:
+                object.__setattr__(self, field_name, scrubbed)
+        return self
+
+
+class ConvergenceMatrix(BaseModel):
+    """Cross-ideological convergence mapping (Mudde/Kaltwasser thin-centered
+    ideology framework + Tuters/Willaert diagonalism)."""
+    groups: list[ConvergenceGroup] = Field(default_factory=list)
+    convergence_type: Annotated[
+        Literal["antagonist", "visionary"],
+        BeforeValidator(_first_pipe_value),
+    ] = "antagonist"
+    convergence_strength: Annotated[
+        Literal["LOW", "MEDIUM", "HIGH"],
+        BeforeValidator(_first_pipe_value),
+    ] = Field(default="LOW", description=_ADVISORY_ONLY_DESCRIPTION)
+    bridge_narratives: list[str] = Field(default_factory=list)
+    amplification_risk: str = Field(default="", max_length=500)
+
+    @model_validator(mode="after")
+    def _scrub_bridge_narratives(self) -> "ConvergenceMatrix":
+        scrubbed = [_scrub_scope_violation(n) for n in self.bridge_narratives]
+        if scrubbed != self.bridge_narratives:
+            object.__setattr__(self, "bridge_narratives", scrubbed)
+        return self
+
+
 class MapperOutput(BaseModel):
     actors: list[Actor]
     relations: list[ActorRelation] = Field(default_factory=list)
     narrative_summary: str
+    convergence_matrix: ConvergenceMatrix | None = None
+
+    @model_validator(mode="after")
+    def _validate_convergence(self) -> "MapperOutput":
+        """C3: Degrade 1-group matrix to None rather than crash."""
+        if self.convergence_matrix and len(self.convergence_matrix.groups) < 2:
+            object.__setattr__(self, "convergence_matrix", None)
+        return self
 
 
 # --- TTP Classifier ---
@@ -446,6 +553,91 @@ class BridgeOutput(BaseModel):
         return self
 
 
+# --- Evidence Certainty Framework (Sprint 4 Phase 2, inspired by GRADE) ---
+
+class ConfidenceProfile(BaseModel):
+    """Evidence Certainty Framework. Inspired by GRADE's structural approach
+    (baselines + adjustment factors) but targeting claim-level evidence
+    assessment, not clinical study-level evidence quality."""
+
+    evidence_quality: float = Field(default=0.5, ge=0.0, le=1.0)
+    source_reliability: float = Field(default=0.5, ge=0.0, le=1.0)
+    claim_testability: float = Field(default=0.5, ge=0.0, le=1.0)
+    expert_consensus: float = Field(default=0.5, ge=0.0, le=1.0)
+    internal_coherence: float = Field(default=0.5, ge=0.0, le=1.0)
+    composite: float = Field(
+        default=0.5, ge=0.0, le=1.0, description=_ADVISORY_ONLY_DESCRIPTION,
+    )
+    ecf_level: str = Field(default="MODERATE", description=_ADVISORY_ONLY_DESCRIPTION)
+
+    _WEIGHTS: ClassVar[dict[str, float]] = {
+        "evidence_quality": 0.30,
+        "source_reliability": 0.20,
+        "claim_testability": 0.15,
+        "expert_consensus": 0.20,
+        "internal_coherence": 0.15,
+    }
+
+    @model_validator(mode="after")
+    def _compute_derived_fields(self) -> "ConfidenceProfile":
+        w = self._WEIGHTS
+        comp = round(sum(getattr(self, k) * v for k, v in w.items()), 3)
+        object.__setattr__(self, "composite", comp)
+        if comp >= 0.75:
+            level = "HIGH"
+        elif comp >= 0.50:
+            level = "MODERATE"
+        elif comp >= 0.25:
+            level = "LOW"
+        else:
+            level = "VERY_LOW"
+        object.__setattr__(self, "ecf_level", level)
+        return self
+
+
+# --- Counter-Narrative Quality Score (Sprint 4 Phase 2, experimental) ---
+
+class CounterNarrativeQualityScore(BaseModel):
+    """Scores real-world institutional counter-narrative quality.
+    EXPERIMENTAL: Not yet empirically validated as scoring instrument.
+    Evaluates institutional responses (CDC, WHO, etc.), NOT this pipeline's
+    own Bridge Builder output."""
+
+    _CNQS_STATUS: ClassVar[str] = "experimental"
+
+    respect_for_audience: int = Field(default=3, ge=1, le=5)
+    acknowledgment_of_uncertainty: int = Field(default=3, ge=1, le=5)
+    proportionality_of_response: int = Field(default=3, ge=1, le=5)
+    institutional_interest_transparency: int = Field(default=3, ge=1, le=5)
+    alternative_explanation_quality: int = Field(default=3, ge=1, le=5)
+    factual_accuracy: int = Field(default=3, ge=1, le=5)
+    tone_calibration: int = Field(default=3, ge=1, le=5)
+    cognitive_load_management: int = Field(default=3, ge=1, le=5)
+    evaluated_source: Annotated[str, BeforeValidator(_null_to_empty_str)] = Field(
+        default="",
+        description=_ADVISORY_ONLY_DESCRIPTION,
+    )
+    composite: float = Field(
+        default=0.6, ge=0.0, le=1.0, description=_ADVISORY_ONLY_DESCRIPTION,
+    )
+    has_critical_failure: bool = False
+
+    @model_validator(mode="after")
+    def _compute_and_scrub(self) -> "CounterNarrativeQualityScore":
+        scrubbed = _scrub_scope_violation(self.evaluated_source)
+        if scrubbed != self.evaluated_source:
+            object.__setattr__(self, "evaluated_source", scrubbed)
+        dims = [
+            self.respect_for_audience, self.acknowledgment_of_uncertainty,
+            self.proportionality_of_response, self.institutional_interest_transparency,
+            self.alternative_explanation_quality, self.factual_accuracy,
+            self.tone_calibration, self.cognitive_load_management,
+        ]
+        object.__setattr__(self, "composite", round(sum(dims) / (len(dims) * 5), 3))
+        object.__setattr__(self, "has_critical_failure", any(d == 1 for d in dims))
+        return self
+
+
 # --- Adversarial Auditor ---
 
 class AuditVerdict(str, Enum):
@@ -480,6 +672,8 @@ class AuditorOutput(BaseModel):
         BeforeValidator(_first_pipe_value),
     ] = "none"
     frame_capture_evidence: str = ""
+    confidence_profile: ConfidenceProfile | None = None
+    cnqs: CounterNarrativeQualityScore | None = None
 
     @model_validator(mode="after")
     def veto_requires_fail(self) -> "AuditorOutput":
@@ -504,6 +698,8 @@ class AnalysisReport(BaseModel):
     method: Literal["method_2"] = "method_2"
     degraded: bool = False
     degraded_reason: str | None = None
+    confidence_profile: ConfidenceProfile | None = None
+    cnqs: CounterNarrativeQualityScore | None = None
 
 
 # --- API Response Envelope ---
@@ -528,6 +724,11 @@ class AnalysisResponse(BaseModel):
         "prebunking_note": "",
     }
 
+    _TOP_LEVEL_FIELD_DEFAULTS: ClassVar[dict[str, object]] = {
+        "confidence_profile": None,
+        "cnqs": None,
+    }
+
     @classmethod
     def from_report(
         cls,
@@ -536,10 +737,18 @@ class AnalysisResponse(BaseModel):
     ) -> "AnalysisResponse":
         data = report.model_dump(mode="json")
         suppressed_list = []
-        if suppressed and "bridge" in data:
-            bridge = data["bridge"]
+        if suppressed:
+            if "bridge" in data:
+                bridge = data["bridge"]
+                for field_name in sorted(suppressed):
+                    if field_name in bridge and field_name in cls._FIELD_DEFAULTS:
+                        bridge[field_name] = cls._FIELD_DEFAULTS[field_name]
+                        suppressed_list.append(field_name)
             for field_name in sorted(suppressed):
-                if field_name in bridge and field_name in cls._FIELD_DEFAULTS:
-                    bridge[field_name] = cls._FIELD_DEFAULTS[field_name]
-                    suppressed_list.append(field_name)
+                if field_name in data and field_name in cls._TOP_LEVEL_FIELD_DEFAULTS:
+                    data[field_name] = cls._TOP_LEVEL_FIELD_DEFAULTS[field_name]
+                    if field_name not in suppressed_list:
+                        suppressed_list.append(field_name)
+                    if "audit" in data and field_name in data["audit"]:
+                        data["audit"][field_name] = cls._TOP_LEVEL_FIELD_DEFAULTS[field_name]
         return cls(data=data, suppressed_fields=suppressed_list)

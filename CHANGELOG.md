@@ -3,9 +3,32 @@
 All notable changes to Huginn & Muninn are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.12.0] - 2026-05-12 -- "Epistemic Equity"
+
+Sprint 5. The pipeline now tracks where knowledge comes from, not just what it says. Three features: a regional source registry for non-Western perspectives, epistemic provenance on every traced origin, and a plain-language methodology page explaining how confidence scores work. Cumulative: 340 tests.
+
+### Added
+- **Regional Source Registry** (`data/regional_sources.json`): 21 institutions across 5 regions (Africa, Asia-Pacific, Latin America, MENA, Indigenous Knowledge Systems). Advisory framing throughout: the registry is "sources to consider," never "trusted sources." Governance metadata tracks curator, inclusion criteria, and review date. A bias warning in the registry itself states that static source lists encode creator bias. Loaded via `load_regional_sources()` with `lru_cache` and graceful fallback when the file is missing or malformed.
+- **Epistemic Provenance tracking** on `OriginEntry`: new `EpistemicProvenance` model with 7 tradition types (`western_academic`, `western_institutional`, `global_south_academic`, `global_south_institutional`, `community_experiential`, `indigenous_knowledge`, `unclassified`). Default is `unclassified` to prevent false Western-academic attribution when the LLM is uncertain. `BeforeValidator(_first_pipe_value)` applied to the `tradition` field. Length limits on `region` (256) and `language_of_origin` (10).
+- **Bidirectional epistemic diversity gap detection** on `TracerOutput`: `model_validator` fires when 80%+ of classified origins share a single tradition. Bidirectional: triggers on any tradition, not just Western. Ignores `unclassified` entries to prevent false positives. Gap message includes the percentage and dominant tradition.
+- **Confidence Score Transparency page** (`confidence-methodology.html`): plain-language methodology document built into the gallery. Explains the three-factor confidence calculation, all five ECF dimensions with weights, ECF levels, source tier system with examples, and what the score is NOT (not a truth score, not a censorship signal, not a legal determination, not a replacement for human judgment). CNQS section marked [Beta] with all 8 dimensions explained.
+- **Source tier breakdown** in gallery: each scenario page now shows source tier counts (T1: N, T2: N, etc.) alongside the confidence score.
+- **"How is this score calculated?" link** on every gallery scenario page, pointing to the methodology document.
+- **27 new tests** in `test_epistemic_provenance.py`: EpistemicProvenance model validation (5), OriginEntry provenance integration (3), bidirectional gap detection (9), regional source registry schema and framing (10).
+- Tracer prompts updated (both production and runner) with epistemic diversity instructions, provenance schema, and tradition taxonomy.
+
+### Changed
+- `language_of_origin` default changed from `"en"` to `""`. The previous default was a Western-centric assumption that contradicted the feature's intent.
+- Region key names in the Tracer prompt are now sanitized (alphanumeric + underscore only) and passed through `sanitize_for_prompt()` before injection.
+- `load_regional_sources()` now catches `JSONDecodeError` and `UnicodeDecodeError`, returning empty fallback instead of crashing.
+
+### Review discipline
+- 3-faction fleet review (Federation, Klingon, Ferengi). 5 mitigations applied from convergent findings.
+- 6 acceptance criteria verified: default unclassified, bidirectional gap detection, advisory framing, methodology explains ECF dimensions, methodology states what score is NOT, gallery link present.
+
 ## [0.11.0] - 2026-04-12 -- "Auditor Exfiltration Guard"
 
-Sprint 4. Closes the audit-description exfiltration channel where suppressed Bridge field content could leak through Auditor free-text fields.
+Sprint 4. Closes the audit-description exfiltration channel where suppressed Bridge field content could leak through Auditor free-text fields. Cumulative: 544 tests.
 
 ### Added
 - **Audit text scrubbing** in `projection.py`: `_scrub_audit_text()` scans four Auditor free-text fields (`findings[*].description`, `findings[*].recommendation`, `summary`, `frame_capture_evidence`) for references to suppressed field names (underscore, space, and short-form variants, case-insensitive). Matching sentences are replaced with `[audit-content-redacted: references suppressed field]`. Sentence-level granularity preserves non-matching content in the same finding.
@@ -23,7 +46,7 @@ Sprint 4. Closes the audit-description exfiltration channel where suppressed Bri
 
 ## [0.10.0] - 2026-04-12 -- "First-Class Audit Categories"
 
-Sprint 3 PR 2. Promotes cognitive warfare and frame capture from description-prefix workarounds to first-class AuditFinding categories, and adds gallery rendering for all Sprint 2 Bridge diagnostic fields.
+Sprint 3 PR 2. Promotes cognitive warfare and frame capture from description-prefix workarounds to first-class AuditFinding categories, and adds gallery rendering for all Sprint 2 Bridge diagnostic fields. Cumulative: 528 tests.
 
 ### Added
 - **`cognitive_warfare` and `frame_capture` AuditFinding categories**: First-class Literal values replacing the Sprint 1 description-prefix workaround (`[cognitive_warfare]`/`[frame_capture]` in the `manipulation`/`quality` categories). The Auditor prompt now instructs the LLM to emit these directly. The docs generator (`generate-comprehensive-findings.js`) carries interpretation entries for both: cognitive_warfare maps to GT-series signatures, frame_capture flags pipeline framing adoption orthogonal to factual accuracy.
@@ -34,16 +57,16 @@ Sprint 3 PR 2. Promotes cognitive warfare and frame capture from description-pre
 
 ### Changed
 - **Auditor prompt updated**: JSON template now lists all 7 category values. Instructions changed from "Do NOT invent new category values; use manipulation with prefix" to "Use cognitive_warfare for GT-series findings and frame_capture for framing-adoption findings."
-- **Gallery posture badge**: Uses CSS class lookup map instead of string interpolation (Klingon security fix). Fallback styling on base `.posture-badge` for unknown values.
+- **Gallery posture badge**: Uses CSS class lookup map instead of string interpolation (security review fix). Fallback styling on base `.posture-badge` for unknown values.
 - **Pattern density warning wording**: Changed from "predispose readers to over-connect" to "structured to encourage over-connection" (claim-as-subject, not reader-pathologizing).
 
 ### Review discipline
-- **Six-faction fleet review**: Federation 63/100, Klingon 7/10, Romulan 7/10, Ferengi 6/10, Borg 7/10, Holodeck 6/10. Highest convergence finding: 5/6 factions independently identified the auditor prompt contradiction (prompt still using old description-prefix pattern while schema accepted new categories).
+- **Six-perspective adversarial review**: correctness 63/100, security 7/10, legal 7/10, cost 6/10, integration 7/10, scenario 6/10. Highest convergence finding: 5/6 reviewers independently identified the auditor prompt contradiction (prompt still using old description-prefix pattern while schema accepted new categories).
 - **10 convergent mitigations applied**: auditor prompt sync, section title rename, vacuum disclaimer, pattern density rewording, posture CSS lookup map + fallback, category display-name mapping, hasContent guard reorder, dead CSS cleanup, docs generator exhaustiveness comment, diagnostic-note styling.
 
 ## [0.9.0] - 2026-04-12 -- "External Surface Hardening"
 
-Sprint 3 PR 1. Closes the compound defamation-surface blocker from Sprint 2 by projecting all Method 2 analysis results through an `AnalysisResponse` envelope at every external serialization boundary. Adds operator field-suppression configuration, CLI rendering for Sprint 2 Bridge fields, and OpenAPI advisory descriptions.
+Sprint 3 PR 1. Closes the compound defamation-surface blocker from Sprint 2 by projecting all Method 2 analysis results through an `AnalysisResponse` envelope at every external serialization boundary. Adds operator field-suppression configuration, CLI rendering for Sprint 2 Bridge fields, and OpenAPI advisory descriptions. Cumulative: 511 tests.
 
 ### Added
 - **`AnalysisResponse` envelope model** in `contracts.py`: wraps projected `AnalysisReport` in a `data` field with `suppressed_fields` disclosure (Charter Commitment 5: transparent uncertainty) and `api_version` metadata. Constructed via `from_report()` classmethod from a validated `AnalysisReport` instance. `data` is a strict subset of `AnalysisReport` (machine-enforced by test). Response-envelope metadata is exempt from the strict-subset constraint.
@@ -56,37 +79,68 @@ Sprint 3 PR 1. Closes the compound defamation-surface blocker from Sprint 2 by p
 
 ### Changed
 - **10 serialization boundaries now projected** through `AnalysisResponse`: `/api/analyze`, `/api/jobs/{id}`, `/api/batch/{id}`, `/api/check-and-escalate` (method_2 key), `/api/history` (normalize then project), `/api/compare` (post-comparison projection), webhook dispatch, callback dispatch, CLI JSON output. All boundaries project at READ time only; the internal job store retains the full `AnalysisReport`.
-- **Orchestrator return normalized**: `orchestrator.py` now returns `AnalysisReport(**result).model_dump(mode="json")` instead of the raw dict, ensuring all downstream consumers receive schema-valid data with computed defaults populated (Borg AP-1 fix).
-- **Webhook secret prefix leak fixed**: `GET /api/webhooks` and `GET /api/webhooks/{id}` and `PATCH /api/webhooks/{id}` now return `secret_configured: true` instead of exposing the first 8 hex characters of the HMAC secret (Klingon security fix). The full secret is still returned once on `POST /api/webhooks` creation.
+- **Orchestrator return normalized**: `orchestrator.py` now returns `AnalysisReport(**result).model_dump(mode="json")` instead of the raw dict, ensuring all downstream consumers receive schema-valid data with computed defaults populated (integration review fix).
+- **Webhook secret prefix leak fixed**: `GET /api/webhooks` and `GET /api/webhooks/{id}` and `PATCH /api/webhooks/{id}` now return `secret_configured: true` instead of exposing the first 8 hex characters of the HMAC secret (security review fix). The full secret is still returned once on `POST /api/webhooks` creation.
 
 ### Review discipline
-- **Six-faction fleet review** of the Sprint 3 plan (Federation 67/100, Klingon 34/100 pre-hardening, Romulan 4/10->7/10, Ferengi 7/10 ROI, Borg 7/10, Holodeck 7/10). ~4,800 lines of independent review across 6 reviewers. Highest fleet convergence of any H&M sprint: 6/6 factions independently found the 8th serialization boundary.
+- **Six-perspective adversarial review** of the Sprint 3 plan (correctness 67/100, security 34/100 pre-hardening, legal 4/10->7/10, cost 7/10, integration 7/10, scenario 7/10). ~4,800 lines of independent review across 6 reviewers. Highest fleet convergence of any H&M sprint: 6/6 reviewers independently found the 8th serialization boundary.
 - **Adversarial plan review** found the strict-subset/disclosure contradiction (Medium-High), comparison projection point error, and bidirectional completeness test gap. All mitigated in the final plan.
 - **16 zero-regression constraints** locked (expanded from Sprint 2's 14).
 
 ## [0.8.0] - 2026-04-11 -- "Scoped Diagnostics"
 
-Sprint 2 completion release. Charter and symmetry foundations, verification priority triage, and Bridge Builder scoped diagnostics. Every shipping item is grounded in peer-reviewed literature and enforced by adversarial tests.
+Sprint 2 completion release. Charter and symmetry foundations, verification priority triage, and Bridge Builder scoped diagnostics. Every shipping item is grounded in peer-reviewed literature and enforced by adversarial tests. Cumulative: 228 tests.
 
-### Added (Sprint 2 PR 3 -- Bridge Scoped Diagnostics)
+### Added (Sprint 2 PR 3: Bridge Scoped Diagnostics)
 - **`communication_posture` on `BridgeOutput`**: A `Literal["direct_correction","inoculation_first","relational_first"]` field that selects the communicative register of the analysis, orthogonal to numeric confidence. `direct_correction` is the default and classical-refutation posture. `inoculation_first` follows the McGuire 1964 / van der Linden 2017/2020 / Roozenbeek & van der Linden 2022 prebunking literature and leads with naming the manipulation technique before introducing counter-evidence. `relational_first` follows the Common Humanity (Perry et al.) / Costello protocol (Costello, Pennycook, Rand 2024) literature and starts from acknowledgment of the kernel of truth before any correction. Posture is advisory to downstream communicators; it is mechanically separated from `overall_confidence` by runtime invariance tests and a grep-style architectural lock (BG-042 Confidence-Posture Separation).
 - **`pattern_density_warning` on `BridgeOutput`**: A content-describing boolean that flags claims whose structural features (repeated numeric coincidences, rhythmic lexical choices, escalating concept chains) predispose readers to over-connect. Grounded in Alter & Oppenheimer 2009 / Schwarz 1998 on processing-fluency effects. The flag describes the claim, never the reader.
 - **`vacuum_filled_by` on `BridgeOutput`**: A narrative-pattern-only description of what filled an expertise or information vacuum around the claim. Grounded in the Golebiewski & boyd data-voids literature and Starbird et al. 2019 on collaborative disinformation. Prompt-enforced strict scope: no named publishers, no named individuals, no named organisations.
 - **`prebunking_note` on `BridgeOutput`**: A one-sentence technique-recognition cue a reader can carry forward. Grounded in Roozenbeek, van der Linden, Goldberg, Rathje & Lewandowsky 2022 on technique-specific prebunking durability. Additive to the Inferential Gap Map; never a substitute.
 - **P2-11 Inferential Gap Map labeling**: The existing Layer 4 inferential-gap instruction is now explicitly labeled in the Bridge Builder prompt as "[REPARATIVE PATTERN-INJECTION RESPONSE -- load-bearing]", making the intent legible to future editors. The underlying kernel-and-leap instruction is unchanged; a new `TestBridgePromptPreservation` class enforces that it cannot drift.
 - **35 new tests**: `TestBridgeCommunicationPosture` (8), `TestBridgePatternDensityWarning` (3), `TestBridgeVacuumFilledByAndPrebunkingNote` (7), `TestBridgePromptPreservation` (4), `TestBridgeCommunicationPosturePrompt` (4), `TestBridgeScopedP26Prompt` (5), and four confidence-invariance / integration tests.
-- **Research note**: `research/bridge-scoped-diagnostics-scientific-grounding.md` -- a ~3,500-word record of the peer-reviewed literature behind each new field, with revisit triggers for replication failures.
-- **Sprint 2 PR 3 Codex mitigations** (5 must-fixes): Codex GPT-5.4 adversarial review returned HOLD with a High-severity blind spot -- `vacuum_filled_by` and `prebunking_note` were prompt-constrained to narrative patterns only, but the schema accepted toxic strings naming publishers/organisations/individuals if the LLM ignored the prompt. The policy guarantee was not yet an implementation guarantee. Fixes shipped: (1) schema-level scope scrubber at `contracts.py::_scope_scrub_narrative_pattern_fields` with blocklist + proper-noun-run detection, replacing scope violations with `[scope:redacted-named-entity]` marker (degrade-do-not-crash); (2) 12 new negative tests in `TestBridgeScopeScrubber` covering named publishers, state-aligned outlets for symmetric enforcement, multi-token Capitalised runs, and narrative-pattern preservation; (3) integration test `test_pipeline_scrubs_named_publisher_in_vacuum_filled_by` proving the scrubber fires through the full orchestrator boundary; (4) symmetric-actor integration test `test_pipeline_symmetric_actor_swap_on_bridge_fields` extending BG-044 invariance to the four PR 3 fields; (5) `TestBridgePromptTokenBudget` locking the Sprint 2 Zero-Regression Constraint #5 of <6,500 input tokens against accidental prompt drift. Science note §3.4 rewritten to hedge the `relational_first` posture's Common Humanity / Costello grounding explicitly as design-informed synthesis rather than a validated posture-taxonomy finding.
-- **Sprint 2 PR 3 fleet mitigations round 2** (follow-up commit after 6-faction review returned post-merge): (1) `MOCK_RESPONSES["bridge_builder"]` fixture in `test_orchestrator.py` extended with all four new fields, closing the Federation-flagged pattern divergence from PR 2. (2) Grep-style architectural lock in `test_communication_posture_not_referenced_in_confidence_computation` hardened against duplicate-sentinel false-pass by adding `count == 1` assertions and sentinel-ordering check -- four-faction convergence (Federation, Klingon, Borg, Ferengi). (3) `inoculation_first` prompt line rewritten from "only then introduce counter-evidence" to "then introduce counter-evidence within the same response" plus explicit POSTURE SCOPE clause stating all four analytical layers must be produced in full regardless of posture, closing the Klingon/Romulan convergent P2-9-regression concern. (4) `vacuum_filled_by` prompt example "astroturf-grade citizen testimonials" replaced with neutral "repeated numeric coincidences stacking toward a single conclusion" plus Charter Commitment 3 guard against conflating authentic grassroots voice with engineered campaigns, closing Holodeck I-roles. (5) `communication_posture` schema docstring extended with advisory-only disclaimer explicitly warning against automated routing-gate use (GDPR Art. 22 / EU AI Act Annex III prophylactic, Romulan MUST #2). (6) `prebunking_note` gains `max_length=500` Field constraint, mirroring `socratic_dialogue` max_length=3 discipline from Sprint 1 (Borg Minor #4). (7) Vacuous `assert "not" in lower` in `test_prebunking_note_forbids_new_factual_assertions` replaced with an anchored assertion on the section I header canonical phrase "NOT a new factual assertion" (Federation + Klingon Minor). (8) `test_consensus_explanation_instruction_preserved` tightened to assert on the fuller canonical phrase "equal depth and specificity" at its canonical section A location (Federation Minor #3). (9) `pattern_density_warning` prompt section G gains upstream-signal gating hints (`hypothesis_crowding=high`, `complexity_explosion_flag=true`) plus explicit rhetorical-form exclusion list (protest chants, liturgy, legal argument, poetry, educational mnemonics), closing the Borg BG-043 gate gap and Holodeck I3 Commitment 3 exposure. (10) Science note citation corrections: Roozenbeek et al. 2022 *Science Advances* identified as the primary empirical durability source; van der Linden 2020 relabeled as theoretical synthesis; Kappes et al. 2020 mischaracterisation corrected to "mechanistic building block, theoretical extension, not a direct empirical finding"; "five-month durability" claim for Common Humanity removed entirely; Briggs/Danyk/Weiss 2026 author initials unified across research notes to the Sprint 1 gorgon-trap-integration.md canonical form pending Zenodo record verification; effect-size + decay caveat added to the inoculation durability claim per Holodeck P-roles convergent findings. (11) Revisit-trigger section extended with Tiwari & Elmufti 2024 in-press resolution and Briggs Zenodo verification pending triggers. (12) Symmetric-actor integration test strengthened to actually vary upstream MOCK_MAPPER actor categories (state vs commercial) rather than being a pure idempotency check, making the BG-044 extension a genuine symmetry test.
+- **Research note**: `research/bridge-scoped-diagnostics-scientific-grounding.md`: a ~3,500-word record of the peer-reviewed literature behind each new field, with revisit triggers for replication failures.
 
-### Added (Sprint 2 PR 2 -- Verification Priority)
-- **`verification_priority` on `SubClaim`**: A `Literal["critical","high","low"] = "low"` triage field with a strict anti-inflation discipline in the Decomposer prompt. The anti-inflation clause ("marking everything critical defeats the triage purpose and degrades downstream resource allocation") is load-bearing and test-enforced. Structural triggering criteria only -- the prompt explicitly forbids triage based on legal-register language, politically-charged topics, or named-individual references.
+<details>
+<summary>Sprint 2 PR 3 Codex mitigations (5 must-fixes)</summary>
+
+Codex GPT-5.4 adversarial review returned HOLD with a High-severity blind spot: `vacuum_filled_by` and `prebunking_note` were prompt-constrained to narrative patterns only, but the schema accepted toxic strings naming publishers/organisations/individuals if the LLM ignored the prompt. The policy guarantee was not yet an implementation guarantee. Fixes shipped:
+
+1. Schema-level scope scrubber at `contracts.py::_scope_scrub_narrative_pattern_fields` with blocklist + proper-noun-run detection, replacing scope violations with `[scope:redacted-named-entity]` marker (degrade-do-not-crash).
+2. 12 new negative tests in `TestBridgeScopeScrubber` covering named publishers, state-aligned outlets for symmetric enforcement, multi-token capitalised runs, and narrative-pattern preservation.
+3. Integration test `test_pipeline_scrubs_named_publisher_in_vacuum_filled_by` proving the scrubber fires through the full orchestrator boundary.
+4. Symmetric-actor integration test `test_pipeline_symmetric_actor_swap_on_bridge_fields` extending BG-044 invariance to the four PR 3 fields.
+5. `TestBridgePromptTokenBudget` locking the Sprint 2 Zero-Regression Constraint #5 of <6,500 input tokens against accidental prompt drift. Science note section 3.4 rewritten to hedge the `relational_first` posture's Common Humanity / Costello grounding explicitly as design-informed synthesis rather than a validated posture-taxonomy finding.
+
+</details>
+
+<details>
+<summary>Sprint 2 PR 3 fleet mitigations round 2 (12 items)</summary>
+
+Follow-up commit after 6-faction review returned post-merge:
+
+1. `MOCK_RESPONSES["bridge_builder"]` fixture in `test_orchestrator.py` extended with all four new fields, closing a pattern divergence flagged in correctness review from PR 2.
+2. Grep-style architectural lock in `test_communication_posture_not_referenced_in_confidence_computation` hardened against duplicate-sentinel false-pass by adding `count == 1` assertions and sentinel-ordering check (four-reviewer convergence).
+3. `inoculation_first` prompt line rewritten from "only then introduce counter-evidence" to "then introduce counter-evidence within the same response" plus explicit POSTURE SCOPE clause stating all four analytical layers must be produced in full regardless of posture, closing a convergent security/legal P2-9-regression concern.
+4. `vacuum_filled_by` prompt example "astroturf-grade citizen testimonials" replaced with neutral "repeated numeric coincidences stacking toward a single conclusion" plus Charter Commitment 3 guard against conflating authentic grassroots voice with engineered campaigns, closing a scenario review concern.
+5. `communication_posture` schema docstring extended with advisory-only disclaimer explicitly warning against automated routing-gate use (GDPR Art. 22 / EU AI Act Annex III prophylactic, legal review requirement).
+6. `prebunking_note` gains `max_length=500` Field constraint, mirroring `socratic_dialogue` max_length=3 discipline from Sprint 1 (integration review item).
+7. Vacuous `assert "not" in lower` in `test_prebunking_note_forbids_new_factual_assertions` replaced with an anchored assertion on the section I header canonical phrase "NOT a new factual assertion" (correctness + security review).
+8. `test_consensus_explanation_instruction_preserved` tightened to assert on the fuller canonical phrase "equal depth and specificity" at its canonical section A location (correctness review item).
+9. `pattern_density_warning` prompt section G gains upstream-signal gating hints (`hypothesis_crowding=high`, `complexity_explosion_flag=true`) plus explicit rhetorical-form exclusion list (protest chants, liturgy, legal argument, poetry, educational mnemonics), closing the integration gate gap and a scenario-review Commitment 3 exposure.
+10. Science note citation corrections: Roozenbeek et al. 2022 *Science Advances* identified as the primary empirical durability source; van der Linden 2020 relabeled as theoretical synthesis; Kappes et al. 2020 mischaracterisation corrected to "mechanistic building block, theoretical extension, not a direct empirical finding"; "five-month durability" claim for Common Humanity removed entirely; Briggs/Danyk/Weiss 2026 author initials unified across research notes to the Sprint 1 gorgon-trap-integration.md canonical form pending Zenodo record verification; effect-size + decay caveat added to the inoculation durability claim per scenario-review convergent findings.
+11. Revisit-trigger section extended with Tiwari & Elmufti 2024 in-press resolution and Briggs Zenodo verification pending triggers.
+12. Symmetric-actor integration test strengthened to actually vary upstream MOCK_MAPPER actor categories (state vs commercial) rather than being a pure idempotency check, making the BG-044 extension a genuine symmetry test.
+
+</details>
+
+### Added (Sprint 2 PR 2: Verification Priority)
+- **`verification_priority` on `SubClaim`**: A `Literal["critical","high","low"] = "low"` triage field with a strict anti-inflation discipline in the Decomposer prompt. The anti-inflation clause ("marking everything critical defeats the triage purpose and degrades downstream resource allocation") is load-bearing and test-enforced. Structural triggering criteria only. The prompt explicitly forbids triage based on legal-register language, politically-charged topics, or named-individual references.
 - **Schema-level coherence validator**: `verifiable=False + verification_priority="critical"` is an incoherent combination; the schema silently downgrades to `"high"` rather than raising, mirroring Sprint 1's "degrade, do not crash" discipline.
 - **Cache normalization**: `HuginnDB._normalize_cached_analysis` runs every cache read through `AnalysisReport.model_validate().model_dump()` so pre-Sprint-2 analyses surface every new Pydantic default on cache hit. Fixes a High-severity blind spot where fresh runs would carry new fields and cache hits would silently omit them.
-- **Validation-failure marker enhancement**: The production-boundary marker at `orchestrator.py` now includes the exception class name (`validation_error:<ClassName>`) so downstream log aggregators can distinguish schema drift from other validation failures.
+- **Validation-failure marker update**: The production-boundary marker at `orchestrator.py` now includes the exception class name (`validation_error:<ClassName>`) so downstream log aggregators can distinguish schema drift from other validation failures.
 - **77 new tests** covering triage defaults, literal drift (trailing-space, punctuation, capitalization, None, comma-separated, pipe-separated), cross-field coherence, cache normalization, Auditor count-invariance, priority-confidence invariance, and Decomposer prompt preservation.
 
-### Added (Sprint 2 PR 1 -- Charter and Symmetry Foundations)
+### Added (Sprint 2 PR 1: Charter and Symmetry Foundations)
 - **Actor-category symmetric invariance test suite**: `tests/test_gorgon_symmetry.py` with 5 adversarial pairs asserting bit-equivalent TTP classification and severity counts across 10 actor categories (state and non-state). Operationalises Anti-Weaponization Charter Commitment 7.
 - **Symmetric actor extension plan**: `research/gorgon-trap-symmetric-actor-extension.md` as the parent research note for the invariance discipline.
 - **Documentation language lint**: `tests/test_docs_language.py` with a word-bounded regex lint + 60-character proximity gate enforcing the charter's vocabulary discipline across public-facing docs.
@@ -97,16 +151,16 @@ Sprint 2 completion release. Charter and symmetry foundations, verification prio
 ### Changed
 - Bridge Builder prompt in `agents/bridge.py` gains five new sections (F/G/H/I plus the reparative-Pattern-Injection labeling) while preserving the existing load-bearing inferential_gap, narrative_deconstruction, and consensus_explanation instructions verbatim. A dedicated `TestBridgePromptPreservation` class enforces this preservation at the assertion level.
 - `BridgeOutput` and `SubClaim` Pydantic schemas each gain safe defaults on every new field so that older LLM outputs, cached JSON, and the orchestrator's degraded-result fallback paths continue to parse against `AnalysisReport`.
-- Both the normal and degraded orchestrator bridge-fallback paths explicitly carry every new field default -- a zero-regression requirement restated in the Sprint 2 plan.
-- Decomposer prompt legal-register language removed per Romulan / Holodeck legal-review convergence. "Legal liability" and "criminal conduct" are no longer triggering criteria; structural ("material downstream harm", "falsifiable numeric assertion") language replaces them.
+- Both the normal and degraded orchestrator bridge-fallback paths explicitly carry every new field default, a zero-regression requirement restated in the Sprint 2 plan.
+- Decomposer prompt legal-register language removed per legal / scenario review convergence. "Legal liability" and "criminal conduct" are no longer triggering criteria; structural ("material downstream harm", "falsifiable numeric assertion") language replaces them.
 
 ### Review discipline
-- **Six-faction fleet review** on every PR (Federation, Klingon, Romulan, Ferengi, Borg, Holodeck).
+- **Six-perspective adversarial review** on every PR (correctness, security, legal, cost, integration, scenario).
 - **Codex GPT-5.4 adversarial review** on every PR as an independent cross-model check.
 - **Zero regression** against the Sprint 1 Codex-mandated constraints. Every Sprint 2 PR closed with the baseline plus net-new tests passing; Sprint 1 PR 1 shipped at 86 baseline -> 116 passing; PR 2 shipped at 116 -> 193; PR 3 shipped at 193 -> 228.
 
 ### Rejected in Sprint 2 (with falsification criteria)
-- **P2-8 `timing_suspicion`**: Rejected as specified. Six factions plus Codex converged on the judgement that an LLM-generated "suspicious timing" flag creates structural false-positive exposure on legitimate journalism, protest, and grassroots activity -- a Charter Commitment 3 violation vector. Revisit only with a labeled-corpus 0% false-positive gate and observational-only scope.
+- **P2-8 `timing_suspicion`**: Rejected as specified. Six factions plus Codex converged on the judgement that an LLM-generated "suspicious timing" flag creates structural false-positive exposure on legitimate journalism, protest, and grassroots activity, a Charter Commitment 3 violation vector. Revisit only with a labeled-corpus 0% false-positive gate and observational-only scope.
 - **P2-9 Frame-Amplification Pre-Check**: Deferred. The "route to inoculation-style response *instead of* direct refutation" framing recreates the Sprint 1 rejection by letting frame-risk suppress verification. An acceptable reformulation is an additive-only posture overlay, which `communication_posture` partially addresses.
 - **P2-13 self-poisoning triad**: Rejected entirely. Charter Commitment 1 (no surveillance / dossiers / profiling) is dispositive. No Sprint 2 reformulation path.
 - **S1 AuditFinding enum expansion**: Deferred. A hidden consumer in `docs/generate-comprehensive-findings.js` groups `AuditFinding.category` into report buckets; adding new literals would create unlabeled buckets in generated reports until the docs generator is updated.
@@ -144,7 +198,6 @@ Sprint 2 completion release. Charter and symmetry foundations, verification prio
 - **7 Entity Types**: Scenario, Actor, Technique (DISARM TTP), TechniqueReveal (Named Trick), Claim, Mutation, TemporalEra.
 - **Graph Builder CLI**: `python graph/build_graph.py` extracts entities from JSON results and exports Cytoscape.js-compatible JSON.
 - **Gallery Navigation**: Nav bar added to all gallery pages (index, 20 scenarios, knowledge graph).
-- **Implementation Plan**: `docs/plans/2026-03-28-knowledge-graph-phase1.md` (17 tasks, TDD).
 - **18 new tests** for graph builder (total 273 passing).
 
 ### Changed
@@ -156,12 +209,11 @@ Sprint 2 completion release. Charter and symmetry foundations, verification prio
 ### Added
 - **Technique Reveal (v5)**: Each manipulation technique named in plain language, like revealing a magic trick. Includes mechanic explanation, historical precedent, and pattern classification.
 - **Asymmetric Weight Principle**: Systematic multi-campaign strategies receive proportionally more analysis than isolated framing choices. Prevents false equivalence.
-- **GP-06 Scenario**: Brexit/Farage sanewashing -- tests technique recycling, media normalization, and asymmetric weight across a multi-decade political playbook.
+- **GP-06 Scenario**: Brexit/Farage sanewashing: tests technique recycling, media normalization, and asymmetric weight across a multi-decade political playbook.
 - **TechniqueReveal Pydantic model**: 6 fields (technique, how_it_works, used_by, where_used_here, historical_precedent, pattern_type).
 - **Evaluation**: 12 weighted checks including technique_naming (8%).
 - **Setup Guide**: Step-by-step for non-technical users (Docker, CLI, Claude Code).
 - **Scenario Gallery**: Static site generator for browsing pre-run analysis results.
-- **LinkedIn article proposal**: Documented framework for public communication.
 
 ### Changed
 - Bridge Builder prompt v5 with Section E and Round 2 "NAME IT" instruction.
@@ -173,7 +225,7 @@ Sprint 2 completion release. Charter and symmetry foundations, verification prio
 ### Added
 - **Scientific Consensus (v4)**: Presents established scientific explanation with equal depth to the conspiracy analysis. 6,000-10,000 chars of mechanism-level explanation.
 - 6 new v4 scenario results (HS-01: 100%, HS-02: 94.7%, HS-04: 95.5%, EN-01: 97.3%, EV-03: 94.7%, GP-01: 94.7%).
-- Comprehensive findings DOCX generator with v4 sections.
+- Findings DOCX generator with v4 sections.
 
 ### Changed
 - BridgeOutput gains consensus_explanation field.
@@ -193,8 +245,8 @@ Sprint 2 completion release. Charter and symmetry foundations, verification prio
 - 20 real-world test scenarios across 6 categories.
 - Test runner with 10 weighted evaluation checks.
 - Claude Code native pipeline runner.
-- Scientific research enhancement (370+ sources, citation verification).
-- Comprehensive findings DOCX (19 scenarios).
+- Scientific research expansion (370+ sources, citation verification).
+- Findings DOCX (19 scenarios).
 
 ### Changed
 - Socratic dialogue Round 2 improved: systemic patterns over individual blame.

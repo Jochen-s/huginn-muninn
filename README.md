@@ -61,7 +61,7 @@ Two analysis methods, one pipeline.
 | Agent | What It Does |
 |-------|-------------|
 | **Claim Decomposer** | Breaks input into verifiable sub-claims. Flags hypothesis crowding (v0.7.0) and assigns verification priority (v0.8.0). |
-| **Origin Tracer** | Tracks claim origins, spread patterns, and how narratives migrate between ideological camps over time. |
+| **Origin Tracer** | Tracks claim origins, spread patterns, epistemic provenance (v0.12.0), and how narratives migrate between ideological camps over time. |
 | **Network Mapper** | Maps information flow and actor relationships. |
 | **TTP Classifier** | Labels manipulation techniques using the DISARM framework, including cognitive warfare techniques (v0.7.0). |
 | **Bridge Builder** | The common humanity layer. Identifies universal needs, surfaces concrete overlap, deconstructs manufactured narratives, presents scientific consensus with equal depth (v0.4.0), and advises communication approach grounded in 27 peer-reviewed citations (v0.8.0). |
@@ -116,6 +116,28 @@ The diagnostic fields from v0.8.0 are powerful. They also create a defamation su
 **v0.11.0** closed the remaining exfiltration channel. Suppressed Bridge field content could still leak through Auditor free-text descriptions. A sentence-level scrubber now catches references to suppressed field names (underscore, space, short-form variants, case-insensitive) and replaces matching sentences with a redaction marker. An `audit_redacted` flag on every response discloses when scrubbing fired. Best-effort, honest about its limits.
 
 The engineering discipline: diagnostic power and legal safety shipped in the same pipeline.
+
+---
+
+## Epistemic Equity (v0.12.0)
+
+A claim about vaccine safety in Germany gets traced to WHO studies and Reuters articles. That's Tier 1 and Tier 2 sourcing. Confidence: 72%.
+
+The same claim circulates in Senegal. Local health authorities published their own analysis. Community health workers documented what they observed. None of it shows up in the trace because the pipeline only knew about Western academic and institutional sources.
+
+That's a blind spot. And it's the kind of blind spot that erodes trust in exactly the communities where trust matters most.
+
+v0.12.0 addresses this with three connected features:
+
+**Regional Source Registry.** 21 institutions across 5 regions: Africa, Asia-Pacific, Latin America, MENA, and Indigenous Knowledge Systems. CODESRIA, CLACSO, the African Union, ASEAN, Te Mana Raraunga. The registry is advisory. Source presence does not confer trust. Source absence does not indicate unreliability. A bias warning in the registry itself says what needs saying: static source lists encode creator bias. Treat them as starting points.
+
+**Epistemic Provenance.** Every traced origin now carries a tradition classification: `western_academic`, `western_institutional`, `global_south_academic`, `global_south_institutional`, `community_experiential`, `indigenous_knowledge`, or `unclassified`. The default is `unclassified`. Not `western_academic`. If the pipeline doesn't know where knowledge comes from, it says so.
+
+A gap detector fires when 80% or more of traced origins share a single tradition. Bidirectional: it flags Western monoculture and Global South monoculture equally. The point is diversity of perspective, not a hierarchy of traditions.
+
+**Confidence Score Transparency.** A [methodology page](https://jochen-s.github.io/huginn-muninn/gallery/confidence-methodology.html) explains how scores work in plain language. What the five ECF dimensions measure. How source tiers contribute. What the score is NOT: not a truth score, not a censorship signal, not a replacement for human judgment. Every scenario page now links to it with a [?] next to the confidence percentage.
+
+No black boxes. If the system assigns a number, it owes you an explanation of how that number was produced.
 
 ---
 
@@ -233,8 +255,9 @@ Full log with falsification criteria: [REJECTIONS.md](REJECTIONS.md).
 | v0.8.0 | 228 |
 | v0.9.0 | 511 |
 | v0.11.0 | 544 |
+| v0.12.0 | 340 (monorepo) |
 
-20 real-world scenarios validated across health & science, geopolitics, environment, events, technology, and media.
+28 real-world scenarios validated across health & science, geopolitics, environment, events, technology, and media.
 
 ---
 
@@ -294,6 +317,6 @@ If you reference this work in an academic context, please cite the underlying re
 
 ---
 
-*Current version: v0.11.0 "Auditor Exfiltration Guard". 544 tests. The mission hasn't changed: de-polarize, find common ground, then make the tool unnecessary.*
+*Current version: v0.12.0 "Epistemic Equity". 340 tests. The mission hasn't changed: de-polarize, find common ground, then make the tool unnecessary.*
 
 *Author: Jochen Schmiedbauer*
