@@ -61,11 +61,11 @@ Two analysis methods, one pipeline.
 | Agent | What It Does |
 |-------|-------------|
 | **Claim Decomposer** | Breaks input into verifiable sub-claims. Flags hypothesis crowding (v0.7.0) and assigns verification priority (v0.8.0). |
-| **Origin Tracer** | Tracks claim origins, spread patterns, epistemic provenance (v0.12.0), and how narratives migrate between ideological camps over time. |
+| **Origin Tracer** | Tracks claim origins, spread patterns, epistemic provenance (6 traditions including Global South), and how narratives migrate between ideological camps over time. Gap detection at 80%+ single-tradition dominance (v0.12.0). |
 | **Network Mapper** | Maps information flow and actor relationships. |
 | **TTP Classifier** | Labels manipulation techniques using the DISARM framework, including cognitive warfare techniques (v0.7.0). |
 | **Bridge Builder** | The common humanity layer. Identifies universal needs, surfaces concrete overlap, deconstructs manufactured narratives, presents scientific consensus with equal depth (v0.4.0), and advises communication approach grounded in 27 peer-reviewed citations (v0.8.0). |
-| **Adversarial Auditor** | Red-teams the entire analysis for bias, errors, and frame capture risk. First-class cognitive warfare and frame capture categories (v0.10.0). Exfiltration-guarded (v0.11.0). |
+| **Adversarial Auditor** | Red-teams the entire analysis for bias, errors, and frame capture risk. Evidence Certainty Framework assessment with 5 weighted dimensions (v0.12.0). Exfiltration-guarded (v0.11.0). |
 
 Everything flows through an orchestrator. Output passes through a regulated envelope (v0.9.0) that projects results through field suppression and scope scrubbing before reaching any external boundary.
 
@@ -119,25 +119,27 @@ The engineering discipline: diagnostic power and legal safety shipped in the sam
 
 ---
 
-## Epistemic Equity (v0.12.0)
+## Epistemic Equity (v0.12.0-v0.14.0)
 
-A claim about vaccine safety in Germany gets traced to WHO studies and Reuters articles. That's Tier 1 and Tier 2 sourcing. Confidence: 72%.
+A disinformation analysis tool that only knows Western sources has a blind spot the size of most of the world.
 
-The same claim circulates in Senegal. Local health authorities published their own analysis. Community health workers documented what they observed. None of it shows up in the trace because the pipeline only knew about Western academic and institutional sources.
+v0.12.0 added epistemic provenance tracking. Every source the Origin Tracer identifies now carries a tradition classification: western academic, western institutional, global south academic, global south institutional, community experiential, or indigenous knowledge. When 80%+ of classified sources come from a single tradition, a gap detection warning fires. Not an error. A signal that the analysis is seeing the world through one lens.
 
-That's a blind spot. And it's the kind of blind spot that erodes trust in exactly the communities where trust matters most.
+The regional source registry carries 21 institutions across Africa, Asia-Pacific, Latin America, MENA, and Indigenous Knowledge Systems. These aren't a trust list. They're a prompt to look wider.
 
-v0.12.0 addresses this with three connected features:
+v0.12.0 also shipped the Evidence Certainty Framework (ECF): five weighted dimensions that replace a single confidence number with something you can actually interrogate.
 
-**Regional Source Registry.** 21 institutions across 5 regions: Africa, Asia-Pacific, Latin America, MENA, and Indigenous Knowledge Systems. CODESRIA, CLACSO, the African Union, ASEAN, Te Mana Raraunga. The registry is advisory. Source presence does not confer trust. Source absence does not indicate unreliability. A bias warning in the registry itself says what needs saying: static source lists encode creator bias. Treat them as starting points.
+| Dimension | Weight | What It Measures |
+|-----------|--------|-----------------|
+| Evidence Quality | 30% | Strength of underlying evidence (studies vs. anecdotes) |
+| Source Reliability | 20% | Editorial standards, correction policies, peer review |
+| Claim Testability | 15% | Can the claim be checked against observable data? |
+| Expert Consensus | 20% | Genuine scientific debate vs. manufactured disagreement |
+| Internal Coherence | 15% | Do the claim's sub-claims support each other? |
 
-**Epistemic Provenance.** Every traced origin now carries a tradition classification: `western_academic`, `western_institutional`, `global_south_academic`, `global_south_institutional`, `community_experiential`, `indigenous_knowledge`, or `unclassified`. The default is `unclassified`. Not `western_academic`. If the pipeline doesn't know where knowledge comes from, it says so.
+A `uniform_input_flag` fires when all five dimensions come back suspiciously similar. The LLM equivalent of checking "all of the above" without thinking about it.
 
-A gap detector fires when 80% or more of traced origins share a single tradition. Bidirectional: it flags Western monoculture and Global South monoculture equally. The point is diversity of perspective, not a hierarchy of traditions.
-
-**Confidence Score Transparency.** A [methodology page](https://jochen-s.github.io/huginn-muninn/gallery/confidence-methodology.html) explains how scores work in plain language. What the five ECF dimensions measure. How source tiers contribute. What the score is NOT: not a truth score, not a censorship signal, not a replacement for human judgment. Every scenario page now links to it with a [?] next to the confidence percentage.
-
-No black boxes. If the system assigns a number, it owes you an explanation of how that number was produced.
+v0.14.0 re-ran all six COVID scenarios (lab leak, vaccine harm, plandemic, ivermectin suppression, lockdown tyranny, pharma profiteering) through the updated pipeline. Confidence ranges from 0.31 (plandemic, where the kernel is real but the leap fails every load-bearing test) to 0.72 (pharma profits, where the documentary record is exceptionally strong). The gallery now renders ECF dimension tables, epistemic tradition badges, and gap detection warnings for every scenario.
 
 ---
 
@@ -255,10 +257,9 @@ Full log with falsification criteria: [REJECTIONS.md](REJECTIONS.md).
 | v0.8.0 | 228 |
 | v0.9.0 | 511 |
 | v0.11.0 | 544 |
-| v0.12.0 | 340 |
-| v0.13.0 | 355 |
+| v0.14.0 | 386 (standard baseline) |
 
-28 real-world scenarios validated across health & science, geopolitics, environment, events, technology, and media.
+28 real-world scenarios validated across health & science, geopolitics, environment, events, technology, and media. Six COVID scenarios re-run with full ECF and provenance data (v0.14.0).
 
 ---
 
@@ -318,6 +319,6 @@ If you reference this work in an academic context, please cite the underlying re
 
 ---
 
-*Current version: v0.13.0 "Pipeline Hardening". 355 tests. The mission hasn't changed: de-polarize, find common ground, then make the tool unnecessary.*
+*Current version: v0.14.0 "Epistemic Equity". 386 tests. The mission hasn't changed: de-polarize, find common ground, then make the tool unnecessary.*
 
 *Author: Jochen Schmiedbauer*

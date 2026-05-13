@@ -134,4 +134,10 @@ def project_analysis(
     # flag would create false assurance; showing it is honest. Operators who need
     # zero-knowledge suppression must implement downstream filtering.
     resp_data["audit_redacted"] = audit_redacted
+
+    experimental = []
+    report_data = resp_data.get("data", {})
+    if report_data.get("cnqs") is not None:
+        experimental.append("cnqs")
+    resp_data["experimental_fields"] = experimental
     return resp_data

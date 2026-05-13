@@ -280,3 +280,31 @@ class TestAuditExfiltrationGuard:
         desc = result["data"]["audit"]["findings"][0]["description"]
         assert "vacuum_filled_by" in desc
         assert result["audit_redacted"] is False
+
+
+class TestExperimentalFields:
+    """CNQS experimental status surfaces in API envelope."""
+
+    def setup_method(self):
+        _reset_settings()
+
+    def teardown_method(self):
+        _reset_settings()
+
+    def test_cnqs_marked_experimental_in_envelope(self):
+        raw = TestProjectAnalysis()._make_raw_analysis()
+        raw["cnqs"] = {
+            "respect_for_audience": 4, "acknowledgment_of_uncertainty": 3,
+            "proportionality_of_response": 4, "institutional_interest_transparency": 3,
+            "alternative_explanation_quality": 3, "factual_accuracy": 4,
+            "tone_calibration": 3, "cognitive_load_management": 3,
+            "evaluated_source": "CDC press briefing",
+        }
+        result = project_analysis(raw, suppressed=frozenset())
+        assert "cnqs" in result.get("experimental_fields", [])
+
+    def test_no_experimental_fields_when_cnqs_absent(self):
+        raw = TestProjectAnalysis()._make_raw_analysis()
+        raw.pop("cnqs", None)
+        result = project_analysis(raw, suppressed=frozenset())
+        assert result.get("experimental_fields", []) == []

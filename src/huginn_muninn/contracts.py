@@ -4,6 +4,7 @@ from __future__ import annotations
 import logging
 import re
 import unicodedata
+from confusables import normalize as _confusable_normalize
 from collections import Counter
 from enum import Enum
 from typing import Annotated, ClassVar, Literal
@@ -13,10 +14,27 @@ from pydantic import BaseModel, BeforeValidator, Field, model_validator
 _log = logging.getLogger(__name__)
 
 
+_LOG_UNSAFE_CATEGORIES = frozenset({"Cc", "Cf", "Zl", "Zp"})
+
+
+def _sanitize_for_log(v: str) -> str:
+    """Strip control, bidi-override, and format characters for safe logging (K5-A)."""
+    if not isinstance(v, str):
+        return str(v)
+    return "".join(
+        " " if unicodedata.category(c) in _LOG_UNSAFE_CATEGORIES else c
+        for c in v
+    ).strip()
+
+
 def _first_pipe_value(v: object) -> object:
     """Take first value when LLM returns pipe-separated enum like 'a|b'."""
     if isinstance(v, str) and "|" in v:
-        _log.debug("Pipe-separated value sanitized: %r -> %r", v, v.split("|")[0].strip())
+        _log.debug(
+            "Pipe-separated value sanitized: %s -> %s",
+            _sanitize_for_log(v),
+            _sanitize_for_log(v.split("|")[0].strip()),
+        )
         return v.split("|")[0].strip()
     return v
 
@@ -113,10 +131,21 @@ def _looks_like_named_entity(text: str) -> bool:
         return False
     # (0) Normalize Unicode to defeat homoglyph/confusable evasion.
     text = unicodedata.normalize("NFKC", text)
-    text = re.sub("[​-‏⁠﻿]", "", text)
-    # (1) Explicit blocklist hit (word-boundary aware).
-    if _BLOCKLIST_RE.search(text):
-        return True
+    # Strip ALL Unicode Format (Cf) characters: zero-width, soft hyphens,
+    # bidi overrides, word joiners. Blanket category check is more robust
+    # than a hand-rolled codepoint range (fleet K2-A-4 mitigation).
+    text = "".join(c for c in text if unicodedata.category(c) != "Cf")
+    # (1) K2-A: confusable normalization for cross-script homoglyphs.
+    # Length cap prevents DoS on adversarially long strings (fleet K2-A-7).
+    try:
+        check_text = text[:2000] if len(text) > 2000 else text
+        confusable_variants = _confusable_normalize(check_text, prioritize_alpha=True)
+    except Exception:
+        confusable_variants = []
+    texts_to_check = [text] + [v for v in confusable_variants if v != text]
+    for check_text in texts_to_check:
+        if _BLOCKLIST_RE.search(check_text):
+            return True
     # (2) Capitalised run heuristic + news-entity suffix guard.
     for match in _CAPITALISED_RUN.finditer(text):
         run = match.group(0)
@@ -307,19 +336,20 @@ class TracerOutput(BaseModel):
         dominant, dominant_count = counts.most_common(1)[0]
         if dominant == "unclassified":
             classified = [t for t in traditions if t != "unclassified"]
+            # Require 2+ classified traditions before computing sub-count dominance.
             if len(classified) >= 2:
                 sub_counts = Counter(classified)
                 sub_dominant, sub_count = sub_counts.most_common(1)[0]
                 if sub_count / len(classified) >= 0.8:
                     pct = round(sub_count / len(classified) * 100)
                     gap_msg = f"{pct}% of classified sources are {sub_dominant}"
-                    _log.info("Epistemic diversity gap detected: %s", gap_msg)
+                    _log.info("Epistemic diversity gap detected: %s", _sanitize_for_log(gap_msg))
                     object.__setattr__(self, "epistemic_diversity_gap", gap_msg)
             return self
         if dominant_count / total >= 0.8:
             pct = round(dominant_count / total * 100)
             gap_msg = f"{pct}% of sources classified as {dominant}"
-            _log.info("Epistemic diversity gap detected: %s", gap_msg)
+            _log.info("Epistemic diversity gap detected: %s", _sanitize_for_log(gap_msg))
             object.__setattr__(self, "epistemic_diversity_gap", gap_msg)
         return self
 
@@ -584,6 +614,7 @@ class ConfidenceProfile(BaseModel):
         default=0.5, ge=0.0, le=1.0, description=_ADVISORY_ONLY_DESCRIPTION,
     )
     ecf_level: str = Field(default="MODERATE", description=_ADVISORY_ONLY_DESCRIPTION)
+    uniform_input_flag: bool = False
 
     _WEIGHTS: ClassVar[dict[str, float]] = {
         "evidence_quality": 0.30,
@@ -607,6 +638,10 @@ class ConfidenceProfile(BaseModel):
         else:
             level = "VERY_LOW"
         object.__setattr__(self, "ecf_level", level)
+        dims = [self.evidence_quality, self.source_reliability,
+                self.claim_testability, self.expert_consensus,
+                self.internal_coherence]
+        object.__setattr__(self, "uniform_input_flag", max(dims) - min(dims) <= 0.05)
         return self
 
 
@@ -717,7 +752,10 @@ class AnalysisReport(BaseModel):
     method: Literal["method_2"] = "method_2"
     degraded: bool = False
     degraded_reason: str | None = None
-    confidence_profile: ConfidenceProfile | None = None
+    confidence_profile: ConfidenceProfile | None = Field(
+        default=None,
+        description="Auditor ECF assessment. Also available nested in audit output for backward compatibility.",
+    )
     cnqs: CounterNarrativeQualityScore | None = None
 
 
@@ -733,8 +771,9 @@ class AnalysisResponse(BaseModel):
 
     data: dict
     suppressed_fields: list[str] = Field(default_factory=list)
-    api_version: str = "0.11.0"
+    api_version: str = "0.14.0"
     audit_redacted: bool = False
+    experimental_fields: list[str] = Field(default_factory=list)
 
     _FIELD_DEFAULTS: ClassVar[dict[str, object]] = {
         "communication_posture": "direct_correction",

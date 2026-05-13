@@ -12,7 +12,7 @@ from huginn_muninn.agents.classifier import ClassifierAgent
 from huginn_muninn.agents.decomposer import DecomposerAgent
 from huginn_muninn.agents.mapper import MapperAgent
 from huginn_muninn.agents.tracer import TracerAgent
-from huginn_muninn.contracts import AnalysisReport
+from huginn_muninn.contracts import AnalysisReport, _sanitize_for_log
 from huginn_muninn.llm import LLMClient
 
 log = logging.getLogger(__name__)
@@ -227,7 +227,7 @@ class Orchestrator:
         try:
             AnalysisReport(**result)
         except ValidationError as e:
-            log.error("Pipeline produced invalid output: %s", e)
+            log.error("Pipeline produced invalid output: %s", _sanitize_for_log(str(e)))
             # Sprint 2 PR 2 / Federation mitigation: include the exception
             # type name in the marker so downstream log aggregators can
             # distinguish schema drift from other validation failures. The
@@ -244,7 +244,7 @@ class Orchestrator:
         try:
             return agent.run(input_data)
         except AgentError as e:
-            log.warning("Agent %s failed: %s", agent.name, e)
+            log.warning("Agent %s failed: %s", agent.name, _sanitize_for_log(str(e)))
             failures.append(agent.name)
             return None
 

@@ -17,6 +17,7 @@
     --amber:  #E67E22;
     --green:  #27AE60;
     --gray:   #5D6D7E;
+    --muted:  #7F8C8D;
     --border: #D0D9E4;
     --font:   -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
   }
@@ -153,6 +154,7 @@
   .badge-systematic { background: #FDEDEC; color: var(--red); }
   .badge-repeated   { background: #E8F8F5; color: var(--teal); }
   .badge-isolated   { background: #FEF5E7; color: var(--amber); }
+  .badge-severity   { background: #FDEDEC; color: var(--red); }
 
   /* Footer */
   .site-footer {
@@ -566,6 +568,19 @@
     .essay-prose { font-size: 0.95rem; }
     .essay-prose h2 { font-size: 1.2rem; }
   }
+
+  .gap-warning {
+    background: #fff3cd;
+    border: 1px solid #ffc107;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin: 12px 0;
+    font-size: 0.95em;
+  }
+  .dim-weight {
+    color: var(--muted);
+    font-size: 0.85em;
+  }
 </style>
 </head>
 <body>
@@ -582,7 +597,7 @@
     <a class="back-link" href="index.html">&larr; Back to gallery</a>
     <h1>HS-11: Big Pharma made billions from COVID while people suffered. They don&#39;t care about health, just profits.</h1>
     <div class="header-meta">
-      <span class="badge badge-version">v1</span>
+      <span class="badge badge-version">v2</span>
       <span class="badge badge-medium">Medium</span>
       <span class="badge badge-kernel-true">Kernel of Truth</span>
       <span class="badge badge-version">Health &amp; Science</span>
@@ -602,27 +617,42 @@
         </tr>
       </thead>
       <tbody>
-        <tr><td>Sub-claims</td><td>9</td></tr>
-        <tr><td>Actors identified</td><td>14</td></tr>
+        <tr><td>Sub-claims</td><td>12</td></tr>
+        <tr><td>Actors identified</td><td>24</td></tr>
         <tr><td>TTP matches</td><td>12</td></tr>
         <tr><td>Audit verdict</td><td><span class="badge badge-warnings">PASS WITH WARNINGS</span></td></tr>
         <tr><td>Pipeline version</td><td>6-agent Method 2</td></tr>
-        <tr><td>Overall confidence</td><td>65% <a href="confidence-methodology.html" class="methodology-link" title="How is this score calculated?">[?]</a></td></tr>
-        <tr><td>Source tiers</td><td>T1: 3</td></tr>
+        <tr><td>Overall confidence</td><td>72% <a href="confidence-methodology.html" class="methodology-link" title="How is this score calculated?">[?]</a></td></tr>
+        <tr><td>Source tiers</td><td>T1: 5</td></tr>
+        <tr><td>Epistemic traditions</td><td><span class="badge badge-version">Western Institutional: 3</span> <span class="badge badge-version">Global South Institutional: 2</span></td></tr>
       </tbody>
     </table>
   </div>
 
+  
+    <div class="section">
+      <h2>Evidence Certainty Framework</h2>
+      <p class="intro-note">Multi-dimensional confidence assessment inspired by GRADE methodology. <a href="confidence-methodology.html" class="methodology-link">[?]</a></p>
+      <table class="metrics-table">
+        <thead><tr><th>Dimension</th><th>Score</th></tr></thead>
+        <tbody>
+          <tr><td>Evidence Quality <span class="dim-weight">(30%)</span></td><td>84%</td></tr><tr><td>Source Reliability <span class="dim-weight">(20%)</span></td><td>81%</td></tr><tr><td>Claim Testability <span class="dim-weight">(15%)</span></td><td>58%</td></tr><tr><td>Expert Consensus <span class="dim-weight">(20%)</span></td><td>72%</td></tr><tr><td>Internal Coherence <span class="dim-weight">(15%)</span></td><td>66%</td></tr>
+          <tr style="font-weight:600;border-top:2px solid var(--border)"><td>Composite (N/A)</td><td>0%</td></tr>
+        </tbody>
+      </table>
+    </div>
+  
+
   <div class="section">
     <h2>Universal Needs</h2>
     <p class="intro-note">The legitimate human needs this claim speaks to, regardless of whether the claim is accurate.</p>
-    <div class="needs-list"><div class="need-item"><span class="need-name">Accountability:</span>People across the political spectrum want pharmaceutical companies held accountable for pricing decisions, access barriers, and the relationship between public funding and private profit.</div><div class="need-item"><span class="need-name">Health security:</span>Everyone wants confidence that medicines are developed with genuine concern for welfare, not solely shareholder returns.</div><div class="need-item"><span class="need-name">Transparency:</span>Both sides demand visibility into drug pricing, clinical trials, regulatory capture prevention, and public-investment-to-public-benefit translation.</div></div>
+    <div class="needs-list"><div class="need-item"><span class="need-name">Safety:</span>People want to be able to trust that medicines they take are safe, that their illnesses will be treated by people who are thinking about them rather than about market share, and that the system that provides their care is not structured to harm them. This need was activated during the pandemic for both vaccinated and unvaccinated communities, and it has independent philosophical standing grounded in informed consent and patient-centered care.</div><div class="need-item"><span class="need-name">Fairness:</span>People across the political spectrum want a fair process where the costs and benefits of medical innovation are distributed equitably, where global access is not gated by wealth, where public funding produces returns to the public that funded it, and where the rules under which pharmaceutical companies operate are determined by democratic deliberation rather than by industry lobbying. This need is particularly acute when documented disparities like the COVID vaccine access gap make the unfairness visible.</div><div class="need-item"><span class="need-name">Recognition:</span>Those who lost family members to COVID, those who lost family members to pharmaceutical industry conduct in earlier eras (opioids, Vioxx), those who experienced access denial during the pandemic, and those who continue to experience pricing barriers to essential medicines deserve to have their experiences heard and adjudicated honestly. Recognition is distinct from any specific causal verdict on industry motivation.</div><div class="need-item"><span class="need-name">Trust:</span>People want institutions whose financial incentives are transparent, whose communications under crisis are honest about uncertainty and about what is being decided in their name, and whose recommendations they can rely on without first having to audit the financial entanglements behind them. The pharmaceutical industry&#39;s communications during the pandemic, including the documented opposition to TRIPS waiver and the post-emergency pricing announcements, materially affected this trust.</div><div class="need-item"><span class="need-name">Truth:</span>All sides want to know what actually happened, what the actual cost-and-benefit balance of pharmaceutical industry COVID conduct was, and what the actual policy levers are for addressing the documented harms. The dispute is about how to weigh the evidence and what reforms it implies, not whether evidence matters.</div></div>
   </div>
 
   <div class="section">
         <h2>Scientific Consensus / Mainstream Explanation</h2>
         <p class="intro-note">The established scientific or institutional explanation for this phenomenon.</p>
-        <div class="prose"><p>The evidence shows a genuinely complex picture. SEC filings confirm $100B+ in collective COVID revenue. Lancet research estimated vaccines prevented 14-20 million deaths in the first year. Studies observed that by late 2021, high-income countries had administered ~150 doses per 100 people while low-income countries had fewer than 10. The measured gap between public investment ($18B+ from US alone) and private profit represents a genuine policy failure. However, evidence does not support the claim that companies &#39;don&#39;t care about health&#39;; corporate intent is not directly measurable. What is measurable is behavior: companies simultaneously produced life-saving vaccines at unprecedented speed AND resisted voluntary licensing. Both are documented facts.</p></div>
+        <div class="prose"><p>The clearest reading of the evidence has several distinct parts that need to be held together rather than collapsed into one verdict. On the documented profits: Pfizer reported approximately 100 billion USD in 2022 total revenue with Comirnaty and Paxlovid contributing approximately 56 billion USD combined; Moderna transitioned from approximately 800 million USD in 2019 to approximately 18.5 billion in 2021 and 19.3 billion in 2022; AstraZeneca operated under contractually-scoped not-for-profit pricing during the acute pandemic phase before transitioning to commercial pricing in late 2021; Johnson and Johnson and other companies delivered substantial volumes including donations through COVAX. The revenue numbers are accurate and the temporal pattern (peak in 2021-2022, decline thereafter) is what would be predicted for emergency-procurement-driven sales. On the access gap: by late 2021, approximately 6 percent of Africans were fully vaccinated while approximately 60-70 percent of high-income country populations were fully vaccinated; WHO Director-General Tedros characterized the gap as &#39;vaccine apartheid&#39; in May 2021; Africa CDC and Strive Masiyiwa as AU Special Envoy documented dose-hoarding by high-income countries; COVAX was structurally underfunded relative to high-income country domestic procurement spending. The access gap is documented and the framing originated in Global South institutional voice. On the TRIPS waiver: India and South Africa submitted the waiver proposal to the WTO on October 2, 2020; PhRMA and IFPMA coordinated industry opposition; the Biden administration partially reversed US position on May 5, 2021 by endorsing a vaccines-only waiver; the June 2022 WTO compromise was limited to vaccines, did not extend to therapeutics or diagnostics, and was widely characterized as inadequate. The industry opposition is publicly recorded and constitutes the cleanest documentary evidence of coordinated structural behavior that disadvantaged access. On the public funding: NIH basic science contributions including the VRC team&#39;s prefusion-stabilized spike protein work, BARDA contracts totaling approximately 12.4 billion USD by mid-2021, the German federal 375 million EUR grant to BioNTech, and the NIH-Moderna patent dispute resolution all represent documented public investment, though the contribution varied substantially across companies with Pfizer specifically declining direct BARDA development funding. On the historical pattern: opioid crisis settlements exceeding 26 billion USD, Vioxx litigation, insulin pricing controversies, and the broader pattern from the AIDS access fight forward provide documented evidence of pharmaceutical industry conduct that informs the COVID-era assessment. On motive and individual character: there is no documentary evidence that pharmaceutical employees and executives as individuals &#39;don&#39;t care about health.&#39; Many of the scientists who developed the COVID-19 vaccines have spoken publicly and credibly about their commitment to health outcomes, and the products they developed have saved very large numbers of lives. The structural critique does not require character attribution: corporate incentive systems can and do produce predictable patterns of harm independent of individual character, and the analytical framework that distinguishes between systemic and individual moral attribution is well-established in business ethics, organizational sociology, and political economy. The mechanism keywords here are corporate fiduciary obligations, patent exclusivity, pricing autonomy under emergency procurement, TRIPS architecture, compulsory licensing, public funding attribution, regulatory capture, and access policy levers. The honest summary is that the documented harms during the COVID pandemic produced by pharmaceutical industry conduct were substantial and policy-actionable, that the structural critique of corporate incentive systems is well-supported and points toward specific reform agendas, and that the character-attribution claim about individual indifference to health is not supported by the evidence and is structurally counterproductive even when the underlying outrage at the documented harms is well-founded.</p></div>
       </div>
 
   <div class="section">
@@ -637,106 +667,190 @@
         
         <div class="technique-field">
           <div class="technique-label">Used by</div>
-          <div class="technique-text">Populist actors across the political spectrum</div>
+          <div class="technique-text">Cross-coalition spanning serious access advocates and right-populist anti-establishment ecosystem</div>
         </div>
         
         <div class="technique-field">
           <div class="technique-label">How it works</div>
-          <div class="technique-text">Takes real documented problems and uses them as emotional on-ramp to conclusions the evidence does not support</div>
+          <div class="technique-text">Real and substantial documented pharmaceutical industry conduct (TRIPS waiver opposition, pricing during access emergency, opioid crisis pattern, insulin pricing pattern) is used as the legitimate evidentiary on-ramp to the motive-attribution claim that pharmaceutical employees and executives &#39;don&#39;t care about health.&#39; The structural critique is well-supported by the documentary record; the leap to individual-character attribution is not. Mobilization framing bonds the two together by rhetorical proximity rather than evidentiary connection.</div>
         </div>
         
         <div class="technique-field">
           <div class="technique-label">In this claim</div>
-          <div class="technique-text">Real Moderna profit margin data presented alongside unfalsifiable claims about corporate intent</div>
+          <div class="technique-text">Documented Pfizer 100 billion USD 2022 revenue, real African 6 percent vaccination rate, real PhRMA TRIPS waiver opposition, and real prior conduct pattern are all used to support the inference that pharmaceutical workers do not care about patient outcomes; the same evidence supports a structural critique that does not require the character-attribution leap</div>
         </div>
         
         <div class="technique-field">
           <div class="technique-label">Historical precedent</div>
-          <div class="technique-text">HIV/AIDS access activism co-opted by AIDS denialism</div>
+          <div class="technique-text">AIDS access activism legitimately documented industry pricing behavior on AZT and antiretrovirals; the same evidence base supported both compulsory licensing advocacy and unsupported HIV-denialism claims; tobacco industry critique legitimately documented industry conduct alongside conspiratorial frames that the underlying evidence did not require</div>
         </div>
       </div>
     </div>
     <div class="technique-card">
       <div class="technique-header">
-        <span class="technique-name">Dismiss Criticism</span>
+        <span class="technique-name">Institutional Self-Damage and Manufactured Grievance</span>
         <span class="badge badge-systematic">[SYSTEMATIC]</span>
       </div>
       <div class="technique-body">
         
         <div class="technique-field">
           <div class="technique-label">Used by</div>
-          <div class="technique-text">Pharmaceutical industry and institutional defenders</div>
+          <div class="technique-text">Pharmaceutical industry communications operations including PhRMA, IFPMA, and individual company corporate communications</div>
         </div>
         
         <div class="technique-field">
           <div class="technique-label">How it works</div>
-          <div class="technique-text">Treats all criticism as anti-vax conspiracy, refusing to distinguish evidence-based equity critiques</div>
+          <div class="technique-text">Pharmaceutical industry communications and conduct repeatedly manufacture the very public outrage that the industry&#39;s coordinated messaging then attempts to neutralize, producing a self-damaging communicative cycle that strengthens the structural critique on each iteration. Examples include CEO statements characterizing access advocates as economically illiterate, post-emergency pricing announcements that signal indifference to the prior emergency framing, sustained opposition to widely-popular reform measures, and selective engagement with technical content that elides the structural critique&#39;s strongest claims.</div>
         </div>
         
         <div class="technique-field">
           <div class="technique-label">In this claim</div>
-          <div class="technique-text">Industry TRIPS waiver responses framed access concerns as threats to innovation</div>
+          <div class="technique-text">Pfizer CEO Albert Bourla March 2021 statements on low-income country access; Moderna CEO Stephane Bancel January 2023 announcement of 110-130 USD per dose post-emergency pricing; sustained PhRMA opposition to IRA Medicare price negotiation alongside record industry profits; AstraZeneca May 2024 EU market withdrawal of Vaxzevria for commercial reasons; coordinated industry communications that characterized TRIPS waiver advocacy as anti-innovation rather than as policy-mainstream</div>
         </div>
         
         <div class="technique-field">
           <div class="technique-label">Historical precedent</div>
-          <div class="technique-text">Chemical industry dismissed environmental concerns as &#39;chemophobia&#39;</div>
+          <div class="technique-text">Tobacco industry communications during 1990s litigation produced sustained self-damage; pharmaceutical industry communications during AIDS access fight similarly produced manufactured grievance that strengthened the case for compulsory licensing; oil industry climate communications produced similar self-damaging cycles</div>
         </div>
       </div>
     </div>
     <div class="technique-card">
       <div class="technique-header">
-        <span class="technique-name">Emotional Appeals</span>
+        <span class="technique-name">Selective Revenue-Profit Framing and Numerator-Without-Denominator</span>
+        <span class="badge badge-systematic">[SYSTEMATIC]</span>
+      </div>
+      <div class="technique-body">
+        
+        <div class="technique-field">
+          <div class="technique-label">Used by</div>
+          <div class="technique-text">Both sides</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">How it works</div>
+          <div class="technique-text">Real revenue figures are cited without distinguishing from net profit; specific high-revenue products are cited without engagement with portfolio costs, R&amp;D recovery, manufacturing costs, and tax obligations; pricing decisions are characterized without engagement with negotiated net prices after rebates; list prices are cited as proxies for actual transaction prices.</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">In this claim</div>
+          <div class="technique-text">Claim-promoter side: Pfizer 100 billion USD 2022 revenue cited as if it were pandemic profit, when it represents total revenue including all product lines and is before costs; Moderna 18.5 billion USD revenue cited without distinguishing from net profit; AstraZeneca contractually-scoped pricing transition characterized as stealth profiteering. Institutional side: net price trajectories cited without engagement with list-price increases or with patient out-of-pocket experience; pharmaceutical advertising spending characterized as marketing while research spending is characterized as investment with the comparative framing eliding the relative scale</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">Historical precedent</div>
+          <div class="technique-text">Tobacco litigation similarly featured asymmetric framings of revenue versus profit, gross spending versus net spending, and list versus transaction pricing; broader corporate-conduct analysis routinely encounters numerator-without-denominator framing on multiple sides</div>
+        </div>
+      </div>
+    </div>
+    <div class="technique-card">
+      <div class="technique-header">
+        <span class="technique-name">Flatten Structural Critique into Character Attribution</span>
+        <span class="badge badge-systematic">[SYSTEMATIC]</span>
+      </div>
+      <div class="technique-body">
+        
+        <div class="technique-field">
+          <div class="technique-label">Used by</div>
+          <div class="technique-text">Cross-coalition including both serious access advocates in mobilization framing and right-populist ecosystem in character-attribution framing</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">How it works</div>
+          <div class="technique-text">Documented structural patterns of corporate behavior under specific incentive systems are translated into claims about individual moral character that the structural critique itself does not require. The collapse changes the political project from policy reform (compulsory licensing pathways, public option manufacturing, R&amp;D financing reform) to expressive outrage (pharmaceutical workers are bad people), with mobilization advantages but reform-agenda costs.</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">In this claim</div>
+          <div class="technique-text">The original claim&#39;s &#39;they don&#39;t care about health, just profits&#39; collapses the structural-incentive analysis that the access-advocacy literature substantively contains into a character-attribution claim about pharmaceutical workers as individuals; the resulting framing obscures the reform agenda that the underlying evidence actually supports</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">Historical precedent</div>
+          <div class="technique-text">Anti-tobacco campaign successfully translated structural critique into character attribution against tobacco company executives, with policy results that were achieved primarily through tax, advertising restriction, and indoor air policy rather than through executive character reform; anti-oil-industry framing has similarly translated structural critique into character attribution with mixed policy results</div>
+        </div>
+      </div>
+    </div>
+    <div class="technique-card">
+      <div class="technique-header">
+        <span class="technique-name">Flatten Global South Reasoning into Western Frames</span>
+        <span class="badge badge-systematic">[SYSTEMATIC]</span>
+      </div>
+      <div class="technique-body">
+        
+        <div class="technique-field">
+          <div class="technique-label">Used by</div>
+          <div class="technique-text">Western media and political ecosystems on both sides of the broader debate</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">How it works</div>
+          <div class="technique-text">Access advocacy that originated in Global South institutional voice (WHO Director-General Tedros from Ethiopia, Africa CDC under Nkengasong and Kaseya, Strive Masiyiwa as AU Special Envoy, India and South Africa governments as TRIPS waiver co-proposers) is imported into Western political frames and rebroadcast in forms that no longer reflect the original institutional reasoning. The Global South critique becomes evidence for either Western progressive or Western right-populist narratives, with the original institutional voice flattened.</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">In this claim</div>
+          <div class="technique-text">Tedros &#39;vaccine apartheid&#39; framing is cited by Western progressive advocates as if it were a Western advocacy frame, when it originated in Global South institutional voice; Africa CDC and Strive Masiyiwa statements are recompressed into Western political frames; the India-South Africa TRIPS waiver proposal is characterized as either inadequate or as foundational depending on the Western frame that is selectively accessing it; the WHO mRNA Technology Transfer Hub at Afrigen in Cape Town receives less Western press attention than the IP and procurement debates that operate principally in Western policy arenas</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">Historical precedent</div>
+          <div class="technique-text">Western alternative-medicine movements have selectively imported traditional Chinese medicine and Ayurveda elements while stripping their original epistemic frameworks; Latin American liberation theology was variously imported into US religious and political contexts in forms that distorted the original</div>
+        </div>
+      </div>
+    </div>
+    <div class="technique-card">
+      <div class="technique-header">
+        <span class="technique-name">Cross-Coalition Capture and Trojan Horse Coalition Formation</span>
+        <span class="badge badge-systematic">[SYSTEMATIC]</span>
+      </div>
+      <div class="technique-body">
+        
+        <div class="technique-field">
+          <div class="technique-label">Used by</div>
+          <div class="technique-text">Cross-platform ecosystem including both progressive media and right-populist anti-establishment ecosystem</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">How it works</div>
+          <div class="technique-text">Legitimate structural-critique advocates (Public Citizen, MSF, KEI, Oxfam, Sanders) and conspiratorial actors (RFK Jr. ecosystem, FLCCC orbit, anti-vaccine networks) are bound together in a cross-coalition by the underlying frame (&#39;Big Pharma bad&#39;) even though their analytical frameworks, reform agendas, and ethical commitments differ substantially. Audiences enter through the legitimate door and are exposed to conspiratorial content as adjacent material; audiences enter through the conspiratorial door and acquire legitimate-seeming structural evidence to support the conspiratorial frame.</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">In this claim</div>
+          <div class="technique-text">Sanders, Public Citizen, and MSF technical analyses circulate on the same platforms as RFK Jr., Malone, and Carlson commentary, with the structural critique providing prima facie credibility to the adjacent conspiratorial content; the 2025 HHS appointment formally institutionalizes the cross-coalition by placing skeptic-side ecosystem actors in formal regulatory authority over pharmaceutical policy</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">Historical precedent</div>
+          <div class="technique-text">Anti-globalization movement coalitions in the late 1990s and 2000s included both serious structural critics and conspiratorial frames with audience flow from one to the other; cross-coalition formation between left and right populism on Federal Reserve critique has produced similar dynamics</div>
+        </div>
+      </div>
+    </div>
+    <div class="technique-card">
+      <div class="technique-header">
+        <span class="technique-name">Recontextualize Corporate Communications</span>
         <span class="badge badge-isolated">[ISOLATED]</span>
       </div>
       <div class="technique-body">
         
         <div class="technique-field">
           <div class="technique-label">Used by</div>
-          <div class="technique-text">Both sides: populist critics use suffering narratives; industry uses &#39;miracle of science&#39; framing</div>
+          <div class="technique-text">Both progressive media and right-populist anti-establishment media</div>
         </div>
         
         <div class="technique-field">
           <div class="technique-label">How it works</div>
-          <div class="technique-text">Replaces cost-benefit analysis with moral absolutes on both sides</div>
+          <div class="technique-text">Routine corporate communications including earnings calls, investor presentations, and policy statements are placed in conspiratorial or character-attribution frames the original communications did not contain, with the framing leveraging the substantive documentary credibility of the underlying document to support inferences the document does not directly support.</div>
         </div>
         
         <div class="technique-field">
           <div class="technique-label">In this claim</div>
-          <div class="technique-text">Claim&#39;s &#39;people suffered&#39; framing makes acknowledging vaccine benefits feel like betrayal</div>
+          <div class="technique-text">Pfizer Albert Bourla investor communications recontextualized as confessions of indifference to access; Moderna Stephane Bancel pricing announcements recontextualized as evidence of indifference to health; AstraZeneca contractually-scoped pricing transition recontextualized as stealth profiteering; the NIH-Moderna patent dispute resolution recontextualized as evidence of theft</div>
         </div>
         
         <div class="technique-field">
           <div class="technique-label">Historical precedent</div>
-          <div class="technique-text">HIV/AIDS activism used similar emotional framing</div>
-        </div>
-      </div>
-    </div>
-    <div class="technique-card">
-      <div class="technique-header">
-        <span class="technique-name">Fact Distortion Through Selective Framing</span>
-        <span class="badge badge-isolated">[ISOLATED]</span>
-      </div>
-      <div class="technique-body">
-        
-        <div class="technique-field">
-          <div class="technique-label">Used by</div>
-          <div class="technique-text">Content creators and political figures across the spectrum</div>
-        </div>
-        
-        <div class="technique-field">
-          <div class="technique-label">How it works</div>
-          <div class="technique-text">Presents accurate individual data points while omitting countervailing data</div>
-        </div>
-        
-        <div class="technique-field">
-          <div class="technique-label">In this claim</div>
-          <div class="technique-text">Revenue cited without R&amp;D context; conversely, industry cites lives saved without access inequality context</div>
-        </div>
-        
-        <div class="technique-field">
-          <div class="technique-label">Historical precedent</div>
-          <div class="technique-text">Climate denial used selective data presentation for decades</div>
+          <div class="technique-text">Climategate emails (2009) recontextualized as conspiracy evidence; Pfizer FOIA-released pharmacovigilance documents recontextualized as confessions; broader pattern of recontextualization at varying distances from underlying document content</div>
         </div>
       </div>
     </div>
@@ -746,35 +860,35 @@
   <div class="section">
     <h2>Inferential Gap</h2>
     <p class="intro-note">Where the evidence ends and the leap begins.</p>
-    <div class="prose"><p>The evidence firmly establishes enormous profit and inequitable access. The unsupported leap: concluding that because companies maximized profit, profit was their only consideration and they were indifferent to health outcomes. This collapses complex institutional reality into a single villain narrative.</p></div>
+    <div class="prose"><p>[object Object]</p></div>
   </div>
 
   <div class="section">
     <h2>Common Ground</h2>
-    <div class="prose"><p>People who believe this claim and those who push back share remarkable common ground when you strip away the framing. Both sides acknowledge extraordinary pharma revenue during COVID. Both recognize profoundly unequal global vaccine access. Both want medicines to be safe and effective. The genuine disagreement is narrower than it appears: whether profit-seeking is inherently incompatible with public health, or whether it can be channeled through better regulation and accountability structures.</p></div>
+    <div class="prose"><p>When the framing is set aside, the area of genuine shared ground between people who believe Big Pharma made billions while people suffered and people who believe the industry&#39;s pandemic role was on balance positive is much larger than the public conversation suggests. Both groups generally acknowledge that the COVID vaccines saved many lives and that this is a genuine achievement worth honoring. Both agree that the speed of vaccine development, with multiple effective products available within twelve months of pathogen identification, was historically unprecedented. Both agree that the underlying scientific platform work that made that speed possible was substantially publicly funded over decades and that this funding deserves transparent acknowledgment. Both agree that the access gap between high-income and low-income countries during 2021 was real, was substantial, and was a failure that policy architecture should address. Both agree that pharmaceutical companies are publicly traded entities with fiduciary obligations to shareholders, that this creates structural incentives that affect their behavior under any condition, and that those incentives sometimes conflict with health and access objectives in ways that policy should manage. Both agree that the opioid crisis was a documented harm produced principally by specific pharmaceutical industry conduct and that the lessons of that crisis remain relevant. Both agree that the regulatory architecture (FDA user-fee structure, EUA framework, patent law, Medicare pricing autonomy, BPCIA biosimilar pathway) materially shapes industry conduct and that reform conversations are legitimate. The actual disagreement is much narrower than the rhetorical war suggests: how much of the documented harm during the pandemic should be attributed to individual character flaws in pharmaceutical employees and executives versus to structural incentive systems that produce predictable harm independent of individual character, and what does that distinction imply for the reform agenda? The character-attribution framing tends to direct energy toward expressive outrage; the structural framing tends to direct energy toward policy reform including compulsory licensing pathways, public option manufacturing, R&amp;D financing reform, transparency on public-funded research, and stronger Medicare price negotiation. Both ways of thinking about the same documented evidence are present in the public conversation. Distinguishing them is the analytical contribution.</p></div>
   </div>
 
   <div class="section">
     <h2>Narrative Deconstruction</h2>
-    <div class="prose"><p>The legitimate concern began as a specific, evidence-based structural critique: Oxfam and MSF documented how patent protections created a two-track pandemic. As the narrative migrated through populist channels, the specific structural critique collapsed into universal moral condemnation. What got lost was the simultaneous reality that these same companies developed effective vaccines in under a year, saving an estimated 14 to 20 million lives. The horseshoe convergence between left-wing access advocates and right-wing anti-establishment populists erased the crucial distinction between &#39;the system distributes benefits unfairly&#39; and &#39;the entire enterprise is malicious.&#39;</p></div>
+    <div class="prose"><p>This claim is unusual in the COVID suite because its kernel is exceptionally strong and its leap is more specific than in adjacent claims. Stage one is the documented evidentiary core: Pfizer at approximately 100 billion USD in 2022 with Comirnaty plus Paxlovid contributing approximately 56 billion USD, Moderna&#39;s transition from approximately 800 million to over 18 billion USD, the documented African vaccination gap at approximately 6 percent while the US was at approximately 60 percent, the TRIPS waiver fight at the WTO with industry coordinated opposition through PhRMA and IFPMA, the substantial public funding contribution through BARDA, NIH, and the German government grant to BioNTech, the prior pharmaceutical industry pattern through opioids and Vioxx, the WHO mRNA Technology Transfer Hub&#39;s struggle to obtain voluntary collaboration from Moderna and Pfizer, the AstraZeneca contractually-scoped pricing transition, and the Pfizer-and-Moderna opposition to the IRA Medicare price negotiation framework. Each of these is publicly recorded, and together they constitute a substantial documentary case. Stage two is also defensible: corporate incentive systems in publicly traded pharmaceutical companies do produce predictable patterns of behavior when patent exclusivity, pricing autonomy, and emergency procurement intersect; the patterns are visible in the documentary record across multiple eras and product classes. Stage three is where the inferential leap occurs, and it is more specific than in adjacent claims: from &#39;the corporate incentive system produced documented harms and predictable behavior&#39; to &#39;pharmaceutical employees and executives as individuals do not care about health, only profit.&#39; That leap collapses a structural critique into a character-attribution claim, and it does so in a way that obscures the actual reform agenda. The structural critique implies specific policy levers (compulsory licensing pathways, public option manufacturing, R&amp;D financing reform, transparency on public funding, Medicare price negotiation expansion, EUA reform); the character-attribution claim implies that pharmaceutical workers, including the scientists who developed the products that worked, are morally compromised. The first is policy-actionable and historically supported by examples like the AIDS access fight, where structural reform (compulsory licensing of antiretrovirals) was achieved through institutional engagement that did not require villainizing pharmaceutical employees. The second is mobilization-oriented and politically expressive but typically does not produce the structural reforms it ostensibly demands. Stage four is the capture: the cross-coalition that has formed around the strong version of the claim includes both serious access advocates (Public Citizen, MSF, KEI, Oxfam, Sanders) who operate from the structural framing and conspiratorial actors (RFK Jr. ecosystem, FLCCC orbit, anti-vaccine networks) who operate from frames that the structural advocates do not endorse, with audience flow from the legitimate structural-critique door to the adjacent conspiratorial frames. The 2025 HHS reconstitution under RFK Jr. has now formally institutionalized the cross-coalition, creating a moment where defending the documented structural critique requires distinguishing it carefully from the conspiratorial frames it now travels alongside in much public discourse. The reform agenda that the documented evidence actually supports has become harder to advance because the coalition that ought to be carrying it has been remade around frames that the underlying technical evidence does not support.</p></div>
   </div>
 
   
     <div class="section">
       <h2>Feasibility Assessment</h2>
-      <div class="prose"><p>For the strongest version (entire industry deliberately prioritized profit over all health outcomes), it would require thousands of scientists and regulators across competing companies to coordinate suppression of health concerns. It would require zero whistleblowers despite strong legal protections. The more modest version (structural incentives led to inequitable distribution) requires no conspiracy and is well-documented.</p></div>
+      <div class="prose"><p>For the structural reading of the claim (corporate incentive systems produced documented harms during COVID through patent exclusivity, pricing autonomy, and TRIPS waiver opposition) to hold, the evidence requirements are well-met: SEC filings, WTO records, PhRMA lobbying disclosures, BARDA contracts, and academic analyses provide a substantial documentary foundation. The structural reading is well-supported by the available record and does not require character attribution. For the character-attribution reading of the claim (pharmaceutical employees and executives as individuals do not care about health) to hold, the evidence requirements are not met. The structural critique does not require individual moral failing: corporate fiduciary obligations and patent-and-pricing architectures produce predictable patterns of behavior regardless of individual character, and the analytical framework that distinguishes structural from individual moral attribution is well-established. Many of the scientists who developed the COVID-19 vaccines have spoken publicly and credibly about their commitment to health outcomes including Katalin Kariko on mRNA platform development, Drew Weissman on the foundational science, Ugur Sahin and Ozlem Tureci on BioNTech, Kizzmekia Corbett at NIH VRC, and many others; their products have saved very large numbers of lives. Pharmaceutical companies also vary substantially in conduct, with AstraZeneca&#39;s contractually-scoped not-for-profit pricing during the acute pandemic phase providing a documented counterexample to the strong character-attribution claim. The historical pattern includes both documented harms (Purdue opioids, Merck Vioxx, insulin pricing) and documented public health contributions (HIV antiretrovirals, hepatitis C cure, oncology advances, pre-COVID vaccine programs) that any rigorous individual-character claim would need to engage with. The character-attribution reading typically does not engage with these complicating elements. The structural reading honors every piece of the kernel without requiring the character-attribution leap and points toward specific reform agendas that are within the existing policy framework. Reforms that are within the existing policy framework include: TRIPS Article 31 compulsory licensing made operational through proactive use; expansion of the WHO mRNA Technology Transfer Hub model to other technology platforms; Medicare price negotiation framework expansion under the IRA; transparency requirements on public funding contributions to pharmaceutical R&amp;D with corresponding reach-through or march-in rights; FDA user-fee structure reform to reduce structural alignment with industry; EUA framework revision to better integrate alternatives; AMC and pooled procurement architecture reform for future pandemic preparedness; public option pharmaceutical manufacturing through CivicaRx-style nonprofit generics or through national-level public manufacturing capacity. Each of these reforms is supported by the documented kernel and is institutionally feasible without requiring the character-attribution claim.</p></div>
     </div>
 
   
     <div class="section">
       <h2>Commercial Interests</h2>
-      <div class="prose"><p>Pro-pharma side: PhRMA spends $300M+ annually on lobbying. Anti-pharma side: supplement industry exceeds $50B annually and directly benefits from institutional distrust; figures like Mercola built media empires on anti-pharma content. Legitimate equity critics (MSF, Oxfam) are grant-funded and advocate policy changes rather than selling alternatives.</p></div>
+      <div class="prose"><p>On the pro-claim side: a substantial commercial ecosystem has grown around sustained pharmaceutical critique. Children&#39;s Health Defense revenue grew from approximately 1.3 million USD (2018) to over 23 million USD (2022). RFK Jr.&#39;s &#39;The Real Anthony Fauci&#39; sold over 1 million copies. Patrick Radden Keefe&#39;s &#39;Empire of Pain&#39; was a major commercial success. The Substack ecosystem including Berenson, Malone, Kirsch, Weinstein, and Kheriaty monetizes sustained pharmaceutical grievance. The alternative-health and supplement market exceeds 50 billion USD annually with significant adjacency to pharmaceutical critique. The 2025 RFK Jr. HHS Secretary appointment now provides formal regulatory authority to figures whose pre-appointment income depended on sustained pharmaceutical critique, creating a novel commercial-political alignment. Sanders book, speaking tour, and political fundraising are also financially substantial though operating under different ethical norms than the right-populist ecosystem. The serious access-advocacy ecosystem (Public Citizen, MSF, KEI, Oxfam) operates under nonprofit funding structures that are substantially more disciplined than the populist ecosystem. On the anti-claim side: pharmaceutical industry has obvious financial interest in defending IP architecture, pricing autonomy, and against Medicare price negotiation. PhRMA reports approximately 28-30 million USD annual federal lobbying expenditure plus substantial state-level lobbying and direct member-company lobbying. Pfizer earned approximately 36.8 billion USD from Comirnaty in 2021 alone. Moderna transitioned from approximately 800 million USD to over 18 billion USD on a single product. The pharmaceutical industry sustains substantial advertising spending in medical journals, direct-to-consumer media (in the United States and New Zealand), and political contribution channels. FDA user-fee structure creates structural alignment with industry across multiple drug classes. Major medical journals depend on pharmaceutical advertising and reprint revenue. Industry trade associations including PhRMA, IFPMA, BIO, and EFPIA coordinate sustained messaging operations. Neither set of motives proves either claim true or false. Both sets are relevant when evaluating sourcing and weight of testimony, and both should be disclosed when participants are appealing to authority. The asymmetry worth noting is that the industry financial interests are several orders of magnitude larger than the populist-critique financial interests, that they are deployed through professionalized lobbying infrastructure with sustained presence in federal and state policy environments, and that they have substantially more access to formal decision-making than the critique ecosystem has. The populist-critique financial interests are more visible because they are organized around publicly identifiable individuals while the industry financial interests operate principally through institutional channels that are less narratively legible.</p></div>
     </div>
 
   
     <div class="section">
       <h2>Perception Gap</h2>
-      <div class="prose"><p>Believers assume pushback means naive trust in corporations or indifference to suffering; most defenders actually acknowledge &#39;the system produced both good and bad outcomes.&#39; Critics of the claim assume believers are anti-science or ungrateful for vaccines; many believers are actually saying &#39;the distribution of benefits was unjust.&#39; The gap between perceived and actual positions is enormous, and manipulation thrives in that gap.</p></div>
+      <div class="prose"><p>Believers in the claim often assume that anyone who pushes back must be financially aligned with pharmaceutical industry, complicit in the documented access denial, or so committed to defending corporate-friendly institutions that they cannot acknowledge the documented harms. In reality, most thoughtful pushback now openly acknowledges the substantial pandemic-era revenues, the documented access gap, the TRIPS waiver fight outcome, the public funding contribution, and the prior pattern of pharmaceutical industry conduct including the opioid crisis and Vioxx. The pushback is principally about the leap from structural critique to character attribution, not about the underlying structural critique. Skeptics of the strong claim often assume believers are economically illiterate, anti-innovation, anti-capitalist, or politically captured by populist ressentiment. In reality, many believers are saying something narrower than the strong claim: &#39;the pharmaceutical industry&#39;s documented behavior during the pandemic on access, pricing, and IP architecture warrants substantial structural reform, and the industry&#39;s coordinated opposition to that reform is itself part of the evidence base.&#39; That narrower position is reasonable and is supported by the documentary record. The gap between perceived and actual positions on both sides is wide. The Global South dimension creates a further perception gap that operates somewhat differently than in the ivermectin claim: Anglophone audiences on both sides of the Western debate tend to flatten WHO, Africa CDC, AU envoy, and Indian and South African institutional voices into evidence for their preferred Western narrative, when in fact those institutions operated as institutional voices in their own right with their own reasoning about access, capacity-building, and post-pandemic preparedness that should be engaged on its own terms. The 2025 HHS reconstitution under RFK Jr. has further complicated the perception gap because legitimate structural pharmaceutical critique now operates in a political environment where it is bonded to broader skeptic-side frames that the structural critique itself does not require and that the underlying technical evidence does not support.</p></div>
     </div>
 
   <div class="section">
@@ -783,22 +897,22 @@
     
     <div class="dialogue-round round-1">
       <div class="round-label">Round 1: Perspective-Getting</div>
-      <div class="dialogue-bubble"><p>I hear the concern behind this, and I understand where it comes from. When we watched pharmaceutical executives report record earnings while people in our communities were sick, grieving, or struggling to access care, the anger that produces is not irrational. It is a reasonable response to a real pattern. The data backs up the core of what is being said here: these companies made extraordinary amounts of money during a global health crisis, and access to the vaccines they produced was deeply unequal. If we look at the numbers, Pfizer&#39;s COVID vaccine revenue alone exceeded the GDP of many of the countries that struggled to access doses. That disparity is real, it is documented, and the frustration it generates is legitimate.</p></div>
+      <div class="dialogue-bubble"><p>Round 1 (OARS: Open question, Affirmation, Reflective listening, Summary): I want to start by saying something that I think gets lost in most conversations about this. The anger behind what you are holding is not irrational and it is not fringe. The numbers are real. Pfizer reported roughly 100 billion in 2022 revenue with Comirnaty and Paxlovid contributing around 56 billion of that. Moderna went from roughly 800 million in 2019 revenue to over 18 billion in 2021 on a single product. At the same time, Africa was at around 6 percent fully vaccinated when the United States and Western Europe were at 60 to 70 percent, and the gap between high-income and low-income country access was so stark that the head of the World Health Organization, Tedros Adhanom from Ethiopia, called it &#39;vaccine apartheid&#39; in May 2021. The TRIPS waiver fight at the World Trade Organization is publicly documented: India and South Africa proposed in October 2020 to suspend intellectual property on COVID vaccines, treatments, and tests so manufacturers around the world could make them; PhRMA and the international industry association IFPMA coordinated to oppose it; the US, EU, UK, and Switzerland blocked it for most of two years; the eventual June 2022 compromise was limited to vaccines only and most of the people who had been pushing for it said it was inadequate. Public funding was substantial. NIH scientists like Barney Graham, Kizzmekia Corbett, and John Mascola did foundational work on the spike protein. BARDA contracts came to around 12.4 billion dollars by mid-2021. The German government gave BioNTech 375 million euros. And then there is the longer record before COVID. The opioid crisis settlements with McKesson, Cardinal Health, AmerisourceBergen, and Johnson and Johnson came to 26 billion dollars in 2022. The Sacklers&#39; Purdue documentation is public. Vioxx, insulin, none of that is invented. So when someone hears all of that and concludes that the system is structured to put profit ahead of the people whose lives depend on access, that is a structural read that the documentary record actually supports. It is not paranoia and it is not anti-science. Before we look at anything else, I would really like to understand what part of this has stayed with you most. Was it watching the access gap and knowing what it meant for people you knew or for places you have connections to? Was it the lobbying against the Medicare price negotiation, where the same companies were posting record profits while fighting to keep older Americans paying the highest prices in the world? Was it something more personal, like watching someone you love be priced out of a medication they needed? What is the specific thing that you cannot let go of?</p></div>
     </div>
     <div class="dialogue-round round-2">
       <div class="round-label">Round 2: Guided Examination</div>
-      <div class="dialogue-bubble"><p>Where it gets more complicated, and I think this is worth sitting with, is that the same companies and the same profit motive that created this access problem also produced something that research estimates saved somewhere between 14 and 20 million lives in a single year. That does not erase the equity failure. But it does mean we are dealing with a system that simultaneously produced one of the fastest life-saving interventions in medical history and one of the starkest examples of global health inequality. The challenge is that when we collapse this into &#39;they don&#39;t care about health,&#39; we actually lose our ability to fix the specific, structural problems, like patent barriers and the gap between public investment and public benefit, because we have replaced a solvable policy problem with an unfalsifiable moral judgment.</p></div>
+      <div class="dialogue-bubble"><p>Round 2 (OARS: Acknowledge, then introduce evidence within the validated frame): Thank you for that. What you described is what most of the serious access advocacy actually says, and I want to walk through where I think the structural critique you are making is well-supported and where I think there is a leap in how it is sometimes framed that ends up working against the reform agenda you would probably support. The structural critique is supported. Corporate fiduciary obligations in publicly traded pharmaceutical companies create incentives that operate alongside, and sometimes against, access and health objectives. The TRIPS architecture, the FDA user-fee structure that makes the agency partly funded by the industry it regulates, the patent-and-pricing autonomy framework under existing US law, the absence until 2022 of Medicare drug price negotiation, all of these are structural features that produce predictable patterns of behavior independent of who happens to be running any specific company at any specific moment. Public Citizen under Peter Maybarduk, Knowledge Ecology International under James Love, Médecins Sans Frontières Access Campaign, Oxfam, the People&#39;s Vaccine Alliance, BMJ under Fiona Godlee and Kamran Abbasi, the Lancet COVID-19 Commission under Jeffrey Sachs, Senator Sanders at the Senate HELP Committee, all of them are operating in a structural-critique frame that takes the corporate incentive system as the analytical object rather than the moral character of pharmaceutical employees. The reform agenda that follows is also clear and partly underway. The Inflation Reduction Act in 2022 created the first Medicare drug price negotiation framework in US history. The WHO mRNA Technology Transfer Hub at Afrigen Biologics in Cape Town is reverse-engineering an mRNA platform without voluntary collaboration from Moderna or Pfizer. TRIPS Article 31 compulsory licensing remains an available tool that more countries could use more proactively. Public option pharmaceutical manufacturing through CivicaRx-style nonprofit generics is operational and could be expanded. R&amp;D financing reform with reach-through or march-in rights on publicly funded inventions is on the policy agenda. The pandemic Treaty and Pandemic Accord negotiations have continued the access architecture conversation. Where I want to push gently is on the move from &#39;the corporate incentive system produced documented harms&#39; to &#39;they don&#39;t care about health, just profits.&#39; That second framing collapses a structural critique into a claim about individual moral character, and I think it actually makes the reform agenda harder to advance. Some of the scientists who developed the COVID vaccines, Katalin Kariko, Drew Weissman, Ugur Sahin and Ozlem Tureci at BioNTech, Kizzmekia Corbett at NIH, have spoken publicly and credibly about caring deeply about health outcomes, and the products they developed have saved many millions of lives. AstraZeneca&#39;s contractually-scoped not-for-profit pricing during the acute pandemic phase, even though it eventually transitioned to commercial pricing, is a documented exception within the same industry. Pharmaceutical companies vary, and the same industry that produced the opioid crisis also produced HIV antiretrovirals that have kept tens of millions of people alive. The harder, more accurate claim is something like this: corporate incentive systems in publicly traded pharmaceutical companies produce predictable patterns of behavior that include both the harms you have documented and the public health contributions that are also real, the system is not currently structured to manage that tension well, and that is what reform should target. When the framing collapses into &#39;they are bad people,&#39; two things happen that work against the reform agenda. First, it allows the industry to defend itself by pointing to the individual scientists and clinicians who clearly do care, sidestepping the structural critique. Second, it forms cross-coalitions with conspiratorial actors who have very different reform agendas, including the broader skeptic-side ecosystem that now operates from inside HHS under Secretary Kennedy. That cross-coalition makes it harder, not easier, to get compulsory licensing pathways operational, public option manufacturing expanded, and price negotiation strengthened.</p></div>
     </div>
     <div class="dialogue-round round-3">
       <div class="round-label">Round 3: Integration</div>
-      <div class="dialogue-bubble"><p>So here is what I find myself wrestling with, and I am genuinely curious what you think: if we accept that the profit motive both accelerated vaccine development and created barriers to equitable access, what would a system look like that keeps the speed and scientific capability while closing the access gap, and how do we advocate for that system without either defending the inequities or dismissing the genuine achievement?</p></div>
+      <div class="dialogue-bubble"><p>Round 3 (OARS: Open question that integrates kernel and leap without closing): So when we sit with all of this together, I think the more honest place to land is something like this. The pharmaceutical industry&#39;s pandemic-era behavior on access, pricing, and intellectual property was a documented and substantial failure. The structural critique is well-supported by the record. The Global South dimension is essential, was led by Global South institutional voices in their own right, and was flattened in Western reception in ways that themselves warrant attention. The public funding contribution was substantial and warrants both transparency and policy mechanisms to ensure public return on public investment. The reform agenda is clear and is partly underway, and it does not require any of us to make claims about individual moral character that the evidence does not support. At the same time, the move from this structural critique to &#39;they don&#39;t care about health&#39; is a leap that obscures the reform agenda and forms unhelpful cross-coalitions with frames that the underlying evidence does not support. The question I find myself wrestling with, and that I would really like to know how you see it, is this: given that the structural critique is well-supported and the reform agenda is clear, what would it look like for us to push together for the specific changes the evidence actually supports, compulsory licensing pathways made operational, public option manufacturing expanded, Medicare price negotiation strengthened, R&amp;D financing reform with reach-through rights, the WHO mRNA hub model expanded, EUA architecture reform, AMC and pooled procurement reform, and serious engagement with the Pandemic Accord access architecture, without collapsing the structural critique into character attribution that makes those reforms harder to achieve?</p></div>
     </div>
   </div>
 
   
   <div class="section">
     <h2>Reframe</h2>
-    <blockquote class="reframe-block">We share a common demand that public health crises should not produce billionaires in some countries and body bags in others. Together, we can insist on structural reforms, like stronger public-benefit conditions on publicly funded research, transparent pricing, and enforceable global access commitments, that address the real inequity without losing sight of the scientific capacity that saved millions of lives.</blockquote>
+    <blockquote class="reframe-block">What we share across this disagreement is a refusal to accept that medicines should be priced beyond the reach of the people who need them, a demand that the public funds that contributed to pharmaceutical innovation produce returns to the public that funded it, an insistence that Global South medical institutions and patient communities be engaged on their own terms as institutional voices rather than as evidence for either Western faction, and a commitment to a system in which the rules of pharmaceutical production and distribution are determined by democratic deliberation rather than by industry lobbying alone. Together, we can press for compulsory licensing pathways made operational through proactive use under TRIPS Article 31, expansion of the WHO mRNA Technology Transfer Hub model to other technology platforms, Medicare price negotiation framework expansion under the IRA, transparency requirements on public funding contributions to pharmaceutical R&amp;D with corresponding reach-through or march-in rights, FDA user-fee structure reform to reduce structural alignment with industry, public option pharmaceutical manufacturing through nonprofit generics or national-level capacity, AMC and pooled procurement architecture reform for future pandemic preparedness, and serious engagement with the access architecture that the Pandemic Accord negotiations and the May 2024 World Health Assembly have continued to grapple with. None of these reforms requires choosing between erasing the patients who suffered access denial and erasing the scientists who developed products that saved lives. They require holding both with care and pursuing the structural changes that the documented evidence actually supports.</blockquote>
   </div>
 
   
@@ -808,20 +922,16 @@
     <div class="diagnostics-grid">
       <div class="diagnostic-card">
         <h4>Communication Posture</h4>
-        <p><span class="posture-badge posture-relational_first">Relational First</span></p>
-      </div>
-<div class="diagnostic-card">
-        <h4>Pattern Density</h4>
-        <div class="pattern-density-warning">High pattern density detected in claim structure. The claim is structured to encourage over-connection between unrelated elements.</div>
+        <p><span class="posture-badge ">Structural First With Explicit Validation</span></p>
       </div>
 <div class="diagnostic-card">
         <h4>Credibility Gap</h4>
         <p class="diagnostic-note">Narrative pattern description; no specific publisher or outlet identified.</p>
-        <p>This narrative fills a deep need for moral clarity during traumatic, disorienting experience. When mainstream institutions failed to honestly acknowledge the tension between pharmaceutical profit and public health equity, people were left with an explanatory vacuum that the &#39;Big Pharma does not care&#39; narrative fills with simple, emotionally coherent blame.</p>
+        <p>The claim fills a vacuum left by an institutional environment that has consistently failed to address the documented structural harms produced by pharmaceutical industry conduct over multiple decades, that has allowed coordinated industry opposition to access reforms (TRIPS waiver, Medicare price negotiation, public-funding transparency) to succeed in policy arenas where the underlying public would have supported reform, and that has framed structural critique as economically illiterate or anti-innovation when it is policy-mainstream. The vacuum is institutionally manufactured by the asymmetry between the scale of documented harms and the scale of institutional response, and is filled by people who arrive with both an explanation of the asymmetry and a community of others who recognize it. The character-attribution version of the claim is one filling of the vacuum; the structural-critique version of the same evidence base is another filling that the documentary record actually supports. Both fillings are responding to a real institutional failure to address documented harms through commensurate reform, but they imply different reform agendas and different political coalitions.</p>
       </div>
 <div class="diagnostic-card">
         <h4>Prebunking Note</h4>
-        <p>Before encountering claims about pharmaceutical companies during COVID, understand three things. First, pharma companies genuinely did generate extraordinary profits from publicly funded research, and global vaccine access was measurably unequal; these are documented facts, not conspiracy. Second, the same system produced vaccines at unprecedented speed that saved millions of measurable lives. Third, when someone presents only one half, whether the &#39;heroes&#39; or &#39;villains&#39; version, they are asking you to trade clear thinking for the comfort of a simple story.</p>
+        <p>Before encountering claims about Big Pharma COVID profits, hold five facts together. First, the documented profits are real and substantial. Pfizer at approximately 100 billion USD in 2022 total revenue with Comirnaty and Paxlovid contributing approximately 56 billion USD; Moderna&#39;s transition from approximately 800 million USD to over 18 billion USD; the access gap with Africa at approximately 6 percent fully vaccinated when high-income countries were at 60 to 70 percent; this is all SEC and WHO documentation, not speculation. Second, the access architecture failures are documented. The TRIPS waiver fight from October 2020 to June 2022 produced an inadequate compromise after industry coordinated opposition; the WHO mRNA Technology Transfer Hub at Afrigen in Cape Town has not received voluntary collaboration from Moderna or Pfizer; COVAX was structurally underfunded relative to high-income country domestic procurement; these are real institutional failures with names and dates attached. Third, the public funding contribution was substantial and warrants transparency. NIH basic science contributions, BARDA contracts totaling approximately 12.4 billion USD, the German federal grant to BioNTech, the NIH-Moderna patent dispute resolution; the public investment is documented and the question of public return on public investment is policy-mainstream. Fourth, the prior pattern is real. The opioid crisis settlements exceeding 26 billion USD, Vioxx, insulin pricing, the AIDS access fight history; the pharmaceutical industry&#39;s documented prior conduct provides the cognitive infrastructure within which the COVID claim arrives. Fifth, the move from &#39;corporate incentive systems produced documented harms&#39; (well-supported, policy-actionable) to &#39;pharmaceutical workers don&#39;t care about health&#39; (not supported, mobilization-oriented) is the inferential leap to watch for; the structural critique stands on its own evidence and supports a specific reform agenda (compulsory licensing pathways, public option manufacturing, Medicare price negotiation expansion, R&amp;D financing reform, FDA user-fee reform), and collapsing it into individual character attribution typically makes the reform agenda harder to advance rather than easier. When someone gives you only the institutional defense (&#39;the system worked, vaccines saved lives, criticism is anti-science&#39;) or only the character-attribution version (&#39;they don&#39;t care about you, only profits&#39;), they are asking you to trade the harder truth, that the structural critique is well-supported and the reform agenda is clear and partly underway, for the comfort of a simple story; both simplifications obscure the documented evidence and the policy levers that follow from it.</p>
       </div>
     </div>
   </div>
@@ -832,83 +942,126 @@
       <span>Verdict:</span>
       <span class="badge badge-warnings">PASS WITH WARNINGS</span>
     </div>
-    <div class="audit-summary">Analysis is methodologically sound, treats claim-holders with respect, identifies manipulation on both sides, and produces genuinely dialogic bridge output. Two medium findings: Global South voice gap and affective validation. All correctable without re-running pipeline.</div>
+    <div class="audit-summary">Analysis is methodologically sound, treats both the structural critique and the institutional response with the seriousness they deserve, and identifies the unusual feature of this claim relative to adjacent COVID claims: the underlying kernel is exceptionally strong and well-documented while the inferential leap is more specific than in adjacent claims (collapse of structural critique into character attribution rather than fabrication of new empirical claims). The bridge holds the harder dual truth: the structural critique of pharmaceutical industry conduct during COVID is well-supported and points toward a specific policy-actionable reform agenda, and the leap from structural critique to individual-character attribution is not supported by the evidence and is structurally counterproductive to the reform agenda the underlying evidence supports. The Global South dimension is structurally integrated rather than appended, with WHO under Tedros, Africa CDC under Nkengasong and Kaseya, Strive Masiyiwa as AU envoy, and India and South Africa governments as TRIPS waiver co-proposers treated as institutional voices in their own right. The 2025 RFK Jr. HHS appointment is acknowledged as an authority-inversion that changes the moral-foundations analysis and creates a moment when defending the documented structural critique requires distinguishing it carefully from the conspiratorial frames it now travels alongside in much public discourse. Two medium findings (Global South primary-language source access, IRA implementation and Pandemic Accord integration) are correctable in future iterations without re-running the pipeline. The analysis uses we/us/together language throughout the bridge, completes exactly three Socratic rounds with Round 3 ending in a question, and the OARS protocol is followed cleanly with Round 1 as pure validation of the substantive factual kernel. The kernel-and-leap inferential gap analysis is the central analytical contribution: the kernel (documented profits, real access gap, real TRIPS waiver fight, substantial public funding, real prior pattern, real corporate incentive structures) is substantial and policy-actionable, and the leap (pharmaceutical workers and executives as individuals &#39;don&#39;t care about health&#39;) is unsupported by the evidence and counterproductive to the reform agenda. Confidence profile reflects genuinely varied dimensions: evidence quality is high (SEC filings, WTO records, BARDA contracts, academic analyses are all publicly verifiable), source reliability is moderate-high (Public Citizen, KEI, MSF, BMJ, Africa CDC are high-credibility sources), claim testability is mixed (structural elements are testable through documentary evidence while character-attribution elements are not directly testable), expert consensus is moderate-high (structural critique is broadly supported across health policy academia though character-attribution framing is more contested), and internal coherence is moderate-high (structural reading is internally coherent though the original claim&#39;s character-attribution framing introduces analytical tension that the bridge addresses). The positive confidence_adjustment of +0.02 reflects that this claim has the strongest documentary kernel of any claim in the COVID suite analyzed to date, with the structural critique substantially supported by publicly available evidence, while the inferential leap is identified and addressed without dismissing the underlying outrage.</div>
     <ul class="findings-list">
     <li class="finding-item">
       <div class="finding-header">
         <span class="finding-category">Accuracy</span>
         <span class="finding-severity-low">LOW</span>
-        <span class="finding-description">Lancet 14-20M lives saved estimate should be pinned to Watson et al. 2022</span>
+        <span class="finding-description">Revenue and pricing figures are accurate to publicly available SEC filings and corporate disclosures: Pfizer 2022 total...</span>
       </div>
       
       <div class="finding-body">
-        <div class="finding-rec"><strong>Recommendation:</strong> Add specific citation for credibility under challenge</div>
+        <div class="finding-description">Revenue and pricing figures are accurate to publicly available SEC filings and corporate disclosures: Pfizer 2022 total revenue approximately 100 billion USD with Comirnaty and Paxlovid combined approximately 56 billion USD; Moderna 2019 revenue approximately 800 million USD transitioning to approximately 18.5 billion USD in 2021 and 19.3 billion USD in 2022; BARDA contract totals approximately 12.4 billion USD by mid-2021; German federal grant to BioNTech 375 million EUR; opioid settlement total approximately 26 billion USD finalized 2022; Vioxx litigation total approximately 4.85 billion USD; Children&#39;s Health Defense revenue trajectory approximately 1.3 million USD (2018) to over 23 million USD (2022). These are all publicly verifiable to within reasonable rounding.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Retain approximate-figure presentation; do not collapse to single-decimal precision that implies false specificity. Verify each figure against current SEC filings if used in downstream artifacts.</div>
       </div>
     </li>
     <li class="finding-item">
       <div class="finding-header">
         <span class="finding-category">Completeness</span>
         <span class="finding-severity-medium">MEDIUM</span>
-        <span class="finding-description">Global South actors underrepresented in equity critique grounding</span>
+        <span class="finding-description">Global South epistemic provenance is structurally integrated through the access-gap origin entry (Tedros, Africa CDC,...</span>
       </div>
       
       <div class="finding-body">
-        <div class="finding-rec"><strong>Recommendation:</strong> Add specific non-Western voices to actor map</div>
+        <div class="finding-description">Global South epistemic provenance is structurally integrated through the access-gap origin entry (Tedros, Africa CDC, Strive Masiyiwa, India and South Africa governments) and through the TRIPS waiver origin entry, and the bridge engages the Global South dimension as institutional voice in its own right rather than as supporting material for Western factions. This is consistent with the v2 schema. However, primary-language sources at Africa CDC, AU, AVMA, and ICMR are referenced but not directly engaged; Latin American patient-side voices and African civil society outside the WHO-WHA frame remain mediated through Anglophone secondary sources.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Future iterations should engage directly with Africa CDC, AU, AVMA, and primary-language Indian, Brazilian, and South African civil society documentation. Consider sourcing African Vaccine Manufacturing Accelerator (AVMA) commitments at the Kigali December 2022 conference and subsequent African Union outputs.</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">Accuracy</span>
+        <span class="finding-severity-medium">MEDIUM</span>
+        <span class="finding-description">The AstraZeneca contractually-scoped not-for-profit pricing during the acute pandemic phase and the documented...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">The AstraZeneca contractually-scoped not-for-profit pricing during the acute pandemic phase and the documented transition to commercial pricing in November 2021 is characterized accurately as a counterexample to a uniform-industry-conduct framing. This nuance is essential to the analytical credibility of the structural critique because it distinguishes within-industry variation from uniform character attribution. The May 2024 EU market withdrawal of Vaxzevria for commercial rather than safety reasons is also material.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> No change needed. Retain explicit AstraZeneca counterexample treatment. Consider adding similar within-industry variation detail for vaccine programs in non-COVID indications (HIV antiretrovirals, hepatitis C cure, pediatric vaccines, oncology) in future iterations.</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">Completeness</span>
+        <span class="finding-severity-medium">MEDIUM</span>
+        <span class="finding-description">The 2025 RFK Jr. HHS Secretary appointment and the resulting authority-inversion dynamic are integrated into the actor...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">The 2025 RFK Jr. HHS Secretary appointment and the resulting authority-inversion dynamic are integrated into the actor map, the moral foundations analysis, the commercial motives section, and the narrative deconstruction. The implications of having a skeptic-side ecosystem actor in formal HHS regulatory authority while still drawing on outsider-coded framing represent a substantively novel dynamic that destabilizes the standard institutional-voice-versus-dissident-voice framework. The current analysis treats this as moderately developed but acknowledges it merits deeper engagement.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Future iterations should expand the authority-inversion analysis with attention to specific HHS regulatory actions taken under Secretary Kennedy in 2025-2026 and their implications for the structural critique advocates who now face the same regulatory authority operating under skeptic-side leadership.</div>
       </div>
     </li>
     <li class="finding-item">
       <div class="finding-header">
         <span class="finding-category">framing</span>
         <span class="finding-severity-low">LOW</span>
-        <span class="finding-description">Ideological migration note risks implying claim is primarily right-wing</span>
+        <span class="finding-description">Communication posture is set to structural_first_with_explicit_validation, which is appropriate given the unusually...</span>
       </div>
       
       <div class="finding-body">
-        <div class="finding-rec"><strong>Recommendation:</strong> Clarify migration was additive, not substitutive</div>
+        <div class="finding-description">Communication posture is set to structural_first_with_explicit_validation, which is appropriate given the unusually strong factual kernel and the relatively lower defensiveness profile compared to adjacent COVID claims. Pattern density warning is false, reflecting that the structural critique stands on its own evidence with substantially less TTP density than adjacent COVID claims. Bilateral TTP attribution (approximately six claim-promoter, three institutional, three both-sides) is essential and well-executed; the institutional T0007 (manufacture grievance and institutional self-damage) attribution is load-bearing and reflects the unusual dynamic in which pharmaceutical industry communications repeatedly manufacture the grievance the industry then attempts to neutralize.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Retain bilateral TTP attribution in future iterations. Consider whether the institutional T0080 attribution warrants further granular splitting into specific pharmaceutical company communications versus PhRMA-coordinated communications versus FDA-side communications.</div>
       </div>
     </li>
     <li class="finding-item">
       <div class="finding-header">
         <span class="finding-category">methodology</span>
         <span class="finding-severity-low">LOW</span>
-        <span class="finding-description">DISARM confidence scores precise without stated calibration method</span>
+        <span class="finding-description">DISARM confidence scores are presented to two decimal places without an explicit calibration method. Variance across...</span>
       </div>
       
       <div class="finding-body">
-        <div class="finding-rec"><strong>Recommendation:</strong> Add calibration transparency note</div>
+        <div class="finding-description">DISARM confidence scores are presented to two decimal places without an explicit calibration method. Variance across techniques (0.55 to 0.93) suggests intuitive rather than empirical calibration. The lower T0022 (conspiracy theory) score of 0.65 is appropriately differentiated from adjacent COVID claims where the score is materially higher, reflecting that the structural critique in this claim does not require coordination. The lower T0023 (distort facts) score of 0.55 is appropriately differentiated reflecting that the underlying numbers in this claim are largely accurate.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Document calibration approach in next iteration. The differentiated scoring relative to adjacent COVID claims is a strength of this analysis and should be preserved.</div>
       </div>
     </li>
     <li class="finding-item">
       <div class="finding-header">
         <span class="finding-category">Bias</span>
         <span class="finding-severity-low">LOW</span>
-        <span class="finding-description">TTP attribution ratio between sides not explicitly stated</span>
+        <span class="finding-description">TTP attribution is approximately six claim-promoter (T0010, T0023, T0117.002, T0042, T0049, T0043), three institutional...</span>
       </div>
       
       <div class="finding-body">
-        <div class="finding-rec"><strong>Recommendation:</strong> Report counts by attribution side</div>
+        <div class="finding-description">TTP attribution is approximately six claim-promoter (T0010, T0023, T0117.002, T0042, T0049, T0043), three institutional (T0080 institutional-side, T0061 institutional-lobbying-side, T0007 institutional-self-damage), and three both-sides (T0050, T0019, partial T0022). The institutional count is higher than in adjacent COVID claims (HS-09 had two institutional-side attributions) which reflects the genuinely greater documented institutional behavior in this scenario rather than analyst bias. The institutional T0007 attribution to pharmaceutical industry communications is the load-bearing institutional TTP and reflects how repeatedly industry communications and conduct manufactured the grievance they then attempted to neutralize.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Future iterations should consider whether T0007 institutional-side should be split into multiple distinct manifestations (CEO communications, PhRMA coordinated messaging, post-emergency pricing announcements, IRA opposition) to give the institutional side more granular attribution proportionate to its longitudinal impact.</div>
       </div>
     </li>
     <li class="finding-item">
       <div class="finding-header">
         <span class="finding-category">ethics</span>
         <span class="finding-severity-medium">MEDIUM</span>
-        <span class="finding-description">Socratic dialogue may need explicit affective validation before complexity</span>
+        <span class="finding-description">The Socratic dialogue follows OARS structure with Round 1 as pure perspective-getting with explicit validation, Round 2...</span>
       </div>
       
       <div class="finding-body">
-        <div class="finding-rec"><strong>Recommendation:</strong> Add emotional acknowledgment step in Round 1</div>
+        <div class="finding-description">The Socratic dialogue follows OARS structure with Round 1 as pure perspective-getting with explicit validation, Round 2 as evidence introduction within the validated frame, and Round 3 as integration ending in an open question. Round 1 explicitly affirms the substantive factual kernel before any pushback, which is appropriate given the unusually strong evidentiary base in this claim. Round 2 carries the structural-versus-character-attribution distinction as its primary analytical content rather than introducing contradicting empirical material, which is appropriate given that the empirical material itself largely supports the claim&#39;s kernel. Round 3 ends in a reform-agenda question that integrates kernel and structural critique without requiring concession on character attribution.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> The OARS structure is appropriate for this claim&#39;s defensiveness profile (moderate, lower than adjacent COVID claims). Consider whether even Round 1&#39;s framing could acknowledge the institutional defensive response more explicitly to model that the conversation includes that voice.</div>
       </div>
     </li>
     <li class="finding-item">
       <div class="finding-header">
         <span class="finding-category">Completeness</span>
         <span class="finding-severity-low">LOW</span>
-        <span class="finding-description">Fiduciary duty structural constraint not addressed</span>
+        <span class="finding-description">The Inflation Reduction Act Medicare price negotiation framework is included in the actor map and the reform agenda...</span>
       </div>
       
       <div class="finding-body">
-        <div class="finding-rec"><strong>Recommendation:</strong> Add structural-incentive node distinguishing intent from organizational design</div>
+        <div class="finding-description">The Inflation Reduction Act Medicare price negotiation framework is included in the actor map and the reform agenda discussion but its substantive 2024-2026 implementation experience is not deeply integrated. The Pandemic Accord negotiations and May 2024 World Health Assembly are referenced but not deeply integrated. The WHO mRNA Technology Transfer Hub at Afrigen is referenced multiple times and is well-integrated as the principal example of post-IP-fight capacity-building.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Future iterations should integrate IRA Medicare price negotiation implementation experience (first ten drugs negotiated prices announced August 2024, industry legal challenges, second-round drug selection) and the Pandemic Accord adoption status into the reform agenda discussion. Consider sourcing African Vaccine Manufacturing Accelerator (AVMA) progress updates.</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">Frame Adoption</span>
+        <span class="finding-severity-low">LOW</span>
+        <span class="finding-description">Bridge analysis does not display frame capture: it does not collapse into either the strong character-attribution claim...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">Bridge analysis does not display frame capture: it does not collapse into either the strong character-attribution claim (&#39;they don&#39;t care about health&#39;) or the institutional-defense frame (&#39;the system worked, vaccines saved lives, criticism is anti-science&#39;). The structural critique is supported with documentary evidence; the inferential leap to character attribution is explicitly identified and pushed back on without dismissing the underlying outrage; the reform agenda is articulated in policy-actionable specifics. The Global South dimension is preserved as institutional voice in its own right rather than as evidence for Western factions. The within-industry variation (AstraZeneca contractually-scoped pricing) is preserved.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> No correction needed.</div>
       </div>
     </li></ul>
   </div>
@@ -918,7 +1071,7 @@
       <h2>Evaluation Methodology</h2>
       <p class="intro-note">Full transparency on how this scenario was scored. 12 weighted checks, each independently measurable. <a href="https://github.com/Jochen-s/huginn-muninn/blob/main/tests/run_bridge_scenarios.py" target="_blank" rel="noopener">View source code</a></p>
       <div class="eval-summary">
-        <span class="eval-overall">95.3%</span>
+        <span class="eval-overall">84.2%</span>
         <span class="badge badge-pass">Grade A</span>
       </div>
       <div style="overflow-x:auto">
@@ -932,11 +1085,11 @@
               <th>What It Measures</th>
             </tr>
           </thead>
-          <tbody><tr class="eval-fail">
+          <tbody><tr class="eval-partial">
       <td>needs coverage</td>
       <td class="eval-weight">7%</td>
-      <td class="eval-score">33%</td>
-      <td class="eval-status">MISS</td>
+      <td class="eval-score">67%</td>
+      <td class="eval-status">PARTIAL</td>
       <td class="eval-desc">Expected universal human needs matched against identified needs</td>
     </tr><tr class="eval-pass">
       <td>issue overlap quality</td>
@@ -950,17 +1103,17 @@
       <td class="eval-score">100%</td>
       <td class="eval-status">PASS</td>
       <td class="eval-desc">Narrative deconstruction is substantive (&gt;100 characters)</td>
-    </tr><tr class="eval-pass">
+    </tr><tr class="eval-partial">
       <td>consensus explanation</td>
       <td class="eval-weight">11%</td>
-      <td class="eval-score">100%</td>
-      <td class="eval-status">PASS</td>
+      <td class="eval-score">50%</td>
+      <td class="eval-status">PARTIAL</td>
       <td class="eval-desc">Scientific/mainstream explanation &gt;200 chars with 3+ mechanism keywords</td>
-    </tr><tr class="eval-pass">
+    </tr><tr class="eval-fail">
       <td>inferential gap</td>
       <td class="eval-weight">8%</td>
-      <td class="eval-score">100%</td>
-      <td class="eval-status">PASS</td>
+      <td class="eval-score">0%</td>
+      <td class="eval-status">MISS</td>
       <td class="eval-desc">Inferential gap analysis is substantive (&gt;50 characters)</td>
     </tr><tr class="eval-pass">
       <td>feasibility check</td>

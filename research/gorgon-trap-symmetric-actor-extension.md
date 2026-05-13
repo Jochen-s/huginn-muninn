@@ -9,7 +9,7 @@
 
 The Gorgon Trap taxonomy shipped in v0.7.0 (GT-001 White Noise, GT-002 Black Noise, GT-003 Pattern Injection) was derived from a paper that names specific state actors. Huginn & Muninn's Anti-Weaponization Charter Commitment 7 requires that the pipeline apply every detection signature symmetrically: the same structural pattern must trigger the same classification regardless of which actor category executes it.
 
-This document is the formal record that the `GT-*` detection signatures are not coded to any single actor category, and it names the categories the signatures are expected to cover. It exists so that a future contributor adding a new scenario, a new TTP, or a new evaluation fixture can check their work against a principle rather than a feeling.
+This document is the formal record that the `GT-*` detection signatures aren't coded to any single actor category, and it names the categories the signatures are expected to cover. It exists so that a future contributor adding a new scenario, a new TTP, or a new evaluation fixture can check their work against a principle rather than a feeling.
 
 ## 2. The Symmetry Principle
 
@@ -17,17 +17,17 @@ A narrative-attack signature is symmetric if and only if the classification outc
 
 This is a testable property. The fixture at `tests/fixtures/gorgon_symmetry_cases.json` and the test at `tests/test_gorgon_symmetry.py` encode the property as adversarial pairs that differ only in the actor-category slot. Any GT-family classifier or downstream consumer that produces different outputs across a pair is in violation of Charter Commitment 7.
 
-The principle has a negative-space expression as well: a signature that only triggers on a single actor category, or that triggers with higher severity for one category than for another, is not a detection signature — it is an editorial position. Editorial positions are not disallowed by the charter, but they must not be presented to users as classifier outputs.
+The principle has a negative-space expression as well: a signature that only triggers on a single actor category, or that triggers with higher severity for one category than for another, isn't a detection signature. It is an editorial position. Editorial positions are not disallowed by the charter, but they must not be presented to users as classifier outputs.
 
 ## 3. Actor Categories
 
-The following categories are enumerated at the level of structural role, not at the level of current operations. The plan deliberately does not name specific campaigns, individuals, or named operations; those belong in evidence-grade research notes, not in a taxonomy precondition.
+The following categories are enumerated at the level of structural role, not at the level of current operations. The plan deliberately doesn't name specific campaigns, individuals, or named operations; those belong in evidence-grade research notes, not in a taxonomy precondition.
 
 ### 3.1 State and state-adjacent categories
 
 The following category descriptions exist for symmetry-testing coverage only. They are structural labels for test-corpus purposes, not current-operational attributions. No paragraph in this section names a sub-organisation, campaign, or operation; see Section 5 for what this plan explicitly does not do.
 
-**Five Eyes intelligence community**. Includes the US, UK, Canada, Australia, and New Zealand intelligence and strategic-communications apparatus as a structural category for symmetry testing. Historical literature describes signatures such as foreign-language outlet seeding, coordination with sympathetic journalism outlets, and timed release of partial evidence into news cycles. This category is included so those signatures are not treated differently when associated with Western state actors.
+**Five Eyes intelligence community**. Includes the US, UK, Canada, Australia, and New Zealand intelligence and strategic-communications apparatus as a structural category for symmetry testing. Historical literature describes signatures such as foreign-language outlet seeding, coordination with sympathetic journalism outlets, and timed release of partial evidence into news cycles. This category is included so those signatures aren't treated differently when associated with Western state actors.
 
 **Russian Federation**. Includes state and state-adjacent information operations as a structural category for symmetry testing. The RAND "Firehose of Falsehood" model (Paul & Matthews 2016) describes high-volume, multi-channel saturation patterns that map to White Noise without requiring the Gorgon Trap paper's adversary framing. This category is included so those signatures are tested as structural patterns rather than as Russia-specific labels.
 
@@ -51,7 +51,7 @@ The following category descriptions exist for symmetry-testing coverage only. Th
 
 ## 4. Falsification Cases
 
-The following falsification cases are templates describing the shape of a category-breaking scenario. They are not themselves historical attributions; verified example citations per category will be added in a follow-up research note once the review corpus is assembled and vetted.
+The following falsification cases are templates describing the shape of a category-breaking scenario. They aren't themselves historical attributions; verified example citations per category will be added in a follow-up research note once the review corpus is assembled and vetted.
 
 For each category, a falsification case is a template for the kind of documented scenario in which the category executes a signature that the corpus would otherwise associate with a different category. If the pipeline fails to trigger the signature on the falsification case, the signature is category-coded rather than structural, and the charter commitment is violated.
 
@@ -77,9 +77,9 @@ For each category, a falsification case is a template for the kind of documented
 
 ## 5. What This Plan Does Not Do
 
-This plan does not attribute specific current operations to specific actors. Attribution is evidentially demanding and legally exposed, and the pipeline is not an attribution tool. The plan enumerates structural categories so that the detection signatures can be tested for symmetry; it does not claim that any category is currently executing any specific campaign.
+This plan doesn't attribute specific current operations to specific actors. Attribution is evidentially demanding and legally exposed, and the pipeline isn't an attribution tool. The plan enumerates structural categories so that the detection signatures can be tested for symmetry; it doesn't claim that any category is currently executing any specific campaign.
 
-This plan also does not prescribe the pipeline's response to detections. Detection is distinct from response; the Bridge Builder's approach to a detected signature is governed by the Anti-Weaponization Charter and the Three Questions framework, not by this document.
+This plan also doesn't prescribe the pipeline's response to detections. Detection is distinct from response; the Bridge Builder's approach to a detected signature is governed by the Anti-Weaponization Charter and the Three Questions framework, not by this document.
 
 ## 6. Enforcement
 
@@ -94,15 +94,15 @@ A change that adds a new GT-family TTP, a new evaluation scenario, or a new Brid
 ## 7. Revisit Triggers
 
 - A new GT-family TTP is proposed. Requires new adversarial pair at fixture layer.
-- A new actor category emerges that the current enumeration does not cover. Requires updating `REQUIRED_ACTOR_CATEGORIES` in the test file and adding at least one pair.
+- A new actor category emerges that the current enumeration doesn't cover. Requires updating `REQUIRED_ACTOR_CATEGORIES` in the test file and adding at least one pair.
 - Evidence emerges that a specific detection signature in the pipeline has asymmetric behaviour across categories. This is the falsification case trigger for the specific signature and invalidates its charter compliance until fixed.
 - The Gorgon Trap paper progresses to peer review or a peer-reviewed RCT shows that any category's signatures have measurably different structural properties than another's. This would be grounds to revisit the symmetry claim itself.
 
 ## 8. Related Documents
 
-- `ANTI-WEAPONIZATION-CHARTER.md` -- the governing commitments (Commitment 7 is enforced here).
-- `research/gorgon-trap-integration.md` -- the parent record of the Gorgon Trap taxonomy decision, including rejections and revisit triggers.
-- `tests/fixtures/gorgon_symmetry_cases.json` -- the test corpus.
-- `tests/test_gorgon_symmetry.py` -- the deterministic invariance tests.
+- `ANTI-WEAPONIZATION-CHARTER.md`: the governing commitments (Commitment 7 is enforced here).
+- `research/gorgon-trap-integration.md`: the parent record of the Gorgon Trap taxonomy decision, including rejections and revisit triggers.
+- `tests/fixtures/gorgon_symmetry_cases.json`: the test corpus.
+- `tests/test_gorgon_symmetry.py`: the deterministic invariance tests.
 - Paul, C. & Matthews, M. (2016). *The Russian "Firehose of Falsehood" Propaganda Model*. RAND. Independent description of White Noise.
 - Lakoff, G. (2004). *Don't Think of an Elephant*. The frame-engagement grounding that makes Pattern Injection recognisable.

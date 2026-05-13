@@ -17,6 +17,7 @@
     --amber:  #E67E22;
     --green:  #27AE60;
     --gray:   #5D6D7E;
+    --muted:  #7F8C8D;
     --border: #D0D9E4;
     --font:   -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
   }
@@ -153,6 +154,7 @@
   .badge-systematic { background: #FDEDEC; color: var(--red); }
   .badge-repeated   { background: #E8F8F5; color: var(--teal); }
   .badge-isolated   { background: #FEF5E7; color: var(--amber); }
+  .badge-severity   { background: #FDEDEC; color: var(--red); }
 
   /* Footer */
   .site-footer {
@@ -566,6 +568,19 @@
     .essay-prose { font-size: 0.95rem; }
     .essay-prose h2 { font-size: 1.2rem; }
   }
+
+  .gap-warning {
+    background: #fff3cd;
+    border: 1px solid #ffc107;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin: 12px 0;
+    font-size: 0.95em;
+  }
+  .dim-weight {
+    color: var(--muted);
+    font-size: 0.85em;
+  }
 </style>
 </head>
 <body>
@@ -582,7 +597,7 @@
     <a class="back-link" href="index.html">&larr; Back to gallery</a>
     <h1>HS-07: The COVID vaccines are causing more harm than they&#39;re preventing.</h1>
     <div class="header-meta">
-      <span class="badge badge-version">v1</span>
+      <span class="badge badge-version">v2</span>
       <span class="badge badge-hard">Hard</span>
       <span class="badge badge-kernel-true">Kernel of Truth</span>
       <span class="badge badge-version">Health &amp; Science</span>
@@ -603,26 +618,41 @@
       </thead>
       <tbody>
         <tr><td>Sub-claims</td><td>10</td></tr>
-        <tr><td>Actors identified</td><td>22</td></tr>
-        <tr><td>TTP matches</td><td>14</td></tr>
+        <tr><td>Actors identified</td><td>23</td></tr>
+        <tr><td>TTP matches</td><td>10</td></tr>
         <tr><td>Audit verdict</td><td><span class="badge badge-warnings">PASS WITH WARNINGS</span></td></tr>
         <tr><td>Pipeline version</td><td>6-agent Method 2</td></tr>
-        <tr><td>Overall confidence</td><td>66% <a href="confidence-methodology.html" class="methodology-link" title="How is this score calculated?">[?]</a></td></tr>
-        <tr><td>Source tiers</td><td>T1: 1, T2: 1, T3: 3, T4: 1</td></tr>
+        <tr><td>Overall confidence</td><td>44% <a href="confidence-methodology.html" class="methodology-link" title="How is this score calculated?">[?]</a></td></tr>
+        <tr><td>Source tiers</td><td>T1: 1, T2: 2, T3: 2, T4: 1</td></tr>
+        <tr><td>Epistemic traditions</td><td><span class="badge badge-version">Community Experiential: 3</span> <span class="badge badge-version">Western Institutional: 2</span> <span class="badge badge-version">Western Academic: 1</span></td></tr>
       </tbody>
     </table>
   </div>
 
+  
+    <div class="section">
+      <h2>Evidence Certainty Framework</h2>
+      <p class="intro-note">Multi-dimensional confidence assessment inspired by GRADE methodology. <a href="confidence-methodology.html" class="methodology-link">[?]</a></p>
+      <table class="metrics-table">
+        <thead><tr><th>Dimension</th><th>Score</th></tr></thead>
+        <tbody>
+          <tr><td>Evidence Quality <span class="dim-weight">(30%)</span></td><td>78%</td></tr><tr><td>Source Reliability <span class="dim-weight">(20%)</span></td><td>85%</td></tr><tr><td>Claim Testability <span class="dim-weight">(15%)</span></td><td>62%</td></tr><tr><td>Expert Consensus <span class="dim-weight">(20%)</span></td><td>88%</td></tr><tr><td>Internal Coherence <span class="dim-weight">(15%)</span></td><td>70%</td></tr>
+          <tr style="font-weight:600;border-top:2px solid var(--border)"><td>Composite (N/A)</td><td>0%</td></tr>
+        </tbody>
+      </table>
+    </div>
+  
+
   <div class="section">
     <h2>Universal Needs</h2>
     <p class="intro-note">The legitimate human needs this claim speaks to, regardless of whether the claim is accurate.</p>
-    <div class="needs-list"><div class="need-item"><span class="need-name">Safety:</span>Parents, patients, and citizens want to know what is being put into their bodies and the bodies of their children is genuinely well-characterized; this is a baseline human need, not a fringe demand.</div><div class="need-item"><span class="need-name">Autonomy:</span>People want to make medical decisions for themselves and their families without coercion, financial penalty, or social ostracism; this need was activated for many during mandate periods regardless of their vaccine views.</div><div class="need-item"><span class="need-name">Trust:</span>People want public-health communicators to be candid about uncertainty and to update transparently when evidence changes; trust is a precondition for cooperation, not its consequence.</div><div class="need-item"><span class="need-name">Recognition:</span>Those who experienced adverse events, and the families of those who died after vaccination, need their experience to be heard and adjudicated honestly, whatever the causal verdict turns out to be.</div><div class="need-item"><span class="need-name">Truth:</span>All sides want to know what actually happened; the dispute is about how to weigh evidence, not whether evidence matters.</div></div>
+    <div class="needs-list"><div class="need-item"><span class="need-name">Safety:</span>Parents, patients, and citizens want to know that substances administered to themselves and their children are genuinely well-characterized, and that surveillance for harms is rigorous and transparent. This is a baseline human need, not a fringe demand, and it is the same need that drives both the people demanding accountability for adverse events and the people supporting vaccination programs to prevent severe COVID-19 outcomes.</div><div class="need-item"><span class="need-name">Autonomy:</span>People want to make medical decisions for themselves and their families without coercion, financial penalty, employment threat, or social ostracism. This need was activated for many during mandate periods regardless of their underlying vaccine views, and it has independent philosophical standing grounded in the Nuremberg Code (1947), the Declaration of Helsinki (1964), and the Beauchamp and Childress framework of biomedical ethics.</div><div class="need-item"><span class="need-name">Trust:</span>People want public-health communicators to be candid about uncertainty and to update transparently when evidence changes. Trust is a precondition for cooperation, not its consequence. The 2021 messaging on transmission blocking that did not survive the Omicron wave, and the delayed candid acknowledgment of the myocarditis signal between April and June 2021, materially eroded the trust that population health communication depends on.</div><div class="need-item"><span class="need-name">Recognition:</span>Those who experienced adverse events and the families of those who died after vaccination need their experiences heard and adjudicated honestly, whatever the causal verdict turns out to be. Recognition is distinct from causal endorsement. The harm-narrative ecosystem grew partly because formal compensation pathways (CICP especially) were perceived as inadequate and slow.</div><div class="need-item"><span class="need-name">Truth:</span>All sides want to know what actually happened. The dispute is about how to weigh evidence, not whether evidence matters.</div></div>
   </div>
 
   <div class="section">
         <h2>Scientific Consensus / Mainstream Explanation</h2>
         <p class="intro-note">The established scientific or institutional explanation for this phenomenon.</p>
-        <div class="prose"><p>Looking at the evidence as it currently stands across multiple independent data sources, the picture is genuinely complex and the simple &#39;more harm than good&#39; framing does not survive contact with the measured data, while the simple &#39;safe and effective for everyone&#39; framing also fails. Israeli Ministry of Health surveillance and the Patone et al. BMJ study observed that mRNA dose-two myocarditis in males 16-29 occurs at roughly 100-150 cases per million doses, that most cases resolved with standard care, and that COVID-19 infection itself produces myocarditis at higher rates in most studied age groups. Watson et al. Lancet Infectious Diseases modeling estimated vaccines prevented approximately 14-20 million deaths in the first year of rollout, with sensitivity-analysis ranges that remain net-positive at the population level even under pessimistic assumptions. The FOIA-released Pfizer cumulative-analysis document is a standard pharmacovigilance report whose 1,291 &#39;adverse events of special interest&#39; are reports received, not adjudicated causations. Excess-mortality data from the WHO, Our World in Data, and Karlinsky/Kobak estimates shows that excess mortality is elevated in both high- and low-vaccination countries, with COVID-19 itself, delayed care, drug overdoses, and heat events identified as major contributors. The honest synthesis: the vaccines carried real, demographic-specific risks that were under-communicated; they also prevented a measured, large quantity of severe outcomes; institutional trust failures are real; and the strongest version of the harm claim is not supported by the available data.</p></div>
+        <div class="prose"><p>Looking at the evidence as it currently stands across multiple independent data sources, the picture is genuinely complex, and both the simple &#39;more harm than good&#39; framing and the simple &#39;safe and effective for everyone&#39; framing fail to survive contact with the measured data. Israeli Ministry of Health surveillance and the Patone et al. BMJ and Nature Medicine studies observed that mRNA dose-two myocarditis in males aged 16-29 occurs at approximately 100 to 150 cases per million doses, that most cases resolved with standard care, and that COVID-19 infection itself produces myocarditis at higher rates in most demographic strata, with the important exception of males under forty after the second mRNA dose where vaccine myocarditis exceeded infection myocarditis in that specific stratum. Watson et al. in The Lancet Infectious Diseases (June 2022) estimated through population-level modeling that vaccines prevented approximately 14.4 to 19.8 million deaths in the first year of rollout, with sensitivity-analysis ranges that remain net-positive at the population level under a range of assumptions about counterfactual transmission and infection fatality rates by age. The FOIA-released Pfizer cumulative-analysis document is a standard pharmacovigilance report whose 1,291 &#39;adverse events of special interest&#39; are reports received within a defined window, not adjudicated causations. Excess-mortality data from the WHO, Our World in Data, and Karlinsky and Kobak estimates shows excess mortality is elevated in both high- and low-vaccination countries, with COVID-19 itself, delayed care, drug overdoses, suicide, and heat events identified as major contributors that vary by country and time period. Long COVID and post-acute sequelae prevented by vaccination are part of the benefit ledger that the harm-narrative ecosystem rarely engages. The honest synthesis: the vaccines carried real, demographic-specific risks that were under-communicated in the rollout phase; they also prevented a measured, large quantity of severe outcomes; institutional trust failures are real and consequential; and the strongest population-level version of the harm claim is not supported by the available data.</p></div>
       </div>
 
   <div class="section">
@@ -637,106 +667,78 @@
         
         <div class="technique-field">
           <div class="technique-label">Used by</div>
-          <div class="technique-text">Bridge figures in the skeptic ecosystem</div>
+          <div class="technique-text">Bridge figures in the skeptic ecosystem including RFK Jr., Malone, Kirsch, and Dowd</div>
         </div>
         
         <div class="technique-field">
           <div class="technique-label">How it works</div>
-          <div class="technique-text">Real documented harms and communication failures are used as the emotional and evidentiary on-ramp to claims that the evidence does not support</div>
+          <div class="technique-text">Real documented harms and communication failures are used as the emotional and evidentiary on-ramp to claims the evidence does not support. The legitimate first step (myocarditis is real and was under-communicated) is bonded to the unsupported leap (aggregate harms exceed aggregate benefits) by emotional adjacency rather than evidentiary connection.</div>
         </div>
         
         <div class="technique-field">
           <div class="technique-label">In this claim</div>
-          <div class="technique-text">Genuine myocarditis findings presented adjacent to unverified mass-casualty claims</div>
+          <div class="technique-text">Genuine Israeli and Nordic myocarditis findings presented adjacent to claims about 17 million vaccine deaths globally, with the audience invited to treat the former as evidence for the latter</div>
         </div>
         
         <div class="technique-field">
           <div class="technique-label">Historical precedent</div>
-          <div class="technique-text">Anti-fluoridation activism similarly built on real industrial-fluoride incidents</div>
+          <div class="technique-text">Anti-fluoridation activism in the 1950s-1960s similarly built on real industrial-fluoride pollution incidents and legitimate dose-response questions to support broader claims; vaccine-autism narratives built on legitimate vaccine-injury history to support the Wakefield 1998 hypothesis</div>
         </div>
       </div>
     </div>
     <div class="technique-card">
       <div class="technique-header">
-        <span class="technique-name">Dismiss Criticism</span>
+        <span class="technique-name">Numerator Without Denominator</span>
         <span class="badge badge-systematic">[SYSTEMATIC]</span>
       </div>
       <div class="technique-body">
         
         <div class="technique-field">
           <div class="technique-label">Used by</div>
-          <div class="technique-text">Public health institutions and pro-vaccine media</div>
+          <div class="technique-text">Skeptic content creators most prominently (VAERS counts); occasionally institutional defenders in the opposite direction (lives-saved estimates without demographic stratification)</div>
         </div>
         
         <div class="technique-field">
           <div class="technique-label">How it works</div>
-          <div class="technique-text">Treats all critique as anti-science conspiracy, failing to distinguish methodologically rigorous concerns from terminal-frame content</div>
+          <div class="technique-text">Adverse-event counts are presented as raw totals without the doses-administered context or background rate baselines that would allow assessment of whether the count is elevated above expectation. The framing creates a sense of magnitude without enabling actual evaluation.</div>
         </div>
         
         <div class="technique-field">
           <div class="technique-label">In this claim</div>
-          <div class="technique-text">Peer-reviewed pediatric-booster skepticism bundled with depopulation content under &#39;anti-vax&#39;</div>
+          <div class="technique-text">37,000 VAERS death reports cited without approximately 670 million US dose denominator or background mortality expectation; conversely, Watson et al. 14 to 20 million prevented deaths sometimes cited without acknowledgment that pediatric net benefit was modeled to be smaller</div>
         </div>
         
         <div class="technique-field">
           <div class="technique-label">Historical precedent</div>
-          <div class="technique-text">Climate establishment occasionally dismissed legitimate methodological critique as denialism</div>
+          <div class="technique-text">Climate denial used selective time-window data for decades; tobacco-industry science similarly relied on numerator manipulation</div>
         </div>
       </div>
     </div>
     <div class="technique-card">
       <div class="technique-header">
-        <span class="technique-name">Emotional Appeals on Both Sides</span>
+        <span class="technique-name">Evidentiary Inversion</span>
         <span class="badge badge-isolated">[ISOLATED]</span>
       </div>
       <div class="technique-body">
         
         <div class="technique-field">
           <div class="technique-label">Used by</div>
-          <div class="technique-text">Both sides: &#39;Died Suddenly&#39; imagery and &#39;pandemic of the unvaccinated&#39; framing function symmetrically</div>
+          <div class="technique-text">Naomi Wolf War Room project; downstream skeptic media</div>
         </div>
         
         <div class="technique-field">
           <div class="technique-label">How it works</div>
-          <div class="technique-text">Concrete individual cases substitute for population-level evidence; identification overrides cost-benefit analysis</div>
+          <div class="technique-text">Routine pharmacovigilance documents that exist for every authorized pharmaceutical product are reframed as confessions or cover-up evidence. The standard regulatory mechanism that surfaced the data is treated as proof of the wrongdoing.</div>
         </div>
         
         <div class="technique-field">
           <div class="technique-label">In this claim</div>
-          <div class="technique-text">Athlete-collapse compilations and ICU-overflow images bypass the question of population-scaled rates</div>
+          <div class="technique-text">Pfizer post-marketing cumulative analysis report (February 28, 2021) framed as confession when the document is standard adverse-event tracking; FDA-released pharmacovigilance baseline treated as smoking gun</div>
         </div>
         
         <div class="technique-field">
           <div class="technique-label">Historical precedent</div>
-          <div class="technique-text">Both sides of HRT debate used emotional case-based framing in 1990s-2000s</div>
-        </div>
-      </div>
-    </div>
-    <div class="technique-card">
-      <div class="technique-header">
-        <span class="technique-name">Selective Framing Through Numerator Without Denominator</span>
-        <span class="badge badge-isolated">[ISOLATED]</span>
-      </div>
-      <div class="technique-body">
-        
-        <div class="technique-field">
-          <div class="technique-label">Used by</div>
-          <div class="technique-text">Skeptic content creators most prominently; some institutional defenders in the opposite direction</div>
-        </div>
-        
-        <div class="technique-field">
-          <div class="technique-label">How it works</div>
-          <div class="technique-text">Adverse-event counts presented without doses-administered context; conversely, lives-saved estimates sometimes presented without the demographic where benefit was marginal</div>
-        </div>
-        
-        <div class="technique-field">
-          <div class="technique-label">In this claim</div>
-          <div class="technique-text">VAERS death counts without ~670M US dose denominator; Watson et al. estimates rarely accompanied by acknowledgment that pediatric net benefit was smaller</div>
-        </div>
-        
-        <div class="technique-field">
-          <div class="technique-label">Historical precedent</div>
-          <div class="technique-text">Climate denial used selective time-window data for decades</div>
+          <div class="technique-text">Climategate emails (2009) recontextualized as conspiracy evidence despite content being routine scientific correspondence</div>
         </div>
       </div>
     </div>
@@ -749,22 +751,78 @@
         
         <div class="technique-field">
           <div class="technique-label">Used by</div>
-          <div class="technique-text">Anti-vaccine movement infrastructure</div>
+          <div class="technique-text">Anti-vaccine movement infrastructure (CHD, ICAN, War Room)</div>
         </div>
         
         <div class="technique-field">
           <div class="technique-label">How it works</div>
-          <div class="technique-text">Genuine injury and bereavement testimony is channeled into political framing the witnesses themselves may not fully endorse</div>
+          <div class="technique-text">Genuine injury and bereavement testimony is channeled into political framing the witnesses themselves may not fully endorse. The suffering is real; the curation of the suffering into political content is a separate operation.</div>
         </div>
         
         <div class="technique-field">
           <div class="technique-label">In this claim</div>
-          <div class="technique-text">CICP applicants and React 19 members featured at rallies whose explicit messaging extends beyond their personal experience</div>
+          <div class="technique-text">React 19 members and CICP applicants featured at rallies whose explicit messaging extends substantially beyond the personal experience of the witnesses</div>
         </div>
         
         <div class="technique-field">
           <div class="technique-label">Historical precedent</div>
-          <div class="technique-text">Anti-GMO movements similarly featured farmer testimony to support political conclusions some farmers did not share</div>
+          <div class="technique-text">Anti-GMO movements featured farmer testimony to support political conclusions some farmers did not share; tobacco-control campaigns appropriated individual cases similarly</div>
+        </div>
+      </div>
+    </div>
+    <div class="technique-card">
+      <div class="technique-header">
+        <span class="technique-name">Dismiss Criticism Bundling</span>
+        <span class="badge badge-systematic">[SYSTEMATIC]</span>
+      </div>
+      <div class="technique-body">
+        
+        <div class="technique-field">
+          <div class="technique-label">Used by</div>
+          <div class="technique-text">Public health institutions and parts of pro-vaccine media</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">How it works</div>
+          <div class="technique-text">Legitimate scientific critique is bundled with conspiratorial content under a single dismissive label, preventing serious engagement with methodologically rigorous concerns. This is institutional manipulation operating symmetrically with skeptic-side techniques.</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">In this claim</div>
+          <div class="technique-text">Peer-reviewed pediatric-booster skepticism (Prasad, Hoeg, JCVI) bundled with depopulation content under the single &#39;anti-vax&#39; label; Twitter Files revealed CDC moderation requests targeted some accounts posting peer-reviewed methodological critique</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">Historical precedent</div>
+          <div class="technique-text">Climate establishment occasionally dismissed legitimate methodological critique as denialism; HRT establishment dismissed early concerns about cardiovascular risk in postmenopausal women</div>
+        </div>
+      </div>
+    </div>
+    <div class="technique-card">
+      <div class="technique-header">
+        <span class="technique-name">Emotional Appeals on Both Sides</span>
+        <span class="badge badge-isolated">[ISOLATED]</span>
+      </div>
+      <div class="technique-body">
+        
+        <div class="technique-field">
+          <div class="technique-label">Used by</div>
+          <div class="technique-text">Skeptic side: &#39;Died Suddenly&#39; imagery, athlete-collapse compilations, bereaved-parent testimony. Institutional side: &#39;pandemic of the unvaccinated&#39; framing, ICU overflow images, bereaved-of-COVID testimony.</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">How it works</div>
+          <div class="technique-text">Concrete individual cases substitute for population-level evidence. Identification with the suffering of identifiable individuals overrides aggregate cost-benefit analysis. Both sides deploy the technique using mirror-image imagery.</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">In this claim</div>
+          <div class="technique-text">Athlete-collapse compilations circulated despite collapses occurring in all eras; ICU-overflow images deployed during periods when capacity strain varied by region</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">Historical precedent</div>
+          <div class="technique-text">Both sides of HRT debate used emotional case-based framing in 1990s-2000s; tobacco-control and tobacco-industry messaging both relied heavily on emotional appeals across decades</div>
         </div>
       </div>
     </div>
@@ -774,35 +832,35 @@
   <div class="section">
     <h2>Inferential Gap</h2>
     <p class="intro-note">Where the evidence ends and the leap begins.</p>
-    <div class="prose"><p>The evidence supports several intermediate conclusions: myocarditis risk in young males is real, VAERS underreports, communication failed in specific demonstrable ways, and risk-benefit varies by demographic. The unsupported inferential leap is from these specific findings to the population-level conclusion that aggregate harms exceed aggregate benefits across all demographics and all vaccine products. That leap requires either accepting unadjudicated VAERS counts as causation, or attributing excess mortality predominantly to vaccines despite multiple plausible alternative drivers, or assuming a coordinated concealment large enough to suppress findings from non-aligned researchers globally.</p></div>
+    <div class="prose"><p>[object Object]</p></div>
   </div>
 
   <div class="section">
     <h2>Common Ground</h2>
-    <div class="prose"><p>When the framing is set aside, the area of genuine shared ground is much larger than the public conversation suggests. People who believe COVID vaccines caused net harm and people who believe the vaccines saved millions of lives generally agree on a striking number of points. Both groups acknowledge that myocarditis in young males after mRNA dose two is a real, documented signal that was initially under-communicated. Both agree VAERS is a passive system that under-detects rare events. Both agree mandate policy was imposed beyond the evidence on transmission-blocking, especially after Omicron. Both agree pharmaceutical companies have a documented history of minimizing harms, from Vioxx to opioids. Both agree that risk-benefit varies dramatically by age, prior infection, and comorbidity. The real disagreement is much narrower: whether the aggregate signal supports a population-level net-harm conclusion, and how much weight to give measured benefits relative to measured and suspected harms.</p></div>
+    <div class="prose"><p>When the framing is set aside, the area of genuine shared ground between people who believe COVID vaccines caused net harm and people who believe the vaccines saved millions of lives is much larger than the public conversation suggests. Both groups generally acknowledge that myocarditis in young males after mRNA dose two is a real, documented signal that was initially under-communicated. Both agree VAERS is a passive system that under-detects rare events. Both agree mandate policy was imposed past the point where the transmission-blocking case was strong, especially after Omicron. Both agree pharmaceutical companies have a documented history of minimizing harms, from Vioxx to opioids. Both agree that risk-benefit varies dramatically by age, prior infection status, and comorbidity, and that uniform &#39;safe and effective for all&#39; messaging obscured this variation. Both agree that compensation systems for those genuinely injured by vaccination have been inadequate and slow. The actual disagreement is much narrower than the rhetorical war suggests: whether the aggregate signal supports a population-level net-harm conclusion across all demographics and doses, and how much weight to give measured benefits relative to measured and suspected harms when those harms remain only partially adjudicated.</p></div>
   </div>
 
   <div class="section">
     <h2>Narrative Deconstruction</h2>
-    <div class="prose"><p>This claim follows a documented escalation pathway that begins in real ground and ends somewhere the evidence does not support. The entry point is concrete: &#39;my child had a bad reaction,&#39; or &#39;I have post-vaccine symptoms.&#39; That step is legitimate and the experiences are real. The next step is also defensible: &#39;adverse events are real and were underreported.&#39; Pharmacovigilance systems are imperfect, and the myocarditis signal in young males is a real example of detection followed by delayed candid communication. The third step is where the leap occurs: &#39;they are hiding the real death toll.&#39; This requires reframing standard pharmacovigilance documents as confessions, treating VAERS counts as confirmed causation, and ignoring excess mortality in unvaccinated populations and in low-vaccination countries. The terminal step, that vaccines are a depopulation tool, requires abandoning the constraints of evidence entirely. The architecture of this pathway is what makes it effective: each step is locally plausible to someone who has just accepted the previous one, even though the start and end positions are radically different in their evidentiary requirements.</p></div>
+    <div class="prose"><p>This claim follows a documented escalation pathway that begins in real ground and ends somewhere the evidence does not support. The entry point is concrete and legitimate: &#39;my child had a bad reaction,&#39; or &#39;I have post-vaccine symptoms,&#39; or &#39;my neighbor died after vaccination and no one will tell me whether the two are connected.&#39; The second step is also defensible: &#39;adverse events are real and were initially under-communicated.&#39; Pharmacovigilance systems are imperfect, the myocarditis signal in young males is a real example of detection followed by delayed candid communication, and CDC&#39;s initial transmission-blocking messaging did not survive contact with Omicron. The third step is where the inferential leap occurs: &#39;they are hiding the real death toll.&#39; This requires reframing standard pharmacovigilance documents as confessions, treating VAERS counts as confirmed causation, attributing multi-causal excess mortality predominantly to vaccines, and ignoring excess mortality in unvaccinated populations and in low-vaccination countries. The terminal step, that vaccines are a depopulation tool or bioweapon, requires abandoning the constraints of evidence entirely. The architecture of this pathway is what makes it effective: each step is locally plausible to someone who has just accepted the previous one, even though the start and end positions are radically different in their evidentiary requirements and their policy implications.</p></div>
   </div>
 
   
     <div class="section">
       <h2>Feasibility Assessment</h2>
-      <div class="prose"><p>For the strongest version of the claim (vaccines caused net population-level harm and this is being deliberately concealed) to hold, several conditions would need to obtain simultaneously: independent national registries in Israel, the UK, Sweden, Denmark, Norway, Australia, and Japan would all need to produce systematically distorted results in the same direction; ~670 million US doses and ~13 billion global doses would need to have produced harms large enough to overwhelm measured benefits without surfacing in any of these systems; thousands of clinicians, regulators, and academic researchers across competing jurisdictions and political systems would need to coordinate silence despite strong whistleblower incentives. The weaker version of the claim (vaccines carried real, age-specific risks that were under-communicated and pediatric/young-adult risk-benefit is more contested than authorities admitted) requires no such conditions and is well-supported.</p></div>
+      <div class="prose"><p>For the strongest version of the claim (vaccines caused net population-level harm across all demographics, and this is being deliberately concealed) to hold, several conditions would need to obtain simultaneously. Independent national registries in Israel, the United Kingdom, Sweden, Denmark, Norway, Australia, and Japan would all need to produce systematically distorted results in the same direction. Approximately 670 million US doses and approximately 13 billion global doses would need to have produced harms large enough to overwhelm measured benefits without surfacing in any of these surveillance systems. Thousands of clinicians, regulators, and academic researchers across competing jurisdictions and political systems would need to coordinate silence despite strong whistleblower incentives, professional rivalries, and the existence of well-funded organizations (CHD, ICAN) actively soliciting and publicizing dissent. The weaker version of the claim (vaccines carried real, demographic-specific risks that were under-communicated, and pediatric and young-adult risk-benefit was more contested than authorities admitted) requires none of these conditions and is well-supported by available evidence including Prasad, Hoeg, and JCVI analyses.</p></div>
     </div>
 
   
     <div class="section">
       <h2>Commercial Interests</h2>
-      <div class="prose"><p>On the pro-vaccine side, manufacturers earned over $100B in COVID vaccine revenue (Pfizer ~$36.8B in 2021 from Comirnaty alone), and public-health institutional reputations depend on a positive outcome story. On the skeptic side, the anti-vaccine media economy has grown substantially: Children&#39;s Health Defense revenue grew from $1.3M (2018) to $23M+ (2022), the alternative-health and supplements market exceeds $50B annually, and the speaking/book/Substack/conference circuit around figures like Malone, Kirsch, Dowd, and RFK Jr. represents a material industry. Both sides have financial stakes in their narratives; neither set of motives proves either claim true or false, but both are relevant when evaluating sourcing.</p></div>
+      <div class="prose"><p>On the pro-vaccine side, manufacturers earned over 100 billion USD in COVID vaccine revenue (Pfizer approximately 36.8 billion USD in 2021 from Comirnaty alone, Moderna approximately 18 billion USD), and public-health institutional reputations depend on a positive outcome story. CDC, FDA, and WHO have institutional investment in the vaccination programs they coordinated and authorized. On the skeptic side, the anti-vaccine media economy has grown substantially: Children&#39;s Health Defense revenue grew from approximately 1.3 million USD (2018) to 23 million USD plus (2022). The alternative-health and supplements market exceeds 50 billion USD annually. The speaking, book, Substack, and conference circuit around figures including Malone, Kirsch, Dowd, Wolf, and RFK Jr. represents a material industry with revenue dependent on the continued salience of the harm narrative. Both sides have substantial financial stakes in their narratives. Neither set of motives proves either claim true or false. Both sets of motives are relevant when evaluating sourcing and weight of testimony, and both should be disclosed when participants are appealing to authority.</p></div>
     </div>
 
   
     <div class="section">
       <h2>Perception Gap</h2>
-      <div class="prose"><p>Believers in the claim often assume that anyone who pushes back must be either willfully blind to real injuries, financially captured by pharma, or so committed to scientific authority that they cannot acknowledge institutional failure; in reality, most thoughtful pushback acknowledges the myocarditis signal, the communication failures, the underreporting in passive surveillance, and the mandate overreach. Critics of the claim often assume believers are anti-science, gullible, or politically motivated; in reality, many believers are responding to a real injury, a real adverse event in their family, or a justified loss of trust in institutions that themselves communicated poorly. The space between perceived and actual positions is wide on both sides, and this gap is exactly where motivated content creators, on both sides, harvest attention and money.</p></div>
+      <div class="prose"><p>Believers in the claim often assume that anyone who pushes back must be either willfully blind to real injuries, financially captured by pharma, or so committed to scientific authority that they cannot acknowledge institutional failure. In reality, most thoughtful pushback acknowledges the myocarditis signal, the communication failures, the underreporting in passive surveillance, the mandate overreach, and the inadequacy of compensation systems. Critics of the claim often assume believers are anti-science, gullible, or politically motivated. In reality, many believers are responding to a real injury, a real adverse event in their family, a justified loss of trust in institutions that themselves communicated poorly, or a defensible value claim about bodily autonomy that does not require any factual claim about vaccine harm to be coherent. The space between perceived and actual positions on both sides is wide, and this gap is precisely where motivated content creators on both sides harvest attention and revenue.</p></div>
     </div>
 
   <div class="section">
@@ -811,22 +869,22 @@
     
     <div class="dialogue-round round-1">
       <div class="round-label">Round 1: Perspective-Getting</div>
-      <div class="dialogue-bubble"><p>I want to start by saying that what is underneath this claim, the worry that something real happened to people and was not honestly acknowledged, is not a fringe concern and it is not paranoid. Myocarditis after mRNA dose two in young males is a real, documented signal that Israeli surveillance detected, that the CDC eventually confirmed, and that ended up on the FDA fact sheet. The initial communication around that signal was slow, and people whose teenagers ended up in the hospital had every reason to feel that the system was not as upfront as it should have been. VAERS does underreport, mandates were imposed past the point where the transmission-blocking case was strong, and pharma companies do have a documented pattern of minimizing harms historically. Anyone holding this claim is holding at least a piece of something true, and we do not get anywhere useful together by pretending otherwise.</p></div>
+      <div class="dialogue-bubble"><p>Round 1: I want to start by saying that what is underneath this claim, the worry that something real happened to people and was not honestly acknowledged, is not a fringe concern and it is not paranoid. If you are afraid for your children, or if you are grieving someone who died after vaccination and you cannot get a straight answer about whether the two are connected, you are standing somewhere that I think deserves serious engagement, not dismissal. The myocarditis signal in young males after the second mRNA dose is real. Israeli surveillance detected it first, the CDC eventually confirmed it, and it now appears on the FDA fact sheet. The initial communication around that signal was slow, and parents whose teenagers ended up in the hospital had every reason to feel that the system was not as upfront as it should have been. VAERS does underreport rare events as a feature of passive surveillance. Mandates were imposed past the point where the transmission-blocking case was strong, especially after Omicron arrived. Pharmaceutical companies do have a documented pattern of minimizing harms historically, and the compensation systems for vaccine injuries have been slow and inadequate in ways that deepen mistrust. So if you are holding this claim, you are holding at least a piece of something true, and we do not get anywhere useful together by pretending otherwise. Before we go any further, I would like to understand what part of this worries you most. Is it the safety question, the question of whether you were lied to, the question of whether the people who were hurt are being recognized, or something else?</p></div>
     </div>
     <div class="dialogue-round round-2">
       <div class="round-label">Round 2: Guided Examination</div>
-      <div class="dialogue-bubble"><p>Where this gets harder, and I think this is the part worth sitting with together, is that the same evidence base that confirms the myocarditis signal also includes things that pull against the strongest version of the claim. The Patone study in the BMJ found that COVID-19 infection itself causes myocarditis at higher rates than the vaccine in most age groups. Watson and colleagues in The Lancet Infectious Diseases estimated that vaccines prevented somewhere between 14 and 20 million deaths in the first year, with sensitivity ranges that stay net-positive even under fairly pessimistic assumptions. Excess mortality is elevated in countries that vaccinated heavily and in countries that barely vaccinated at all, and major contributors include COVID itself, delayed care during lockdowns, drug overdoses, and heat events. None of that erases the real injuries; it just means the bigger picture is genuinely more complicated than either &#39;safe and effective&#39; or &#39;more harm than good.&#39; We can hold both the real adverse events and the measured population benefits without one cancelling the other.</p></div>
+      <div class="dialogue-bubble"><p>Round 2: Here is a pattern I think is worth sitting with together, because it does not require either of us to give up what we already know. The myocarditis signal is real, and the same Patone et al. study in Nature Medicine that confirmed it also showed that COVID-19 infection itself causes myocarditis at higher rates than vaccination in most demographic strata, with the important exception of males under forty after a second mRNA dose. That demographic exception is real and matters. The Watson et al. modeling in The Lancet Infectious Diseases estimated vaccines prevented somewhere between 14.4 and 19.8 million deaths in the first year. That estimate is modeled rather than directly counted, and the sensitivity ranges depend on assumptions about counterfactual transmission and age-specific infection fatality rates, but the ranges stay net-positive under a range of pessimistic assumptions. Excess mortality in 2021 through 2023 is elevated in countries that vaccinated heavily and in countries that barely vaccinated at all, with COVID-19 itself, delayed care during lockdowns, drug overdoses, suicide, and heat events identified as major contributors. The pattern worth noticing is this: when a real signal gets picked up and amplified through a particular ecosystem, the demographic specificity vanishes (males 16 to 29 after dose two becomes &#39;everyone is being harmed&#39;), the denominator vanishes (37,000 VAERS reports without 670 million doses), and the pharmacovigilance baseline becomes a confession. Alongside those simplified messages, you will often find a book, a supplement, a Substack subscription, or a water filter being sold. That does not mean your concern is wrong. It means the version of the story that has reached you may have been simplified by people whose income depends on the simplification. The same is true on the institutional side: when CDC bundled peer-reviewed pediatric-booster critique with depopulation content under the single &#39;anti-vax&#39; label, that was the institutional version of the same technique. Both directions deserve scrutiny.</p></div>
     </div>
     <div class="dialogue-round round-3">
       <div class="round-label">Round 3: Integration</div>
-      <div class="dialogue-bubble"><p>So if we take both of those seriously together, the documented adverse events that were under-communicated and the documented benefits that the data shows, here is what I keep coming back to and I would really like to know how you see it: given that there are demographics where the risk-benefit was genuinely close (healthy young males with a third or fourth dose) and demographics where it was overwhelmingly net positive (older adults, immunocompromised, those with comorbidities), and given that compensation systems for the real injuries have been inadequate, what does an honest health-policy stance look like that acknowledges every documented harm, refuses coerced administration where benefit is marginal, properly compensates those who were injured, and still allows access for those for whom the data clearly favors vaccination?</p></div>
+      <div class="dialogue-bubble"><p>Round 3: Here is what I keep coming back to, and I would really like to know how you see it. There are actually two questions bundled into this claim, and keeping them separate changes what is possible between us. Question one is empirical: do the documented adverse events, taken together with the documented benefits and the documented uncertainties, support a population-level conclusion that aggregate harm exceeds aggregate benefit across all demographics and all dose schedules? The honest answer based on the available evidence is no, but with important demographic-specific exceptions where the risk-benefit was genuinely close (healthy young males after a third or fourth dose) and where the original recommendations have been re-evaluated by serious people in legitimate channels (JCVI, Prasad, Hoeg). That is a contested zone, not a settled question, and pretending otherwise is part of how trust was lost in the first place. Question two is ethical: even if vaccines were net beneficial in aggregate, was the way they were rolled out (uniform messaging that erased demographic variation, mandates imposed past the transmission-blocking evidence, slow compensation for documented injuries) compatible with the principle of informed consent that medicine claims to honor? The Nuffield Council on Bioethics has acknowledged that population health interventions create real autonomy tension. That tension is not a fringe concern; it is the same tension that the entire bioethics literature has worked on for sixty years. So here is the question I want to ask you, and I am genuinely asking, not rhetorically. What would a health-policy stance look like that took every documented harm seriously, refused coerced administration where benefit is marginal, properly compensated those who were injured according to legitimate adjudication, distinguished demographic-specific recommendations from blanket mandates, and still allowed access for those for whom the data clearly favors vaccination? Could we hold all of those things at once?</p></div>
     </div>
   </div>
 
   
   <div class="section">
     <h2>Reframe</h2>
-    <blockquote class="reframe-block">What we share, across this disagreement, is a refusal to be lied to about our own bodies and the bodies of our children, a demand that those who were genuinely injured be heard and compensated, and an insistence that medical decisions be made with real informed consent rather than coercion. Together, we can press for transparent risk data by age and dose, better-funded compensation, demographic-specific recommendations rather than blanket mandates, and pharmacovigilance systems that surface signals earlier, without erasing either the people who were harmed or the people who were protected.</blockquote>
+    <blockquote class="reframe-block">What we share across this disagreement is a refusal to be lied to about our own bodies and the bodies of our children, a demand that those who were genuinely injured be heard and compensated, and an insistence that medical decisions be made with real informed consent rather than coercion. Together, we can press for transparent risk data disaggregated by age and dose and prior infection status; properly funded compensation for those whose injuries are adjudicated as vaccine-caused; demographic-specific recommendations rather than blanket mandates; pharmacovigilance systems that surface signals earlier and communicate them more candidly; and institutional humility about the limits of population-scale messaging in the presence of demographic variability. None of those goals requires choosing between erasing the people who were harmed and erasing the people who were protected. They require holding both with care.</blockquote>
   </div>
 
   
@@ -845,11 +903,11 @@
 <div class="diagnostic-card">
         <h4>Credibility Gap</h4>
         <p class="diagnostic-note">Narrative pattern description; no specific publisher or outlet identified.</p>
-        <p>This narrative fills a vacuum left by institutional communication that, in the rollout phase, presented vaccines as uniformly &#39;safe and effective&#39; without disaggregating by age, dose, or risk, and that delayed honest acknowledgment of the myocarditis signal and the limits of transmission blocking. When people whose teenagers had cardiac events or whose family members died after vaccination went looking for honest engagement and instead found &#39;pandemic of the unvaccinated&#39; messaging, they did not find a place to put their experience inside the official story. The harm narrative provided that place. The remedy is not to dismiss the narrative but to build communication and compensation systems that actually hold all the data, including the parts that complicate the official story, so that the vacuum does not need to be filled by overcorrection.</p>
+        <p>This narrative fills a vacuum left by institutional communication that in the rollout phase presented vaccines as uniformly safe and effective without disaggregating by age, dose, prior infection, or comorbidity, and that delayed honest acknowledgment of the myocarditis signal and the limits of transmission blocking. When people whose teenagers had cardiac events, or whose family members died after vaccination, went looking for honest engagement and instead found uniform messaging and accusations of conspiracy thinking, they did not find a place to put their experience inside the official story. The harm narrative provided that place, monetized by a media economy that grew accordingly. The remedy is not to dismiss the narrative but to build communication and compensation systems that actually hold all the data, including the parts that complicate the official story, so that the vacuum does not need to be filled by overcorrection. The same vacuum dynamic operates in the other direction: communities that rely on vaccination as the only accessible preventive measure encountered a counter-narrative that did not engage with their concrete dependency on the public health system, and that gap is also worth filling honestly.</p>
       </div>
 <div class="diagnostic-card">
         <h4>Prebunking Note</h4>
-        <p>Before encountering claims about COVID vaccine harms, four facts are worth holding together. First, adverse events from these vaccines are real and demographic-specific; myocarditis in young males, anaphylaxis, and TTS with adenovirus-vectored vaccines are documented and were initially under-communicated. Second, the same evidence base shows the vaccines prevented an estimated 14-20 million deaths in their first year and that COVID-19 infection causes myocarditis at higher rates than vaccination in most studied groups. Third, VAERS counts are reports, not adjudicated causations, and the FOIA-released Pfizer documents are pharmacovigilance baselines, not confessions. Fourth, when someone offers only the harm half or only the benefit half, they are asking you to trade clear thinking for the comfort of a simple story; the honest answer is that risk-benefit varied dramatically by age, dose, and prior infection, and that this complexity does not validate either extreme framing.</p>
+        <p>Before encountering claims about COVID vaccine harms in either direction, five facts are worth holding together. First, adverse events from these vaccines are real and demographic-specific: myocarditis in young males after mRNA dose two, anaphylaxis, and thrombosis-with-thrombocytopenia syndrome with adenovirus-vectored vaccines are documented and were initially under-communicated. Second, the same evidence base shows vaccines prevented an estimated 14.4 to 19.8 million deaths in their first year through population-level modeling, and that COVID-19 infection causes myocarditis at higher rates than vaccination in most studied groups with a demographic-specific exception for young males after dose two. Third, VAERS counts are reports, not adjudicated causations, and the FOIA-released Pfizer documents are pharmacovigilance baselines, not confessions. Fourth, risk-benefit varies dramatically by age, dose, prior infection status, and variant era, and uniform messaging in either direction obscures that variation. Fifth, when someone offers you only the harm half or only the benefit half, they are asking you to trade clear thinking for the comfort of a simple story, and someone is usually being paid for the simplification.</p>
       </div>
     </div>
   </div>
@@ -860,112 +918,114 @@
       <span>Verdict:</span>
       <span class="badge badge-warnings">PASS WITH WARNINGS</span>
     </div>
-    <div class="audit-summary">Analysis is methodologically sound, treats claim-holders with respect, identifies manipulation on both sides including institutional over-claiming, and produces genuinely dialogic bridge output that honors documented adverse events without endorsing the population-level net-harm conclusion. Two medium findings on demographic-specific Patone caveat and long-COVID completeness; one medium finding on strengthening due-process language for bereaved families. All correctable without re-running pipeline. No forbidden phrases detected; Round 3 ends with question mark; consensus explanation exceeds 300 chars and includes mechanism keywords (study, evidence, research, data, measured, observed); issue overlap and narrative deconstruction exceed 200 chars; all three socratic rounds exceed 200 chars.</div>
+    <div class="audit-summary">Analysis is methodologically sound, treats claim-holders with respect, identifies manipulation on both sides including institutional over-claiming, and produces dialogic bridge output that honors documented adverse events without endorsing the population-level net-harm conclusion. The kernel-and-leap inferential gap analysis is the central analytical contribution: the kernel (real adverse events, real communication failures, real autonomy concerns, real compensation inadequacies) is large and growing, and the leap (population-level aggregate net harm across all demographics) requires evidentiary moves the data does not support. Three medium-severity findings: demographic-specific Patone caveat must remain explicit, long-COVID and LMIC equity dimensions should expand in future iterations, and due-process language for bereaved families should strengthen. The bilateral TTP attribution (T0080 attributed to public health institutions alongside skeptic-side techniques) is essential and well-executed. Confidence profile reflects genuinely varied dimensions: source reliability is high (gold-standard registries available), evidence quality is high (peer-reviewed cohort and modeling studies), inferential validity is moderate (the kernel-to-leap pathway is well-mapped but contested), epistemic humility is high (acknowledges genuine demographic-specific contested zones), and adversarial robustness is moderate (analysis would survive most rigorous critique but is vulnerable to Global South and long-COVID completeness gaps).</div>
     <ul class="findings-list">
     <li class="finding-item">
       <div class="finding-header">
         <span class="finding-category">Accuracy</span>
         <span class="finding-severity-low">LOW</span>
-        <span class="finding-description">Watson et al. Lancet Infectious Diseases estimate range (14-20M) is cited; sensitivity ranges and assumptions (R0, IFR...</span>
+        <span class="finding-description">Watson et al. Lancet Infectious Diseases estimate range of 14.4 to 19.8 million deaths averted is cited as a modeled...</span>
       </div>
       
       <div class="finding-body">
-        <div class="finding-description">Watson et al. Lancet Infectious Diseases estimate range (14-20M) is cited; sensitivity ranges and assumptions (R0, IFR by age) should be flagged for readers who want to interrogate the number</div>
-        <div class="finding-rec"><strong>Recommendation:</strong> Add explicit note that Watson estimate is modeled, not directly measured, and ranges depend on assumptions about counterfactual transmission</div>
+        <div class="finding-description">Watson et al. Lancet Infectious Diseases estimate range of 14.4 to 19.8 million deaths averted is cited as a modeled rather than directly measured figure. The sensitivity ranges depend on assumptions about counterfactual transmission, age-specific infection fatality rates, and counterfactual non-pharmaceutical interventions. The analysis appropriately flags the modeled nature.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Retain the explicit modeled-not-measured note in any downstream summary; consider citing the Watson supplementary appendix sensitivity tables if space permits.</div>
       </div>
     </li>
     <li class="finding-item">
       <div class="finding-header">
         <span class="finding-category">Accuracy</span>
         <span class="finding-severity-medium">MEDIUM</span>
-        <span class="finding-description">Patone et al. Nat Med (Dec 2022) comparing infection-myocarditis to vaccine-myocarditis is cited as supporting the...</span>
+        <span class="finding-description">The Patone et al. demographic-specific exception (males under 40 after second mRNA dose where vaccine myocarditis...</span>
       </div>
       
       <div class="finding-body">
-        <div class="finding-description">Patone et al. Nat Med (Dec 2022) comparing infection-myocarditis to vaccine-myocarditis is cited as supporting the consensus narrative; the same paper found that in males under 40 after second mRNA dose, vaccine myocarditis exceeded infection myocarditis in that specific stratum</div>
-        <div class="finding-rec"><strong>Recommendation:</strong> Acknowledge demographic-specific exception explicitly in consensus_explanation to avoid asymmetric citation</div>
+        <div class="finding-description">The Patone et al. demographic-specific exception (males under 40 after second mRNA dose where vaccine myocarditis exceeded infection myocarditis in that specific stratum) is acknowledged in the consensus explanation, which is essential to avoid asymmetric citation. This finding is the strongest counter-instance to the global &#39;infection greater than vaccine&#39; summary and must remain explicit.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> No change needed in this version. Future iterations should ensure this demographic exception remains prominent and is not lost in summarization.</div>
       </div>
     </li>
     <li class="finding-item">
       <div class="finding-header">
         <span class="finding-category">Completeness</span>
         <span class="finding-severity-medium">MEDIUM</span>
-        <span class="finding-description">The bridge does not address long COVID and post-acute sequelae prevented by vaccination, which is part of the...</span>
+        <span class="finding-description">The bridge addresses long COVID and post-acute sequelae as part of the benefit ledger in the prebunking note and...</span>
       </div>
       
       <div class="finding-body">
-        <div class="finding-description">The bridge does not address long COVID and post-acute sequelae prevented by vaccination, which is part of the population-benefit ledger</div>
-        <div class="finding-rec"><strong>Recommendation:</strong> Add long-COVID prevention as benefit-side consideration in next iteration</div>
+        <div class="finding-description">The bridge addresses long COVID and post-acute sequelae as part of the benefit ledger in the prebunking note and consensus explanation, but the engagement is brief. The harm-narrative ecosystem typically does not engage with prevented long COVID, which is a substantial portion of the benefit calculation.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Future iterations should expand long-COVID prevention as a population-level benefit consideration with specific estimates from the RECOVER cohort or comparable studies.</div>
       </div>
     </li>
     <li class="finding-item">
       <div class="finding-header">
         <span class="finding-category">Completeness</span>
-        <span class="finding-severity-low">LOW</span>
-        <span class="finding-description">Global South vaccine-equity perspectives largely absent from actor map and bridge; the harm-narrative discourse is...</span>
+        <span class="finding-severity-medium">MEDIUM</span>
+        <span class="finding-description">Global South vaccine-equity perspectives are largely absent from the actor map and bridge. The harm-narrative discourse...</span>
       </div>
       
       <div class="finding-body">
-        <div class="finding-description">Global South vaccine-equity perspectives largely absent from actor map and bridge; the harm-narrative discourse is heavily Western</div>
-        <div class="finding-rec"><strong>Recommendation:</strong> Add LMIC voices and the inverse access-equity critique to actor map</div>
+        <div class="finding-description">Global South vaccine-equity perspectives are largely absent from the actor map and bridge. The harm-narrative discourse is heavily Western, and the inverse equity critique (low-income countries received doses late and at lower coverage) deserves engagement to avoid hemispheric bias.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Future iterations should add LMIC voices and the inverse access-equity critique. COVAX failures and patent-waiver disputes warrant their own thread.</div>
       </div>
     </li>
     <li class="finding-item">
       <div class="finding-header">
         <span class="finding-category">framing</span>
         <span class="finding-severity-low">LOW</span>
-        <span class="finding-description">Communication posture flagged as &#39;relational_first_with_explicit_validation&#39; is appropriate but pattern_density_warning...</span>
+        <span class="finding-description">Communication posture is set to relational_first_with_explicit_validation, which is appropriate given the...</span>
       </div>
       
       <div class="finding-body">
-        <div class="finding-description">Communication posture flagged as &#39;relational_first_with_explicit_validation&#39; is appropriate but pattern_density_warning is set true; consider whether warning should also flag for institutional-defender content over-claiming certainty</div>
-        <div class="finding-rec"><strong>Recommendation:</strong> Add symmetric warning for both directions of motivated content</div>
+        <div class="finding-description">Communication posture is set to relational_first_with_explicit_validation, which is appropriate given the kernel-of-truth profile. The pattern_density_warning is true, reflecting high TTP density. The bilateral attribution of TTPs (institutional dismissal in T0080 alongside skeptic-side techniques) is essential and well-executed.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Retain bilateral TTP attribution in future iterations to preserve analytical integrity.</div>
       </div>
     </li>
     <li class="finding-item">
       <div class="finding-header">
         <span class="finding-category">methodology</span>
         <span class="finding-severity-low">LOW</span>
-        <span class="finding-description">DISARM confidence scores presented to 0.01 precision without stated calibration method</span>
+        <span class="finding-description">DISARM confidence scores are presented to two decimal places without a stated calibration method. The variance across...</span>
       </div>
       
       <div class="finding-body">
-        <div class="finding-rec"><strong>Recommendation:</strong> Document calibration approach or round to nearest 0.05</div>
+        <div class="finding-description">DISARM confidence scores are presented to two decimal places without a stated calibration method. The variance across techniques (0.60 to 0.95) suggests intuitive rather than empirical calibration.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Document calibration approach in next iteration or round to nearest 0.05.</div>
       </div>
     </li>
     <li class="finding-item">
       <div class="finding-header">
         <span class="finding-category">Bias</span>
         <span class="finding-severity-low">LOW</span>
-        <span class="finding-description">TTP attribution count by side is implicit; explicit reporting would make the both-sides analysis verifiable</span>
+        <span class="finding-description">TTP attribution is approximately 80 percent skeptic-side and 20 percent institutional-side. This is consistent with the...</span>
       </div>
       
       <div class="finding-body">
-        <div class="finding-rec"><strong>Recommendation:</strong> Add side-count tally: skeptic-attributed vs institution-attributed vs both</div>
+        <div class="finding-description">TTP attribution is approximately 80 percent skeptic-side and 20 percent institutional-side. This is consistent with the empirical distribution of manipulation in the public discourse on this scenario but should be made explicit so readers can interrogate the ratio.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Add explicit side-count tally in future iterations: skeptic-attributed, institution-attributed, both-attributed.</div>
       </div>
     </li>
     <li class="finding-item">
       <div class="finding-header">
         <span class="finding-category">ethics</span>
         <span class="finding-severity-medium">MEDIUM</span>
-        <span class="finding-description">Socratic dialogue Round 1 leads with validation but readers who lost a family member after vaccination may need an even...</span>
+        <span class="finding-description">The Socratic dialogue Round 1 leads with validation of the fear and the underlying experience rather than with...</span>
       </div>
       
       <div class="finding-body">
-        <div class="finding-description">Socratic dialogue Round 1 leads with validation but readers who lost a family member after vaccination may need an even more explicit acknowledgment that suspected causation deserves adjudication, not dismissal</div>
-        <div class="finding-rec"><strong>Recommendation:</strong> Strengthen language about due-process for suspected causation in next iteration</div>
+        <div class="finding-description">The Socratic dialogue Round 1 leads with validation of the fear and the underlying experience rather than with validation of the factual claim, which is the correct frame for OARS protocol. Readers who lost a family member after vaccination may need an even more explicit acknowledgment that suspected causation deserves adjudication, not dismissal.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Strengthen language about due-process for suspected causation in CICP and VICP pathways in future iterations; consider linking to specific compensation program details.</div>
       </div>
     </li>
     <li class="finding-item">
       <div class="finding-header">
         <span class="finding-category">Completeness</span>
         <span class="finding-severity-low">LOW</span>
-        <span class="finding-description">Excess-mortality discussion mentions multiple drivers but does not engage Dowd-style age-stratified mortality arguments...</span>
+        <span class="finding-description">Excess-mortality discussion mentions multiple drivers (COVID-19 itself, delayed care, drug overdoses, suicide, heat...</span>
       </div>
       
       <div class="finding-body">
-        <div class="finding-description">Excess-mortality discussion mentions multiple drivers but does not engage Dowd-style age-stratified mortality arguments specifically</div>
-        <div class="finding-rec"><strong>Recommendation:</strong> Add targeted engagement with age-stratified excess-mortality framing</div>
+        <div class="finding-description">Excess-mortality discussion mentions multiple drivers (COVID-19 itself, delayed care, drug overdoses, suicide, heat events) but does not engage the Dowd-style age-stratified mortality argument in granular detail. The age-stratified argument is the most sophisticated version of the harm claim and warrants direct engagement.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Future iterations should add targeted engagement with age-stratified excess-mortality framing, including the Society of Actuaries group life data Dowd draws on and the methodological criticisms of his interpretation.</div>
       </div>
     </li></ul>
   </div>
@@ -975,7 +1035,7 @@
       <h2>Evaluation Methodology</h2>
       <p class="intro-note">Full transparency on how this scenario was scored. 12 weighted checks, each independently measurable. <a href="https://github.com/Jochen-s/huginn-muninn/blob/main/tests/run_bridge_scenarios.py" target="_blank" rel="noopener">View source code</a></p>
       <div class="eval-summary">
-        <span class="eval-overall">100.0%</span>
+        <span class="eval-overall">92.0%</span>
         <span class="badge badge-pass">Grade A</span>
       </div>
       <div style="overflow-x:auto">
@@ -1013,11 +1073,11 @@
       <td class="eval-score">100%</td>
       <td class="eval-status">PASS</td>
       <td class="eval-desc">Scientific/mainstream explanation &gt;200 chars with 3+ mechanism keywords</td>
-    </tr><tr class="eval-pass">
+    </tr><tr class="eval-fail">
       <td>inferential gap</td>
       <td class="eval-weight">8%</td>
-      <td class="eval-score">100%</td>
-      <td class="eval-status">PASS</td>
+      <td class="eval-score">0%</td>
+      <td class="eval-status">MISS</td>
       <td class="eval-desc">Inferential gap analysis is substantive (&gt;50 characters)</td>
     </tr><tr class="eval-pass">
       <td>feasibility check</td>

@@ -3,38 +3,37 @@
 All notable changes to Huginn & Muninn are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/).
 
-## [0.13.0] - 2026-05-12 -- "Pipeline Hardening"
+## [0.14.0] - 2026-05-13 -- "Epistemic Equity"
 
-Sprint 6. Closes all deferred items from Sprints 4 and 5. The Auditor now produces a five-dimensional Evidence Certainty Framework profile end-to-end, the scope scrubber blocks Unicode homoglyph evasion, and source tier scoring reflects actual quality gradients. Cumulative: 355 tests.
+Sprints 5-7. Multi-dimensional confidence assessment, epistemic provenance tracking, and security hardening. 386 tests in standard baseline, zero regression.
 
 ### Added
-- **Auditor ConfidenceProfile end-to-end**: Auditor prompt now requests 5 ECF dimensions (evidence_quality, source_reliability, claim_testability, expert_consensus, internal_coherence). Orchestrator propagates confidence_profile and cnqs from AuditorOutput to AnalysisReport top-level.
-- **Unicode/homoglyph scope scrubber hardening**: NFKC normalization and zero-width character stripping on all scope-scrubbed text. Blocks fullwidth character substitution and zero-width joiner evasion of the publisher blocklist.
-- **CNQS critical failure cap**: Composite score capped at 0.3 when any dimension scores 1 (the Likert floor). A single disqualifying failure overrides otherwise high scores.
-- **Non-linear source tier scoring**: Tier scores changed from linear (0.9/0.7/0.5/0.3) to non-linear (0.95/0.80/0.50/0.20). The quality gap between unverified and commentary sources is now larger than between peer-reviewed and journalism.
-- **Gap detection sub-count**: When "unclassified" dominates the tradition distribution, the detector re-checks the classified subset for monoculture (2+ classified sources, 80%+ threshold).
-- **Pipe-value sanitization telemetry**: DEBUG log when LLM returns pipe-separated enum values. INFO log when epistemic diversity gap detection fires.
-- **Runner-production prompt parity**: All runner templates synced with production agents (Tracer: relay_type + notable_omissions; Auditor: 7 categories + ECF + CNQS + veto criteria; Bridge: OARS + diagnostic fields).
-- **15 new tests**: Auditor ECF propagation (5), Unicode hardening (4), CNQS cap (2), non-linear tiers (1), gap edge case (2), pipe logging (1).
+
+- **Evidence Certainty Framework (ECF)**: `ConfidenceProfile` with 5 weighted dimensions (evidence quality 30%, source reliability 20%, claim testability 15%, expert consensus 20%, internal coherence 15%). Inspired by GRADE's structural approach, targeting claim-level evidence assessment. ECF level categorization: HIGH (0.75+), MODERATE (0.50-0.74), LOW (0.25-0.49), VERY LOW (<0.25). `uniform_input_flag` detects suspiciously uniform LLM outputs (spread <= 0.05).
+- **Counter-Narrative Quality Score (CNQS)**: 8-dimension evaluation of institutional counter-narrative quality (experimental). Composite capped at 0.3 when any dimension scores 1 (critical failure). Machine-readable `experimental_fields` list on `AnalysisResponse` envelope surfaces CNQS status to API consumers.
+- **Epistemic provenance tracking**: `EpistemicProvenance` model on `OriginEntry` with 6 classified traditions (western academic, western institutional, global south academic, global south institutional, community experiential, indigenous knowledge) plus unclassified default. Bidirectional gap detection fires at 80%+ single-tradition dominance.
+- **Regional Source Registry**: 21 institutions across 5 regions (Africa, Asia-Pacific, Latin America, MENA, Indigenous Knowledge Systems). Advisory framing with governance metadata.
+- **OARS Socratic protocol**: Bridge Builder Round 1 restructured around Motivational Interviewing's Open questions, Affirmations, Reflective listening, and Summaries. Round 1 validates the emotion, never the factual claim. Evidence enters in Round 2 only.
+- **Gallery ECF rendering**: 5-dimension table with composite score and UNIFORM badge. Epistemic tradition badges in metrics table. Gap detection warning using pre-computed pipeline field.
+- **COVID scenario v2 re-runs (HS-06 through HS-11)**: 6 scenarios re-run with all Sprint 5-7 fields populated. ECF profiles varied across dimensions (spreads 0.20-0.47). Overall confidence range: 0.31 (HS-08 plandemic) to 0.72 (HS-11 pharma profits). Global South provenance integrated structurally.
+- **Confusable homoglyph detection (K2-A)**: `confusables` library normalizes Cyrillic/Greek lookalikes before blocklist check. Blanket `unicodedata.category('Cf')` strip replaces hand-rolled codepoint ranges. Length cap and exception guard for resilience.
+- **Log injection sanitization (K5-A)**: Category-based stripping of control, format, bidi-override, and line-separator characters from all untrusted log data.
+- **Non-linear source tier scores**: 0.95/0.80/0.50/0.20 (was 0.9/0.7/0.5/0.3). Tier 4 fallback default 0.20.
+- **Confidence methodology page**: Plain-language explanation of scoring at `confidence-methodology.html` with [?] links from gallery scores.
 
 ### Changed
-- Tier fallback default for unknown source_tier changed from 0.3 to 0.20 (matches tier 4).
-- Methodology files carry SYNC WARNING comments linking gallery/build.js and docs/confidence-methodology.md.
+
+- `api_version` bumped to `"0.14.0"`.
+- `pyproject.toml` gains `confusables>=1.2.0,<2` dependency.
+- Auditor prompt requests ECF dimensions with upstream signal anchoring.
+- Runner-production parity: tracer, auditor, and bridge templates updated to match production prompt features.
+- `confidence_profile` and `cnqs` propagated from audit to top-level `AnalysisReport`.
 
 ### Review discipline
-- 4-faction fleet review (Federation 74/100, Klingon 6/10, Ferengi 7/10) + Codex adversarial (7/10, SHIP_WITH_MITIGATIONS). 7 mitigations applied.
 
-## [0.12.0] - 2026-05-12 -- "Epistemic Equity"
-
-Sprint 5. The pipeline now tracks where knowledge comes from, not just what it says. Regional source registry, epistemic provenance tracking, and confidence score transparency. Cumulative: 340 tests.
-
-### Added
-- **Regional Source Registry** (`data/regional_sources.json`): 21 institutions across 5 regions. Advisory framing throughout.
-- **Epistemic Provenance tracking** on `OriginEntry`: 7 tradition types, default "unclassified."
-- **Bidirectional epistemic diversity gap detection**: fires when 80%+ of classified origins share a single tradition.
-- **Confidence Score Transparency page**: plain-language methodology document in gallery.
-- **Source tier breakdown** and methodology link on every gallery scenario page.
-- **27 new tests** covering provenance, gap detection, and registry validation.
+- Sprint 7 PR 1 fleet review: Federation 71/100, Klingon 5/10 (red-team), Ferengi 6/10. 10 convergent mitigations applied (Cf blanket strip, exception guard, length cap, bidi override coverage, variant dedup fix, gap log sanitization, boundary condition, upper version pin, space replacement, Greek homoglyph test).
+- Sprint 7 PR 3 fleet review: Combined 72/100 CONDITIONAL. 4 mitigations (tradition label schema alignment, pre-computed gap field, XSS ordering, parseFloat guards).
+- Sprints 5-6 fleet reviews: 3+4 faction reviews with 12 total mitigations.
 
 ## [0.11.0] - 2026-04-12 -- "Auditor Exfiltration Guard"
 

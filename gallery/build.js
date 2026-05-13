@@ -141,6 +141,7 @@ const SHARED_CSS = `
     --amber:  #E67E22;
     --green:  #27AE60;
     --gray:   #5D6D7E;
+    --muted:  #7F8C8D;
     --border: #D0D9E4;
     --font:   -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
   }
@@ -277,6 +278,7 @@ const SHARED_CSS = `
   .badge-systematic { background: #FDEDEC; color: var(--red); }
   .badge-repeated   { background: #E8F8F5; color: var(--teal); }
   .badge-isolated   { background: #FEF5E7; color: var(--amber); }
+  .badge-severity   { background: #FDEDEC; color: var(--red); }
 
   /* Footer */
   .site-footer {
@@ -689,6 +691,19 @@ const SHARED_CSS = `
     .metrics-table th, .metrics-table td { padding: 8px 10px; }
     .essay-prose { font-size: 0.95rem; }
     .essay-prose h2 { font-size: 1.2rem; }
+  }
+
+  .gap-warning {
+    background: #fff3cd;
+    border: 1px solid #ffc107;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin: 12px 0;
+    font-size: 0.95em;
+  }
+  .dim-weight {
+    color: var(--muted);
+    font-size: 0.85em;
   }
 `;
 
@@ -1203,6 +1218,68 @@ function renderSourceTierBreakdown(data) {
   return `<tr><td>Source tiers</td><td>${parts.join(', ')}</td></tr>`;
 }
 
+function renderConfidenceProfile(data) {
+  const cp = data?.confidence_profile;
+  if (!cp) return '';
+  const dims = [
+    { name: 'Evidence Quality', key: 'evidence_quality', weight: '30%' },
+    { name: 'Source Reliability', key: 'source_reliability', weight: '20%' },
+    { name: 'Claim Testability', key: 'claim_testability', weight: '15%' },
+    { name: 'Expert Consensus', key: 'expert_consensus', weight: '20%' },
+    { name: 'Internal Coherence', key: 'internal_coherence', weight: '15%' },
+  ];
+  const uniformWarning = cp.uniform_input_flag
+    ? ' <span class="badge badge-severity" title="All dimensions suspiciously similar; LLM may not have differentiated">UNIFORM</span>'
+    : '';
+  const rows = dims.map(d =>
+    `<tr><td>${d.name} <span class="dim-weight">(${d.weight})</span></td><td>${((parseFloat(cp[d.key]) || 0) * 100).toFixed(0)}%</td></tr>`
+  ).join('');
+  return `
+    <div class="section">
+      <h2>Evidence Certainty Framework${uniformWarning}</h2>
+      <p class="intro-note">Multi-dimensional confidence assessment inspired by GRADE methodology. <a href="confidence-methodology.html" class="methodology-link">[?]</a></p>
+      <table class="metrics-table">
+        <thead><tr><th>Dimension</th><th>Score</th></tr></thead>
+        <tbody>
+          ${rows}
+          <tr style="font-weight:600;border-top:2px solid var(--border)"><td>Composite (${esc(cp.ecf_level || 'N/A')})</td><td>${((parseFloat(cp.composite) || 0) * 100).toFixed(0)}%</td></tr>
+        </tbody>
+      </table>
+    </div>`;
+}
+
+function renderEpistemicProvenance(data) {
+  const origins = data?.origins?.origins;
+  if (!origins || origins.length === 0) return '';
+  const traditions = {};
+  for (const o of origins) {
+    const prov = o.epistemic_provenance;
+    if (prov && prov.tradition && prov.tradition !== 'unclassified') {
+      traditions[prov.tradition] = (traditions[prov.tradition] || 0) + 1;
+    }
+  }
+  if (Object.keys(traditions).length === 0) return '';
+  const labels = {
+    western_academic: 'Western Academic',
+    western_institutional: 'Western Institutional',
+    global_south_academic: 'Global South Academic',
+    global_south_institutional: 'Global South Institutional',
+    community_experiential: 'Community Experiential',
+    indigenous_knowledge: 'Indigenous Knowledge',
+  };
+  const items = Object.entries(traditions)
+    .sort((a, b) => b[1] - a[1])
+    .map(([k, v]) => `<span class="badge badge-version">${esc(labels[k] || k)}: ${v}</span>`)
+    .join(' ');
+  return `<tr><td>Epistemic traditions</td><td>${items}</td></tr>`;
+}
+
+function renderGapDetectionWarning(data) {
+  const gap = data?.origins?.epistemic_diversity_gap;
+  if (!gap) return '';
+  return `<div class="gap-warning"><strong>Epistemic diversity gap:</strong> ${esc(gap)}</div>`;
+}
+
 function renderUniversalNeeds(needs) {
   if (!needs || needs.length === 0) return '<p class="intro-note">No universal needs data available.</p>';
   const items = needs.map(n => {
@@ -1444,9 +1521,13 @@ function buildScenarioPage(scenario, allScenarios) {
           ? `<tr><td>Overall confidence</td><td>${(data.overall_confidence * 100).toFixed(0)}% <a href="confidence-methodology.html" class="methodology-link" title="How is this score calculated?">[?]</a></td></tr>`
           : ''}
         ${renderSourceTierBreakdown(data)}
+        ${renderEpistemicProvenance(data)}
       </tbody>
     </table>
   </div>
+
+  ${renderConfidenceProfile(data)}
+  ${renderGapDetectionWarning(data)}
 
   <div class="section">
     <h2>Universal Needs</h2>

@@ -22,6 +22,7 @@ from huginn_muninn.contracts import (
     AnalysisReport,
     AnalysisResponse,
     _SCOPE_VIOLATION_MARKER,
+    _looks_like_named_entity,
 )
 
 
@@ -1421,6 +1422,92 @@ class TestConfidenceProfile:
         assert report.confidence_profile is None
 
 
+class TestECFUniformInputDetection:
+    """K1-A: Detect suspiciously uniform ECF dimension values."""
+
+    def test_all_same_flagged(self):
+        from huginn_muninn.contracts import ConfidenceProfile
+        cp = ConfidenceProfile(
+            evidence_quality=0.9, source_reliability=0.9,
+            claim_testability=0.9, expert_consensus=0.9,
+            internal_coherence=0.9,
+        )
+        assert cp.uniform_input_flag is True
+
+    def test_all_default_flagged(self):
+        from huginn_muninn.contracts import ConfidenceProfile
+        cp = ConfidenceProfile()
+        assert cp.uniform_input_flag is True
+
+    def test_spread_just_below_threshold(self):
+        from huginn_muninn.contracts import ConfidenceProfile
+        cp = ConfidenceProfile(
+            evidence_quality=0.90, source_reliability=0.91,
+            claim_testability=0.89, expert_consensus=0.90,
+            internal_coherence=0.90,
+        )
+        assert cp.uniform_input_flag is True
+
+    def test_spread_above_threshold_not_flagged(self):
+        from huginn_muninn.contracts import ConfidenceProfile
+        cp = ConfidenceProfile(
+            evidence_quality=0.9, source_reliability=0.7,
+            claim_testability=0.8, expert_consensus=0.6,
+            internal_coherence=0.5,
+        )
+        assert cp.uniform_input_flag is False
+
+    def test_moderate_variation_not_flagged(self):
+        from huginn_muninn.contracts import ConfidenceProfile
+        cp = ConfidenceProfile(
+            evidence_quality=0.8, source_reliability=0.75,
+            claim_testability=0.7, expert_consensus=0.85,
+            internal_coherence=0.6,
+        )
+        assert cp.uniform_input_flag is False
+
+    def test_flag_does_not_affect_composite(self):
+        from huginn_muninn.contracts import ConfidenceProfile
+        cp = ConfidenceProfile(
+            evidence_quality=0.9, source_reliability=0.9,
+            claim_testability=0.9, expert_consensus=0.9,
+            internal_coherence=0.9,
+        )
+        expected = round(0.9 * 0.30 + 0.9 * 0.20 + 0.9 * 0.15 + 0.9 * 0.20 + 0.9 * 0.15, 3)
+        assert cp.composite == expected
+        assert cp.uniform_input_flag is True
+
+    def test_flag_default_is_false_when_varied(self):
+        from huginn_muninn.contracts import ConfidenceProfile
+        cp = ConfidenceProfile(
+            evidence_quality=0.3, source_reliability=0.8,
+            claim_testability=0.5, expert_consensus=0.9,
+            internal_coherence=0.4,
+        )
+        assert cp.uniform_input_flag is False
+
+    def test_spread_at_threshold_flagged(self):
+        """Fleet K1-A-1: spread <= 0.05 must be flagged.
+        Uses 0.04 spread to avoid IEEE 754 boundary ambiguity."""
+        from huginn_muninn.contracts import ConfidenceProfile
+        cp = ConfidenceProfile(
+            evidence_quality=0.50, source_reliability=0.50,
+            claim_testability=0.50, expert_consensus=0.50,
+            internal_coherence=0.54,
+        )
+        assert cp.uniform_input_flag is True
+
+    def test_spread_just_above_threshold_not_flagged(self):
+        """Fleet K1-A-1: spread clearly above 0.05 is not flagged."""
+        from huginn_muninn.contracts import ConfidenceProfile
+        cp = ConfidenceProfile(
+            evidence_quality=0.50, source_reliability=0.50,
+            claim_testability=0.50, expert_consensus=0.50,
+            internal_coherence=0.56,
+        )
+        assert cp.uniform_input_flag is False
+
+
 class TestCounterNarrativeQualityScore:
     """Sprint 4 Phase 2: CNQS model (experimental)."""
 
@@ -1451,7 +1538,7 @@ class TestCounterNarrativeQualityScore:
         )
         assert c.composite == 1.0
 
-    def test_composite_all_ones(self):
+    def test_composite_with_all_minimum_scores_triggers_critical(self):
         from huginn_muninn.contracts import CounterNarrativeQualityScore
         c = CounterNarrativeQualityScore(
             respect_for_audience=1, acknowledgment_of_uncertainty=1,
@@ -1708,6 +1795,115 @@ class TestScopeScrubberUnicodeHardening:
     def test_clean_text_not_affected_by_normalization(self):
         from huginn_muninn.contracts import _looks_like_named_entity
         assert not _looks_like_named_entity("absence of primary research")
+
+
+class TestConfusableHomoglyphDetection:
+    """K2-A: Cyrillic and mixed-script homoglyph bypass prevention."""
+
+    def test_cyrillic_bbc_detected(self):
+        assert _looks_like_named_entity("ВВС") is True
+
+    def test_cyrillic_cnn_detected(self):
+        assert _looks_like_named_entity("СNN") is True
+
+    def test_mixed_script_reuters_detected(self):
+        assert _looks_like_named_entity("Rеutеrs") is True
+
+    def test_clean_latin_still_detected(self):
+        assert _looks_like_named_entity("BBC News") is True
+
+    def test_innocent_cyrillic_not_flagged(self):
+        assert _looks_like_named_entity("Москва") is False
+
+    def test_empty_and_none_safe(self):
+        assert _looks_like_named_entity("") is False
+        assert _looks_like_named_entity(None) is False
+
+    def test_scope_scrubber_catches_cyrillic_bypass(self):
+        from huginn_muninn.contracts import BridgeOutput
+        bridge = BridgeOutput(
+            universal_needs=["safety"],
+            issue_overlap="overlap",
+            narrative_deconstruction="deconstruction",
+            perception_gap="gap",
+            moral_foundations={},
+            reframe="reframe",
+            vacuum_filled_by="narrative of ВВС coverage",
+            socratic_dialogue=["R1"],
+        )
+        assert bridge.vacuum_filled_by == "[scope:redacted-named-entity]"
+
+    def test_greek_beta_homoglyph_detected(self):
+        """Fleet K2-A-1: Greek Beta (U+0392) looks like Latin B."""
+        assert _looks_like_named_entity("ΒΒC") is True
+
+    def test_soft_hyphen_does_not_fragment_blocklist(self):
+        """Fleet K2-A-4: U+00AD between letters must not prevent detection."""
+        assert _looks_like_named_entity("B­BC") is True
+
+    def test_confusable_normalize_exception_degrades_gracefully(self):
+        """Fleet F-6: if confusables library raises, function returns False."""
+        import unittest.mock as mock
+        with mock.patch("huginn_muninn.contracts._confusable_normalize", side_effect=RuntimeError("boom")):
+            assert _looks_like_named_entity("some text") is False
+
+    def test_long_string_does_not_hang(self):
+        """Fleet K2-A-7: strings over 2000 chars are truncated before normalize."""
+        long_text = "a" * 5000
+        assert _looks_like_named_entity(long_text) is False
+
+
+class TestLogInjectionSanitization:
+    """K5-A: Control characters stripped before logging."""
+
+    def test_ansi_escape_stripped(self):
+        from huginn_muninn.contracts import _sanitize_for_log
+        assert "\x1b" not in _sanitize_for_log("hello\x1b[31mred\x1b[0m")
+
+    def test_null_byte_stripped(self):
+        from huginn_muninn.contracts import _sanitize_for_log
+        assert "\x00" not in _sanitize_for_log("test\x00injected")
+
+    def test_newline_stripped(self):
+        from huginn_muninn.contracts import _sanitize_for_log
+        result = _sanitize_for_log("line1\nfake_log_entry\rmore")
+        assert "\n" not in result
+        assert "\r" not in result
+
+    def test_normal_text_unchanged(self):
+        from huginn_muninn.contracts import _sanitize_for_log
+        assert _sanitize_for_log("normal text 123") == "normal text 123"
+
+    def test_unicode_preserved(self):
+        from huginn_muninn.contracts import _sanitize_for_log
+        assert _sanitize_for_log("Moskva Munchen") == "Moskva Munchen"
+
+    def test_pipe_value_sanitized_in_log(self, caplog):
+        import logging
+        from huginn_muninn.contracts import _first_pipe_value
+        with caplog.at_level(logging.DEBUG, logger="huginn_muninn.contracts"):
+            _first_pipe_value("a\x1b[31m|b")
+        assert "\x1b" not in caplog.text
+
+    def test_bidi_override_stripped(self):
+        """Fleet K5-A-1: U+202E RIGHT-TO-LEFT OVERRIDE must be stripped."""
+        from huginn_muninn.contracts import _sanitize_for_log
+        result = _sanitize_for_log("normal‮reversed‬normal")
+        assert "‮" not in result
+        assert "‬" not in result
+
+    def test_line_separator_stripped(self):
+        """Fleet K5-A-2: U+2028/U+2029 line/paragraph separators stripped."""
+        from huginn_muninn.contracts import _sanitize_for_log
+        result = _sanitize_for_log("line1 fake WARNING more")
+        assert " " not in result
+        assert " " not in result
+
+    def test_soft_hyphen_stripped(self):
+        """Fleet K2-A-4: U+00AD soft hyphen is a Cf character, must be stripped."""
+        from huginn_muninn.contracts import _sanitize_for_log
+        result = _sanitize_for_log("te­st")
+        assert "­" not in result
 
 
 class TestCNQSCriticalFailureCap:
