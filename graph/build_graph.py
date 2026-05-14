@@ -83,6 +83,15 @@ def _slugify(name: str) -> str:
     return slug.strip("-")
 
 
+def _normalize_actor_name(name: str) -> str:
+    """Normalize actor name for deduplication."""
+    n = name.strip()
+    for prefix in ("The ", "the "):
+        if n.startswith(prefix):
+            n = n[len(prefix):]
+    return n
+
+
 def _short_hash(text: str) -> str:
     """Return first 8 hex chars of SHA-256 digest of text."""
     return hashlib.sha256(text.encode()).hexdigest()[:8]
@@ -189,6 +198,7 @@ def _add_scenario(G: nx.DiGraph, r: dict, sid: str) -> None:
     """Add a scenario node to the graph."""
     bridge = r.get("bridge", {})
     gap = _compute_false_polarization_gap(bridge)
+    cp = r.get("confidence_profile") or {}
     G.add_node(f"scenario:{sid}", **{
         "node_type": "scenario",
         "label": sid,
@@ -199,36 +209,48 @@ def _add_scenario(G: nx.DiGraph, r: dict, sid: str) -> None:
         "confidence": r.get("overall_confidence", 0),
         "complexity": r.get("decomposition", {}).get("complexity", ""),
         "false_polarization_gap": gap,
+        "ecf_level": cp.get("ecf_level", "N/A"),
+        "ecf_composite": cp.get("composite", "N/A"),
+        "overall_confidence": r.get("overall_confidence", "N/A"),
     })
 
 
 def _add_actors(G: nx.DiGraph, r: dict, sid: str) -> None:
-    """Extract actors from intelligence.actors, dedup by slugified name.
+    """Extract actors from intelligence.actors, dedup by normalized slug.
 
-    Tracks all scenarios each actor appears in and keeps the maximum
-    credibility seen across those appearances.
+    Names are normalized (strip leading "The "/"the ", trim whitespace) so
+    that variants like "WHO", "The WHO", "the WHO" collapse to one node.
+    Tracks all scenarios each actor appears in, keeps the maximum
+    credibility seen, and records observed name aliases.
     """
     actors = r.get("intelligence", {}).get("actors", [])
     for actor in actors:
         name = actor.get("name", "")
         if not name:
             continue
-        aid = f"actor:{_slugify(name)}"
+        canonical = _normalize_actor_name(name)
+        aid = f"actor:{_slugify(canonical)}"
 
         if G.has_node(aid):
-            G.nodes[aid]["scenarios"].append(sid)
-            G.nodes[aid]["credibility"] = max(
-                G.nodes[aid]["credibility"],
+            node = G.nodes[aid]
+            if sid not in node["scenarios"]:
+                node["scenarios"].append(sid)
+            node["credibility"] = max(
+                node["credibility"],
                 actor.get("credibility", 0),
             )
+            aliases = node.setdefault("aliases", [])
+            if name != node["label"] and name not in aliases:
+                aliases.append(name)
         else:
             G.add_node(aid, **{
                 "node_type": "actor",
-                "label": name,
+                "label": canonical,
                 "actor_type": actor.get("type", "unknown"),
                 "motivation": actor.get("motivation", ""),
                 "credibility": actor.get("credibility", 0),
                 "scenarios": [sid],
+                "aliases": [name] if name != canonical else [],
             })
 
         G.add_edge(f"scenario:{sid}", aid, edge_type="features", label="features")
@@ -243,8 +265,8 @@ def _add_actor_relations(G: nx.DiGraph, r: dict, sid: str) -> None:
     """
     relations = r.get("intelligence", {}).get("relations", [])
     for rel in relations:
-        src = f"actor:{_slugify(rel.get('source_actor', ''))}"
-        tgt = f"actor:{_slugify(rel.get('target_actor', ''))}"
+        src = f"actor:{_slugify(_normalize_actor_name(rel.get('source_actor', '')))}"
+        tgt = f"actor:{_slugify(_normalize_actor_name(rel.get('target_actor', '')))}"
         if not G.has_node(src) or not G.has_node(tgt):
             continue
         rel_type = rel.get("relation_type", "unknown")

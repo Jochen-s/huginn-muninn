@@ -117,6 +117,12 @@ _NEWS_ENTITY_SUFFIXES = frozenset(
 _CAPITALISED_RUN = re.compile(
     r"\b[A-Z][a-zA-Z0-9]+(?:\s+(?:(?:the|of|for|and|&)\s+)?[A-Z][a-zA-Z0-9]+)+\b"
 )
+# K2-A-5: case-insensitive variant for confusable-normalized text (always lowercase).
+_CAPITALISED_RUN_CI = re.compile(
+    r"\b[a-zA-Z][a-zA-Z0-9]+(?:\s+(?:(?:the|of|for|and|&)\s+)?[a-zA-Z][a-zA-Z0-9]+)+\b",
+    re.IGNORECASE,
+)
+_NEWS_ENTITY_SUFFIXES_LOWER = frozenset(s.lower() for s in _NEWS_ENTITY_SUFFIXES)
 
 
 def _looks_like_named_entity(text: str) -> bool:
@@ -147,17 +153,26 @@ def _looks_like_named_entity(text: str) -> bool:
         if _BLOCKLIST_RE.search(check_text):
             return True
     # (2) Capitalised run heuristic + news-entity suffix guard.
-    for match in _CAPITALISED_RUN.finditer(text):
-        run = match.group(0)
-        tokens = [t for t in run.split() if t and t[0].isupper()]
-        if not tokens:
-            continue
-        # Three or more consecutive Capitalised tokens is strong signal.
-        if len(tokens) >= 3:
-            return True
-        # Two-token Capitalised run with a news-entity suffix.
-        if any(tok in _NEWS_ENTITY_SUFFIXES for tok in tokens):
-            return True
+    # K2-A-5: also run on confusable variants (always lowercase) using
+    # case-insensitive regex. Variants use suffix-only matching (the
+    # 3-token rule is too aggressive on lowercase prose).
+    for check_text in texts_to_check:
+        is_variant = check_text != text
+        if is_variant:
+            for match in _CAPITALISED_RUN_CI.finditer(check_text):
+                tokens = [t for t in match.group(0).split() if t and t[0].isalpha()]
+                if any(tok.lower() in _NEWS_ENTITY_SUFFIXES_LOWER for tok in tokens):
+                    return True
+        else:
+            for match in _CAPITALISED_RUN.finditer(check_text):
+                run = match.group(0)
+                tokens = [t for t in run.split() if t and t[0].isupper()]
+                if not tokens:
+                    continue
+                if len(tokens) >= 3:
+                    return True
+                if any(tok in _NEWS_ENTITY_SUFFIXES for tok in tokens):
+                    return True
     return False
 
 
@@ -771,7 +786,7 @@ class AnalysisResponse(BaseModel):
 
     data: dict
     suppressed_fields: list[str] = Field(default_factory=list)
-    api_version: str = "0.14.0"
+    api_version: str = "0.15.0"
     audit_redacted: bool = False
     experimental_fields: list[str] = Field(default_factory=list)
 

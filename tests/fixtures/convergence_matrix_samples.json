@@ -1,0 +1,86 @@
+{
+  "_comment": "Fixture data for ConvergenceMatrix gallery rendering. Synthetic data matching contracts.py schema.",
+  "_version": "sprint-8-v0.15.0",
+  "scenarios": {
+    "HS-01": {
+      "groups": [
+        {
+          "label": "anti-establishment left",
+          "political_position": "left",
+          "framing": "corporate capture of regulatory agencies",
+          "core_grievance": "institutional betrayal of public trust",
+          "proposed_solution": "radical transparency and corporate accountability"
+        },
+        {
+          "label": "libertarian right",
+          "political_position": "right",
+          "framing": "government overreach into personal health choices",
+          "core_grievance": "erosion of individual bodily autonomy",
+          "proposed_solution": "deregulation and informed consent"
+        },
+        {
+          "label": "wellness community",
+          "political_position": "cross-cutting",
+          "framing": "suppression of alternative health approaches",
+          "core_grievance": "dismissal of holistic and traditional medicine",
+          "proposed_solution": "integrative health framework"
+        }
+      ],
+      "convergence_type": "antagonist",
+      "convergence_strength": "HIGH",
+      "bridge_narratives": [
+        "institutional accountability transcends political alignment",
+        "bodily autonomy as shared value across the spectrum"
+      ],
+      "amplification_risk": "Cross-spectrum convergence on institutional distrust creates amplification surface for coordinated campaigns targeting specific health policies."
+    },
+    "GP-01": {
+      "groups": [
+        {
+          "label": "environmentalist left",
+          "political_position": "left",
+          "framing": "corporate greed prioritizing profit over planetary survival",
+          "core_grievance": "systemic failure to address climate emergency",
+          "proposed_solution": "radical restructuring of economic systems"
+        },
+        {
+          "label": "fiscal conservative",
+          "political_position": "center-right",
+          "framing": "economic disruption from hasty policy changes",
+          "core_grievance": "unaccountable international bodies imposing costs",
+          "proposed_solution": "market-based solutions with cost-benefit analysis"
+        }
+      ],
+      "convergence_type": "visionary",
+      "convergence_strength": "LOW",
+      "bridge_narratives": [
+        "economic fairness in transition costs"
+      ],
+      "amplification_risk": "Limited convergence reduces cross-spectrum amplification risk."
+    },
+    "SC-01": {
+      "groups": [
+        {
+          "label": "civil liberties advocates",
+          "political_position": "cross-cutting",
+          "framing": "surveillance state expansion under security pretexts",
+          "core_grievance": "erosion of constitutional privacy protections",
+          "proposed_solution": "strong encryption and warrant requirements"
+        },
+        {
+          "label": "national security hawks",
+          "political_position": "center-right",
+          "framing": "necessary intelligence capabilities against adversaries",
+          "core_grievance": "operational blindness from encryption",
+          "proposed_solution": "lawful access frameworks with oversight"
+        }
+      ],
+      "convergence_type": "antagonist",
+      "convergence_strength": "MEDIUM",
+      "bridge_narratives": [
+        "accountability and oversight serve both security and liberty"
+      ],
+      "amplification_risk": "Moderate convergence on oversight narratives; low risk of coordinated amplification."
+    }
+  }
+}

@@ -4,8 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Knowledge Graph | Huginn &amp; Muninn</title>
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+<style>  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
     --navy:   #1B2A4A;
@@ -581,6 +580,29 @@
     font-size: 0.85em;
   }
 
+/* Convergence Matrix (Sprint 8) */
+.convergence-header {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.convergence-table td:first-child { min-width: 140px; }
+.convergence-table td:nth-child(2) { white-space: nowrap; }
+.convergence-bridges, .convergence-risk {
+  margin-top: 16px;
+  padding: 12px 16px;
+  background: var(--bg);
+  border-radius: 8px;
+}
+.convergence-bridges h4, .convergence-risk h4 {
+  font-size: 0.95em;
+  color: var(--navy);
+  margin-bottom: 8px;
+}
+.convergence-bridges ul { padding-left: 20px; }
+.convergence-bridges li { margin-bottom: 4px; }
+.convergence-risk p { font-size: 0.95em; color: var(--gray); }
+
 
   #cy {
     width: 100%;
@@ -713,8 +735,8 @@
       </select>
     </div>
     <div>
-      <label for="filter-category">Category:</label>
-      <select id="filter-category">
+      <label for="category-filter">Category:</label>
+      <select id="category-filter">
         <option value="all">All categories</option>
         <option value="Health & Science">Health & Science</option>
         <option value="Geopolitics">Geopolitics</option>
@@ -1014,6 +1036,15 @@
       h += detailField('Category', d.category);
       h += detailField('Version', d.version);
       h += detailField('Confidence', d.confidence ? (d.confidence * 100).toFixed(0) + '%' : '');
+      if (d.ecf_level && d.ecf_level !== 'N/A') {
+        h += detailField('ECF level', d.ecf_level);
+      }
+      if (d.ecf_composite != null && d.ecf_composite !== 'N/A') {
+        var composite = typeof d.ecf_composite === 'number'
+          ? (d.ecf_composite * 100).toFixed(0) + '%'
+          : String(d.ecf_composite);
+        h += detailField('ECF composite', composite);
+      }
       if (d.false_polarization_gap != null) {
         var gapPct = (d.false_polarization_gap * 100).toFixed(0);
         h += detailField('Shared Reality', gapPct + '% of underlying concerns are shared across perspectives');
@@ -1023,10 +1054,18 @@
       h += detailField('Actor type', d.actor_type);
       h += detailField('Credibility', d.credibility ? (d.credibility * 100).toFixed(0) + '%' : '');
       h += detailField('Motivation', d.motivation);
-      h += detailField('Appears in', (d.scenarios || []).join(', '));
+      var actorScenarios = d.scenarios || [];
+      h += detailField('Scenario count', actorScenarios.length);
+      h += detailField('Appears in', actorScenarios.join(', '));
+      if (d.aliases && d.aliases.length) {
+        h += detailField('Also seen as', d.aliases.join(', '));
+      }
     } else if (d.node_type === 'technique') {
       h += detailField('DISARM ID', d.disarm_id);
       h += detailField('Max confidence', d.max_confidence ? (d.max_confidence * 100).toFixed(0) + '%' : '');
+      if (d.flicc_category) {
+        h += detailField('Pattern type', d.flicc_category);
+      }
       h += detailField('Used in', (d.scenarios || []).join(', '));
     } else if (d.node_type === 'technique_reveal') {
       h += detailField('Pattern type', d.pattern_type);
@@ -1071,7 +1110,7 @@
 
   function attachControls() {
     document.getElementById('filter-type').addEventListener('change', applyFilters);
-    document.getElementById('filter-category').addEventListener('change', applyFilters);
+    document.getElementById('category-filter').addEventListener('change', applyFilters);
     document.getElementById('filter-search').addEventListener('input', applyFilters);
     document.getElementById('filter-perspective').addEventListener('change', applyFilters);
 
@@ -1104,7 +1143,7 @@
 
   function applyFilters() {
     var typeFilter = document.getElementById('filter-type').value;
-    var catFilter = document.getElementById('filter-category').value;
+    var catFilter = document.getElementById('category-filter').value;
     var search = document.getElementById('filter-search').value.toLowerCase().trim();
     var perspective = document.getElementById('filter-perspective').value;
     var emphTypes = perspective !== 'all' ? PERSPECTIVE_EMPHASIS[perspective] || [] : [];

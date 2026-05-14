@@ -3,6 +3,32 @@
 All notable changes to Huginn & Muninn are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.15.0] - 2026-05-14 -- "Convergence Lens"
+
+Sprint 8. ConvergenceMatrix gallery rendering, methodology sync enforcement, CSS extraction, confusable capitalised-run hardening, knowledge graph improvements. 423 tests in standard baseline, zero regression.
+
+### Added
+
+- **ConvergenceMatrix gallery rendering**: `renderConvergenceMatrix()` in `gallery/build.js` shows cross-ideological convergence groups, political positions, bridge narratives, and amplification risk. Renders as a visual table between gap detection and Universal Needs sections. Fixture data for HS-01 (HIGH antagonist, 3 groups), GP-01 (LOW visionary, 2 groups), and SC-01 (MEDIUM antagonist, 2 groups).
+- **Methodology sync enforcement**: 16-test suite (`test_methodology_sync.py`) verifying ECF weights, levels, source tiers, CNQS dimensions, and sync warnings stay aligned across `docs/confidence-methodology.md`, `buildMethodologyPage()` in `build.js`, and `ConfidenceProfile._WEIGHTS` in `contracts.py`. Three-way sync with scoped brace-depth parsing.
+- **K2-A-5 capitalised-run on confusable variants**: `_looks_like_named_entity()` now runs the capitalised-run heuristic on confusable-normalized text (always lowercase) using case-insensitive regex with suffix-only matching. Closes Klingon fleet finding K2-A-5 where entities like "Evening Standard" with Cyrillic homoglyphs bypassed both blocklist and capitalised-run checks.
+- **Knowledge graph actor deduplication**: `_normalize_actor_name()` strips "The "/"the " prefixes and collapses variant names to canonical nodes with alias tracking. Relations normalized to match canonical slugs.
+- **Knowledge graph ECF integration**: Scenario nodes now carry `ecf_level`, `ecf_composite`, and `overall_confidence` attributes. Enhanced node detail panel shows ECF data for scenarios, scenario count for actors, pattern type for techniques.
+- **Category filter** in knowledge graph page for scenario type filtering.
+- **Gallery convergence CSS**: Dedicated styles for convergence header, table, bridge narratives, and amplification risk sections.
+
+### Changed
+
+- `api_version` bumped to `"0.15.0"`.
+- **SHARED_CSS extraction**: 577-line inline CSS template literal extracted from `gallery/build.js` to `gallery/shared.css`. Build reads via `fs.readFileSync`. All generated HTML output byte-identical.
+- `category-filter` element ID standardized in graph page controls.
+
+### Review discipline
+
+- K2-A-5 implementation required discovering that `confusables` library always returns lowercase, making the naive loop fix a no-op. Redesigned to use suffix-only matching for confusable variants (3-token rule too aggressive on lowercase prose). Two pre-existing false-positive regressions caught and fixed during development.
+- Spec reviewer caught 4 issues in methodology sync tests: VERY_LOW vs VERY LOW gap, loose tier-weight regex, scoping issues. All fixed before commit.
+- PR 3 ConvergenceMatrix fixtures validated against contracts.py model at test time.
+
 ## [0.14.0] - 2026-05-13 -- "Epistemic Equity"
 
 Sprints 5-7. Multi-dimensional confidence assessment, epistemic provenance tracking, and security hardening. 386 tests in standard baseline, zero regression.

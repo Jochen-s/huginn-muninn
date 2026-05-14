@@ -257,6 +257,7 @@ Full log with falsification criteria: [REJECTIONS.md](REJECTIONS.md).
 | v0.8.0 | 228 |
 | v0.9.0 | 511 |
 | v0.11.0 | 544 |
+| v0.15.0 | 423 (standard baseline) |
 | v0.14.0 | 386 (standard baseline) |
 
 28 real-world scenarios validated across health & science, geopolitics, environment, events, technology, and media. Six COVID scenarios re-run with full ECF and provenance data (v0.14.0).
@@ -319,6 +320,6 @@ If you reference this work in an academic context, please cite the underlying re
 
 ---
 
-*Current version: v0.14.0 "Epistemic Equity". 386 tests. The mission hasn't changed: de-polarize, find common ground, then make the tool unnecessary.*
+*Current version: v0.15.0 "Convergence Lens". 423 tests. The mission hasn't changed: de-polarize, find common ground, then make the tool unnecessary.*
 
 *Author: Jochen Schmiedbauer*

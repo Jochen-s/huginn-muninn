@@ -1853,6 +1853,53 @@ class TestConfusableHomoglyphDetection:
         assert _looks_like_named_entity(long_text) is False
 
 
+class TestConfusableCapitalisedRun:
+    """K2-A-5: capitalised-run heuristic must also fire on confusable variants.
+
+    The confusables library returns lowercase, so the case-sensitive
+    _CAPITALISED_RUN regex misses them. K2-A-5 adds a case-insensitive
+    variant for confusable-normalized text.
+
+    Test entities are chosen to NOT be in the blocklist so only the
+    capitalised-run path can detect them.
+    """
+
+    def test_confusable_two_token_with_news_suffix(self):
+        """'Еvening Standard' with Cyrillic Е (U+0415) bypasses NFKC but
+        confusable-normalizes to 'evening standard'. 'Standard' is a
+        NEWS_ENTITY_SUFFIX. Must be detected via K2-A-5 path."""
+        text = "Еvening Standard coverage"
+        assert _looks_like_named_entity(text) is True
+
+    def test_confusable_three_token_run(self):
+        """'Sydnеy Morning Herald' with Cyrillic е (U+0435) in Sydney.
+        Three-token run should be detected via K2-A-5."""
+        text = "Sydnеy Morning Herald reported"
+        assert _looks_like_named_entity(text) is True
+
+    def test_confusable_press_suffix(self):
+        """'Dеtroit Free Press' with Cyrillic е. Three tokens + 'Press'
+        suffix. Must be detected."""
+        text = "Dеtroit Free Press investigation"
+        assert _looks_like_named_entity(text) is True
+
+    def test_ascii_capitalised_run_still_works(self):
+        """Regression: plain ASCII runs detected by original case-sensitive
+        regex must not regress."""
+        assert _looks_like_named_entity("The New York Times reported") is True
+        assert _looks_like_named_entity("Evening Standard coverage") is True
+
+    def test_non_entity_confusable_not_flagged(self):
+        """Confusable chars in generic lowercase text must not trigger
+        false positive. Single-word confusable has no multi-token run."""
+        assert _looks_like_named_entity("institutional rеsponse") is False
+
+    def test_confusable_single_token_not_flagged(self):
+        """A single confusable word (not a multi-word run, not in blocklist)
+        should not be flagged by the capitalised-run heuristic."""
+        assert _looks_like_named_entity("the Rеporter said") is False
+
+
 class TestLogInjectionSanitization:
     """K5-A: Control characters stripped before logging."""
 
