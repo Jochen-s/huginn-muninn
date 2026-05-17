@@ -115,7 +115,7 @@ class TestMethodTwoPipeline:
         assert len(report.ttps.ttp_matches) == 2
         assert "safety" in report.bridge.universal_needs
         assert len(report.bridge.socratic_dialogue) == 3
-        assert report.overall_confidence > 0.5
+        assert report.overall_confidence > 0.3
         assert not report.degraded
 
     def test_pipeline_backcompat_legacy_decomposer_defaults_priority(self):

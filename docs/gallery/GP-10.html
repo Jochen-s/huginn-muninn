@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GP-10: Germany is experiencing a deliberate demographic transformation. The... &mdash; Huginn &amp; Muninn</title>
+  <meta name="description" content="6-agent AI pipeline analysis of: Germany is experiencing a deliberate demographic transformation. The Potsdam meeting revealed that Remigration is the only serious policy response....">
+  <style>  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy:   #1B2A4A;
+    --red:    #C0392B;
+    --teal:   #16A085;
+    --bg:     #F0F4F8;
+    --white:  #FFFFFF;
+    --amber:  #E67E22;
+    --green:  #27AE60;
+    --gray:   #5D6D7E;
+    --muted:  #7F8C8D;
+    --border: #D0D9E4;
+    --font:   -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  }
+
+  html { font-size: 16px; }
+
+  body {
+    font-family: var(--font);
+    font-weight: 400;
+    line-height: 1.6;
+    color: #2C3E50;
+    background: var(--white);
+  }
+
+  a { color: var(--teal); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  h1, h2, h3, h4 { font-weight: 700; color: var(--navy); line-height: 1.25; }
+
+  /* Layout */
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+  .content   { max-width: 800px;  margin: 0 auto; padding: 0 24px; }
+
+  /* Header */
+  .site-header {
+    background: var(--navy);
+    color: var(--white);
+    padding: 48px 0 40px;
+  }
+  .site-header h1 { color: var(--white); font-size: 2rem; margin-bottom: 8px; }
+  .site-header .subtitle {
+    font-size: 1.05rem;
+    color: #A8BCCF;
+    max-width: 680px;
+    margin-bottom: 16px;
+  }
+  .site-header .intro {
+    font-size: 0.95rem;
+    color: #8AA5BC;
+    max-width: 720px;
+    line-height: 1.7;
+  }
+
+  /* Nav bar */
+  .site-nav {
+    background: #152138;
+    padding: 10px 0;
+  }
+  .site-nav a {
+    color: #8AA5BC;
+    font-size: 0.875rem;
+  }
+  .site-nav a:hover { color: var(--white); }
+  .site-nav a.active { color: var(--white); font-weight: 600; }
+
+  /* Category sections */
+  .category-section { padding: 48px 0; border-bottom: 1px solid var(--border); }
+  .category-section:last-child { border-bottom: none; }
+
+  .category-header { margin-bottom: 24px; }
+  .category-header h2 { font-size: 1.5rem; margin-bottom: 6px; }
+  .category-header .category-intro { color: var(--gray); font-size: 0.95rem; }
+
+  /* Cards grid */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+
+  .card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    transition: box-shadow 0.15s;
+    display: flex;
+    flex-direction: column;
+  }
+  .card:hover { box-shadow: 0 4px 16px rgba(27, 42, 74, 0.12); }
+
+  .card-id {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--gray);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .card-claim {
+    font-size: 0.95rem;
+    color: #2C3E50;
+    flex: 1;
+    margin-bottom: 14px;
+    line-height: 1.5;
+  }
+
+  .card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+  }
+
+  .card-link {
+    margin-top: 14px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--teal);
+  }
+
+  /* Badges */
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+  }
+  .badge-version  { background: #EAF0F7; color: var(--navy); }
+  .methodology-link { font-size: 0.85em; color: var(--accent); text-decoration: none; margin-left: 0.3em; }
+  .methodology-link:hover { text-decoration: underline; }
+  .badge-easy     { background: #EAF6EE; color: #1E8449; }
+  .badge-medium   { background: #FEF9E7; color: #7D6608; }
+  .badge-hard     { background: #FDEDEC; color: var(--red); }
+  .badge-kernel-true  { background: #EAF6EE; color: #1E8449; }
+  .badge-kernel-false { background: #F2F3F4; color: var(--gray); }
+  .badge-pass     { background: #EAF6EE; color: #1E8449; }
+  .badge-warnings { background: #FEF9E7; color: #7D6608; }
+  .badge-fail     { background: #FDEDEC; color: var(--red); }
+  .badge-systematic { background: #FDEDEC; color: var(--red); }
+  .badge-repeated   { background: #E8F8F5; color: var(--teal); }
+  .badge-isolated   { background: #FEF5E7; color: var(--amber); }
+  .badge-severity   { background: #FDEDEC; color: var(--red); }
+
+  /* Footer */
+  .site-footer {
+    background: var(--navy);
+    color: #8AA5BC;
+    padding: 32px 0;
+    margin-top: 48px;
+    font-size: 0.875rem;
+  }
+  .site-footer a { color: #8AA5BC; }
+  .site-footer a:hover { color: var(--white); }
+
+  /* ---- Scenario page styles ---- */
+
+  .scenario-header {
+    background: var(--navy);
+    padding: 40px 0 32px;
+    color: var(--white);
+  }
+  .scenario-header .back-link {
+    font-size: 0.875rem;
+    color: #8AA5BC;
+    display: inline-block;
+    margin-bottom: 16px;
+  }
+  .scenario-header .back-link:hover { color: var(--white); }
+  .scenario-header h1 {
+    color: var(--white);
+    font-size: 1.6rem;
+    margin-bottom: 12px;
+    line-height: 1.3;
+  }
+  .scenario-header .header-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .metrics-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    margin: 24px 0;
+  }
+  .metrics-table th {
+    text-align: left;
+    background: var(--bg);
+    padding: 10px 14px;
+    font-weight: 600;
+    color: var(--navy);
+    border-bottom: 2px solid var(--border);
+  }
+  .metrics-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    color: #2C3E50;
+  }
+  .metrics-table tr:last-child td { border-bottom: none; }
+
+  .section {
+    padding: 40px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .section:last-child { border-bottom: none; }
+
+  .section h2 {
+    font-size: 1.3rem;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--bg);
+    letter-spacing: -0.01em;
+  }
+
+  .section p { margin-bottom: 16px; color: #2C3E50; }
+  .section p:last-child { margin-bottom: 0; }
+
+  .intro-note {
+    color: var(--gray);
+    font-size: 0.875rem;
+    font-style: italic;
+    margin-bottom: 16px;
+  }
+
+  /* Prose blocks: long-form text with proper paragraph spacing */
+  .prose {
+    font-size: 0.95rem;
+    line-height: 1.75;
+    color: #34495E;
+  }
+  .prose p {
+    margin-bottom: 16px;
+  }
+  .prose p:last-child { margin-bottom: 0; }
+
+  /* Needs pills */
+  .needs-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .need-item {
+    background: var(--bg);
+    border-left: 3px solid var(--teal);
+    padding: 10px 14px;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+  .need-name {
+    font-weight: 700;
+    color: var(--navy);
+    margin-right: 6px;
+  }
+
+  /* Technique cards */
+  .technique-card {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+  .technique-header {
+    background: var(--bg);
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .technique-name {
+    font-weight: 700;
+    color: var(--navy);
+    font-size: 1rem;
+    flex: 1;
+  }
+  .technique-body { padding: 16px; }
+  .technique-field { margin-bottom: 14px; }
+  .technique-field:last-child { margin-bottom: 0; }
+  .technique-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--gray);
+    margin-bottom: 4px;
+  }
+  .technique-text { font-size: 0.9rem; color: #2C3E50; line-height: 1.6; }
+
+  /* Socratic dialogue */
+  .dialogue-round { margin-bottom: 28px; }
+  .dialogue-round:last-child { margin-bottom: 0; }
+  .round-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 10px;
+  }
+  .round-1 .round-label { color: var(--teal); }
+  .round-2 .round-label { color: var(--navy); }
+  .round-3 .round-label { color: #6C3483; }
+
+  .dialogue-bubble {
+    padding: 20px 24px;
+    border-radius: 8px;
+    font-size: 0.92rem;
+    line-height: 1.75;
+  }
+  .dialogue-bubble p { margin-bottom: 12px; }
+  .dialogue-bubble p:last-child { margin-bottom: 0; }
+  .round-1 .dialogue-bubble { background: #EAF7F4; border-left: 4px solid var(--teal); }
+  .round-2 .dialogue-bubble { background: #EAF0F7; border-left: 4px solid var(--navy); }
+  .round-3 .dialogue-bubble { background: #F5EEF8; border-left: 4px solid #6C3483; }
+
+  /* Reframe */
+  .reframe-block {
+    border-left: 4px solid var(--amber);
+    background: #FEF9E7;
+    padding: 20px 20px 20px 24px;
+    border-radius: 0 8px 8px 0;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    font-style: italic;
+    color: #2C3E50;
+  }
+
+  /* Audit findings */
+  .audit-summary {
+    background: var(--bg);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 16px;
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+  .findings-list { list-style: none; }
+  .finding-item {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+  .finding-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: var(--bg);
+    cursor: default;
+  }
+  .finding-category {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--gray);
+  }
+  .finding-severity-low    { color: var(--teal); font-size: 0.75rem; font-weight: 600; }
+  .finding-severity-medium { color: var(--amber); font-size: 0.75rem; font-weight: 600; }
+  .finding-severity-high     { color: var(--red); font-size: 0.75rem; font-weight: 600; }
+  .finding-severity-critical { color: #8B0000; font-size: 0.75rem; font-weight: 700; }
+  .finding-description { font-size: 0.875rem; color: #2C3E50; }
+
+  /* Scoped diagnostics (v0.8.0+) */
+  .diagnostics-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 12px;
+  }
+  @media (max-width: 640px) { .diagnostics-grid { grid-template-columns: 1fr; } }
+  .diagnostic-card {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    background: var(--bg);
+  }
+  .diagnostic-card h4 {
+    margin: 0 0 6px;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--gray);
+  }
+  .diagnostic-card p { margin: 0; font-size: 0.9rem; line-height: 1.6; }
+  .diagnostic-note { font-size: 0.78rem; color: var(--gray); font-style: italic; margin-bottom: 4px !important; }
+  .posture-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    background: #F5F5F5;
+    color: #555;
+  }
+  .posture-inoculation_first  { background: #FFF3E0; color: #E65100; }
+  .posture-relational_first   { background: #E3F2FD; color: #1565C0; }
+  .pattern-density-warning {
+    background: #FFF8E1;
+    border-left: 4px solid var(--amber);
+    padding: 10px 14px;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.875rem;
+    margin-top: 8px;
+  }
+  .finding-body { padding: 10px 14px; border-top: 1px solid var(--border); }
+  .finding-rec {
+    font-size: 0.8rem;
+    color: var(--gray);
+    margin-top: 4px;
+  }
+  .finding-rec strong { color: #2C3E50; }
+
+  /* Scenario navigation */
+  .scenario-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 0;
+    border-top: 1px solid var(--border);
+    margin-top: 16px;
+    gap: 16px;
+  }
+  .scenario-nav a {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--teal);
+  }
+  .scenario-nav .disabled { color: var(--gray); pointer-events: none; }
+
+  /* Responsive */
+  /* Evaluation methodology table */
+  .evaluation-section { background: #FAFBFD; margin: 0 -32px; padding: 40px 32px; border-bottom: 1px solid var(--border); }
+  .eval-summary { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+  .eval-overall { font-size: 2rem; font-weight: 700; color: var(--navy); }
+  .eval-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  .eval-table th { text-align: left; padding: 10px 12px; border-bottom: 2px solid var(--border); color: var(--gray); font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; }
+  .eval-table td { padding: 10px 12px; border-bottom: 1px solid #EEF1F5; }
+  .eval-table td:first-child { font-weight: 600; text-transform: capitalize; }
+  .eval-weight, .eval-score { text-align: center; font-variant-numeric: tabular-nums; }
+  .eval-status { text-align: center; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.04em; }
+  .eval-pass .eval-status { color: var(--green); }
+  .eval-partial .eval-status { color: var(--amber); }
+  .eval-fail .eval-status { color: var(--red); }
+  .eval-desc { color: var(--gray); font-size: 0.8rem; }
+  .eval-note { margin-top: 16px; font-size: 0.82rem; color: var(--gray); line-height: 1.6; }
+
+  /* Essay page styles */
+  .essay-prose {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #2C3E50;
+    max-width: 760px;
+  }
+  .essay-prose h2 {
+    font-size: 1.35rem;
+    margin-top: 40px;
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--bg);
+  }
+  .essay-prose h3 {
+    font-size: 1.1rem;
+    margin-top: 28px;
+    margin-bottom: 10px;
+    color: var(--navy);
+  }
+  .essay-prose h4 {
+    font-size: 1rem;
+    margin-top: 20px;
+    margin-bottom: 8px;
+    color: #34495E;
+  }
+  .essay-prose p { margin-bottom: 18px; }
+  .essay-prose ul, .essay-prose ol { margin: 0 0 18px 24px; }
+  .essay-prose li { margin-bottom: 8px; line-height: 1.75; }
+  .essay-prose strong { color: var(--navy); font-weight: 700; }
+  .essay-prose em { font-style: italic; }
+  .essay-prose hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 36px 0;
+  }
+  .essay-prose blockquote {
+    border-left: 4px solid var(--teal);
+    padding: 8px 20px;
+    margin: 20px 0;
+    background: var(--bg);
+    color: #34495E;
+    font-style: italic;
+  }
+  .essay-prose code {
+    background: var(--bg);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: 'SFMono-Regular', Consolas, monospace;
+    font-size: 0.88em;
+  }
+  .essay-prose .essay-meta {
+    color: var(--gray);
+    font-size: 0.875rem;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .essay-prose .references {
+    font-size: 0.88rem;
+    color: #34495E;
+    line-height: 1.65;
+  }
+  .essay-prose .references p { margin-bottom: 10px; }
+
+  /* Essay card styles (index page) */
+  .essay-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px;
+    transition: box-shadow 0.15s;
+    display: flex;
+    flex-direction: column;
+  }
+  .essay-card:hover { box-shadow: 0 4px 16px rgba(27, 42, 74, 0.12); }
+  .essay-card .card-id { color: #6C3483; }
+  .essay-card h3 {
+    font-size: 1.15rem;
+    margin-bottom: 8px;
+    line-height: 1.35;
+  }
+  .essay-card .essay-summary {
+    color: #34495E;
+    font-size: 0.92rem;
+    line-height: 1.6;
+    flex: 1;
+    margin-bottom: 14px;
+  }
+  .essay-card .essay-date {
+    font-size: 0.8rem;
+    color: var(--gray);
+    margin-bottom: 10px;
+  }
+
+  @media (max-width: 640px) {
+    .site-header h1 { font-size: 1.5rem; }
+    .cards-grid { grid-template-columns: 1fr; }
+    .scenario-header h1 { font-size: 1.3rem; }
+    .scenario-nav { flex-direction: column; align-items: flex-start; }
+    .metrics-table { font-size: 0.8rem; }
+    .metrics-table th, .metrics-table td { padding: 8px 10px; }
+    .essay-prose { font-size: 0.95rem; }
+    .essay-prose h2 { font-size: 1.2rem; }
+  }
+
+  .gap-warning {
+    background: #fff3cd;
+    border: 1px solid #ffc107;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin: 12px 0;
+    font-size: 0.95em;
+  }
+  .dim-weight {
+    color: var(--muted);
+    font-size: 0.85em;
+  }
+
+/* Convergence Matrix (Sprint 8) */
+.convergence-header {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.convergence-table td:first-child { min-width: 140px; }
+.convergence-table td:nth-child(2) { white-space: nowrap; }
+.convergence-bridges, .convergence-risk {
+  margin-top: 16px;
+  padding: 12px 16px;
+  background: var(--bg);
+  border-radius: 8px;
+}
+.convergence-bridges h4, .convergence-risk h4 {
+  font-size: 0.95em;
+  color: var(--navy);
+  margin-bottom: 8px;
+}
+.convergence-bridges ul { padding-left: 20px; }
+.convergence-bridges li { margin-bottom: 4px; }
+.convergence-risk p { font-size: 0.95em; color: var(--gray); }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a href="index.html">Gallery</a>
+    <a href="graph.html">Knowledge Graph</a>
+  </div>
+</nav>
+
+<header class="scenario-header">
+  <div class="content">
+    <a class="back-link" href="index.html">&larr; Back to gallery</a>
+    <h1>GP-10: Germany is experiencing a deliberate demographic transformation. The Potsdam meeting revealed that Remigration is the only serious policy response. The AfD is persecuted by the Verfassungsschutz precisely because it speaks truths the establishment cannot tolerate.</h1>
+    <div class="header-meta">
+      <span class="badge badge-version">v1</span>
+      <span class="badge badge-medium">Medium</span>
+      <span class="badge badge-kernel-false">No Clear Kernel</span>
+      <span class="badge badge-version">Geopolitics</span>
+    </div>
+  </div>
+</header>
+
+<main class="content">
+
+  <div class="section">
+    <h2>Pipeline Metrics</h2>
+    <table class="metrics-table">
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Sub-claims</td><td>8</td></tr>
+        <tr><td>Actors identified</td><td>13</td></tr>
+        <tr><td>TTP matches</td><td>17</td></tr>
+        <tr><td>Audit verdict</td><td><span class="badge badge-warnings">PASS WITH WARNINGS</span></td></tr>
+        <tr><td>Pipeline version</td><td>v5-epistemic-equity</td></tr>
+        <tr><td>Overall confidence</td><td>31% <a href="confidence-methodology.html" class="methodology-link" title="How is this score calculated?">[?]</a></td></tr>
+        <tr><td>Source tiers</td><td>T1: 7, T2: 4, T3: 2, T4: 4</td></tr>
+        <tr><td>Epistemic traditions</td><td><span class="badge badge-version">Western Academic: 7</span> <span class="badge badge-version">Western Institutional: 5</span> <span class="badge badge-version">Community Experiential: 3</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  
+    <div class="section">
+      <h2>Evidence Certainty Framework</h2>
+      <p class="intro-note">Multi-dimensional confidence assessment inspired by GRADE methodology. <a href="confidence-methodology.html" class="methodology-link">[?]</a></p>
+      <table class="metrics-table">
+        <thead><tr><th>Dimension</th><th>Score</th></tr></thead>
+        <tbody>
+          <tr><td>Evidence Quality <span class="dim-weight">(30%)</span></td><td>28%</td></tr><tr><td>Source Reliability <span class="dim-weight">(20%)</span></td><td>22%</td></tr><tr><td>Claim Testability <span class="dim-weight">(15%)</span></td><td>45%</td></tr><tr><td>Expert Consensus <span class="dim-weight">(20%)</span></td><td>72%</td></tr><tr><td>Internal Coherence <span class="dim-weight">(15%)</span></td><td>22%</td></tr>
+          <tr style="font-weight:600;border-top:2px solid var(--border)"><td>Composite (N/A)</td><td>0%</td></tr>
+        </tbody>
+      </table>
+    </div>
+  <div class="gap-warning"><strong>Epistemic diversity gap:</strong> The dominant German treatment of replacement rhetoric, both pro and anti, is produced inside the western_academic and western_institutional traditions, with the rhetoric itself originating in those same traditions (Grant via the Reich, Sarrazin via the Bundesbank, Camus via Schnellroda, Sellner via Antaios). The community_experiential perspective of those described as the replacing population is systematically peripheral to the national political conversation about them, even though Germany is uniquely positioned to center those voices: Turkish-German communities have been present since 1961 and now span three to four generations; Vietnamese-German, Russian-German, Polish-German, Yugoslav-German, Syrian-German, Afghan-German, and Afro-German communities all have rich civic and intellectual production. The Hanau families&#39; campaign (Initiative 19. Februar), the NSU families&#39; decade-long fight for state accountability, the work of TGD, EOTO, ISD, DOMiD, Mediendienst Integration, Neue Deutsche Medienmacher*innen, the postmigrantische theory of Foroutan and El-Mafaalani, and the everyday testimony of residents subject to AfD rhetoric are the missing center of most analyses. Indigenous knowledge and global_south_academic perspectives on diaspora, mobility, and pluralism are also nearly absent from the German debate, which has continued to treat these questions as if they were settled within German traditions alone. The specifically German omission is doubled by the Erinnerungskultur framework: the discourse about migrants is conducted in a country where the most authoritative voices on what &#39;Nie wieder&#39; means should be those whose families experienced the alternative, and yet the conversation has often run without them. This is a structural omission rather than an oversight; it is part of how the rhetoric sustains itself.</div>
+
+  
+  <div class="section">
+    <h2>Convergence Matrix</h2>
+    <p class="intro-note">Cross-ideological convergence mapping showing how different political groups engage with the same claim (Mudde/Kaltwasser thin-centered ideology framework).</p>
+    <div class="convergence-header">
+      <span class="badge" style="background:var(--amber);color:white">MEDIUM convergence</span>
+      <span class="badge badge-version">Antagonist</span>
+    </div>
+    <table class="metrics-table convergence-table">
+      <thead>
+        <tr><th>Group</th><th>Position</th><th>Framing</th><th>Core Grievance</th></tr>
+      </thead>
+      <tbody>
+    <tr>
+      <td><strong>German ethnonationalist right (AfD, Fluegel-adjacent network, IBD, IfS Schnellroda, Compact, Junge Alternative)</strong></td>
+      <td><span class="badge badge-version">right</span></td>
+      <td>The German Volk or Leitkultur is under existential threat from non-European, especially Muslim, immigration and asylum policy, executed or permitted by complicit Altparteien elites and Brussels, with the BfV deployed as a politicized instrument to silence the party that names this.</td>
+      <td>Loss of cultural and demographic primacy in territory historically associated with the German nation, deep distrust of the postwar political order, eastern German sense of economic and political marginalization since 1990, and the felt experience of being told that legitimate concerns are racist.</td>
+    </tr>
+    <tr>
+      <td><strong>Union center-right voter base under Merz leadership (parts of CDU/CSU drifting rightward, Werteunion-adjacent)</strong></td>
+      <td><span class="badge badge-version">center-right</span></td>
+      <td>Immigration is poorly managed especially since 2015, integration is failing in specific neighborhoods and after specific events (Solingen, Aschaffenburg, Mannheim), and the federal state has not been honest about the trade-offs in asylum and family reunification policy.</td>
+      <td>Frustration with the Ampel coalition&#39;s perceived migration management failures, the post-Solingen and post-Aschaffenburg public mood, and a sense that legitimate concerns about specific neighborhoods or specific high-profile cases have been dismissed as racism by progressive opponents.</td>
+    </tr>
+    <tr>
+      <td><strong>Anti-globalization economic left (parts of BSW under Wagenknecht, parts of older Linke base, some union currents)</strong></td>
+      <td><span class="badge badge-version">left</span></td>
+      <td>Mass labor migration and asylum policy are used by employers to undercut wages, weaken unions, strain the welfare state, and accelerate deindustrialization, and the political class is complicit. This is a legitimate policy critique that shares some surface-level conclusions with ethnonationalist restriction but from fundamentally different premises and motivations.</td>
+      <td>Erosion of working-class bargaining power, housing costs in cities, healthcare and educational strain, eastern German economic conditions, and pension precarity, attributed to capital mobility, neoliberal policy, and migration policy that favors employers and undercuts the welfare state.</td>
+    </tr>
+    <tr>
+      <td><strong>Cross-cutting cultural-conservative voters (parts of CDU/CSU traditional Catholic and Protestant milieu, parts of older eastern Land conservative base, religious-conservative voters across denominations)</strong></td>
+      <td><span class="badge badge-version">cross-cutting</span></td>
+      <td>Rapid social, religious, and demographic change is destabilizing community life and the transmission of a particular German, Christian, and family-centered way of life. This represents traditional cultural conservatism, not ethnonationalism; the convergence is in the direction of preferred policy outcomes, not in the underlying analysis.</td>
+      <td>Sense of cultural dispossession in specific neighborhoods, secularization, generational transmission concerns, and the perception that traditional values are no longer recognized in public life including in schools, broadcasting, and civic ceremony.</td>
+    </tr></tbody>
+    </table>
+    <div class="convergence-bridges">
+        <h4>Bridge Narratives</h4>
+        <ul><li>Housing affordability in Berlin, Munich, Hamburg, Frankfurt, and increasingly in eastern cities like Leipzig and Dresden frames newcomers as competitors for scarce housing and social housing, bridging the right-wing identity frame and the left-wing economic frame around a single visible scarcity.</li><li>Healthcare waiting times, GP shortages especially in rural eastern Germany, and educational strain (Brennpunktschulen) are attributed to immigration in the right frame and to austerity, federalism failures, and labor shortages in the left frame, sharing the same surface experience.</li><li>Pension viability and welfare-state sustainability against the demographic transition provide a frame in which both right ethnonationalists (newcomers as net cost) and left economic nationalists (capital and migration policy as threat to social insurance) arrive at restrictionist conclusions from different premises.</li><li>Failed integration narratives anchored in post-2015 cohorts and specific high-profile attacks (Berlin Christmas market 2016, Wuerzburg 2021, Solingen 2024, Aschaffenburg 2025, Magdeburg 2024) provide a shared visual and emotional shorthand that all four groups can invoke without sharing the same theory of why.</li><li>Eastern German sense of economic and political marginalization since 1990 connects ethnonationalist anti-immigration framing with left-economic anti-elite framing in a regional political identity, particularly in Thuringia, Saxony, Brandenburg, and Saxony-Anhalt where AfD and BSW between them now hold large shares of the electorate.</li></ul>
+      </div>
+    <div class="convergence-risk">
+        <h4>Amplification Risk</h4>
+        <p>MEDIUM: Four groups arrive at restrictionist conclusions independently from different framings of overlapping surface experience. The convergence is antagonistic rather than orchestrated: there is no documented joint operation across the four groups, no shared command structure, and no synchronized campaign. The groups arrive at adjacent conclusions through parallel rather than coordinated paths. This makes the position unusually robust because rebuttals tailored to one framing do not touch the others, and the political risk is that actors with explicit replacement framing (AfD) harvest the votes of all four groups by speaking in the surface vocabulary (housing, healthcare, integration, eastern economic conditions) without having to make the underlying claim explicit. The Brandmauer between Union and AfD was designed to interrupt this harvesting at the institutional level; the late January 2025 Bundestag votes in which Union motions passed with AfD support indicated the formal Brandmauer is eroding at the legislative behavior level even where the coalition prohibition formally survives. Notable absence of evidence: there is no public documentation of a coordinated cross-platform campaign in the Sellner-AfD-Compact-Russian-amplification space that meets the strict definition of coordinated information operation across all four groups; what is documented is the IBD-IfS-Sellner-AfD coordination on one side and the parallel Russian Doppelganger amplification on the other, which is closer to convergent amplification than to a single joint operation.</p>
+      </div>
+  </div>
+
+  <div class="section">
+    <h2>Universal Needs</h2>
+    <p class="intro-note">The legitimate human needs this claim speaks to, regardless of whether the claim is accurate.</p>
+    <div class="needs-list"><div class="need-item"><span class="need-name">Safety, both physical and cultural:</span>the legitimate human need to feel that your home, your children&#39;s future, and the world you recognize are protected. This need is real when expressed by a German grandmother in a Saxon village worried about her town changing and equally real when expressed by a Turkish-German teenager in Berlin-Neukoelln worried about being targeted in the street after a high-profile attack. Refusing to acknowledge it on either side validates the populist claim that no one is listening. In Germany this need carries an additional weight: the same anxiety, badly handled, was once channeled into the alternative whose impossibility the Grundgesetz is engineered to guarantee.</div><div class="need-item"><span class="need-name">Belonging:</span>the need to feel that your identity has a place, is recognized, and is allowed to continue. This need does not require that other identities be erased; German history itself is the history of layered belongings (Bavarian, Saxon, Prussian, Catholic and Protestant and increasingly secular and Muslim and Jewish, European, regional, local). The constitutional Staatsvolk theory and the postmigrantische theory of Foroutan and El-Mafaalani both reject the zero-sum framing. The legitimate need for belonging becomes weaponized only when it is reframed as a zero-sum competition between Volk and Anti-Volk.</div><div class="need-item"><span class="need-name">Agency:</span>the need to feel that you have meaningful say over the conditions of your life, your community, and your country. German voters who turn to AfD or to BSW often do so after years of feeling that their concerns about housing, services, eastern economic conditions, and pace of change were dismissed. The eastern German experience of post-1990 transition (Treuhandanstalt, deindustrialization, demographic outflow of young workers, the felt erosion of life trajectories) is the structural agency wound that AfD has been able to mobilize. The need for agency is the engine that drives people toward whoever appears to be listening.</div><div class="need-item"><span class="need-name">Fairness:</span>the need to believe that the rules apply equally, that scarce resources are allocated by principles you can defend to your neighbor, and that nobody is gaming the system at your expense. This intuition is hardwired and pre-rational; when it fires, the rational explanation that follows tends to be retrofitted rather than discovered. The replacement frame supplies a ready-made fairness story (we are being cheated of our country) that is emotionally satisfying even where the empirical attribution is wrong. The legitimate German fairness debate (Buergergeld vs. Asylbewerberleistungsgesetz, eastern-western pension differentials, the federal-Land allocation of integration costs) is real and addressable; the replacement frame makes it harder to address by attaching it to an unfalsifiable conspiracy.</div></div>
+  </div>
+
+  <div class="section">
+        <h2>Scientific Consensus / Mainstream Explanation</h2>
+        <p class="intro-note">The established scientific or institutional explanation for this phenomenon.</p>
+        <div class="prose"><p>The mainstream scientific and historical account, assembled from comparative political science, demography, integration studies, constitutional law, and Erinnerungskultur scholarship, is detailed enough that it can stand point for point against the replacement story.</p>
+<p>DEMOGRAPHIC MECHANICS: German population dynamics are undergoing a long demographic transition that began in the late nineteenth century and accelerated after the Second World War and again after unification. Native-born fertility fell below the replacement rate of about 2.1 children per woman by the early 1970s and has hovered between roughly 1.3 and 1.6 for fifty years. Life expectancy has risen substantially. The result is a population that is simultaneously aging and shrinking at the native-born level. Migration partially offsets this. Destatis projections show that without migration, the German population would be in absolute decline; with the labor demand that German employers and the social-insurance financing model require, the partial offset is structural rather than discretionary. None of this is the result of a coordinated plan; it is the emergent outcome of millions of individual fertility and mobility decisions inside policy frameworks that have themselves shifted repeatedly across federal and Land governments of all party combinations. Klaus Bade at Osnabrueck, Naika Foroutan at Humboldt, Aladin El-Mafaalani at Osnabrueck, and Francois Heran at the College de France have addressed this directly in publications written specifically to engage with the Sarrazin and Sellner positions. Across multiple governments (Kohl, Schroeder, Merkel I-IV, Scholz, Merz), under coalitions including CDU/CSU, SPD, FDP, Greens, and most of the parties in postwar German politics, the demographic outcome has been similar; the policy choices that shape it have been bipartisan in the cross-party sense.</p>
+<p>LABOR MARKET PULL: A significant share of contemporary migration into Germany is driven by labor demand in sectors where native-born workers are insufficient at prevailing wages. Healthcare, social care, construction, agriculture, transport, hospitality, and increasingly the skilled-trades and engineering all rely structurally on migrant labor. The Institut fuer Arbeitsmarkt- und Berufsforschung (IAB) under Bruecker has documented this in repeated studies; the Sachverstaendigenrat zur Begutachtung der gesamtwirtschaftlichen Entwicklung has documented it from a macroeconomic perspective; the SVR has documented it from the integration perspective. The same political coalitions that publicly express anxiety about immigration depend on it operationally. Closing the flow without addressing the underlying labor demand produces predictable shortages, which become political problems of their own.</p>
+<p>INTEGRATION OUTCOMES VARY: Academic studies by Foroutan, El-Mafaalani, Spielhaus, Mecheril, Schiffauer, Phalet, and the broader DeZIM-affiliated and university-based research show that integration outcomes for German residents of Turkish, Italian, Yugoslav, Russian-German, Vietnamese, Syrian, Afghan, and Afro-German origin vary substantially by generation, neighborhood, education, and policy regime. Second and third generation Turkish-German residents speak German, participate in the labor market, hold civic and professional positions across all sectors including journalism, medicine, law, and politics, and identify as German at high rates per DeZIM surveys. They are also the residents most directly targeted by replacement rhetoric, which simultaneously demands their integration and denies its possibility. Specific neighborhoods (Berlin-Neukoelln, Berlin-Wedding, Duisburg-Marxloh, Frankfurt-Gallus) show measurable concentrations of unemployment, lower educational attainment, and residential segregation, which result from a documented combination of housing policy, labor market discrimination, school choice patterns, and underfunding of municipal services. The neighborhoods are not the future of Germany; they are the past of German policy choices.</p>
+<p>POPULIST RADICAL RIGHT PATTERN: Mudde and Norris show that AfD instantiates the populist radical right family, with the post-Fluegel network around Hoecke pushing toward voelkisch positions that exceed even the family&#39;s typical bounds. Vlaams Belang, AfD, RN, PVV, FPOe, Fidesz, and Fratelli d&#39;Italia all share the structural framework of nativism, authoritarianism, and populism. The replacement claim is the most emotionally compelling and demographically scientific-sounding version of the ethnic nativist component. It is not unique to Germany, it is not unique to immigration, and it follows a documented historical pattern in which the specific outgroup rotates while the structural framework persists. The specifically German feature is the Fluegel-IBD-IfS coordination ecosystem and the constitutional Wehrhafte Demokratie response that the Grundgesetz mandates.</p>
+<p>HISTORICAL PARALLELS AND THE GERMAN-SPECIFIC LINEAGE: Madison Grant in 1916, then the National Socialist racial program 1933-1945, then the constitutional break of the Grundgesetz 1949, then Sarrazin 2010, then Camus 2011 translated into German networks, then Sellner 2024 and Potsdam. The function of the racial and ethnocultural hierarchy is to give economically and politically precarious in-group voters a status hierarchy as compensation for material conditions that the political economy is not going to address. The mechanism is durable because it works on the psychology of relative status, not on the absolute conditions of the people it deceives. The German-specific feature is that the lineage was once operationalized into industrial murder, and the postwar German constitutional order (Article 1 human dignity, Article 79.3 eternity clause, Wehrhafte Demokratie jurisprudence, BfV mandate) is engineered explicitly to make the recurrence visible and politically costly. This is why AfD&#39;s attack on Erinnerungskultur (Gauland &#39;Vogelschiss,&#39; Hoecke on the Berlin memorial, the explicit rejection of the postwar memory consensus) is so load-bearing for the project: the project is incompatible with the memory consensus, and one or the other must give way.</p>
+<p>THE NSU AND HANAU FAMILIES&#39; TESTIMONY: The most authoritative voices on what state failure to recognize and prevent far-right violence costs are the families of the NSU murder victims (Enver Simsek, Abdurrahim Oezuedogru, Sueleyman Taskoeprue, Habil Kilic, Mehmet Turgut, Ismail Yasar, Theodoros Boulgarides, Mehmet Kubasik, Halit Yozgat, Michele Kiesewetter) and the families of the Hanau victims (Gokhan Gueltekin, Sedat Guerbuez, Said Nesar Hashemi, Mercedes Kierpacz, Hamza Kurtovic, Vili Viorel Paun, Fatih Saracoglu, Ferhat Unvar, Kaloyan Velkov). Their testimony, including the decade-long campaign for state accountability through the Initiative 19. Februar and NSU-Watch, is the most authoritative German voice on what the replacement rhetoric&#39;s violent endpoint costs. Centering this testimony is not a moral concession; it is the application of the epistemic equity principle that those most affected by a rhetoric must have central voice in the analysis of it.</p>
+<p>WHAT ALL OF THIS IMPLIES: A serious response to the conditions German voters describe requires addressing housing supply (federal and Land construction targets, Mietpreisbremse, public investment), healthcare workforce planning (training capacity, recognition of foreign qualifications, rural GP supply), pension viability (demographic adjustment, labor market participation, productivity investment), integration policy coherence across federal and Land levels, asylum process speed and operational failure correction (Dublin enforcement, BAMF capacity, deportation case-handling), eastern German economic conditions (industrial policy, regional investment, federal solidarity transfers in their current and successor forms), and democratic accountability to communities that have felt unheard. The bipartisan record across CDU/CSU, SPD, FDP, Greens, and Linke governments shows that the failures are cross-party; the response cannot be a partisan attack on any one wing. None of these solutions requires, and most of them are obstructed by, the replacement framing.</p></div>
+      </div>
+
+  <div class="section">
+        <h2>Name the Trick</h2>
+        
+    <div class="technique-card">
+      <div class="technique-header">
+        <span class="technique-name">Scapegoat Construction</span>
+        <span class="badge badge-systematic">[SYSTEMATIC]</span>
+      </div>
+      <div class="technique-body">
+        
+        <div class="technique-field">
+          <div class="technique-label">Used by</div>
+          <div class="technique-text">AfD, IBD, IfS Schnellroda, Compact, Junge Alternative, the broader Neue Rechte ecosystem; also visible in partial form in some Union vocabulary under Merz and historically in CSU campaign material; in different domains, by political actors across the spectrum when they convert structural problems into out-group narratives.</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">How it works</div>
+          <div class="technique-text">You can recognize scapegoat construction when a complex set of structural conditions you experience daily gets collapsed into a single, visible out-group as the supposed cause. Three signals to watch for. First, a real grievance you already feel (housing costs, healthcare access, pension anxiety, eastern German economic marginalization, specific high-profile attacks) is named accurately and your frustration validated. Second, a clearly visible, easily recognized out-group is named as the cause (in this scenario, residents with migration background, especially Muslim residents and asylum seekers). Third, the actual structural causes go unmentioned or get dismissed when raised (housing supply policy and Mietpreisbremse, healthcare workforce planning and recognition of foreign qualifications, demographic transition and pension reform avoidance, eastern German industrial policy and Treuhandanstalt legacy, asylum operational failures that have specific operational causes). The tell is the asymmetry: the grievance is described in granular detail, the out-group attribution is asserted with emotional force, and the structural causes are absent. If you find your anger being aimed at neighbors while the policy actors whose decisions produced your conditions remain unnamed, you are looking at scapegoat construction. The specifically German feature: the previous instance of this exact architecture was operationalized into industrial murder, and the postwar constitutional order is engineered explicitly to make the recurrence recognizable.</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">In this claim</div>
+          <div class="technique-text">The German replacement claim attributes housing shortages in major cities, healthcare waiting times, GP shortages in rural eastern Germany, pension anxieties, eastern economic conditions, and specific high-profile attacks (Solingen, Mannheim, Aschaffenburg) to immigration and asylum policy as the dominant cause. The evidence base instead identifies housing supply policy, a chronic and documented healthcare workforce shortage, decades of pension reform avoidance against the broader European demographic transition, eastern industrial policy failures since 1990, and specific operational failures in asylum administration as the dominant drivers. German research institutes (SVR, DeZIM, IAB, the Bundesinstitut fuer Bevoelkerungsforschung, the Sachverstaendigenrat zur Begutachtung der gesamtwirtschaftlichen Entwicklung) have documented this attribution mismatch.</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">Historical precedent</div>
+          <div class="technique-text">The most direct historical precedent in the German case is the Volksgemeinschaft framework 1933-1945, in which German economic anxiety produced by the Great Depression, the Versailles indemnity structure, and political instability was redirected toward Jewish, Slavic, Roma, and other constructed out-groups and operationalized into industrial murder. Other precedents include the Jim Crow racial hierarchy in the American South in the same period; the Dreyfus-era French antisemitism; the targeting of Asian-origin residents in 1990s Indonesia during economic crises; and the 1968 Powell rhetoric in the United Kingdom. In every case the structure is identical: real anxieties, wrong attribution, protection of the actual causes from accountability. The German-specific obligation is that the historical anchor is not foreign or distant; it is the constitutional order&#39;s founding alternative.</div>
+        </div>
+      </div>
+    </div>
+    <div class="technique-card">
+      <div class="technique-header">
+        <span class="technique-name">Demographic Cherry-Picking</span>
+        <span class="badge badge-systematic">[SYSTEMATIC]</span>
+      </div>
+      <div class="technique-body">
+        
+        <div class="technique-field">
+          <div class="technique-label">Used by</div>
+          <div class="technique-text">AfD, Compact, identitarian online networks, IBD, and a wider ecosystem of German-language social media accounts that translate pan-European material into German.</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">How it works</div>
+          <div class="technique-text">You can spot demographic cherry-picking when a single alarming statistic about population, migration, or birth rates is presented without the context that would change its meaning. Three signals to watch for. First, the metric is chosen for shock value: gross migration flows rather than net population change, newborn names in a single district rather than aggregate composition over a longer horizon, asylum application figures rather than protection-rate-adjusted intake. Second, the framing maximizes alarm: absolute numbers rather than per capita rates, short time windows that capture spikes (2015) rather than long-run trends, single-year intake rather than ten-year integration outcomes. Third, the qualifying context is missing: aging, sub-replacement native fertility since 1970, labor market demand, the share of migration that is intra-EU (Polish, Romanian, Bulgarian, Italian) rather than non-European, the share that is humanitarian intake (Ukrainian post-2022, Syrian 2015), and the integration outcomes measured by language, employment, and civic participation. The eastern German use is particularly egregious: replacement anxiety is highest in Lander where migration-background share is substantially below the western German average per Destatis. Because each fragment is technically accurate, the technique is resistant to ordinary fact-checking; the only correction available is that the figure is misleading without context, which is a harder message to communicate than the original alarming number.</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">In this claim</div>
+          <div class="technique-text">Destatis, BAMF, and Eurostat data are systematically presented in fragments. The newborn name composition of a single Berlin or Frankfurt district is presented as the future of Germany. Year-on-year asylum applications in a peak year (2015) are presented as the steady state. Specific high-migration corridors are presented without return flows or Dublin transfers. Specific crime statistics from the BKA Polizeiliche Kriminalstatistik are presented without age, sex, registration-effect, and socioeconomic controls that the criminological literature shows account for most of the variation. German fact-checking organizations (Correctiv Faktencheck, dpa Faktencheck, ARD Faktenfinder, Mimikama) have repeatedly documented these patterns.</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">Historical precedent</div>
+          <div class="technique-text">The tobacco industry&#39;s selective use of safety studies. Climate denial&#39;s selective use of cold-weather events. Anti-vaccine advocates&#39; selective use of adverse event reports without denominators. The Sarrazin 2010 use of behavior-genetics literature that the discipline itself rejected as misapplied. The technique is general; cherry-picking is the most common method of motivated reasoning when the full evidence base is complex enough that most people cannot evaluate it independently.</div>
+        </div>
+      </div>
+    </div>
+    <div class="technique-card">
+      <div class="technique-header">
+        <span class="technique-name">Fear Amplification as Distraction</span>
+        <span class="badge badge-systematic">[SYSTEMATIC]</span>
+      </div>
+      <div class="technique-body">
+        
+        <div class="technique-field">
+          <div class="technique-label">Used by</div>
+          <div class="technique-text">AfD, Compact, Sellner, IBD, identitarian online networks; in different domains and with different targets, also visible across the political spectrum when fear is used to redirect rather than to inform.</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">How it works</div>
+          <div class="technique-text">You can recognize fear amplification as distraction when a measured concern you hold gets escalated rhetorically and then redirected toward an out-group rather than toward the structural causes of the concern. Two signals to watch for. First, the language climbs the temperature ladder: demographic change becomes Bevoelkerungsaustausch, neighborhood change becomes invasion, policy incoherence becomes Volksverrat (treason against the people), specific high-profile attacks become evidence of civilizational war. Each step makes the statement less accurate but more emotionally compelling and more shareable, and your own heightened emotion is the indicator that you have left the analytical register. Second, the political energy generated by the escalated fear ends up pointed at neighbors, asylum seekers, and the EU rather than at the housing supply, healthcare workforce, pension, eastern industrial, and asylum-operational policy decisions that produced the underlying conditions. If your starting worry was rent in Munich or a GP shortage in Saxony, and you end the conversation worrying about civilizational survival and Remigration, ask which actors benefited from that substitution and which actors became unmentionable along the way.</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">In this claim</div>
+          <div class="technique-text">Anxiety about housing affordability in German cities, healthcare waiting times, pension viability, eastern economic conditions, and high-profile attacks is real and unaddressed. The replacement frame absorbs this anxiety, escalates it from concern to threat to existential crisis, and points it at migration-background neighbors, asylum seekers, and the Altparteien rather than at the housing, healthcare, pension, industrial, and asylum-operational policy choices. The eastern German political mobilization is the clearest illustration: areas with very low migration-background shares show very high replacement anxiety, which can only be explained by the fear-amplification function rather than by local demographic observation.</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">Historical precedent</div>
+          <div class="technique-text">Goebbels formalized fear amplification as propaganda principle in the 1930s in the country whose constitutional order is therefore engineered to recognize it. The American War on Terror after 2001 amplified terrorism into civilizational threat. McCarthy-era anti-communism amplified domestic communist threat. The tobacco and chemical industries amplified fear of regulation. The Russian information operations on European elections amplified migration anxiety to weaken EU cohesion. The mechanism is one of the most studied in political communication and consistently shows the same structure.</div>
+        </div>
+      </div>
+    </div>
+    <div class="technique-card">
+      <div class="technique-header">
+        <span class="technique-name">Historical Pattern Recycling (the Jim Crow and Volksgemeinschaft Parallel)</span>
+        <span class="badge badge-systematic">[SYSTEMATIC]</span>
+      </div>
+      <div class="technique-body">
+        
+        <div class="technique-field">
+          <div class="technique-label">Used by</div>
+          <div class="technique-text">Madison Grant and the Jim Crow racial system in the United States 1910s-1960s; the National Socialist program 1933-1945 in Germany; restated through Sarrazin 2010, Camus 2011 translated into German networks, Sellner 2024 and Potsdam, AfD in its Remigration-adjacent vocabulary, Bjoern Hoecke specifically with his Erinnerungskultur attacks, Compact magazine, and the broader Neue Rechte. The lineage is documented; the recurrence is the point.</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">How it works</div>
+          <div class="technique-text">You can recognize historical pattern recycling when a contemporary rhetoric shares the same structural architecture as an older, historically discredited one, with the vocabulary updated and the out-group rotated but the underlying mechanism intact. Four structural elements to watch for. First, a precarious in-group is named as threatened. Second, that in-group is offered a status hierarchy that elevates it over a specific out-group. Third, the in-group&#39;s precarity is attributed to the out-group rather than to the political economy producing it. Fourth, the framing remains durable across changing material conditions because it operates on relative rather than absolute status, so it keeps working even when nothing the speakers proposed actually improves the in-group&#39;s life. The recycling is not always conscious; new actors do not need to read the older texts, because the architecture is reproduced wherever it solves the political problem of retaining the loyalty of voters whose material conditions remain unaddressed. The German-specific detection test: take the structural skeleton, swap the vocabulary, and ask whether the same speech would have fit Volksgemeinschaft 1933-1945 or Madison Grant 1916. The lineage is documented; the constitutional order exists explicitly because the lineage was once operationalized into industrial murder.</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">In this claim</div>
+          <div class="technique-text">The current German moment is the same architecture re-rendered. Economically precarious German voters, particularly in the eastern Lander where post-unification deindustrialization, demographic outflow, and felt political marginalization compound, are offered a status hierarchy in which they are the threatened indigenous Volk and migration-background neighbors are the threat. The hierarchy provides relative status consolation while the absolute conditions (housing, healthcare, eastern industrial policy, pension viability) remain unaddressed. The same playbook, different century, different ocean, different language. The German constitutional order is engineered to make this recognizable; the voter who recognizes the architecture is harder to recruit because the architecture is what is doing the work, not the specific claims that decorate it. The AfD attack on Erinnerungskultur is therefore not incidental; it is necessary to dismantle the recognition mechanism.</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">Historical precedent</div>
+          <div class="technique-text">The lineage itself is the historical precedent. Madison Grant 1916. The Nuremberg laws and the Volksgemeinschaft framework 1933-1945. The 1968 Powell speech. The 1990s anti-Asian rhetoric in Southeast Asia during the financial crisis. The 2014-onward Russian framing of cultural civilizational war. The Halle synagogue attack 2019 and the Hanau attack 2020 made the German lineage impossible to ignore by producing the violent endpoint inside Germany itself.</div>
+        </div>
+      </div>
+    </div>
+    <div class="technique-card">
+      <div class="technique-header">
+        <span class="technique-name">Just Asking Questions</span>
+        <span class="badge badge-systematic">[SYSTEMATIC]</span>
+      </div>
+      <div class="technique-body">
+        
+        <div class="technique-field">
+          <div class="technique-label">Used by</div>
+          <div class="technique-text">Mainstream German talk-show panels (Anne Will, Maischberger, Markus Lanz, Hart aber Fair), parts of Union under Merz when borrowing AfD vocabulary in deniable form, Junge Freiheit and Tichys Einblick op-eds, and a wide range of online content creators who maintain a respectability hedge.</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">How it works</div>
+          <div class="technique-text">You can spot just-asking-questions when a substantive claim is delivered as an interrogative rather than as a declarative, lowering the burden of proof and giving the speaker plausible deniability about the conclusion the listener is meant to draw. Three signals to watch for. First, the question presupposes its own conclusion (asking whether elites have a plan presumes the plan exists as an open possibility). Second, the speaker rejects accountability for the conclusion if challenged, because nothing was technically asserted. Third, anyone who responds by naming the framing is recast as the one closing down debate. The detection test: rewrite the question as a declarative and ask whether the same speaker would defend that declarative under scrutiny. If the answer is no, you are looking at deniable assertion rather than genuine inquiry.</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">In this claim</div>
+          <div class="technique-text">Programs and op-eds ask whether the 2015 decision was honest, whether the BfV is being politicized, whether the asylum system is delivering, whether voters are being listened to, whether Sellner&#39;s Remigration framework has been fairly heard. Each question is individually defensible; together they construct the replacement and persecution claims without requiring anyone to make them. The listener integrates the impression while the speaker maintains the position of having only asked.</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">Historical precedent</div>
+          <div class="technique-text">The strategy is well documented in tobacco and climate communication. In German political communication it has a long history in the framing of antisemitic, racist, and revisionist talking points across the postwar period (Bitburg 1985 debate, Walser 1998 Paulskirche speech &#39;Auschwitzkeule&#39; framing, Sarrazin 2010 as &#39;just asking demographic questions&#39;).</div>
+        </div>
+      </div>
+    </div>
+    <div class="technique-card">
+      <div class="technique-header">
+        <span class="technique-name">Persecution Inversion</span>
+        <span class="badge badge-systematic">[SYSTEMATIC]</span>
+      </div>
+      <div class="technique-body">
+        
+        <div class="technique-field">
+          <div class="technique-label">Used by</div>
+          <div class="technique-text">AfD federal and Land leadership, the broader Neue Rechte ecosystem, Compact and Junge Freiheit op-eds, and identitarian online channels.</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">How it works</div>
+          <div class="technique-text">You can recognize persecution inversion when a constitutional safeguard or institutional accountability mechanism is reframed as proof of the persecution it was designed to constrain. Two signals to watch for. First, the institution performing the function is conflated with the individuals or events the function targets, so that any action taken under the function becomes evidence of bias rather than execution of mandate. Second, legitimate historical criticism of the institution (BfV NSU failures 1998-2011, V-Mann issues, structural conservative bias) is mobilized to delegitimize the institution doing what it should have done then. The detection test: ask whether the same logic applied to other classifications (NPD historically, Reichsbuerger, Identitaere Bewegung Deutschland which has not contested its classification on these grounds) would produce the same conclusion. If the persecution claim only fires for one party, the pattern is targeted not structural.</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">In this claim</div>
+          <div class="technique-text">The BfV classification of AfD as Verdachtsfall (2021) and gesichert rechtsextremistisch (May 2025 federal, paused pending court proceedings) and the Thuringia Verfassungsschutz classification (2021) are reframed by the party as political persecution. The substantive evidentiary basis (documented statements consistent with activity against the freiheitlich-demokratische Grundordnung, Hoecke convictions for SA slogan use, post-Fluegel network continuity, IBD ties documented at Potsdam) is set aside, and the constitutional function is reframed as instrument. The OVG Muenster jurisprudence partially upholding earlier classifications is ignored in the framing.</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">Historical precedent</div>
+          <div class="technique-text">The strategy is documented in Hungarian and Polish illiberal politics (constitutional courts and judiciaries reframed as instruments of opposition), in Russian and Belarusian opposition framing of state intelligence, and historically in many authoritarian and aspirant-authoritarian movements that need to delegitimize the institutional checks on their growth. The specifically German feature is that BfV exists explicitly to do what the BfV failed to do during the NSU period; the AfD claim collapses this distinction.</div>
+        </div>
+      </div>
+    </div>
+      </div>
+
+  
+  <div class="section">
+    <h2>Inferential Gap</h2>
+    <p class="intro-note">Where the evidence ends and the leap begins.</p>
+    <div class="prose"><p>The evidence base supports the observation that demographic change is occurring in Germany and that policy has been incoherent across federal and Land levels. The evidence base does not support, and cannot support, the claim that the change is the deliberate execution of a coordinated Altparteien plan or that the BfV classification of AfD is political persecution rather than constitutional function. The leap from incoherence to plan, from emergent outcome to engineered project, from policy failure to demographic conspiracy, from intelligence-service classification to political persecution, is the inferential gap. It cannot be closed by more demographic data, because demographic data only describes outcomes, not intentions. It cannot be closed by leaked documents, because no credible documentary evidence of a coordinated replacement plan has been identified in the archives, parliamentary records, intergovernmental communications, or academic literature; the closest reference points (UN 2001 Replacement Migration, 2018 Global Compact) are documents that explicitly state they are not the plans the rhetoric represents them as. The gap is closed in the listener&#39;s mind by a structural intuition (this looks like a plan because it has consequences) that the rhetoric is engineered to trigger, not by evidence that the rhetoric supplies. The BfV persecution claim faces an additional inferential gap: the classification jurisprudence has been litigated and partially upheld by the OVG Muenster and other courts; the institutional record exists in the public domain; the persecution claim requires that the same constitutional order that is alleged to protect the Altparteien is simultaneously the order whose protection AfD invokes in litigating the classification.</p></div>
+  </div>
+
+  <div class="section">
+    <h2>Common Ground</h2>
+    <div class="prose"><p>People who hold the replacement claim and people who reject it share more common ground than the German public debate suggests. Both agree that something is genuinely changing in Germany and that the change since 2015 has been faster than the political system has been honest about. Both agree that housing is unaffordable in Berlin, Munich, Hamburg, Frankfurt, and increasingly in eastern cities like Leipzig and Dresden, and that waiting lists for affordable housing are long enough to be a generational problem. Both agree that integration policy at the federal-Land-municipal level has been incoherent for at least three decades, with predictable consequences in specific neighborhoods and after specific high-profile attacks. Both agree that the federal political class has not been straight with voters about the trade-offs involved in any plausible asylum and labor migration policy. Both agree that there are real questions about specific attacks (Solingen, Mannheim, Aschaffenburg, Magdeburg) and the asylum system&#39;s handling of those cases. Both agree that the Brandmauer between Union and AfD as a strategy has not on its own addressed the underlying drivers of support for AfD and that simply branding voters as Nazi neither persuades nor heals.</p>
+<p>The disagreement is narrower than it appears. It is not about whether change is happening or whether specific failures are real; it is about why, who is responsible, and what kind of response is honest and constitutionally compatible. The replacement frame says the change is deliberate, the responsibility lies with a complicit Altparteien elite executing a plan, the BfV is a politicized instrument suppressing the truth, and the response must be Remigration including German citizens. The evidence-based account says the change is the emergent outcome of aging, low native fertility, labor demand, family reunification under existing law, asylum obligations under Article 16a and the Geneva Convention, EU mobility, and emergency humanitarian intake (2015 Syrian, 2022 Ukrainian), and that the response must be coherent policy on housing, healthcare workforce, integration, eastern economic conditions, asylum process speed, and democratic accountability. Neither account makes the change disappear. The first replaces a hard policy problem with a moral villain and proposes a constitutionally impossible solution. The second keeps the problem hard and asks the political system to actually solve it.</p>
+<p>Both sides, at the level of individual voters in a German kitchen, want the same things: a country where their children can afford a home, where the language and traditions they grew up with continue to have public space, where neighbors of different backgrounds can build a shared life, where high-profile failures are honestly investigated, and where political leaders tell the truth about trade-offs. Naming this shared ground is not a rhetorical move; it is a precondition for the conversation continuing at all, and it is the move that the postmigrantische framework (Foroutan, El-Mafaalani) explicitly recommends as the alternative to the zero-sum framing.</p></div>
+  </div>
+
+  <div class="section">
+    <h2>Narrative Deconstruction</h2>
+    <div class="prose"><p>The German replacement claim operates at multiple levels, and the analytical move that matters most is to distinguish them precisely.</p>
+<p>LEVEL ONE, SUBSTANTIALLY TRUE: Demographic change is occurring in Germany. Destatis, SVR, and DeZIM document that the population is aging, that native-born fertility has been below replacement for over fifty years, that net migration has been substantially positive especially in 2015 and 2022, and that approximately 29.7 percent of the German population in 2023 has a migration background per Destatis methodology. These facts are not in serious dispute among demographers. To deny them is to leave the field to the populists. Acknowledging them is the first step toward an honest conversation.</p>
+<p>LEVEL TWO, PARTIALLY TRUE WITH HEAVY NUANCE: Specific policy choices have shaped these outcomes. EU enlargement, family reunification rules, the 2015 decision to keep the German border open during the Syrian inflow (Merkel &#39;Wir schaffen das&#39; 31 August 2015), the 1993 Asylkompromiss restriction of Article 16a, the slow build-out of legal labor migration channels, the federal-Land division of integration competences, and the 2022 emergency intake of Ukrainian war displaced all matter. Critics who say German policy on migration has been incoherent across federal and Land levels are correct, and the policy critique is legitimate. What is not supported by evidence is the leap from incoherence to deliberate replacement plan. Incoherence is the absence of a plan, not the execution of one.</p>
+<p>LEVEL THREE, LEGITIMATE BUT MISFRAMED: Specific high-profile failures are real. The Solingen attack of 23 August 2024 involved an asylum seeker who should have been deported to Bulgaria under Dublin rules and was not; the operational failure is documented and the federal interior ministry has been investigated. The Aschaffenburg attack of January 2025, the Mannheim attack of May 2024, and the Magdeburg attack of December 2024 each have specific operational and intelligence-handling questions. These deserve honest investigation. They do not, individually or together, evidence a deliberate replacement plan; they evidence specific failures in specific cases that the asylum and deportation systems must answer for.</p>
+<p>LEVEL FOUR, UNSUPPORTED: The intentionality claim. The assertion that German demographic change is the deliberate, coordinated execution of an Altparteien plan to replace the German people, and that the BfV&#39;s classification of AfD is political persecution rather than the constitutional function it was designed to perform, is not supported by any documentary, archival, or institutional evidence. The closest the rhetoric comes to a citation is the 2001 UN Population Division Replacement Migration report and the 2018 UN Global Compact for Migration, both of which the documents themselves explicitly identify as modeling and non-binding framework respectively, not as policy plans. The framing requires the implausible joint assumption that the Altparteien are simultaneously competent enough to execute a multi-decade demographic conspiracy across government rotations between CDU/CSU, SPD, FDP, Greens, and Linke, and incompetent enough to fail at housing, healthcare, fiscal management, pension reform, the energy transition, and integration policy. The contradiction is internal to the claim. Either German governments are powerful enough to engineer demographic outcomes silently across all parties and decades, in which case they are powerful enough to address the conditions voters complain about, or they are too weak to address ordinary policy problems, in which case they cannot be running a hidden replacement project.</p>
+<p>LEVEL FIVE, UNSUPPORTED AND CONSTITUTIONALLY IMPOSSIBLE: The Remigration program as defined by Sellner at Potsdam, including the forced removal of German citizens with migration background, is constitutionally impossible under Article 16 of the Basic Law (prohibition of denaturalization). It is also incompatible with Article 1 (human dignity) and Article 3 (equality before the law). The Sellner program is therefore not a policy proposal in the operational sense; it is a programmatic frame that requires the dismantling of the constitutional order to be implementable. This is the substantive content the BfV classification points to.</p>
+<p>LEVEL SIX, UNSUPPORTED: The BfV persecution claim. The BfV operates under judicial review; classification decisions have been litigated repeatedly and partially upheld; the Thuringia Verfassungsschutz under Stephan Kramer has provided the most extensive public documentation of the basis for its classification. The legitimate criticism of BfV (NSU investigative failures 1998-2011, V-Mann issues) is mobilized to delegitimize the institution doing what it failed to do then. The persecution inversion is structurally sophisticated and politically powerful, but the institutional record does not support it.</p>
+<p>The deconstruction is not a dismissal. The voter who feels the change is feeling something real. The voter who points at Solingen is pointing at a real failure. The eastern German voter who feels economically marginalized since 1990 is correct about a structural condition. The neighbor whose name appears as the replacing population is also a German voter, often three or four generations in. The honest conversation is about how a society manages change and specific failures without producing scapegoats and without dismantling the constitutional order to do it, not about whether the change exists or whether the failures occurred.</p></div>
+  </div>
+
+  
+    <div class="section">
+      <h2>Feasibility Assessment</h2>
+      <div class="prose"><p>Considered as an operational plan, the German replacement claim faces severe feasibility problems. It would require coordinated action across at least the Federal Republic of Germany since 1955, across multiple federal governments (Adenauer, Erhard, Kiesinger, Brandt, Schmidt, Kohl, Schroeder, Merkel I-IV, Scholz, Merz), through unification 1990, and across the 16 Bundeslaender of varied political composition. It would require the active complicity of national civil services, Destatis, BAMF, the federal and Land police, the BfV (which AfD simultaneously alleges is an instrument of the conspiracy and a politicized instrument of persecution), the judicial system that reviews intelligence classifications, the academic and research institutes that publish the evidence base, the press across federal and regional levels, and the European institutions that the conspiracy is alleged to use. It would require this coordination across robust whistleblower protections, freedom-of-information regimes, parliamentary investigation powers (especially the NSU and Hanau parliamentary inquiries that have demonstrated the system&#39;s capacity to expose state failure), opposition party scrutiny including by AfD itself, investigative journalism (Correctiv on Potsdam, Spiegel, Zeit, ARD, ZDF, taz), and academic analysis. It would require that no first-generation participant in the conspiracy, across this entire span, defects or repents into the public record. The simpler explanation that policy is incoherent across federal and Land levels, that demographic outcomes are emergent, and that migration is driven by aging, labor demand, asylum obligations under existing law, and emergency humanitarian intake fits the evidence without requiring any of these implausible joint assumptions. The conspiracy version of the claim is operationally infeasible. The constitutional version of Sellner&#39;s Remigration program (including German citizens) is also operationally infeasible because Article 16 of the Basic Law prohibits denaturalization and Article 1 prohibits denial of human dignity; Sellner&#39;s program would require dismantling the constitutional order, which the same order&#39;s Wehrhafte Demokratie jurisprudence is designed to prevent. The BfV persecution claim faces additional feasibility problems: it requires that a politicized BfV operates against AfD while simultaneously operating against the Identitaere Bewegung Deutschland, the Institut fuer Staatspolitik, the NPD historically, the Reichsbuerger movement, parts of the Querdenker movement, and Salafist networks, with no equivalent classification of mainstream parties from CDU/CSU through Linke. The classification pattern fits the constitutional mandate of monitoring activity against the freiheitlich-demokratische Grundordnung; the persecution pattern would require a different and unrelated set of facts.</p></div>
+    </div>
+
+  
+    <div class="section">
+      <h2>Commercial Interests</h2>
+      <div class="prose"><p>Multiple commercial and political incentives sustain the German replacement narrative independent of its evidentiary merit. Political actors gain electoral support, parliamentary salaries, public funding, and media platforms by mobilizing the framing; AfD in particular has transformed from a marginal Euro-skeptic party in 2013 into the largest opposition party in the 2025 Bundestag, with the financial infrastructure that comes with that scale (parliamentary funding, party-affiliated foundation funding via Desiderius-Erasmus-Stiftung which has faced its own legal questions about state funding). Media outlets that platform the rhetoric capture audience share in a competitive attention market; the Compact magazine ban and partial suspension in 2024 illustrates the market value of explicit replacement-adjacent framing. Online entrepreneurs build personal brands as identitarian commentators, with monetized YouTube, Substack, Telegram, and merchandise channels; Sellner&#39;s Telegram channel is the central example. Antaios Verlag, Schnellroda summer academies, and Sezession magazine constitute an organized publishing ecosystem with durable revenue. Book sales for replacement-adjacent authors are durable; Sarrazin sold over 1.5 million copies, Sellner has built a sustained author career, and the genre overall (Tichys Einblick books, Compact books, Antaios catalog) generates predictable revenue. Foreign state-aligned channels, notably Russian Doppelganger and adjacent operations documented by EU DisinfoLab and the Federal Office for Information Security (BSI), amplify the framing for strategic purposes that have nothing to do with German welfare but everything to do with weakening German and EU political cohesion. None of this commercial structure proves the framing is wrong; it does establish that the framing is sustained by a financial ecosystem that benefits from its continuation regardless of whether it is supported by evidence. The structural asymmetry matters: there is no comparable commercial ecosystem rewarding careful demographic analysis. Bruecker&#39;s IAB work does not generate viral clips, SVR reports do not produce merchandise, and DeZIM publications do not anchor a media career on the scale Sellner and Compact have built.</p></div>
+    </div>
+
+  
+    <div class="section">
+      <h2>Perception Gap</h2>
+      <div class="prose"><p>The perception gap on this topic is among the widest in contemporary German politics. The voter who shares replacement-adjacent material believes they are defending an obvious truth that political and media elites are forbidden to admit. They perceive critics as metropolitan-elite Berlin-Hamburg-Munich-Frankfurt residents who do not live in the affected neighborhoods or in the eastern Lander, do not pay attention to local conditions, and use accusations of Nazi to silence ordinary concerns. They perceive academic demographers and SVR/DeZIM/IAB scholars as ideologically motivated to downplay the change, the BfV as a politicized Altparteien instrument, and journalists as part of the system that conceals the truth. They perceive AfD as the only political vehicle willing to say what they think. The voter who rejects the claim sees a recycled racist conspiracy theory in a country whose constitutional order exists precisely to make this kind of conspiracy theory politically impossible, a public discourse poisoned by Neue Rechte vocabulary, neighbors and colleagues being dehumanized in a country whose grandparents either suffered or perpetrated the previous instance of the same architecture, the NSU and Hanau families being failed again as their warnings are dismissed, and a political vehicle whose internal documents and personnel reveal that the constitutional incompatibility is not coincidental but central. They perceive replacement believers as either fascist-adjacent or naive. Both perceptions miss the architecture beneath the disagreement. The believer often does not perceive that their legitimate concerns about housing, healthcare, eastern economic conditions, and specific asylum-operational failures are being instrumentalized by a political operation whose framing has been refined across a century and which functions to protect from accountability the structural decisions that actually produced their conditions. The critic often does not perceive that dismissing the believer&#39;s concern validates the populist claim that elites do not listen, that the eastern German experience of post-unification economic and political marginalization is a real structural condition that deserves explicit recognition, and that the most effective response is not to assert the believer is wrong about everything but to name the architecture and offer a better explanation for the conditions they correctly observe. The corrosive feature of this perception gap is that both sides have part of the truth, and the operation that produced the replacement frame benefits from each side perceiving the other as the entirety of the problem. The specifically German feature is that the country&#39;s constitutional order encodes the historical answer to the dispute, and yet the dispute continues to operate as if the constitutional order were one of the contested objects rather than a hard-won settlement.</p></div>
+    </div>
+
+  <div class="section">
+    <h2>Socratic Dialogue</h2>
+    <p class="intro-note">A model conversation demonstrating how to engage someone who holds this belief.</p>
+    
+    <div class="dialogue-round round-1">
+      <div class="round-label">Round 1: Perspective-Getting</div>
+      <div class="dialogue-bubble"><p>Round 1 (OARS, validate the emotion, never the claim): I hear you, and I want to take this seriously rather than dismiss it. You are watching things change. You see streets in Berlin or Leipzig or your Saxon village that look different than they did when you grew up. You wait longer for a GP appointment than your mother did, particularly if you live in the rural east where the practice nearest you is hours away. Your daughter cannot afford a flat in the city you raised her in. Your pension is a question rather than an answer, and you know the demographic math is not on your side. You saw Solingen on the news, and Mannheim, and Aschaffenburg, and you noticed that some of the political and media response felt evasive. You feel, especially if you live in Thuringia or Saxony or Brandenburg, that since 1990 something happened to the life trajectory your parents had and the politicians in Berlin never actually fixed it. You feel that when you raise any of this, you get called Nazi instead of getting answers, in a country where being called Nazi is the heaviest thing anyone can say. That is a real experience and the frustration that produces is legitimate. Wohnungsnot is real. Ueberfremdung anxiety, whatever you think of the word, points at something many people feel. The eastern experience is not imagined. I am not going to tell you that you are imagining it. I am not going to tell you that you are racist for noticing. Change is happening, the pace of change since 2015 has outrun the political system&#39;s willingness to have an honest conversation about asylum capacity and integration, and the everyday consequences are showing up in your kitchen. Before I say anything else, I want you to know that I see that and I am not going to pretend nothing is changing. Can you tell me which specific thing is hurting most right now? Is it the housing, the healthcare, the pension, the eastern experience since 1990, the feeling that your district or village is not yours anymore, the response to a specific high-profile attack, or the feeling that nobody is listening?</p></div>
+    </div>
+    <div class="dialogue-round round-2">
+      <div class="round-label">Round 2: Guided Examination</div>
+      <div class="dialogue-bubble"><p>Round 2 (Guided examination, introduce evidence): Thank you for telling me. I want to share something with you, and I am not doing it to argue you out of what you feel. I am doing it because I think you deserve a better explanation than the one you are being given. There is a technique called scapegoating. It works like this: take a real problem with several causes, point at one visible group as the cause, and quietly leave the actual causes alone. The problem is real, so the anger is real, but the anger is being aimed at the wrong target. Look at what we talked about. Housing in German cities is unaffordable. Why? The Federal Statistical Office, the Bundesinstitut fuer Bau-, Stadt- und Raumforschung, and the Hans-Boeckler-Stiftung have published this clearly: construction has not kept pace with population growth and household formation for over a decade. The Mietpreisbremse has not been backed by sufficient public construction. Investors have bought up stock that used to be family housing. Immigration is one factor on the demand side, but it is much smaller than the supply failure on the other side. Healthcare. The waiting lists are getting longer because Germany is not training enough physicians and because we have not recognized foreign qualifications fast enough; in fact, a significant share of healthcare workers, from hospital cleaners to specialist doctors, are people who came here from somewhere else, including from the Ukraine and the post-2015 Syrian doctor cohorts whose qualification recognition has been a major federal-Land negotiation. The healthcare system depends on migration in ways most people do not see in their daily lives. Pensions. The pension math is hard because the German working-age population is shrinking through aging, not through immigration; the IAB and the SVR have both shown that immigration is partly what keeps the math from getting worse faster. Eastern conditions. The economic geography of the eastern Lander since 1990 has its own specific history, and the Treuhandanstalt period, the deindustrialization, and the demographic outflow of young workers are the structural conditions there. None of this was caused by people arriving in 2015. The federal and Land governments have not done what they should have done about it. Now look at who has been telling you for many years that immigration is the cause. AfD. The same party. The same vocabulary. Hoecke, who has been convicted in 2024 for using the SA slogan &#39;Alles fuer Deutschland.&#39; The Potsdam meeting in November 2023, which Correctiv exposed in January 2024, where Martin Sellner presented Remigration to AfD figures and donors at the Landhaus Adlon. Sellner&#39;s program includes the forced removal of German citizens with migration background, which Article 16 of the Basic Law prohibits. The vocabulary, Grosser Austausch, is borrowed from the French writer Renaud Camus, whose framework Madison Grant&#39;s 1916 American book underwrote and which the National Socialist program 1933-1945 operationalized in this country. The Christchurch attacker named this exact framing. The Halle synagogue attacker in 2019 named this framing. The Hanau attacker in 2020 named this framing. Nine residents of migration background were killed in Hanau, and their families have been fighting for state accountability since. Their names are public. I am not saying you are them. I am saying the framing has a lineage, the lineage is documented, the lineage in this country runs through the alternative that the Grundgesetz exists to never repeat, and the people at the top of the framing know what they are doing even when the people sharing the clips on Telegram do not. The most uncomfortable question I want to ask you is this. If immigration were the main cause of your housing, healthcare, pension, and eastern conditions, you would expect those problems to be smaller in places with little immigration. Look at the eastern Lander. Thuringia, Saxony, Brandenburg, Saxony-Anhalt. They have the highest replacement anxiety in Germany. They also have the lowest migration-background share, per Destatis. How can the framing that says immigration is the cause fit a geography in which the strongest political mobilization is happening in the places with the fewest migrants? Either the framing is wrong about the cause, or the framing is doing something other than describing reality. Does that pattern fit the explanation you have been given?</p></div>
+    </div>
+    <div class="dialogue-round round-3">
+      <div class="round-label">Round 3: Integration</div>
+      <div class="dialogue-bubble"><p>Round 3 (Integration, Charter C6): I want to close with what I think we actually agree on, because I suspect it is more than the politicians on either side want us to notice. We agree that something is changing in Germany and that the political system has not been honest about it. We agree that federal and Land governments, across coalitions including CDU/CSU, SPD, FDP, Greens, Linke, and now varying eastern combinations, have failed at housing, healthcare workforce, pension reform, eastern industrial policy, integration policy coherence, and the operational specifics of the asylum system in cases like Solingen. We agree that being told you are Nazi for raising any of this is dismissive and counterproductive, especially in a country where that word carries the weight it does. We agree that you have a right to your language, your traditions, and your community continuing to have a public place, and the constitutional order recognizes that for everyone living here. We agree that specific high-profile attacks were real failures that deserve honest investigation rather than evasion. None of that is up for negotiation. Now consider this: your Turkish-German neighbor on the third floor in your eastern German block, or in your western city building. Her grandfather came to Germany in 1961 because the mines or the auto plants needed workers and the federal government recruited him under the Anwerbeabkommen. She was born here, speaks German, pays taxes, her son is in your daughter&#39;s school. Or consider your Vietnamese-German neighbor in Rostock or Berlin whose parents came as contract workers in the GDR or as boat refugees in the west, both of whom belong to communities present here for fifty years. Or your Ukrainian neighbor who arrived in 2022 fleeing a war you saw on the news. When you look at her actual life, what does she want? An affordable home, a school that works, a doctor she can see, a pension she can count on, a country where her son is allowed to be German without having to prove it every day. That is the same list as yours. The Hanau families want exactly that, and their nine sons and daughters were killed by someone who believed exactly what AfD and Sellner are now telling you. The NSU families lost ten relatives to murderers who believed exactly the same framing, and for ten years the state investigated the victims instead of the murderers. The political operation that has been telling you these neighbors are the threat has been very good at making you forget that you are standing in the same queue at the same housing office, frustrated with the same Bundesregierung, affected by the same policy failures. The people building this framing across a hundred and ten years, in this country specifically across a lineage you and I both know how it ended, have always needed people like you and people like her to look at each other instead of at them. If you could set aside the framing for a moment and look at the person next to you in that queue, what do you think the two of you might demand together from the housing minister, the health minister, and the pension reform commission that neither of you can get alone?</p></div>
+    </div>
+  </div>
+
+  
+  <div class="section">
+    <h2>Reframe</h2>
+    <blockquote class="reframe-block">You and the neighbor you are afraid is replacing you both want the same thing: an affordable home, a school that works, a doctor you can see, a pension you can count on, a community where your children belong and your language continues, honest investigations of specific failures, and a government that is straight about trade-offs across federal and Land levels; everything else is the architecture that someone built to keep you from noticing that, in a country whose constitutional order was built precisely because the previous version of this argument ended at Auschwitz.</blockquote>
+  </div>
+
+  
+  <div class="section">
+    <h2>Response Strategy Signals</h2>
+    <p class="intro-note">Signals guiding how this analysis might be communicated effectively. Advisory to communicators, not a characterisation of the reader.</p>
+    <div class="diagnostics-grid">
+      <div class="diagnostic-card">
+        <h4>Communication Posture</h4>
+        <p><span class="posture-badge posture-relational_first">Relational First</span></p>
+      </div>
+<div class="diagnostic-card">
+        <h4>Pattern Density</h4>
+        <div class="pattern-density-warning">High pattern density detected in claim structure. The claim is structured to encourage over-connection between unrelated elements.</div>
+      </div>
+<div class="diagnostic-card">
+        <h4>Credibility Gap</h4>
+        <p class="diagnostic-note">Narrative pattern description; no specific publisher or outlet identified.</p>
+        <p>When mainstream German politics fails to honestly address housing, healthcare workforce, pension reform, eastern industrial policy, integration coherence, and the operational specifics of asylum administration, and when policy is incoherent across federal and Land levels, a vacuum opens in which voters need an explanation for the conditions they experience daily. The replacement framing fills that vacuum with a simple, emotionally coherent story that supplies a villain (Altparteien, Brussels, an unnamed globalist establishment) and a path of action (Remigration). The narrative pattern works because it provides explanatory closure that the messy empirical reality cannot easily match, and because the actors offering it appear to take voters seriously where the political mainstream has not. The eastern German vacuum is structurally larger: post-1990 economic and political marginalization was never fully addressed by federal politics, and the AfD has been able to harvest that unaddressed condition. The vacuum is not produced by immigration; it is produced by political and policy failure, and any response that does not also fill the vacuum with honest, concrete, structural answers leaves the field open for the replacement frame to return. The German-specific constraint is that the alternative to the constitutional order is not abstract; the country exists in the form it does because of what happened the last time the vacuum was filled with this particular framing.</p>
+      </div>
+<div class="diagnostic-card">
+        <h4>Prebunking Note</h4>
+        <p>Before encountering German replacement claims, note four cues. Demographic change is real (denying it cedes ground). Specific failures (Solingen, Aschaffenburg) deserve honest investigation. The move combines real grievances with intent claims plus a constitutionally impossible program (Sellner Remigration including citizens). The lineage from Grant through Volksgemeinschaft to Sellner is why the Grundgesetz exists.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Audit</h2>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+      <span>Verdict:</span>
+      <span class="badge badge-warnings">PASS WITH WARNINGS</span>
+    </div>
+    <div class="audit-summary">This v1 analysis handles a high-difficulty German scenario in which the underlying observation (demographic change, specific high-profile asylum failures, eastern German marginalization) is real and partially shared across the political spectrum, while the framing layered on top (deliberate Altparteien plan, Sellner Remigration as serious response, BfV persecution) is a documented century-old conspiracy architecture whose German lineage runs through the alternative the constitutional order exists to never repeat. The decomposition correctly separates the substantively true demographic and operational claims from the unsupported intentionality claim, the constitutionally impossible Remigration program, and the BfV persecution inversion. The origins trace the lineage from Madison Grant through National Socialist racial policy and the postwar constitutional break, through Sarrazin 2010, Camus 2011 translated into German networks, Sellner 2024 and Potsdam, the AfD&#39;s radicalization under successive leaderships, and into the 2024-2025 events. The intelligence section captures the three-layer system (intellectual lineage with German constitutional break, Potsdam and AfD operationalization, transcontinental amplification) and the antagonistic convergence between left-wing economic nationalism (parts of BSW base), right-wing ethnonationalism (AfD, IBD), Union vocabulary drift under Merz, and cultural-conservative cross-cutting voters. The TTPs include DISARM techniques and four custom entries (demographic cherry-picking, fear amplification as distraction, scapegoat construction, persecution inversion). The bridge implements relational_first communication posture, OARS-protocol Socratic dialogue with explicit German anchoring (Anwerbeabkommen, Treuhandanstalt, Hanau and NSU families, Hoecke SA conviction, Article 16 constitutional impossibility, eastern low-migration-high-anxiety paradox), and the Jim Crow and Volksgemeinschaft historical parallel, with hedged numerical claims and German-context language. Remaining gaps: deeper centering of community_experiential voices in narrative_summary, named-publication pinning for Heran, Foroutan, El-Mafaalani, Bade, and Bruecker, double-checking the federal BfV May 2025 timeline. The minus 0.05 confidence adjustment reflects these correctable but real completeness gaps and the higher-stakes German constitutional terrain. Confidence scores rate the conspiracy and persecution framing, not the demographic data itself. The 0.72 expert consensus reflects strong agreement among German demographers, integration scholars, and constitutional lawyers that the intentionality claim, the Remigration program including citizens, and the BfV persecution claim are unsupported. The 0.22 internal coherence reflects the claim&#39;s self-contradictions (Altparteien simultaneously omnicompetent and incompetent; BfV simultaneously instrument and Altparteien target invoking its own protection; constitutional order both rejected and invoked).</div>
+    <ul class="findings-list">
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">Accuracy</span>
+        <span class="finding-severity-low">LOW</span>
+        <span class="finding-description">Key factual claims are well-sourced: Destatis 2023 population and migration-background share (~29.7 percent), the...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">Key factual claims are well-sourced: Destatis 2023 population and migration-background share (~29.7 percent), the Correctiv Potsdam reporting of 10 January 2024 and the meeting date of 25 November 2023 at Landhaus Adlon, the named attendees including Sellner and Hartwig, the protest response in January-February 2024 (estimates 1.4-3.5 million across cities), Sellner&#39;s Remigration: Ein Vorschlag (Antaios 2024), Sarrazin&#39;s Deutschland schafft sich ab (DVA 2010) and the cited 1.5 million copies, Hoecke&#39;s 2024 conviction for SA slogan use, the BfV Verdachtsfall 2021 classification and the May 2025 gesichert rechtsextremistisch upgrade paused pending court proceedings, the Halle synagogue attack date of 9 October 2019, the Hanau attack date of 19 February 2020 with nine murdered residents of migration background, and the OVG Muenster 2022 ruling on Fluegel/JA. The Heran-Bade-Foroutan attributions are correct. Some specific numbers (protest counts, exact attendee lists, exact Compact ban court timeline) are presented with explicit hedging.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Pin the specific Heran College de France publication, the named Foroutan and El-Mafaalani works (Foroutan &#39;Die postmigrantische Gesellschaft&#39; 2015; El-Mafaalani &#39;Das Integrationsparadox&#39; 2018), and the OVG Muenster March 2022 ruling citation, and double-check the federal BfV May 2025 timeline against current sources before publication.</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">Completeness</span>
+        <span class="finding-severity-medium">MEDIUM</span>
+        <span class="finding-description">The community_experiential perspective of Turkish-German, Vietnamese-German, Syrian-German, Afghan-German,...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">The community_experiential perspective of Turkish-German, Vietnamese-German, Syrian-German, Afghan-German, Russian-German, and Afro-German residents is acknowledged but could be more central to the consensus_explanation. The NSU and Hanau families&#39; testimony and the Initiative 19. Februar and NSU-Watch work are referenced and centered in Round 3 of the Socratic dialogue, which is the right move; the epistemic equity principle would argue for even more centering.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Expand the second and third generation integration paragraph in consensus_explanation with named ethnographic and theoretical works (Foroutan postmigrantische Gesellschaft; El-Mafaalani Integrationsparadox; Mecheril natio-ethno-kulturelle Zugehoerigkeit), and consider adding a paragraph in narrative_summary on the Initiative 19. Februar and NSU-Watch as central voices.</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">Bias</span>
+        <span class="finding-severity-medium">MEDIUM</span>
+        <span class="finding-description">The analysis is, defensibly, more sympathetic to the position that rejects the conspiracy framing than to the position...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">The analysis is, defensibly, more sympathetic to the position that rejects the conspiracy framing than to the position that holds it. This reflects the evidence base (intentionality is not supported, constitutional incompatibility of Sellner&#39;s program is not contested). The Socratic dialogue mitigates this in Round 1 with explicit OARS-style validation and explicit recognition of the eastern German experience. Round 2 and Round 3 lean toward challenging the framing.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Consider strengthening the Round 1 acknowledgment that municipal-level data shows specific German neighborhoods experienced very rapid demographic change in compressed time horizons after 2015, which aggregate national averages obscure, and that this is a legitimate driver of the felt experience independent of its political framing.</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">Manipulation</span>
+        <span class="finding-severity-low">LOW</span>
+        <span class="finding-description">The techniques_revealed section implements the Asymmetric Weight Principle correctly. The replacement actors&#39;...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">The techniques_revealed section implements the Asymmetric Weight Principle correctly. The replacement actors&#39; techniques are classified as systematic with detailed multi-decade evidence and historical precedent. The Persecution Inversion technique is added to handle the German-specific BfV-as-persecution claim. The German-specific Volksgemeinschaft anchor is added to the Historical Pattern Recycling technique.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> No fix needed.</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">Completeness</span>
+        <span class="finding-severity-low">LOW</span>
+        <span class="finding-description">The bipartisan policy failure dimension is explicit (named across Kohl, Schroeder, Merkel I-IV, Scholz, Merz...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">The bipartisan policy failure dimension is explicit (named across Kohl, Schroeder, Merkel I-IV, Scholz, Merz governments and across coalitions including CDU/CSU, SPD, FDP, Greens, Linke). The eastern-western divergence is addressed both in the structural analysis and in the convergence matrix.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> No fix needed.</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">Quality</span>
+        <span class="finding-severity-low">LOW</span>
+        <span class="finding-description">The Socratic dialogue successfully implements OARS protocol in Round 1, named-technique guided examination in Round 2...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">The Socratic dialogue successfully implements OARS protocol in Round 1, named-technique guided examination in Round 2 with the eastern German low-migration-high-anxiety paradox as the central analytical move, and integration with concrete agency in Round 3 ending with a genuine question. Round 3&#39;s final sentence ends with a question mark per C6 compliance. The use of German specifics (Anwerbeabkommen 1961, Treuhandanstalt, Potsdam, Hanau and NSU families with named anchors, Sellner&#39;s Article 16 constitutional impossibility, Hoecke&#39;s SA conviction) anchors the dialogue in lived context.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> No fix needed.</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">Completeness</span>
+        <span class="finding-severity-low">LOW</span>
+        <span class="finding-description">International comparative material is included for AfD&#39;s place in the broader European populist radical right family....</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">International comparative material is included for AfD&#39;s place in the broader European populist radical right family. The Erinnerungskultur dimension is centered as the German-specific feature.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Optional expansion in future revision on the comparative response of European democracies to replacement-adjacent rhetoric in their own contexts (French institutional response to Camus, Belgian cordon sanitaire and its erosion, Dutch response to PVV, Italian Fratelli d&#39;Italia coalition). The German focus is correct for this scenario.</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">Quality</span>
+        <span class="finding-severity-low">LOW</span>
+        <span class="finding-description">v1 pipeline redesign compliance: Round 3 ends with genuine question (C6 verified). Convergence_strength is MEDIUM and...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">v1 pipeline redesign compliance: Round 3 ends with genuine question (C6 verified). Convergence_strength is MEDIUM and the amplification_risk text explicitly notes the absence of evidence for a coordinated joint operation across the four groups, satisfying the convergence-strength evidence requirement. Actor credibility_basis fields are structural strings throughout. All three pipeline redesign items validated.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> No fix needed. Pipeline redesign working as intended.</div>
+      </div>
+    </li></ul>
+  </div>
+
+  
+    <div class="section evaluation-section">
+      <h2>Evaluation Methodology</h2>
+      <p class="intro-note">Full transparency on how this scenario was scored. 12 weighted checks, each independently measurable. <a href="https://github.com/Jochen-s/huginn-muninn/blob/main/tests/run_bridge_scenarios.py" target="_blank" rel="noopener">View source code</a></p>
+      <div class="eval-summary">
+        <span class="eval-overall">93.0%</span>
+        <span class="badge badge-pass">Grade A</span>
+      </div>
+      <div style="overflow-x:auto">
+        <table class="eval-table">
+          <thead>
+            <tr>
+              <th>Check</th>
+              <th>Weight</th>
+              <th>Score</th>
+              <th>Status</th>
+              <th>What It Measures</th>
+            </tr>
+          </thead>
+          <tbody><tr class="eval-fail">
+      <td>needs coverage</td>
+      <td class="eval-weight">7%</td>
+      <td class="eval-score">0%</td>
+      <td class="eval-status">MISS</td>
+      <td class="eval-desc">Expected universal human needs matched against identified needs</td>
+    </tr><tr class="eval-pass">
+      <td>issue overlap quality</td>
+      <td class="eval-weight">6%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Common ground text is substantive (&gt;50 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>narrative deconstruction</td>
+      <td class="eval-weight">7%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Narrative deconstruction is substantive (&gt;100 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>consensus explanation</td>
+      <td class="eval-weight">11%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Scientific/mainstream explanation &gt;200 chars with 3+ mechanism keywords</td>
+    </tr><tr class="eval-pass">
+      <td>inferential gap</td>
+      <td class="eval-weight">8%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Inferential gap analysis is substantive (&gt;50 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>feasibility check</td>
+      <td class="eval-weight">6%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Feasibility assessment is substantive (&gt;50 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>commercial motives</td>
+      <td class="eval-weight">6%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Commercial motive analysis is substantive (&gt;30 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>technique naming</td>
+      <td class="eval-weight">8%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">At least 1 technique named with mechanic (&gt;30 chars) and precedent (&gt;20 chars)</td>
+    </tr><tr class="eval-pass">
+      <td>perception gap</td>
+      <td class="eval-weight">5%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Perception gap analysis is substantive (&gt;30 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>socratic dialogue</td>
+      <td class="eval-weight">17%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">3 rounds, ends with question, Round 1 shows perspective-getting</td>
+    </tr><tr class="eval-pass">
+      <td>reframe quality</td>
+      <td class="eval-weight">7%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Reframe &gt;20 chars using shared-value language (we, together, both)</td>
+    </tr><tr class="eval-pass">
+      <td>no controlling language</td>
+      <td class="eval-weight">12%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Zero matches against 9 controlling phrases</td>
+    </tr></tbody>
+        </table>
+      </div>
+      <p class="eval-note">Overall score = weighted sum of individual check scores. Weights reflect the relative importance of each dimension to the project's mission: Socratic dialogue quality (17%) and controlling language detection (12%) are weighted highest because autonomy-supportive framing is the core differentiator.</p>
+    </div>
+
+  <div class="scenario-nav">
+    <a href="GP-09.html">&larr; GP-09: Le grand remplacement is a demographic reality...</a>
+    <a href="index.html">Gallery</a>
+    <a href="HS-01.html">HS-01: The government is spraying chemicals from planes... &rarr;</a>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="content">
+    <p>
+      <a href="index.html">Huginn &amp; Muninn Gallery</a> &nbsp;|&nbsp;
+      MIT License &nbsp;|&nbsp;
+      Analysis powered by Claude (Anthropic)
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>

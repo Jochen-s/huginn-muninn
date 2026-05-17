@@ -162,3 +162,42 @@ class TestBridgePromptPreservation:
         system = _get_bridge_system_prompt()
         assert "warmth" in system.lower()
         assert "controlling language" in system.lower()
+
+
+class TestCharterC6Round3:
+    """Charter Commitment 6: autonomy-preserving. Round 3 must end with
+    a question, not a call to action or solidarity mobilization."""
+
+    def test_prompt_requires_round3_to_end_with_question(self):
+        prompt = _get_bridge_prompt()
+        lower = prompt.lower()
+        assert "round 3" in lower
+        assert any(phrase in lower for phrase in [
+            "end with a question",
+            "close with a question",
+            "ends with a question",
+            "must be a genuine question",
+            "must be a question",
+            "last sentence is a question",
+        ]), "Round 3 instruction must explicitly require ending with a question"
+
+    def test_prompt_bans_solidarity_mobilization_in_round3(self):
+        prompt = _get_bridge_prompt()
+        lower = prompt.lower()
+        assert "solidarity mobilization" in lower or (
+            "never" in lower and any(p in lower for p in [
+                "the most powerful thing",
+                "call to action",
+                "solidarity",
+                "mobiliz",
+            ])
+        ), "Prompt must ban solidarity mobilization / call-to-action language in Round 3"
+
+    def test_prompt_round3_preserves_integration_function(self):
+        """Round 3 still integrates and bridges; C6 only changes the ENDING."""
+        prompt = _get_bridge_prompt()
+        lower = prompt.lower()
+        assert "round 3" in lower
+        assert any(w in lower for w in ["integration", "common ground", "shared"]), (
+            "Round 3 must still perform integration function"
+        )

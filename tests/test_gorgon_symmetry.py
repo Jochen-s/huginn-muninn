@@ -431,6 +431,7 @@ class TestGorgonSymmetricExtensionPlan:
         assert "templates" in text and (
             "not themselves historical attributions" in text
             or "not historical attributions" in text
+            or "aren't themselves historical attributions" in text
         ), (
             "Section 4 must include a templates disclaimer (Holodeck P2-013)."
         )

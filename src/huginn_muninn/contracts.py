@@ -371,12 +371,42 @@ class TracerOutput(BaseModel):
 
 # --- Intelligence Mapper ---
 
+def _coerce_credibility_basis(v: object) -> str:
+    """Convert legacy numeric credibility to structural description.
+    Supports backward compat with old 0.0-1.0 float values."""
+    if isinstance(v, (int, float)):
+        if v >= 0.75:
+            return "high documented credibility"
+        elif v >= 0.4:
+            return "mixed or contested credibility"
+        else:
+            return "low documented credibility"
+    if v is None or (isinstance(v, str) and not v.strip()):
+        return "not assessed"
+    return str(v)
+
+
 class Actor(BaseModel):
     name: str
     type: Annotated[Literal["state", "media", "influencer", "organization", "bot_network", "unknown"], BeforeValidator(_first_pipe_value)]
     motivation: str
-    credibility: float = Field(..., ge=0.0, le=1.0)
+    credibility_basis: Annotated[str, BeforeValidator(_coerce_credibility_basis)] = Field(
+        default="not assessed",
+        description=(
+            "Structural description of the actor's credibility basis. "
+            "Charter C1: no numeric profiling scores on actors."
+        ),
+    )
     evidence: str = ""
+
+    @model_validator(mode="before")
+    @classmethod
+    def _migrate_credibility_field(cls, data: dict) -> dict:
+        """Backward compat: rename old 'credibility' float to 'credibility_basis'."""
+        if isinstance(data, dict) and "credibility" in data and "credibility_basis" not in data:
+            data = {**data}
+            data["credibility_basis"] = data.pop("credibility")
+        return data
 
 
 class ActorRelation(BaseModel):
@@ -427,6 +457,43 @@ class ConvergenceMatrix(BaseModel):
         scrubbed = [_scrub_scope_violation(n) for n in self.bridge_narratives]
         if scrubbed != self.bridge_narratives:
             object.__setattr__(self, "bridge_narratives", scrubbed)
+        return self
+
+    # Substring matches (not word-boundary). High-recall, low-precision by
+    # design: degrade to MEDIUM only when clearly no coordination evidence.
+    # Known gap: synonyms like "parallel amplification" bypass the check.
+    _COORDINATION_EVIDENCE_KEYWORDS: ClassVar[frozenset[str]] = frozenset((
+        "coordinated", "coordination", "orchestrated", "orchestration",
+        "joint campaign", "joint effort", "joint operation",
+        "synchronized", "synchronised", "jointly",
+        "organised", "organized",
+        "documented collaboration", "cross-platform",
+    ))
+
+    _NEGATION_PREFIXES: ClassVar[tuple[str, ...]] = (
+        "no ", "not ", "without ", "absent ", "lack of ", "un",
+    )
+
+    @model_validator(mode="after")
+    def _require_coordination_evidence_for_high(self) -> "ConvergenceMatrix":
+        """Codex GP-07 + Codex v2 mitigation: HIGH convergence_strength
+        requires documented coordination evidence in amplification_risk.
+        Negation-aware: 'No coordinated activity' does not count."""
+        if self.convergence_strength != "HIGH":
+            return self
+        risk_lower = self.amplification_risk.lower()
+        has_evidence = False
+        for kw in self._COORDINATION_EVIDENCE_KEYWORDS:
+            idx = risk_lower.find(kw)
+            if idx < 0:
+                continue
+            prefix = risk_lower[max(0, idx - 12):idx].rstrip()
+            if any(prefix.endswith(neg.rstrip()) for neg in self._NEGATION_PREFIXES):
+                continue
+            has_evidence = True
+            break
+        if not has_evidence:
+            object.__setattr__(self, "convergence_strength", "MEDIUM")
         return self
 
 
@@ -612,6 +679,23 @@ class BridgeOutput(BaseModel):
             object.__setattr__(self, "prebunking_note", scrubbed_prebunk)
         return self
 
+    c6_violation: bool = Field(default=False, exclude=True)
+
+    @model_validator(mode="after")
+    def _enforce_round3_question_ending(self) -> "BridgeOutput":
+        """Sprint 9 fleet + Codex convergence: Charter C6 requires Round 3
+        to end with a genuine question. Schema-level enforcement backs up
+        the prompt instruction. Sets machine-readable c6_violation flag
+        and logs warning. Degrade-don't-crash: does not raise."""
+        if self.socratic_dialogue and len(self.socratic_dialogue) >= 3:
+            r3 = self.socratic_dialogue[-1].rstrip()
+            if not r3.endswith("?"):
+                _log.warning(
+                    "Charter C6 violation: Round 3 does not end with a question"
+                )
+                object.__setattr__(self, "c6_violation", True)
+        return self
+
 
 # --- Evidence Certainty Framework (Sprint 4 Phase 2, inspired by GRADE) ---
 
@@ -786,7 +870,7 @@ class AnalysisResponse(BaseModel):
 
     data: dict
     suppressed_fields: list[str] = Field(default_factory=list)
-    api_version: str = "0.15.0"
+    api_version: str = "0.16.0"
     audit_redacted: bool = False
     experimental_fields: list[str] = Field(default_factory=list)
 

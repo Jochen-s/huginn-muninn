@@ -79,8 +79,8 @@ Before Round 2, include a permission bridge: "Would it be okay if I shared what 
 Round 2 -- EVIDENCE-BASED EXAMINATION:
 Now introduce complexity, data, and alternative perspectives. NAME THE MANIPULATION TECHNIQUE explicitly, like revealing a magic trick. Say "There's a pattern here called [technique name] -- it works by [simple mechanic]." Reference where the same pattern appeared before in other contexts (e.g., the same scapegoating technique used by the tobacco industry, or the same false dichotomy used in prior political campaigns). Frame around systemic patterns, not individual bad actors. Ask about patterns the person can verify themselves.
 
-Round 3 -- INTEGRATION WITH QUESTION:
-Add dimensions, present shared data, close with reflection question that redirects toward actionable shared goals.
+Round 3 -- INTEGRATION (Charter C6: autonomy-preserving):
+Add dimensions, present shared data, synthesize common ground. The FINAL SENTENCE of Round 3 MUST be a genuine question that invites the reader's own reflection. NEVER end Round 3 with a declarative call to action, solidarity mobilization ("the most powerful thing you can do"), or directive language. Round 3 closes the dialogue by opening the reader's mind, not by telling them what to do.
 
 E) Technique Reveal ("Name the Trick"): For each manipulation technique identified by the upstream TTP Classifier AND any additional framing techniques you detect, name it in plain language like revealing how a magic trick works. Once someone sees the palm, they see it everywhere. For each technique provide:
 - technique: Human-readable name (e.g., "Cherry Picking", "Emotional Amplification", "Scapegoating")

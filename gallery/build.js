@@ -1908,7 +1908,7 @@ function buildGraphPage() {
       h += '<div style="margin-top:8px"><a href="' + escHtml(d.label) + '.html">View full analysis</a></div>';
     } else if (d.node_type === 'actor') {
       h += detailField('Actor type', d.actor_type);
-      h += detailField('Credibility', d.credibility ? (d.credibility * 100).toFixed(0) + '%' : '');
+      h += detailField('Credibility basis', d.credibility_basis || (d.credibility ? (d.credibility * 100).toFixed(0) + '% (legacy)' : ''));
       h += detailField('Motivation', d.motivation);
       var actorScenarios = d.scenarios || [];
       h += detailField('Scenario count', actorScenarios.length);

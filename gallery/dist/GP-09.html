@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GP-09: Le grand remplacement is a demographic reality that anyone can see in... &mdash; Huginn &amp; Muninn</title>
+  <meta name="description" content="6-agent AI pipeline analysis of: Le grand remplacement is a demographic reality that anyone can see in the banlieues. Renaud Camus simply named what was already happening. Marine Le...">
+  <style>  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy:   #1B2A4A;
+    --red:    #C0392B;
+    --teal:   #16A085;
+    --bg:     #F0F4F8;
+    --white:  #FFFFFF;
+    --amber:  #E67E22;
+    --green:  #27AE60;
+    --gray:   #5D6D7E;
+    --muted:  #7F8C8D;
+    --border: #D0D9E4;
+    --font:   -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  }
+
+  html { font-size: 16px; }
+
+  body {
+    font-family: var(--font);
+    font-weight: 400;
+    line-height: 1.6;
+    color: #2C3E50;
+    background: var(--white);
+  }
+
+  a { color: var(--teal); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  h1, h2, h3, h4 { font-weight: 700; color: var(--navy); line-height: 1.25; }
+
+  /* Layout */
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+  .content   { max-width: 800px;  margin: 0 auto; padding: 0 24px; }
+
+  /* Header */
+  .site-header {
+    background: var(--navy);
+    color: var(--white);
+    padding: 48px 0 40px;
+  }
+  .site-header h1 { color: var(--white); font-size: 2rem; margin-bottom: 8px; }
+  .site-header .subtitle {
+    font-size: 1.05rem;
+    color: #A8BCCF;
+    max-width: 680px;
+    margin-bottom: 16px;
+  }
+  .site-header .intro {
+    font-size: 0.95rem;
+    color: #8AA5BC;
+    max-width: 720px;
+    line-height: 1.7;
+  }
+
+  /* Nav bar */
+  .site-nav {
+    background: #152138;
+    padding: 10px 0;
+  }
+  .site-nav a {
+    color: #8AA5BC;
+    font-size: 0.875rem;
+  }
+  .site-nav a:hover { color: var(--white); }
+  .site-nav a.active { color: var(--white); font-weight: 600; }
+
+  /* Category sections */
+  .category-section { padding: 48px 0; border-bottom: 1px solid var(--border); }
+  .category-section:last-child { border-bottom: none; }
+
+  .category-header { margin-bottom: 24px; }
+  .category-header h2 { font-size: 1.5rem; margin-bottom: 6px; }
+  .category-header .category-intro { color: var(--gray); font-size: 0.95rem; }
+
+  /* Cards grid */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+
+  .card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    transition: box-shadow 0.15s;
+    display: flex;
+    flex-direction: column;
+  }
+  .card:hover { box-shadow: 0 4px 16px rgba(27, 42, 74, 0.12); }
+
+  .card-id {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--gray);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .card-claim {
+    font-size: 0.95rem;
+    color: #2C3E50;
+    flex: 1;
+    margin-bottom: 14px;
+    line-height: 1.5;
+  }
+
+  .card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+  }
+
+  .card-link {
+    margin-top: 14px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--teal);
+  }
+
+  /* Badges */
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+  }
+  .badge-version  { background: #EAF0F7; color: var(--navy); }
+  .methodology-link { font-size: 0.85em; color: var(--accent); text-decoration: none; margin-left: 0.3em; }
+  .methodology-link:hover { text-decoration: underline; }
+  .badge-easy     { background: #EAF6EE; color: #1E8449; }
+  .badge-medium   { background: #FEF9E7; color: #7D6608; }
+  .badge-hard     { background: #FDEDEC; color: var(--red); }
+  .badge-kernel-true  { background: #EAF6EE; color: #1E8449; }
+  .badge-kernel-false { background: #F2F3F4; color: var(--gray); }
+  .badge-pass     { background: #EAF6EE; color: #1E8449; }
+  .badge-warnings { background: #FEF9E7; color: #7D6608; }
+  .badge-fail     { background: #FDEDEC; color: var(--red); }
+  .badge-systematic { background: #FDEDEC; color: var(--red); }
+  .badge-repeated   { background: #E8F8F5; color: var(--teal); }
+  .badge-isolated   { background: #FEF5E7; color: var(--amber); }
+  .badge-severity   { background: #FDEDEC; color: var(--red); }
+
+  /* Footer */
+  .site-footer {
+    background: var(--navy);
+    color: #8AA5BC;
+    padding: 32px 0;
+    margin-top: 48px;
+    font-size: 0.875rem;
+  }
+  .site-footer a { color: #8AA5BC; }
+  .site-footer a:hover { color: var(--white); }
+
+  /* ---- Scenario page styles ---- */
+
+  .scenario-header {
+    background: var(--navy);
+    padding: 40px 0 32px;
+    color: var(--white);
+  }
+  .scenario-header .back-link {
+    font-size: 0.875rem;
+    color: #8AA5BC;
+    display: inline-block;
+    margin-bottom: 16px;
+  }
+  .scenario-header .back-link:hover { color: var(--white); }
+  .scenario-header h1 {
+    color: var(--white);
+    font-size: 1.6rem;
+    margin-bottom: 12px;
+    line-height: 1.3;
+  }
+  .scenario-header .header-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .metrics-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    margin: 24px 0;
+  }
+  .metrics-table th {
+    text-align: left;
+    background: var(--bg);
+    padding: 10px 14px;
+    font-weight: 600;
+    color: var(--navy);
+    border-bottom: 2px solid var(--border);
+  }
+  .metrics-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    color: #2C3E50;
+  }
+  .metrics-table tr:last-child td { border-bottom: none; }
+
+  .section {
+    padding: 40px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .section:last-child { border-bottom: none; }
+
+  .section h2 {
+    font-size: 1.3rem;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--bg);
+    letter-spacing: -0.01em;
+  }
+
+  .section p { margin-bottom: 16px; color: #2C3E50; }
+  .section p:last-child { margin-bottom: 0; }
+
+  .intro-note {
+    color: var(--gray);
+    font-size: 0.875rem;
+    font-style: italic;
+    margin-bottom: 16px;
+  }
+
+  /* Prose blocks: long-form text with proper paragraph spacing */
+  .prose {
+    font-size: 0.95rem;
+    line-height: 1.75;
+    color: #34495E;
+  }
+  .prose p {
+    margin-bottom: 16px;
+  }
+  .prose p:last-child { margin-bottom: 0; }
+
+  /* Needs pills */
+  .needs-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .need-item {
+    background: var(--bg);
+    border-left: 3px solid var(--teal);
+    padding: 10px 14px;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+  .need-name {
+    font-weight: 700;
+    color: var(--navy);
+    margin-right: 6px;
+  }
+
+  /* Technique cards */
+  .technique-card {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+  .technique-header {
+    background: var(--bg);
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .technique-name {
+    font-weight: 700;
+    color: var(--navy);
+    font-size: 1rem;
+    flex: 1;
+  }
+  .technique-body { padding: 16px; }
+  .technique-field { margin-bottom: 14px; }
+  .technique-field:last-child { margin-bottom: 0; }
+  .technique-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--gray);
+    margin-bottom: 4px;
+  }
+  .technique-text { font-size: 0.9rem; color: #2C3E50; line-height: 1.6; }
+
+  /* Socratic dialogue */
+  .dialogue-round { margin-bottom: 28px; }
+  .dialogue-round:last-child { margin-bottom: 0; }
+  .round-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 10px;
+  }
+  .round-1 .round-label { color: var(--teal); }
+  .round-2 .round-label { color: var(--navy); }
+  .round-3 .round-label { color: #6C3483; }
+
+  .dialogue-bubble {
+    padding: 20px 24px;
+    border-radius: 8px;
+    font-size: 0.92rem;
+    line-height: 1.75;
+  }
+  .dialogue-bubble p { margin-bottom: 12px; }
+  .dialogue-bubble p:last-child { margin-bottom: 0; }
+  .round-1 .dialogue-bubble { background: #EAF7F4; border-left: 4px solid var(--teal); }
+  .round-2 .dialogue-bubble { background: #EAF0F7; border-left: 4px solid var(--navy); }
+  .round-3 .dialogue-bubble { background: #F5EEF8; border-left: 4px solid #6C3483; }
+
+  /* Reframe */
+  .reframe-block {
+    border-left: 4px solid var(--amber);
+    background: #FEF9E7;
+    padding: 20px 20px 20px 24px;
+    border-radius: 0 8px 8px 0;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    font-style: italic;
+    color: #2C3E50;
+  }
+
+  /* Audit findings */
+  .audit-summary {
+    background: var(--bg);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 16px;
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+  .findings-list { list-style: none; }
+  .finding-item {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+  .finding-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: var(--bg);
+    cursor: default;
+  }
+  .finding-category {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--gray);
+  }
+  .finding-severity-low    { color: var(--teal); font-size: 0.75rem; font-weight: 600; }
+  .finding-severity-medium { color: var(--amber); font-size: 0.75rem; font-weight: 600; }
+  .finding-severity-high     { color: var(--red); font-size: 0.75rem; font-weight: 600; }
+  .finding-severity-critical { color: #8B0000; font-size: 0.75rem; font-weight: 700; }
+  .finding-description { font-size: 0.875rem; color: #2C3E50; }
+
+  /* Scoped diagnostics (v0.8.0+) */
+  .diagnostics-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 12px;
+  }
+  @media (max-width: 640px) { .diagnostics-grid { grid-template-columns: 1fr; } }
+  .diagnostic-card {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    background: var(--bg);
+  }
+  .diagnostic-card h4 {
+    margin: 0 0 6px;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--gray);
+  }
+  .diagnostic-card p { margin: 0; font-size: 0.9rem; line-height: 1.6; }
+  .diagnostic-note { font-size: 0.78rem; color: var(--gray); font-style: italic; margin-bottom: 4px !important; }
+  .posture-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    background: #F5F5F5;
+    color: #555;
+  }
+  .posture-inoculation_first  { background: #FFF3E0; color: #E65100; }
+  .posture-relational_first   { background: #E3F2FD; color: #1565C0; }
+  .pattern-density-warning {
+    background: #FFF8E1;
+    border-left: 4px solid var(--amber);
+    padding: 10px 14px;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.875rem;
+    margin-top: 8px;
+  }
+  .finding-body { padding: 10px 14px; border-top: 1px solid var(--border); }
+  .finding-rec {
+    font-size: 0.8rem;
+    color: var(--gray);
+    margin-top: 4px;
+  }
+  .finding-rec strong { color: #2C3E50; }
+
+  /* Scenario navigation */
+  .scenario-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 0;
+    border-top: 1px solid var(--border);
+    margin-top: 16px;
+    gap: 16px;
+  }
+  .scenario-nav a {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--teal);
+  }
+  .scenario-nav .disabled { color: var(--gray); pointer-events: none; }
+
+  /* Responsive */
+  /* Evaluation methodology table */
+  .evaluation-section { background: #FAFBFD; margin: 0 -32px; padding: 40px 32px; border-bottom: 1px solid var(--border); }
+  .eval-summary { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+  .eval-overall { font-size: 2rem; font-weight: 700; color: var(--navy); }
+  .eval-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  .eval-table th { text-align: left; padding: 10px 12px; border-bottom: 2px solid var(--border); color: var(--gray); font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; }
+  .eval-table td { padding: 10px 12px; border-bottom: 1px solid #EEF1F5; }
+  .eval-table td:first-child { font-weight: 600; text-transform: capitalize; }
+  .eval-weight, .eval-score { text-align: center; font-variant-numeric: tabular-nums; }
+  .eval-status { text-align: center; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.04em; }
+  .eval-pass .eval-status { color: var(--green); }
+  .eval-partial .eval-status { color: var(--amber); }
+  .eval-fail .eval-status { color: var(--red); }
+  .eval-desc { color: var(--gray); font-size: 0.8rem; }
+  .eval-note { margin-top: 16px; font-size: 0.82rem; color: var(--gray); line-height: 1.6; }
+
+  /* Essay page styles */
+  .essay-prose {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #2C3E50;
+    max-width: 760px;
+  }
+  .essay-prose h2 {
+    font-size: 1.35rem;
+    margin-top: 40px;
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--bg);
+  }
+  .essay-prose h3 {
+    font-size: 1.1rem;
+    margin-top: 28px;
+    margin-bottom: 10px;
+    color: var(--navy);
+  }
+  .essay-prose h4 {
+    font-size: 1rem;
+    margin-top: 20px;
+    margin-bottom: 8px;
+    color: #34495E;
+  }
+  .essay-prose p { margin-bottom: 18px; }
+  .essay-prose ul, .essay-prose ol { margin: 0 0 18px 24px; }
+  .essay-prose li { margin-bottom: 8px; line-height: 1.75; }
+  .essay-prose strong { color: var(--navy); font-weight: 700; }
+  .essay-prose em { font-style: italic; }
+  .essay-prose hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 36px 0;
+  }
+  .essay-prose blockquote {
+    border-left: 4px solid var(--teal);
+    padding: 8px 20px;
+    margin: 20px 0;
+    background: var(--bg);
+    color: #34495E;
+    font-style: italic;
+  }
+  .essay-prose code {
+    background: var(--bg);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: 'SFMono-Regular', Consolas, monospace;
+    font-size: 0.88em;
+  }
+  .essay-prose .essay-meta {
+    color: var(--gray);
+    font-size: 0.875rem;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .essay-prose .references {
+    font-size: 0.88rem;
+    color: #34495E;
+    line-height: 1.65;
+  }
+  .essay-prose .references p { margin-bottom: 10px; }
+
+  /* Essay card styles (index page) */
+  .essay-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px;
+    transition: box-shadow 0.15s;
+    display: flex;
+    flex-direction: column;
+  }
+  .essay-card:hover { box-shadow: 0 4px 16px rgba(27, 42, 74, 0.12); }
+  .essay-card .card-id { color: #6C3483; }
+  .essay-card h3 {
+    font-size: 1.15rem;
+    margin-bottom: 8px;
+    line-height: 1.35;
+  }
+  .essay-card .essay-summary {
+    color: #34495E;
+    font-size: 0.92rem;
+    line-height: 1.6;
+    flex: 1;
+    margin-bottom: 14px;
+  }
+  .essay-card .essay-date {
+    font-size: 0.8rem;
+    color: var(--gray);
+    margin-bottom: 10px;
+  }
+
+  @media (max-width: 640px) {
+    .site-header h1 { font-size: 1.5rem; }
+    .cards-grid { grid-template-columns: 1fr; }
+    .scenario-header h1 { font-size: 1.3rem; }
+    .scenario-nav { flex-direction: column; align-items: flex-start; }
+    .metrics-table { font-size: 0.8rem; }
+    .metrics-table th, .metrics-table td { padding: 8px 10px; }
+    .essay-prose { font-size: 0.95rem; }
+    .essay-prose h2 { font-size: 1.2rem; }
+  }
+
+  .gap-warning {
+    background: #fff3cd;
+    border: 1px solid #ffc107;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin: 12px 0;
+    font-size: 0.95em;
+  }
+  .dim-weight {
+    color: var(--muted);
+    font-size: 0.85em;
+  }
+
+/* Convergence Matrix (Sprint 8) */
+.convergence-header {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.convergence-table td:first-child { min-width: 140px; }
+.convergence-table td:nth-child(2) { white-space: nowrap; }
+.convergence-bridges, .convergence-risk {
+  margin-top: 16px;
+  padding: 12px 16px;
+  background: var(--bg);
+  border-radius: 8px;
+}
+.convergence-bridges h4, .convergence-risk h4 {
+  font-size: 0.95em;
+  color: var(--navy);
+  margin-bottom: 8px;
+}
+.convergence-bridges ul { padding-left: 20px; }
+.convergence-bridges li { margin-bottom: 4px; }
+.convergence-risk p { font-size: 0.95em; color: var(--gray); }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a href="index.html">Gallery</a>
+    <a href="graph.html">Knowledge Graph</a>
+  </div>
+</nav>
+
+<header class="scenario-header">
+  <div class="content">
+    <a class="back-link" href="index.html">&larr; Back to gallery</a>
+    <h1>GP-09: Le grand remplacement is a demographic reality that anyone can see in the banlieues. Renaud Camus simply named what was already happening. Marine Le Pen and the Rassemblement National represent the democratic response to a transformation that the French elite refuses to acknowledge.</h1>
+    <div class="header-meta">
+      <span class="badge badge-version">v1</span>
+      <span class="badge badge-medium">Medium</span>
+      <span class="badge badge-kernel-false">No Clear Kernel</span>
+      <span class="badge badge-version">Geopolitics</span>
+    </div>
+  </div>
+</header>
+
+<main class="content">
+
+  <div class="section">
+    <h2>Pipeline Metrics</h2>
+    <table class="metrics-table">
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Sub-claims</td><td>8</td></tr>
+        <tr><td>Actors identified</td><td>12</td></tr>
+        <tr><td>TTP matches</td><td>16</td></tr>
+        <tr><td>Audit verdict</td><td><span class="badge badge-warnings">PASS WITH WARNINGS</span></td></tr>
+        <tr><td>Pipeline version</td><td>v5-epistemic-equity</td></tr>
+        <tr><td>Overall confidence</td><td>33% <a href="confidence-methodology.html" class="methodology-link" title="How is this score calculated?">[?]</a></td></tr>
+        <tr><td>Source tiers</td><td>T1: 9, T2: 3, T3: 5, T4: 3</td></tr>
+        <tr><td>Epistemic traditions</td><td><span class="badge badge-version">Western Academic: 11</span> <span class="badge badge-version">Western Institutional: 4</span> <span class="badge badge-version">Community Experiential: 4</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  
+    <div class="section">
+      <h2>Evidence Certainty Framework</h2>
+      <p class="intro-note">Multi-dimensional confidence assessment inspired by GRADE methodology. <a href="confidence-methodology.html" class="methodology-link">[?]</a></p>
+      <table class="metrics-table">
+        <thead><tr><th>Dimension</th><th>Score</th></tr></thead>
+        <tbody>
+          <tr><td>Evidence Quality <span class="dim-weight">(30%)</span></td><td>30%</td></tr><tr><td>Source Reliability <span class="dim-weight">(20%)</span></td><td>25%</td></tr><tr><td>Claim Testability <span class="dim-weight">(15%)</span></td><td>48%</td></tr><tr><td>Expert Consensus <span class="dim-weight">(20%)</span></td><td>72%</td></tr><tr><td>Internal Coherence <span class="dim-weight">(15%)</span></td><td>22%</td></tr>
+          <tr style="font-weight:600;border-top:2px solid var(--border)"><td>Composite (N/A)</td><td>0%</td></tr>
+        </tbody>
+      </table>
+    </div>
+  <div class="gap-warning"><strong>Epistemic diversity gap:</strong> The French replacement debate is structurally an in-house debate within the French intellectual tradition. Camus, Zemmour, Heran, Tribalat, Taguieff, and Noiriel are all French academics or French writers arguing in French about a French question. The community_experiential perspective of those described as the replacing population (French-Algerian, French-Moroccan, French-Tunisian, French-Malian, French-Senegalese, French-Congolese, French-Antillean, French-Comorian residents and citizens) is systematically absent from the political conversation about them, even though they are its subject. Indigenous knowledge and global_south_academic perspectives on diaspora, mobility, colonialism, and pluralism, including the substantial Algerian, Moroccan, Senegalese, and Malian academic traditions on migration and post-coloniality, are almost entirely missing from the French mainstream debate, which treats the question as if it were settled within French Republican traditions alone. The asymmetry is intensified by the French Republican statistical regime: because ethnicity cannot be measured directly, the lived experience of being subject to ethnic-replacement rhetoric is the only place where the phenomenon is visible to the people experiencing it, and that experience does not have a statistical proxy in the public debate. The people whose presence is the subject are not invited to the table at which the question is asked, and the table is itself constructed in such a way that their seat does not formally exist.</div>
+
+  
+  <div class="section">
+    <h2>Convergence Matrix</h2>
+    <p class="intro-note">Cross-ideological convergence mapping showing how different political groups engage with the same claim (Mudde/Kaltwasser thin-centered ideology framework).</p>
+    <div class="convergence-header">
+      <span class="badge" style="background:var(--amber);color:white">MEDIUM convergence</span>
+      <span class="badge badge-version">Antagonist</span>
+    </div>
+    <table class="metrics-table convergence-table">
+      <thead>
+        <tr><th>Group</th><th>Position</th><th>Framing</th><th>Core Grievance</th></tr>
+      </thead>
+      <tbody>
+    <tr>
+      <td><strong>French ethnonationalist and identitarian right (RN core, Reconquete, identitaires, fachosphere)</strong></td>
+      <td><span class="badge badge-version">right</span></td>
+      <td>French civilization, identity, language, and Republican-Catholic heritage face existential threat from post-colonial and Muslim immigration, executed or permitted by complicit globalist elites in Paris and Brussels.</td>
+      <td>Loss of cultural, demographic, and territorial primacy in the historic French nation, combined with deep distrust of the institutions of the Fifth Republic and of the European Union.</td>
+    </tr>
+    <tr>
+      <td><strong>French cultural-conservative center-right (parts of Les Republicains, conservative-Gaullist current, traditional Catholic milieu, Reconquete-curious LR voters)</strong></td>
+      <td><span class="badge badge-version">center-right</span></td>
+      <td>Immigration is poorly managed, integration is failing in specific quartiers, laicite is under pressure, and the political class is incompetent or unwilling to address visible community-level outcomes.</td>
+      <td>Frustration with policy incoherence across successive presidencies, loss of LR market share to RN, and a sense that legitimate concerns about laicite, security, and integration are dismissed as racism by progressive opponents.</td>
+    </tr>
+    <tr>
+      <td><strong>France peripherique and anti-globalization economic-left current (parts of LFI base on specific issues, residual PCF voters in former industrial areas, gilets jaunes-aligned voters)</strong></td>
+      <td><span class="badge badge-version">left</span></td>
+      <td>Mass labor migration is used by employers to undercut wages, weaken unions, and strain the welfare state, and the political class is complicit in this dynamic. The legitimate policy critique shares surface-level conclusions with ethnonationalist restriction but is founded on different premises and motivations.</td>
+      <td>Erosion of working-class bargaining power, deindustrialization of the France peripherique, housing costs in the periurban ring, public-service withdrawal in small and medium towns, healthcare desert formation, and pension precarity.</td>
+    </tr>
+    <tr>
+      <td><strong>Laicite-republican cross-cutting current (parts of Macronist center, parts of social-democratic left, parts of Printemps republicain)</strong></td>
+      <td><span class="badge badge-version">cross-cutting</span></td>
+      <td>French Republican universalism and laicite are non-negotiable; visible failures of integration around specific communautarisme practices represent a threat to the Republican model itself, distinct from racist or ethnonationalist framing.</td>
+      <td>Sense that the Republican model is under pressure from both communautariste demands and from ethnonationalist counter-mobilization; perception that the left has abandoned laicite defense.</td>
+    </tr></tbody>
+    </table>
+    <div class="convergence-bridges">
+        <h4>Bridge Narratives</h4>
+        <ul><li>Housing affordability in the periurban ring around Paris, Lyon, Marseille, and the France peripherique towns frames newcomers as competitors for scarce social housing, bridging the ethnonationalist identity frame and the economic-left frame around a single visible scarcity.</li><li>Insecurite in specific quartiers, especially after high-salience violent incidents (Crepol 2023, Samuel Paty 2020, the 2015 attacks), provides a shared visual and emotional shorthand that all four groups invoke without sharing the same theory of cause; the policing solution proposed by the right and the inequality-and-investment solution proposed by the left point in different directions.</li><li>Laicite as framing device crosses traditional left-right lines: the right uses it as civilizational defense, the laicite-republican current uses it as universalist principle, and the consequence is convergence on specific policy outcomes (bans on hijab in schools 2004, face veil 2010, abaya 2024) without convergence on underlying analysis.</li><li>Public-service withdrawal in the France peripherique, healthcare desert formation, and pension precarity provide an economic frame in which both right ethnonationalists (newcomers as net cost) and left economic nationalists (capital and policy as threat to social insurance) arrive at restrictionist conclusions from different premises.</li></ul>
+      </div>
+    <div class="convergence-risk">
+        <h4>Amplification Risk</h4>
+        <p>MEDIUM: Four groups arrive at restrictionist or replacement-adjacent conclusions independently and through different framings of the same surface experience. The convergence is antagonistic rather than acting-in-concert: laicite-republican secularists, cultural-conservative LR voters, France peripherique left voters, and the explicit ethnonationalist right do not coordinate their political activity, but their independently held positions produce a single political center of gravity on migration-restrictive outcomes. This makes the position unusually robust because rebuttals tailored to one framing do not touch the others. The risk is that political actors with explicit replacement framing (RN, Reconquete) harvest the votes of all four groups by speaking in the surface vocabulary of housing, insecurite, laicite, and public services without having to make the underlying claim explicit. The CNews-Bollore mediasphere provides the amplification infrastructure within which this harvesting becomes electorally consequential, with Acrimed and Mediapart documenting the systematic platforming choices. The cordon sanitaire that historically isolated the Front National has materially eroded since 2022, with the 2023 immigration law debate functioning as the visible moment in which Les Republicains crossed into vote-by-vote alignment with RN on a flagship policy.</p>
+      </div>
+  </div>
+
+  <div class="section">
+    <h2>Universal Needs</h2>
+    <p class="intro-note">The legitimate human needs this claim speaks to, regardless of whether the claim is accurate.</p>
+    <div class="needs-list"><div class="need-item"><span class="need-name">Safety, both physical and cultural:</span>the legitimate human need to feel that your home, your children&#39;s future, and the world you recognize are protected. This need is real when expressed by a French grandmother worried that her market town has changed and equally real when expressed by a French-Algerian teenager worried about being stopped at every metro station and called names on the street. Refusing to acknowledge it on either side validates the populist claim that no one is listening.</div><div class="need-item"><span class="need-name">Belonging:</span>the need to feel that your identity has a place, is recognized, and is allowed to continue. This need does not require that other identities be erased; identities can coexist, and French history is itself the history of layered belongings (Gallo-Roman, Frankish, regional, Catholic and increasingly secular, Republican, European, post-colonial). The legitimate need for belonging becomes weaponized only when it is reframed as a zero-sum competition for a single homogeneous Frenchness that has never empirically existed.</div><div class="need-item"><span class="need-name">Agency:</span>the need to feel that you have meaningful say over the conditions of your life, your community, and your country. Voters who turn to replacement framing often do so after years of feeling that their concerns about housing, services, insecurite, and the pace of change in their town were dismissed by Paris-centric political and media classes. The need for agency is the engine that drives people toward whoever appears to be listening, including in the France peripherique where gilets jaunes-aligned frustration mapped a topography of unheardness.</div><div class="need-item"><span class="need-name">Fairness:</span>the need to believe that the rules apply equally, that scarce resources are allocated by principles you can defend to your neighbor, and that nobody is gaming the system at your expense. This intuition is hardwired and pre-rational; when it fires, the rational explanation that follows tends to be retrofitted rather than discovered. The replacement frame supplies a ready-made fairness story (we are being cheated of our country by an elite that prefers newcomers) that is emotionally satisfying even where the empirical attribution is wrong, and the same intuition fires, with equal legitimacy and different content, in the French-Algerian citizen who experiences police controls at a documented rate disproportionate to her share of the population.</div></div>
+  </div>
+
+  <div class="section">
+        <h2>Scientific Consensus / Mainstream Explanation</h2>
+        <p class="intro-note">The established scientific or institutional explanation for this phenomenon.</p>
+        <div class="prose"><p>The mainstream scientific and historical account, assembled from French demography, sociology, history, and political science, is detailed enough to stand point for point against the replacement story.</p>
+<p>DEMOGRAPHIC MECHANICS: French and European populations are undergoing a long demographic transition that began in the nineteenth century (France was, distinctively, the first European country to reach sub-replacement fertility historically) and continued through the twentieth. Native-born fertility has been below the replacement rate of 2.1 children per woman in France for several decades, with the 2023 figure at 1.68. Life expectancy has risen substantially. The result is a population that is simultaneously aging and shrinking at the native-born level. Migration partially offsets this. INSEE and INED data show that without migration, the French population would already be in absolute decline; the working-age population would be shrinking faster. None of this is the result of a coordinated plan; it is the emergent outcome of millions of individual fertility and mobility decisions inside policy frameworks that have themselves shifted repeatedly. Francois Heran at the College de France, INED, and the broader French demographic community have addressed this directly in publications written specifically to engage with the Camus framing.</p>
+<p>COLONIAL LABOR RECRUITMENT AND POST-COLONIAL MIGRATION: A significant share of post-1945 migration to France is the direct material consequence of French colonial action and French post-war industrial labor recruitment. France recruited Algerian, Moroccan, Tunisian, Malian, and Senegalese workers for mining, auto manufacturing (Renault Billancourt is iconic), construction, and public works. The SONACOTRA hostels housed them under state coordination. The 1962 Evian Accords and the abandonment of approximately 60,000 to 90,000 harkis are constitutive of the politics of post-colonial migration in subsequent decades. The 1976 regroupement familial reform shaped the family structure of subsequent settlement. Algeria, Morocco, Tunisia, Mali, Senegal, the Comoros, the Antilles, and Reunion are not foreign in the same sense that, say, Vietnam is foreign to the United States; they are sites of an extended French colonial history whose consequences include the contemporary demography.</p>
+<p>LABOR MARKET PULL TODAY: Contemporary French migration is driven substantially by labor demand in healthcare, social care, construction, agriculture, transport, hospitality, and increasingly digital services. The same employers and political coalitions that publicly express anxiety about immigration depend on it operationally. The Cour des Comptes, the Conseil d&#39;analyse economique, and academic research at PSE and Sciences Po have documented this tension. Closing the flow without addressing the underlying labor demand produces predictable shortages.</p>
+<p>INTEGRATION OUTCOMES VARY AND ARE LARGELY STRUCTURALLY EXPLAINED: Academic studies by Patrick Simon (INED), Nacira Guenif-Souilamas (Paris 8), Abdellali Hajjat (Paris Nanterre), Mame-Fatou Niang (Carnegie Mellon), Marwan Mohammed (CNRS), Fabien Truong (Paris 8), and the EHESS and Sciences Po sociology departments show that integration outcomes for French residents of Maghrebi, West African, and sub-Saharan African origin vary substantially by generation, neighborhood, education, employment-discrimination exposure, and policy regime. Second, third, and now fourth-generation French citizens speak French, participate in the labor market, hold civic positions, identify as French at high rates (the INED TeO surveys document this), and are also the citizens most directly targeted by replacement rhetoric, which simultaneously demands their integration and denies its possibility. Specific quartiers (parts of the 93 in Seine-Saint-Denis, Marseille nord, Vaulx-en-Velin, Roubaix) show measurable concentrations of unemployment, lower educational attainment, and residential segregation, which result from a documented combination of housing-policy choice (the politique de la ville and its limits), labor-market discrimination (testing audits by Yann Algan and others), school-choice patterns, and structural underfunding. The quartiers are not the future of France; they are the past of French policy choices.</p>
+<p>POPULIST RADICAL RIGHT PATTERN AND FRENCH SPECIFICITY: Cas Mudde, Pippa Norris, and the French specialists Sylvain Crepon, Nonna Mayer, and Jerome Fourquet show that the populist radical right family across Europe shares a structural framework, while RN has French-specific texture: Republican vocabulary, laicite framing, colonial-history erasure, and dediabolisation strategy. The 2018 rename from FN to RN, Marine Le Pen&#39;s strategic distancing from Jean-Marie, and Jordan Bardella&#39;s youth-facing presence are specific French operational moves. The replacement claim is the most demographically scientific-sounding version of the ethnic nativist component.</p>
+<p>FRENCH HISTORICAL PRECEDENT: France has been a country of immigration for at least 150 years (Noiriel, Le Creuset francais). Italian, Polish, Spanish, Portuguese, Armenian, Jewish (waves from Russia, then Eastern Europe, then North Africa post-1956 and post-1962), and now North and Sub-Saharan African arrivals have each been framed in their moment as the latest civilizational threat. Drumont in 1886 wrote about Jewish replacement in vocabulary structurally indistinguishable from Camus&#39;s 2011 vocabulary about Muslim replacement, as Noiriel&#39;s Le Venin dans la plume documents directly. The framing has a track record of being wrong, predictively, about the population it warns against.</p>
+<p>WHAT ALL OF THIS IMPLIES: A serious response to the conditions French voters describe requires addressing housing supply in the periurban ring, deindustrialization in the France peripherique (Manufacture du futur and ecological-transition policies have been substantively under-discussed), healthcare workforce planning and medical-desert correction, pension viability, integration-policy coherence across national, regional, and municipal levels, post-colonial memory work (the Stora Report&#39;s recommendations are a starting point), and democratic accountability to communities including both the gilets-jaunes-coded France peripherique and the post-colonial-origin French citizens of the quartiers. None of these solutions requires, and most are obstructed by, the replacement framing. The bipartisan policy failure across Mitterrand, Chirac, Sarkozy, Hollande, and Macron presidencies is the actual subject; the framing converts that failure into a moral story about neighbors.</p></div>
+      </div>
+
+  <div class="section">
+        <h2>Name the Trick</h2>
+        
+    <div class="technique-card">
+      <div class="technique-header">
+        <span class="technique-name">Scapegoat Construction</span>
+        <span class="badge badge-systematic">[SYSTEMATIC]</span>
+      </div>
+      <div class="technique-body">
+        
+        <div class="technique-field">
+          <div class="technique-label">Used by</div>
+          <div class="technique-text">RN, Reconquete, identitaires, the broader French populist-radical-right ecosystem; also, in different domains, by political actors across the spectrum when they convert structural problems into out-group narratives.</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">How it works</div>
+          <div class="technique-text">You can recognize scapegoat construction when a complex set of structural conditions you experience daily gets collapsed into a single, visible out-group as the supposed cause. Three signals to watch for. First, a real grievance you already feel (housing costs, insecurite, laicite under pressure, public-service withdrawal, deindustrialization, the cost of living, the sense that your town has changed) is named accurately and your frustration validated. Second, a clearly visible, easily recognized out-group is named as the cause (in this scenario, post-colonial-origin and Muslim French residents). Third, the actual structural causes go unmentioned or get dismissed when raised (housing supply policy, labor-market deregulation, public-service decisions, pension reform avoidance, the colonial inheritance, EU economic governance, the decisions of capital). The tell is the asymmetry: the grievance is described in granular detail, the out-group attribution is asserted with emotional force, and the structural causes are absent or waved away. If your anger ends up aimed at your French-Algerian neighbor while the policy actors whose decisions produced your conditions remain unnamed, you are looking at scapegoat construction.</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">In this claim</div>
+          <div class="technique-text">The replacement claim deployed in France attributes housing shortages in the periurban ring, healthcare desert formation, deindustrialization, public-service withdrawal in the France peripherique, pension anxieties, and the sense of cultural change to immigration as the dominant cause. The evidence base instead identifies housing supply policy and the loi SRU implementation failures, decades of pension reform avoidance, healthcare workforce planning failures, the structural choices that produced medical deserts, the trajectory of French deindustrialization, and the broader French demographic transition as the dominant drivers. The Cour des Comptes, France Strategie, the Conseil d&#39;analyse economique, PSE, and Sciences Po researchers have documented this attribution mismatch for years.</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">Historical precedent</div>
+          <div class="technique-text">The most direct French historical precedent is Drumont&#39;s 1886 La France juive and the Dreyfus-era antisemitism, in which a Jewish officer was scapegoated for systemic military failures and a wider conspiracy structure was constructed around the Jewish presence in France. Noiriel&#39;s Le Venin dans la plume makes the structural parallel between Drumont and Zemmour explicit. Further precedents include the Italian, Polish, Spanish, and Portuguese arrivals in earlier waves, each framed in their moment as the latest civilizational threat (the 1893 Aigues-Mortes massacre of Italian workers is a violent anchor). The Jim Crow architecture in the United States is the transatlantic structural analogue. In every case the structure is identical: real anxieties, wrong attribution, protection of the actual causes from accountability.</div>
+        </div>
+      </div>
+    </div>
+    <div class="technique-card">
+      <div class="technique-header">
+        <span class="technique-name">Demographic Cherry-Picking</span>
+        <span class="badge badge-systematic">[SYSTEMATIC]</span>
+      </div>
+      <div class="technique-body">
+        
+        <div class="technique-field">
+          <div class="technique-label">Used by</div>
+          <div class="technique-text">RN, Reconquete, Fdesouche, CNews opinion programs, and the wider French fachosphere translating pan-European material into French.</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">How it works</div>
+          <div class="technique-text">You can spot demographic cherry-picking when a single alarming statistic about population, migration, or birth rates is presented without the context that would change its meaning. Three signals to watch for. First, the metric is chosen for shock value: gross migration flows rather than net population change, the share of first names of foreign origin in a single municipality rather than aggregate composition over a longer horizon, single-quartier statistics presented as national futures. Second, the framing maximizes alarm: absolute numbers rather than per capita rates, short time windows that capture spikes rather than long-run trends. Third, qualifying context is missing: aging, sub-replacement native fertility, labor market demand, the share of migration that is intra-EU rather than non-European, the share of new arrivals on student or short-term work visas, the post-colonial labor recruitment history. Because each fragment is technically accurate, the technique is resistant to ordinary fact-checking. The only correction available is that the figure is misleading without context, which is a harder message to communicate than the original alarming number. If a statistic arrives detached from denominators, time horizons, and comparison groups, treat that absence as the signal.</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">In this claim</div>
+          <div class="technique-text">INSEE and INED data are systematically presented in fragments. The newborn first-name composition of a single Seine-Saint-Denis municipality is presented as the future of France. Year-on-year gross arrivals in a single peak year are presented as the steady state. Specific high-migration corridors are presented without their corresponding return flows or student-visa cycling. Specific crime statistics are presented without age, neighborhood, and socioeconomic controls that the academic literature (Mucchielli, Roche, the Observatoire national de la delinquance) shows account for most of the variation. Les Decodeurs, Checknews, AFP Factuel, and Conspiracy Watch have documented these patterns repeatedly.</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">Historical precedent</div>
+          <div class="technique-text">The tobacco industry&#39;s selective use of safety studies. Climate denial&#39;s selective use of cold-weather events. Anti-vaccine selective use of adverse event reports without denominators. The technique is general; cherry-picking is the most common method of motivated reasoning when the full evidence base is complex enough that most people cannot evaluate it independently.</div>
+        </div>
+      </div>
+    </div>
+    <div class="technique-card">
+      <div class="technique-header">
+        <span class="technique-name">Fear Amplification as Distraction</span>
+        <span class="badge badge-systematic">[SYSTEMATIC]</span>
+      </div>
+      <div class="technique-body">
+        
+        <div class="technique-field">
+          <div class="technique-label">Used by</div>
+          <div class="technique-text">RN, Reconquete, identitaires, segments of CNews and Sud Radio opinion programming, the wider French populist radical right; in different domains and with different targets, also visible across the political spectrum when fear is used to redirect rather than to inform.</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">How it works</div>
+          <div class="technique-text">You can recognize fear amplification as distraction when a measured concern you hold gets escalated rhetorically and then redirected toward an out-group rather than toward the structural causes of the concern. Two signals to watch for. First, the language climbs the temperature ladder: demographic change becomes invasion, neighborhood change becomes occupation, policy incoherence becomes betrayal. Each step makes the statement less accurate but more emotionally compelling and more shareable, and your own heightened emotion is the indicator that you have left the analytical register. Second, the political energy generated by the escalated fear ends up pointed at neighbors, refugees, and the EU rather than at the housing supply, healthcare workforce, pension, public-service withdrawal, and labor-market policy decisions that produced the underlying conditions. If your starting worry was rent or the closure of your maternity hospital and you end the conversation worrying about civilizational survival, ask which actors benefited from that substitution and which actors became unmentionable along the way.</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">In this claim</div>
+          <div class="technique-text">Anxiety about housing in the periurban ring, deindustrialization in the France peripherique, the closure of small-town maternity wards and rural courthouses, pension precarity, the cost of fuel and food, and the sense that the village no longer belongs to those who grew up in it is real and unaddressed. The replacement frame absorbs this anxiety, escalates it from concern to threat to existential crisis, and points it at post-colonial-origin neighbors and the federal-EU institutions rather than at the policy choices that produced the underlying conditions. The voter who came in worried about the local maternity ward closure leaves with a feeling that France is being taken from them; the policy actors whose decisions shaped the closure benefit from the redirection.</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">Historical precedent</div>
+          <div class="technique-text">Goebbels formalized fear amplification as a propaganda principle in the 1930s. The American War on Terror after 2001 amplified terrorism into civilizational threat to justify policies with broader strategic purposes. McCarthy-era anti-communism amplified domestic communist threat to redirect anxieties about post-war social change. Drumont in 1880s France amplified imaginary Jewish conspiracy to redirect anxieties about industrialization and urbanization. The mechanism is one of the most studied in political communication and consistently shows the same structure.</div>
+        </div>
+      </div>
+    </div>
+    <div class="technique-card">
+      <div class="technique-header">
+        <span class="technique-name">Historical Pattern Recycling (the Drumont and Jim Crow Parallels)</span>
+        <span class="badge badge-systematic">[SYSTEMATIC]</span>
+      </div>
+      <div class="technique-body">
+        
+        <div class="technique-field">
+          <div class="technique-label">Used by</div>
+          <div class="technique-text">Drumont 1886, Barres 1902, Raspail 1973, Camus 2011, Generation Identitaire France 2012-2021, Zemmour from 2014 and especially Reconquete 2021-, RN under Marine Le Pen from 2011, Orban from 2015, AfD in Remigration discussions, Tucker Carlson at Fox News 2016-2021. The lineage is documented; the recurrence is the point.</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">How it works</div>
+          <div class="technique-text">You can recognize historical pattern recycling when a contemporary rhetoric shares the structural architecture of an older, historically discredited one, with the vocabulary updated and the out-group rotated but the underlying mechanism intact. Four structural elements to watch for. First, a precarious in-group is named as threatened. Second, that in-group is offered a status hierarchy that elevates it over a specific out-group. Third, the in-group&#39;s precarity is attributed to the out-group rather than to the political economy producing it. Fourth, the framing remains durable across changing material conditions because it operates on relative rather than absolute status, so it keeps working even when nothing the speakers proposed actually improves the in-group&#39;s life. The recycling is not always conscious; new actors do not need to read the older texts, because the architecture is reproduced wherever it solves the political problem of retaining the loyalty of voters whose material conditions remain unaddressed. The detection test: take the structural skeleton, swap the vocabulary, and ask whether the same speech would have fitted a known historical case. In France the test is unusually strong because Drumont&#39;s 1886 La France juive provides a direct domestic template whose architecture is structurally indistinguishable from Camus&#39;s 2011 Le Grand Remplacement once you substitute &#39;juif&#39; for &#39;musulman&#39; and &#39;cosmopolite&#39; for &#39;mondialiste&#39;. Noiriel&#39;s Le Venin dans la plume documents this directly.</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">In this claim</div>
+          <div class="technique-text">The current French moment is the same architecture re-rendered. Economically precarious French voters facing housing costs, healthcare strain, pension anxieties, public-service withdrawal, and deindustrialization are offered a status hierarchy in which they are the threatened indigenous people and post-colonial-origin neighbors are the threat. The hierarchy provides relative status consolation while the absolute conditions remain unaddressed. The same playbook, different century, different ocean for some variants, same country for the French variant. The voter who recognizes the architecture is harder to recruit because the architecture is what is doing the work, not the specific claims that decorate it.</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">Historical precedent</div>
+          <div class="technique-text">The lineage itself is the historical precedent. Drumont&#39;s 1886 La France juive. The 1893 Aigues-Mortes massacre of Italian workers. The 1930s rhetoric of French national rootedness against Polish, Spanish, and Italian arrivals. The Vichy framing of 1940-1944. Powell&#39;s 1968 Rivers of Blood speech in the UK. Each instance is recognizable because the architecture is recognizable. The Christchurch manifesto in 2019 made the contemporary lineage impossible to ignore by writing it down explicitly and naming Camus by name.</div>
+        </div>
+      </div>
+    </div>
+    <div class="technique-card">
+      <div class="technique-header">
+        <span class="technique-name">Just Asking Questions (French TV-Studio Variant)</span>
+        <span class="badge badge-systematic">[SYSTEMATIC]</span>
+      </div>
+      <div class="technique-body">
+        
+        <div class="technique-field">
+          <div class="technique-label">Used by</div>
+          <div class="technique-text">CNews opinion programming, parts of the Bollore-Vivendi-Canal+ mediasphere, parts of LR when borrowing RN vocabulary in deniable form, and a wide range of online content creators who maintain a respectability hedge.</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">How it works</div>
+          <div class="technique-text">You can spot just-asking-questions when a substantive claim is delivered as an interrogative rather than as a declarative, lowering the burden of proof and giving the speaker plausible deniability about the conclusion the listener is meant to draw. Three signals to watch for. First, the question presupposes its own conclusion (asking whether the elite has a replacement plan presumes the plan exists as an open possibility). Second, the speaker rejects accountability for the conclusion if challenged, because nothing was technically asserted. Third, anyone who responds by naming the framing is recast as the one closing down debate. The detection test: rewrite the question as a declarative and ask whether the same speaker would defend that declarative under scrutiny. If the answer is no, you are looking at deniable assertion rather than genuine inquiry. The French television-studio variant has a specific genre: the round-table opinion panel on CNews or Sud Radio in which a host frames the topic as forbidden, repeats the question for the audience, and shields the broadcaster from regulatory action while preserving the framing.</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">In this claim</div>
+          <div class="technique-text">Programs and op-eds ask whether demographic change is being properly debated, whether elites have a plan, whether the EU is honest about its intentions, whether voters are being listened to, whether Camus&#39;s vocabulary should be &#39;free&#39; to be discussed. Each question is individually defensible; together they construct the replacement claim without requiring anyone to make it. The listener integrates the impression while the speaker maintains the position of having only asked. Acrimed and Mediapart have documented the production-side choices that produce this effect on French television.</div>
+        </div>
+        
+        <div class="technique-field">
+          <div class="technique-label">Historical precedent</div>
+          <div class="technique-text">The strategy is well documented in tobacco and climate communication. In political communication it has a long history in the framing of antisemitic, racist, and homophobic talking points across the twentieth century. In France specifically, the Vichy-era &#39;on a le droit de poser la question juive&#39; is the historical anchor.</div>
+        </div>
+      </div>
+    </div>
+      </div>
+
+  
+  <div class="section">
+    <h2>Inferential Gap</h2>
+    <p class="intro-note">Where the evidence ends and the leap begins.</p>
+    <div class="prose"><p>The evidence base supports the observation that demographic change is occurring, that the colonial dimension is constitutive of post-1945 French demography, and that French migration and integration policy has been incoherent across decades. The evidence base does not support, and cannot support, the claim that the change is the deliberate execution of a coordinated plan by a complicit French elite. The leap from policy incoherence to plan, from emergent outcome to engineered project, from colonial-history consequence to demographic conspiracy, is the inferential gap. It cannot be closed by more INSEE data, because demographic data only describes outcomes, not intentions. It cannot be closed by leaked documents, because no credible documentary evidence has been identified in the reviewed French record, including the parliamentary archives, inter-ministerial correspondence, the archives of the Secretariat general aux affaires europeennes, journalistic investigation, and academic analysis. The gap is closed in the listener&#39;s mind by a structural intuition (this looks like a plan because it has consequences) that the rhetoric is engineered to trigger, not by evidence that the rhetoric supplies. The French specificity of the gap is that the universalist Republican vocabulary in which the rhetoric is dressed makes it appear as a defense of the Republic, when it functions as a particularist ethnic project disguised in universalist clothing.</p></div>
+  </div>
+
+  <div class="section">
+    <h2>Common Ground</h2>
+    <div class="prose"><p>People who hold the replacement claim and people who reject it share more common ground than the French public debate suggests. Both agree that something is genuinely changing in France and that the political class has not been honest about it across successive presidencies. Both agree that housing in the periurban ring around Paris, Lyon, Marseille, and Bordeaux is unaffordable and that waiting lists for logement social are long enough to be a generational problem. Both agree that public services have withdrawn from the France peripherique, that medical deserts are real, and that small and medium towns have been hollowed out. Both agree that integration policy has been incoherent across decades and that specific quartiers face measurable difficulties. Both agree that political and media elites have not always been straight with voters about trade-offs. Both agree that the cordon sanitaire as a strategy has neither persuaded voters nor healed the underlying conditions.</p>
+<p>The disagreement is narrower than it appears. It is not about whether change is happening; it is about why, who is responsible, what the colonial inheritance means, and what kind of response is honest. The replacement frame says the change is deliberate, the responsibility lies with a complicit elite executing a plan, and the response must be radical restriction. The evidence-based account says the change is the emergent outcome of post-colonial labor recruitment by France itself, aging, low native fertility, family reunification under French law, asylum obligations under the Geneva Convention, intra-EU mobility, and global mobility, and that the response must be coherent policy on housing, integration, education, labor markets, public services in the France peripherique, and democratic accountability. Neither account makes the change disappear. The first replaces a hard policy problem with a moral villain. The second keeps the problem hard and asks the political system to actually solve it.</p>
+<p>Both sides, at the level of individual voters in a French kitchen, want the same things: a country where their children can afford a home, where the language and traditions they grew up with continue to have public space, where neighbors of different backgrounds can build a shared life, where laicite is lived rather than weaponized, and where political leaders tell the truth about trade-offs. Naming this shared ground is not a rhetorical move; it is a precondition for the conversation continuing at all.</p></div>
+  </div>
+
+  <div class="section">
+    <h2>Narrative Deconstruction</h2>
+    <div class="prose"><p>The replacement claim in its French form operates at three levels, and the analytical move that matters most is to distinguish them precisely.</p>
+<p>LEVEL ONE, SUBSTANTIALLY TRUE: Demographic change is occurring. INSEE and INED document that French populations are aging, that native-born fertility has been below replacement for several decades, that net migration has been positive in most years since 1945, and that specific quartiers in the Ile-de-France, Marseille nord, Lyon periphery, Roubaix, and other industrial zones have substantially higher shares of residents whose family origins are in the Maghreb, West Africa, sub-Saharan Africa, and the Indian Ocean. These facts are not in serious dispute among French demographers. To deny them is to leave the field to Camus and Zemmour. Acknowledging them is the first step toward an honest conversation.</p>
+<p>LEVEL TWO, PARTIALLY TRUE WITH HEAVY NUANCE: Specific French policy choices have shaped these outcomes, and the colonial dimension is constitutive. From the 1940s through 1974, France actively recruited Algerian, Moroccan, Tunisian, Malian, and Senegalese labor for the auto industry, mining, construction, and public works; the SONACOTRA hostels were a state instrument of this recruitment. The 1962 Evian Accords ended the Algerian War on terms that included free movement for a period that subsequent agreements modified. The 1976 regroupement familial reform under Giscard, the 1980s socialist-government legalizations, the 1993 Pasqua laws, the 1998 Guigou nationality reforms, the 2003 Sarkozy laws, the 2015-2016 asylum response, and the 2023 Darmanin immigration law all matter. Critics who say French migration policy has been incoherent are correct; the legitimate policy critique is available. What is not supported by evidence is the leap from incoherence to deliberate replacement plan. The 1974 immigration halt was not a successful boundary; the regroupement familial reform that followed two years later, in part to manage the social consequences of the halt, was the largest single legal driver of subsequent settlement. Incoherence is the absence of a plan, not the execution of one. The colonial relation is constitutive of the demography in a way that the contemporary framing actively erases.</p>
+<p>LEVEL THREE, UNSUPPORTED: The intentionality claim. The assertion that French demographic change is the deliberate, coordinated execution of an elite plan to replace the French people and destroy their culture is not supported by any documentary, archival, or institutional evidence. The closest the rhetoric comes to a citation is the 2001 UN Population Division Replacement Migration report, which the report itself explicitly states is not a policy advocacy document but a demographic modeling exercise. The framing requires the implausible joint assumption that French governments are simultaneously competent enough to execute a multi-decade demographic conspiracy in coordination across all of Mitterrand, Chirac, Sarkozy, Hollande, and Macron presidencies and across left, right, and center coalitions, and incompetent enough to fail at housing, healthcare, pension reform, the gilets jaunes crisis, and the public services of the France peripherique. The contradiction is internal to the claim.</p>
+<p>The deconstruction is not a dismissal. The voter who feels the change is feeling something real. The neighbor whose name appears as the &#39;replacing&#39; population is also a French citizen, often two and three generations in, whose grandfather was recruited by France itself in the 1960s to mine French coal or build French roads. The honest conversation is about how a society manages change that it materially produced, without producing scapegoats, not whether the change exists.</p></div>
+  </div>
+
+  
+    <div class="section">
+      <h2>Feasibility Assessment</h2>
+      <div class="prose"><p>Considered as an operational plan, the replacement claim faces severe feasibility problems. It would require coordinated action across left, right, and center French governments since at least the 1970s (Giscard, Mitterrand, Chirac, Jospin cohabitation, Sarkozy, Hollande, Macron), across all twenty-seven EU member states under qualified majority voting on most migration matters, dozens of party rotations, the active complicity of national civil services, INSEE, INED, the Ministere de l&#39;Interieur, the prefectures, the police, the gendarmerie, the magistrature, and the press, all without leaks despite France&#39;s whistleblower protections, freedom of information regimes, parliamentary committee powers, opposition party scrutiny, Mediapart investigation, Le Canard enchaine investigation, and academic analysis. It would require the same governments that demonstrably fail at housing construction (the loi SRU implementation), pension reform (the 2010, 2019, 2023 sequences), healthcare workforce planning, the gilets jaunes crisis, and the response to the 2015 attacks to nonetheless execute a silent multi-decade demographic engineering project with operational discipline. It would require that no first-generation participant in the conspiracy defects or repents into the public record across forty years. The simpler explanation, that policy is incoherent, that demographic outcomes are emergent, that post-colonial labor recruitment has long-term demographic consequences, that migration is driven by aging, labor demand, and humanitarian obligations under existing law, and that the colonial inheritance is constitutive, fits the evidence without requiring any of these implausible joint assumptions. The conspiracy version of the claim is operationally infeasible. The structural version (capital and elites benefit from migration policy choices that disadvantage native-born workers) is partially defensible inside a different analytical frame but does not require the language of replacement and does not support the conclusions drawn from it.</p></div>
+    </div>
+
+  
+    <div class="section">
+      <h2>Commercial Interests</h2>
+      <div class="prose"><p>Multiple commercial and political incentives sustain the replacement narrative independent of its evidentiary merit. Political actors gain electoral support, parliamentary salaries, public funding, ministerial offices, and media platforms by mobilizing the framing; the RN under Marine Le Pen has grown from a marginal party in the 1990s, through three consecutive presidential finalist rounds, into the largest single political force in France by recent vote share, with the financial infrastructure that comes with that scale. Reconquete and Zemmour built a media-political business from the framing. Media outlets that platform the rhetoric capture audience share; the Bollore-Vivendi-Canal+ consolidation has built a multi-asset commercial structure (CNews, Europe 1, Paris Match, JDD, Hanouna&#39;s TPMP, the C8 then C8-successor channel) that benefits commercially from sustained replacement-frame programming, as Acrimed and Mediapart have documented in detail. Online entrepreneurs build personal brands as identitarian commentators with monetized YouTube channels, Substacks, Patreon, Telegram, and merchandise. Book sales for Camus, Zemmour, Onfray (on selected works), and the wider essay ecosystem are durable. Fdesouche and the fachosphere aggregators monetize traffic. Foreign state-aligned channels (Russian and other) amplify the framing for strategic purposes that have nothing to do with French welfare but everything to do with weakening EU and French political cohesion; the 2014 RN loan from a Russian-linked Czech bank and subsequent loans from Hungarian-linked sources illustrate the financial-political dimension. None of this commercial structure proves the framing is wrong; it does establish that the framing is sustained by a financial ecosystem that benefits from its continuation regardless of whether it is supported by evidence. The structural asymmetry matters: there is no comparable commercial ecosystem rewarding careful demographic analysis. Heran&#39;s College de France lectures do not generate viral clips, INSEE tables do not produce merchandise, and Noiriel&#39;s social-history monographs do not anchor a media career.</p></div>
+    </div>
+
+  
+    <div class="section">
+      <h2>Perception Gap</h2>
+      <div class="prose"><p>The perception gap on this topic is among the widest in contemporary French politics. The voter who shares replacement-adjacent material believes they are defending an obvious truth that political and media elites are forbidden to admit. They perceive critics as metropolitan-Paris-Lyon-Bordeaux residents who do not live in the affected quartiers and do not see what they see, who pay no attention to the France peripherique, and who use accusations of racism to silence ordinary concerns. They perceive academic demographers as ideologically motivated to downplay the change and journalists as part of the system that conceals it. They perceive RN, and increasingly Reconquete, as the only political vehicle willing to say what they think. The voter who rejects the claim sees a recycled racist conspiracy theory with a direct Drumont lineage, a public discourse poisoned by far-right vocabulary, neighbors and colleagues being dehumanized in the universalist language of the Republic, and a political vehicle (RN) whose dediabolisation is a strategic posture rather than a substantive change. They perceive replacement believers as either racist or naive. Both perceptions miss the architecture beneath the disagreement. The believer often does not perceive that their legitimate concerns about housing, healthcare, laicite, and the France peripherique are being instrumentalized by a political operation whose framing has been refined across a hundred and forty years and which functions to protect from accountability the structural decisions that actually produced their conditions, including the colonial inheritance that the framing actively erases. The critic often does not perceive that dismissing the believer&#39;s concern validates the populist claim that elites do not listen, and that the most effective response is not to assert the believer is wrong about everything but to name the architecture and offer a better explanation for the conditions they correctly observe. The corrosive feature of this perception gap is that both sides have part of the truth, and the operation that produced the French replacement frame benefits from each side perceiving the other as the entirety of the problem.</p></div>
+    </div>
+
+  <div class="section">
+    <h2>Socratic Dialogue</h2>
+    <p class="intro-note">A model conversation demonstrating how to engage someone who holds this belief.</p>
+    
+    <div class="dialogue-round round-1">
+      <div class="round-label">Round 1: Perspective-Getting</div>
+      <div class="dialogue-bubble"><p>Round 1 (OARS, validate the emotion, never the claim): I hear you, and I want to take this seriously rather than dismiss it. You are watching France change. You see streets in your town or your quartier that look different than they did when you grew up. You wait longer for a generaliste appointment than your mother did, and your local maternite has closed. Your daughter cannot afford a flat in Lyon or Bordeaux or even in the second ring. The local industry is gone, the courthouse is gone, the prefecture has consolidated, the train station has lost half its services. Your pension is a question rather than an answer. The 2023 immigration debate felt like the only debate where ordinary concerns about insecurite and integration in specific quartiers were actually named. You feel like nobody in Paris is actually listening, and when you raise these things you get called raciste instead of getting answers. That is a real experience and the frustration that produces is legitimate. I am not going to tell you that you are imagining it. I am not going to tell you that you are racist for noticing. Change is happening, the pace of change has outrun the political system&#39;s willingness to have an honest conversation about integration and about laicite, and the everyday consequences are showing up in your kitchen. Before I say anything else, I want you to know that I see that and I am not going to pretend nothing is changing. Can you tell me which specific thing is hurting most right now? Is it the housing, the healthcare, the maternite closure, the public-service withdrawal in your town, the insecurite in a specific quartier, the laicite question at your daughter&#39;s school, or the feeling that nobody is listening? I am not asking to test you. I am asking because the conversation has to start with the actual concern, not with the political slogan that someone else attached to it.</p></div>
+    </div>
+    <div class="dialogue-round round-2">
+      <div class="round-label">Round 2: Guided Examination</div>
+      <div class="dialogue-bubble"><p>Round 2 (Guided examination, introduce evidence with French specificity): Thank you for telling me. I want to share something with you, and I am not doing it to argue you out of what you feel. I am doing it because I think you deserve a better explanation than the one you are being given. There is a technique called scapegoating. It works like this: take a real problem with several causes, point at one visible group as the cause, and quietly leave the actual causes alone. The problem is real, so the anger is real, but the anger is being aimed at the wrong target. Look at what we just talked about. Housing in the periurban ring is unaffordable. Why? France Strategie, the Cour des Comptes, and housing economists have published this clearly: housing construction has not kept pace with household formation for over a decade, the loi SRU has been under-implemented for two decades, investors have absorbed stock that used to be family housing, and the politique de la ville has stalled. Immigration is one factor on the demand side, but it is much smaller than the supply failure on the other side. Healthcare. The maternite closures and medical deserts come from the numerus clausus decisions made in the 1980s and 1990s, the geographic distribution of MDs, and successive reforms that did not solve the problem; in fact, a significant share of healthcare workers, from hospital cleaners to specialist doctors, are people who came here from Algeria, Morocco, Tunisia, Mali, Senegal, the Antilles, and beyond. The French healthcare system depends structurally on the people the framing tells you are the threat. Pensions. The math is hard because the working-age population is shrinking through aging, not through immigration; immigration is part of what keeps the math from getting worse faster. Now look at who has been telling you for many years that immigration is the cause. The same names. The same family. The Front National rebranded as Rassemblement National. The same diagnosis Camus published in 2011, which Eric Zemmour amplified, which is the same diagnosis Drumont published in 1886 about the Jewish presence with the word changed. Gerard Noiriel&#39;s Le Venin dans la plume sets those two texts side by side. The Christchurch attacker, who killed 51 worshippers across two mosques in 2019 and titled his manifesto after Camus&#39;s book, named this exact framing as his reason. I am not saying you are him. I am saying the framing has a lineage, and the lineage is documented, and the people at the top of it know what they are doing even when the people sharing the clips on TikTok do not. Two questions I want to ask you. First, if immigration were the main cause of your housing, healthcare, and pension problems, you would expect those problems to be smaller in places with little immigration. Look at the rural communes in the Creuse, the Cantal, the Lozere where there is almost no immigration. The housing is failing there too. The doctors are leaving there too. The maternites are closing there too. The factor that is the same everywhere is the policy choices, not the neighbors. Second, your French-Algerian neighbor in the apartment opposite or your French-Malian colleague at the depot, did France itself recruit her grandfather to come here, to mine French coal in Lorraine or to build the autoroute or to staff the Renault Billancourt plant? The answer in most cases is yes. The 1962 abandonment of the harkis, the SONACOTRA hostels, the 1976 regroupement familial reform: these are decisions France made. Does the framing that calls her a foreigner change once you remember that?</p></div>
+    </div>
+    <div class="dialogue-round round-3">
+      <div class="round-label">Round 3: Integration</div>
+      <div class="dialogue-bubble"><p>Round 3 (Integration, Charter C6 -- must end with a question): I want to close with what I think we actually agree on, because I suspect it is more than the politicians on either side want us to notice. We agree that something is changing in France and that the political system has not been honest about it across successive presidencies. We agree that successive governments, of left, right, and center, have failed at housing, at healthcare, at the France peripherique, at pension reform, and at integration policy. We agree that being told you are raciste for raising any of this is dismissive and counterproductive. We agree that you have a right to your language, your traditions, your village or your quartier, and your community continuing to have a public place. None of that is up for negotiation. Now consider this: your French-Algerian neighbor on the third floor. Her father came to Roubaix in the 1960s because France&#39;s textile industry needed workers, or her grandfather to Lorraine because the mines needed workers. She speaks French, she pays her impots, her son is in your daughter&#39;s college. When you look at her actual life, what does she want? An affordable home, a school that works, a doctor she can see, a pension she can count on, a country where her son is allowed to be French without having to prove it every time he is stopped at the metro. That is the same list as yours. The political operation that has been telling you she is the threat has been very good at making you forget that the two of you are standing in the same queue at the same prefecture, frustrated with the same minister, affected by the same policy failures, and inheriting the same colonial history that France itself made and has never finished reckoning with. The people building this framing across a hundred and forty years, from Drumont in 1886 to Camus in 2011, have always needed people like you and people like her to look at each other instead of at the politique de la ville, the loi SRU, the numerus clausus medical, the pension files, and the question of what France did in Algeria. If the two of you set the framing aside for a moment and looked at the person next to you in that prefecture queue, what could you demand together that neither of you can win alone?</p></div>
+    </div>
+  </div>
+
+  
+  <div class="section">
+    <h2>Reframe</h2>
+    <blockquote class="reframe-block">You and the French-Algerian neighbor you are afraid is replacing you both want the same thing: an affordable home, a school that works, a doctor you can see, a pension you can count on, a town where your children belong and the French language continues to be spoken, and a government that is honest about trade-offs and honest about what France itself did in the Maghreb that brought her grandfather here in the first place; everything else is the architecture that someone built to keep the two of you from noticing that you are standing in the same queue at the same prefecture.</blockquote>
+  </div>
+
+  
+  <div class="section">
+    <h2>Response Strategy Signals</h2>
+    <p class="intro-note">Signals guiding how this analysis might be communicated effectively. Advisory to communicators, not a characterisation of the reader.</p>
+    <div class="diagnostics-grid">
+      <div class="diagnostic-card">
+        <h4>Communication Posture</h4>
+        <p><span class="posture-badge posture-relational_first">Relational First</span></p>
+      </div>
+<div class="diagnostic-card">
+        <h4>Pattern Density</h4>
+        <div class="pattern-density-warning">High pattern density detected in claim structure. The claim is structured to encourage over-connection between unrelated elements.</div>
+      </div>
+<div class="diagnostic-card">
+        <h4>Credibility Gap</h4>
+        <p class="diagnostic-note">Narrative pattern description; no specific publisher or outlet identified.</p>
+        <p>When mainstream French politics fails to honestly address housing, healthcare, pension, public-service withdrawal in the France peripherique, the colonial-history dimension, and integration concerns, and when policy is incoherent across successive presidencies, a vacuum opens in which voters need an explanation for the conditions they experience daily. The replacement framing fills that vacuum with a simple, emotionally coherent story that supplies a villain (the elite), an enemy (the post-colonial-origin neighbor), and a path of action (RN at the ballot box). The narrative pattern works because it provides explanatory closure that the messy empirical reality of post-colonial labor recruitment, fertility transition, EU mobility, and bipartisan policy failure cannot easily match, and because the actors offering it (RN under Marine Le Pen and Bardella, Reconquete under Zemmour, CNews and the Bollore mediasphere) appear to take voters seriously where the political mainstream has not. The vacuum is not produced by immigration; it is produced by political and policy failure, and any response that does not also fill the vacuum with honest, concrete, structural answers, including answers to the colonial-history question that France has not finished asking, leaves the field open for the replacement frame to return.</p>
+      </div>
+<div class="diagnostic-card">
+        <h4>Prebunking Note</h4>
+        <p>Before encountering French replacement claims, note three cues. First, demographic change is real; denying it cedes ground. Second, the move combines true data fragments with unfalsifiable intent claims (cherry-picking plus conspiracy). Third, the lineage runs from Drumont 1886 to Camus 2011 to Christchurch 2019, and France itself recruited the post-colonial migration the framing now calls foreign. Recognizing the architecture is the strongest defense.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Audit</h2>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+      <span>Verdict:</span>
+      <span class="badge badge-warnings">PASS WITH WARNINGS</span>
+    </div>
+    <div class="audit-summary">This v1 analysis handles a high-difficulty scenario in which the underlying observation (demographic change in France including in specific banlieues) is real and partially shared across the political spectrum, while the framing layered on top of it (deliberate replacement plan executed by complicit elites, with RN as the only democratic response) is a documented French conspiracy architecture with a violent endpoint at Christchurch. The decomposition correctly separates the substantively true demographic claim, the partially true policy-incoherence claim, and the unsupported intentionality claim, and adds the France-specific colonial-relation question (SC-8). The origins trace the lineage from Drumont 1886 and Barres 1902 through Raspail 1973, Camus 2011, Generation Identitaire 2012-2021, Zemmour 2014 and Reconquete 2022, RN under Marine and Bardella, the Bollore mediasphere, and Christchurch 2019, with INED, INSEE, Heran, Tribalat, Simon, Noiriel, Taguieff, and the named French-postcolonial scholars as the evidentiary counterweight. The intelligence section captures the three-layer system (French intellectual lineage, French political operationalization including dediabolisation, French and transcontinental amplification) and the antagonistic convergence between laicite-republican, cultural-conservative-LR, France-peripherique-left, and ethnonationalist-right groups. The TTPs include DISARM techniques and four custom entries including Colonial-History Erasure, which captures the France-specific dimension. The bridge implements relational_first communication posture, OARS-protocol Socratic dialogue with explicit French anchoring (harkis, SONACOTRA, Renault Billancourt, Creuse-Cantal-Lozere counterfactual, Drumont parallel), Round 3 ending in a genuine question per Charter C6. The minus 0.04 confidence adjustment reflects correctable but real completeness gaps around deeper community_experiential centering and specific publication pinning. Confidence scores rate the conspiracy framing, not the demographic data itself. The 0.72 expert consensus reflects strong agreement among French demographers and historians that the intentionality claim is unsupported and that the colonial relation is constitutive.</div>
+    <ul class="findings-list">
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">Accuracy</span>
+        <span class="finding-severity-low">LOW</span>
+        <span class="finding-description">Key factual claims are well-sourced: INSEE 2023 fertility (1.68), Camus 2011 publication date, Zemmour 2014 and 2018...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">Key factual claims are well-sourced: INSEE 2023 fertility (1.68), Camus 2011 publication date, Zemmour 2014 and 2018 book dates and 2022 first-round 7 percent, Marine Le Pen 2011 FN takeover and 2018 FN-to-RN rebrand, Generation Identitaire France dissolution March 2021, Christchurch 2019 (51 worshippers, two mosques, manifesto titled after Camus), 1976 regroupement familial reform, the 2004 conspicuous symbols law, the 2010 face veil ban, the 2024 abaya ban, Heran&#39;s College de France chair (2017), the Stora Report (2021), Drumont&#39;s La France juive (1886), Raspail&#39;s Le Camp des Saints (1973), Noiriel&#39;s Le Venin dans la plume (2019). The Tarrant naming of Camus is correctly attributed.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Pin specific Heran publications (Avenir des migrations 2018, the 2017 essay sequence) and specific INED TeO survey waves (2008-2009, 2019-2020). Verify the 2014 RN loan structure language carefully if cited in future revisions; the precise institutional names have been subject to media correction over the years.</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">Completeness</span>
+        <span class="finding-severity-medium">MEDIUM</span>
+        <span class="finding-description">The community_experiential perspective of French-Algerian, French-Moroccan, French-Tunisian, French-Malian,...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">The community_experiential perspective of French-Algerian, French-Moroccan, French-Tunisian, French-Malian, French-Senegalese, French-Antillean, and French-Comorian residents is centered more explicitly than in the GP-07 Flemish baseline, particularly through the colonial-history dimension and the named scholars (Guenif-Souilamas, Hajjat, Niang, Truong). The lived experience of being the named replacing population could be further deepened through direct community-organization statements (CRAN, La Cimade, Lallab on the gendered dimension).</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Future revisions could integrate Lallab-style framing of the intersection between laicite policy and Muslim women&#39;s agency, and direct quotation from Niang&#39;s Racialisations americaines vues de France or from Guenif-Souilamas&#39;s earlier work.</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">Bias</span>
+        <span class="finding-severity-medium">MEDIUM</span>
+        <span class="finding-description">The analysis is, defensibly, more sympathetic to the position that rejects the conspiracy framing than to the position...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">The analysis is, defensibly, more sympathetic to the position that rejects the conspiracy framing than to the position that holds it. This reflects the evidence base (intentionality is not supported and the colonial relation is constitutive) but could be perceived by RN-aligned voters as hostile analysis disguised as objectivity. The Socratic dialogue mitigates this in Round 1 with explicit OARS-style validation. Rounds 2 and 3 lean toward challenging the framing while explicitly preserving the legitimate grievances.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Consider strengthening Round 1 with an explicit acknowledgment that commune-level INSEE data shows some French communes have experienced very rapid demographic change in compressed time horizons, which national averages obscure. This is a legitimate driver of the felt experience and deserves explicit recognition before the framing is challenged.</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">Manipulation</span>
+        <span class="finding-severity-low">LOW</span>
+        <span class="finding-description">The techniques_revealed section implements the Asymmetric Weight Principle. The replacement actors&#39; techniques are...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">The techniques_revealed section implements the Asymmetric Weight Principle. The replacement actors&#39; techniques are classified as systematic with detailed multi-decade evidence and historical precedent rooted in French history (Drumont, Aigues-Mortes, Vichy). The Colonial-History Erasure custom technique is added to capture the France-specific dimension that the GP-07 Flemish scenario did not require.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> No fix needed.</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">Completeness</span>
+        <span class="finding-severity-low">LOW</span>
+        <span class="finding-description">The bipartisan policy failure dimension is named explicitly: Mitterrand, Chirac, Sarkozy, Hollande, Macron and the...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">The bipartisan policy failure dimension is named explicitly: Mitterrand, Chirac, Sarkozy, Hollande, Macron and the cohabitations in between. The vacuum that RN fills is created by this bipartisan failure, not by the existence of immigration. The analysis foregrounds this more explicitly than the GP-07 baseline, given the depth of French presidential-rotation evidence.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Optional future addition: name the specific reform episodes (the 2019 and 2023 pension reform fights, the 2018 gilets jaunes crisis, the 2015 attack response) as case studies of the policy failures that the replacement frame absorbs and redirects.</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">Quality</span>
+        <span class="finding-severity-low">LOW</span>
+        <span class="finding-description">The Socratic dialogue implements OARS protocol in Round 1, named-technique guided examination in Round 2 with...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">The Socratic dialogue implements OARS protocol in Round 1, named-technique guided examination in Round 2 with French-specific anchors (Drumont parallel, harkis, SONACOTRA, Renault Billancourt, numerus clausus, Creuse-Cantal-Lozere counterfactual), and integration with concrete agency in Round 3 ending with a genuine question (Charter C6 compliance). The colonial-recruitment question in Round 2 is the distinctive France-specific Socratic move that the Flemish scenario did not include.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> No fix needed.</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">Completeness</span>
+        <span class="finding-severity-low">LOW</span>
+        <span class="finding-description">International comparative material is included for AfD, Orban, Salvini, Meloni, FPO, Tucker Carlson, and Tarrant, but...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">International comparative material is included for AfD, Orban, Salvini, Meloni, FPO, Tucker Carlson, and Tarrant, but the analysis could go deeper on how other French-speaking polities (Belgium-Wallonia, Switzerland-Romande, Quebec) have handled or instrumentalized replacement-adjacent rhetoric, especially given the cross-border circulation of identitaire material in francophone networks.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> Optional expansion in a future revision. The French focus is correct for this scenario.</div>
+      </div>
+    </li>
+    <li class="finding-item">
+      <div class="finding-header">
+        <span class="finding-category">Quality</span>
+        <span class="finding-severity-low">LOW</span>
+        <span class="finding-description">v5 pipeline redesign compliance: Round 3 ends with a genuine question (C6), convergence_strength is MEDIUM (C3 -- the...</span>
+      </div>
+      
+      <div class="finding-body">
+        <div class="finding-description">v5 pipeline redesign compliance: Round 3 ends with a genuine question (C6), convergence_strength is MEDIUM (C3 -- the amplification_risk paragraph explicitly states the convergence is antagonistic rather than the result of joint operations, and notes documented coordination only at the institutional level of cross-party alignment on the 2023 immigration law, not as a high-confidence coordinated joint campaign across the four groups), actor credibility is given as structural string descriptions (C1, no numeric floats). All three pipeline redesign items validated.</div>
+        <div class="finding-rec"><strong>Recommendation:</strong> No fix needed. Pipeline redesign working as intended.</div>
+      </div>
+    </li></ul>
+  </div>
+
+  
+    <div class="section evaluation-section">
+      <h2>Evaluation Methodology</h2>
+      <p class="intro-note">Full transparency on how this scenario was scored. 12 weighted checks, each independently measurable. <a href="https://github.com/Jochen-s/huginn-muninn/blob/main/tests/run_bridge_scenarios.py" target="_blank" rel="noopener">View source code</a></p>
+      <div class="eval-summary">
+        <span class="eval-overall">93.0%</span>
+        <span class="badge badge-pass">Grade A</span>
+      </div>
+      <div style="overflow-x:auto">
+        <table class="eval-table">
+          <thead>
+            <tr>
+              <th>Check</th>
+              <th>Weight</th>
+              <th>Score</th>
+              <th>Status</th>
+              <th>What It Measures</th>
+            </tr>
+          </thead>
+          <tbody><tr class="eval-fail">
+      <td>needs coverage</td>
+      <td class="eval-weight">7%</td>
+      <td class="eval-score">0%</td>
+      <td class="eval-status">MISS</td>
+      <td class="eval-desc">Expected universal human needs matched against identified needs</td>
+    </tr><tr class="eval-pass">
+      <td>issue overlap quality</td>
+      <td class="eval-weight">6%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Common ground text is substantive (&gt;50 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>narrative deconstruction</td>
+      <td class="eval-weight">7%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Narrative deconstruction is substantive (&gt;100 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>consensus explanation</td>
+      <td class="eval-weight">11%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Scientific/mainstream explanation &gt;200 chars with 3+ mechanism keywords</td>
+    </tr><tr class="eval-pass">
+      <td>inferential gap</td>
+      <td class="eval-weight">8%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Inferential gap analysis is substantive (&gt;50 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>feasibility check</td>
+      <td class="eval-weight">6%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Feasibility assessment is substantive (&gt;50 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>commercial motives</td>
+      <td class="eval-weight">6%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Commercial motive analysis is substantive (&gt;30 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>technique naming</td>
+      <td class="eval-weight">8%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">At least 1 technique named with mechanic (&gt;30 chars) and precedent (&gt;20 chars)</td>
+    </tr><tr class="eval-pass">
+      <td>perception gap</td>
+      <td class="eval-weight">5%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Perception gap analysis is substantive (&gt;30 characters)</td>
+    </tr><tr class="eval-pass">
+      <td>socratic dialogue</td>
+      <td class="eval-weight">17%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">3 rounds, ends with question, Round 1 shows perspective-getting</td>
+    </tr><tr class="eval-pass">
+      <td>reframe quality</td>
+      <td class="eval-weight">7%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Reframe &gt;20 chars using shared-value language (we, together, both)</td>
+    </tr><tr class="eval-pass">
+      <td>no controlling language</td>
+      <td class="eval-weight">12%</td>
+      <td class="eval-score">100%</td>
+      <td class="eval-status">PASS</td>
+      <td class="eval-desc">Zero matches against 9 controlling phrases</td>
+    </tr></tbody>
+        </table>
+      </div>
+      <p class="eval-note">Overall score = weighted sum of individual check scores. Weights reflect the relative importance of each dimension to the project's mission: Socratic dialogue quality (17%) and controlling language detection (12%) are weighted highest because autonomy-supportive framing is the core differentiator.</p>
+    </div>
+
+  <div class="scenario-nav">
+    <a href="GP-08.html">&larr; GP-08: Mass immigration is a deliberate plan to replace...</a>
+    <a href="index.html">Gallery</a>
+    <a href="GP-10.html">GP-10: Germany is experiencing a deliberate demographic... &rarr;</a>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="content">
+    <p>
+      <a href="index.html">Huginn &amp; Muninn Gallery</a> &nbsp;|&nbsp;
+      MIT License &nbsp;|&nbsp;
+      Analysis powered by Claude (Anthropic)
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>

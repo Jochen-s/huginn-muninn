@@ -203,7 +203,7 @@ Respond in JSON. IMPORTANT: Each enum field must be EXACTLY ONE value, not combi
       "name": "Actor name or description",
       "type": "CHOOSE ONE: state, media, influencer, organization, bot_network, unknown",
       "motivation": "Why they promote this narrative",
-      "credibility": 0.0-1.0,
+      "credibility_basis": "Structural description of the actor's credibility basis (e.g., 'documented track record', 'known disinformation outlet', 'mixed record'). Do NOT use numeric scores.",
       "evidence": "What supports this assessment"
     }}
   ],

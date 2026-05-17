@@ -8,6 +8,8 @@ from __future__ import annotations
 
 import hashlib
 import json
+
+from huginn_muninn.contracts import _coerce_credibility_basis
 import re
 from collections import Counter
 from itertools import combinations
@@ -151,7 +153,7 @@ def _compute_false_polarization_gap(bridge: dict) -> float:
     Higher values mean more shared reality than perceived.
     """
     mf = bridge.get("moral_foundations", {})
-    if not mf:
+    if not mf or not isinstance(mf, dict):
         return 0.0
 
     def _extract_foundations(items: list) -> set[str]:
@@ -235,10 +237,18 @@ def _add_actors(G: nx.DiGraph, r: dict, sid: str) -> None:
             node = G.nodes[aid]
             if sid not in node["scenarios"]:
                 node["scenarios"].append(sid)
-            node["credibility"] = max(
-                node["credibility"],
-                actor.get("credibility", 0),
-            )
+            incoming = actor.get("credibility_basis", actor.get("credibility", "not assessed"))
+            if isinstance(incoming, (int, float)):
+                incoming = _coerce_credibility_basis(incoming)
+            existing = node.get("credibility_basis", "not assessed")
+            # Priority ordering: known categories ranked, free-text preferred
+            # over coerced categories, "not assessed" always loses.
+            _CRED_PRIORITY = {"not assessed": 0, "low documented credibility": 1,
+                              "mixed or contested credibility": 2, "high documented credibility": 3}
+            inc_p = _CRED_PRIORITY.get(incoming, 4)
+            ext_p = _CRED_PRIORITY.get(existing, 4)
+            if inc_p > ext_p or (inc_p == ext_p and len(str(incoming)) > len(str(existing))):
+                node["credibility_basis"] = incoming
             aliases = node.setdefault("aliases", [])
             if name != node["label"] and name not in aliases:
                 aliases.append(name)
@@ -248,7 +258,9 @@ def _add_actors(G: nx.DiGraph, r: dict, sid: str) -> None:
                 "label": canonical,
                 "actor_type": actor.get("type", "unknown"),
                 "motivation": actor.get("motivation", ""),
-                "credibility": actor.get("credibility", 0),
+                "credibility_basis": _coerce_credibility_basis(
+                    actor.get("credibility_basis", actor.get("credibility", "not assessed"))
+                ),
                 "scenarios": [sid],
                 "aliases": [name] if name != canonical else [],
             })
@@ -431,7 +443,11 @@ def _add_temporal_eras(G: nx.DiGraph, r: dict, sid: str) -> None:
     collected in the node's scenarios list.
     """
     eras = r.get("origins", {}).get("temporal_context", [])
+    if isinstance(eras, str):
+        return
     for era in eras:
+        if not isinstance(era, dict):
+            continue
         era_name = era.get("era", "")
         if not era_name:
             continue

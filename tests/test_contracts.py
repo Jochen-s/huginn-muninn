@@ -128,11 +128,59 @@ class TestMapperOutput:
             relations=[],
             narrative_summary="A single narrative about X",
         )
-        assert out.actors[0].credibility == 0.6
+        assert out.actors[0].credibility_basis == "mixed or contested credibility"
 
-    def test_credibility_bounds(self):
-        with pytest.raises(ValidationError):
-            Actor(name="X", type="media", motivation="Y", credibility=1.5)
+    def test_credibility_float_coerced_to_string(self):
+        """Float values no longer raise; they degrade to string categories."""
+        a = Actor(name="X", type="media", motivation="Y", credibility=1.5)
+        assert a.credibility_basis == "high documented credibility"
+
+
+class TestActorCredibilityBasis:
+    """Actor.credibility replaced with credibility_basis (string).
+    Charter C1: no numeric profiling scores on actors."""
+
+    def test_string_credibility_basis_accepted(self):
+        a = Actor(
+            name="Test Actor", type="media",
+            motivation="audience", credibility_basis="documented track record of factual reporting",
+        )
+        assert a.credibility_basis == "documented track record of factual reporting"
+
+    def test_default_credibility_basis(self):
+        a = Actor(name="Test", type="media", motivation="test")
+        assert a.credibility_basis == "not assessed"
+
+    def test_float_input_converted_to_category(self):
+        """Backward compat: old numeric 0.0-1.0 values degrade to categories."""
+        a = Actor(
+            name="Test", type="media", motivation="test",
+            credibility_basis=0.8,
+        )
+        assert isinstance(a.credibility_basis, str)
+        assert a.credibility_basis != ""
+
+    def test_float_high_becomes_high_category(self):
+        a = Actor(name="T", type="media", motivation="m", credibility_basis=0.9)
+        assert "high" in a.credibility_basis.lower()
+
+    def test_float_medium_becomes_medium_category(self):
+        a = Actor(name="T", type="media", motivation="m", credibility_basis=0.5)
+        assert "mixed" in a.credibility_basis.lower() or "medium" in a.credibility_basis.lower()
+
+    def test_float_low_becomes_low_category(self):
+        a = Actor(name="T", type="media", motivation="m", credibility_basis=0.2)
+        assert "low" in a.credibility_basis.lower()
+
+    def test_empty_string_defaults(self):
+        a = Actor(name="T", type="media", motivation="m", credibility_basis="")
+        assert a.credibility_basis == "not assessed"
+
+    def test_old_credibility_field_name_still_works(self):
+        """Backward compat: old JSON with 'credibility' float key."""
+        a = Actor(name="T", type="media", motivation="m", credibility=0.6)
+        assert isinstance(a.credibility_basis, str)
+        assert a.credibility_basis != ""
 
 
 class TestClassifierOutput:
@@ -445,6 +493,37 @@ class TestBridgeVacuumFilledByAndPrebunkingNote:
         out = BridgeOutput(**old_dict)
         assert out.vacuum_filled_by == ""
         assert out.prebunking_note == ""
+
+
+class TestBridgeC6Enforcement:
+    """Sprint 9: Charter C6 schema-level Round 3 question enforcement."""
+
+    def _make_bridge(self, round3_text: str) -> "BridgeOutput":
+        return BridgeOutput(
+            universal_needs=["safety"],
+            issue_overlap="overlap",
+            narrative_deconstruction="decon",
+            perception_gap="gap",
+            reframe="reframe",
+            socratic_dialogue=[
+                "Round 1: validation",
+                "Round 2: evidence?",
+                round3_text,
+            ],
+        )
+
+    def test_round3_ending_with_question_no_violation(self):
+        b = self._make_bridge("What would change if you and your neighbor demanded answers together?")
+        assert b.c6_violation is False
+
+    def test_round3_ending_with_statement_sets_violation(self):
+        b = self._make_bridge("The most powerful thing you can do is stand together.")
+        assert b.c6_violation is True
+
+    def test_c6_violation_excluded_from_serialization(self):
+        b = self._make_bridge("Stand together now.")
+        d = b.model_dump(mode="json")
+        assert "c6_violation" not in d
 
 
 class TestBridgeScopeScrubber:
@@ -1612,7 +1691,9 @@ class TestConvergenceMatrix:
     def test_convergence_strength_pipe_separated(self):
         from huginn_muninn.contracts import ConvergenceMatrix
         m = ConvergenceMatrix(convergence_strength="HIGH|LOW")
-        assert m.convergence_strength == "HIGH"
+        # Pipe sanitizer picks HIGH, then evidence validator degrades to MEDIUM
+        # because no coordination evidence in amplification_risk
+        assert m.convergence_strength == "MEDIUM"
 
     def test_political_position_pipe_separated(self):
         from huginn_muninn.contracts import ConvergenceGroup
@@ -1687,6 +1768,91 @@ class TestConvergenceMatrix:
         m = MapperOutput(actors=[], narrative_summary="test")
         assert m.convergence_matrix is None
 
+
+class TestConvergenceEvidenceRequirement:
+    """HIGH convergence_strength requires documented coordination evidence
+    in amplification_risk, not just shared policy preferences."""
+
+    def test_high_without_coordination_evidence_degrades_to_medium(self):
+        from huginn_muninn.contracts import ConvergenceMatrix
+        m = ConvergenceMatrix(
+            convergence_strength="HIGH",
+            amplification_risk="Groups share similar policy preferences on immigration.",
+        )
+        assert m.convergence_strength == "MEDIUM"
+
+    def test_high_with_coordination_evidence_stays_high(self):
+        from huginn_muninn.contracts import ConvergenceMatrix
+        m = ConvergenceMatrix(
+            convergence_strength="HIGH",
+            amplification_risk="Documented coordinated cross-platform campaign targeting health policies.",
+        )
+        assert m.convergence_strength == "HIGH"
+
+    def test_high_with_empty_amplification_risk_degrades(self):
+        from huginn_muninn.contracts import ConvergenceMatrix
+        m = ConvergenceMatrix(
+            convergence_strength="HIGH",
+            amplification_risk="",
+        )
+        assert m.convergence_strength == "MEDIUM"
+
+    def test_medium_not_affected_by_evidence_check(self):
+        from huginn_muninn.contracts import ConvergenceMatrix
+        m = ConvergenceMatrix(
+            convergence_strength="MEDIUM",
+            amplification_risk="Shared concerns but no coordination.",
+        )
+        assert m.convergence_strength == "MEDIUM"
+
+    def test_low_not_affected_by_evidence_check(self):
+        from huginn_muninn.contracts import ConvergenceMatrix
+        m = ConvergenceMatrix(convergence_strength="LOW")
+        assert m.convergence_strength == "LOW"
+
+    def test_high_with_organized_keyword_stays_high(self):
+        from huginn_muninn.contracts import ConvergenceMatrix
+        m = ConvergenceMatrix(
+            convergence_strength="HIGH",
+            amplification_risk="Organized amplification network detected across platforms.",
+        )
+        assert m.convergence_strength == "HIGH"
+
+    def test_pipe_separated_high_still_checked(self):
+        """Pipe sanitizer runs before validator; HIGH|LOW -> HIGH -> check."""
+        from huginn_muninn.contracts import ConvergenceMatrix
+        m = ConvergenceMatrix(
+            convergence_strength="HIGH|LOW",
+            amplification_risk="Groups share similar policy preferences.",
+        )
+        assert m.convergence_strength == "MEDIUM"
+
+    def test_negated_keyword_does_not_count_as_evidence(self):
+        """Codex v2: 'No coordinated activity' must NOT preserve HIGH."""
+        from huginn_muninn.contracts import ConvergenceMatrix
+        m = ConvergenceMatrix(
+            convergence_strength="HIGH",
+            amplification_risk="No coordinated activity was detected in this case.",
+        )
+        assert m.convergence_strength == "MEDIUM"
+
+    def test_negated_without_keyword_degrades(self):
+        from huginn_muninn.contracts import ConvergenceMatrix
+        m = ConvergenceMatrix(
+            convergence_strength="HIGH",
+            amplification_risk="Activity occurred without coordination between groups.",
+        )
+        assert m.convergence_strength == "MEDIUM"
+
+    def test_affirmative_keyword_after_negation_stays_high(self):
+        """Negation on one keyword shouldn't block a later affirmative one."""
+        from huginn_muninn.contracts import ConvergenceMatrix
+        m = ConvergenceMatrix(
+            convergence_strength="HIGH",
+            amplification_risk="Not a single campaign but documented coordinated amplification across platforms.",
+        )
+        assert m.convergence_strength == "HIGH"
+
     def test_serializes_in_model_dump(self):
         from huginn_muninn.contracts import ConvergenceGroup, ConvergenceMatrix
         m = ConvergenceMatrix(
@@ -1696,7 +1862,9 @@ class TestConvergenceMatrix:
             ],
             convergence_type="antagonist",
             convergence_strength="HIGH",
+            amplification_risk="Documented coordinated cross-platform campaign.",
         )
+        assert m.convergence_strength == "HIGH"
         d = m.model_dump(mode="json")
         assert "groups" in d
         assert "convergence_type" in d
