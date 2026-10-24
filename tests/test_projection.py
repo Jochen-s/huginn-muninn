@@ -1,4 +1,5 @@
 """Tests for the AnalysisResponse projection helper."""
+import json
 import pytest
 from huginn_muninn.projection import project_analysis
 from huginn_muninn.config import _reset_settings
@@ -86,11 +87,24 @@ class TestProjectAnalysis:
         result = project_analysis(verdict, is_method2=False)
         assert result == verdict
 
-    def test_project_invalid_dict_returns_raw(self):
-        """If the dict can't validate as AnalysisReport, return it raw."""
-        bad = {"not_a_report": True}
-        result = project_analysis(bad)
-        assert result == bad
+    def test_project_invalid_dict_fails_closed(self):
+        """A dict that cannot validate must not pass through raw.
+
+        The payload carries content under a suppressed field name so the
+        test would catch a leak; the old fail-open behaviour returned this
+        dict unchanged and the old test certified it with nothing to leak.
+        """
+        bad = {
+            "not_a_report": True,
+            "bridge": {"perception_gap": "LEAKED-NAMED-PERSON content"},
+        }
+        result = project_analysis(bad, suppressed=frozenset({"perception_gap"}))
+        assert "LEAKED-NAMED-PERSON" not in json.dumps(result)
+        assert result["degraded"] is True
+        assert result["degraded_reason"] == "contract_validation_failed"
+        assert result["data"] == {}
+        assert result["suppressed_fields"] == ["perception_gap"]
+        assert "api_version" in result
 
 
 class TestAuditRedacted:
@@ -308,3 +322,44 @@ class TestExperimentalFields:
         raw.pop("cnqs", None)
         result = project_analysis(raw, suppressed=frozenset())
         assert result.get("experimental_fields", []) == []
+
+
+class TestVetoCarriersAreScrubbed:
+    """The veto path copies audit.summary into degraded_reason and the
+    withheld dialogue line; both must get the Sprint 4 scrub."""
+
+    def _vetoed_raw(self):
+        return {
+            "claim": "X",
+            "decomposition": {
+                "sub_claims": [{"text": "X", "type": "factual", "verifiable": True}],
+                "original_claim": "X", "complexity": "simple",
+            },
+            "origins": {"origins": []},
+            "intelligence": {"actors": [], "relations": [], "narrative_summary": ""},
+            "ttps": {"ttp_matches": [], "primary_tactic": "Assess"},
+            "bridge": {
+                "universal_needs": ["safety"], "issue_overlap": "o",
+                "narrative_deconstruction": "d", "perception_gap": "g",
+                "moral_foundations": {}, "reframe": "r", "socratic_dialogue": ["R1"],
+            },
+            "audit": {
+                "verdict": "fail", "findings": [], "confidence_adjustment": -0.5, "veto": True,
+                "summary": "Total incoherence. The vacuum_filled_by field names a person. Vetoed.",
+            },
+            "overall_confidence": 0.1,
+            "method": "method_2",
+            "degraded": True,
+            "degraded_reason": "Auditor veto: Total incoherence. The vacuum_filled_by field names a person. Vetoed.",
+        }
+
+    def test_withheld_dialogue_and_reason_are_scrubbed(self, monkeypatch):
+        monkeypatch.setenv("HUGINN_SUPPRESS_FIELDS", "vacuum_filled_by")
+        result = project_analysis(self._vetoed_raw())
+        data = result["data"]
+        assert data["bridge_withheld"] is True
+        assert "vacuum_filled_by" not in data["audit"]["summary"]
+        assert "vacuum_filled_by" not in data["degraded_reason"]
+        assert all("vacuum_filled_by" not in line for line in data["bridge"]["socratic_dialogue"])
+        assert "Total incoherence" in data["bridge"]["socratic_dialogue"][0]
+        assert result["audit_redacted"] is True

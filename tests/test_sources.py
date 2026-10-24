@@ -33,3 +33,20 @@ class TestDisarmTechniques:
             assert "id" in t
             assert "name" in t
             assert "description" in t
+
+
+class TestKnownSourceTier:
+    def test_listed_low_trust_platform_is_known_tier_4(self):
+        from huginn_muninn.sources import known_source_tier
+        assert known_source_tier("https://t.me/channel/1") == 4
+        assert get_source_tier("https://t.me/channel/1") == 4
+
+    def test_unknown_domain_is_none_but_scores_4(self):
+        from huginn_muninn.sources import known_source_tier
+        assert known_source_tier("https://example-unknown.invalid/x") is None
+        assert get_source_tier("https://example-unknown.invalid/x") == 4
+
+    def test_empty_and_garbage_are_none(self):
+        from huginn_muninn.sources import known_source_tier
+        assert known_source_tier("") is None
+        assert known_source_tier("not a url") is None

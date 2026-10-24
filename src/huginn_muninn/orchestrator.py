@@ -12,13 +12,34 @@ from huginn_muninn.agents.classifier import ClassifierAgent
 from huginn_muninn.agents.decomposer import DecomposerAgent
 from huginn_muninn.agents.mapper import MapperAgent
 from huginn_muninn.agents.tracer import TracerAgent
-from huginn_muninn.contracts import AnalysisReport, _sanitize_for_log
+from huginn_muninn.contracts import AnalysisReport, _sanitize_for_log, absent_bridge
 from huginn_muninn.llm import LLMClient
+from huginn_muninn.sources import known_source_tier
 
 log = logging.getLogger(__name__)
 
 
 _SOURCE_TIER_SCORES: dict[int, float] = {1: 0.95, 2: 0.80, 3: 0.50, 4: 0.20}
+
+
+def _effective_source_tier(entry: object) -> int:
+    """Tier for one Tracer origin: the domain registry wins where it knows the domain.
+
+    The Tracer assigns `source_tier` to itself, so the deterministic registry in
+    `sources.py` is consulted first: when `earliest_source` is a URL on a listed
+    domain, that tier is used, including the listed tier-4 platforms (a Telegram
+    post cannot be self-reported as tier 1); unknown domains and non-URL sources
+    keep the LLM tier. Before 2026-09-03 the registry had no caller and the
+    number rested on the model's self-report alone."""
+    if not isinstance(entry, dict):
+        return 4
+    llm_tier = entry.get("source_tier", 4)
+    src = entry.get("earliest_source", "")
+    if isinstance(src, str) and src.lower().startswith(("http://", "https://")):
+        registry_tier = known_source_tier(src)
+        if registry_tier is not None:
+            return registry_tier
+    return llm_tier if isinstance(llm_tier, int) else 4
 
 _CONFIDENCE_COMPLEXITY_DAMPENER: dict[str, float] = {
     "simple": 1.0,
@@ -39,9 +60,7 @@ def _compute_source_quality_base(origins: dict, decomposition: dict) -> float:
     if not entries:
         return 0.5
     scores = [
-        _SOURCE_TIER_SCORES.get(
-            e.get("source_tier", 4) if isinstance(e, dict) else 4, 0.20
-        )
+        _SOURCE_TIER_SCORES.get(_effective_source_tier(e), 0.20)
         for e in entries
     ]
     tier_mean = sum(scores) / len(scores)
@@ -84,6 +103,26 @@ def _compute_hypothesis_expansion_score(decomposition: dict) -> float:
     return round(min(1.0, raw), 3)
 
 
+def _absent_audit(verdict: str, summary: str, findings: list[dict] | None = None,
+                  confidence_adjustment: float = 0.0, veto: bool = False) -> dict:
+    """An AuditorOutput-shaped dict for the paths where no Auditor output ships.
+
+    veto is False unless the caller is preserving a veto the Auditor did
+    issue (a vetoed report that failed final validation); the orchestrator
+    never fabricates one."""
+    return {
+        "verdict": verdict,
+        "findings": findings or [],
+        "confidence_adjustment": confidence_adjustment,
+        "veto": veto,
+        "summary": summary,
+        "frame_capture_risk": "none",
+        "frame_capture_evidence": "",
+        "confidence_profile": None,
+        "cnqs": None,
+    }
+
+
 class Orchestrator:
     """Coordinates the 6-agent Method 2 pipeline."""
 
@@ -113,6 +152,12 @@ class Orchestrator:
         # Stage 2: Origin tracing
         origins = self._run_agent(self.tracer, {**context}, failures)
         origins = origins or {"origins": [], "mutations": [], "notable_omissions": []}
+        # Write the registry-corrected tier back into the data the report
+        # ships, so the tier a reader sees is the tier the score used
+        # (review finding, 2026-09-03: a WHO link showed T4 beside 0.95).
+        for entry in origins.get("origins", []) or []:
+            if isinstance(entry, dict):
+                entry["source_tier"] = _effective_source_tier(entry)
         context["origins"] = origins
 
         # Stage 3: Intelligence mapping
@@ -126,28 +171,7 @@ class Orchestrator:
         context["ttps"] = ttps
 
         bridge = self._run_agent(self.bridge, {**context}, failures)
-        bridge = bridge or {
-            "universal_needs": ["unknown"],
-            "issue_overlap": "",
-            "narrative_deconstruction": "",
-            "consensus_explanation": "",
-            "inferential_gap": "",
-            "feasibility_check": "",
-            "commercial_motives": "",
-            "techniques_revealed": [],
-            "perception_gap": "",
-            "moral_foundations": {},
-            "reframe": "",
-            "socratic_dialogue": ["Bridge analysis unavailable"],
-            # Sprint 2 PR 3: Bridge scoped diagnostics. When the Bridge
-            # Builder fails, the fallback must still carry every schema
-            # default so AnalysisReport validation succeeds. All values
-            # are the "safe absent-signal" defaults; see contracts.py.
-            "communication_posture": "direct_correction",
-            "pattern_density_warning": False,
-            "vacuum_filled_by": "",
-            "prebunking_note": "",
-        }
+        bridge = bridge or absent_bridge("Bridge analysis unavailable")
 
         # Stage 5: Adversarial Audit
         # Gorgon Trap P1 #5: compute deterministic hypothesis-expansion signal
@@ -175,18 +199,14 @@ class Orchestrator:
             },
             failures,
         )
-        audit = audit or {
-            "verdict": "pass_with_warnings",
-            "findings": [{"category": "quality", "severity": "medium",
-                          "description": "Auditor unavailable", "recommendation": "Manual review"}],
-            "confidence_adjustment": -0.1,
-            "veto": False,
-            "summary": "Auditor agent failed; results unverified",
-            "frame_capture_risk": "none",
-            "frame_capture_evidence": "",
-            "confidence_profile": None,
-            "cnqs": None,
-        }
+        # No Auditor ran, so nothing was checked: the label says so instead
+        # of reading as a pass with warnings (decided 2026-09-03).
+        audit = audit or _absent_audit(
+            "unaudited", "Auditor agent failed; results unaudited",
+            findings=[{"category": "quality", "severity": "medium",
+                       "description": "Auditor unavailable", "recommendation": "Manual review"}],
+            confidence_adjustment=-0.1,
+        )
 
         # Compute overall confidence
         base_confidence = _compute_source_quality_base(origins, decomposition)
@@ -200,6 +220,12 @@ class Orchestrator:
         degraded_reason = None
         if vetoed:
             degraded_reason = f"Auditor veto: {audit.get('summary', '')}"
+            # Decided 2026-09-03: a veto is a stop, not a flag. The Bridge
+            # layer is withheld and replaced by the veto reason; the evidence
+            # layer (decomposition, origins, actors, TTPs, audit findings)
+            # ships so the reader can see why the stop fired. The withholding
+            # itself is done by AnalysisReport.veto_withholds_bridge at the
+            # validation below, so cached and replayed reports get it too.
         elif failures:
             degraded_reason = f"Agent failures: {', '.join(failures)}"
 
@@ -235,7 +261,10 @@ class Orchestrator:
             # regression tests continue to match via substring / lowercase
             # containment.
             failures.append(f"validation_error:{type(e).__name__}")
-            return self._degraded_result(claim, failures)
+            return self._degraded_result(
+                claim, failures,
+                veto_summary=str(audit.get("summary", "")) if vetoed else None,
+            )
 
         return AnalysisReport(**result).model_dump(mode="json")
 
@@ -248,8 +277,24 @@ class Orchestrator:
             failures.append(agent.name)
             return None
 
-    def _degraded_result(self, claim: str, failures: list[str]) -> dict:
-        """Return a minimal degraded result when critical agents fail."""
+    def _degraded_result(self, claim: str, failures: list[str],
+                         veto_summary: str | None = None) -> dict:
+        """Return a minimal degraded result when critical agents fail.
+
+        veto_summary is set when a vetoed report failed final validation: the
+        veto the Auditor issued is preserved instead of being replaced by a
+        no-Auditor audit (review finding, 2026-09-03)."""
+        if veto_summary is not None:
+            audit = _absent_audit("fail", f"Auditor veto: {veto_summary}", veto=True)
+            reason = (
+                f"Auditor veto: {veto_summary}. Critical agent failure: {', '.join(failures)}. "
+                "Use Method 1 (huginn check) for this claim."
+            )
+        else:
+            audit = _absent_audit(
+                "unaudited", "Pipeline degraded due to critical agent failure; no Auditor ran",
+            )
+            reason = f"Critical agent failure: {', '.join(failures)}. Use Method 1 (huginn check) for this claim."
         return {
             "claim": claim,
             "decomposition": {
@@ -277,33 +322,17 @@ class Orchestrator:
             "origins": {"origins": [], "mutations": [], "notable_omissions": []},
             "intelligence": {"actors": [], "relations": [], "narrative_summary": "", "convergence_matrix": None},
             "ttps": {"ttp_matches": [], "primary_tactic": "Assess"},
-            "bridge": {
-                "universal_needs": ["unknown"], "issue_overlap": "", "narrative_deconstruction": "",
-                "consensus_explanation": "",
-                "inferential_gap": "", "feasibility_check": "", "commercial_motives": "",
-                "techniques_revealed": [],
-                "perception_gap": "", "moral_foundations": {}, "reframe": "",
-                "socratic_dialogue": ["Analysis unavailable"],
-                # Sprint 2 PR 3: Bridge scoped diagnostics must also appear
-                # in the degraded fallback so every codepath reaches the
-                # AnalysisReport contract with every field populated.
-                "communication_posture": "direct_correction",
-                "pattern_density_warning": False,
-                "vacuum_filled_by": "",
-                "prebunking_note": "",
-            },
-            "audit": {
-                "verdict": "fail", "findings": [], "confidence_adjustment": 0,
-                "veto": False, "summary": "Pipeline degraded due to critical agent failure",
-                "frame_capture_risk": "none",
-                "frame_capture_evidence": "",
-                "confidence_profile": None,
-                "cnqs": None,
-            },
+            "bridge": absent_bridge(
+                f"Bridge layer withheld: Auditor veto: {veto_summary}" if veto_summary is not None
+                else "Analysis unavailable",
+                needs="withheld" if veto_summary is not None else "unknown",
+            ),
+            "audit": audit,
             "overall_confidence": 0.0,
             "confidence_profile": None,
             "cnqs": None,
             "method": "method_2",
             "degraded": True,
-            "degraded_reason": f"Critical agent failure: {', '.join(failures)}. Use Method 1 (huginn check) for this claim.",
+            "degraded_reason": reason,
+            "bridge_withheld": veto_summary is not None,
         }

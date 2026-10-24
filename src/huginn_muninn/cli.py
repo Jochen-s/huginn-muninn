@@ -10,33 +10,61 @@ import httpx
 
 from pydantic import ValidationError
 
-from huginn_muninn.config import get_settings
+from huginn_muninn import __version__
+from huginn_muninn.config import DEFAULT_MODEL, MODEL_ENV_VAR, get_settings
 from huginn_muninn.db import HuginnDB
+from huginn_muninn.escalation import should_escalate_verdict
 from huginn_muninn.llm import OllamaClient, extract_json_from_response
 from huginn_muninn.models import ClaimInput, VerdictOutput
 from huginn_muninn.prompt import build_pass1_prompt, build_pass2_prompt
-
-_VERSION = "0.1.0"
-
 
 def _db_path() -> Path:
     return get_settings().db_path
 
 
+def _resolve_model(ctx: click.Context, model: str) -> str:
+    """Pick the model: subcommand --model, then group --model, then env var, then default."""
+    source = ctx.get_parameter_source("model")
+    group_model = (ctx.obj or {}).get("model")
+    if group_model and source in (
+        click.core.ParameterSource.DEFAULT,
+        click.core.ParameterSource.ENVIRONMENT,
+    ):
+        return group_model
+    return model
+
+
 @click.group()
-@click.version_option(_VERSION, prog_name="Huginn & Muninn")
-def main():
+@click.version_option(__version__, prog_name="Huginn & Muninn")
+@click.option(
+    "--model",
+    default=None,
+    help=f"Ollama model for any subcommand (subcommand --model wins; overrides {MODEL_ENV_VAR})",
+)
+@click.pass_context
+def main(ctx: click.Context, model: str | None):
     """Huginn & Muninn -- fact-checking that finds common ground."""
+    ctx.ensure_object(dict)
+    ctx.obj["model"] = model
 
 
 @main.command()
 @click.argument("claim")
-@click.option("--model", default="qwen3.5:9b", help="Ollama model name")
+@click.option(
+    "--model",
+    envvar=MODEL_ENV_VAR,
+    default=DEFAULT_MODEL,
+    show_default=True,
+    show_envvar=True,
+    help="Ollama model name",
+)
 @click.option("--json-output", is_flag=True, help="Output raw JSON instead of formatted text")
 @click.option("--no-cache", is_flag=True, help="Skip cache lookup")
 @click.option("--auto-escalate", is_flag=True, help="Auto-run Method 2 if escalation recommended")
-def check(claim: str, model: str, json_output: bool, no_cache: bool, auto_escalate: bool):
+@click.pass_context
+def check(ctx: click.Context, claim: str, model: str, json_output: bool, no_cache: bool, auto_escalate: bool):
     """Fact-check a claim with Common Humanity analysis."""
+    model = _resolve_model(ctx, model)
     # Validate claim input
     try:
         ClaimInput(text=claim)
@@ -110,7 +138,7 @@ def check(claim: str, model: str, json_output: bool, no_cache: bool, auto_escala
                 db.store_verdict(claim, verdict_dict)
 
             # Escalate to Method 2 if needed
-            if auto_escalate and verdict_dict.get("escalation", {}).get("should_escalate"):
+            if auto_escalate and should_escalate_verdict(verdict_dict)[0]:
                 click.echo(
                     "\nEscalation recommended -- running Method 2 analysis...",
                     err=True,
@@ -163,11 +191,20 @@ def feedback(claim: str, feedback_type: str, comment: str | None):
 
 @main.command()
 @click.argument("claim")
-@click.option("--model", default="qwen3.5:9b", help="Ollama model name")
+@click.option(
+    "--model",
+    envvar=MODEL_ENV_VAR,
+    default=DEFAULT_MODEL,
+    show_default=True,
+    show_envvar=True,
+    help="Ollama model name",
+)
 @click.option("--json-output", is_flag=True, help="Output raw JSON instead of formatted text")
 @click.option("--no-cache", is_flag=True, help="Skip cache lookup")
-def analyze(claim: str, model: str, json_output: bool, no_cache: bool):
+@click.pass_context
+def analyze(ctx: click.Context, claim: str, model: str, json_output: bool, no_cache: bool):
     """Deep analysis of a claim using Method 2 (6-agent pipeline)."""
+    model = _resolve_model(ctx, model)
     from huginn_muninn.orchestrator import Orchestrator
 
     try:
@@ -230,6 +267,8 @@ def _print_analysis(data: dict):
     click.echo(f"  Confidence: {data.get('overall_confidence', 0):.0%}")
     if data.get("degraded"):
         click.echo(f"  [DEGRADED] {data.get('degraded_reason', '')}")
+    if data.get("bridge_withheld"):
+        click.echo("  [BRIDGE WITHHELD] The Adversarial Auditor vetoed this analysis; the common-ground, dialogue and reframe sections are replaced by the veto reason.")
     click.echo(f"{'='*60}")
 
     decomp = data.get("decomposition", {})
@@ -251,7 +290,7 @@ def _print_analysis(data: dict):
             click.echo(f"    - [{t.get('disarm_id', '?')}] {t.get('technique_name', '')} (conf: {t.get('confidence', 0):.0%})")
 
     bridge = data.get("bridge", {})
-    if bridge.get("universal_needs"):
+    if bridge.get("universal_needs") and not data.get("bridge_withheld"):
         click.echo(f"\n{'- '*30}")
         click.echo("  COMMON GROUND")
         click.echo(f"{'- '*30}")

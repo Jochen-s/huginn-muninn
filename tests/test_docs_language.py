@@ -174,6 +174,40 @@ class TestDocsLanguageReplacementIsDocumented:
         )
 
 
+class TestRejectionsCiteCharterCommitments:
+    """REJECTIONS.md cites charter commitments by number and short name. Each
+    cited number must resolve to the charter commitment with that name, so the
+    two load-bearing documents cannot drift apart (found off by one, 2026-09-02)."""
+
+    CHARTER = REPO_ROOT / "ANTI-WEAPONIZATION-CHARTER.md"
+    REJECTIONS = REPO_ROOT / "REJECTIONS.md"
+    COMMITMENT_RE = re.compile(r"^(\d+)\.\s+\*\*(.+?)\.\*\*", re.MULTILINE)
+    CITATION_LINE_RE = re.compile(r"^\*\*Commitment:\*\*\s*(.+)$", re.MULTILINE)
+    CITATION_RE = re.compile(r"(\d+)\s*\(([^)]+)\)")
+
+    def _charter_commitments(self) -> dict[int, str]:
+        text = self.CHARTER.read_text(encoding="utf-8")
+        found = {int(n): title.strip().lower() for n, title in self.COMMITMENT_RE.findall(text)}
+        assert len(found) == 8, f"expected 8 charter commitments, parsed {sorted(found)}"
+        return found
+
+    def test_every_cited_commitment_resolves_to_charter_heading(self):
+        charter = self._charter_commitments()
+        text = self.REJECTIONS.read_text(encoding="utf-8")
+        lines = self.CITATION_LINE_RE.findall(text)
+        assert lines, "no '**Commitment:**' lines found in REJECTIONS.md"
+        mismatches = []
+        for line in lines:
+            cites = self.CITATION_RE.findall(line)
+            assert cites, f"unparseable commitment citation: {line!r}"
+            for num_s, label in cites:
+                num = int(num_s)
+                title = charter.get(num)
+                if title is None or title != label.strip().lower():
+                    mismatches.append(f"{num} ({label}) -> charter {num} is {title!r}")
+        assert mismatches == [], "REJECTIONS.md cites commitments the charter numbers differently:\n" + "\n".join(mismatches)
+
+
 class TestDocsLanguageAllowlistAdversarial:
     """Adversarial regression tests that pin the lint against specific attack
     patterns the fleet and Codex reviewers identified during PR 1 review."""
@@ -264,3 +298,23 @@ class TestDocsLanguageAllowlistAdversarial:
                 )
                 return
         pytest.fail("heading did not contain a pathologising phrase")
+
+
+class TestDocsLanguagePublishedSurfaces:
+    """The lint reads the surfaces that are actually published, not only the
+    markdown sources (2026-09-03 fleet review X-12 / B-013)."""
+
+    DIST = REPO_ROOT / "gallery" / "dist"
+
+    def test_built_gallery_has_no_pathologising_phrases(self):
+        if not self.DIST.exists():
+            pytest.skip("gallery/dist not built in this checkout")
+        pages = sorted(self.DIST.rglob("*.html"))
+        assert pages, "gallery/dist exists but holds no HTML"
+        violations = []
+        for page in pages:
+            text = page.read_text(encoding="utf-8", errors="replace").lower()
+            for phrase in PATHOLOGISING_PHRASES:
+                if phrase in text:
+                    violations.append(f"{page.relative_to(REPO_ROOT)}: {phrase}")
+        assert violations == [], "\n".join(violations)

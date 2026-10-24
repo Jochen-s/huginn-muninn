@@ -1,6 +1,6 @@
 [project]
 name = "huginn-muninn"
-version = "0.14.0"
+version = "0.17.0"
 description = "De-polarize. Find common ground. Then make the tool unnecessary."
 readme = "README.md"
 authors = [
@@ -37,6 +37,9 @@ markers = [
     "e2e: end-to-end tests requiring a running Ollama instance (deselect with '-m not e2e')",
 ]
 
+# Deliberately separate from the "dev" extra above: this PEP 735 group is
+# installed by default by `uv sync`, the extra only with `--extra dev`.
+# CI uses both. Do not delete either as a duplicate.
 [dependency-groups]
 dev = [
     "pytest-httpx>=0.36.0",

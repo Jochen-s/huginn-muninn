@@ -849,3 +849,192 @@ class TestConfidenceProfilePropagation:
         result = orch.run("X is true because Y")
 
         assert result.get("confidence_profile") is None
+
+
+class TestDeterministicSourceTier:
+    """`get_source_tier` is wired into the confidence base for known domains."""
+
+    def test_known_domain_overrides_llm_tier(self):
+        origins = {"origins": [{"sub_claim": "X", "earliest_source": "https://www.who.int/news/x", "source_tier": 4}]}
+        base = _compute_source_quality_base(origins, {"complexity": "simple"})
+        assert base == 0.95
+
+    def test_unknown_domain_keeps_llm_tier(self):
+        origins = {"origins": [{"sub_claim": "X", "earliest_source": "https://example-unknown-blog.invalid/p", "source_tier": 2}]}
+        base = _compute_source_quality_base(origins, {"complexity": "simple"})
+        assert base == 0.8
+
+    def test_non_url_source_keeps_llm_tier(self):
+        origins = {"origins": [{"sub_claim": "X", "earliest_source": "A 2019 press release", "source_tier": 3}]}
+        base = _compute_source_quality_base(origins, {"complexity": "simple"})
+        assert base == 0.5
+
+    def test_corrected_tier_is_written_back_into_the_report(self):
+        """The tier a reader sees is the tier the score used."""
+        responses = {**MOCK_RESPONSES}
+        responses["origin_tracer"] = {
+            "origins": [{"sub_claim": "X", "earliest_source": "https://www.who.int/news/x",
+                         "earliest_date": None, "source_tier": 4, "propagation_path": []}],
+            "mutations": [],
+        }
+        result = Orchestrator(make_mock_client(responses)).run("X is true because Y")
+        assert result["origins"]["origins"][0]["source_tier"] == 1
+        assert result["overall_confidence"] >= 0.95
+
+    def test_listed_tier_4_platform_overrides_inflated_llm_tier(self):
+        """A Telegram post self-reported as tier 1 scores as the registry's tier 4.
+
+        Review finding 2026-09-03: get_source_tier returns 4 for unknown AND
+        listed-low domains, so a '!= 4' guard let the listed ones through."""
+        origins = {"origins": [{"sub_claim": "X", "earliest_source": "https://t.me/somechannel/1", "source_tier": 1}]}
+        base = _compute_source_quality_base(origins, {"complexity": "simple"})
+        assert base == 0.2
+
+
+class TestAuditorVetoWithholdsBridge:
+    """Decided 2026-09-03: an Auditor veto is a stop, not a flag.
+
+    A veto withholds the Bridge layer (dialogue, reframe, diagnostics), which
+    is the part of the report that reads as advice and is the part a gamed
+    pipeline would weaponise. The evidence layer (decomposition, origins,
+    actors, TTPs, audit findings) still ships with degraded=True so the reader
+    can see why the stop fired. When the Auditor itself fails, the result is
+    labelled unaudited instead of pass_with_warnings, and the Bridge ships."""
+
+    VETO = {
+        "verdict": "fail",
+        "findings": [{"category": "bias", "severity": "critical",
+                      "description": "Bad", "recommendation": "Fix"}],
+        "confidence_adjustment": -0.5,
+        "veto": True,
+        "summary": "Vetoed",
+    }
+
+    def _run(self, auditor):
+        responses = {**MOCK_RESPONSES, "adversarial_auditor": auditor}
+        return Orchestrator(make_mock_client(responses)).run("X is true because Y")
+
+    def test_veto_withholds_bridge_prose(self):
+        result = self._run(self.VETO)
+        bridge = result["bridge"]
+        assert result["bridge_withheld"] is True
+        assert bridge["reframe"] == ""
+        assert bridge["issue_overlap"] == ""
+        assert bridge["narrative_deconstruction"] == ""
+        assert bridge["perception_gap"] == ""
+        assert bridge["techniques_revealed"] == []
+        assert bridge["moral_foundations"] == {}
+        assert bridge["universal_needs"] == ["withheld"]
+        assert len(bridge["socratic_dialogue"]) == 1
+        assert "withheld" in bridge["socratic_dialogue"][0].lower()
+        assert "Vetoed" in bridge["socratic_dialogue"][0]
+
+    def test_veto_keeps_the_evidence_layer(self):
+        result = self._run(self.VETO)
+        assert result["degraded"] is True
+        assert "veto" in result["degraded_reason"].lower()
+        assert result["decomposition"]["sub_claims"]
+        assert result["audit"]["veto"] is True
+        assert result["audit"]["findings"][0]["description"] == "Bad"
+        assert result["ttps"]["primary_tactic"] == MOCK_RESPONSES["ttp_classifier"]["primary_tactic"]
+        assert result["origins"]["origins"][0]["earliest_source"] == "source.com"
+
+    def test_veto_result_validates_as_report(self):
+        report = AnalysisReport(**self._run(self.VETO))
+        assert report.bridge_withheld is True
+        assert report.audit.veto is True
+
+    def test_bridge_withheld_is_derived_from_veto(self):
+        """A report built by hand with veto=True cannot leave the flag False."""
+        result = self._run(MOCK_RESPONSES["adversarial_auditor"])
+        result["audit"]["veto"] = True
+        result["audit"]["verdict"] = "fail"
+        report = AnalysisReport(**result)
+        assert report.bridge_withheld is True
+        result["audit"]["veto"] = False
+        result["bridge_withheld"] = True
+        assert AnalysisReport(**result).bridge_withheld is False
+
+    def test_cached_vetoed_report_comes_back_withheld(self):
+        """A row stored before 2026-09-03 holds veto=True and the full Bridge.
+
+        The cache normaliser runs it through AnalysisReport, so the contract
+        must do the withholding, not only the orchestrator (review finding:
+        a cache hit used to lift the veto)."""
+        from huginn_muninn.db import HuginnDB
+        stale = self._run(MOCK_RESPONSES["adversarial_auditor"])
+        stale["audit"] = {**stale["audit"], "veto": True, "verdict": "fail", "summary": "Stored veto"}
+        stale.pop("bridge_withheld", None)
+        assert stale["bridge"]["reframe"] == "This is about fairness"
+        fresh = HuginnDB._normalize_cached_analysis(stale)
+        assert fresh["bridge_withheld"] is True
+        assert fresh["bridge"]["reframe"] == ""
+        assert fresh["bridge"]["universal_needs"] == ["withheld"]
+        assert "Stored veto" in fresh["bridge"]["socratic_dialogue"][0]
+
+    def test_model_emitted_unaudited_is_not_an_audit(self):
+        """'unaudited' is reserved: a model that emits it produced no audit."""
+        client = MagicMock(spec=OllamaClient)
+        order = ["claim_decomposer", "origin_tracer", "intelligence_mapper",
+                 "ttp_classifier", "bridge_builder"]
+        client.generate.side_effect = [
+            json.dumps(MOCK_RESPONSES[name]) for name in order
+        ] + [json.dumps({"verdict": "unaudited", "findings": [], "confidence_adjustment": 0.0,
+                         "veto": False, "summary": "Looks fine"})]
+        result = Orchestrator(client).run("X is true because Y")
+        assert result["degraded"] is True
+        assert "adversarial_auditor" in result["degraded_reason"]
+        assert result["audit"]["verdict"] == "unaudited"
+        assert result["audit"]["summary"] != "Looks fine"
+
+    def test_vetoed_report_that_fails_validation_keeps_its_veto(self, monkeypatch):
+        """The validation-failure fallback must not replace a veto with a
+        no-Auditor audit (review finding, 2026-09-03)."""
+        from huginn_muninn import orchestrator as orch_module
+        responses = {**MOCK_RESPONSES, "adversarial_auditor": self.VETO}
+        orch = Orchestrator(make_mock_client(responses))
+        real_cls = orch_module.AnalysisReport
+
+        class _AlwaysFailReport:
+            def __init__(self, **_kwargs):
+                real_cls.model_validate({})
+
+        monkeypatch.setattr(orch_module, "AnalysisReport", _AlwaysFailReport)
+        result = orch.run("X is true because Y")
+        assert result["degraded"] is True
+        assert result["audit"]["veto"] is True
+        assert result["audit"]["verdict"] == "fail"
+        assert "Vetoed" in result["audit"]["summary"]
+        assert result["bridge_withheld"] is True
+        assert result["bridge"]["universal_needs"] == ["withheld"]
+        assert "validation_error" in result["degraded_reason"]
+        assert "veto" in result["degraded_reason"].lower()
+        real_cls(**result)  # the fallback itself validates
+
+    def test_critical_failure_result_is_unaudited(self):
+        client = MagicMock(spec=OllamaClient)
+        client.generate.side_effect = ["no json here"]
+        result = Orchestrator(client).run("X is true because Y")
+        assert result["degraded"] is True
+        assert result["audit"]["verdict"] == "unaudited"
+        assert result["bridge_withheld"] is False
+
+    def test_no_veto_ships_bridge(self):
+        result = self._run(MOCK_RESPONSES["adversarial_auditor"])
+        assert result["bridge_withheld"] is False
+        assert result["bridge"]["reframe"] == MOCK_RESPONSES["bridge_builder"]["reframe"]
+
+    def test_auditor_failure_is_labelled_unaudited(self):
+        client = MagicMock(spec=OllamaClient)
+        order = ["claim_decomposer", "origin_tracer", "intelligence_mapper",
+                 "ttp_classifier", "bridge_builder"]
+        client.generate.side_effect = [
+            json.dumps(MOCK_RESPONSES[name]) for name in order
+        ] + ["no json in this reply"]
+        result = Orchestrator(client).run("X is true because Y")
+        assert result["audit"]["verdict"] == "unaudited"
+        assert result["audit"]["veto"] is False
+        assert "unaudited" in result["audit"]["summary"].lower()
+        assert result["degraded"] is True
+        assert result["bridge_withheld"] is False
+        assert result["bridge"]["reframe"] == MOCK_RESPONSES["bridge_builder"]["reframe"]

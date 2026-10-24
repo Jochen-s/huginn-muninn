@@ -46,3 +46,15 @@ docs/*-test-suite-findings*.js
 docs/huginn-muninn-pkm-summit-brief.js
 docs/huginn-muninn-presentation-brief-v2.js
 docs/linkedin-post-*.md
+**/.claude/state/
+**/.claude/settings.local.json
+**/.claude/worktrees/
+.knowledge-db/
+.fleet/
+.klingon/
+.codex/
+.mcp.json
+node_modules/
+HANDOFF-auto.md
+*.log
+.git-commit-msg.tmp

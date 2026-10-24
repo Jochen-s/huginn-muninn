@@ -18,7 +18,7 @@ Huginn & Muninn is built to strengthen democratic discourse. These commitments a
 
 6. **Autonomy-preserving.** Users are treated as autonomous adults capable of evaluating evidence. The system presents information and asks questions. It never lectures, labels, or condescends.
 
-7. **Anti-bias vigilance.** The system acknowledges its own biases (Western-centric training data, English-language dominance, temporal knowledge gaps) and flags them when relevant. Actor-category symmetry is enforced by automated tests (v0.8.0): structurally equivalent attack signatures must classify identically regardless of whether the described actor is state, commercial, or non-state. Any divergence fails the test suite.
+7. **Anti-bias vigilance.** The system acknowledges its own biases (Western-centric training data, English-language dominance, temporal knowledge gaps) and flags them when relevant. Actor-category symmetry is a tested design requirement (v0.8.0): the symmetry fixtures pair structurally equivalent attack signatures across state, commercial, and non-state actors and require identical classifications, and any divergence in the fixtures or the extension plan fails the test suite. A runtime check of the live classifier's output on those pairs is not yet built.
 
 8. **Open methodology.** The analysis methodology, source tiering criteria, and manipulation technique taxonomy are fully transparent and open to public scrutiny.
 

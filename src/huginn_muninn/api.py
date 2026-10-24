@@ -16,14 +16,17 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field, ValidationError
 
+from huginn_muninn import __version__
 from huginn_muninn.batch import BatchStore
 from huginn_muninn.comparison import ComparisonEngine
 from huginn_muninn.config import get_settings
 from huginn_muninn.db import HuginnDB
+from huginn_muninn.escalation import should_escalate_verdict
 from huginn_muninn.jobs import JobStatus, JobStore
 from huginn_muninn.llm import create_client, extract_json_from_response
 from huginn_muninn.model_registry import ModelRegistry
 from huginn_muninn.models import ClaimInput, JobRequest, VerdictOutput
+from huginn_muninn.netguard import host_is_public
 from huginn_muninn.orchestrator import Orchestrator
 from huginn_muninn.projection import project_analysis
 from huginn_muninn.prompt import build_pass1_prompt, build_pass2_prompt
@@ -54,6 +57,19 @@ async def lifespan(a: FastAPI):
         else None
     )
     comparison_engine = ComparisonEngine(model_registry, db)
+    try:
+        webhook_count = len(db.list_webhooks())
+    except Exception:  # pragma: no cover - disclosure must never block startup
+        webhook_count = 0
+    egress = _enabled_egress(settings, webhook_count)
+    if egress:
+        log.warning(
+            "Data leaves this machine through: %s. Unset the corresponding "
+            "settings for a fully local run (README, Privacy).",
+            "; ".join(egress),
+        )
+    else:
+        log.info("No outbound data path enabled: analysis stays on this machine.")
     job_store = JobStore(max_jobs=settings.max_jobs)
     batch_store = BatchStore(job_store)
     webhook_dispatcher = WebhookDispatcher(db)
@@ -91,7 +107,7 @@ async def lifespan(a: FastAPI):
 app = FastAPI(
     title="Huginn & Muninn",
     description="Fact-checking with Common Humanity",
-    version="0.3.0",
+    version=__version__,
     lifespan=lifespan,
 )
 
@@ -158,6 +174,21 @@ class SessionItemRequest(BaseModel):
 
 
 # --- Helpers ---
+
+def _enabled_egress(settings, webhook_count: int) -> list[str]:
+    """Name every configured path by which analysis data leaves the machine.
+
+    The README's privacy section promises a local default and names these
+    three optional exits; this is the runtime half of that promise."""
+    paths: list[str] = []
+    if settings.llm_provider != "ollama":
+        paths.append(f"hosted LLM provider '{settings.llm_provider}' (every prompt, including the claim)")
+    if settings.search_api_key:
+        paths.append(f"web search via '{settings.search_provider}' (query terms)")
+    if webhook_count:
+        paths.append(f"{webhook_count} registered webhook(s) (analysis results)")
+    return paths
+
 
 def _check_llm() -> dict:
     try:
@@ -238,15 +269,13 @@ def _validate_url(url: str, field: str = "url") -> None:
     hostname = parsed.hostname
     if not hostname:
         raise HTTPException(422, detail=f"Invalid {field}: missing hostname")
-    try:
-        addr = ipaddress.ip_address(hostname)
-        if addr.is_private or addr.is_loopback or addr.is_link_local or addr.is_reserved:
-            raise HTTPException(422, detail=f"{field} must not point to a private/internal address")
-    except ValueError:
-        # hostname is a DNS name -- block obvious internal names
-        lower = hostname.lower()
-        if lower in ("localhost",) or lower.endswith(".local") or lower.endswith(".internal"):
-            raise HTTPException(422, detail=f"{field} must not point to a private/internal address")
+    # Resolve-then-check (netguard): literal IPs, non-dotted literals that
+    # only the resolver understands, and DNS names that point inward all
+    # fail here; unresolvable names fail closed. Re-checked at delivery.
+    ok, reason = host_is_public(hostname)
+    if not ok:
+        log.info("Rejected %s: %s", field, reason)
+        raise HTTPException(422, detail=f"{field} must not point to a private/internal address")
 
 
 # --- Routes ---
@@ -285,9 +314,12 @@ def analyze(req: ClaimRequest):
         raise HTTPException(422, detail=str(e))
     try:
         result, analysis_id = _run_method2(req.claim, no_cache=req.no_cache)
+        result = project_analysis(result)
+        # Envelope metadata, set after projection: AnalysisReport has no
+        # analysis_id field, so setting it on the raw dict was dropped by
+        # validation and only survived on the (now closed) fail-open path.
         if analysis_id is not None:
             result["analysis_id"] = analysis_id
-        result = project_analysis(result)
         return result
     except httpx.ReadTimeout:
         raise HTTPException(504, detail="LLM request timed out")
@@ -304,7 +336,7 @@ def check_and_escalate(req: ClaimRequest):
         raise HTTPException(422, detail=str(e))
     try:
         verdict, verdict_id = _run_method1(req.claim, no_cache=req.no_cache)
-        should_escalate = verdict.get("escalation", {}).get("should_escalate", False)
+        should_escalate, _escalation_reason = should_escalate_verdict(verdict)
         if should_escalate:
             report, analysis_id = _run_method2(req.claim, no_cache=req.no_cache)
             report = project_analysis(report)

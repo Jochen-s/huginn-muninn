@@ -11,6 +11,7 @@ from huginn_muninn.sources import load_disarm_techniques
 
 class ClassifierAgent(BaseAgent):
     name = "ttp_classifier"
+    output_model = ClassifierOutput
 
     def system_prompt(self) -> str:
         return (

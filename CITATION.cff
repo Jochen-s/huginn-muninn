@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below. For the underlying research, cite the original studies listed in the README."
+title: "Huginn & Muninn: a local-first framework for disinformation analysis and common-ground bridging"
+type: software
+authors:
+  - family-names: Schmiedbauer
+    given-names: Jochen
+version: 0.17.0
+date-released: 2026-10-24
+license: MIT
+repository-code: "https://github.com/Jochen-s/huginn-muninn"
+url: "https://jochen-s.github.io/huginn-muninn/"
+keywords:
+  - disinformation
+  - fact-checking
+  - DISARM
+  - common ground
+  - local-first

@@ -65,7 +65,7 @@ Two analysis methods, one pipeline.
 | **Network Mapper** | Maps information flow and actor relationships. |
 | **TTP Classifier** | Labels manipulation techniques using the DISARM framework, including cognitive warfare techniques (v0.7.0). |
 | **Bridge Builder** | The common humanity layer. Identifies universal needs, surfaces concrete overlap, deconstructs manufactured narratives, presents scientific consensus with equal depth (v0.4.0), and advises communication approach grounded in 27 peer-reviewed citations (v0.8.0). |
-| **Adversarial Auditor** | Red-teams the entire analysis for bias, errors, and frame capture risk. Evidence Certainty Framework assessment with 5 weighted dimensions (v0.12.0). Exfiltration-guarded (v0.11.0). |
+| **Adversarial Auditor** | Red-teams the entire analysis for bias, errors, and frame capture risk. Evidence Certainty Framework assessment with 5 weighted dimensions (v0.12.0). Exfiltration-guarded (v0.11.0). A veto withholds the Bridge layer and ships the evidence layer flagged degraded; a failed Auditor labels the result `unaudited`. |
 
 Everything flows through an orchestrator. Output passes through a regulated envelope (v0.9.0) that projects results through field suppression and scope scrubbing before reaching any external boundary.
 
@@ -116,6 +116,8 @@ The diagnostic fields from v0.8.0 are powerful. They also create a defamation su
 **v0.11.0** closed the remaining exfiltration channel. Suppressed Bridge field content could still leak through Auditor free-text descriptions. A sentence-level scrubber now catches references to suppressed field names (underscore, space, short-form variants, case-insensitive) and replaces matching sentences with a redaction marker. An `audit_redacted` flag on every response discloses when scrubbing fired. Best-effort, honest about its limits.
 
 The engineering discipline: diagnostic power and legal safety shipped in the same pipeline.
+
+**Webhook receivers.** Every delivery carries `X-Huginn-Signature-256: sha256=<hmac>` computed over the raw body with the secret returned once at registration. Verify it before trusting the payload: `huginn_muninn.webhooks.verify_signature(body, secret, signature)` does the constant-time comparison. The API side registers, signs and re-checks the destination host at delivery; it does not receive webhooks, so the subscription endpoints belong behind the same access control as the rest of the API.
 
 ---
 
@@ -181,12 +183,12 @@ uvicorn huginn_muninn.api:app --host 0.0.0.0 --port 8000
 
 A 2025 study (Rani et al.) found that AI dialogue can reduce conspiracy beliefs by 21% while simultaneously degrading independent discernment by 15% over four weeks. This dependency paradox is a real risk for any AI fact-checking tool. I take it seriously enough to have redesigned the entire Bridge Builder around it.
 
-Four architectural pillars address it:
+Four architectural pillars address it. Only the first is built today; the other three are design commitments for a future interactive layer, since the current engine is a stateless pipeline with no user model or session history.
 
-1. **Genuine Socratic method.** The system asks questions that guide reasoning, not verdicts that replace it. Rani et al.'s own data shows guiding questions correlate positively with independent detection skills (r=0.29). Directive correction undermines them.
-2. **Mandatory fading.** AI support withdraws as user competence grows. Without explicit fading, the learning zone collapses.
-3. **Desirable difficulties.** Users attempt their own analysis before seeing the AI's. Slower short-term performance, better long-term retention (Bjork, 1994).
-4. **System-regulated access.** Research from Wharton shows system-regulated AI access produces 64% learning gains versus 30% for unrestricted access. Users can't be trusted to self-limit AI reliance. The system enforces structure.
+1. **Genuine Socratic method** (built, as a constraint on the Bridge output). The dialogue script names the technique instead of asserting a verdict and must close on a question. Rani et al.'s own data shows guiding questions correlate positively with independent detection skills (r=0.29). Directive correction undermines them.
+2. **Mandatory fading** (design). AI support withdraws as user competence grows. Without explicit fading, the learning zone collapses.
+3. **Desirable difficulties** (design). Users attempt their own analysis before seeing the AI's. Slower short-term performance, better long-term retention (Bjork, 1994).
+4. **System-regulated access** (design). Research from Wharton shows system-regulated AI access produces 64% learning gains versus 30% for unrestricted access. Users can't be trusted to self-limit AI reliance. The system enforces structure.
 
 The graduation model: learn the Three Questions. Apply them yourself. Stop needing the tool. That's the goal.
 
@@ -213,7 +215,7 @@ The system distinguishes manufactured doubt from genuine scientific uncertainty 
 | Domain | Confidence | Key Research |
 |--------|-----------|-------------|
 | Socratic AI Dialogue | **Strong** | Costello et al. (Science, 2024): 20% durable reduction. AAAS Newcomb Cleveland Prize 2026. Dependency caveat addressed by design. |
-| Inoculation / Prebunking | **Moderate-Strong** | van der Linden & Roozenbeek; Google/Jigsaw (5.4M users). Meta-analysis 2025 (N=37,075) confirms. Lab-to-field gap remains. |
+| Inoculation / Prebunking | **Moderate-Strong** | van der Linden & Roozenbeek; Roozenbeek et al. 2022 YouTube field study (22,632 participants, ads shown to 5.4M). Meta-analysis 2025 (N=37,075) confirms. Lab-to-field gap remains. |
 | Manufactured Doubt | **Strong** | Goldberg et al. (2021): 28 tactics, 5 industries. Well-documented, cross-industry. |
 | Cognitive Apprenticeship | **Strong** | Collins, Brown & Newman (1989): decades of replication. |
 | Perception Gap | **Weak** | More in Common (2019): US-only, single study. Used cautiously. |
@@ -257,18 +259,28 @@ Full log with falsification criteria: [REJECTIONS.md](REJECTIONS.md).
 | v0.8.0 | 228 |
 | v0.9.0 | 511 |
 | v0.11.0 | 544 |
-| v0.15.0 | 423 (standard baseline) |
 | v0.14.0 | 386 (standard baseline) |
+| v0.15.0 | 423 (standard baseline) |
+| v0.16.0 | 505 (standard baseline) |
+| v0.17.0 | 827 (public CI runs 818; 9 need the private scenario corpus and skip) |
 
-28 real-world scenarios validated across health & science, geopolitics, environment, events, technology, and media. Six COVID scenarios re-run with full ECF and provenance data (v0.14.0).
+31 real-world scenarios validated across health & science, geopolitics, environment, events, technology, and media. Six COVID scenarios re-run with full ECF and provenance data (v0.14.0).
 
 ---
 
 ## Privacy
 
-Your data never leaves your machine. Huginn & Muninn runs entirely on local hardware using open-source models through Ollama. No cloud dependency. No API keys required for base usage. No data collection.
+By default your data stays on your machine: Huginn & Muninn runs on local hardware using open-source models through Ollama, needs no API key, and collects nothing.
 
-If you are analyzing sensitive political claims, you should not have to trust a third party with that data.
+Three optional settings send data out, and each is off unless you turn it on:
+
+- `HUGINN_LLM_PROVIDER` set to a hosted provider sends every prompt, including the claim, to that provider.
+- `HUGINN_SEARCH_API_KEY` enables web search through the configured provider (Brave by default) and sends the query terms.
+- A registered webhook sends the analysis result to the URL you registered.
+
+The API logs a warning at startup naming any of the three that is enabled. The public gallery was produced with a hosted model (Claude), which its page footers state; the shipped default is the local `qwen3.5:9b`.
+
+If you are analyzing sensitive political claims, you should not have to trust a third party with that data, and with the defaults you do not.
 
 ---
 
@@ -276,7 +288,7 @@ If you are analyzing sensitive political claims, you should not have to trust a 
 
 This matters enough to build before the features.
 
-The [Anti-Weaponization Charter](ANTI-WEAPONIZATION-CHARTER.md) defines 8 non-negotiable commitments. The system cannot manufacture false common ground. It cannot be used as a persuasion engine for any agenda. It acknowledges when moral positions are genuinely irreconcilable. Actor-category symmetry tests (v0.8.0) ensure structurally equivalent attack signatures classify identically regardless of whether the actor is a state or non-state entity. Any divergence is a charter violation.
+The [Anti-Weaponization Charter](ANTI-WEAPONIZATION-CHARTER.md) defines 8 non-negotiable commitments. The system cannot manufacture false common ground. It cannot be used as a persuasion engine for any agenda. It acknowledges when moral positions are genuinely irreconcilable. Actor-category symmetry fixtures (v0.8.0) pair structurally equivalent attack signatures across state, commercial, and non-state actors and require identical classifications; a runtime check on live classifier output is not yet built.
 
 Not every disagreement is manufactured. Some are real. But the ones that are manufactured deserve to be seen.
 
@@ -284,7 +296,7 @@ Not every disagreement is manufactured. Some are real. But the ones that are man
 
 ## Contributing
 
-Contributions welcome. Open an issue first to discuss what you'd like to change.
+Contributions welcome. Open an issue first to discuss what you'd like to change. See [CONTRIBUTING.md](CONTRIBUTING.md) for setup, [SECURITY.md](SECURITY.md) for reporting vulnerabilities privately, and [CORRECTIONS.md](CORRECTIONS.md) for reporting an error in published content (with a log of the corrections made so far).
 
 Areas where contributions are particularly valuable:
 - Cross-cultural validation of the Three Questions framework
@@ -299,6 +311,12 @@ Areas where contributions are particularly valuable:
 I built this with Claude (Anthropic). All research synthesis, design decisions, editorial voice, and final calls are mine. Claude helped with code generation, adversarial testing, and literature review.
 
 Transparency matters. If I'm building a tool that teaches people to evaluate information sources, I should be upfront about my own.
+
+---
+
+## Third-Party Content
+
+The technique reference in `data/disarm_techniques.json` is a hand-curated subset of the [DISARM Framework](https://github.com/DISARMFoundation/DISARMframeworks) by the DISARM Foundation, used under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) with descriptions rewritten for this project. The `GT-001` to `GT-003` entries are this project's own additions and are not part of DISARM. The file's `_meta` block records version, source and licence; `NOTICE` carries the attribution.
 
 ---
 
@@ -320,6 +338,6 @@ If you reference this work in an academic context, please cite the underlying re
 
 ---
 
-*Current version: v0.15.0 "Convergence Lens". 423 tests. The mission hasn't changed: de-polarize, find common ground, then make the tool unnecessary.*
+*Current version: v0.17.0. 827 tests. The mission hasn't changed: de-polarize, find common ground, then make the tool unnecessary.*
 
 *Author: Jochen Schmiedbauer*

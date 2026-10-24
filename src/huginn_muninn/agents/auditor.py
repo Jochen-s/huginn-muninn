@@ -3,13 +3,14 @@ from __future__ import annotations
 
 import json
 
-from huginn_muninn.agents.base import BaseAgent
+from huginn_muninn.agents.base import AgentError, BaseAgent
 from huginn_muninn.contracts import AuditorOutput
 from huginn_muninn.prompt import sanitize_claim, sanitize_for_prompt
 
 
 class AuditorAgent(BaseAgent):
     name = "adversarial_auditor"
+    output_model = AuditorOutput
 
     def system_prompt(self) -> str:
         return (
@@ -97,7 +98,9 @@ VETO is a RARE NUCLEAR OPTION. You should almost never use it.
 For MOST issues, use verdict=pass_with_warnings with detailed findings. This lets
 the reader see the analysis AND your critique together. Only veto when the analysis
 is so broken that showing it would actively mislead the reader even with your
-warnings attached.
+warnings attached. A veto is enforced, not merely recorded: the Bridge layer
+(common ground, dialogue, reframe) is withheld from the reader and replaced by
+your summary, while the evidence layer ships with your findings attached.
 
 VETO CRITERIA -- ALL THREE must be true simultaneously:
 1. The flaw makes the ENTIRE analysis misleading (not just one section)
@@ -149,4 +152,11 @@ DECISION GUIDE:
 - Catastrophic (meets ALL THREE veto criteria) -> verdict=fail, veto=true"""
 
     def parse_output(self, raw: dict) -> dict:
+        # "unaudited" is reserved for the orchestrator's no-Auditor path. A
+        # model that emits it did not produce an audit, so it is treated like
+        # any other malformed reply and the orchestrator labels the run
+        # unaudited and degraded (review finding, 2026-09-03).
+        verdict = raw.get("verdict")
+        if isinstance(verdict, str) and verdict.strip().lower().startswith("unaudited"):
+            raise AgentError("Auditor emitted the reserved verdict 'unaudited'")
         return AuditorOutput(**raw).model_dump()

@@ -8,6 +8,7 @@ from huginn_muninn.prompt import sanitize_claim
 
 class DecomposerAgent(BaseAgent):
     name = "claim_decomposer"
+    output_model = DecomposerOutput
 
     def system_prompt(self) -> str:
         return (

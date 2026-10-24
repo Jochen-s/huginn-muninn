@@ -111,10 +111,14 @@ class TestCallbackDelivery:
 
 
 class TestWebhookDelivery:
-    def test_webhook_receives_signed_payload(self, db, job_store, mock_client):
+    def test_webhook_receives_signed_payload(self, db, job_store, mock_client, monkeypatch):
         """Register webhook -> submit job -> webhook receives HMAC-signed payload."""
+        # Delivery re-checks the host (netguard), so use a public name that
+        # resolves to a public address; localhost is refused by design.
+        from huginn_muninn import netguard
+        monkeypatch.setattr(netguard, "resolve_addresses", lambda h: ["93.184.216.34"])
         secret = "test_webhook_secret"
-        db.create_webhook("http://localhost:8888/hook", secret, ["job.completed", "verdict.completed"])
+        db.create_webhook("https://hooks.example.com/hook", secret, ["job.completed", "verdict.completed"])
 
         dispatcher = WebhookDispatcher(db)
         with patch("huginn_muninn.llm.extract_json_from_response") as mock_extract, \

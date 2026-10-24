@@ -12,7 +12,7 @@ class TestSettings:
         s = Settings()
         assert s.ollama_base_url == "http://localhost:11434"
         assert s.default_model == "qwen3.5:9b"
-        assert s.cors_origins == ["*"]
+        assert s.cors_origins == ["http://localhost:8000", "http://127.0.0.1:8000"]
         assert "huginn.db" in str(s.db_path)
 
     def test_env_override_ollama_url(self, monkeypatch):

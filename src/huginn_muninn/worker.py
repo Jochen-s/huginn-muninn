@@ -8,6 +8,7 @@ from typing import TYPE_CHECKING
 
 import httpx
 
+from huginn_muninn.escalation import should_escalate_verdict
 from huginn_muninn.jobs import JobStatus
 from huginn_muninn.projection import project_analysis
 
@@ -85,7 +86,7 @@ class JobRunner:
             return self._run_method2(claim)
         elif method == "check-and-escalate":
             verdict = self._run_method1(claim, deep_sources=deep_sources)
-            should_escalate = verdict.get("escalation", {}).get("should_escalate", False)
+            should_escalate, _escalation_reason = should_escalate_verdict(verdict)
             if should_escalate:
                 report = self._run_method2(claim)
                 return {"method_1": verdict, "method_2": report, "escalated": True}

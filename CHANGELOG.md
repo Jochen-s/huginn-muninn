@@ -3,6 +3,85 @@
 All notable changes to Huginn & Muninn are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [Unreleased]
+
+## [0.17.0] - 2026-10-24
+
+First release since the 2026-09-03 fleet review. It publishes the review's fixes, which were committed but not live until now, including the removal of numeric credibility values from named people in the public knowledge graph.
+
+### Fixed (2026-10-24)
+
+- **`huginn --model X analyze` works** (GitHub issue #1, second half). `--model` is now accepted on the command group as well as on each subcommand. Precedence: subcommand `--model`, then group `--model`, then `HUGINN_DEFAULT_MODEL`, then the built-in default.
+- **One version everywhere**: `huginn --version` reported 0.1.0 and the OpenAPI spec 0.3.0. The CLI, the OpenAPI spec and the response envelope's `api_version` now read the package version, and `tests/test_version_sync.py` checks them against `pyproject.toml`, the CHANGELOG and the README footer.
+- **`.env.example` no longer sets `HUGINN_CORS_ORIGINS=*`**: copying the template used to undo the same-origin default.
+- **Webhook integration test** used `localhost`, which the delivery-time host check correctly refuses; it now uses a public name with stubbed DNS. The test sat outside the curated baseline, which is why it went unnoticed.
+
+### Added (2026-10-24)
+
+- Continuous integration: GitHub Actions runs the full test suite on every push and pull request.
+- `SECURITY.md`, `CONTRIBUTING.md`, `CORRECTIONS.md` (how to report an error in published content, plus a log of corrections made) and `CITATION.cff`.
+
+### Fleet review 2026-09-03
+
+Full fleet review 2026-09-03 (report `.fleet/reports/2026-09-03-0131-hm-forgotten.md`, internal). Every change below traces to a finding id there.
+
+### Security
+
+- **Projection fails closed** (X-03): a result that does not validate as `AnalysisReport` now returns a degraded envelope (`degraded: true`, empty `data`) instead of the raw dict, which skipped field suppression and audit scrubbing. The old test certified the fail-open with a payload that had nothing to leak; the new one carries a suppressed field.
+- **Auditor veto resolves toward the stop** (X-03): `veto=True` with `verdict='pass'` used to raise, become an `AgentError`, and be replaced by a default audit with `veto=False`. It now degrades to `verdict='fail'` and records the contradiction in the summary.
+- **Auditor veto withholds the Bridge layer** (X-03 follow-up, decided 2026-09-03): a veto used to set `degraded=true` and ship every section unchanged, which is a stop that stops nothing. The withholding is done by `AnalysisReport` itself at validation: whenever `audit.veto` is true the Bridge layer (common ground, dialogue, reframe, diagnostics) is replaced by the veto reason and `bridge_withheld=true` is stamped, so analyses cached before this change with a veto and a full Bridge come back withheld on every cache hit and DB replay (the code review found that an orchestrator-only stop was lifted by the cache). Decomposition, origins, actors, TTPs and the audit findings still ship so the reader can see why the stop fired. The gallery replaces the whole Bridge block with the reason (keyed on `audit.veto` as well, since scenario JSON written outside the orchestrator carries no flag), the web UI and the CLI print a withheld notice and skip common ground. A veto with any non-fail verdict degrades to `fail`. A vetoed report that fails final validation keeps its veto in the fallback instead of being relabelled as a no-Auditor failure. The veto reason copied into `degraded_reason` and the withheld dialogue line gets the same suppressed-field scrub as the audit text.
+- **`unaudited` verdict is reserved for the orchestrator**: when the Auditor agent fails, or the pipeline degrades before it runs, the verdict is `unaudited` instead of `pass_with_warnings` or `fail`. A model reply that claims `unaudited` is treated as malformed output, so a captured Auditor cannot mask itself as absent.
+- **Listed low-trust platforms can no longer be self-reported as tier 1** (X-06 follow-up): `known_source_tier` distinguishes a registry tier 4 (Telegram, X, TikTok and the other listed platforms) from an unknown domain, and the confidence base uses the registry tier for every listed domain. The corrected tier is written back into `origins[].source_tier`, so the tier a reader sees is the tier the score used.
+- **Gallery verdict badge matches exactly**: an unrecognised verdict renders as such in the fail style instead of falling through to a green PASS.
+- **Outbound URL guard resolves then checks** (K-006, new `netguard.py`): webhook URLs are resolved and every address must be public; unresolvable names fail closed; non-dotted IP literals such as `2130706433` no longer slip through the DNS branch; the host is re-checked at delivery time against DNS rebinding.
+- **CORS default is same-origin** (K-001 adjacent): `HUGINN_CORS_ORIGINS` defaults to `http://localhost:8000,http://127.0.0.1:8000` instead of `*`.
+- **Public webhooks router removed from the VPS compose** (K-001): `/api/webhooks` is unauthenticated subscription management that returns a fresh HMAC secret; it now sits behind `block-public` with the rest of the API. Takes effect on the next VPS deploy.
+- **`docker-compose.yml` binds to loopback** (K-019): `127.0.0.1:8000:8000`.
+- **JSON extraction prefers the schema-shaped object** (K-005): each agent passes its contract's field names, so a decoy JSON object embedded in an analysed claim can no longer win by size.
+- **Essay links accept only http(s), relative and fragment URLs** (K-015): other schemes render as plain text.
+
+### Fixed
+
+- **Web UI read the Method 2 report off the response envelope**: `renderAnalysis` looked for `degraded`, `bridge` and `audit` on the `AnalysisResponse` envelope instead of its `data` field, so a Method 2 result rendered as confidence N/A and nothing else. Unwrapped.
+- **`/api/analyze` dropped `analysis_id` for valid reports**: the id was set on the raw dict before projection and validation discarded it; only the fail-open path ever returned it. Set on the envelope after projection now.
+- **Knowledge graph carried numeric credibility on named people** (X-01, Charter Commitment 1): `gallery/dist/graph-data.json` regenerated from the current builder (31 scenarios, categorical `credibility_basis` only); a build-time test fails on any numeric `credibility` under an actor node, in the builder and in the shipped artifact.
+- **Tier ladder documented wrong** (X-02): the methodology page and gallery said 0.9/0.7/0.5/0.3; the orchestrator has used the non-linear 0.95/0.80/0.50/0.20 since Sprint 6. Docs follow code; `TestSourceTierSync` now derives its expectations from `_SOURCE_TIER_SCORES`.
+- **`data/` seeds excluded from the public sync and the image** (X-04): the sync now excludes only transients under `data/`, aborts if a seed is missing in the target or a non-template `.env*` file would ship, and the Dockerfile copies the two seed files. Duplicate exclude removed (X-12).
+- **Two reserved-name `NUL` files** deleted (B-018).
+
+### Changed
+
+- **Deterministic modules wired in** (X-06): `get_source_tier` now overrides the Tracer's self-assigned tier for domains in the registry; `should_escalate_verdict` combines the Method 1 self-report with `compute_escalation` as a floor (low confidence escalates regardless of the model's flag) at all three call sites.
+- **`TTPMatch.disarm_id` validated** (X-11): well-formed `T####`, `T####.###` and `GT-###` ids are kept, anything else demotes to `null` without blocking; new `in_reference` flag says whether the id is in the shipped reference. The seed file carries a `_meta` block (source, licence CC BY 4.0, curation dates) and `NOTICE` plus a README section give the DISARM Foundation attribution.
+- **Free-text scrub inventory** (K-007): `tests/test_free_text_inventory.py` enumerates every free-text field reachable from `AnalysisReport` and fails on any field without a recorded scrub-or-allow decision.
+- **Startup egress disclosure** (X-18): the API logs which of the three outbound paths (hosted LLM, web search, webhooks) is enabled; the README privacy section leads with the local default and names the three.
+- **Docs language lint reads the built gallery** (X-12): `gallery/dist/**/*.html` is scanned alongside the markdown sources.
+- **RESEARCH.md, README, REJECTIONS.md, charter wording** (X-07, X-14, X-16): "implements" became "the design calls for" where nothing is built; five citation defects corrected (Meyer et al. chatbot effect flagged as disputed pending a human read of Figure 1); the two rejection reasons state their real basis; Commitment 7 says fixtures are tested and the runtime check is not built.
+- `.env.example` documents every variable `config.py` reads.
+
+### Fixed (earlier in this cycle)
+
+- **CLI ignored `HUGINN_DEFAULT_MODEL`** (GitHub issue #1). `huginn check` and `huginn analyze` hardcoded the `--model` default, so the environment variable only affected the API. Both options now read `HUGINN_DEFAULT_MODEL`, with `qwen3.5:9b` as the single fallback defined in `config.py`. An explicit `--model` still wins. `--help` shows the default and the variable. Note that `--model` belongs after the subcommand: `huginn check --model llama3.2:3b "claim"`.
+- **Version drift**: `pyproject.toml` (0.14.0) and the README footer (0.15.0) now match `api_version` 0.16.0.
+
+### Changed
+
+- **RESEARCH.md citations**: the ~77,000-participant persuasion-accuracy study (doi:10.1126/science.aea3884) is Hackenburg, Tappin, Hewitt et al., Science 2025, not Bai, Voelkel et al.; the Bai et al. entry now points to its Nature Communications paper. Costello et al. 2024 carries the Science Expression of Concern (11 June 2026). Rani et al. is cited as CHI 2026 instead of an unreplicated preprint. A regulatory note records the Digital Omnibus deferral of AI Act Annex III to 2 December 2027.
+
+## [0.16.0] - 2026-05-17
+
+Sprint 9. Pipeline redesign and three replacement scenarios. 505 tests in standard baseline.
+
+### Added
+
+- **GP-08, GP-09, GP-10**: Great Replacement Theory scenarios for the Netherlands (PVV), France (RN) and Germany (AfD). 31 scenarios plus one essay in the gallery.
+
+### Changed
+
+- **Actor credibility as `credibility_basis` strings** instead of numeric scores.
+- **Convergence evidence gating**: amplification risk stays MEDIUM unless coordination is documented.
+- **C6 Round 3 question compliance** in the Bridge Builder dialogue structure.
+
 ## [0.15.0] - 2026-05-14 -- "Convergence Lens"
 
 Sprint 8. ConvergenceMatrix gallery rendering, methodology sync enforcement, CSS extraction, confusable capitalised-run hardening, knowledge graph improvements. 423 tests in standard baseline, zero regression.

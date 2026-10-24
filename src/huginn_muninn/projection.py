@@ -99,8 +99,19 @@ def project_analysis(
     try:
         report = AnalysisReport.model_validate(raw)
     except ValidationError:
-        log.warning("Failed to validate analysis for projection; returning raw")
-        return raw
+        # Fail closed. Returning the raw dict skipped field suppression and
+        # audit scrubbing, so an unvalidatable payload was the one path on
+        # which suppressed content reached the boundary unfiltered.
+        log.warning("Failed to validate analysis for projection; returning degraded envelope")
+        return {
+            "data": {},
+            "suppressed_fields": sorted(suppressed),
+            "api_version": AnalysisResponse.model_fields["api_version"].default,
+            "audit_redacted": False,
+            "experimental_fields": [],
+            "degraded": True,
+            "degraded_reason": "contract_validation_failed",
+        }
 
     response = AnalysisResponse.from_report(report, suppressed=suppressed)
     resp_data = response.model_dump(mode="json")
@@ -127,6 +138,23 @@ def project_analysis(
                     audit["frame_capture_evidence"], suppressed
                 )
                 audit_redacted = audit_redacted or was_scrubbed
+        # The veto path copies audit.summary into degraded_reason and, when
+        # the Bridge is withheld, into socratic_dialogue[0]. Those carriers
+        # are scrubbed with the same rule (review finding, 2026-09-03).
+        report = resp_data.get("data", {})
+        if report.get("degraded_reason"):
+            report["degraded_reason"], was_scrubbed = _scrub_audit_text(
+                report["degraded_reason"], suppressed
+            )
+            audit_redacted = audit_redacted or was_scrubbed
+        if report.get("bridge_withheld"):
+            dialogue = (report.get("bridge") or {}).get("socratic_dialogue") or []
+            scrubbed_lines = []
+            for line in dialogue:
+                line, was_scrubbed = _scrub_audit_text(line, suppressed)
+                audit_redacted = audit_redacted or was_scrubbed
+                scrubbed_lines.append(line)
+            report["bridge"]["socratic_dialogue"] = scrubbed_lines
 
     # Deliberate design choice (3/6 fleet flagged Streisand risk): audit_redacted
     # is always emitted in the envelope. This is the hybrid-C disclosure: operators

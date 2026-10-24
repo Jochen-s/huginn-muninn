@@ -6,6 +6,9 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 
+DEFAULT_MODEL = "qwen3.5:9b"
+MODEL_ENV_VAR = "HUGINN_DEFAULT_MODEL"
+
 _SUPPRESSIBLE_FIELDS = frozenset({
     "communication_posture",
     "pattern_density_warning",
@@ -41,7 +44,7 @@ class Settings:
         default_factory=lambda: Path(os.environ.get("HUGINN_DB_PATH", str(Path.home() / ".huginn" / "huginn.db")))
     )
     default_model: str = field(
-        default_factory=lambda: os.environ.get("HUGINN_DEFAULT_MODEL", "qwen3.5:9b")
+        default_factory=lambda: os.environ.get(MODEL_ENV_VAR, DEFAULT_MODEL)
     )
     cors_origins: list[str] = field(default_factory=lambda: _parse_cors())
     webhook_secret: str | None = field(
@@ -76,8 +79,13 @@ class Settings:
     )
 
 
+# Same-origin by default: the web UI is served by this app, so no cross-origin
+# caller needs access unless the operator names one. Was "*" until 2026-09-03.
+_DEFAULT_CORS = "http://localhost:8000,http://127.0.0.1:8000"
+
+
 def _parse_cors() -> list[str]:
-    raw = os.environ.get("HUGINN_CORS_ORIGINS", "*")
+    raw = os.environ.get("HUGINN_CORS_ORIGINS", _DEFAULT_CORS)
     if raw == "*":
         return ["*"]
     return [o.strip() for o in raw.split(",") if o.strip()]

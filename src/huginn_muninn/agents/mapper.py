@@ -10,6 +10,7 @@ from huginn_muninn.prompt import sanitize_claim, sanitize_for_prompt
 
 class MapperAgent(BaseAgent):
     name = "intelligence_mapper"
+    output_model = MapperOutput
 
     def system_prompt(self) -> str:
         return (

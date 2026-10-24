@@ -14,6 +14,9 @@ RUN uv sync --frozen --no-dev --no-install-project
 COPY README.md ./
 COPY src/ src/
 COPY web/ web/
+# sources.py resolves data/ relative to the package: without these two
+# files the TTP classifier degrades silently inside the container.
+COPY data/disarm_techniques.json data/regional_sources.json data/
 RUN uv sync --frozen --no-dev
 
 RUN mkdir -p /data && chown -R appuser:appuser /app /data

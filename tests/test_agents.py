@@ -823,18 +823,25 @@ class TestAuditorAgent:
         assert output.veto
         assert len(output.findings) == 1
 
-    def test_parse_output_rejects_veto_with_pass(self):
+    def test_parse_output_degrades_veto_with_pass_to_fail(self):
+        """A contradictory Auditor keeps its veto instead of failing the agent.
+
+        Raising AgentError here let the orchestrator substitute a default
+        audit with veto=False, so the contradiction lifted the veto.
+        """
         client = MagicMock(spec=OllamaClient)
         client.generate.return_value = json.dumps({
             "verdict": "pass", "findings": [], "confidence_adjustment": 0.0,
             "veto": True, "summary": "Contradictory",
         })
         agent = AuditorAgent(client)
-        with pytest.raises(AgentError, match="adversarial_auditor failed"):
-            agent.run({
-                "original_claim": "test", "decomposition": {},
-                "origins": {}, "intelligence": {}, "ttps": {}, "bridge": {},
-            })
+        result = agent.run({
+            "original_claim": "test", "decomposition": {},
+            "origins": {}, "intelligence": {}, "ttps": {}, "bridge": {},
+        })
+        assert result["veto"] is True
+        assert result["verdict"] == "fail"
+        assert "degraded to fail" in result["summary"]
 
     def test_prompt_checks_all_upstream(self):
         client = MagicMock(spec=OllamaClient)
@@ -905,3 +912,20 @@ class TestAuditorAgent:
         normalized = " ".join(prompt.split())
         assert "DISTINCT from fact-checking" in normalized
         assert "frame_capture_risk" in prompt
+
+
+class TestAuditorReservedVerdict:
+    def test_model_emitted_unaudited_raises(self):
+        """The orchestrator owns 'unaudited'; the model cannot claim it."""
+        from huginn_muninn.agents.base import AgentError
+        client = MagicMock(spec=OllamaClient)
+        client.generate.return_value = json.dumps({
+            "verdict": "unaudited", "findings": [], "confidence_adjustment": 0.0,
+            "veto": False, "summary": "Nothing to see",
+        })
+        agent = AuditorAgent(client)
+        with pytest.raises(AgentError, match="reserved verdict"):
+            agent.run({
+                "original_claim": "test", "decomposition": {},
+                "origins": {}, "intelligence": {}, "ttps": {}, "bridge": {},
+            })

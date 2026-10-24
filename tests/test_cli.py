@@ -23,11 +23,6 @@ class TestCLI:
         result = runner.invoke(main, ["check"])
         assert result.exit_code != 0
 
-    def test_version(self, runner):
-        result = runner.invoke(main, ["--version"])
-        assert result.exit_code == 0
-        assert "0.1.0" in result.output
-
 
 class TestAutoEscalate:
     @pytest.fixture
@@ -271,3 +266,125 @@ class TestAnalyzeCLI:
         runner = CliRunner()
         result = runner.invoke(main, ["analyze"])
         assert result.exit_code != 0
+
+
+class TestModelEnvVar:
+    """GitHub issue #1: the CLI must honour HUGINN_DEFAULT_MODEL like the API does."""
+
+    @staticmethod
+    def _run(runner, args, env):
+        from unittest.mock import MagicMock, patch
+
+        mock_db = MagicMock()
+        mock_db.get_cached_verdict.return_value = None
+        mock_db.get_cached_analysis.return_value = None
+        mock_client = MagicMock()
+        mock_client.check_available.return_value = False
+        with patch("huginn_muninn.cli.HuginnDB") as mock_db_cls, \
+             patch("huginn_muninn.cli.OllamaClient") as mock_client_cls:
+            mock_db_cls.return_value.__enter__ = MagicMock(return_value=mock_db)
+            mock_db_cls.return_value.__exit__ = MagicMock(return_value=False)
+            mock_client_cls.return_value.__enter__ = MagicMock(return_value=mock_client)
+            mock_client_cls.return_value.__exit__ = MagicMock(return_value=False)
+            result = runner.invoke(main, args, env=env)
+        return result, mock_client_cls
+
+    def test_check_uses_env_model(self, runner):
+        result, client_cls = self._run(runner, ["check", "some claim"], {"HUGINN_DEFAULT_MODEL": "llama3.2:3b"})
+        assert result.exit_code == 1
+        client_cls.assert_called_once_with(model="llama3.2:3b")
+        assert "llama3.2:3b" in result.output
+
+    def test_analyze_uses_env_model(self, runner):
+        result, client_cls = self._run(runner, ["analyze", "some claim"], {"HUGINN_DEFAULT_MODEL": "llama3.2:3b"})
+        assert result.exit_code == 1
+        client_cls.assert_called_once_with(model="llama3.2:3b")
+
+    def test_explicit_model_beats_env(self, runner):
+        result, client_cls = self._run(
+            runner, ["check", "--model", "mistral:7b", "some claim"], {"HUGINN_DEFAULT_MODEL": "llama3.2:3b"}
+        )
+        assert result.exit_code == 1
+        client_cls.assert_called_once_with(model="mistral:7b")
+
+    def test_fallback_without_env(self, runner):
+        result, client_cls = self._run(runner, ["check", "some claim"], {"HUGINN_DEFAULT_MODEL": None})
+        assert result.exit_code == 1
+        client_cls.assert_called_once_with(model="qwen3.5:9b")
+
+    def test_help_names_env_var(self, runner):
+        result = runner.invoke(main, ["check", "--help"])
+        assert "HUGINN_DEFAULT_MODEL" in result.output
+
+    # Issue #1, second half: `huginn --model X analyze ...` was rejected.
+    def test_group_model_reaches_analyze(self, runner):
+        result, client_cls = self._run(
+            runner, ["--model", "mistral:7b", "analyze", "some claim"], {"HUGINN_DEFAULT_MODEL": None}
+        )
+        assert result.exit_code == 1
+        client_cls.assert_called_once_with(model="mistral:7b")
+
+    def test_group_model_reaches_check(self, runner):
+        result, client_cls = self._run(
+            runner, ["--model", "mistral:7b", "check", "some claim"], {"HUGINN_DEFAULT_MODEL": None}
+        )
+        assert result.exit_code == 1
+        client_cls.assert_called_once_with(model="mistral:7b")
+
+    def test_group_model_beats_env(self, runner):
+        result, client_cls = self._run(
+            runner, ["--model", "mistral:7b", "check", "some claim"], {"HUGINN_DEFAULT_MODEL": "llama3.2:3b"}
+        )
+        assert result.exit_code == 1
+        client_cls.assert_called_once_with(model="mistral:7b")
+
+    def test_subcommand_model_beats_group_model(self, runner):
+        result, client_cls = self._run(
+            runner,
+            ["--model", "mistral:7b", "check", "--model", "phi4:14b", "some claim"],
+            {"HUGINN_DEFAULT_MODEL": None},
+        )
+        assert result.exit_code == 1
+        client_cls.assert_called_once_with(model="phi4:14b")
+
+
+class TestVersion:
+    def test_version_matches_package(self, runner):
+        from importlib.metadata import version
+
+        result = runner.invoke(main, ["--version"])
+        assert result.exit_code == 0
+        assert version("huginn-muninn") in result.output
+
+
+class TestPrintAnalysisWithheld:
+    def _report(self, withheld: bool) -> dict:
+        return {
+            "overall_confidence": 0.3,
+            "degraded": withheld,
+            "degraded_reason": "Auditor veto: Vetoed" if withheld else None,
+            "bridge_withheld": withheld,
+            "decomposition": {"sub_claims": [{"type": "factual", "text": "X"}], "complexity": "simple"},
+            "bridge": {
+                "universal_needs": ["withheld"] if withheld else ["fairness"],
+                "reframe": "" if withheld else "About fairness",
+                "socratic_dialogue": ["Bridge layer withheld: Auditor veto: Vetoed"] if withheld else ["Round 1"],
+            },
+            "audit": {"verdict": "fail" if withheld else "pass", "findings": [], "summary": "s"},
+        }
+
+    def test_withheld_report_prints_notice_and_no_common_ground(self, capsys):
+        from huginn_muninn.cli import _print_analysis
+        _print_analysis(self._report(True))
+        out = capsys.readouterr().out
+        assert "[BRIDGE WITHHELD]" in out
+        assert "COMMON GROUND" not in out
+        assert "SHARED NEEDS" not in out
+        assert "SUB-CLAIMS" in out
+
+    def test_normal_report_prints_common_ground(self, capsys):
+        from huginn_muninn.cli import _print_analysis
+        _print_analysis(self._report(False))
+        out = capsys.readouterr().out
+        assert "[BRIDGE WITHHELD]" not in out
+        assert "COMMON GROUND" in out

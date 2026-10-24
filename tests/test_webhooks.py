@@ -47,6 +47,13 @@ class TestHMAC:
         assert verify_signature(b"", "secret", sig) is True
 
 
+@pytest.fixture(autouse=True)
+def _public_resolver(monkeypatch):
+    """Delivery re-checks the host; keep example.com off real DNS in tests."""
+    from huginn_muninn import netguard
+    monkeypatch.setattr(netguard, "resolve_addresses", lambda h: ["93.184.216.34"])
+
+
 class TestWebhookDispatcher:
     def test_dispatch_and_stop(self):
         db = MagicMock()
@@ -105,5 +112,22 @@ class TestWebhookDispatcher:
         dispatcher = WebhookDispatcher(db)
         with patch("huginn_muninn.webhooks.httpx.post") as mock_post:
             dispatcher.dispatch("job.completed", {})
+            dispatcher.stop(timeout=2.0)
+        mock_post.assert_not_called()
+
+
+class TestDeliveryRecheck:
+    """Delivery re-resolves the host; a name repointed inward is refused."""
+
+    def test_private_resolution_refuses_delivery(self, monkeypatch):
+        from huginn_muninn import netguard
+        monkeypatch.setattr(netguard, "resolve_addresses", lambda h: ["127.0.0.1"])
+        db = MagicMock()
+        db.get_webhooks_for_event.return_value = [
+            {"url": "http://rebound.example.com/hook", "secret": "s3cret"}
+        ]
+        dispatcher = WebhookDispatcher(db)
+        with patch("huginn_muninn.webhooks.httpx.post") as mock_post:
+            dispatcher.dispatch("job.completed", {"job_id": "abc"})
             dispatcher.stop(timeout=2.0)
         mock_post.assert_not_called()

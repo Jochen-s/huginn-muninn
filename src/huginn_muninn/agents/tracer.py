@@ -11,6 +11,7 @@ from huginn_muninn.sources import load_regional_sources
 
 class TracerAgent(BaseAgent):
     name = "origin_tracer"
+    output_model = TracerOutput
 
     def system_prompt(self) -> str:
         return (

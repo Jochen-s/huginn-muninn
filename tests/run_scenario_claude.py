@@ -505,7 +505,9 @@ VETO is a RARE NUCLEAR OPTION. You should almost never use it.
 For MOST issues, use verdict=pass_with_warnings with detailed findings. This lets
 the reader see the analysis AND your critique together. Only veto when the analysis
 is so broken that showing it would actively mislead the reader even with your
-warnings attached.
+warnings attached. A veto is enforced, not merely recorded: the Bridge layer
+(common ground, dialogue, reframe) is withheld from the reader and replaced by
+your summary, while the evidence layer ships with your findings attached.
 
 VETO CRITERIA -- ALL THREE must be true simultaneously:
 1. The flaw makes the ENTIRE analysis misleading (not just one section)

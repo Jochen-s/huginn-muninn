@@ -7,9 +7,12 @@ import unicodedata
 from confusables import normalize as _confusable_normalize
 from collections import Counter
 from enum import Enum
+from functools import lru_cache
 from typing import Annotated, ClassVar, Literal
 
 from pydantic import BaseModel, BeforeValidator, Field, model_validator
+
+from huginn_muninn import __version__
 
 _log = logging.getLogger(__name__)
 
@@ -513,11 +516,45 @@ class MapperOutput(BaseModel):
 
 # --- TTP Classifier ---
 
+_DISARM_ID_PATTERN = re.compile(r"^(?:T\d{4}(?:\.\d{3})?|GT-\d{3})$")
+
+
+def _normalize_disarm_id(v: object) -> str | None:
+    """Keep well-formed DISARM or GT identifiers; demote anything else to None.
+
+    Non-blocking by design: an unrecognised identifier is data the reader can
+    still see in `technique_name` and `evidence`, and a malformed one must not
+    fail the whole analysis. Membership in the shipped reference is a separate
+    flag (`in_reference`), because the reference is a hand-curated subset and
+    a real DISARM code outside it is not an error."""
+    if not isinstance(v, str):
+        return None
+    s = v.strip()
+    return s if _DISARM_ID_PATTERN.match(s) else None
+
+
+@lru_cache(maxsize=1)
+def _known_disarm_ids() -> frozenset[str]:
+    # Called once per TTPMatch; the reference file never changes at runtime.
+    from huginn_muninn.sources import load_disarm_techniques  # local: keep contracts import-light
+    return frozenset(t.get("id", "") for t in load_disarm_techniques())
+
+
 class TTPMatch(BaseModel):
-    disarm_id: str
+    disarm_id: Annotated[str | None, BeforeValidator(_normalize_disarm_id)]
     technique_name: str
     confidence: float = Field(..., ge=0.0, le=1.0)
     evidence: str
+    in_reference: bool = Field(
+        default=False,
+        description="True when disarm_id is present in the shipped technique reference (data/disarm_techniques.json).",
+    )
+
+    @model_validator(mode="after")
+    def _stamp_reference_membership(self) -> "TTPMatch":
+        known = _known_disarm_ids()
+        object.__setattr__(self, "in_reference", self.disarm_id is not None and self.disarm_id in known)
+        return self
 
 
 class ClassifierOutput(BaseModel):
@@ -797,6 +834,10 @@ class AuditVerdict(str, Enum):
     PASS = "pass"
     PASS_WITH_WARNINGS = "pass_with_warnings"
     FAIL = "fail"
+    # The Auditor never ran (agent failure). Set by the orchestrator, not
+    # emitted by the model: nothing was checked, so the report must not
+    # read as "passed with warnings" (decided 2026-09-03).
+    UNAUDITED = "unaudited"
 
 
 class AuditFinding(BaseModel):
@@ -830,10 +871,46 @@ class AuditorOutput(BaseModel):
 
     @model_validator(mode="after")
     def veto_requires_fail(self) -> "AuditorOutput":
-        if self.veto and self.verdict == AuditVerdict.PASS:
-            msg = "veto=True is inconsistent with verdict='pass'"
-            raise ValueError(msg)
+        """Resolve a contradictory Auditor toward the stop.
+
+        Raising here used to surface as an AgentError, and the orchestrator
+        then substituted a default audit with veto=False: an inconsistent
+        Auditor lifted its own veto. A veto is the higher-consequence signal,
+        so the verdict degrades to fail and the contradiction is recorded in
+        the summary instead."""
+        if self.veto and self.verdict != AuditVerdict.FAIL:
+            emitted = self.verdict.value
+            object.__setattr__(self, "verdict", AuditVerdict.FAIL)
+            note = f"[Auditor emitted veto=True with verdict='{emitted}'; verdict degraded to fail]"
+            object.__setattr__(self, "summary", f"{note} {self.summary}".strip())
         return self
+
+
+def absent_bridge(dialogue_line: str, needs: str = "unknown") -> dict:
+    """A BridgeOutput-shaped dict carrying no advice.
+
+    Used when the Bridge Builder failed and when an Auditor veto withholds
+    the Bridge layer. Every schema default is present so AnalysisReport
+    validation succeeds on every codepath; all values are the safe
+    absent-signal defaults (Sprint 2 PR 3)."""
+    return {
+        "universal_needs": [needs],
+        "issue_overlap": "",
+        "narrative_deconstruction": "",
+        "consensus_explanation": "",
+        "inferential_gap": "",
+        "feasibility_check": "",
+        "commercial_motives": "",
+        "techniques_revealed": [],
+        "perception_gap": "",
+        "moral_foundations": {},
+        "reframe": "",
+        "socratic_dialogue": [dialogue_line],
+        "communication_posture": "direct_correction",
+        "pattern_density_warning": False,
+        "vacuum_filled_by": "",
+        "prebunking_note": "",
+    }
 
 
 # --- Final Output ---
@@ -851,11 +928,33 @@ class AnalysisReport(BaseModel):
     method: Literal["method_2"] = "method_2"
     degraded: bool = False
     degraded_reason: str | None = None
+    # True when an Auditor veto replaced the Bridge layer with the veto
+    # reason (decided 2026-09-03): the evidence layer ships, the advice
+    # layer does not. Derived from audit.veto by the validator below, which
+    # also performs the withholding, so a cached row, a DB replay or an
+    # external producer gets the same stop as a fresh run.
+    bridge_withheld: bool = False
     confidence_profile: ConfidenceProfile | None = Field(
         default=None,
         description="Auditor ECF assessment. Also available nested in audit output for backward compatibility.",
     )
     cnqs: CounterNarrativeQualityScore | None = None
+
+    @model_validator(mode="after")
+    def veto_withholds_bridge(self) -> "AnalysisReport":
+        """A veto is a stop, not a flag: the Bridge layer is replaced here.
+
+        Enforced in the contract rather than only in the orchestrator so that
+        analyses cached before 2026-09-03 with veto=True and a full Bridge
+        come back withheld on every cache hit (review finding, 2026-09-03)."""
+        vetoed = bool(self.audit.veto)
+        object.__setattr__(self, "bridge_withheld", vetoed)
+        if vetoed:
+            reason = f"Bridge layer withheld: Auditor veto: {self.audit.summary}"
+            object.__setattr__(
+                self, "bridge", BridgeOutput(**absent_bridge(reason, needs="withheld")),
+            )
+        return self
 
 
 # --- API Response Envelope ---
@@ -870,7 +969,7 @@ class AnalysisResponse(BaseModel):
 
     data: dict
     suppressed_fields: list[str] = Field(default_factory=list)
-    api_version: str = "0.16.0"
+    api_version: str = __version__
     audit_redacted: bool = False
     experimental_fields: list[str] = Field(default_factory=list)
 

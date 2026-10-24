@@ -391,10 +391,22 @@ function kernelBadge(id) {
 }
 
 function verdictBadge(verdict) {
+  // Exact match on the AuditVerdict values; anything else is shown as
+  // unrecognised in the fail style rather than falling through to PASS.
   if (!verdict) return '';
-  if (verdict.includes('fail')) return `<span class="badge badge-fail">FAIL</span>`;
-  if (verdict.includes('warning')) return `<span class="badge badge-warnings">PASS WITH WARNINGS</span>`;
-  return `<span class="badge badge-pass">PASS</span>`;
+  switch (String(verdict).trim().toLowerCase()) {
+    case 'pass': return `<span class="badge badge-pass">PASS</span>`;
+    case 'pass_with_warnings': return `<span class="badge badge-warnings">PASS WITH WARNINGS</span>`;
+    case 'fail': return `<span class="badge badge-fail">FAIL</span>`;
+    case 'unaudited': return `<span class="badge badge-fail">UNAUDITED</span>`;
+    default: return `<span class="badge badge-fail">UNRECOGNISED VERDICT</span>`;
+  }
+}
+
+function isBridgeWithheld(data) {
+  // Scenario JSON written outside the orchestrator carries audit.veto but
+  // no bridge_withheld; the veto itself is the signal (fail closed).
+  return Boolean(data.bridge_withheld || (data.audit && data.audit.veto));
 }
 
 function patternBadge(pt) {
@@ -704,6 +716,19 @@ function renderGapDetectionWarning(data) {
   return `<div class="gap-warning"><strong>Epistemic diversity gap:</strong> ${esc(gap)}</div>`;
 }
 
+function renderBridgeWithheld(data) {
+  // Replaces the whole Bridge block (Universal Needs through Scoped
+  // Diagnostics) when the Auditor vetoed the analysis; nothing from the
+  // bridge object is rendered, so a non-empty default can never leak here.
+  return `
+  <div class="section">
+    <h2>Bridge Layer Withheld</h2>
+    <div class="gap-warning"><strong>The Adversarial Auditor vetoed this analysis.</strong> The evidence sections above and the audit below ship as produced. The common-ground, dialogue, reframe and diagnostics sections are withheld and replaced by the veto reason.</div>
+    <div class="prose">${esc(data.degraded_reason || ('Auditor veto: ' + ((data.audit || {}).summary || '')))}</div>
+  </div>
+`;
+}
+
 function renderUniversalNeeds(needs) {
   if (!needs || needs.length === 0) return '<p class="intro-note">No universal needs data available.</p>';
   const items = needs.map(n => {
@@ -942,6 +967,57 @@ function buildScenarioPage(scenario, allScenarios) {
     ? `<a href="${esc(next.id)}.html">${esc(next.id)}: ${esc(truncate(next.data.claim || '', 50))} &rarr;</a>`
     : `<span class="disabled">Last scenario &rarr;</span>`;
 
+  const bridgeSections = isBridgeWithheld(data)
+    ? renderBridgeWithheld(data)
+    : `
+
+  <div class="section">
+    <h2>Universal Needs</h2>
+    <p class="intro-note">The legitimate human needs this claim speaks to, regardless of whether the claim is accurate.</p>
+    ${renderUniversalNeeds(bridge.universal_needs)}
+  </div>
+
+  ${consensusSection}
+
+  ${techniquesSection}
+
+  ${bridge.inferential_gap ? `
+  <div class="section">
+    <h2>Inferential Gap</h2>
+    <p class="intro-note">Where the evidence ends and the leap begins.</p>
+    <div class="prose">${formatParagraphs(bridge.inferential_gap)}</div>
+  </div>` : ''}
+
+  <div class="section">
+    <h2>Common Ground</h2>
+    <div class="prose">${formatParagraphs(bridge.issue_overlap || 'No common ground data available.')}</div>
+  </div>
+
+  <div class="section">
+    <h2>Narrative Deconstruction</h2>
+    <div class="prose">${formatParagraphs(bridge.narrative_deconstruction || 'No narrative deconstruction data available.')}</div>
+  </div>
+
+  ${renderOptionalSection('Feasibility Assessment', bridge.feasibility_check)}
+
+  ${renderOptionalSection('Commercial Interests', bridge.commercial_motives)}
+
+  ${renderOptionalSection('Perception Gap', bridge.perception_gap)}
+
+  <div class="section">
+    <h2>Socratic Dialogue</h2>
+    <p class="intro-note">A model conversation demonstrating how to engage someone who holds this belief.</p>
+    ${renderSocraticDialogue(bridge.socratic_dialogue)}
+  </div>
+
+  ${bridge.reframe ? `
+  <div class="section">
+    <h2>Reframe</h2>
+    <blockquote class="reframe-block">${esc(bridge.reframe)}</blockquote>
+  </div>` : ''}
+
+  ${renderScopedDiagnostics(bridge)}`;
+
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1002,54 +1078,7 @@ function buildScenarioPage(scenario, allScenarios) {
   ${renderConfidenceProfile(data)}
   ${renderGapDetectionWarning(data)}
 
-  ${renderConvergenceMatrix(data)}
-
-  <div class="section">
-    <h2>Universal Needs</h2>
-    <p class="intro-note">The legitimate human needs this claim speaks to, regardless of whether the claim is accurate.</p>
-    ${renderUniversalNeeds(bridge.universal_needs)}
-  </div>
-
-  ${consensusSection}
-
-  ${techniquesSection}
-
-  ${bridge.inferential_gap ? `
-  <div class="section">
-    <h2>Inferential Gap</h2>
-    <p class="intro-note">Where the evidence ends and the leap begins.</p>
-    <div class="prose">${formatParagraphs(bridge.inferential_gap)}</div>
-  </div>` : ''}
-
-  <div class="section">
-    <h2>Common Ground</h2>
-    <div class="prose">${formatParagraphs(bridge.issue_overlap || 'No common ground data available.')}</div>
-  </div>
-
-  <div class="section">
-    <h2>Narrative Deconstruction</h2>
-    <div class="prose">${formatParagraphs(bridge.narrative_deconstruction || 'No narrative deconstruction data available.')}</div>
-  </div>
-
-  ${renderOptionalSection('Feasibility Assessment', bridge.feasibility_check)}
-
-  ${renderOptionalSection('Commercial Interests', bridge.commercial_motives)}
-
-  ${renderOptionalSection('Perception Gap', bridge.perception_gap)}
-
-  <div class="section">
-    <h2>Socratic Dialogue</h2>
-    <p class="intro-note">A model conversation demonstrating how to engage someone who holds this belief.</p>
-    ${renderSocraticDialogue(bridge.socratic_dialogue)}
-  </div>
-
-  ${bridge.reframe ? `
-  <div class="section">
-    <h2>Reframe</h2>
-    <blockquote class="reframe-block">${esc(bridge.reframe)}</blockquote>
-  </div>` : ''}
-
-  ${renderScopedDiagnostics(bridge)}
+  ${renderConvergenceMatrix(data)}${bridgeSections}
 
   <div class="section">
     <h2>Audit</h2>
@@ -1061,7 +1090,7 @@ function buildScenarioPage(scenario, allScenarios) {
     ${renderFindings(audit.findings)}
   </div>
 
-  ${renderEvaluation(id, bridge)}
+  ${isBridgeWithheld(data) ? '' : renderEvaluation(id, bridge)}
 
   <div class="scenario-nav">
     ${prevLink}
@@ -1125,7 +1154,11 @@ function renderMarkdown(src) {
     s = s.replace(/\*([^*\n]+)\*/g, '<em>$1</em>');
     s = s.replace(/(^|[^A-Za-z0-9_])_([^_\n]+)_(?=[^A-Za-z0-9_]|$)/g, '$1<em>$2</em>');
     s = s.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_, txt, url) => {
-      const safeUrl = url.replace(/"/g, '&quot;');
+      // Only http(s), same-site relative paths and fragments become links;
+      // javascript:, data: and any other scheme render as plain text (K-015).
+      const trimmed = url.trim();
+      if (!/^(https?:\/\/|\/|#|\.\/|\.\.\/)/i.test(trimmed)) return txt;
+      const safeUrl = trimmed.replace(/"/g, '&quot;');
       return `<a href="${safeUrl}">${txt}</a>`;
     });
     return s;
@@ -1403,7 +1436,7 @@ function buildMethodologyPage() {
         <tr><td>4</td><td>Unverified/Social</td><td>Social media posts, anonymous blogs, forums, unattributed content</td></tr>
       </tbody>
     </table>
-    <p>The confidence score starts from the average tier score of all identified sources. Tier 1 sources contribute 0.9, Tier 2 contributes 0.7, Tier 3 contributes 0.5, and Tier 4 contributes 0.3.</p>
+    <p>The confidence score starts from the average tier score of all identified sources. Tier 1 sources contribute 0.95, Tier 2 contributes 0.80, Tier 3 contributes 0.50, and Tier 4 contributes 0.20. The spacing is deliberately non-linear: the gap between quality journalism and commentary, and again between commentary and unattributed content, is wider than the gap between peer review and quality journalism.</p>
 
     <h2>What the Score is NOT</h2>
     <ul class="not-list">

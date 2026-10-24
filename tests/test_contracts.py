@@ -714,12 +714,29 @@ class TestAuditorOutput:
                 veto=False, summary="Test",
             )
 
-    def test_veto_with_pass_rejected(self):
-        with pytest.raises(ValidationError, match="inconsistent"):
-            AuditorOutput(
-                verdict=AuditVerdict.PASS, findings=[], confidence_adjustment=0.0,
+    def test_veto_with_pass_degrades_to_fail(self):
+        """An inconsistent Auditor resolves to the stop, not to its absence.
+
+        Raising here became an AgentError that the orchestrator replaced
+        with a default carrying veto=False, so a contradictory Auditor
+        silently lifted its own veto.
+        """
+        out = AuditorOutput(
+            verdict=AuditVerdict.PASS, findings=[], confidence_adjustment=0.0,
+            veto=True, summary="Contradictory",
+        )
+        assert out.veto is True
+        assert out.verdict == AuditVerdict.FAIL
+        assert "veto=True with verdict='pass'" in out.summary
+
+    def test_veto_with_any_non_fail_verdict_degrades_to_fail(self):
+        for verdict in (AuditVerdict.PASS_WITH_WARNINGS, AuditVerdict.UNAUDITED):
+            out = AuditorOutput(
+                verdict=verdict, findings=[], confidence_adjustment=0.0,
                 veto=True, summary="Contradictory",
             )
+            assert out.verdict == AuditVerdict.FAIL
+            assert f"verdict='{verdict.value}'" in out.summary
 
     def test_veto_with_pass_with_warnings_allowed(self):
         out = AuditorOutput(
@@ -2153,3 +2170,36 @@ class TestCNQSCriticalFailureCap:
         )
         assert cnqs.has_critical_failure is False
         assert cnqs.composite > 0.3
+
+
+class TestTTPMatchDisarmId:
+    """disarm_id is format-validated and checked against the loaded reference."""
+
+    def _out(self, disarm_id):
+        return ClassifierOutput(
+            ttp_matches=[{"disarm_id": disarm_id, "technique_name": "x", "confidence": 0.5, "evidence": "e"}],
+            primary_tactic="Execute",
+        )
+
+    def test_reference_id_is_flagged_in_reference(self):
+        m = self._out("T0049").ttp_matches[0]
+        assert m.disarm_id == "T0049"
+        assert m.in_reference is True
+
+    def test_well_formed_unknown_id_is_kept_but_not_in_reference(self):
+        m = self._out("T0002").ttp_matches[0]
+        assert m.disarm_id == "T0002"
+        assert m.in_reference is False
+
+    def test_gt_series_is_in_reference(self):
+        m = self._out("GT-001").ttp_matches[0]
+        assert m.in_reference is True
+
+    def test_malformed_id_demotes_to_none_without_blocking(self):
+        m = self._out("TXXXX").ttp_matches[0]
+        assert m.disarm_id is None
+        assert m.in_reference is False
+
+    def test_sub_technique_format_accepted(self):
+        m = self._out(" T0049.001 ").ttp_matches[0]
+        assert m.disarm_id == "T0049.001"

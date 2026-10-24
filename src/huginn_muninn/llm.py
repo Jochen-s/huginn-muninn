@@ -22,8 +22,17 @@ class LLMClient(Protocol):
     def close(self) -> None: ...
 
 
-def extract_json_from_response(text: str) -> dict:
-    """Extract JSON object from LLM response, handling markdown fences."""
+def extract_json_from_response(
+    text: str, expected_keys: frozenset[str] | set[str] | None = None
+) -> dict:
+    """Extract JSON object from LLM response, handling markdown fences.
+
+    `expected_keys` are the top-level keys of the schema the caller will
+    validate against. When the response holds several JSON objects (the model
+    narrated, or echoed a JSON blob that was embedded in the analysed claim),
+    the candidate sharing the most keys with the schema wins; size is only
+    the tie-break. Before 2026-09-03 the largest object won outright, so a
+    claim carrying a large decoy object could supply the verdict (K-005)."""
     # Try markdown code block first
     match = re.search(r"```(?:json)?\s*\n?(.*?)\n?```", text, re.DOTALL)
     if match:
@@ -46,13 +55,16 @@ def extract_json_from_response(text: str) -> dict:
     # is always larger than small inline fragments).
     decoder = json.JSONDecoder()
     best: dict | None = None
+    best_rank: tuple[int, int] = (-1, -1)
+    keys = frozenset(expected_keys) if expected_keys else frozenset()
     idx = text.find("{")
     while idx != -1:
         try:
             obj, _ = decoder.raw_decode(text, idx)
             if isinstance(obj, dict):
-                if best is None or len(obj) > len(best):
-                    best = obj
+                rank = (len(keys & obj.keys()), len(obj))
+                if rank > best_rank:
+                    best, best_rank = obj, rank
         except json.JSONDecodeError:
             pass
         idx = text.find("{", idx + 1)

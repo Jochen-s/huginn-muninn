@@ -14,6 +14,10 @@ class BaseAgent(abc.ABC):
     """Abstract base for all Method 2 agents."""
 
     name: str = "base"
+    # The pydantic contract this agent validates against. Its field names
+    # steer JSON extraction toward the schema-shaped object when the model's
+    # reply holds more than one (K-005). None keeps the legacy largest-wins.
+    output_model: type | None = None
 
     def __init__(self, client: LLMClient):
         self.client = client
@@ -35,7 +39,8 @@ class BaseAgent(abc.ABC):
         try:
             prompt = f"{self.system_prompt()}\n\n{self.build_prompt(input_data)}"
             raw_text = self.client.generate(prompt)
-            raw_dict = extract_json_from_response(raw_text)
+            expected = frozenset(self.output_model.model_fields) if self.output_model else None
+            raw_dict = extract_json_from_response(raw_text, expected_keys=expected)
             return self.parse_output(raw_dict)
         except AgentError:
             raise

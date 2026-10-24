@@ -15,6 +15,8 @@ from pathlib import Path
 
 import pytest
 
+from huginn_muninn.orchestrator import _SOURCE_TIER_SCORES
+
 ROOT = Path(__file__).resolve().parent.parent
 MD_PATH = ROOT / "docs" / "confidence-methodology.md"
 JS_PATH = ROOT / "gallery" / "build.js"
@@ -58,6 +60,11 @@ def _extract_methodology_js() -> str:
 
 @pytest.fixture(scope="module")
 def md_text() -> str:
+    if not MD_PATH.exists():
+        # The methodology source lives in the private working repo; the public
+        # repo's docs/ is the GitHub Pages site. The JS and contracts checks
+        # still run there.
+        pytest.skip("docs/confidence-methodology.md is not in this checkout")
     return _read(MD_PATH)
 
 
@@ -165,12 +172,20 @@ class TestSourceTierSync:
         ("4", "Unverified/Social"),
     ]
 
+    # Derived from the orchestrator constant, never restated by hand: the
+    # methodology page drifted from the code for four sprints (0.9/0.7/0.5/0.3
+    # on the page, 0.95/0.80/0.50/0.20 in the code since Sprint 6) because
+    # this list used to be a second copy that no test compared to the source.
     TIER_CONTRIBUTIONS = [
-        ("Tier 1", "0.9"),
-        ("Tier 2", "0.7"),
-        ("Tier 3", "0.5"),
-        ("Tier 4", "0.3"),
+        (f"Tier {tier}", f"{score:.2f}")
+        for tier, score in sorted(_SOURCE_TIER_SCORES.items())
     ]
+
+    def test_contributions_cover_every_code_tier(self) -> None:
+        assert [t for t, _ in self.TIER_CONTRIBUTIONS] == [
+            "Tier 1", "Tier 2", "Tier 3", "Tier 4",
+        ]
+        assert dict(self.TIER_CONTRIBUTIONS)["Tier 1"] == f"{_SOURCE_TIER_SCORES[1]:.2f}"
 
     def test_md_contains_all_tier_labels(self, md_text: str) -> None:
         for tier, label in self.TIER_LABELS:

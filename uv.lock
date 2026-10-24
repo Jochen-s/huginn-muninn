@@ -64,6 +64,15 @@ wheels = [
 ]
 
 [[package]]
+name = "confusables"
+version = "1.2.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/66/24/efd76375e69d309c0630d93345813740786bde7d86c3d3cfc97df5e829eb/confusables-1.2.0.tar.gz", hash = "sha256:429caad05333832e1edabb80815704cd26530514369430f913002b2ba548c38e", size = 262816, upload-time = "2021-03-24T02:29:08.592Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/ea/4d/9cc11c3f2efa78809023b387c7304476e6e3c2a2342464fb9c259a39367b/confusables-1.2.0-py3-none-any.whl", hash = "sha256:0c3e4a8ef8a6179f222e8cb6ea65ac5a71fa5c70d2de21950d14e99f933ecf52", size = 268464, upload-time = "2021-03-24T02:29:07.434Z" },
+]
+
+[[package]]
 name = "fastapi"
 version = "0.135.1"
 source = { registry = "https://pypi.org/simple" }
@@ -118,10 +127,11 @@ wheels = [
 
 [[package]]
 name = "huginn-muninn"
-version = "0.3.0"
+version = "0.17.0"
 source = { editable = "." }
 dependencies = [
     { name = "click" },
+    { name = "confusables" },
     { name = "fastapi" },
     { name = "httpx" },
     { name = "networkx" },
@@ -144,6 +154,7 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "click", specifier = ">=8.0" },
+    { name = "confusables", specifier = ">=1.2.0,<2" },
     { name = "fastapi", specifier = ">=0.115" },
     { name = "httpx", specifier = ">=0.27" },
     { name = "networkx", specifier = ">=3.6.1" },

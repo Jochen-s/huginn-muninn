@@ -9,8 +9,11 @@ import queue
 import threading
 import time
 from typing import TYPE_CHECKING
+from urllib.parse import urlparse
 
 import httpx
+
+from huginn_muninn.netguard import host_is_public
 
 if TYPE_CHECKING:
     from huginn_muninn.db import HuginnDB
@@ -67,6 +70,12 @@ class WebhookDispatcher:
         webhooks = self._db.get_webhooks_for_event(event)
         body = json.dumps({"event": event, "data": payload}).encode()
         for wh in webhooks:
+            # Re-check at delivery: the name was public at registration, but
+            # DNS can be repointed inward afterwards (rebinding).
+            ok, reason = host_is_public(urlparse(wh["url"]).hostname)
+            if not ok:
+                log.error("Webhook delivery refused for %s: %s", wh["url"], reason)
+                continue
             sig = sign_payload(body, wh["secret"])
             headers = {
                 "Content-Type": "application/json",

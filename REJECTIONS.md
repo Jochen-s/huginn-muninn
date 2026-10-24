@@ -24,7 +24,7 @@ These will not be revisited. Each is bound to a charter commitment, and reversin
 
 **Why it was rejected:** Would require constructing the exact dossier-assembly capability that Commitment 1 (anti-surveillance) forbids. A tool cannot prevent surveillance of named individuals if it is built on top of infrastructure that enables that surveillance.
 
-**Commitment:** 1 (no targeting of named individuals).
+**Commitment:** 1 (public narratives, not individuals).
 
 **Revisit path:** None.
 
@@ -36,7 +36,7 @@ These are rejected on current evidence. Each includes a falsification criterion:
 
 **What was proposed:** A metadata field that would flag claims arriving in suspicious temporal clusters as likely coordinated.
 
-**Why it was rejected:** Pilot testing generated false positives on legitimate journalism (breaking news naturally clusters in time) and grassroots protest coordination. Flagging either as suspect violates Commitment 3 (evidence-first actor analysis).
+**Why it was rejected:** A six-faction design review plus a cross-model check (Sprint 2, recorded in the CHANGELOG under P2-8) converged on the judgement that an LLM-generated timing flag would create structural false-positive exposure on legitimate journalism (breaking news naturally clusters in time) and grassroots protest coordination. No pilot was run and the field was never implemented; the basis is a predicted exposure, not a measured rate. Flagging either as suspect would violate Commitment 3 (evidence-first actor analysis).
 
 **Commitment:** 3 (evidence-first actor analysis).
 
@@ -46,9 +46,9 @@ These are rejected on current evidence. Each includes a falsification criterion:
 
 **What was proposed:** Adopting Feinberg and Willer's moral reframing technique as a core component of the Bridge Builder's output.
 
-**Why it was rejected:** Six or more preregistered replications failed to reproduce the original effect. Building on a replication-failed foundation would undermine the research integrity commitment (Commitment 7, open methodology).
+**Why it was rejected:** Five preregistered replication attempts listed in the RESEARCH.md bibliography failed to reproduce the original effect, two of them unpublished manuscripts. Building on a replication-failed foundation would undermine the research integrity commitment (Commitment 8, open methodology).
 
-**Commitment:** 7 (open methodology).
+**Commitment:** 8 (open methodology).
 
 **Revisit path:** A successful preregistered large-N replication demonstrating the effect. Until then, moral reframing stays experimental and does not gate core pipeline decisions.
 
@@ -58,7 +58,7 @@ These are rejected on current evidence. Each includes a falsification criterion:
 
 **Why it was rejected:** The Redirect Method measures engagement, not belief change. Treating an engagement metric as a belief-change metric would misrepresent what the pipeline is doing.
 
-**Commitment:** 7 (open methodology), 8 (honest confidence ratings).
+**Commitment:** 8 (open methodology), 5 (transparent uncertainty).
 
 **Revisit path:** An evaluation protocol that measures post-intervention belief shift with preregistered analysis. Engagement can return as a complementary signal at that point, never as the primary mechanism.
 

@@ -406,6 +406,9 @@ def test_full_pipeline_with_real_results():
         pytest.skip("No results directory")
 
     results = load_results(results_dir)
+    if len(results) < 20:
+        # The public repo ships one scenario result; the full corpus is private.
+        pytest.skip(f"needs the full scenario corpus, found {len(results)} result(s)")
     assert len(results) >= 20
 
     G = build_graph(results)
@@ -632,3 +635,50 @@ def test_pivot_points():
     G = build_graph(results)
     pivot_nodes = [n for n, d in G.nodes(data=True) if d.get("pivot_point")]
     assert len(pivot_nodes) >= 1
+
+
+# ---------------------------------------------------------------------------
+# Charter Commitment 1: no numeric profiling scores on actors in the export
+# ---------------------------------------------------------------------------
+
+_SHIPPED_GRAPH = Path(__file__).resolve().parents[1] / "gallery" / "dist" / "graph-data.json"
+
+
+def _numeric_credibility_actors(cy_data):
+    """Return the labels of actor nodes that carry a numeric credibility."""
+    return [
+        el["data"].get("label", el["data"].get("id"))
+        for el in cy_data["elements"]["nodes"]
+        if el["data"].get("node_type") == "actor"
+        and isinstance(el["data"].get("credibility"), (int, float))
+    ]
+
+
+def test_export_never_carries_numeric_actor_credibility():
+    """A legacy numeric credibility on a named person must export as a category."""
+    from graph.build_graph import build_graph, export_cytoscape
+
+    results = [_minimal_result("GP-01", actors=[
+        {"name": "Named Journalist / Outlet", "type": "influencer", "motivation": "", "credibility": 0.65, "evidence": ""},
+    ])]
+
+    cy_data = export_cytoscape(build_graph(results))
+    assert _numeric_credibility_actors(cy_data) == []
+    actor = next(
+        el["data"] for el in cy_data["elements"]["nodes"]
+        if el["data"].get("node_type") == "actor"
+    )
+    assert "credibility" not in actor
+    assert actor["credibility_basis"] == "mixed or contested credibility"
+
+
+def test_shipped_graph_data_has_no_numeric_actor_credibility():
+    """The artifact that ships to the public site, not just the builder."""
+    if not _SHIPPED_GRAPH.exists():
+        pytest.skip("gallery/dist/graph-data.json not built in this checkout")
+    cy_data = json.loads(_SHIPPED_GRAPH.read_text(encoding="utf-8"))
+    offenders = _numeric_credibility_actors(cy_data)
+    assert offenders == [], (
+        f"{len(offenders)} actor nodes in the shipped graph carry a numeric "
+        f"credibility (Charter Commitment 1), first: {offenders[:3]}"
+    )

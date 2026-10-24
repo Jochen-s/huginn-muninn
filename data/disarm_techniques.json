@@ -1,4 +1,13 @@
 {
+  "_meta": {
+    "framework": "DISARM",
+    "source": "https://github.com/DISARMFoundation/DISARMframeworks",
+    "licence": "CC BY 4.0 (upstream README, verified 2026-09-03; the repository LICENSE.md file is titled CC-BY-SA-4.0, see NOTICE)",
+    "upstream_version": "unknown: subset curated by hand, not exported from a tagged DISARM release",
+    "curated": "2026-03-04 (first commit 0fd5fbe1), extended 2026-05-05",
+    "scope": "13 DISARM technique ids plus GT-001..GT-003, which are this project's own additions",
+    "note": "TTPMatch.in_reference is True only for ids listed here; well-formed DISARM ids outside this subset are kept and flagged False."
+  },
   "techniques": [
     {
       "id": "T0025",

@@ -25,18 +25,27 @@ _TIER_DOMAINS: dict[int, set[str]] = {
 }
 
 
-def get_source_tier(url: str) -> int:
-    """Score a URL's source tier (1=highest, 4=lowest)."""
+def known_source_tier(url: str) -> int | None:
+    """Tier for a URL whose domain is in the registry; None when unknown.
+
+    Distinguishes "registry says tier 4" (a listed low-trust platform) from
+    "registry has no opinion", which get_source_tier collapses to 4."""
     if not url:
-        return 4
+        return None
     try:
         domain = urlparse(url).netloc.lower().removeprefix("www.")
     except Exception:
-        return 4
+        return None
     for tier, domains in _TIER_DOMAINS.items():
         if domain in domains or any(domain.endswith(f".{d}") for d in domains):
             return tier
-    return 4  # Unknown sources default to lowest tier
+    return None
+
+
+def get_source_tier(url: str) -> int:
+    """Score a URL's source tier (1=highest, 4=lowest)."""
+    tier = known_source_tier(url)
+    return 4 if tier is None else tier  # Unknown sources default to lowest tier
 
 
 @lru_cache(maxsize=1)

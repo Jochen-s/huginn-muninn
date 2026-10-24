@@ -5,6 +5,13 @@ import pytest
 from fastapi.testclient import TestClient
 
 
+@pytest.fixture(autouse=True)
+def _public_resolver(monkeypatch):
+    """Tests register example.com webhooks; never hit real DNS for them."""
+    from huginn_muninn import netguard
+    monkeypatch.setattr(netguard, "resolve_addresses", lambda h: ["93.184.216.34"])
+
+
 @pytest.fixture
 def client():
     """FastAPI test client with mocked lifespan dependencies."""
@@ -80,6 +87,23 @@ class TestCheckEndpoint:
             resp = client.post("/api/check", json={"claim": "Test claim here", "no_cache": True})
         assert resp.status_code == 200
         mock.assert_called_once()
+
+
+def _valid_report() -> dict:
+    """Minimal AnalysisReport that validates through the projection layer."""
+    return {
+        "claim": "test",
+        "method": "method_2",
+        "overall_confidence": 0.7,
+        "degraded": False,
+        "degraded_reason": None,
+        "decomposition": {"sub_claims": [{"text": "t", "type": "factual", "verifiable": True}], "original_claim": "test", "complexity": "simple"},
+        "origins": {"origins": [], "mutations": []},
+        "intelligence": {"actors": [], "relations": [], "narrative_summary": ""},
+        "ttps": {"ttp_matches": [], "primary_tactic": "Assess"},
+        "bridge": {"universal_needs": ["fairness"], "issue_overlap": "", "narrative_deconstruction": "", "perception_gap": "", "moral_foundations": {}, "reframe": "", "socratic_dialogue": ["R1"]},
+        "audit": {"verdict": "pass", "findings": [], "confidence_adjustment": 0.0, "veto": False, "summary": "OK"},
+    }
 
 
 class TestAnalyzeEndpoint:
@@ -361,11 +385,19 @@ class TestReturnIds:
         assert resp.json()["verdict_id"] == 42
 
     def test_analyze_returns_analysis_id(self, client):
+        """The id must survive projection of a VALID report.
+
+        The old stub {"method": "method_2"} never validated, so the raw
+        dict passed through and the test certified a fail-open path; on a
+        valid report the id was silently dropped by the envelope.
+        """
         with patch("huginn_muninn.api._run_method2") as mock:
-            mock.return_value = ({"method": "method_2"}, 7)
+            mock.return_value = (_valid_report(), 7)
             resp = client.post("/api/analyze", json={"claim": "Test claim here"})
         assert resp.status_code == 200
-        assert resp.json()["analysis_id"] == 7
+        body = resp.json()
+        assert body["analysis_id"] == 7
+        assert body["data"]["method"] == "method_2"
 
     def test_escalate_returns_both_ids(self, client):
         verdict = {
@@ -388,3 +420,42 @@ class TestStaticFiles:
         resp = client.get("/")
         assert resp.status_code == 200
         assert "html" in resp.text.lower()
+
+
+class TestEgressDisclosure:
+    def test_no_egress_by_default(self):
+        from huginn_muninn.api import _enabled_egress
+        from huginn_muninn.config import Settings
+        assert _enabled_egress(Settings(), webhook_count=0) == []
+
+    def test_each_path_named(self, monkeypatch):
+        from huginn_muninn.api import _enabled_egress
+        from huginn_muninn.config import Settings
+        monkeypatch.setenv("HUGINN_LLM_PROVIDER", "anthropic")
+        monkeypatch.setenv("HUGINN_SEARCH_API_KEY", "k")
+        paths = _enabled_egress(Settings(), webhook_count=2)
+        joined = " ".join(paths)
+        assert len(paths) == 3
+        assert "anthropic" in joined and "web search" in joined and "2 registered webhook" in joined
+
+
+class TestWebhookUrlGuard:
+    def test_private_resolving_name_rejected(self, client, monkeypatch):
+        from huginn_muninn import netguard
+        monkeypatch.setattr(netguard, "resolve_addresses", lambda h: ["10.0.0.4"])
+        resp = client.post("/api/webhooks", json={
+            "url": "http://intranet.example.com/hook", "events": ["job.completed"]
+        })
+        assert resp.status_code == 422
+
+    def test_unresolvable_name_rejected(self, client, monkeypatch):
+        import socket
+        from huginn_muninn import netguard
+
+        def boom(h):
+            raise socket.gaierror(8, "no such host")
+        monkeypatch.setattr(netguard, "resolve_addresses", boom)
+        resp = client.post("/api/webhooks", json={
+            "url": "http://nowhere.invalid/hook", "events": ["job.completed"]
+        })
+        assert resp.status_code == 422

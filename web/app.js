@@ -264,12 +264,20 @@
   }
 
   function renderAnalysis(a) {
+    // /api/analyze returns the AnalysisResponse envelope; the report is
+    // under .data. Unwrap here so every field read below is on the report.
+    if (a && a.data && a.api_version !== undefined) {
+      a = a.data;
+    }
     var html = "";
     var conf = a.overall_confidence != null ? (a.overall_confidence * 100).toFixed(0) + "%" : "N/A";
     html += '<div class="analysis-section"><h3>Method 2 Analysis</h3>';
     html += "<p>Confidence: " + escapeHtml(conf) + "</p>";
     if (a.degraded) {
       html += '<p style="color:var(--error)">Degraded: ' + escapeHtml(a.degraded_reason || "unknown") + "</p>";
+    }
+    if (a.bridge_withheld) {
+      html += '<p style="color:var(--error)">Bridge layer withheld: the Adversarial Auditor vetoed this analysis. The evidence sections and the audit ship as produced; the common-ground, dialogue and reframe sections are replaced by the veto reason.</p>';
     }
     html += "</div>";
 
@@ -305,7 +313,7 @@
       html += "</div>";
     }
 
-    if (a.bridge) {
+    if (a.bridge && !a.bridge_withheld) {
       html += renderCommonGround(a.bridge, true);
     }
 

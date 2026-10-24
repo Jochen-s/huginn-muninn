@@ -10,6 +10,7 @@ from huginn_muninn.prompt import sanitize_claim, sanitize_for_prompt
 
 class BridgeAgent(BaseAgent):
     name = "bridge_builder"
+    output_model = BridgeOutput
 
     def system_prompt(self) -> str:
         return (

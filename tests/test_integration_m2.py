@@ -351,3 +351,7 @@ class TestMethodTwoPipeline:
         report = AnalysisReport(**result)
         assert report.degraded
         assert report.audit.veto
+        # End-to-end wiring only; the field-level veto assertions live in
+        # test_orchestrator.py::TestAuditorVetoWithholdsBridge.
+        assert report.bridge_withheld
+        assert report.bridge.reframe == ""

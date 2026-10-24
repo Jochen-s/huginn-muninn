@@ -1,0 +1,9 @@
+Huginn & Muninn
+
+This project includes a hand-curated subset of the DISARM Framework
+(https://github.com/DISARMFoundation/DISARMframeworks), Copyright the
+DISARM Foundation, licensed under the Creative Commons Attribution 4.0
+International licence (CC BY 4.0, https://creativecommons.org/licenses/by/4.0/).
+Technique identifiers and names are DISARM's; descriptions in
+data/disarm_techniques.json are rewritten for this project. Entries with
+the GT- prefix are this project's own additions and are not part of DISARM.
