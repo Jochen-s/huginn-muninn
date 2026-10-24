@@ -33,6 +33,9 @@ build-backend = "uv_build"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+# graph/ is a top-level module, not part of the installed package; the
+# plain `pytest` entry point (as in CI) does not put the repo root on sys.path.
+pythonpath = ["."]
 markers = [
     "e2e: end-to-end tests requiring a running Ollama instance (deselect with '-m not e2e')",
 ]
