@@ -23,7 +23,7 @@ from huginn_muninn.config import get_settings
 from huginn_muninn.db import HuginnDB
 from huginn_muninn.escalation import should_escalate_verdict
 from huginn_muninn.jobs import JobStatus, JobStore
-from huginn_muninn.llm import create_client, extract_json_from_response
+from huginn_muninn.llm import EFFORT_PROVIDERS, client_cache_key, create_client, extract_json_from_response
 from huginn_muninn.model_registry import ModelRegistry
 from huginn_muninn.models import ClaimInput, JobRequest, VerdictOutput
 from huginn_muninn.netguard import host_is_public
@@ -49,6 +49,8 @@ async def lifespan(a: FastAPI):
         base_url=settings.ollama_base_url,
         model=settings.default_model,
         api_key=settings.llm_api_key,
+        **({"effort": settings.llm_effort}
+           if settings.llm_effort and settings.llm_provider in EFFORT_PROVIDERS else {}),
     )
     model_registry = ModelRegistry(settings.models_config_path)
     search_client = (
@@ -201,8 +203,9 @@ def _check_llm() -> dict:
 
 def _run_method1(claim: str, no_cache: bool = False) -> tuple[dict, int | None]:
     db = app.state.db
+    key = client_cache_key(app.state.client)
     if not no_cache:
-        result = db.get_cached_verdict_with_id(claim)
+        result = db.get_cached_verdict_with_id(claim, model_key=key)
         if result:
             return result
 
@@ -226,14 +229,15 @@ def _run_method1(claim: str, no_cache: bool = False) -> tuple[dict, int | None]:
         raise HTTPException(502, detail="LLM response did not match expected schema")
 
     verdict_dict = output.model_dump(mode="json")
-    row_id = db.store_verdict(claim, verdict_dict)
+    row_id = db.store_verdict(claim, verdict_dict, model_key=key)
     return verdict_dict, row_id
 
 
 def _run_method2(claim: str, no_cache: bool = False) -> tuple[dict, int | None]:
     db = app.state.db
+    key = client_cache_key(app.state.client)
     if not no_cache:
-        result = db.get_cached_analysis_with_id(claim)
+        result = db.get_cached_analysis_with_id(claim, model_key=key)
         if result:
             return result
 
@@ -243,7 +247,7 @@ def _run_method2(claim: str, no_cache: bool = False) -> tuple[dict, int | None]:
     orch = Orchestrator(client)
     result = orch.run(claim)
 
-    row_id = db.store_analysis(claim, result)
+    row_id = db.store_analysis(claim, result, model_key=key)
     return result, row_id
 
 

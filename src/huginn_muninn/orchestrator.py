@@ -35,6 +35,8 @@ def _effective_source_tier(entry: object) -> int:
         return 4
     llm_tier = entry.get("source_tier", 4)
     src = entry.get("earliest_source", "")
+    if isinstance(src, str) and src.strip().lower() == "unknown":
+        return 4  # a source nobody can name cannot be rated above the floor
     if isinstance(src, str) and src.lower().startswith(("http://", "https://")):
         registry_tier = known_source_tier(src)
         if registry_tier is not None:

@@ -40,6 +40,8 @@ Identify:
 3. Relationships between actors (who amplifies, funds, coordinates with whom)
 4. A narrative summary of the information network
 
+ACCURACY OVER COMPLETENESS: You have no search tool, only what you already know. Name a person, outlet, organization or state as an actor ONLY if you are confident it publicly promoted, amplified or opposed this specific claim. If you know only that the claim circulates, describe the actor generically with type "unknown" rather than naming someone. Use type "bot_network" only for coordinated inauthentic activity that a published investigation documented for this claim; widespread sharing is not evidence of bots. Use the relation types "funds" and "coordinates" only for documented financial or organizational links; shared views or similar wording are at most "cites" or "amplifies", and otherwise no relation. Do not label any actor a disinformation source unless that rating is documented; describe its record neutrally instead. Do not drop an actor whose role in this claim is well documented (by public investigations, court records, internal documents or its own statements): name it, because leaving out a documented actor is also an error. Fewer actors and no relations are better than invented ones: readers will check names and links, and one invented connection discredits the whole analysis.
+
 Respond in JSON. IMPORTANT: Each enum field must be EXACTLY ONE value, not combined.
 
 {{
@@ -48,7 +50,7 @@ Respond in JSON. IMPORTANT: Each enum field must be EXACTLY ONE value, not combi
       "name": "Actor name or description",
       "type": "CHOOSE ONE: state, media, influencer, organization, bot_network, unknown",
       "motivation": "Why they promote this narrative",
-      "credibility_basis": "Structural description of the actor's credibility basis (e.g., 'documented track record', 'known disinformation outlet', 'mixed record'). Do NOT use numeric scores.",
+      "credibility_basis": "What is documented about the actor's record, or 'not assessed'. Do NOT use numeric scores.",
       "evidence": "What supports this assessment"
     }}
   ],
@@ -65,9 +67,8 @@ Respond in JSON. IMPORTANT: Each enum field must be EXACTLY ONE value, not combi
 
 Guidelines:
 - Only include actors you have evidence for
-- Credibility 0.0 = known disinformation source, 1.0 = highly credible
-- Flag speculative assessments explicitly in the evidence field
-- Include both supporters AND opponents of the narrative"""
+- In the evidence field, say what the assessment rests on; mark anything uncertain as uncertain
+- Include documented opponents of the narrative as well as supporters; do not invent either"""
 
     def parse_output(self, raw: dict) -> dict:
         return MapperOutput(**raw).model_dump()

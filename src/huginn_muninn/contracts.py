@@ -42,6 +42,39 @@ def _first_pipe_value(v: object) -> object:
     return v
 
 
+def _none_to_empty(v: object) -> object:
+    """Optional free text: local models send null where "" was asked for."""
+    return "" if v is None else v
+
+
+def _enum_spelling(v: object) -> object:
+    """Fold case, spaces and hyphens: local models write "Ideological Migration"."""
+    v = _first_pipe_value(v)
+    if isinstance(v, str):
+        return re.sub(r"[\s_-]+", "_", v.strip().lower())
+    return v
+
+
+_FRAME_CAPTURE_SYNONYMS = {"low": "possible", "medium": "possible", "moderate": "possible",
+                           "critical": "high", "unknown": "none"}
+
+
+def _frame_capture_level(v: object) -> object:
+    """Map near-miss risk words onto none|possible|high; anything else -> "none"."""
+    v = _enum_spelling(v)
+    if v in ("none", "possible", "high"):
+        return v
+    if v in _FRAME_CAPTURE_SYNONYMS:
+        return _FRAME_CAPTURE_SYNONYMS[v]
+    _log.warning("Unknown frame_capture_risk %s; using none", _sanitize_for_log(str(v))[:40])
+    return "none"
+
+
+def _none_to_unknown(v: object) -> object:
+    """A source the model could not name: null reads as "unknown", not a failure."""
+    return "unknown" if v is None else v
+
+
 # Sprint 2 PR 3 Codex mitigation (High severity -- must-fix #1):
 # `vacuum_filled_by` and `prebunking_note` on BridgeOutput are prompt-
 # constrained to narrative patterns only -- never named publishers, never
@@ -296,17 +329,22 @@ class EpistemicProvenance(BaseModel):
 
 class OriginEntry(BaseModel):
     sub_claim: str
-    earliest_source: str
+    earliest_source: Annotated[str, BeforeValidator(_none_to_unknown)]
     earliest_date: str | None = None
-    source_tier: int = Field(..., ge=1, le=4)
+    # Missing or null tier reads as 4 (social media/unknown), the most cautious tier.
+    source_tier: Annotated[int, BeforeValidator(lambda v: 4 if v is None else v)] = Field(default=4, ge=1, le=4)
     propagation_path: list[str] = Field(default_factory=list)
     epistemic_provenance: EpistemicProvenance | None = None
+
+
+MutationType = Literal["distortion", "amplification", "recontextualization", "fabrication", "ideological_migration", "inversion"]
+_MUTATION_TYPES = frozenset(MutationType.__args__)
 
 
 class NarrativeMutation(BaseModel):
     original: str
     mutated: str
-    mutation_type: Annotated[Literal["distortion", "amplification", "recontextualization", "fabrication", "ideological_migration", "inversion"], BeforeValidator(_first_pipe_value)]
+    mutation_type: Annotated[MutationType, BeforeValidator(_enum_spelling)]
     source: str
     # Relay classification for narrative mutation tracking. Default "ambiguous"
     # prevents speculation about intent when explicit signals are absent.
@@ -321,8 +359,8 @@ class TemporalContext(BaseModel):
     date_range: str
     dominant_framing: str
     key_actors: list[str] = Field(default_factory=list)
-    power_context: str = ""
-    irony_or_inversion: str = ""
+    power_context: Annotated[str, BeforeValidator(_none_to_empty)] = ""
+    irony_or_inversion: Annotated[str, BeforeValidator(_none_to_empty)] = ""
 
 
 class TracerOutput(BaseModel):
@@ -335,6 +373,32 @@ class TracerOutput(BaseModel):
     # (vs. speculative "suppressed") lives in the Tracer prompt, not the schema.
     notable_omissions: list[str] = Field(default_factory=list, max_length=3)
     epistemic_diversity_gap: str | None = None
+    # Mutations removed because their type fit no category (local-model drift).
+    dropped_mutations: int = 0
+
+    @model_validator(mode="before")
+    @classmethod
+    def _drop_unclassifiable_mutations(cls, data: object) -> object:
+        """A mutation whose type is outside the list, even after spelling
+        fixes, is dropped on its own; it must not fail the whole tracer."""
+        if not isinstance(data, dict):
+            return data
+        mutations = data.get("mutations")
+        if mutations is None:
+            return {**data, "mutations": [], "dropped_mutations": 0}
+        if not isinstance(mutations, list):
+            return data
+        kept = []
+        for m in mutations:
+            kind = _enum_spelling(m.get("mutation_type")) if isinstance(m, dict) else None
+            if isinstance(kind, str) and kind in _MUTATION_TYPES:
+                kept.append(m)
+                continue
+            shown = m.get("mutation_type") if isinstance(m, dict) else m
+            _log.warning("Dropped mutation with unknown type: %s",
+                         _sanitize_for_log(str(shown))[:80])
+        dropped = len(mutations) - len(kept)
+        return {**data, "mutations": kept, "dropped_mutations": dropped}
 
     @model_validator(mode="after")
     def _detect_epistemic_diversity_gap(self) -> "TracerOutput":
@@ -602,7 +666,10 @@ class BridgeOutput(BaseModel):
     perception_gap: Annotated[str, BeforeValidator(_null_to_empty_str)]
     moral_foundations: dict[str, list[str]] = Field(default_factory=dict)
     reframe: Annotated[str, BeforeValidator(_null_to_empty_str)]
-    socratic_dialogue: list[str] = Field(..., min_length=1, max_length=3)
+    # Empty when the model omits it (local models do); the rest of the
+    # bridge is still worth showing. Consumers already handle an empty list.
+    socratic_dialogue: Annotated[list[str], BeforeValidator(lambda v: [] if v is None else v)] = Field(
+        default_factory=list, max_length=3)
     # --- Sprint 2 PR 3: Bridge scoped diagnostics ---
     # P2-10 Communication Posture (BG-042 Confidence-Posture Separation):
     # Orthogonal to overall_confidence. Confidence answers "how certain is
@@ -863,7 +930,7 @@ class AuditorOutput(BaseModel):
     # and gallery builder were updated in the same PR to handle both.
     frame_capture_risk: Annotated[
         Literal["none", "possible", "high"],
-        BeforeValidator(_first_pipe_value),
+        BeforeValidator(_frame_capture_level),
     ] = "none"
     frame_capture_evidence: str = ""
     confidence_profile: ConfidenceProfile | None = None

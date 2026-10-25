@@ -59,3 +59,31 @@ class TestOllamaClient:
     def test_client_custom_model(self):
         client = OllamaClient(model="llama3.1:8b")
         assert client.model == "llama3.1:8b"
+
+
+class TestOllamaClientTuning:
+    def test_timeout_default_300(self, monkeypatch):
+        monkeypatch.delenv("HUGINN_OLLAMA_TIMEOUT", raising=False)
+        assert OllamaClient().timeout == 300.0
+
+    def test_timeout_from_env(self, monkeypatch):
+        monkeypatch.setenv("HUGINN_OLLAMA_TIMEOUT", "900")
+        assert OllamaClient().timeout == 900.0
+
+    def test_explicit_timeout_beats_env(self, monkeypatch):
+        monkeypatch.setenv("HUGINN_OLLAMA_TIMEOUT", "900")
+        assert OllamaClient(timeout=60).timeout == 60.0
+
+    def test_num_ctx_sent_when_set(self, monkeypatch, httpx_mock):
+        monkeypatch.setenv("HUGINN_OLLAMA_NUM_CTX", "16384")
+        httpx_mock.add_response(url="http://localhost:11434/api/generate", json={"response": "ok"})
+        OllamaClient().generate("hi")
+        body = json.loads(httpx_mock.get_requests()[0].content)
+        assert body["options"]["num_ctx"] == 16384
+
+    def test_num_ctx_absent_by_default(self, monkeypatch, httpx_mock):
+        monkeypatch.delenv("HUGINN_OLLAMA_NUM_CTX", raising=False)
+        httpx_mock.add_response(url="http://localhost:11434/api/generate", json={"response": "ok"})
+        OllamaClient().generate("hi")
+        body = json.loads(httpx_mock.get_requests()[0].content)
+        assert "num_ctx" not in body["options"]

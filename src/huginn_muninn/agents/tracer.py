@@ -43,6 +43,12 @@ For each sub-claim, identify:
 3. Any mutations in the narrative as it spread
 4. The epistemic tradition and geographic region of each source
 
+ACCURACY OVER COMPLETENESS: You have no search tool, only what you already know. Fill earliest_source at the level of detail you actually know:
+- If you know a specific documented origin (a named book, report, study, broadcast, court case, campaign or public figure), name it.
+- If you know the history only in outline (which movement, debate or kind of outlet first spread the claim, and roughly when), describe that outline and give only the year you are sure of, written as YYYY (never padded to YYYY-01-01). That is the honest level of detail, not a placeholder.
+- Write "unknown" only when you know nothing about how or where the claim arose. If you can describe the claim's history in temporal_context, you know enough to describe its origin here.
+Never invent a title, an author, an exact day, or a link between two actors to fill a field: a wrong specific citation is worse than a broad description, because readers will check it and one invented citation discredits the whole analysis. source_tier rates the source that first spread the claim, not the science of the topic it is about.
+
 CRITICAL: Track TEMPORAL CONTEXT SHIFTS. Many claims migrate between ideological camps over time as power dynamics change. For example, "media is controlled by elites" was a left-wing critique (Chomsky 1988) that was adopted by right-wing populism (Trump 2017) and now applies paradoxically to the adopters' own media ecosystem. Map these ideological migrations explicitly.
 
 EPISTEMIC DIVERSITY: Consider sources beyond Western academic and institutional traditions. The regional source registry includes sources from: {region_names}. These are additional sources to consider, not a trust list. Source absence from the registry does not indicate unreliability.
@@ -53,8 +59,8 @@ Respond in JSON. IMPORTANT: Each enum field must be EXACTLY ONE value, not combi
   "origins": [
     {{
       "sub_claim": "the sub-claim text",
-      "earliest_source": "URL or description of earliest source",
-      "earliest_date": "YYYY-MM-DD or null if unknown",
+      "earliest_source": "URL, named source, or description of who first spread it; \"unknown\" only if you know nothing",
+      "earliest_date": "YYYY-MM-DD, YYYY if only the year is known, or null if unknown",
       "source_tier": 1-4,
       "propagation_path": ["source1", "source2", "..."],
       "epistemic_provenance": {{

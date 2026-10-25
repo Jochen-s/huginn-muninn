@@ -10,6 +10,7 @@ import httpx
 
 from huginn_muninn.escalation import should_escalate_verdict
 from huginn_muninn.jobs import JobStatus
+from huginn_muninn.llm import client_cache_key
 from huginn_muninn.projection import project_analysis
 
 if TYPE_CHECKING:
@@ -117,7 +118,7 @@ class JobRunner:
 
         output = VerdictOutput(claim=claim, **p2_data)
         verdict_dict = output.model_dump(mode="json")
-        self._db.store_verdict(claim, verdict_dict)
+        self._db.store_verdict(claim, verdict_dict, model_key=client_cache_key(self._client))
         return verdict_dict
 
     def _run_method2(self, claim: str) -> dict:
@@ -125,7 +126,7 @@ class JobRunner:
 
         orch = Orchestrator(self._client)
         result = orch.run(claim)
-        self._db.store_analysis(claim, result)
+        self._db.store_analysis(claim, result, model_key=client_cache_key(self._client))
         return result
 
     def _fire_callback(

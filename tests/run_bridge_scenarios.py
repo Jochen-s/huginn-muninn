@@ -2,28 +2,28 @@
 
 Usage:
     # Run all scenarios (requires Ollama running with model available)
-    python -m tests.run_bridge_scenarios
+    python tests/run_bridge_scenarios.py
 
     # Run specific scenario by ID
-    python -m tests.run_bridge_scenarios --id HS-01
+    python tests/run_bridge_scenarios.py --id HS-01
 
     # Run by category
-    python -m tests.run_bridge_scenarios --category health_science
+    python tests/run_bridge_scenarios.py --category health_science
 
     # Run by difficulty
-    python -m tests.run_bridge_scenarios --difficulty easy
+    python tests/run_bridge_scenarios.py --difficulty easy
 
     # Use a different model
-    python -m tests.run_bridge_scenarios --model llama3.1:8b
+    python tests/run_bridge_scenarios.py --model llama3.1:8b
 
     # Use OpenAI-compatible endpoint (LiteLLM, OpenRouter, etc.)
-    python -m tests.run_bridge_scenarios --provider openai --base-url http://localhost:4000 --model gpt-4o
+    python tests/run_bridge_scenarios.py --provider openai --base-url http://localhost:4000 --model gpt-4o
 
     # Output JSON results
-    python -m tests.run_bridge_scenarios --json-output
+    python tests/run_bridge_scenarios.py --json-output
 
     # Dry run (show scenarios without executing)
-    python -m tests.run_bridge_scenarios --dry-run
+    python tests/run_bridge_scenarios.py --dry-run
 """
 from __future__ import annotations
 
@@ -38,7 +38,10 @@ sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
 from huginn_muninn.llm import OllamaClient, OpenAIClient, create_client
 from huginn_muninn.orchestrator import Orchestrator
-from tests.scenarios import SCENARIOS, get_scenario, get_scenarios_by_category, get_scenarios_by_difficulty
+# Import the sibling module directly: the confusables dependency installs a
+# top-level `tests` package that shadows this folder as `tests.scenarios`.
+sys.path.insert(0, str(Path(__file__).parent))
+from scenarios import SCENARIOS, get_scenario, get_scenarios_by_category, get_scenarios_by_difficulty
 
 
 def evaluate_bridge_output(scenario: dict, bridge: dict) -> dict:
@@ -356,9 +359,10 @@ def main():
     parser.add_argument("--category", help="Run scenarios by category")
     parser.add_argument("--difficulty", help="Run scenarios by difficulty (easy/medium/hard)")
     parser.add_argument("--model", default="qwen3.5:9b", help="LLM model name")
-    parser.add_argument("--provider", default="ollama", choices=["ollama", "openai", "anthropic"], help="LLM provider")
+    parser.add_argument("--provider", default="ollama", choices=["ollama", "openai", "anthropic", "claude-code"], help="LLM provider")
     parser.add_argument("--base-url", default="http://localhost:11434", help="LLM base URL")
     parser.add_argument("--api-key", default="", help="API key for OpenAI-compatible providers")
+    parser.add_argument("--effort", choices=["low", "medium", "high", "xhigh", "max"], help="Claude effort level (anthropic and claude-code providers)")
     parser.add_argument("--json-output", action="store_true", help="Output JSON results")
     parser.add_argument("--dry-run", action="store_true", help="Show scenarios without executing")
     parser.add_argument("--output-file", help="Save results to JSON file")
@@ -403,6 +407,7 @@ def main():
         base_url=args.base_url,
         model=args.model,
         api_key=args.api_key or None,
+        **({"effort": args.effort} if args.provider in ("anthropic", "claude-code") and args.effort else {}),
     )
 
     if not client.check_available():

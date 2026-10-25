@@ -266,6 +266,36 @@ class TestTracerAgent:
         })
         assert "X happened" in prompt
 
+    def test_prompt_allows_unknown_origins(self):
+        """The blinded rating (2026-10-25) found invented origin dates and
+        sources in most local-model analyses; the prompt must make "unknown"
+        an accepted answer."""
+        agent = TracerAgent(MagicMock(spec=OllamaClient))
+        prompt = agent.build_prompt({"original_claim": "c", "sub_claims": [{"text": "X happened"}]})
+        assert "ACCURACY OVER COMPLETENESS" in prompt
+        assert '"unknown"' in prompt
+
+    def _tracer_prompt(self):
+        return TracerAgent(MagicMock(spec=OllamaClient)).build_prompt(
+            {"original_claim": "c", "sub_claims": [{"text": "X happened"}]})
+
+    def test_prompt_keeps_unknown_for_no_knowledge_only(self):
+        """Tracer A/B data (2026-10-25): with the first honesty prompt, 9b wrote
+        "unknown" for nearly every origin while describing the same history in
+        temporal_context."""
+        assert 'Write "unknown" only when you know nothing' in self._tracer_prompt()
+
+    def test_prompt_accepts_a_year_without_an_invented_day(self):
+        assert "YYYY if only the year is known" in self._tracer_prompt()
+
+    def test_prompt_forbids_padding_a_year_to_january_first(self):
+        """tracer-ab3 (2026-10-25): 13 of 34 origin dates were padded to -01-01."""
+        assert "never padded to YYYY-01-01" in self._tracer_prompt()
+
+    def test_prompt_has_no_example_source_to_copy(self):
+        """tracer-ab3: 9b copied the example "activist newsletters" into two scenarios."""
+        assert "activist newsletters" not in self._tracer_prompt()
+
     def test_prompt_sanitizes_claim(self):
         client = MagicMock(spec=OllamaClient)
         agent = TracerAgent(client)
@@ -308,6 +338,31 @@ MOCK_MAPPER_RESPONSE = json.dumps({
     ],
     "narrative_summary": "The claim is amplified by a media-politics feedback loop.",
 })
+
+
+class TestMapperHonestyPrompt:
+    """The blinded rating (2026-10-25) cited invented bot networks, funding
+    links and disinformation labels from the mapper on local models."""
+
+    def _prompt(self):
+        from huginn_muninn.agents.mapper import MapperAgent
+
+        return MapperAgent(MagicMock(spec=OllamaClient)).build_prompt(
+            {"original_claim": "c", "sub_claims": [], "origins": {}})
+
+    def test_prompt_asks_for_accuracy_over_completeness(self):
+        assert "ACCURACY OVER COMPLETENESS" in self._prompt()
+
+    def test_prompt_offers_no_disinformation_label_example(self):
+        assert "known disinformation" not in self._prompt()
+
+    def test_prompt_still_requires_documented_actors(self):
+        """Round 1 of the mapper A/B (2026-10-25): the model dropped the
+        well-documented fossil-fuel lobby from a climate claim."""
+        assert "leaving out a documented actor is also an error" in self._prompt()
+
+    def test_prompt_drops_numeric_credibility_scale(self):
+        assert "Credibility 0.0" not in self._prompt()
 
 
 class TestMapperAgent:

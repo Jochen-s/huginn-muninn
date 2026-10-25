@@ -2,10 +2,13 @@
 from __future__ import annotations
 
 import json
+import logging
 import sqlite3
 import threading
 from datetime import datetime, timezone
 from pathlib import Path
+
+log = logging.getLogger(__name__)
 
 
 class HuginnDB:
@@ -86,32 +89,72 @@ class HuginnDB:
             );
             CREATE INDEX IF NOT EXISTS idx_comparisons_claim ON comparisons(claim);
         """)
+        # Cached results name the model that produced them (2026-10-25).
+        # Rows from before have NULL and are never served to a keyed lookup.
+        # If the column cannot be added (read-only file, full disk), keyed
+        # lookups return nothing rather than results from another model.
+        self._has_model_key = True
+        for table in ("verdicts", "analyses"):
+            columns = {r["name"] for r in self._conn.execute(f"PRAGMA table_info({table})")}
+            try:
+                if "model_key" not in columns:
+                    try:
+                        self._conn.execute(f"ALTER TABLE {table} ADD COLUMN model_key TEXT")
+                    except sqlite3.OperationalError as e:  # another process added it first
+                        if "duplicate column" not in str(e).lower():
+                            raise
+                self._conn.execute(
+                    f"CREATE INDEX IF NOT EXISTS idx_{table}_claim_model ON {table}(claim, model_key)")
+            except sqlite3.OperationalError as e:
+                columns = {r["name"] for r in self._conn.execute(f"PRAGMA table_info({table})")}
+                if "model_key" not in columns:
+                    log.warning("Cache cannot record models (%s); cached results will not be reused", e)
+                    self._has_model_key = False
         self._conn.commit()
 
-    def store_verdict(self, claim: str, verdict_data: dict) -> int:
+    def _key_filter(self, model_key: str | None) -> tuple[str, tuple]:
+        """Extra WHERE clause: a keyed lookup matches only that model;
+        an unkeyed one (feedback) matches any row."""
+        if model_key is None:
+            return "", ()
+        if not self._has_model_key:
+            return " AND 0", ()
+        return " AND model_key = ?", (model_key,)
+
+    def store_verdict(self, claim: str, verdict_data: dict, model_key: str | None = None) -> int:
         with self._lock:
-            cur = self._conn.execute(
-                "INSERT INTO verdicts (claim, verdict_json, created_at) VALUES (?, ?, ?)",
-                (claim, json.dumps(verdict_data), datetime.now(timezone.utc).isoformat()),
-            )
+            if self._has_model_key:
+                cur = self._conn.execute(
+                    "INSERT INTO verdicts (claim, verdict_json, created_at, model_key) VALUES (?, ?, ?, ?)",
+                    (claim, json.dumps(verdict_data), datetime.now(timezone.utc).isoformat(), model_key),
+                )
+            else:
+                cur = self._conn.execute(
+                    "INSERT INTO verdicts (claim, verdict_json, created_at) VALUES (?, ?, ?)",
+                    (claim, json.dumps(verdict_data), datetime.now(timezone.utc).isoformat()),
+                )
             self._conn.commit()
             return cur.lastrowid
 
-    def get_cached_verdict(self, claim: str) -> dict | None:
+    def get_cached_verdict(self, claim: str, model_key: str | None = None) -> dict | None:
+        where, params = self._key_filter(model_key)
         with self._lock:
             row = self._conn.execute(
-                "SELECT verdict_json FROM verdicts WHERE claim = ? ORDER BY created_at DESC LIMIT 1",
-                (claim,),
+                "SELECT verdict_json FROM verdicts WHERE claim = ?" + where
+                + " ORDER BY created_at DESC, id DESC LIMIT 1",
+                (claim, *params),
             ).fetchone()
         if row:
             return json.loads(row["verdict_json"])
         return None
 
-    def get_cached_verdict_with_id(self, claim: str) -> tuple[dict, int] | None:
+    def get_cached_verdict_with_id(self, claim: str, model_key: str | None = None) -> tuple[dict, int] | None:
+        where, params = self._key_filter(model_key)
         with self._lock:
             row = self._conn.execute(
-                "SELECT id, verdict_json FROM verdicts WHERE claim = ? ORDER BY created_at DESC LIMIT 1",
-                (claim,),
+                "SELECT id, verdict_json FROM verdicts WHERE claim = ?" + where
+                + " ORDER BY created_at DESC, id DESC LIMIT 1",
+                (claim, *params),
             ).fetchone()
         if row:
             return json.loads(row["verdict_json"]), row["id"]
@@ -133,35 +176,45 @@ class HuginnDB:
 
     def get_feedback_for_claim(self, claim: str) -> list[dict]:
         rows = self._conn.execute(
-            "SELECT * FROM feedback WHERE claim = ? ORDER BY created_at",
+            "SELECT * FROM feedback WHERE claim = ? ORDER BY created_at, id",
             (claim,),
         ).fetchall()
         return [dict(r) for r in rows]
 
-    def store_analysis(self, claim: str, analysis_data: dict) -> int:
+    def store_analysis(self, claim: str, analysis_data: dict, model_key: str | None = None) -> int:
         with self._lock:
-            cur = self._conn.execute(
-                "INSERT INTO analyses (claim, analysis_json, created_at) VALUES (?, ?, ?)",
-                (claim, json.dumps(analysis_data), datetime.now(timezone.utc).isoformat()),
-            )
+            if self._has_model_key:
+                cur = self._conn.execute(
+                    "INSERT INTO analyses (claim, analysis_json, created_at, model_key) VALUES (?, ?, ?, ?)",
+                    (claim, json.dumps(analysis_data), datetime.now(timezone.utc).isoformat(), model_key),
+                )
+            else:
+                cur = self._conn.execute(
+                    "INSERT INTO analyses (claim, analysis_json, created_at) VALUES (?, ?, ?)",
+                    (claim, json.dumps(analysis_data), datetime.now(timezone.utc).isoformat()),
+                )
             self._conn.commit()
             return cur.lastrowid
 
-    def get_cached_analysis(self, claim: str) -> dict | None:
+    def get_cached_analysis(self, claim: str, model_key: str | None = None) -> dict | None:
+        where, params = self._key_filter(model_key)
         with self._lock:
             row = self._conn.execute(
-                "SELECT analysis_json FROM analyses WHERE claim = ? ORDER BY created_at DESC LIMIT 1",
-                (claim,),
+                "SELECT analysis_json FROM analyses WHERE claim = ?" + where
+                + " ORDER BY created_at DESC, id DESC LIMIT 1",
+                (claim, *params),
             ).fetchone()
         if row:
             return self._normalize_cached_analysis(json.loads(row["analysis_json"]))
         return None
 
-    def get_cached_analysis_with_id(self, claim: str) -> tuple[dict, int] | None:
+    def get_cached_analysis_with_id(self, claim: str, model_key: str | None = None) -> tuple[dict, int] | None:
+        where, params = self._key_filter(model_key)
         with self._lock:
             row = self._conn.execute(
-                "SELECT id, analysis_json FROM analyses WHERE claim = ? ORDER BY created_at DESC LIMIT 1",
-                (claim,),
+                "SELECT id, analysis_json FROM analyses WHERE claim = ?" + where
+                + " ORDER BY created_at DESC, id DESC LIMIT 1",
+                (claim, *params),
             ).fetchone()
         if row:
             return (
@@ -206,11 +259,12 @@ class HuginnDB:
         """Return recent verdicts, most recent first."""
         with self._lock:
             rows = self._conn.execute(
-                "SELECT claim, verdict_json, created_at FROM verdicts ORDER BY created_at DESC LIMIT ?",
+                "SELECT * FROM verdicts ORDER BY created_at DESC, id DESC LIMIT ?",
                 (limit,),
             ).fetchall()
         return [
-            {"claim": r["claim"], "data": json.loads(r["verdict_json"]), "created_at": r["created_at"]}
+            {"claim": r["claim"], "data": json.loads(r["verdict_json"]), "created_at": r["created_at"],
+             "model_key": r["model_key"] if "model_key" in r.keys() else None}
             for r in rows
         ]
 
@@ -218,11 +272,12 @@ class HuginnDB:
         """Return recent analyses, most recent first."""
         with self._lock:
             rows = self._conn.execute(
-                "SELECT claim, analysis_json, created_at FROM analyses ORDER BY created_at DESC LIMIT ?",
+                "SELECT * FROM analyses ORDER BY created_at DESC, id DESC LIMIT ?",
                 (limit,),
             ).fetchall()
         return [
-            {"claim": r["claim"], "data": json.loads(r["analysis_json"]), "created_at": r["created_at"]}
+            {"claim": r["claim"], "data": json.loads(r["analysis_json"]), "created_at": r["created_at"],
+             "model_key": r["model_key"] if "model_key" in r.keys() else None}
             for r in rows
         ]
 
@@ -246,7 +301,7 @@ class HuginnDB:
                 return None
             session = dict(row)
             items = self._conn.execute(
-                "SELECT * FROM session_items WHERE session_id = ? ORDER BY added_at",
+                "SELECT * FROM session_items WHERE session_id = ? ORDER BY added_at, id",
                 (session_id,),
             ).fetchall()
         session["items"] = [dict(i) for i in items]
@@ -255,7 +310,7 @@ class HuginnDB:
     def list_sessions(self) -> list[dict]:
         with self._lock:
             rows = self._conn.execute(
-                "SELECT * FROM sessions ORDER BY created_at DESC"
+                "SELECT * FROM sessions ORDER BY created_at DESC, id DESC"
             ).fetchall()
         return [dict(r) for r in rows]
 
@@ -296,7 +351,7 @@ class HuginnDB:
     def list_webhooks(self) -> list[dict]:
         with self._lock:
             rows = self._conn.execute(
-                "SELECT * FROM webhooks ORDER BY created_at DESC"
+                "SELECT * FROM webhooks ORDER BY created_at DESC, id DESC"
             ).fetchall()
         result = []
         for r in rows:
@@ -392,7 +447,7 @@ class HuginnDB:
     def get_recent_comparisons(self, limit: int = 20) -> list[dict]:
         with self._lock:
             rows = self._conn.execute(
-                "SELECT * FROM comparisons ORDER BY created_at DESC LIMIT ?",
+                "SELECT * FROM comparisons ORDER BY created_at DESC, id DESC LIMIT ?",
                 (limit,),
             ).fetchall()
         return [

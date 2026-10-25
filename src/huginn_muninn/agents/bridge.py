@@ -164,6 +164,6 @@ Critical constraints:
 
     def parse_output(self, raw: dict) -> dict:
         # LLMs sometimes exceed the 3-round limit despite prompt constraints
-        if "socratic_dialogue" in raw and len(raw["socratic_dialogue"]) > 3:
+        if isinstance(raw.get("socratic_dialogue"), list) and len(raw["socratic_dialogue"]) > 3:
             raw["socratic_dialogue"] = raw["socratic_dialogue"][:3]
         return BridgeOutput(**raw).model_dump()

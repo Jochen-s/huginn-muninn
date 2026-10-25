@@ -5,8 +5,8 @@ type: software
 authors:
   - family-names: Schmiedbauer
     given-names: Jochen
-version: 0.17.0
-date-released: 2026-10-24
+version: 0.18.0
+date-released: 2026-10-25
 license: MIT
 repository-code: "https://github.com/Jochen-s/huginn-muninn"
 url: "https://jochen-s.github.io/huginn-muninn/"

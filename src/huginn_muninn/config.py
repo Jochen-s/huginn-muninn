@@ -74,6 +74,10 @@ class Settings:
     llm_api_key: str | None = field(
         default_factory=lambda: os.environ.get("HUGINN_LLM_API_KEY")
     )
+    # Reasoning effort for the Claude providers (anthropic, claude-code).
+    llm_effort: str | None = field(
+        default_factory=lambda: os.environ.get("HUGINN_LLM_EFFORT") or None
+    )
     suppressed_fields: tuple[str, ...] = field(
         default_factory=_parse_suppress_fields
     )

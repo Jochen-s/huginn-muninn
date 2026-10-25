@@ -292,25 +292,25 @@ class TestModelEnvVar:
     def test_check_uses_env_model(self, runner):
         result, client_cls = self._run(runner, ["check", "some claim"], {"HUGINN_DEFAULT_MODEL": "llama3.2:3b"})
         assert result.exit_code == 1
-        client_cls.assert_called_once_with(model="llama3.2:3b")
+        client_cls.assert_called_once(); assert client_cls.call_args.kwargs["model"] == "llama3.2:3b"
         assert "llama3.2:3b" in result.output
 
     def test_analyze_uses_env_model(self, runner):
         result, client_cls = self._run(runner, ["analyze", "some claim"], {"HUGINN_DEFAULT_MODEL": "llama3.2:3b"})
         assert result.exit_code == 1
-        client_cls.assert_called_once_with(model="llama3.2:3b")
+        client_cls.assert_called_once(); assert client_cls.call_args.kwargs["model"] == "llama3.2:3b"
 
     def test_explicit_model_beats_env(self, runner):
         result, client_cls = self._run(
             runner, ["check", "--model", "mistral:7b", "some claim"], {"HUGINN_DEFAULT_MODEL": "llama3.2:3b"}
         )
         assert result.exit_code == 1
-        client_cls.assert_called_once_with(model="mistral:7b")
+        client_cls.assert_called_once(); assert client_cls.call_args.kwargs["model"] == "mistral:7b"
 
     def test_fallback_without_env(self, runner):
         result, client_cls = self._run(runner, ["check", "some claim"], {"HUGINN_DEFAULT_MODEL": None})
         assert result.exit_code == 1
-        client_cls.assert_called_once_with(model="qwen3.5:9b")
+        client_cls.assert_called_once(); assert client_cls.call_args.kwargs["model"] == "qwen3.5:9b"
 
     def test_help_names_env_var(self, runner):
         result = runner.invoke(main, ["check", "--help"])
@@ -322,21 +322,21 @@ class TestModelEnvVar:
             runner, ["--model", "mistral:7b", "analyze", "some claim"], {"HUGINN_DEFAULT_MODEL": None}
         )
         assert result.exit_code == 1
-        client_cls.assert_called_once_with(model="mistral:7b")
+        client_cls.assert_called_once(); assert client_cls.call_args.kwargs["model"] == "mistral:7b"
 
     def test_group_model_reaches_check(self, runner):
         result, client_cls = self._run(
             runner, ["--model", "mistral:7b", "check", "some claim"], {"HUGINN_DEFAULT_MODEL": None}
         )
         assert result.exit_code == 1
-        client_cls.assert_called_once_with(model="mistral:7b")
+        client_cls.assert_called_once(); assert client_cls.call_args.kwargs["model"] == "mistral:7b"
 
     def test_group_model_beats_env(self, runner):
         result, client_cls = self._run(
             runner, ["--model", "mistral:7b", "check", "some claim"], {"HUGINN_DEFAULT_MODEL": "llama3.2:3b"}
         )
         assert result.exit_code == 1
-        client_cls.assert_called_once_with(model="mistral:7b")
+        client_cls.assert_called_once(); assert client_cls.call_args.kwargs["model"] == "mistral:7b"
 
     def test_subcommand_model_beats_group_model(self, runner):
         result, client_cls = self._run(
@@ -345,7 +345,7 @@ class TestModelEnvVar:
             {"HUGINN_DEFAULT_MODEL": None},
         )
         assert result.exit_code == 1
-        client_cls.assert_called_once_with(model="phi4:14b")
+        client_cls.assert_called_once(); assert client_cls.call_args.kwargs["model"] == "phi4:14b"
 
 
 class TestVersion:
@@ -388,3 +388,181 @@ class TestPrintAnalysisWithheld:
         out = capsys.readouterr().out
         assert "[BRIDGE WITHHELD]" not in out
         assert "COMMON GROUND" in out
+
+
+class TestProviderOption:
+    """The CLI can use hosted providers, not only Ollama (2026-10-25)."""
+
+    @staticmethod
+    def _run(runner, args, env):
+        from unittest.mock import MagicMock, patch
+
+        mock_db = MagicMock()
+        mock_db.get_cached_verdict.return_value = None
+        mock_db.get_cached_analysis.return_value = None
+        mock_client = MagicMock()
+        mock_client.check_available.return_value = False
+        mock_client.__enter__ = MagicMock(return_value=mock_client)
+        mock_client.__exit__ = MagicMock(return_value=False)
+        base_env = {"HUGINN_DEFAULT_MODEL": None, "HUGINN_LLM_PROVIDER": None, "HUGINN_LLM_EFFORT": None}
+        with patch("huginn_muninn.cli.HuginnDB") as mock_db_cls, \
+             patch("huginn_muninn.cli.OllamaClient") as ollama_cls, \
+             patch("huginn_muninn.cli.create_client", return_value=mock_client) as factory:
+            mock_db_cls.return_value.__enter__ = MagicMock(return_value=mock_db)
+            mock_db_cls.return_value.__exit__ = MagicMock(return_value=False)
+            ollama_cls.return_value.__enter__ = MagicMock(return_value=mock_client)
+            ollama_cls.return_value.__exit__ = MagicMock(return_value=False)
+            result = runner.invoke(main, args, env={**base_env, **env})
+        return result, ollama_cls, factory
+
+    def test_default_provider_is_ollama(self, runner):
+        result, ollama_cls, factory = self._run(runner, ["check", "some claim"], {})
+        ollama_cls.assert_called_once(); assert ollama_cls.call_args.kwargs["model"] == "qwen3.5:9b"
+        factory.assert_not_called()
+
+    def test_claude_code_provider_defaults_to_opus(self, runner):
+        result, ollama_cls, factory = self._run(runner, ["analyze", "--provider", "claude-code", "some claim"], {})
+        ollama_cls.assert_not_called()
+        assert factory.call_args.args[0] == "claude-code"
+        assert factory.call_args.args[2] == "claude-opus-5-5"
+
+    def test_explicit_model_is_kept_for_hosted_provider(self, runner):
+        result, _, factory = self._run(
+            runner, ["check", "--provider", "anthropic", "--model", "claude-sonnet-5-5", "some claim"], {})
+        assert factory.call_args.args[2] == "claude-sonnet-5-5"
+
+    def test_local_env_model_is_not_sent_to_claude(self, runner):
+        result, _, factory = self._run(
+            runner, ["check", "--provider", "claude-code", "some claim"], {"HUGINN_DEFAULT_MODEL": "qwen3.8:27b"})
+        assert factory.call_args.args[2] == "claude-opus-5-5"
+
+    def test_claude_env_model_is_used(self, runner):
+        result, _, factory = self._run(
+            runner, ["check", "some claim"],
+            {"HUGINN_LLM_PROVIDER": "claude-code", "HUGINN_DEFAULT_MODEL": "claude-sonnet-5-5"})
+        assert factory.call_args.args[2] == "claude-sonnet-5-5"
+
+    def test_effort_is_passed_to_claude_provider(self, runner):
+        result, _, factory = self._run(
+            runner, ["analyze", "--provider", "claude-code", "--effort", "high", "some claim"], {})
+        assert factory.call_args.kwargs["effort"] == "high"
+
+    def test_provider_from_env(self, runner):
+        result, ollama_cls, factory = self._run(runner, ["check", "some claim"], {"HUGINN_LLM_PROVIDER": "claude-code"})
+        ollama_cls.assert_not_called()
+        assert factory.call_args.args[0] == "claude-code"
+
+    def test_group_provider_reaches_subcommand(self, runner):
+        result, _, factory = self._run(runner, ["--provider", "claude-code", "check", "some claim"], {})
+        assert factory.call_args.args[0] == "claude-code"
+
+    def test_hosted_provider_prints_privacy_notice(self, runner):
+        result, _, _ = self._run(runner, ["check", "--provider", "claude-code", "some claim"], {})
+        assert "sent to claude-code" in result.output
+
+    def test_unavailable_hosted_provider_exits_with_message(self, runner):
+        result, _, _ = self._run(runner, ["check", "--provider", "claude-code", "some claim"], {})
+        assert result.exit_code == 1
+        assert "claude-code" in result.output
+
+    def test_missing_anthropic_extra_is_explained(self, runner):
+        from unittest.mock import MagicMock, patch
+
+        mock_db = MagicMock()
+        mock_db.get_cached_verdict.return_value = None
+        with patch("huginn_muninn.cli.HuginnDB") as mock_db_cls,              patch("huginn_muninn.cli.create_client", side_effect=ImportError("No module named 'anthropic'")):
+            mock_db_cls.return_value.__enter__ = MagicMock(return_value=mock_db)
+            mock_db_cls.return_value.__exit__ = MagicMock(return_value=False)
+            result = runner.invoke(main, ["check", "--provider", "anthropic", "some claim"],
+                                   env={"HUGINN_LLM_PROVIDER": None})
+        assert result.exit_code == 1
+        assert ".[claude]" in result.output
+
+    def test_unknown_provider_is_rejected(self, runner):
+        result = runner.invoke(main, ["check", "--provider", "nope", "some claim"])
+        assert result.exit_code == 2
+
+
+class TestCacheNotice:
+    """A cache hit is announced; it comes from the same model (see test_model_keyed_cache.py)."""
+
+    def test_cached_analysis_is_announced(self, runner):
+        from unittest.mock import MagicMock, patch
+
+        mock_db = MagicMock()
+        mock_db.get_cached_analysis.return_value = {"overall_confidence": 0.5}
+        with patch("huginn_muninn.cli.HuginnDB") as mock_db_cls:
+            mock_db_cls.return_value.__enter__ = MagicMock(return_value=mock_db)
+            mock_db_cls.return_value.__exit__ = MagicMock(return_value=False)
+            result = runner.invoke(main, ["analyze", "--json-output", "some claim"])
+        assert result.exit_code == 0
+        assert "Served from cache" in result.output
+
+
+def test_settings_read_llm_effort(monkeypatch):
+    from huginn_muninn.config import Settings
+
+    monkeypatch.setenv("HUGINN_LLM_EFFORT", "high")
+    assert Settings().llm_effort == "high"
+
+
+class TestProviderReviewFixes:
+    """Independent review of the provider change, 2026-10-25."""
+
+    _run = staticmethod(TestProviderOption._run)
+
+    def test_ollama_uses_base_url_from_env(self, runner, monkeypatch):
+        monkeypatch.setattr("huginn_muninn.config._settings", None)  # settings are a cached singleton
+        result, ollama_cls, _ = self._run(runner, ["check", "some claim"], {"OLLAMA_BASE_URL": "http://gpu-box:11434"})
+        assert ollama_cls.call_args.kwargs["base_url"] == "http://gpu-box:11434"
+
+    def test_subcommand_provider_beats_group_provider(self, runner):
+        result, ollama_cls, factory = self._run(
+            runner, ["--provider", "claude-code", "check", "--provider", "ollama", "some claim"], {})
+        factory.assert_not_called()
+        ollama_cls.assert_called_once()
+
+    def test_effort_env_reaches_client(self, runner):
+        result, _, factory = self._run(
+            runner, ["analyze", "--provider", "claude-code", "some claim"], {"HUGINN_LLM_EFFORT": "max"})
+        assert factory.call_args.kwargs["effort"] == "max"
+
+    def test_effort_with_non_claude_provider_is_flagged(self, runner):
+        result, _, factory = self._run(runner, ["check", "--provider", "openai", "--effort", "high", "some claim"], {})
+        assert "ignored for openai" in result.output
+        assert "effort" not in factory.call_args.kwargs
+
+    def test_no_privacy_notice_when_client_cannot_start(self, runner):
+        from unittest.mock import MagicMock, patch
+
+        mock_db = MagicMock()
+        mock_db.get_cached_verdict.return_value = None
+        with patch("huginn_muninn.cli.HuginnDB") as mock_db_cls, \
+             patch("huginn_muninn.cli.create_client", side_effect=ImportError("anthropic")):
+            mock_db_cls.return_value.__enter__ = MagicMock(return_value=mock_db)
+            mock_db_cls.return_value.__exit__ = MagicMock(return_value=False)
+            result = runner.invoke(main, ["check", "--provider", "anthropic", "some claim"],
+                                   env={"HUGINN_LLM_PROVIDER": None})
+        assert "are sent to" not in result.output
+
+    def test_analyze_reports_hosted_error_without_traceback(self, runner):
+        from unittest.mock import MagicMock, patch
+
+        mock_db = MagicMock()
+        mock_db.get_cached_analysis.return_value = None
+        client = MagicMock()
+        client.check_available.return_value = True
+        client.__enter__ = MagicMock(return_value=client)
+        client.__exit__ = MagicMock(return_value=False)
+        orch = MagicMock()
+        orch.run.side_effect = RuntimeError("claude CLI exited 1: rate limited")
+        with patch("huginn_muninn.cli.HuginnDB") as mock_db_cls, \
+             patch("huginn_muninn.cli.create_client", return_value=client), \
+             patch("huginn_muninn.orchestrator.Orchestrator", return_value=orch):
+            mock_db_cls.return_value.__enter__ = MagicMock(return_value=mock_db)
+            mock_db_cls.return_value.__exit__ = MagicMock(return_value=False)
+            result = runner.invoke(main, ["analyze", "--provider", "claude-code", "some claim"],
+                                   env={"HUGINN_LLM_PROVIDER": None})
+        assert result.exit_code == 1
+        assert "Error from claude-code: claude CLI exited 1" in result.output
+        assert not isinstance(result.exception, RuntimeError)

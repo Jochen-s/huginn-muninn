@@ -3,7 +3,12 @@ from __future__ import annotations
 
 import json
 import logging
+import os
 import re
+import shutil
+import subprocess
+import tempfile
+from pathlib import Path
 from typing import Protocol, runtime_checkable
 
 import httpx
@@ -77,16 +82,26 @@ def extract_json_from_response(
 class OllamaClient:
     """Client for Ollama local LLM inference."""
 
+    provider = "ollama"
+
     def __init__(
         self,
         base_url: str = "http://localhost:11434",
         model: str = "qwen3.5:9b",
-        timeout: float = 300.0,
+        timeout: float | None = None,
+        num_ctx: int | None = None,
     ):
+        # Larger local models need more than 300 s for a long agent answer;
+        # HUGINN_OLLAMA_NUM_CTX keeps a big model fully on the GPU.
+        if timeout is None:
+            timeout = float(os.environ.get("HUGINN_OLLAMA_TIMEOUT", "300"))
+        if num_ctx is None and os.environ.get("HUGINN_OLLAMA_NUM_CTX"):
+            num_ctx = int(os.environ["HUGINN_OLLAMA_NUM_CTX"])
         self.base_url = base_url
         self.model = model
-        self.timeout = timeout
-        self._client = httpx.Client(timeout=timeout)
+        self.timeout = float(timeout)
+        self.num_ctx = num_ctx
+        self._client = httpx.Client(timeout=self.timeout)
 
     def generate(self, prompt: str) -> str:
         """Send prompt to Ollama and return the response text."""
@@ -96,6 +111,8 @@ class OllamaClient:
             "stream": False,
             "options": {"temperature": 0.3, "num_predict": 4096},
         }
+        if self.num_ctx:
+            payload["options"]["num_ctx"] = self.num_ctx
         # Disable thinking mode for Qwen 3.x models via API parameter
         # (thinking wastes token budget on internal reasoning for structured output)
         if "qwen3" in self.model.lower():
@@ -130,6 +147,8 @@ class OllamaClient:
 
 class OpenAIClient:
     """Client for OpenAI-compatible APIs (LiteLLM, OpenRouter, Groq, etc.)."""
+
+    provider = "openai"
 
     def __init__(
         self,
@@ -186,38 +205,46 @@ class OpenAIClient:
 class AnthropicClient:
     """Client for Anthropic API (Claude models)."""
 
+    provider = "anthropic"
+
     def __init__(
         self,
-        model: str = "claude-opus-4-6",
+        model: str = "claude-opus-5-5",
         api_key: str | None = None,
-        temperature: float = 0.3,
-        max_tokens: int = 4096,
+        effort: str | None = None,
+        max_tokens: int = 16000,
     ):
+        # No temperature: API version 2026-10-21 (the SDK 2.x default) rejects
+        # sampling parameters on every model. Thinking is always on for current
+        # models and counts against max_tokens; effort is the depth control.
         import anthropic
 
         self.model = model
-        self._temperature = temperature
+        self.effort = effort
         self._max_tokens = max_tokens
         self._client = anthropic.Anthropic(api_key=api_key) if api_key else anthropic.Anthropic()
 
     def generate(self, prompt: str) -> str:
-        """Send prompt via Anthropic Messages API and return content."""
-        message = self._client.messages.create(
-            model=self.model,
-            max_tokens=self._max_tokens,
-            temperature=self._temperature,
-            messages=[{"role": "user", "content": prompt}],
-        )
-        return message.content[0].text
+        """Send prompt via Anthropic Messages API and return the text blocks."""
+        kwargs: dict = {
+            "model": self.model,
+            "max_tokens": self._max_tokens,
+            "messages": [{"role": "user", "content": prompt}],
+        }
+        if self.effort:
+            kwargs["output_config"] = {"effort": self.effort}
+        message = self._client.messages.create(**kwargs)
+        if message.stop_reason == "refusal":
+            category = getattr(message.stop_details, "category", None)
+            raise RuntimeError(f"{self.model} refused the request (category: {category})")
+        if message.stop_reason == "max_tokens":
+            raise RuntimeError(f"{self.model} hit max_tokens={self._max_tokens}; output truncated")
+        return "".join(b.text for b in message.content if b.type == "text")
 
     def check_available(self) -> bool:
-        """Check if Anthropic API is reachable."""
+        """Check that the API key works, without spending tokens (models list)."""
         try:
-            self._client.messages.create(
-                model=self.model,
-                max_tokens=10,
-                messages=[{"role": "user", "content": "ping"}],
-            )
+            self._client.models.list(limit=1)
             return True
         except Exception:
             return False
@@ -230,6 +257,105 @@ class AnthropicClient:
 
     def __exit__(self, *exc):
         self.close()
+
+
+class ClaudeCodeClient:
+    """Runs each prompt through the headless Claude Code CLI (`claude -p`).
+
+    Uses the operator's Claude Code login instead of an API key. The flags strip
+    the operator's own harness (settings, hooks, plugins, MCP servers, tools,
+    slash commands) and the fixed system prompt replaces Claude Code's agent
+    prompt, so the model sees the analysis prompt and little else. It runs in a
+    neutral temp directory so no project CLAUDE.md is discovered."""
+
+    provider = "claude-code"
+    SYSTEM_PROMPT = (
+        "You are an analysis component inside a fact-checking pipeline. "
+        "Follow the user's instructions exactly and return only the requested output."
+    )
+
+    def __init__(
+        self,
+        model: str = "claude-opus-5-5",
+        effort: str | None = None,
+        timeout: float = 900.0,
+        **_ignored,
+    ):
+        self.model = model
+        self.effort = effort
+        self.timeout = float(timeout)
+        self.total_cost_usd = 0.0
+        self._workdir = Path(tempfile.gettempdir()) / "huginn-claude-code"
+
+    def _command(self) -> list[str]:
+        cmd = [
+            shutil.which("claude") or "claude", "-p",
+            "--model", self.model,
+            "--output-format", "json",
+            "--system-prompt", self.SYSTEM_PROMPT,
+            "--setting-sources", "",
+            "--strict-mcp-config",
+            "--tools", "",
+            "--disable-slash-commands",
+            "--no-session-persistence",
+        ]
+        if self.effort:
+            cmd += ["--effort", self.effort]
+        return cmd
+
+    def generate(self, prompt: str) -> str:
+        """Send prompt on stdin and return the CLI's final result text."""
+        self._workdir.mkdir(exist_ok=True)
+        try:
+            proc = subprocess.run(
+                self._command(), input=prompt, capture_output=True, text=True,
+                encoding="utf-8", timeout=self.timeout, cwd=self._workdir,
+            )
+        except subprocess.TimeoutExpired as e:
+            raise RuntimeError(f"claude CLI timed out after {self.timeout:.0f}s") from e
+        if proc.returncode != 0:
+            raise RuntimeError(f"claude CLI exited {proc.returncode}: {(proc.stderr or proc.stdout)[:500]}")
+        data = json.loads(proc.stdout)
+        self.total_cost_usd += float(data.get("total_cost_usd") or 0.0)
+        if data.get("is_error"):
+            raise RuntimeError(f"claude CLI error: {str(data.get('result'))[:500]}")
+        return data.get("result") or ""
+
+    def check_available(self) -> bool:
+        """True when the claude CLI is on PATH (no model call is spent)."""
+        return shutil.which("claude") is not None
+
+    def close(self):
+        pass
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *exc):
+        self.close()
+
+
+# Providers whose clients take an effort setting. The CLI, the API and the
+# cache key all read this one tuple, so they cannot drift apart.
+EFFORT_PROVIDERS = ("anthropic", "claude-code")
+
+
+def cache_key(provider: str, model: str, effort: str | None = None) -> str:
+    """Name of the model that produced a cached result: provider/model, plus
+    @effort where the provider uses it. Results are served only to the same key."""
+    key = f"{provider}/{model}"
+    if effort and provider in EFFORT_PROVIDERS:
+        key += f"@{effort}"
+    return key
+
+
+def client_cache_key(client: object) -> str | None:
+    """cache_key for a client instance; None for a client that names no provider."""
+    provider = getattr(client, "provider", None)
+    model = getattr(client, "model", None)
+    if not isinstance(provider, str) or not isinstance(model, str):
+        return None
+    return cache_key(provider, model, getattr(client, "effort", None))
 
 
 def create_client(
@@ -255,6 +381,8 @@ def create_client(
             api_key=api_key,
             **kwargs,
         )
+    elif provider == "claude-code":
+        return ClaudeCodeClient(model=model, **kwargs)
     else:
         msg = f"Unknown provider: {provider}"
         raise ValueError(msg)

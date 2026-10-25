@@ -1,20 +1,23 @@
 """Run calibration suite against seed claims and produce a report."""
 from __future__ import annotations
 
+import argparse
 import json
+import os
+import re
 import sys
 import time
 from datetime import datetime, timezone
 from pathlib import Path
 
-from huginn_muninn.llm import OllamaClient, extract_json_from_response
+from huginn_muninn.llm import create_client, extract_json_from_response
 from huginn_muninn.prompt import build_pass1_prompt, build_pass2_prompt
 
 SEED_FILE = Path(__file__).resolve().parent.parent / "data" / "calibration" / "seed_claims.json"
 REPORT_DIR = Path(__file__).resolve().parent.parent / "data" / "calibration"
 
 
-def run_calibration(model: str = "qwen3.5:9b") -> dict:
+def run_calibration(model: str = "qwen3.5:9b", provider: str = "ollama", effort: str | None = None) -> dict:
     """Run all seed claims and return results."""
     with open(SEED_FILE) as f:
         seed_data = json.load(f)
@@ -22,9 +25,11 @@ def run_calibration(model: str = "qwen3.5:9b") -> dict:
     claims = seed_data["claims"]
     results = []
 
-    with OllamaClient(model=model) as client:
+    kwargs = {"effort": effort} if (provider in ("anthropic", "claude-code") and effort) else {}
+    base_url = os.environ.get("OLLAMA_BASE_URL", "http://localhost:11434")
+    with create_client(provider, base_url, model, **kwargs) as client:
         if not client.check_available():
-            print(f"ERROR: Ollama not available or model '{model}' not found.", file=sys.stderr)
+            print(f"ERROR: {provider} not available or model '{model}' not found.", file=sys.stderr)
             sys.exit(1)
 
         for i, claim_entry in enumerate(claims):
@@ -85,7 +90,10 @@ def run_calibration(model: str = "qwen3.5:9b") -> dict:
                 })
                 print(f"  ERROR: {e} ({elapsed:.1f}s)", file=sys.stderr)
 
-    return {"model": model, "timestamp": datetime.now(timezone.utc).isoformat(), "results": results}
+        cost = getattr(client, "total_cost_usd", None)
+
+    return {"model": model, "provider": provider, "effort": effort, "cost_usd": cost,
+            "timestamp": datetime.now(timezone.utc).isoformat(), "results": results}
 
 
 def generate_report(data: dict) -> str:
@@ -101,8 +109,9 @@ def generate_report(data: dict) -> str:
     lines = [
         f"# Calibration Report",
         f"",
-        f"**Model**: {data['model']}",
+        f"**Model**: {data['model']} ({data.get('provider', 'ollama')}, effort={data.get('effort') or 'default'})",
         f"**Timestamp**: {data['timestamp']}",
+        f"**Cost (list price, USD)**: {data.get('cost_usd')}",
         f"**Claims**: {total}",
         f"",
         f"## Summary",
@@ -160,21 +169,21 @@ def generate_report(data: dict) -> str:
 
 
 if __name__ == "__main__":
-    model = sys.argv[1] if len(sys.argv) > 1 else "qwen3.5:9b"
-    data = run_calibration(model)
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument("model", nargs="?", default="qwen3.5:9b")
+    ap.add_argument("--provider", default="ollama", choices=["ollama", "openai", "anthropic", "claude-code"])
+    ap.add_argument("--effort", choices=["low", "medium", "high", "xhigh", "max"],
+                    help="Claude effort level (anthropic and claude-code providers)")
+    args = ap.parse_args()
+    data = run_calibration(args.model, args.provider, args.effort)
 
-    # Save raw JSON
-    json_path = REPORT_DIR / "calibration_results.json"
-    with open(json_path, "w") as f:
-        json.dump(data, f, indent=2)
-    print(f"\nRaw results: {json_path}", file=sys.stderr)
-
-    # Save markdown report
-    report = generate_report(data)
-    report_path = REPORT_DIR / "calibration_report.md"
-    with open(report_path, "w") as f:
-        f.write(report)
+    # One file pair per model run, so comparison runs never overwrite each other.
+    tag = re.sub(r"[^A-Za-z0-9.]+", "-", args.model) + (f"-{args.effort}" if args.effort else "")
+    out_dir = REPORT_DIR / "runs"
+    out_dir.mkdir(exist_ok=True)
+    json_path = out_dir / f"calibration_{tag}.json"
+    json_path.write_text(json.dumps(data, indent=2), encoding="utf-8")
+    report_path = out_dir / f"calibration_{tag}.md"
+    report_path.write_text(generate_report(data), encoding="utf-8")
+    print(f"Results: {json_path}", file=sys.stderr)
     print(f"Report: {report_path}", file=sys.stderr)
-
-    # Also print report to stdout
-    print(report)

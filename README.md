@@ -177,6 +177,41 @@ docker compose up -d   # Web UI at http://localhost:8000
 uvicorn huginn_muninn.api:app --host 0.0.0.0 --port 8000
 ```
 
+### Choosing a model
+
+The default is `qwen3.5:9b` because it runs on most machines. Pick another model with `--model` on any command, or set `HUGINN_DEFAULT_MODEL` once.
+
+| Model | Runs on | Full analysis | Notes |
+|---|---|---|---|
+| `qwen3.5:9b` (default) | GPU with 8 GB or more | about 1 minute | Fastest; weakest analyses |
+| `qwen3.8:27b` | GPU with 24 GB (18 GB minimum) | about 10 minutes | Recommended if your GPU can hold it |
+| Claude Opus 5.5 (hosted) | Anthropic account | about 8 minutes | Strongest analyses; prompts leave your machine |
+
+```bash
+ollama pull qwen3.8:27b
+export HUGINN_DEFAULT_MODEL=qwen3.8:27b
+export HUGINN_OLLAMA_NUM_CTX=32768   # keeps the 27b model fully on a 24 GB GPU
+export HUGINN_OLLAMA_TIMEOUT=900     # larger models need more than the 300-second default
+```
+
+On a smaller GPU the 27b model spills into system memory and slows down sharply; stay with the default there.
+
+To use a hosted model instead, pass `--provider` on the command line or set `HUGINN_LLM_PROVIDER` (the API server and Docker read the same variable):
+
+```bash
+huginn analyze "claim text here" --provider claude-code                 # Claude Opus 5.5, no API key
+huginn analyze "claim text here" --provider claude-code --effort high
+huginn check "claim text here" --provider anthropic --model claude-sonnet-5-5
+```
+
+- `claude-code` uses the signed-in [Claude Code](https://claude.com/claude-code) command line on the same machine instead of an API key (not available inside the Docker image).
+- `anthropic` needs `HUGINN_LLM_API_KEY` and `uv pip install -e ".[claude]"`.
+- `openai` talks to any OpenAI-compatible endpoint at `OLLAMA_BASE_URL`, with `HUGINN_LLM_API_KEY` if it needs one.
+
+With a Claude provider the model defaults to `claude-opus-5-5`; `--effort` (or `HUGINN_LLM_EFFORT`) sets its reasoning effort. A hosted provider receives every prompt, including the claim, and the command line says so before it sends anything (see [Privacy](#privacy)).
+
+How the models compare: in a blinded rating on 12 scenarios (2026-10-25), two independent AI judges preferred Opus 5.5 over both local models on all 12, and preferred `qwen3.8:27b` over `qwen3.5:9b` on most. Both local models sometimes invent origin dates and sources, so check the origin trace before relying on it. The full outputs are not in the repository; `scripts/rating_generate.py` and `scripts/rating_judge.py` reproduce the rating.
+
 ---
 
 ## Designed Against Dependency
@@ -263,6 +298,7 @@ Full log with falsification criteria: [REJECTIONS.md](REJECTIONS.md).
 | v0.15.0 | 423 (standard baseline) |
 | v0.16.0 | 505 (standard baseline) |
 | v0.17.0 | 827 (public CI runs 818; 9 need the private scenario corpus and skip) |
+| v0.18.0 | 934 (public CI runs 922; 9 need the private scenario corpus and skip) |
 
 31 real-world scenarios validated across health & science, geopolitics, environment, events, technology, and media. Six COVID scenarios re-run with full ECF and provenance data (v0.14.0).
 
@@ -338,6 +374,6 @@ If you reference this work in an academic context, please cite the underlying re
 
 ---
 
-*Current version: v0.17.0. 827 tests. The mission hasn't changed: de-polarize, find common ground, then make the tool unnecessary.*
+*Current version: v0.18.0. 934 tests. The mission hasn't changed: de-polarize, find common ground, then make the tool unnecessary.*
 
 *Author: Jochen Schmiedbauer*
