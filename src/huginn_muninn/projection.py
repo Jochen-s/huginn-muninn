@@ -40,6 +40,15 @@ _FIELD_PATTERNS: dict[str, list[str]] = {
 _SENTENCE_SPLIT = re.compile(r"(?<=[.!?])\s+")
 
 
+_INDEX = re.compile(r"\[\d+\]")
+
+
+def _path_in(path: str, suppressed: frozenset[str]) -> bool:
+    """True when a located path such as bridge.prebunking_note or
+    bridge.socratic_dialogue[0] runs through a suppressed field."""
+    return any(seg in suppressed for seg in _INDEX.sub("", path).split("."))
+
+
 def _scrub_audit_text(
     text: str, suppressed: frozenset[str]
 ) -> tuple[str, bool]:
@@ -128,6 +137,25 @@ def project_analysis(
                             finding[key], suppressed
                         )
                         audit_redacted = audit_redacted or was_scrubbed
+                # Design C: a quote is copied analysis text. Keep it only when
+                # it was found, and only in fields the reader still sees; an
+                # unlocated quote could come from a suppressed field. The
+                # paths are honest here: AnalysisReport.model_validate above
+                # recomputed them from this report's text.
+                kept = []
+                for loc in finding.get("locations") or []:
+                    paths = loc.get("paths") or []
+                    if not paths or any(_path_in(p, suppressed) for p in paths):
+                        audit_redacted = audit_redacted or bool(loc.get("quote"))
+                        continue
+                    # A quote the scrub would change no longer matches its
+                    # passage, so the whole location goes.
+                    if _scrub_audit_text(loc.get("quote", ""), suppressed)[1]:
+                        audit_redacted = True
+                        continue
+                    kept.append(loc)
+                finding["locations"] = kept
+                finding["located"] = any(loc.get("paths") for loc in kept)
             if audit.get("summary"):
                 audit["summary"], was_scrubbed = _scrub_audit_text(
                     audit["summary"], suppressed

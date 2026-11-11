@@ -427,6 +427,23 @@
     margin-top: 4px;
   }
   .finding-rec strong { color: #2C3E50; }
+  .finding-number {
+    display: inline-block; min-width: 1.6em; text-align: center;
+    font-size: 0.75rem; font-weight: 700; color: var(--gray);
+    border: 1px solid var(--border); border-radius: 10px;
+  }
+  .finding-quote {
+    margin: 6px 0 0; padding: 4px 10px;
+    border-left: 3px solid var(--border);
+    font-size: 0.85rem; color: #2C3E50; font-style: italic;
+  }
+  .auditor-notes { margin-top: 8px; display: flex; flex-direction: column; gap: 4px; }
+  .auditor-note {
+    display: block; padding: 6px 10px; border-left: 3px solid var(--amber);
+    background: var(--bg); border-radius: 0 6px 6px 0;
+    font-size: 0.8rem; color: #2C3E50; text-decoration: none;
+  }
+  .auditor-note:hover { text-decoration: underline; }
 
   /* Scenario navigation */
   .scenario-nav {
@@ -654,12 +671,11 @@
   
     <div class="section">
       <h2>Evidence Certainty Framework</h2>
-      <p class="intro-note">Multi-dimensional confidence assessment inspired by GRADE methodology. <a href="confidence-methodology.html" class="methodology-link">[?]</a></p>
+      <p class="intro-note">How well the claim as stated is supported, on five separate scores. Strong evidence against the claim gives low Evidence Quality and Expert Consensus scores. Inspired by GRADE methodology. These scores were re-rated on 2026-11-10 with claude-opus-5-5; the rest of this analysis is from the original run. <a href="confidence-methodology.html" class="methodology-link">[?]</a></p>
       <table class="metrics-table">
         <thead><tr><th>Dimension</th><th>Score</th></tr></thead>
         <tbody>
-          <tr><td>Evidence Quality <span class="dim-weight">(30%)</span></td><td>62%</td></tr><tr><td>Source Reliability <span class="dim-weight">(20%)</span></td><td>78%</td></tr><tr><td>Claim Testability <span class="dim-weight">(15%)</span></td><td>82%</td></tr><tr><td>Expert Consensus <span class="dim-weight">(20%)</span></td><td>74%</td></tr><tr><td>Internal Coherence <span class="dim-weight">(15%)</span></td><td>68%</td></tr>
-          <tr style="font-weight:600;border-top:2px solid var(--border)"><td>Composite (N/A)</td><td>0%</td></tr>
+          <tr><td>Evidence Quality <span class="dim-weight">(30%)</span></td><td>10%</td></tr><tr><td>Source Reliability <span class="dim-weight">(20%)</span></td><td>25%</td></tr><tr><td>Claim Testability <span class="dim-weight">(15%)</span></td><td>40%</td></tr><tr><td>Expert Consensus <span class="dim-weight">(20%)</span></td><td>5%</td></tr><tr><td>Internal Coherence <span class="dim-weight">(15%)</span></td><td>35%</td></tr>
         </tbody>
       </table>
     </div>
@@ -677,6 +693,7 @@
         <h2>Scientific Consensus / Mainstream Explanation</h2>
         <p class="intro-note">The established scientific or institutional explanation for this phenomenon.</p>
         <div class="prose"><p>The clearest reading of the evidence has several distinct parts that need to be held together rather than collapsed into one verdict. On the biology and clinical data: Caly et al. (April 3, 2020, Antiviral Research) found that ivermectin reduced SARS-CoV-2 replication in vitro, but at concentrations approximately 35 to 100 times higher than can be achieved in human plasma at approved doses, a dose-translation problem disclosed in the original paper and confirmed by subsequent pharmacokinetic analyses including Schmith et al. 2020. Early meta-analyses (Hill at Liverpool; BIRD/Lawrie) reported pooled benefits that were substantially driven by a small number of trials, including Elgazzar et al. at Benha University, which was later retracted for data fabrication identified by Jack Lawrence at Grftr.News in July 2021 and by the broader Sheldrick-Meyerowitz-Katz-Brown-Heathers data-detective network. Four large pre-registered randomized controlled trials covering outpatient populations across pandemic variants, at doses including and exceeding what FLCCC originally recommended, found no clinically meaningful benefit on hospitalization, recovery, or mortality: TOGETHER (Reis et al., JAMA, March 2022), ACTIV-6 (Naggie et al., NEJM, October 2022), PRINCIPLE (UK, 2022), and COVID-OUT (Bramante et al., 2022). The Cochrane Review (Popp et al., 2022) reached the same null conclusion through independent meta-analytic methodology. On the regulatory and communications behavior: EUA pathways under US law require &#39;no adequate, approved, and available alternatives&#39; framing, which created a structural disincentive (not a conspiracy) to highlight repurposed candidates during the EUA window. FDA consumer guidance about veterinary-formulation paste was legitimate but communicated through a tonally derisive channel (&#39;You are not a horse. You are not a cow.&#39;). Rolling Stone&#39;s Oklahoma overdose story (September 3, 2021) was published, amplified, and later corrected, but the correction reached a fraction of the original audience. On the Global South dimension: ICMR India, MINSA Peru, and Uttar Pradesh state authorities adopted ivermectin during periods of severe vaccine scarcity that Western regulators did not face, and their decisions reflected a legitimate calculus that was different in kind from Western regulator reasoning. Several of these jurisdictions subsequently revised their guidance, but the original adoption and the subsequent revision were both shaped by their own conditions rather than by Western institutional pressure. The flattening of Global South reasoning into Western populist framing is one of the under-acknowledged manipulations in this episode. On motive and coordination: there is no documentary evidence of a coordinated suppression for vaccine revenue across the multiple jurisdictions and institutions the strong claim requires. The behaviors that look like coordination (Merck disclaiming COVID-19 use while developing molnupiravir; FDA framing aligning with major media; WHO guideline timing aligning with EUA progression) are better explained by parallel structural incentives, institutional self-protection, and shared cultural moment than by an organized conspiracy. The mechanism keywords here are dose-translation, fabricated source data, structural incentives, EUA framing, tonal failure, trial design pre-registration, Global South autonomy, and commercial capture. The honest summary is that ivermectin did not work for COVID-19 at studied doses, that the way that conclusion was reached and communicated created a durable grievance that the conclusion itself cannot now resolve, and that the strongest version of the suppression claim does not survive contact with the documentary record.</p></div>
+        
       </div>
 
   <div class="section">
@@ -857,34 +874,40 @@
     <h2>Inferential Gap</h2>
     <p class="intro-note">Where the evidence ends and the leap begins.</p>
     <div class="prose"><p>[object Object]</p></div>
+    
   </div>
 
   <div class="section">
     <h2>Common Ground</h2>
     <div class="prose"><p>When the framing is set aside, the area of genuine shared ground between people who believe a cheap effective treatment was suppressed and people who believe ivermectin did not work for COVID is much larger than the public conversation suggests. Both groups generally acknowledge that a cheap, safe, repurposed drug that worked against COVID would have been a tremendous gift, and that looking for one was the right instinct. Both agree that patients deserve doctors who will discuss their options respectfully rather than telling them to go home until they cannot breathe. Both agree that regulators were slower than the moment demanded, and that EUA framing under US law did create structural incentives that affected how alternatives were considered, even without conspiratorial intent. Both agree that the FDA&#39;s &#39;You are not a horse&#39; tweet and the Rolling Stone Oklahoma story were tonally beneath the seriousness of the questions families were asking. Both agree that compensation and recognition pathways for people who experienced bad outcomes have been inadequate. Both agree that pharmaceutical companies have a documented history of minimizing harms in earlier product classes. The actual disagreement is much narrower than the rhetorical war suggests: did large, pre-registered, well-conducted randomized trials show that ivermectin at studied doses meaningfully helps COVID patients on hospitalization, recovery, or mortality? On that specific empirical question, TOGETHER, ACTIV-6, PRINCIPLE, and COVID-OUT converged on no. And does the documented pattern of regulatory slowness, EUA framing, and dismissive communication rise to the level of coordinated intentional suppression for vaccine revenue, or is it better explained by parallel structural incentives, institutional self-protection, and tonal failures that do not require coordination? On that causal question, the public record supports the structural explanation and does not support the coordination claim.</p></div>
+    
   </div>
 
   <div class="section">
     <h2>Narrative Deconstruction</h2>
     <div class="prose"><p>This claim is a textbook example of how a legitimate grievance gets captured and converted into something the evidence cannot support. Stage one is a real seed: the Caly et al. April 2020 in-vitro signal was real, ivermectin is a Nobel-recognized drug with a real safety record in approved indications, critical-care physicians watching patients die wanted to act, the EUA framework did require &#39;no adequate alternative&#39; language, and federal communicators chose ridicule when they should have chosen respect. Each of these is documented and forms the kernel. Stage two is also defensible: regulatory slowness and dismissive physician training are real problems, the Merck-molnupiravir temporal alignment was at minimum awkward, and the Rolling Stone Oklahoma story was published, amplified, and only partially corrected. Stage three is where the inferential leap occurs: from &#39;real structural incentives disadvantaged repurposed drugs and federal communications were contemptuous&#39; to &#39;a coordinated entity intentionally suppressed a known effective treatment for vaccine revenue.&#39; That leap requires evidence about intent and coordination across multiple national regulators, academic medical centers, journal editorial boards, and frontline investigators that does not exist, and it requires ignoring evidence that does exist: the four large pre-registered trials with publicly available protocols, the data fabrication in Elgazzar identified by independent reviewers with no institutional affiliation, and the in-vitro dose-translation problem disclosed in the original Monash paper. Stage four is the capture: the legitimate energy that should have gone into reforming dismissive physician training, improving EUA evidence integration, disciplining federal communications, and building real respect for Global South medical reasoning instead got channeled into an unfalsifiable conspiracy frame that monetizes through FLCCC protocols, CHD memberships, Substack subscriptions, and now formal regulatory authority at HHS. The institutions and reforms that could address the real grievances become harder to build because the political coalition has been remade around an empirical claim that cannot be sustained.</p></div>
+    
   </div>
 
   
     <div class="section">
       <h2>Feasibility Assessment</h2>
       <div class="prose"><p>For the strongest version of the claim (a coordinated &#39;they&#39; intentionally suppressed a known effective treatment to drive vaccine revenue) to hold, several conditions would need to obtain simultaneously. The FDA, CDC, WHO, MHRA (UK), EMA (EU), Health Canada, TGA (Australia), PMDA (Japan), and the ICMR (India) when it ultimately softened its position, would all need to act in concert despite divergent geopolitical interests, despite the strong incentives Indian, Brazilian, and Latin American regulators had to validate their own earlier guidance, and despite the existence of well-funded organizations actively soliciting whistleblower disclosure. The four large pre-registered trial teams across Brazil, the United States, the United Kingdom, and Colombia would need to have designed their trials to fail, even though their protocols were public, pre-registered, and explicitly engaged with FLCCC dose recommendations (ACTIV-6 used higher doses than FLCCC initially endorsed). Editorial boards at NEJM, JAMA, Lancet, BMJ, and Cochrane would need to coordinate publication of false negative findings. The independent data-integrity reviewers (Lawrence, Sheldrick, Meyerowitz-Katz, Brown, Heathers) who exposed Elgazzar would need to be part of the coordination or be unwitting. Thousands of frontline physicians who had ivermectin samples available and access to off-label prescribing would need to coordinate silence about positive outcomes despite strong professional and reputational incentives to publish. The weaker structural reading (EUA incentives plus user-fee-funded FDA plus communicational ridicule plus media polarization plus shared cultural moment produced a worse-than-necessary outcome) is well-supported by the available record and requires no coordination. The structural reading honors every piece of the kernel without requiring the leap.</p></div>
+      
     </div>
 
   
     <div class="section">
       <h2>Commercial Interests</h2>
       <div class="prose"><p>On the pro-claim side: FLCCC operates a substantial telehealth and protocol licensing business that depends on sustained ivermectin advocacy. Children&#39;s Health Defense grew from approximately 1.3 million USD revenue (2018) to over 23 million USD (2022). The Substack ecosystem including Berenson, Malone, Kirsch, Weinstein, and Kheriaty monetizes paid subscriptions tied to sustained grievance. Alternative-health and supplement market exceeds 50 billion USD annually with significant adjacency to ivermectin-related products. Joe Rogan&#39;s Spotify deal value depends on contrarian audience growth, and JRE #1671 and #1757 were major reach events. The 2025 RFK Jr. HHS Secretary appointment now provides formal regulatory authority to figures whose pre-appointment income depended on the suppression narrative, creating a novel commercial-political alignment. On the anti-claim side: pharmaceutical industry has obvious financial interest in the vaccine and antiviral markets (Pfizer earned approximately 36.8 billion USD from Comirnaty in 2021; Moderna transitioned from pre-revenue to over 18 billion USD; Merck developed molnupiravir as a competing antiviral; Pfizer developed Paxlovid). FDA user-fee structure creates structural alignment with industry across multiple drug classes. Major medical journals depend on pharmaceutical advertising and reprint revenue. CDC, FDA, and WHO have institutional investment in the vaccination programs they coordinated and authorized. Neither set of motives proves either claim true or false. Both sets are relevant when evaluating sourcing and weight of testimony, and both should be disclosed when participants are appealing to authority. The asymmetry worth noting is that the institutional financial interests existed regardless of the empirical verdict, while the skeptic financial ecosystem materialized specifically around the unresolved grievance and would shrink substantially if the grievance were resolved.</p></div>
+      
     </div>
 
   
     <div class="section">
       <h2>Perception Gap</h2>
       <div class="prose"><p>Believers in the claim often assume that anyone who pushes back must be either credulous about institutions, financially aligned with NIH or pharma, or so committed to scientific authority that they cannot acknowledge documented failures. In reality, most thoughtful pushback now openly acknowledges the FDA&#39;s tonal failure, the Rolling Stone Oklahoma error, the EUA structural incentive, the legitimate physician dismissiveness, and the slowness of regulatory response. Skeptics of the claim often assume believers are anti-science, gullible, or politically motivated. In reality, many believers are saying something narrower than the strong claim: &#39;we were treated with contempt during the worst public health crisis of our lifetimes, and that contempt cannot be answered by pointing to the same trials run by the people who treated us with contempt.&#39; That narrower position is reasonable. The gap between perceived and actual positions on both sides is wide, and the institutional side has rarely tried to close it. The Global South dimension creates a further perception gap: Anglophone audiences on both sides of the Western debate tend to flatten ICMR and MINSA reasoning into evidence for their preferred Western narrative, when in fact those institutions were operating under conditions and constraints that neither Western institutional defenders nor Western populist skeptics have accurately represented.</p></div>
+      
     </div>
 
   <div class="section">
@@ -894,14 +917,17 @@
     <div class="dialogue-round round-1">
       <div class="round-label">Round 1: Perspective-Getting</div>
       <div class="dialogue-bubble"><p>Round 1 (OARS: Open question, Affirmation, Reflective listening, Summary): I want to start by saying something that I think gets lost in most conversations about this. The frustration behind what you are holding is not irrational and it is not fringe. There were real failures here, and I do not want to talk about evidence until I have understood the experience that the evidence has to land inside. People who got sick in 2020 and 2021 were often told by their physicians to go home and come back if they could not breathe, with no engagement about any outpatient option. The FDA&#39;s tweet calling people horses, the cable news ridicule, the Rolling Stone Oklahoma story that was published and amplified and only quietly corrected after going viral worldwide, all of that was real, and the contempt that came across to families who were sick or grieving was not imagined. There was also a real in-vitro signal for ivermectin from the Monash team in Australia at the start of the pandemic, a Nobel-recognized drug with a real safety record in its approved uses, and a regulatory framework under US law that did create a structural pressure to keep the &#39;no adequate alternative&#39; box checked during the EUA window. So when someone hears the institutional response and notices that the institutions had a structural reason to want their conclusion to be the conclusion, that is a reasonable suspicion to form, not a stupid one. And there is the Global South piece that almost nobody in the Western conversation engages with honestly: ICMR in India, MINSA in Peru, the state government in Uttar Pradesh, made their own decisions under conditions of vaccine scarcity that no Western country faced, and those decisions deserve to be heard on their own terms rather than imported into either side&#39;s preferred Western narrative. Before we look at anything else, I would really like to understand what part of this has stayed with you. When did you first feel that the people in charge were not being straight with you, and what was the thing that you could not let go of?</p></div>
+      
     </div>
     <div class="dialogue-round round-2">
       <div class="round-label">Round 2: Guided Examination</div>
       <div class="dialogue-bubble"><p>Round 2 (OARS: Acknowledge, then introduce evidence within the validated frame): Thank you for that. What you described tracks with what a lot of people went through, and I appreciate the honesty. I want to walk through what happened with the evidence in a way that does not require either of us to trust the institutions you have good reason to distrust. The first thing is the dose-translation problem disclosed in the original Monash paper itself. Caly and colleagues found that ivermectin reduced viral replication in cells, but at concentrations about thirty-five to one hundred times higher than human plasma can reach at approved doses, and they said so in the paper. That does not mean the drug could not work at higher doses, but it means the in-vitro signal was never the finished argument it was sometimes presented as. The second thing is what happened to the early meta-analyses. Andrew Hill&#39;s first pooled estimate, and Tess Lawrie&#39;s BIRD analysis, were substantially driven by a small number of trials, and one of those, Elgazzar at Benha University in Egypt, was found by an independent graduate student named Jack Lawrence at Grftr.News in July 2021 to contain fabricated patient data. Other trials were flagged by a network of volunteer data-detectives, Sheldrick, Meyerowitz-Katz, Brown, Heathers, who had no institutional affiliation and no pharmaceutical funding. When those trials were removed from the meta-analyses, the pooled effect shrank dramatically. That is not pharma pressure. That is methodology working as designed. The third thing is that the large pre-registered trials that FLCCC and BIRD originally said they wanted were actually run: TOGETHER in Brazil under Edward Mills and Gilmar Reis, ACTIV-6 in the United States under David Boulware and Susanna Naggie, PRINCIPLE in the United Kingdom, and COVID-OUT under Bramante and colleagues. They were run in outpatients, across pandemic variants, at doses that included and exceeded what FLCCC had originally recommended. They consistently found no clinically meaningful benefit. The Cochrane Review reached the same conclusion through independent methodology. None of that requires you to trust the FDA, and none of it requires you to trust the news media. It requires you to look at investigators like Edward Mills, who designed the TOGETHER trial in Brazil, and David Boulware at the University of Minnesota, and ask whether their pre-registered protocols and their published data look like a conspiracy or like science. And here is the harder piece, the institutional side that very few people on either side want to acknowledge directly. The FDA&#39;s &#39;You are not a horse&#39; tweet of August 21, 2021, and Rolling Stone&#39;s Oklahoma overdose story of September 3, 2021, were tonally beneath the seriousness of what families were facing. The Rolling Stone story was published, went viral worldwide, and was only partially corrected after the source hospital denied the account, and the correction reached a small fraction of the original audience. That was, in retrospect, one of the most damaging single communication choices a US federal agency and a major US magazine made during the pandemic, because it built a permanent cultural memory of ridicule that no subsequent trial result can erase. Both of those things are true at the same time. The drug did not work for COVID at studied doses, and the way that conclusion was reached and communicated was disrespectful to people who deserved better.</p></div>
+      
     </div>
     <div class="dialogue-round round-3">
       <div class="round-label">Round 3: Integration</div>
       <div class="dialogue-bubble"><p>Round 3 (OARS: Open question that integrates kernel and leap without closing): So when we sit with all of this together, I think we end up somewhere more honest than either side of this argument has been comfortable with. The evidence we have, taken seriously and not selectively, does not support the claim that ivermectin meaningfully helps COVID patients at the doses that have been studied. And the evidence also does not support the institutional posture that there was nothing to learn from the people who pushed back. The &#39;you are not a horse&#39; framing was a disaster, the Rolling Stone story was a disaster, the dismissive physician training was a disaster, the slowness of the trials was a real problem, and the way Global South reasoning was flattened into Western political frames was a separate disaster on top of all of that. None of that is erased by the trial results, and the trial results are not erased by any of that. The question I find myself wrestling with, and that I would really like to know how you see, is this: given that ivermectin at studied doses did not turn out to be the answer for COVID and that the way that conclusion was reached and communicated was deeply disrespectful to the people who were asking the question, what would it look like for us to push together for the reforms that would actually fix the real failures, respectful physician training on outpatient questions, faster and better-designed repurposing trials, EUA frameworks that integrate alternatives transparently without being captured by them, federal communicators who treat citizens as adults, real recognition and compensation pathways for people who experienced bad outcomes, and honest engagement with Global South medical reasoning on its own terms, without either defending the ridicule or pretending the trial results say something they do not?</p></div>
+      
     </div>
   </div>
 
@@ -909,6 +935,7 @@
   <div class="section">
     <h2>Reframe</h2>
     <blockquote class="reframe-block">What we share across this disagreement is a refusal to be lied to about our own bodies and the bodies of our families, a demand that those whose physicians refused to engage with their questions be heard, an insistence that Global South medical reasoning be taken seriously on its own terms rather than imported into Western political frames, and a commitment to a regulatory system that can be trusted to communicate honestly under crisis conditions. Together, we can press for respectful physician training on outpatient management, faster and better-designed repurposing trials for future pandemics, EUA frameworks that integrate alternatives transparently without being captured by them, federal communicators who treat citizens as adults, recognition and compensation pathways that engage seriously with people who experienced bad outcomes, and honest engagement with Global South medical traditions including the conditions under which their decisions were made. None of those goals requires choosing between erasing the patients who were dismissed and erasing the trial investigators who did the work. They require holding both with care.</blockquote>
+    
   </div>
 
   
@@ -946,6 +973,7 @@
     <ul class="findings-list">
     <li class="finding-item">
       <div class="finding-header">
+        
         <span class="finding-category">Accuracy</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">Dose-translation factor cited as approximately 35 to 100 times depending on pharmacokinetic model is appropriate; this...</span>
@@ -955,9 +983,11 @@
         <div class="finding-description">Dose-translation factor cited as approximately 35 to 100 times depending on pharmacokinetic model is appropriate; this is more defensible than citing a single canonical number under adversarial challenge. Schmith et al. 2020 and subsequent PK analyses support the range.</div>
         <div class="finding-rec"><strong>Recommendation:</strong> Retain the range presentation; do not collapse to a single multiplier in downstream summaries.</div>
       </div>
+      
     </li>
     <li class="finding-item">
       <div class="finding-header">
+        
         <span class="finding-category">Completeness</span>
         <span class="finding-severity-medium">MEDIUM</span>
         <span class="finding-description">Global South epistemic provenance is now explicitly represented in two origin entries (clinical efficacy via...</span>
@@ -967,9 +997,11 @@
         <div class="finding-description">Global South epistemic provenance is now explicitly represented in two origin entries (clinical efficacy via Egypt/India/Peru; Global South medical body endorsement via ICMR/MINSA/Uttar Pradesh), and the bridge engages the Global South dimension as its own narrative thread rather than as supporting material for either Western faction. This is the single largest structural improvement over the v1 analysis. However, primary-language sources (Hindi, Spanish, Portuguese) are referenced but not directly engaged, and Indian and Latin American patient-side voices remain mediated.</div>
         <div class="finding-rec"><strong>Recommendation:</strong> Future iterations should engage directly with primary-language ICMR and MINSA reasoning documents and with Indian and Latin American patient-advocacy voices outside the Western FLCCC orbit.</div>
       </div>
+      
     </li>
     <li class="finding-item">
       <div class="finding-header">
+        
         <span class="finding-category">Accuracy</span>
         <span class="finding-severity-medium">MEDIUM</span>
         <span class="finding-description">The Rolling Stone Oklahoma overdose story (September 3, 2021) and the subsequent correction are characterized...</span>
@@ -979,9 +1011,11 @@
         <div class="finding-description">The Rolling Stone Oklahoma overdose story (September 3, 2021) and the subsequent correction are characterized accurately. The original story sourced to one rural hospital physician was denied by the hospital itself; Rolling Stone issued an editorial note rather than a full retraction; the correction reached a small fraction of the original audience. This is the load-bearing institutional-side manipulation in the episode and must remain explicit.</div>
         <div class="finding-rec"><strong>Recommendation:</strong> No change needed in this version. Retain explicit attribution of T0080 to institutional-side communications and explicit citation of the Rolling Stone correction asymmetry.</div>
       </div>
+      
     </li>
     <li class="finding-item">
       <div class="finding-header">
+        
         <span class="finding-category">Completeness</span>
         <span class="finding-severity-medium">MEDIUM</span>
         <span class="finding-description">The 2025 RFK Jr. HHS Secretary appointment is integrated into the actor map and the temporal context, but the...</span>
@@ -991,9 +1025,11 @@
         <div class="finding-description">The 2025 RFK Jr. HHS Secretary appointment is integrated into the actor map and the temporal context, but the implications of having the skeptic-side narrative now operating from inside formal regulatory authority while still claiming outsider status are not fully drawn out. This authority-inversion dynamic is novel relative to the 2021-2022 configuration and changes the moral-foundations Authority/Subversion analysis materially.</div>
         <div class="finding-rec"><strong>Recommendation:</strong> Future iterations should expand on the authority-inversion dynamic and its implications for evidence-based medicine when skeptic-side institutional capture has occurred.</div>
       </div>
+      
     </li>
     <li class="finding-item">
       <div class="finding-header">
+        
         <span class="finding-category">framing</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">Communication posture is set to relational_first_with_explicit_validation, which is appropriate given the...</span>
@@ -1003,9 +1039,11 @@
         <div class="finding-description">Communication posture is set to relational_first_with_explicit_validation, which is appropriate given the kernel-of-truth profile and the high-defensiveness audience characteristics. Pattern density warning is true, reflecting genuine TTP density (twelve techniques across both sides). Bilateral TTP attribution (seven claim-promoter, two institutional, three both-sides) is essential and well-executed; the institutional T0080 attribution is load-bearing.</div>
         <div class="finding-rec"><strong>Recommendation:</strong> Retain bilateral TTP attribution in future iterations; consider whether the institutional T0080 attribution could be strengthened further given how decisive the tonal failure was to the longitudinal trajectory of the episode.</div>
       </div>
+      
     </li>
     <li class="finding-item">
       <div class="finding-header">
+        
         <span class="finding-category">methodology</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">DISARM confidence scores are presented to two decimal places without an explicit calibration method. The variance...</span>
@@ -1015,9 +1053,11 @@
         <div class="finding-description">DISARM confidence scores are presented to two decimal places without an explicit calibration method. The variance across techniques (0.72 to 0.95) suggests intuitive rather than empirical calibration. The Schmith et al. dose-translation range is now presented as a range rather than a single value, which improves defensibility under adversarial challenge.</div>
         <div class="finding-rec"><strong>Recommendation:</strong> Document calibration approach in next iteration or round to nearest 0.05; consider standardizing reporting precision across pipeline outputs.</div>
       </div>
+      
     </li>
     <li class="finding-item">
       <div class="finding-header">
+        
         <span class="finding-category">Bias</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">TTP attribution is approximately seven claim-promoter, two institutional, three both-sides. This is more balanced than...</span>
@@ -1027,9 +1067,11 @@
         <div class="finding-description">TTP attribution is approximately seven claim-promoter, two institutional, three both-sides. This is more balanced than v1 (seven claim-promoter, two institutional, three both-sides in v1 audit count). The institutional count remains a defensible minority given the empirical distribution of manipulation in this episode but could arguably be higher given how load-bearing the &#39;horse dewormer&#39; framing was to the longitudinal trajectory.</div>
         <div class="finding-rec"><strong>Recommendation:</strong> Future iterations should consider whether T0080 institutional-side should be split into multiple distinct techniques (FDA-tonal-failure, Rolling-Stone-error, late-night-comedy framing) to give the institutional side more granular attribution proportionate to its longitudinal impact.</div>
       </div>
+      
     </li>
     <li class="finding-item">
       <div class="finding-header">
+        
         <span class="finding-category">ethics</span>
         <span class="finding-severity-medium">MEDIUM</span>
         <span class="finding-description">The Socratic dialogue follows OARS structure with Round 1 as pure perspective-getting with explicit validation, Round 2...</span>
@@ -1039,9 +1081,11 @@
         <div class="finding-description">The Socratic dialogue follows OARS structure with Round 1 as pure perspective-getting with explicit validation, Round 2 as evidence introduction within the validated frame, and Round 3 as integration ending in an open question. Round 2 carries substantial evidence weight and may be experienced as overwhelm by highly defensive audiences; the dose-translation, retraction, and large-trial material is dense.</div>
         <div class="finding-rec"><strong>Recommendation:</strong> For high-defensiveness audiences, consider splitting Round 2 across multiple turns with explicit pause points. The current single-turn presentation is appropriate for moderate-defensiveness audiences but may need adaptation for the most defensive readers.</div>
       </div>
+      
     </li>
     <li class="finding-item">
       <div class="finding-header">
+        
         <span class="finding-category">Completeness</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">Senator Ron Johnson hearings and FLCCC congressional testimony are mentioned in propagation paths but not deeply...</span>
@@ -1051,9 +1095,11 @@
         <div class="finding-description">Senator Ron Johnson hearings and FLCCC congressional testimony are mentioned in propagation paths but not deeply integrated into the political-institutionalization analysis. The 2025 HHS reconstitution provides additional context that warrants integration.</div>
         <div class="finding-rec"><strong>Recommendation:</strong> Future iterations should integrate legislative-arena dynamics (Johnson hearings, state-level ivermectin access laws in Tennessee, Oklahoma, and others) into the temporal context and the actor map.</div>
       </div>
+      
     </li>
     <li class="finding-item">
       <div class="finding-header">
+        
         <span class="finding-category">Frame Adoption</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">Bridge analysis does not display frame capture: it does not collapse into either the populist suppression frame or the...</span>
@@ -1063,6 +1109,7 @@
         <div class="finding-description">Bridge analysis does not display frame capture: it does not collapse into either the populist suppression frame or the dismissive &#39;always a horse drug&#39; frame. Both the documented institutional failures and the trial results are held simultaneously. The inferential-gap analysis preserves a genuine distinction between kernel and leap rather than collapsing them.</div>
         <div class="finding-rec"><strong>Recommendation:</strong> No correction needed.</div>
       </div>
+      
     </li></ul>
   </div>
 

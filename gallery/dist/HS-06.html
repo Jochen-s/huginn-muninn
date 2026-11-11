@@ -427,6 +427,23 @@
     margin-top: 4px;
   }
   .finding-rec strong { color: #2C3E50; }
+  .finding-number {
+    display: inline-block; min-width: 1.6em; text-align: center;
+    font-size: 0.75rem; font-weight: 700; color: var(--gray);
+    border: 1px solid var(--border); border-radius: 10px;
+  }
+  .finding-quote {
+    margin: 6px 0 0; padding: 4px 10px;
+    border-left: 3px solid var(--border);
+    font-size: 0.85rem; color: #2C3E50; font-style: italic;
+  }
+  .auditor-notes { margin-top: 8px; display: flex; flex-direction: column; gap: 4px; }
+  .auditor-note {
+    display: block; padding: 6px 10px; border-left: 3px solid var(--amber);
+    background: var(--bg); border-radius: 0 6px 6px 0;
+    font-size: 0.8rem; color: #2C3E50; text-decoration: none;
+  }
+  .auditor-note:hover { text-decoration: underline; }
 
   /* Scenario navigation */
   .scenario-nav {
@@ -654,12 +671,11 @@
   
     <div class="section">
       <h2>Evidence Certainty Framework</h2>
-      <p class="intro-note">Multi-dimensional confidence assessment inspired by GRADE methodology. <a href="confidence-methodology.html" class="methodology-link">[?]</a></p>
+      <p class="intro-note">How well the claim as stated is supported, on five separate scores. Strong evidence against the claim gives low Evidence Quality and Expert Consensus scores. Inspired by GRADE methodology. These scores were re-rated on 2026-11-10 with claude-opus-5-5; the rest of this analysis is from the original run. <a href="confidence-methodology.html" class="methodology-link">[?]</a></p>
       <table class="metrics-table">
         <thead><tr><th>Dimension</th><th>Score</th></tr></thead>
         <tbody>
-          <tr><td>Evidence Quality <span class="dim-weight">(30%)</span></td><td>65%</td></tr><tr><td>Source Reliability <span class="dim-weight">(20%)</span></td><td>72%</td></tr><tr><td>Claim Testability <span class="dim-weight">(15%)</span></td><td>40%</td></tr><tr><td>Expert Consensus <span class="dim-weight">(20%)</span></td><td>35%</td></tr><tr><td>Internal Coherence <span class="dim-weight">(15%)</span></td><td>82%</td></tr>
-          <tr style="font-weight:600;border-top:2px solid var(--border)"><td>Composite (N/A)</td><td>0%</td></tr>
+          <tr><td>Evidence Quality <span class="dim-weight">(30%)</span></td><td>30%</td></tr><tr><td>Source Reliability <span class="dim-weight">(20%)</span></td><td>45%</td></tr><tr><td>Claim Testability <span class="dim-weight">(15%)</span></td><td>45%</td></tr><tr><td>Expert Consensus <span class="dim-weight">(20%)</span></td><td>25%</td></tr><tr><td>Internal Coherence <span class="dim-weight">(15%)</span></td><td>55%</td></tr>
         </tbody>
       </table>
     </div>
@@ -677,6 +693,7 @@
         <h2>Scientific Consensus / Mainstream Explanation</h2>
         <p class="intro-note">The established scientific or institutional explanation for this phenomenon.</p>
         <div class="prose"><p>Looking at the evidence across multiple independent sources as it currently stands, the honest picture is genuinely unresolved on origin and partially supported on cover-up, with terminal-frame escalations not supported. On origin: DOE intelligence assessed research-related origin as more likely than not at low confidence (Feb 2023 reporting); FBI assessed at moderate confidence; four agencies and the National Intelligence Council lean toward natural spillover at low confidence; CIA remains undecided. The Wuhan Institute of Virology conducted relevant bat-coronavirus research, the DEFUSE proposal (2018, not funded by DARPA) discussed engineering features later observed in SARS-CoV-2, the September 2019 WIV database deletion remains unexplained, and Chinese government access controls have prevented independent verification. The Worobey/Pekar/Andersen 2022 papers in Science and the broader natural-spillover case (Huanan Seafood Market clustering, environmental sampling, phylogenetic structure) constitute substantial but contested evidence for a market-mediated zoonotic event. As Alina Chan and others have argued, both hypotheses remain live, and a definitive resolution would likely require access that the Chinese government has not provided. On cover-up: the Lancet letter (Feb 2020) organized by Daszak without disclosing his EcoHealth conflict of interest, the Proximal Origin paper whose authors&#39; private Slack deliberations showed real uncertainty preceding public certainty, the social-media platform suppression of lab-leak discussion later acknowledged by Facebook as error, and the constrained WHO joint study are all documented institutional failures. They constitute partial support for a &#39;cover-up&#39; framing in the sense of premature foreclosure, professional self-protection, and geopolitical constraint, but the maximalist version of the claim, that governments globally coordinated to conceal a known laboratory origin, requires evidence of coordination and prior knowledge that is not present in the available record. The terminal-frame escalation, that SARS-CoV-2 was deliberately released, finds no evidentiary support beyond circumstantial inference and rhetorical assertion. The global death toll (approximately 7 million confirmed deaths, 15-30 million excess deaths by various estimates) is the moral substrate behind all of this; whatever the origin and however the response failed, the suffering was real and demands an honest accounting that neither maximalist nor dismissive framings provide.</p></div>
+        
       </div>
 
   <div class="section">
@@ -857,34 +874,40 @@
     <h2>Inferential Gap</h2>
     <p class="intro-note">Where the evidence ends and the leap begins.</p>
     <div class="prose"><p>The kernel of truth in this scenario is unusually large and multi-layered, which makes the inferential gap narrower and more precise than in most conspiracy scenarios. Established kernel of truth: (1) the lab-leak hypothesis is a live scientific possibility supported by DOE and FBI assessments and by WIV&#39;s documented research portfolio; (2) the early suppression of that hypothesis through the Lancet letter, the Proximal Origin paper, and platform moderation was real and has been partially acknowledged as error; (3) undisclosed conflicts of interest at the Lancet were real; (4) the WHO joint study was constrained by Chinese government access controls; (5) the September 2019 WIV database deletion remains unexplained; (6) bipartisan congressional inquiry has surfaced documents (DEFUSE, Proximal Origin Slack) that the establishment had treated as benign. Exact leap point: the gap occurs between &#39;lab-related origin is possible and was wrongly suppressed&#39; and three distinct further claims. Leap 1: from &#39;lab-related origin is possible&#39; to &#39;lab-related origin is established.&#39; This is the central unresolved scientific question; both hypotheses remain live. Leap 2: from &#39;institutions foreclosed the hypothesis prematurely and protected themselves&#39; to &#39;governments globally coordinated to conceal a known truth.&#39; This requires evidence of coordination and of prior knowledge of the truth being concealed; neither has been produced. Leap 3: from &#39;lab-related origin is possible&#39; to &#39;the virus was deliberately released as a bioweapon or depopulation agent.&#39; This abandons the evidentiary base entirely. Each leap multiplies the evidentiary requirement; the strongest version of the original claim makes all three at once.</p></div>
+    
   </div>
 
   <div class="section">
     <h2>Common Ground</h2>
     <div class="prose"><p>When the political coding is set aside, the area of shared ground is wider than the cable-news framing suggests. Almost everyone now acknowledges that the lab-leak hypothesis was prematurely suppressed in 2020-2021, that platforms and the Lancet letter and the original Proximal Origin framing overreached, and that the Wuhan Institute of Virology conducted relevant research whose records and samples have not been independently accessible. Almost everyone agrees that EcoHealth Alliance&#39;s conflict of interest was real and undisclosed, that the WHO joint study was constrained by Chinese government access controls, and that the Proximal Origin authors&#39; private deliberations did not match the certainty of their published conclusions. Almost everyone agrees that biosecurity oversight of gain-of-function and gain-of-function-adjacent work was, by most accounts, inadequate. The real disagreement is much narrower: it is whether the documented institutional failures rise to the level of a coordinated global cover-up of a known truth, and whether the lab-related origin is so well-established that the natural-spillover evidence (Huanan market clustering, environmental sampling, phylogenetic structure) can be set aside. Those are real disagreements, but they sit inside a much larger frame of shared concern.</p></div>
+    
   </div>
 
   <div class="section">
     <h2>Narrative Deconstruction</h2>
     <div class="prose"><p>This claim escalates through stages that begin in solid ground and gradually leave the evidence behind. Stage one is well-supported: the lab-leak hypothesis is a live scientific possibility, with DOE assessing it as more likely than not at low confidence, FBI at moderate confidence, and substantial circumstantial support including WIV&#39;s research portfolio, the DEFUSE proposal, the September 2019 database deletion, and the WIV-to-Huanan-Market geography. Stage two is also well-supported: there was a partial cover-up in the sense of premature suppression of the hypothesis, undisclosed conflicts of interest at the Lancet, platform moderation later acknowledged as overcorrection, and a constrained WHO investigation. Stage three is where the leap occurs: the inference from these documented failures to a deliberate global cover-up of a known laboratory origin requires evidence that is not present, since the institutional behavior is also consistent with self-protection, professional defensiveness, and geopolitical constraint rather than coordinated concealment of a known truth. Stage four, the terminal frame (deliberate release, depopulation, bioweapon), abandons evidence entirely and requires assuming coordinated international action of a scale never previously documented. The architecture of this escalation is what makes it persuasive: each stage is locally plausible to someone who has accepted the previous stage, even though stages one and four make radically different claims with radically different evidentiary requirements.</p></div>
+    
   </div>
 
   
     <div class="section">
       <h2>Feasibility Assessment</h2>
       <div class="prose"><p>For the maximalist version of the claim (deliberate release coordinated across governments) to hold, multiple independent national governments and intelligence services with sharply divergent geopolitical interests (US, UK, Australia, Japan, France, Germany, Israel, India) would need to have agreed to a unified concealment despite strong incentives to expose adversary culpability; thousands of academic researchers, journalists, and platform employees across competing institutions and political systems would need to have stayed silent despite whistleblower incentives, career rewards, and explicit FOIA disclosures; the same intelligence community that publicly produced a split assessment with DOE and FBI dissents would need to be simultaneously executing a concealment those agencies were defecting from; and the documented natural-spillover evidence (Huanan market clustering, intermediate-host research, phylogenetic structure) would need to have been manufactured. For the moderate version (lab-related origin probable, premature suppression occurred, institutional self-protection followed) very few additional conditions are required, and most are documented. For the strong-but-narrow version (lab origin confirmed, deliberate concealment of known truth) the conditions remain unproven; the publicly available evidence supports premature foreclosure and conflict-of-interest concealment, not certainty about origin or coordinated knowledge of the truth being concealed.</p></div>
+      
     </div>
 
   
     <div class="section">
       <h2>Commercial Interests</h2>
       <div class="prose"><p>On the institutional-defense side: NIH/NIAID, EcoHealth Alliance, and the broader virus-hunting research program have hundreds of millions of dollars in continued funding at stake; pharmaceutical and biotech companies benefit from a natural-origin framing that protects continued mRNA platform investment; the WHO operates under member-state funding that includes substantial Chinese contribution. On the lab-leak side: the alternative-media economy has grown substantially around origin-skeptic content, with figures like Brett Weinstein, Joe Rogan, RFK Jr., Children&#39;s Health Defense, and the broader podcast/Substack/book ecosystem deriving significant revenue from cover-up framing; political coalitions have made the question identity-defining. On the geopolitical side: the Chinese government has clear sovereign interest in non-disclosure regardless of what happened; the US national-security establishment has interest in framing that supports its strategic competition with China; Russian state media has used origin claims for asymmetric advantage. None of these interests proves any particular hypothesis true or false, but all are relevant when evaluating sourcing on every side.</p></div>
+      
     </div>
 
   
     <div class="section">
       <h2>Perception Gap</h2>
       <div class="prose"><p>Believers in this claim often assume that those who urge caution must be either credulous about institutions, financially aligned with NIH/pharma/EcoHealth, or so committed to scientific authority that they cannot acknowledge documented failures; in reality, most thoughtful pushback now openly acknowledges the lab-leak hypothesis is live, that the early suppression was wrong, that the Lancet conflict of interest was real, that the WHO study was constrained, and that the Proximal Origin private/public gap is documented. Critics of the claim often assume believers are conspiracy-minded, geopolitically motivated, or recruited into terminal frames; in reality, many believers are responding to genuine vindication of a hypothesis they were told was conspiracy theory, to real institutional failures, and to the legitimate observation that the system did not work transparently. The gap between perceived and actual positions is wide on both sides, and motivated content creators, on both sides, harvest attention and money from that gap.</p></div>
+      
     </div>
 
   <div class="section">
@@ -894,14 +917,17 @@
     <div class="dialogue-round round-1">
       <div class="round-label">Round 1: Perspective-Getting</div>
       <div class="dialogue-bubble"><p>OARS validation: Open question, Affirmation, Reflective listening, Summary. Pure perspective-getting, no facts introduced.: I want to start by understanding how you came to this view. Something about the way the pandemic was handled left a mark on you, and I do not think that mark came from nowhere. There is a part of this story you have been carrying that I would like to hear before I say anything else: when did you first feel that the official account was not the whole account, and what did you notice that made you start asking these questions? Was it watching people who raised the lab hypothesis early get treated like cranks and then quietly proven right, was it the moment Peter Daszak&#39;s funding relationship with WIV came out and you realized he had organized the Lancet letter without disclosing it, was it the platform takedowns of people you knew were doctors or scientists, was it the gap between private and public messaging when the Proximal Origin Slack came out, was it seeing the WHO walk back its own original framing, or was it something more personal, something closer to your own life and losses? I am asking because before we talk about evidence, I want to understand the experience the evidence has to land inside, and because I think you have probably been told for a long time that what you observed was not worth taking seriously, and that itself has been part of the story. So tell me first: what is the thing about how this was handled that you have not been able to let go of, and what would it mean to you to feel that thing was finally heard?</p></div>
+      
     </div>
     <div class="dialogue-round round-2">
       <div class="round-label">Round 2: Guided Examination</div>
       <div class="dialogue-bubble"><p>Transition into pattern naming with evidence; both kernel-of-truth validation and inferential-gap surfacing.: Thank you. The core of what you are holding is real and I want to be honest about that before anything else. The lab-leak hypothesis is a legitimate scientific possibility, not a conspiracy theory. DOE intelligence assessed a research-related origin as more likely than not at low confidence in early 2023, FBI assessed it at moderate confidence, and the broader intelligence community remains genuinely split. The Wuhan Institute of Virology conducted relevant coronavirus research; the DEFUSE proposal in 2018 specifically discussed engineering features later observed in SARS-CoV-2; the WIV virus sequence database was taken offline in September 2019 in a way that has never been adequately explained. On the cover-up side, the Lancet letter in February 2020 was organized by Peter Daszak without disclosing that EcoHealth Alliance directly funded WIV; the Proximal Origin authors&#39; private Slack messages, later released under subpoena, showed real uncertainty preceding their published certainty; Facebook removed &#39;man-made&#39; COVID content for over a year and later acknowledged the moderation was wrong; the WHO joint study was constrained by Chinese government access controls; and researchers like Alina Chan, Nicholas Wade, and the DRASTIC collective who raised the question in good faith were treated as cranks for too long. Where this gets harder, and I want to name a pattern with you rather than dismiss anything, is that the same record also pulls hard against the strongest version of the claim. The natural-spillover hypothesis is not empty; the Worobey, Pekar, and Andersen 2022 papers in Science laid out substantial evidence including Huanan Seafood Market case clustering, environmental sampling, the phylogenetic structure of early SARS-CoV-2 lineages, and the documented prior pattern of coronavirus emergence (SARS-CoV-1 in 2002-2003, MERS in 2012). Both hypotheses remain live precisely because the evidence is partial on both sides. And on cover-up, the documented institutional failures coexist with self-protective behavior, professional defensiveness, and geopolitical constraint that do not require coordinated global concealment of a known truth. The pattern worth naming is what I would call epistemic escalation: real institutional failures, which deserve real accountability, are used as on-ramps to claims about coordinated planning and deliberate release that the same record cannot sustain. You will recognize this pattern from other places: the same architecture appears in AIDS denialism (real concerns about AZT toxicity became unsupported claims about HIV causation), in anti-fluoridation organizing (real industrial-pollution incidents became municipal-water-poisoning narratives), in moon-landing-hoax framing (real Apollo program engineering anomalies became staged-on-soundstage claims). In each case, a defensible piece of legitimate concern becomes the structural support for claims that require radically more evidence than the defensible piece provides. The DEFUSE proposal becomes &#39;the blueprint they used,&#39; even though it was never funded; the DOE low-confidence assessment becomes &#39;they admitted it was a bioweapon,&#39; even though low confidence in IC parlance means the opposite of admitted; the Proximal Origin private uncertainty becomes &#39;they admitted in private it was a lie,&#39; even though private uncertainty before publication is what science is supposed to look like. The same fact base is doing very different work depending on how far down the escalation you are willing to go.</p></div>
+      
     </div>
     <div class="dialogue-round round-3">
       <div class="round-label">Round 3: Integration</div>
       <div class="dialogue-bubble"><p>Integration: open question that holds both the validated kernel and the inferential-gap question together without closing on the user.: So if we take both of those seriously together, the documented suppression and the documented natural-origin evidence, the partial support for the cover-up framing and the absence of evidence for deliberate release, here is what I keep coming back to and I would really like to know how you see it. Given that the lab-leak hypothesis is genuinely live and was wrongly suppressed, given that institutional failures during the pandemic were real and have eroded trust for understandable reasons, given that the Chinese government continues to obstruct independent inquiry, and given that the maximalist deliberate-release framing extends well beyond what the evidence currently supports, what would an honest accountability framework look like to you that names the specific institutional failures we can document (Lancet conflict of interest, Proximal Origin gap, platform overreach, EcoHealth disclosure failures, WIV access denial, September 2019 database deletion), demands the transparency that has not yet been provided (WIV records, raw early case data, database content), strengthens gain-of-function and biosecurity oversight, takes the global death toll (~7M confirmed, ~15-30M excess) as the moral substrate it has to honor, and still holds open both natural-spillover and lab-related-origin hypotheses as live until evidence resolves them, without either collapsing into &#39;it was definitely a deliberate bioweapon&#39; or &#39;lab leak was always conspiracy theory&#39;?</p></div>
+      
     </div>
   </div>
 
@@ -942,6 +968,7 @@
     <ul class="findings-list">
     <li class="finding-item">
       <div class="finding-header">
+        
         <span class="finding-category">Completeness</span>
         <span class="finding-severity-medium">MEDIUM</span>
         <span class="finding-description">Worobey/Pekar/Andersen 2022 natural-origin papers are cited but their methodological critiques (raised by Chan, Bloom,...</span>
@@ -951,9 +978,11 @@
         <div class="finding-description">Worobey/Pekar/Andersen 2022 natural-origin papers are cited but their methodological critiques (raised by Chan, Bloom, Massey and others) are not engaged in detail; readers may want a sense of how contested the natural-origin evidence itself is.</div>
         <div class="finding-rec"><strong>Recommendation:</strong> Add brief acknowledgment that the natural-origin evidence base is itself contested on methodological grounds in next iteration.</div>
       </div>
+      
     </li>
     <li class="finding-item">
       <div class="finding-header">
+        
         <span class="finding-category">Completeness</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">The September 2019 WIV database deletion is mentioned in inferential_gap and consensus_explanation but could be given...</span>
@@ -963,9 +992,11 @@
         <div class="finding-description">The September 2019 WIV database deletion is mentioned in inferential_gap and consensus_explanation but could be given more prominence given its evidentiary weight as one of the strongest unexplained data points for the lab-related hypothesis.</div>
         <div class="finding-rec"><strong>Recommendation:</strong> Strengthen narrative around database deletion in next iteration.</div>
       </div>
+      
     </li>
     <li class="finding-item">
       <div class="finding-header">
+        
         <span class="finding-category">Accuracy</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">DOE &#39;low confidence&#39; and FBI &#39;moderate confidence&#39; levels are correctly characterized; the National Intelligence...</span>
@@ -975,9 +1006,11 @@
         <div class="finding-description">DOE &#39;low confidence&#39; and FBI &#39;moderate confidence&#39; levels are correctly characterized; the National Intelligence Council and four other agencies&#39; &#39;low confidence&#39; natural-origin assessments are also correctly noted; CIA undecided status as of 2023 is correctly reflected.</div>
         <div class="finding-rec"><strong>Recommendation:</strong> No correction needed.</div>
       </div>
+      
     </li>
     <li class="finding-item">
       <div class="finding-header">
+        
         <span class="finding-category">Completeness</span>
         <span class="finding-severity-medium">MEDIUM</span>
         <span class="finding-description">Long-COVID and the global death toll (~7M confirmed, ~15-30M excess) are integrated into consensus_explanation and...</span>
@@ -987,9 +1020,11 @@
         <div class="finding-description">Long-COVID and the global death toll (~7M confirmed, ~15-30M excess) are integrated into consensus_explanation and moral_foundations but could be woven more explicitly into the reframe and prebunking_note as the moral substrate the analysis must honor.</div>
         <div class="finding-rec"><strong>Recommendation:</strong> Strengthen integration of global mortality figure into reframe and into the closing posture in next iteration.</div>
       </div>
+      
     </li>
     <li class="finding-item">
       <div class="finding-header">
+        
         <span class="finding-category">Cognitive Influence</span>
         <span class="finding-severity-medium">MEDIUM</span>
         <span class="finding-description">GT-001 (epistemic frame capture) and GT-002 (adversary mirror-amplification) are correctly identified. The...</span>
@@ -999,9 +1034,11 @@
         <div class="finding-description">GT-001 (epistemic frame capture) and GT-002 (adversary mirror-amplification) are correctly identified. The terminal-frame ecosystem displays diagnostic signatures of frame capture (counter-evidence absorbed as further confirmation, independent investigations failing to confirm reframed as &#39;captured&#39;), and Russian/Chinese state media weaponize the institutional-distrust mechanism in opposing directions. GT-003 (trust-erosion compounding) is the dominant longitudinal effect.</div>
         <div class="finding-rec"><strong>Recommendation:</strong> No correction needed; the cognitive-warfare attribution is well-supported and bidirectional.</div>
       </div>
+      
     </li>
     <li class="finding-item">
       <div class="finding-header">
+        
         <span class="finding-category">Manipulation</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">TTPs section explicitly attributes T0040 (Suppress Inconvenient Evidence) to the scientific establishment in 2020-2021...</span>
@@ -1011,9 +1048,11 @@
         <div class="finding-description">TTPs section explicitly attributes T0040 (Suppress Inconvenient Evidence) to the scientific establishment in 2020-2021 as the first-mover manipulation, addressing the requirement that techniques be attributed on all relevant sides. T0040.002 (skeptic-side selective omission of natural-origin evidence) is also attributed.</div>
         <div class="finding-rec"><strong>Recommendation:</strong> No correction needed; bidirectional attribution is intentional and well-documented.</div>
       </div>
+      
     </li>
     <li class="finding-item">
       <div class="finding-header">
+        
         <span class="finding-category">Frame Adoption</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">Bridge analysis itself does not display frame capture: it does not collapse into either the maximalist conspiracy frame...</span>
@@ -1023,9 +1062,11 @@
         <div class="finding-description">Bridge analysis itself does not display frame capture: it does not collapse into either the maximalist conspiracy frame or the dismissive &#39;lab leak was always conspiracy theory&#39; frame. Both hypotheses are held live; both sides&#39; techniques are named; the inferential-gap analysis preserves a genuine probability distribution rather than collapsing to a binary.</div>
         <div class="finding-rec"><strong>Recommendation:</strong> No correction needed.</div>
       </div>
+      
     </li>
     <li class="finding-item">
       <div class="finding-header">
+        
         <span class="finding-category">ethics</span>
         <span class="finding-severity-medium">MEDIUM</span>
         <span class="finding-description">Socratic Round 1 follows the OARS protocol cleanly: open question, affirmation of the listener&#39;s experience, reflective...</span>
@@ -1035,9 +1076,11 @@
         <div class="finding-description">Socratic Round 1 follows the OARS protocol cleanly: open question, affirmation of the listener&#39;s experience, reflective listening, summary, with no facts introduced. Round 2 transitions into pattern naming with substantial evidence on both sides. Round 3 integrates and ends with an open question. Readers who hold the maximalist deliberate-release framing may experience Round 3 as still demanding more epistemic restraint than they feel the evidence requires; this is a defensible analytical posture but worth flagging.</div>
         <div class="finding-rec"><strong>Recommendation:</strong> Consider whether explicit acknowledgment that some readers will reject the inferential-gap argument should be added to the reframe.</div>
       </div>
+      
     </li>
     <li class="finding-item">
       <div class="finding-header">
+        
         <span class="finding-category">Bias</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">Framework names commercial motives on all sides (NIH/pharma funding stake; alternative-media economy growth; Chinese...</span>
@@ -1047,9 +1090,11 @@
         <div class="finding-description">Framework names commercial motives on all sides (NIH/pharma funding stake; alternative-media economy growth; Chinese sovereign interest; US strategic-competition interest; Russian asymmetric-advantage interest) without using motive-attribution to settle the underlying scientific question.</div>
         <div class="finding-rec"><strong>Recommendation:</strong> No correction needed.</div>
       </div>
+      
     </li>
     <li class="finding-item">
       <div class="finding-header">
+        
         <span class="finding-category">Quality</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">DISARM confidence scores presented to 0.01-0.05 precision without explicit calibration method documentation;...</span>
@@ -1059,9 +1104,11 @@
         <div class="finding-description">DISARM confidence scores presented to 0.01-0.05 precision without explicit calibration method documentation; GT-001/002/003 scores presented at 0.74-0.83 reflecting genuine uncertainty about cognitive-warfare framework boundaries.</div>
         <div class="finding-rec"><strong>Recommendation:</strong> Document calibration approach or standardize to nearest 0.05 in future iterations.</div>
       </div>
+      
     </li>
     <li class="finding-item">
       <div class="finding-header">
+        
         <span class="finding-category">Accuracy</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">Audit scanned for forbidden phrases (&#39;the truth is&#39;, &#39;experts agree&#39;, &#39;you were misled&#39;, &#39;you fell for&#39;, &#39;you should...</span>
@@ -1071,6 +1118,7 @@
         <div class="finding-description">Audit scanned for forbidden phrases (&#39;the truth is&#39;, &#39;experts agree&#39;, &#39;you were misled&#39;, &#39;you fell for&#39;, &#39;you should know&#39;, &#39;the fact is&#39;, &#39;everyone knows&#39;, &#39;it&#39;s obvious&#39;, &#39;you need to understand&#39;); none detected. Round 3 ends with a question mark. We/us/together language used throughout bridge. Universal needs framed in shared rather than oppositional terms.</div>
         <div class="finding-rec"><strong>Recommendation:</strong> No correction needed.</div>
       </div>
+      
     </li></ul>
   </div>
 

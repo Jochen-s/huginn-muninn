@@ -656,7 +656,10 @@ function renderSourceTierBreakdown(data) {
 
 function renderConfidenceProfile(data) {
   const cp = data?.confidence_profile;
-  if (!cp) return '';
+  // Only profiles re-scored with the claim-level prompt (2026-11-10) are shown;
+  // older ones rated the analysis and would contradict the note below.
+  const prov = data?.confidence_profile_provenance;
+  if (!cp || !prov) return '';
   const dims = [
     { name: 'Evidence Quality', key: 'evidence_quality', weight: '30%' },
     { name: 'Source Reliability', key: 'source_reliability', weight: '20%' },
@@ -673,12 +676,11 @@ function renderConfidenceProfile(data) {
   return `
     <div class="section">
       <h2>Evidence Certainty Framework${uniformWarning}</h2>
-      <p class="intro-note">Multi-dimensional confidence assessment inspired by GRADE methodology. <a href="confidence-methodology.html" class="methodology-link">[?]</a></p>
+      <p class="intro-note">How well the claim as stated is supported, on five separate scores. Strong evidence against the claim gives low Evidence Quality and Expert Consensus scores. Inspired by GRADE methodology. These scores were re-rated on ${esc(prov.rescored || '')} with ${esc(prov.model || '')}; the rest of this analysis is from the original run. <a href="confidence-methodology.html" class="methodology-link">[?]</a></p>
       <table class="metrics-table">
         <thead><tr><th>Dimension</th><th>Score</th></tr></thead>
         <tbody>
           ${rows}
-          <tr style="font-weight:600;border-top:2px solid var(--border)"><td>Composite (${esc(cp.ecf_level || 'N/A')})</td><td>${((parseFloat(cp.composite) || 0) * 100).toFixed(0)}%</td></tr>
         </tbody>
       </table>
     </div>`;
@@ -777,7 +779,7 @@ function renderTechniques(techniques) {
     </div>`).join('');
 }
 
-function renderSocraticDialogue(rounds) {
+function renderSocraticDialogue(rounds, notes) {
   if (!rounds || rounds.length === 0) return '<p class="intro-note">No dialogue data available.</p>';
   const labels = ['Perspective-Getting', 'Guided Examination', 'Integration'];
   const classNames = ['round-1', 'round-2', 'round-3'];
@@ -785,14 +787,101 @@ function renderSocraticDialogue(rounds) {
     <div class="dialogue-round ${classNames[i] || ''}">
       <div class="round-label">Round ${i + 1}: ${labels[i] || 'Round ' + (i + 1)}</div>
       <div class="dialogue-bubble">${formatParagraphs(String(round))}</div>
+      ${renderNotes(notes, `bridge.socratic_dialogue[${i}]`)}
     </div>`).join('');
 }
 
-function renderFindings(findings) {
+// Design C (2026-11-10): each Auditor finding can quote the passages it is
+// about. The build checks again that the quote is in the text at that path, so
+// a stale or forged path shows nothing, and a veto drops Bridge passages.
+const LOCATE_SECTIONS = ['decomposition', 'origins', 'intelligence', 'ttps', 'bridge'];
+
+function normText(s) {
+  return String(s).normalize('NFKC')
+    .replace(/[\u2018\u2019]/g, "'").replace(/[\u201C\u201D]/g, '"')
+    .replace(/\s+/g, ' ').trim();
+}
+
+function valueAtPath(data, path) {
+  let v = data;
+  for (const part of path.match(/[^.[\]]+/g) || []) {
+    if (v === null || typeof v !== 'object') return undefined;
+    v = v[part];
+  }
+  return v;
+}
+
+// Only these fields are printed on a scenario page. A quote from anywhere else
+// (sub-claims, origin tracing, the actor analysis) would publish text the page
+// never shows, so the finding names the section instead (review F1).
+// Kept in step with the renderers: technique cards, universal needs, the
+// scoped diagnostics and the source-diversity warning print too (X-12 review).
+const SHOWN_PATH = new RegExp('^(?:bridge\\.(?:consensus_explanation|inferential_gap|issue_overlap|narrative_deconstruction'
+  + '|feasibility_check|commercial_motives|perception_gap|reframe|socratic_dialogue\\[\\d+\\]|universal_needs\\[\\d+\\]'
+  + '|prebunking_note|vacuum_filled_by|techniques_revealed\\[\\d+\\]\\.(?:technique|name|used_by|how_it_works|where_used_here|historical_precedent))'
+  + '|origins\\.epistemic_diversity_gap)$');
+const VALID_PATH = /^[a-z_]+(\.[A-Za-z_0-9]+|\[\d+\])*$/;
+const SECTION_LABELS = {
+  decomposition: 'the claim breakdown', origins: 'the origin tracing', intelligence: 'the actor analysis',
+  ttps: 'the technique classification', bridge: 'the bridge analysis',
+};
+const MAX_QUOTE_CHARS = 400;
+
+// Passages a finding quotes that are on this page, re-checked against the
+// text, plus the labels of sections it quotes that the page does not show.
+function verifiedPassages(data, f) {
+  const withheld = isBridgeWithheld(data);
+  const shown = [];
+  const hidden = new Set();
+  const seenQuote = new Set();
+  const locs = (f && Array.isArray(f.locations)) ? f.locations : [];
+  for (const loc of locs) {
+    if (!loc || typeof loc !== 'object' || typeof loc.quote !== 'string' || loc.quote.length > MAX_QUOTE_CHARS) continue;
+    const quote = normText(loc.quote);
+    if (quote.length < 12 || quote.split(' ').length < 4) continue;
+    for (const path of (Array.isArray(loc.paths) ? loc.paths : [])) {
+      if (typeof path !== 'string' || !VALID_PATH.test(path)) continue;
+      const root = path.split(/[.[]/)[0];
+      if (!LOCATE_SECTIONS.includes(root) || (withheld && root === 'bridge')) continue;
+      const text = valueAtPath(data, path);
+      if (typeof text !== 'string' || !normText(text).includes(quote)) continue;
+      if (!SHOWN_PATH.test(path)) { hidden.add(SECTION_LABELS[root]); continue; }
+      shown.push({ path, quote: loc.quote, first: !seenQuote.has(quote) });
+      seenQuote.add(quote);
+    }
+  }
+  return { shown, hidden: [...hidden] };
+}
+
+function noteIndex(data) {
+  const byPath = {};
+  ((data.audit || {}).findings || []).forEach((f, i) => {
+    for (const p of verifiedPassages(data, f).shown) {
+      const list = byPath[p.path] = byPath[p.path] || [];
+      if (!list.some(x => x.n === i + 1)) list.push({ n: i + 1, f });
+    }
+  });
+  return byPath;
+}
+
+function renderNotes(notes, path) {
+  const list = (notes || {})[path];
+  if (!list || list.length === 0) return '';
+  return `<div class="auditor-notes">` + list.map(({ n, f }) => `
+    <a class="auditor-note" href="#finding-${n}"><span class="${severityClass(f.severity)}">The automated Auditor questions this passage (finding ${n}, ${esc(String(f.severity || ''))})</span></a>`).join('') + `</div>`;
+}
+
+function renderFindings(findings, data) {
   if (!findings || findings.length === 0) return '<p class="intro-note">No findings recorded.</p>';
-  return `<ul class="findings-list">` + findings.map(f => `
-    <li class="finding-item">
+  const passages = findings.map(f => (data ? verifiedPassages(data, f) : { shown: [], hidden: [] }));
+  const numbered = passages.some(p => p.shown.length > 0 || p.hidden.length > 0);
+  const intro = numbered
+    ? `<p class="intro-note">The Auditor is an automated review step in the same pipeline. Its findings are its reading of the analysis; no person has checked them. Where a finding is about a specific passage, the passage is quoted here and marked on the page.</p>`
+    : '';
+  return intro + `<ul class="findings-list">` + findings.map((f, i) => `
+    <li class="finding-item"${numbered ? ` id="finding-${i + 1}"` : ''}>
       <div class="finding-header">
+        ${numbered ? `<span class="finding-number">${i + 1}</span>` : ''}
         <span class="finding-category">${esc(categoryLabel(f.category))}</span>
         <span class="${severityClass(f.severity)}">${esc(String(f.severity || '').toUpperCase())}</span>
         <span class="finding-description">${esc(truncate(f.description || '', 120))}</span>
@@ -805,6 +894,12 @@ function renderFindings(findings) {
       <div class="finding-body">
         <div class="finding-rec"><strong>Recommendation:</strong> ${esc(f.recommendation)}</div>
       </div>` : '')}
+      ${passages[i].shown.length || passages[i].hidden.length ? `
+      <div class="finding-body finding-passages">
+        ${passages[i].shown.length ? `<div class="finding-rec"><strong>The Auditor's concern is about:</strong></div>
+        ${passages[i].shown.filter(p => p.first).map(p => `<blockquote class="finding-quote">${esc(p.quote)}</blockquote>`).join('')}` : ''}
+        ${passages[i].hidden.length ? `<div class="finding-rec">It ${passages[i].shown.length ? 'also ' : ''}concerns ${esc(passages[i].hidden.join(' and '))}, which this page does not show.</div>` : ''}
+      </div>` : ''}
     </li>`).join('') + `</ul>`;
 }
 
@@ -911,12 +1006,13 @@ function renderConvergenceMatrix(data) {
   </div>`;
 }
 
-function renderOptionalSection(title, text) {
+function renderOptionalSection(title, text, notesHtml = '') {
   if (!text) return '';
   return `
     <div class="section">
       <h2>${title}</h2>
       <div class="prose">${formatParagraphs(text)}</div>
+      ${notesHtml}
     </div>`;
 }
 
@@ -929,6 +1025,7 @@ function buildScenarioPage(scenario, allScenarios) {
   const bridge = data.bridge || {};
   const audit = data.audit || {};
   const stats = data.pipeline_stats || {};
+  const notes = noteIndex(data);
 
   const idx = allScenarios.findIndex(s => s.id === id);
   const prev = idx > 0 ? allScenarios[idx - 1] : null;
@@ -956,6 +1053,7 @@ function buildScenarioPage(scenario, allScenarios) {
         <h2>Scientific Consensus / Mainstream Explanation</h2>
         <p class="intro-note">The established scientific or institutional explanation for this phenomenon.</p>
         <div class="prose">${formatParagraphs(bridge.consensus_explanation)}</div>
+        ${renderNotes(notes, 'bridge.consensus_explanation')}
       </div>`
     : '';
 
@@ -986,34 +1084,38 @@ function buildScenarioPage(scenario, allScenarios) {
     <h2>Inferential Gap</h2>
     <p class="intro-note">Where the evidence ends and the leap begins.</p>
     <div class="prose">${formatParagraphs(bridge.inferential_gap)}</div>
+    ${renderNotes(notes, 'bridge.inferential_gap')}
   </div>` : ''}
 
   <div class="section">
     <h2>Common Ground</h2>
     <div class="prose">${formatParagraphs(bridge.issue_overlap || 'No common ground data available.')}</div>
+    ${renderNotes(notes, 'bridge.issue_overlap')}
   </div>
 
   <div class="section">
     <h2>Narrative Deconstruction</h2>
     <div class="prose">${formatParagraphs(bridge.narrative_deconstruction || 'No narrative deconstruction data available.')}</div>
+    ${renderNotes(notes, 'bridge.narrative_deconstruction')}
   </div>
 
-  ${renderOptionalSection('Feasibility Assessment', bridge.feasibility_check)}
+  ${renderOptionalSection('Feasibility Assessment', bridge.feasibility_check, renderNotes(notes, 'bridge.feasibility_check'))}
 
-  ${renderOptionalSection('Commercial Interests', bridge.commercial_motives)}
+  ${renderOptionalSection('Commercial Interests', bridge.commercial_motives, renderNotes(notes, 'bridge.commercial_motives'))}
 
-  ${renderOptionalSection('Perception Gap', bridge.perception_gap)}
+  ${renderOptionalSection('Perception Gap', bridge.perception_gap, renderNotes(notes, 'bridge.perception_gap'))}
 
   <div class="section">
     <h2>Socratic Dialogue</h2>
     <p class="intro-note">A model conversation demonstrating how to engage someone who holds this belief.</p>
-    ${renderSocraticDialogue(bridge.socratic_dialogue)}
+    ${renderSocraticDialogue(bridge.socratic_dialogue, notes)}
   </div>
 
   ${bridge.reframe ? `
   <div class="section">
     <h2>Reframe</h2>
     <blockquote class="reframe-block">${esc(bridge.reframe)}</blockquote>
+    ${renderNotes(notes, 'bridge.reframe')}
   </div>` : ''}
 
   ${renderScopedDiagnostics(bridge)}`;
@@ -1087,7 +1189,7 @@ function buildScenarioPage(scenario, allScenarios) {
       ${verdictBadge(audit.verdict)}
     </div>
     ${audit.summary ? `<div class="audit-summary">${esc(audit.summary)}</div>` : ''}
-    ${renderFindings(audit.findings)}
+    ${renderFindings(audit.findings, data)}
   </div>
 
   ${isBridgeWithheld(data) ? '' : renderEvaluation(id, bridge)}
@@ -1402,19 +1504,20 @@ function buildMethodologyPage() {
     </ol>
 
     <h2>The Five Dimensions (Evidence Certainty Framework)</h2>
-    <p>Each claim is also assessed across five dimensions. These are weighted to produce a composite score:</p>
+    <p>Each claim is also assessed, as stated, across five dimensions. The scores describe how well the claim is supported, so strong evidence against a claim gives low Evidence Quality and Expert Consensus scores. The package weights them into a composite score:</p>
     <table>
       <thead><tr><th>Dimension</th><th>Weight</th><th>What It Measures</th></tr></thead>
       <tbody>
-        <tr><td>Evidence Quality</td><td>30%</td><td>How strong is the underlying evidence? Are there controlled studies, systematic reviews, or only anecdotes?</td></tr>
-        <tr><td>Source Reliability</td><td>20%</td><td>How credible are the sources? Do they have editorial standards, correction policies, or peer review?</td></tr>
+        <tr><td>Evidence Quality</td><td>30%</td><td>How strong is the evidence that supports the claim? Are there controlled studies, systematic reviews, or only anecdotes?</td></tr>
+        <tr><td>Source Reliability</td><td>20%</td><td>How credible are the sources that make or carry the claim? Do they have editorial standards, correction policies, or peer review?</td></tr>
         <tr><td>Claim Testability</td><td>15%</td><td>Can the claim be checked against observable data? Or is it unfalsifiable by design?</td></tr>
-        <tr><td>Expert Consensus</td><td>20%</td><td>Do domain experts agree on this topic? Is there genuine scientific debate, or manufactured controversy?</td></tr>
+        <tr><td>Expert Consensus</td><td>20%</td><td>How far do domain experts support the claim? Is there genuine scientific debate, or manufactured controversy?</td></tr>
         <tr><td>Internal Coherence</td><td>15%</td><td>Is the claim logically consistent? Do its sub-claims support each other, or contradict?</td></tr>
       </tbody>
     </table>
 
     <h2>ECF Levels</h2>
+    <p>The package reports a level computed from the composite. The gallery shows only the five scores and no level, because a single word such as LOW next to a claim reads like a verdict.</p>
     <table>
       <thead><tr><th>Level</th><th>Composite Score</th><th>What It Means</th></tr></thead>
       <tbody>
@@ -1925,15 +2028,6 @@ function buildGraphPage() {
       h += detailField('Category', d.category);
       h += detailField('Version', d.version);
       h += detailField('Confidence', d.confidence ? (d.confidence * 100).toFixed(0) + '%' : '');
-      if (d.ecf_level && d.ecf_level !== 'N/A') {
-        h += detailField('ECF level', d.ecf_level);
-      }
-      if (d.ecf_composite != null && d.ecf_composite !== 'N/A') {
-        var composite = typeof d.ecf_composite === 'number'
-          ? (d.ecf_composite * 100).toFixed(0) + '%'
-          : String(d.ecf_composite);
-        h += detailField('ECF composite', composite);
-      }
       if (d.false_polarization_gap != null) {
         var gapPct = (d.false_polarization_gap * 100).toFixed(0);
         h += detailField('Shared Reality', gapPct + '% of underlying concerns are shared across perspectives');
@@ -2172,4 +2266,9 @@ function main() {
   console.log(`Open: ${path.join(DIST_DIR, 'index.html')}`);
 }
 
-main();
+if (require.main === module) {
+  main();
+} else {
+  // Loaded by tests: expose the renderers without building.
+  module.exports = { renderFindings, renderNotes, noteIndex, verifiedPassages, buildScenarioPage };
+}

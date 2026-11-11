@@ -427,6 +427,23 @@
     margin-top: 4px;
   }
   .finding-rec strong { color: #2C3E50; }
+  .finding-number {
+    display: inline-block; min-width: 1.6em; text-align: center;
+    font-size: 0.75rem; font-weight: 700; color: var(--gray);
+    border: 1px solid var(--border); border-radius: 10px;
+  }
+  .finding-quote {
+    margin: 6px 0 0; padding: 4px 10px;
+    border-left: 3px solid var(--border);
+    font-size: 0.85rem; color: #2C3E50; font-style: italic;
+  }
+  .auditor-notes { margin-top: 8px; display: flex; flex-direction: column; gap: 4px; }
+  .auditor-note {
+    display: block; padding: 6px 10px; border-left: 3px solid var(--amber);
+    background: var(--bg); border-radius: 0 6px 6px 0;
+    font-size: 0.8rem; color: #2C3E50; text-decoration: none;
+  }
+  .auditor-note:hover { text-decoration: underline; }
 
   /* Scenario navigation */
   .scenario-nav {
@@ -654,12 +671,11 @@
   
     <div class="section">
       <h2>Evidence Certainty Framework</h2>
-      <p class="intro-note">Multi-dimensional confidence assessment inspired by GRADE methodology. <a href="confidence-methodology.html" class="methodology-link">[?]</a></p>
+      <p class="intro-note">How well the claim as stated is supported, on five separate scores. Strong evidence against the claim gives low Evidence Quality and Expert Consensus scores. Inspired by GRADE methodology. These scores were re-rated on 2026-11-10 with claude-opus-5-5; the rest of this analysis is from the original run. <a href="confidence-methodology.html" class="methodology-link">[?]</a></p>
       <table class="metrics-table">
         <thead><tr><th>Dimension</th><th>Score</th></tr></thead>
         <tbody>
-          <tr><td>Evidence Quality <span class="dim-weight">(30%)</span></td><td>30%</td></tr><tr><td>Source Reliability <span class="dim-weight">(20%)</span></td><td>25%</td></tr><tr><td>Claim Testability <span class="dim-weight">(15%)</span></td><td>50%</td></tr><tr><td>Expert Consensus <span class="dim-weight">(20%)</span></td><td>70%</td></tr><tr><td>Internal Coherence <span class="dim-weight">(15%)</span></td><td>25%</td></tr>
-          <tr style="font-weight:600;border-top:2px solid var(--border)"><td>Composite (N/A)</td><td>0%</td></tr>
+          <tr><td>Evidence Quality <span class="dim-weight">(30%)</span></td><td>12%</td></tr><tr><td>Source Reliability <span class="dim-weight">(20%)</span></td><td>15%</td></tr><tr><td>Claim Testability <span class="dim-weight">(15%)</span></td><td>20%</td></tr><tr><td>Expert Consensus <span class="dim-weight">(20%)</span></td><td>5%</td></tr><tr><td>Internal Coherence <span class="dim-weight">(15%)</span></td><td>30%</td></tr>
         </tbody>
       </table>
     </div>
@@ -729,6 +745,7 @@
 <p>POPULIST RADICAL RIGHT PATTERN: Cas Mudde and Pippa Norris show that the populist radical right family across Europe shares a structural framework. It mobilizes ethnic nativism (the people are a homogeneous ethnocultural body under threat), authoritarianism (a strong leader and a hard hand are needed to defend it), and populism (a corrupt elite stands between the people and their defense). Vlaams Belang, AfD, RN, PVV, and Fratelli d&#39;Italia all instantiate this framework with national variations. The replacement claim is the most emotionally compelling and demographically scientific-sounding version of the ethnic nativist component. It is not unique to Flanders, it is not unique to immigration, and it follows a documented historical pattern in which the specific outgroup rotates while the structural framework persists.</p>
 <p>HISTORICAL PARALLELS: The closest historical analogue is the Jim Crow racial hierarchy in the American South. Madison Grant, the original author of the lineage, was writing inside that system and for it. The function of the racial hierarchy was to give economically precarious white Southerners a status hierarchy as compensation for material conditions that the political economy of the South was not going to address. The mechanism is durable because it works on the psychology of relative status, not on the absolute conditions of the people it deceives. The same architecture, transposed across a hundred and ten years and an ocean, reappears in contemporary European replacement rhetoric. The vocabulary is different, the function is identical: convert economic and policy frustration into out-group hostility, and shield the structural causes from political accountability.</p>
 <p>WHAT ALL OF THIS IMPLIES: A serious response to the conditions voters are describing requires addressing housing supply (Flemish housing policy researchers have documented the shortfall for years), healthcare workforce planning, pension viability, integration policy coherence across federal and regional levels, and democratic accountability to communities that have felt unheard. None of these solutions require, and most of them are obstructed by, the replacement framing.</p></div>
+        
       </div>
 
   <div class="section">
@@ -881,6 +898,7 @@
     <h2>Inferential Gap</h2>
     <p class="intro-note">Where the evidence ends and the leap begins.</p>
     <div class="prose"><p>The evidence base supports the observation that demographic change is occurring and that policy has been incoherent. The evidence base does not support, and cannot support, the claim that the change is the deliberate execution of a coordinated plan by a complicit elite. The leap from incoherence to plan, from emergent outcome to engineered project, from policy failure to demographic conspiracy, is the inferential gap. It cannot be closed by more demographic data, because demographic data only describes outcomes, not intentions. It cannot be closed by leaked documents, because no credible documentary evidence has been identified in the reviewed record, including the archives, the parliamentary records, the inter-governmental communications, or the academic literature. The gap is closed in the listener&#39;s mind by a structural intuition (this looks like a plan because it has consequences) that the rhetoric is engineered to trigger, not by evidence that the rhetoric supplies.</p></div>
+    
   </div>
 
   <div class="section">
@@ -888,6 +906,7 @@
     <div class="prose"><p>People who hold the replacement claim and people who reject it share more common ground than the public debate suggests. Both agree that something is genuinely changing in Flanders and that the change has been faster than political institutions have been honest about. Both agree that housing is unaffordable in Ghent, Antwerp, and Brussels and that waiting lists for social housing are long enough to be a generational problem. Both agree that integration policy in Belgium has been incoherent across federal, regional, and municipal levels for at least two decades, with predictable consequences in specific neighborhoods. Both agree that political elites have not been straight with voters about the trade-offs involved in any plausible migration policy. Both agree that the cordon sanitaire as a strategy has failed to address the underlying drivers of support for Vlaams Belang and that simply branding voters as racist neither persuades nor heals.</p>
 <p>The disagreement is narrower than it appears. It is not about whether change is happening; it is about why, who is responsible, and what kind of response is honest. The replacement frame says the change is deliberate, the responsibility lies with a complicit elite executing a plan, and the response must be radical restriction. The evidence-based account says the change is the emergent outcome of aging, low native fertility, labor market demand, family reunification rules, asylum obligations under the Geneva Convention, and intra-EU mobility, and that the response must be coherent policy on housing, integration, education, labor markets, and democratic accountability. Neither account makes the change disappear. The first replaces a hard policy problem with a moral villain. The second keeps the problem hard and asks the political system to actually solve it.</p>
 <p>Both sides, at the level of individual voters in a Flemish kitchen, want the same things: a country where their children can afford a home, where the language and traditions they grew up with continue to have public space, where neighbors of different backgrounds can build a shared life, and where political leaders tell the truth about trade-offs. Naming this shared ground is not a rhetorical move; it is a precondition for the conversation continuing at all.</p></div>
+    
   </div>
 
   <div class="section">
@@ -897,24 +916,28 @@
 <p>LEVEL TWO, PARTIALLY TRUE WITH HEAVY NUANCE: Specific policy choices have shaped these outcomes. EU enlargement, family reunification rules, the slow build-out of legal labor migration channels, asylum policy choices since 2015, and the Belgian federal-regional division of integration competences all matter. Critics who say Belgian policy on migration has been incoherent for two decades are correct, and the policy critique is legitimate. What is not supported by evidence is the leap from incoherence to deliberate replacement plan. Incoherence is the absence of a plan, not the execution of one.</p>
 <p>LEVEL THREE, UNSUPPORTED: The intentionality claim. The assertion that demographic change is the deliberate, coordinated execution of an elite plan to replace the Flemish or European people and destroy their culture is not supported by any documentary, archival, or institutional evidence. The closest the rhetoric comes to a citation is the 2001 UN Population Division Replacement Migration report, which the report itself explicitly states is not a policy advocacy document but a demographic modeling exercise. The framing requires the implausible joint assumption that governments are simultaneously competent enough to execute a multi-decade demographic conspiracy in coordination across dozens of states, ideologies, and party rotations, and incompetent enough to fail at housing, healthcare, fiscal management, and pension reform. The contradiction is internal to the claim. Either governments are powerful enough to engineer demographic outcomes silently, in which case they are powerful enough to address the conditions voters complain about, or they are too weak to address ordinary policy problems, in which case they cannot be running a hidden replacement project.</p>
 <p>The deconstruction is not a dismissal. The voter who feels the change is feeling something real. The neighbor whose name appears as the replacing population is also a Flemish voter, often two and three generations in. The honest conversation is about how a society manages change without producing scapegoats, not whether the change exists.</p></div>
+    
   </div>
 
   
     <div class="section">
       <h2>Feasibility Assessment</h2>
       <div class="prose"><p>Considered as an operational plan, the replacement claim faces severe feasibility problems. It would require coordinated action across at least twenty-seven EU member states, dozens of party rotations in each state across multiple decades, the active complicity of national civil services, statistical agencies, immigration services, and police forces, all without leaks despite robust whistleblower protections, freedom of information regimes, parliamentary investigation powers, opposition party scrutiny, journalistic investigation, and academic analysis. It would require the same governments that demonstrably fail at housing construction, healthcare waiting times, pension reform, and pandemic preparedness to nonetheless execute a silent multi-decade demographic engineering project with operational discipline. It would require that no first-generation participant in the conspiracy, across this entire span, defects or repents into the public record. The simpler explanation that policy is incoherent, that demographic outcomes are emergent, and that migration is driven by aging, labor demand, and humanitarian obligations under existing law fits the evidence without requiring any of these implausible joint assumptions. The conspiracy version of the claim is operationally infeasible. The structural version (capital and elites benefit from migration policy choices that disadvantage native-born workers) is partially defensible inside a different analytical frame but does not require the language of replacement to be made and does not support the conclusions drawn from it.</p></div>
+      
     </div>
 
   
     <div class="section">
       <h2>Commercial Interests</h2>
       <div class="prose"><p>Multiple commercial and political incentives sustain the replacement narrative independent of its evidentiary merit. Political actors gain electoral support, parliamentary salaries, public funding, and media platforms by mobilizing the framing; Vlaams Belang in particular has transformed from a marginal party in the 1990s into one of the largest political organizations in Flanders, with the financial infrastructure that comes with that scale. Media outlets that platform the rhetoric capture audience share in a competitive attention market; outrage content reliably outperforms careful analysis on the engagement metrics that govern modern broadcasting and social media economies. Online entrepreneurs build personal brands as identitarian commentators, with monetized YouTube channels, Substacks, Patreon and Telegram subscriptions, merchandise, and speaking circuits. Book sales for replacement-adjacent authors are durable across decades; Camus and his successors have a continuing market. Foreign state-aligned channels, Russian and otherwise, amplify the framing for strategic purposes that have nothing to do with Flemish welfare but everything to do with weakening EU and Belgian political cohesion. None of this commercial structure proves the framing is wrong; it does establish that the framing is sustained by a financial ecosystem that benefits from its continuation regardless of whether it is supported by evidence. The structural asymmetry matters: there is no comparable commercial ecosystem rewarding careful demographic analysis. Heran&#39;s work does not generate viral clips, Eurostat tables do not produce merchandise, and Belgian Federal Planning Bureau reports do not anchor a media career.</p></div>
+      
     </div>
 
   
     <div class="section">
       <h2>Perception Gap</h2>
       <div class="prose"><p>The perception gap on this topic is among the widest in contemporary Flemish politics. The voter who shares replacement-adjacent material believes they are defending an obvious truth that political and media elites are forbidden to admit. They perceive critics as metropolitan-elite Brussels-Antwerp-Ghent residents who do not live in the affected neighborhoods, do not pay attention to local conditions, and use accusations of racism to silence ordinary concerns. They perceive academic demographers as ideologically motivated to downplay the change and journalists as part of the system that conceals it. They perceive Vlaams Belang as the only political vehicle willing to say what they think. The voter who rejects the claim sees a recycled racist conspiracy theory, a public discourse poisoned by far-right vocabulary, neighbors and colleagues being dehumanized, and a political vehicle whose internal documents reveal that the moderation is tactical. They perceive replacement believers as either racist or naive. Both perceptions miss the architecture beneath the disagreement. The believer often does not perceive that their legitimate concerns about housing, healthcare, and integration are being instrumentalized by a political operation whose framing has been refined across a century and which functions to protect from accountability the structural decisions that actually produced their conditions. The critic often does not perceive that dismissing the believer&#39;s concern validates the populist claim that elites do not listen, and that the most effective response is not to assert the believer is wrong about everything but to name the architecture and offer a better explanation for the conditions they correctly observe. The corrosive feature of this perception gap is that both sides have part of the truth, and the operation that produced the replacement frame benefits from each side perceiving the other as the entirety of the problem.</p></div>
+      
     </div>
 
   <div class="section">
@@ -924,14 +947,17 @@
     <div class="dialogue-round round-1">
       <div class="round-label">Round 1: Perspective-Getting</div>
       <div class="dialogue-bubble"><p>Round 1 (OARS, validate the emotion, never the claim): I hear you, and I want to take this seriously rather than dismiss it. You are watching your neighborhood change. You see streets that look different than they did when you grew up. You wait longer for a GP appointment than your mother did. Your daughter cannot afford a flat in the city you raised her in. Your pension is a question rather than an answer. You feel like nobody in Brussels or Antwerp city hall is actually listening to you, and when you raise these things you get called names instead of getting answers. That is a real experience and the frustration that produces is legitimate. I am not going to tell you that you are imagining it. I am not going to tell you that you are racist for noticing. Change is happening, the pace of change has outrun the political system&#39;s willingness to have an honest conversation about integration, and the everyday consequences are showing up in your kitchen. Before I say anything else, I want you to know that I see that and I am not going to pretend nothing is changing. Can you tell me which specific thing is hurting most right now? Is it the housing, the healthcare, the pension, the feeling that your village or your district is not yours anymore, or the feeling that nobody is listening? I am not asking to test you. I am asking because the conversation has to start with the actual concern, not with the political slogan that someone else attached to it.</p></div>
+      
     </div>
     <div class="dialogue-round round-2">
       <div class="round-label">Round 2: Guided Examination</div>
       <div class="dialogue-bubble"><p>Round 2 (Guided examination, introduce evidence): Thank you for telling me. I want to share something with you, and I am not doing it to argue you out of what you feel. I am doing it because I think you deserve a better explanation than the one you are being given. There is a technique called scapegoating. It works like this: take a real problem with several causes, point at one visible group as the cause, and quietly leave the actual causes alone. The problem is real, so the anger is real, but the anger is being aimed at the wrong target. Look at what we just talked about. Housing in Antwerp and Ghent is unaffordable. Why? The Federal Planning Bureau and the National Bank have published this clearly: housing construction has not kept pace with population growth and household formation for over a decade, according to housing policy researchers. The shortage is structural, not caused by any single group. The rules around social housing waitlists have been frozen for years, and investors have bought up stock that used to be family housing. Immigration is one factor on the demand side, but it is much smaller than the supply failure on the other side. The housing economists who study this find that the primary drivers of high rents are insufficient construction, zoning restrictions, and investment demand, not immigration. Removing one demand group does not fix a supply problem. Healthcare. The waiting lists are getting longer because we are not training enough GPs, not because immigrants are using clinics; in fact, a significant share of healthcare workers, from hospital cleaners to specialist doctors, are people who came here from somewhere else. The healthcare system depends on migration in ways most people do not see in their daily lives, including the people who staff the hospitals and care homes. Pensions. The pension math is hard because the Belgian working-age population is shrinking through aging, not through immigration; immigration is partly what keeps the math from getting worse faster. Now look at who has been telling you for many years that immigration is the cause. Vlaams Belang. The same party. The same vocabulary. Schild and Vrienden, which presented itself as clean-cut Flemish students until VRT Pano showed us the private chats where the same people were trading openly racist and antisemitic material. The vocabulary, omvolking, is borrowed from a French writer named Renaud Camus, who took it from a 1916 American book by Madison Grant that Hitler admired. The Christchurch attacker, who titled his manifesto after Camus&#39;s book, named this exact framing as his reason. I am not saying you are him. I am saying the framing has a lineage, and the lineage is documented, and the people at the top of it know what they are doing even when the people sharing the clips on Facebook do not. The most uncomfortable question I want to ask you is this. If immigration were the main cause of your housing, healthcare, and pension problems, you would expect those problems to be smaller in places with little immigration. Look at the Wallonian and Flemish villages with almost no immigration. The housing is failing there too. The doctors are leaving there too. The pensions are at risk there too. The factor that is the same everywhere is the policy choices, not the neighbors. Does that pattern fit the explanation you have been given?</p></div>
+      
     </div>
     <div class="dialogue-round round-3">
       <div class="round-label">Round 3: Integration</div>
       <div class="dialogue-bubble"><p>Round 3 (Integration, Charter C6): I want to close with what I think we actually agree on, because I suspect it is more than the politicians on either side want us to notice. We agree that something is changing in Flanders and that the political system has not been honest about it. We agree that successive governments, across the political spectrum, have failed at housing, at healthcare, at pensions, and at integration policy. We agree that being told you are racist for raising any of this is dismissive and counterproductive. We agree that you have a right to your language, your traditions, and your community continuing to have a public place. None of that is up for negotiation. Now consider this: your Moroccan-origin neighbor on the third floor. Her father came to Genk in the 1960s because the mines needed workers. She speaks Flemish, she pays taxes, her son is in your daughter&#39;s school. When you look at her actual life, what does she want? An affordable home, a school that works, a doctor she can see, a pension she can count on, a country where her son is allowed to be Flemish without having to prove it every day. That is the same list as yours. The political operation that has been telling you she is the threat has been very good at making you forget that the two of you are standing in the same queue at the same housing office, frustrated with the same minister, affected by the same policy failures. The people building this framing across a hundred years have always needed people like you and people like her to look at each other instead of at them. If you could set aside the framing for a moment and look at the person next to you in that queue, what do you think the two of you might demand together that neither of you can get alone?</p></div>
+      
     </div>
   </div>
 
@@ -939,6 +965,7 @@
   <div class="section">
     <h2>Reframe</h2>
     <blockquote class="reframe-block">You and the neighbor you are afraid is replacing you both want the same thing: an affordable home, a school that works, a doctor you can see, a pension you can count on, a community where your children belong and your language continues, and a government that is honest about trade-offs; everything else is the architecture that someone built to keep you from noticing that.</blockquote>
+    
   </div>
 
   
@@ -976,6 +1003,7 @@
     <ul class="findings-list">
     <li class="finding-item">
       <div class="finding-header">
+        
         <span class="finding-category">Accuracy</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">Key factual claims are well-sourced: Eurostat and Statbel data on aging and sub-replacement fertility, the documented...</span>
@@ -985,9 +1013,11 @@
         <div class="finding-description">Key factual claims are well-sourced: Eurostat and Statbel data on aging and sub-replacement fertility, the documented Schild and Vrienden internal chats surfaced by VRT Pano 2018, the Christchurch manifesto title and casualty count, the Camus 2011 publication date, the Madison Grant 1916 publication date, the Tucker Carlson Fox News segment volume (over 400 between 2016 and 2021 per a New York Times analysis), and the cordon sanitaire erosion documented in Flemish quality press. The Heran refutation of Camus is correctly attributed.</div>
         <div class="finding-rec"><strong>Recommendation:</strong> Pin the specific Heran publication (Avenir des migrations and the College de France lecture series) and the specific INED reports referenced, and consider adding the 2001 UN Population Division Replacement Migration report by name for the section on misrepresented sources.</div>
       </div>
+      
     </li>
     <li class="finding-item">
       <div class="finding-header">
+        
         <span class="finding-category">Completeness</span>
         <span class="finding-severity-medium">MEDIUM</span>
         <span class="finding-description">The community_experiential perspective of Flemish-Moroccan, Flemish-Turkish, Flemish-Congolese, and Flemish-Syrian...</span>
@@ -997,9 +1027,11 @@
         <div class="finding-description">The community_experiential perspective of Flemish-Moroccan, Flemish-Turkish, Flemish-Congolese, and Flemish-Syrian residents is acknowledged in the origins section and in the Socratic dialogue but could be more central to the consensus_explanation. The lived experience of being the named replacing population is the missing voice in most analyses of this topic and the epistemic equity dimension argues for amplifying it.</div>
         <div class="finding-rec"><strong>Recommendation:</strong> Expand the second-generation integration paragraph in consensus_explanation with named ethnographic studies (Fadil, Phalet, Easton) and direct community-organization framings from Kif Kif and Minderhedenforum.</div>
       </div>
+      
     </li>
     <li class="finding-item">
       <div class="finding-header">
+        
         <span class="finding-category">Bias</span>
         <span class="finding-severity-medium">MEDIUM</span>
         <span class="finding-description">The analysis is, defensibly, more sympathetic to the position that rejects the conspiracy framing than to the position...</span>
@@ -1009,9 +1041,11 @@
         <div class="finding-description">The analysis is, defensibly, more sympathetic to the position that rejects the conspiracy framing than to the position that holds it. This reflects the evidence base (intentionality is not supported) but could be perceived by Vlaams Belang voters as hostile analysis disguised as objectivity. The Socratic dialogue mitigates this in Round 1 with explicit OARS-style validation, but Rounds 2 and 3 lean toward challenging the framing.</div>
         <div class="finding-rec"><strong>Recommendation:</strong> Consider strengthening the Round 1 acknowledgment that municipal-level data (Statbel ward-level breakdowns) shows some Flemish communities experienced very rapid demographic change in compressed time horizons, which aggregate national averages obscure. This is a legitimate driver of the felt experience and deserves explicit recognition before the framing is challenged.</div>
       </div>
+      
     </li>
     <li class="finding-item">
       <div class="finding-header">
+        
         <span class="finding-category">Manipulation</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">The techniques_revealed section implements the Asymmetric Weight Principle correctly. The replacement actors&#39;...</span>
@@ -1021,9 +1055,11 @@
         <div class="finding-description">The techniques_revealed section implements the Asymmetric Weight Principle correctly. The replacement actors&#39; techniques are classified as systematic with detailed multi-decade evidence and historical precedent. The claim-maker&#39;s emotional amplification is not separately called out because the scenario is constructed around the claim itself rather than a single observer of it; the analysis treats the framing as the systematic operation it is.</div>
         <div class="finding-rec"><strong>Recommendation:</strong> No fix needed.</div>
       </div>
+      
     </li>
     <li class="finding-item">
       <div class="finding-header">
+        
         <span class="finding-category">Completeness</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">The bipartisan policy failure dimension could be more explicit. Successive Flemish and federal governments across the...</span>
@@ -1033,9 +1069,11 @@
         <div class="finding-description">The bipartisan policy failure dimension could be more explicit. Successive Flemish and federal governments across the political spectrum have failed to address housing, healthcare workforce, and pension reform. The vacuum that Vlaams Belang fills is created by this bipartisan failure, not by the existence of immigration. The analysis touches on this but could foreground it.</div>
         <div class="finding-rec"><strong>Recommendation:</strong> Add a sentence in consensus_explanation that names the cross-party policy failure across Open VLD, CD and V, sp.a-Vooruit, MR, and N-VA governing coalitions over two decades, so the framing is not perceived as a partisan attack on the right.</div>
       </div>
+      
     </li>
     <li class="finding-item">
       <div class="finding-header">
+        
         <span class="finding-category">Quality</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">The Socratic dialogue successfully implements OARS protocol in Round 1, named-technique guided examination in Round 2,...</span>
@@ -1045,9 +1083,11 @@
         <div class="finding-description">The Socratic dialogue successfully implements OARS protocol in Round 1, named-technique guided examination in Round 2, and integration with concrete agency in Round 3. The use of Flemish specifics (Antwerp, Ghent, Genk, Pano, Schild en Vrienden, omvolking, the Moroccan-origin neighbor on the third floor) anchors the dialogue in lived context rather than abstract argument.</div>
         <div class="finding-rec"><strong>Recommendation:</strong> No fix needed.</div>
       </div>
+      
     </li>
     <li class="finding-item">
       <div class="finding-header">
+        
         <span class="finding-category">Completeness</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">International comparative material is included for AfD, RN, PVV, Fratelli d&#39;Italia, and Tucker Carlson, but the...</span>
@@ -1057,9 +1097,11 @@
         <div class="finding-description">International comparative material is included for AfD, RN, PVV, Fratelli d&#39;Italia, and Tucker Carlson, but the analysis could go deeper on how other European democracies have handled or failed to handle replacement-adjacent rhetoric (German memory politics around AfD, French institutional response to Camus, Dutch response to PVV).</div>
         <div class="finding-rec"><strong>Recommendation:</strong> Optional expansion in a future revision. The Flemish focus is correct for this scenario.</div>
       </div>
+      
     </li>
     <li class="finding-item">
       <div class="finding-header">
+        
         <span class="finding-category">Quality</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">v3 pipeline redesign compliance: Round 3 ends with genuine question (C6), convergence_strength downgraded to MEDIUM (C3...</span>
@@ -1069,6 +1111,7 @@
         <div class="finding-description">v3 pipeline redesign compliance: Round 3 ends with genuine question (C6), convergence_strength downgraded to MEDIUM (C3 evidence requirement), actor credibility converted to structural descriptions (C1). All three pipeline redesign items validated.</div>
         <div class="finding-rec"><strong>Recommendation:</strong> No fix needed. Pipeline redesign working as intended.</div>
       </div>
+      
     </li></ul>
   </div>
 

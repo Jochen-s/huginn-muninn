@@ -412,8 +412,24 @@ def _print_analysis(data: dict):
         if audit.get("findings"):
             for finding in audit["findings"]:
                 click.echo(f"    [{finding.get('severity', '?')}] {finding.get('description', '')}")
+                for path, quote in _finding_passages(data, finding):
+                    click.echo(f'      about {path}: "{quote}"')
 
     click.echo(f"\n{'='*60}\n")
+
+
+def _finding_passages(data: dict, finding: dict) -> list[tuple[str, str]]:
+    """(path, quote) for each passage a finding quotes, re-checked against
+    this report's text; a veto drops Bridge passages (design C)."""
+    from huginn_muninn.locate import SECTIONS, locate_quote, normalise_section
+    withheld = data.get("bridge_withheld") or (data.get("audit") or {}).get("veto")
+    sections = {k: data.get(k) for k in SECTIONS}
+    out = []
+    for loc in finding.get("locations") or []:
+        if not isinstance(loc, dict) or (withheld and normalise_section(loc.get("section")) == "bridge"):
+            continue
+        out += [(p, loc.get("quote", "")) for p in locate_quote(sections, loc.get("section"), loc.get("quote"))]
+    return out
 
 
 def _print_verdict(data: dict):

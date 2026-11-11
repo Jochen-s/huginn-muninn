@@ -489,16 +489,44 @@ frame_capture_risk will be "none". Flag sparingly and only with explicit upstrea
 signals.
 
 EVIDENCE CERTAINTY FRAMEWORK (ECF):
-Rate the analysis as a whole across five dimensions (0.0-1.0):
-- evidence_quality: strength of underlying evidence (studies > anecdotes)
-- source_reliability: editorial standards, correction policies, peer review
+Rate the claim as stated, not this analysis and not the topic in general,
+on five dimensions (0.0-1.0; 0.0 / 0.5 / 1.0 anchors, use values between for
+in-between cases):
+- evidence_quality: how strong is the evidence that SUPPORTS the claim?
+  0.0 none, or anecdotes only; 0.5 some real evidence, mixed or indirect;
+  1.0 strong direct evidence (controlled studies, official records).
+- source_reliability: how reliable are the sources that make or carry the claim
+  (its origins and proponents, never the sources that refute it)?
+  0.0 anonymous posts, known fabricators; 0.5 partisan or commentary outlets,
+  mixed record; 1.0 peer review, official statistics, corrections policies.
 - claim_testability: can the claim be checked against observable data?
-- expert_consensus: do domain experts agree? genuine debate vs manufactured?
-- internal_coherence: do the claim's sub-claims support each other?
+  0.0 unfalsifiable by design (secret plots, hidden intent); 0.5 partly
+  checkable, key parts are not; 1.0 fully checkable against data.
+- expert_consensus: how far do domain experts SUPPORT the claim?
+  0.0 Experts reject it almost unanimously; 0.5 real expert debate;
+  1.0 experts broadly agree with it.
+- internal_coherence: do the claim's parts fit together logically?
+  0.0 self-contradictory, or the parts do not connect; 0.5 loose links,
+  some leaps; 1.0 parts support each other without leaps.
 
-Anchor to upstream signals: use the Tracer source_tier distribution as a
-prior for source_reliability. Use the Decomposer sub-claim verifiable count
-for claim_testability. Default 0.5 when uncertain. Do not invent precision.
+Strong evidence AGAINST the claim (for example a well-documented debunk)
+lowers evidence_quality and expert_consensus and never raises any of the five
+scores. These scores describe the claim's support, not the quality of this
+analysis.
+
+Anchor to upstream signals: use the Tracer source_tier distribution of the
+claim's origins as a prior for source_reliability. Use the Decomposer
+sub-claim verifiable count for claim_testability. If you cannot judge a
+dimension at all, use 0.5 and say why in a finding. Do not invent precision.
+
+LOCATING FINDINGS:
+For each finding, list in "locations" up to three passages it is about, so a
+reader sees the finding next to the text. "section" names the part of the
+analysis the passage is in: decomposition, origins, intelligence, ttps or
+bridge. "quote" is 5 to 25 consecutive words copied exactly from that
+section's text, character for character, with no paraphrase, ellipsis or
+added words. If a finding is about something missing, quote the passage
+where it should have appeared, or leave "locations" empty.
 
 VETO is a RARE NUCLEAR OPTION. You should almost never use it.
 
@@ -542,7 +570,10 @@ Respond in JSON. IMPORTANT: Each enum field must be EXACTLY ONE value, not combi
       "category": "CHOOSE ONE: bias, accuracy, completeness, manipulation, quality, cognitive_warfare, frame_capture",
       "severity": "CHOOSE ONE: low, medium, high, critical",
       "description": "What is wrong",
-      "recommendation": "How to fix it"
+      "recommendation": "How to fix it",
+      "locations": [
+        {{"section": "CHOOSE ONE: decomposition, origins, intelligence, ttps, bridge", "quote": "Words copied exactly from that section"}}
+      ]
     }}
   ],
   "confidence_adjustment": -1.0 to 1.0,
@@ -601,6 +632,7 @@ For each scenario, the main agent should execute these steps:
 ### Step 6: Auditor
 - Call `_auditor_template(claim, decomposition, origins, intelligence, ttps, bridge)` to get the prompt
 - Send to a subagent, parse as `audit`
+- Run `huginn_muninn.locate.locate_findings(audit, {decomposition, origins, intelligence, ttps, bridge})` before writing results: it sets each finding's `paths` and `located`; never keep values the model wrote
 
 ### Step 7: Evaluate
 - Import evaluate_bridge_output from tests.scenarios

@@ -427,6 +427,23 @@
     margin-top: 4px;
   }
   .finding-rec strong { color: #2C3E50; }
+  .finding-number {
+    display: inline-block; min-width: 1.6em; text-align: center;
+    font-size: 0.75rem; font-weight: 700; color: var(--gray);
+    border: 1px solid var(--border); border-radius: 10px;
+  }
+  .finding-quote {
+    margin: 6px 0 0; padding: 4px 10px;
+    border-left: 3px solid var(--border);
+    font-size: 0.85rem; color: #2C3E50; font-style: italic;
+  }
+  .auditor-notes { margin-top: 8px; display: flex; flex-direction: column; gap: 4px; }
+  .auditor-note {
+    display: block; padding: 6px 10px; border-left: 3px solid var(--amber);
+    background: var(--bg); border-radius: 0 6px 6px 0;
+    font-size: 0.8rem; color: #2C3E50; text-decoration: none;
+  }
+  .auditor-note:hover { text-decoration: underline; }
 
   /* Scenario navigation */
   .scenario-nav {
@@ -646,19 +663,20 @@
     </ol>
 
     <h2>The Five Dimensions (Evidence Certainty Framework)</h2>
-    <p>Each claim is also assessed across five dimensions. These are weighted to produce a composite score:</p>
+    <p>Each claim is also assessed, as stated, across five dimensions. The scores describe how well the claim is supported, so strong evidence against a claim gives low Evidence Quality and Expert Consensus scores. The package weights them into a composite score:</p>
     <table>
       <thead><tr><th>Dimension</th><th>Weight</th><th>What It Measures</th></tr></thead>
       <tbody>
-        <tr><td>Evidence Quality</td><td>30%</td><td>How strong is the underlying evidence? Are there controlled studies, systematic reviews, or only anecdotes?</td></tr>
-        <tr><td>Source Reliability</td><td>20%</td><td>How credible are the sources? Do they have editorial standards, correction policies, or peer review?</td></tr>
+        <tr><td>Evidence Quality</td><td>30%</td><td>How strong is the evidence that supports the claim? Are there controlled studies, systematic reviews, or only anecdotes?</td></tr>
+        <tr><td>Source Reliability</td><td>20%</td><td>How credible are the sources that make or carry the claim? Do they have editorial standards, correction policies, or peer review?</td></tr>
         <tr><td>Claim Testability</td><td>15%</td><td>Can the claim be checked against observable data? Or is it unfalsifiable by design?</td></tr>
-        <tr><td>Expert Consensus</td><td>20%</td><td>Do domain experts agree on this topic? Is there genuine scientific debate, or manufactured controversy?</td></tr>
+        <tr><td>Expert Consensus</td><td>20%</td><td>How far do domain experts support the claim? Is there genuine scientific debate, or manufactured controversy?</td></tr>
         <tr><td>Internal Coherence</td><td>15%</td><td>Is the claim logically consistent? Do its sub-claims support each other, or contradict?</td></tr>
       </tbody>
     </table>
 
     <h2>ECF Levels</h2>
+    <p>The package reports a level computed from the composite. The gallery shows only the five scores and no level, because a single word such as LOW next to a claim reads like a verdict.</p>
     <table>
       <thead><tr><th>Level</th><th>Composite Score</th><th>What It Means</th></tr></thead>
       <tbody>

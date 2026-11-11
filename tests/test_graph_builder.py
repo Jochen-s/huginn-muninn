@@ -682,3 +682,47 @@ def test_shipped_graph_data_has_no_numeric_actor_credibility():
         f"{len(offenders)} actor nodes in the shipped graph carry a numeric "
         f"credibility (Charter Commitment 1), first: {offenders[:3]}"
     )
+
+
+# ---------------------------------------------------------------------------
+# ECF display (operator decision 2026-11-10): the five scores are shown
+# separately; no composite or level word is attached to a claim.
+# ---------------------------------------------------------------------------
+
+def _scenario_with_profile():
+    r = _minimal_result("HS-01")
+    r["confidence_profile"] = {"evidence_quality": 0.1, "source_reliability": 0.2,
+                               "claim_testability": 0.8, "expert_consensus": 0.05,
+                               "internal_coherence": 0.3, "composite": 0.2, "ecf_level": "VERY_LOW"}
+    return r
+
+
+def test_scenario_node_carries_no_ecf_level():
+    from graph.build_graph import build_graph
+    node = build_graph([_scenario_with_profile()]).nodes["scenario:HS-01"]
+    assert "ecf_level" not in node
+
+
+def test_scenario_node_carries_no_ecf_composite():
+    from graph.build_graph import build_graph
+    node = build_graph([_scenario_with_profile()]).nodes["scenario:HS-01"]
+    assert "ecf_composite" not in node
+
+
+GALLERY_JS = Path(__file__).resolve().parent.parent / "gallery" / "build.js"
+
+
+def test_gallery_profile_table_has_no_composite_row():
+    js = GALLERY_JS.read_text(encoding="utf-8")
+    body = js[js.index("function renderConfidenceProfile"):js.index("function renderEpistemicProvenance")]
+    assert "composite" not in body.lower()
+
+
+def test_gallery_detail_panel_shows_no_ecf_level():
+    assert "'ECF level'" not in GALLERY_JS.read_text(encoding="utf-8")
+
+
+def test_gallery_shows_only_rescored_profiles():
+    js = GALLERY_JS.read_text(encoding="utf-8")
+    body = js[js.index("function renderConfidenceProfile"):js.index("function renderEpistemicProvenance")]
+    assert "if (!cp || !prov) return ''" in body

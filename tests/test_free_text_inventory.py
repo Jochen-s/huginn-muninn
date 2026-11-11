@@ -84,6 +84,9 @@ ALLOWED = {
     "ConfidenceProfile.ecf_level": "enum-like",
     "AuditFinding.description": "audit prose; projection scrubs suppressed-field references",
     "AuditFinding.recommendation": "audit prose; projection scrubs suppressed-field references",
+    "FindingLocation.section": "section name from a fixed list; anything else leaves the finding unlocated",
+    "FindingLocation.quote": "copied analysis text: located only if it occurs in the report, so it repeats text already classified there; when fields are suppressed, projection drops quotes from them and every unlocated quote",
+    "FindingLocation.paths": "field paths computed by huginn_muninn.locate, no model text",
     "AuditorOutput.summary": "audit prose; projection scrubs suppressed-field references",
     "AuditorOutput.frame_capture_evidence": "audit prose; projection scrubs suppressed-field references",
 }

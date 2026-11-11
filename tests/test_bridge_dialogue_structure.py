@@ -201,3 +201,27 @@ class TestCharterC6Round3:
         assert any(w in lower for w in ["integration", "common ground", "shared"]), (
             "Round 3 must still perform integration function"
         )
+
+
+class TestCharterC6Validator:
+    """The schema check behind C6. Opus rating runs (2026-10-25) wrapped
+    Round 3 in quotes, so a genuine closing question ended in ?' or ?" and
+    was flagged as a violation (5 of 24 runs, all false)."""
+
+    def _bridge(self, round3):
+        from huginn_muninn.contracts import BridgeOutput
+
+        return BridgeOutput(
+            universal_needs=["safety"], issue_overlap="o", narrative_deconstruction="d",
+            perception_gap="g", reframe="r", socratic_dialogue=["one", "two", round3])
+
+    @pytest.mark.parametrize("ending", ['what would it be?', "what would it be?'", 'what would it be?"',
+                                        "what would it be?”", "what would it be?’ ", "what would it be? )"])
+    def test_question_inside_closing_quotes_is_not_a_violation(self, ending):
+        assert self._bridge(ending).c6_violation is False
+
+    def test_declarative_ending_is_still_a_violation(self):
+        assert self._bridge("The most powerful thing you can do is vote.").c6_violation is True
+
+    def test_declarative_ending_in_quotes_is_still_a_violation(self):
+        assert self._bridge("'Go and vote.'").c6_violation is True

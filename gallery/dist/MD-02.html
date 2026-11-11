@@ -427,6 +427,23 @@
     margin-top: 4px;
   }
   .finding-rec strong { color: #2C3E50; }
+  .finding-number {
+    display: inline-block; min-width: 1.6em; text-align: center;
+    font-size: 0.75rem; font-weight: 700; color: var(--gray);
+    border: 1px solid var(--border); border-radius: 10px;
+  }
+  .finding-quote {
+    margin: 6px 0 0; padding: 4px 10px;
+    border-left: 3px solid var(--border);
+    font-size: 0.85rem; color: #2C3E50; font-style: italic;
+  }
+  .auditor-notes { margin-top: 8px; display: flex; flex-direction: column; gap: 4px; }
+  .auditor-note {
+    display: block; padding: 6px 10px; border-left: 3px solid var(--amber);
+    background: var(--bg); border-radius: 0 6px 6px 0;
+    font-size: 0.8rem; color: #2C3E50; text-decoration: none;
+  }
+  .auditor-note:hover { text-decoration: underline; }
 
   /* Scenario navigation */
   .scenario-nav {
@@ -671,11 +688,13 @@
   <div class="section">
     <h2>Common Ground</h2>
     <div class="prose"><p>This is among the strongest common-ground cases in contemporary political discourse. Bipartisan polling consistently shows broad agreement on the underlying concerns. A 2023 Pew Research Center survey found that 72% of Americans believe social media companies have too much power over the news people see. The 2018 &#39;Hidden Tribes&#39; study by More in Common found that 80% of Americans believe political correctness is a problem AND that social media makes political divisions worse, cutting across partisan lines. In Congress, children&#39;s online safety has generated rare bipartisan cooperation: the Kids Online Safety Act (KOSA) received support from senators across the political spectrum. The EU Digital Services Act passed with overwhelming cross-party support in the European Parliament. Specific areas of concrete overlap: (1) Algorithms should be more transparent, so people understand why they see what they see. Supported by left, right, EU, US, tech critics, and even some tech companies. (2) Children need stronger protections online. Near-universal agreement across political spectrum, supported by both conservative family-values framing and progressive child-welfare framing. (3) Companies should not profit from amplifying content that harms users, especially minors. Bipartisan agreement on the principle, disagreement only on implementation mechanism. (4) Users should have more control over their own feeds, including options to opt out of algorithmic curation. Aligns with both conservative individual-liberty values and progressive consumer-protection values.</p></div>
+    
   </div>
 
   <div class="section">
     <h2>Narrative Deconstruction</h2>
     <div class="prose"><p>The same underlying concern, that powerful technology companies are shaping public discourse in ways that may harm individuals and society, has been split into two seemingly irreconcilable narratives, but the split is more apparent than real. Narrative A (&#39;Big Tech radicalizes people and destroys democracy&#39;) is primarily held by those on the political left and by tech-reform advocates. It emphasizes corporate negligence, algorithmic amplification of extremism, and the need for government regulation. Narrative B (&#39;Big Tech censors conservative voices and suppresses free speech&#39;) is primarily held by those on the political right. It emphasizes corporate bias, content moderation overreach, and the need to protect speech. The critical insight is that both narratives share the same root concern: unaccountable corporate power over public discourse. The left frames it as &#39;they amplify harmful content for profit.&#39; The right frames it as &#39;they suppress content they disagree with.&#39; Both are describing the same underlying reality: a small number of companies exercise enormous, opaque power over what information billions of people see. The split was reinforced by several dynamics: (1) Platform companies exploited the left-right framing to divide their critics, ensuring regulatory efforts stalled as each side opposed the other side&#39;s proposed remedies. (2) Media coverage sorted the story into partisan bins, with left-leaning outlets emphasizing radicalization and right-leaning outlets emphasizing censorship. (3) The &#39;deliberately designed to radicalize&#39; framing, by overstating intent, made it easy for opponents to dismiss the entire concern, further polarizing the debate. The irony is substantial: the debate about whether social media algorithms polarize people has itself become polarized along algorithmic amplification lines.</p></div>
+    
   </div>
 
   
@@ -686,6 +705,7 @@
     <div class="section">
       <h2>Perception Gap</h2>
       <div class="prose"><p>More in Common&#39;s &#39;Hidden Tribes&#39; research (2018) found that Americans overestimate the extremism of political opponents by roughly a factor of two. Applied to this specific issue: those who believe social media is deliberately designed to radicalize tend to assume that anyone defending tech companies is either naive or complicit. Those who defend tech companies tend to assume that critics want to censor speech or impose government control over the internet. In reality, polling data shows massive overlap. A 2022 Pew study found that majorities of both Democrats (78%) and Republicans (68%) believe social media companies have too much influence over the news people see. Agreement on the problem is far broader than the polarized debate suggests. The perception gap is amplified by the very algorithms under discussion: social media platforms disproportionately surface the most extreme versions of each side&#39;s position, making each side look more radical than it actually is. People who believe algorithms are &#39;deliberately designed to radicalize&#39; are experiencing in real time the amplification they are describing, but misattributing the mechanism (emergent engagement optimization, not deliberate design).</p></div>
+      
     </div>
 
   <div class="section">
@@ -695,14 +715,17 @@
     <div class="dialogue-round round-1">
       <div class="round-label">Round 1: Perspective-Getting</div>
       <div class="dialogue-bubble"><p>Round 1 (Perspective-getting): You are raising something that a lot of people across the political spectrum feel strongly about, and for good reason. Internal Facebook documents, made public by whistleblower Frances Haugen in 2021, confirmed what many suspected: the company&#39;s own researchers found that the engagement algorithm amplified divisive and extreme content, and the company was slow to implement fixes. The Social Dilemma documentary brought these concerns to over 100 million viewers. When you say the algorithms are &#39;deliberately designed to radicalize,&#39; you are pointing at a real phenomenon: these systems do push people toward more extreme content because extreme content drives more engagement. That concern is grounded in documented evidence, not speculation.</p></div>
+      
     </div>
     <div class="dialogue-round round-2">
       <div class="round-label">Round 2: Guided Examination</div>
       <div class="dialogue-bubble"><p>Round 2 (Counter-evidence as question): Here is where it gets interesting, and where the distinction might matter more than it first appears. The Facebook Papers show engineers optimized for engagement metrics like time-on-site, clicks, and shares. Radicalization was an emergent side effect that researchers internally flagged, not the design objective. If a factory optimizes for production speed and the side effect is pollution, we hold them accountable for the pollution, but we describe the problem differently than if they deliberately set out to pollute. Does this distinction between &#39;designed for engagement with radicalization as a side effect&#39; and &#39;deliberately designed to radicalize&#39; change how you would think about solutions? Because if the problem is incentive structures rather than deliberate intent, the most effective remedies might be transparency requirements and algorithmic audits rather than seeking to identify and punish individuals who &#39;chose&#39; to radicalize people.</p></div>
+      
     </div>
     <div class="dialogue-round round-3">
       <div class="round-label">Round 3: Integration</div>
       <div class="dialogue-bubble"><p>Round 3 (Complexity + common ground): Something worth considering is how much agreement actually exists on this issue beneath the polarized debate. Pew Research found that over 70% of Americans, across party lines, believe social media companies have too much power over the news people see. Bipartisan coalitions in Congress have formed around children&#39;s online safety. The EU passed the Digital Services Act with overwhelming cross-party support. People who frame this as &#39;Big Tech radicalizes people&#39; and people who frame it as &#39;Big Tech censors speech&#39; are often describing the same underlying concern: unaccountable corporate power over public discourse. Given that most people, regardless of political affiliation, agree that algorithms should be more transparent and that companies should not profit from amplifying harmful content, what would it look like to work from that shared agreement toward concrete solutions, rather than getting stuck on whether the harm was deliberate or emergent?</p></div>
+      
     </div>
   </div>
 
@@ -710,6 +733,7 @@
   <div class="section">
     <h2>Reframe</h2>
     <blockquote class="reframe-block">Something real and important is happening with social media algorithms, and the concern behind this claim deserves to be taken seriously. Internal documents confirm that engagement-optimized algorithms amplify divisive content, and companies knew about this and were slow to act. That is a legitimate cause for concern and action. At the same time, the specific framing &#39;deliberately designed to radicalize&#39; overstates what the evidence shows. The algorithms were designed to maximize engagement; radicalization is an emergent consequence of that design, not the design goal itself. This distinction matters, not because it lets companies off the hook (the negligence is real), but because understanding the actual mechanism points toward more effective solutions. If the problem were deliberate radicalization, the solution would be to find and punish the individuals who chose to radicalize. If the problem is incentive structures that produce harmful emergent behavior, the solution is to change the incentives: transparency requirements, algorithmic auditing, user controls, and accountability for known harms. The people across the political spectrum who care about this issue, and polling suggests that is most people, share far more common ground than the polarized debate suggests.</blockquote>
+    
   </div>
 
   
@@ -724,6 +748,7 @@
     <ul class="findings-list">
     <li class="finding-item">
       <div class="finding-header">
+        
         <span class="finding-category">Quality</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">The analysis correctly identifies this as the strongest kernel-of-truth case and appropriately distinguishes between...</span>
@@ -733,9 +758,11 @@
         <div class="finding-description">The analysis correctly identifies this as the strongest kernel-of-truth case and appropriately distinguishes between designed-for-engagement and designed-to-radicalize. The core analytical distinction is well-maintained throughout all six agents.</div>
         <div class="finding-rec"><strong>Recommendation:</strong> No action needed. This is an affirmative finding confirming the pipeline handled the primary test focus correctly.</div>
       </div>
+      
     </li>
     <li class="finding-item">
       <div class="finding-header">
+        
         <span class="finding-category">Completeness</span>
         <span class="finding-severity-medium">MEDIUM</span>
         <span class="finding-description">The analysis could more explicitly address the counter-evidence from the 2023 Facebook/Instagram deactivation...</span>
@@ -745,9 +772,11 @@
         <div class="finding-description">The analysis could more explicitly address the counter-evidence from the 2023 Facebook/Instagram deactivation experiments (Nyhan et al., published in Science and Nature). These large-scale experiments found that deactivating Facebook or Instagram, or removing reshared political content, had limited measurable effects on political attitudes and beliefs. This complicates the &#39;destroying democracy&#39; sub-claim and deserves more prominent treatment.</div>
         <div class="finding-rec"><strong>Recommendation:</strong> Elevate the Nyhan et al. (2023) deactivation experiment findings to a more prominent position in the decomposition and origin tracing. These findings are the strongest empirical counter to the &#39;destroying democracy&#39; causal claim and their relative underweighting risks confirmation bias toward the alarm narrative.</div>
       </div>
+      
     </li>
     <li class="finding-item">
       <div class="finding-header">
+        
         <span class="finding-category">Accuracy</span>
         <span class="finding-severity-medium">MEDIUM</span>
         <span class="finding-description">The Bakshy et al. (2015) study is accurately cited but its conclusions are more nuanced than the analysis suggests. The...</span>
@@ -757,9 +786,11 @@
         <div class="finding-description">The Bakshy et al. (2015) study is accurately cited but its conclusions are more nuanced than the analysis suggests. The study found that algorithmic curation slightly reduced exposure to cross-cutting content, but that individual user choices (what to click on) had a larger effect than the algorithm. This finding cuts against both &#39;algorithms are all-powerful&#39; and &#39;algorithms have no effect&#39; framings.</div>
         <div class="finding-rec"><strong>Recommendation:</strong> Add explicit note that Bakshy et al. found individual choice effects were larger than algorithmic effects, which introduces important nuance to the &#39;algorithms amplify divisive content&#39; sub-claim.</div>
       </div>
+      
     </li>
     <li class="finding-item">
       <div class="finding-header">
+        
         <span class="finding-category">Completeness</span>
         <span class="finding-severity-medium">MEDIUM</span>
         <span class="finding-description">The analysis focuses heavily on Western (US/EU) evidence and regulatory responses. Social media algorithmic effects in...</span>
@@ -769,9 +800,11 @@
         <div class="finding-description">The analysis focuses heavily on Western (US/EU) evidence and regulatory responses. Social media algorithmic effects in non-Western democracies (India, Brazil, Philippines, Myanmar) have been documented with arguably more severe consequences, including documented roles in ethnic violence (Myanmar, 2017-2018) and election interference.</div>
         <div class="finding-rec"><strong>Recommendation:</strong> Include at least a brief reference to non-Western cases where algorithmic amplification had more severe documented consequences, particularly the UN report on Facebook&#39;s role in Myanmar violence. This strengthens the &#39;engagement optimization has real harms&#39; argument while maintaining the engagement-vs-radicalization distinction.</div>
       </div>
+      
     </li>
     <li class="finding-item">
       <div class="finding-header">
+        
         <span class="finding-category">Bias</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">The Bridge Builder appropriately avoids controlling language and does not confront identity. The Socratic dialogue ends...</span>
@@ -781,9 +814,11 @@
         <div class="finding-description">The Bridge Builder appropriately avoids controlling language and does not confront identity. The Socratic dialogue ends with a question and maintains three rounds. The analysis does not over-dismiss the legitimate concerns (a key test requirement). However, there is a slight asymmetry in how the analysis treats tech company motivations (described with detailed nuance) versus conspiracy amplifier motivations (described more briefly).</div>
         <div class="finding-rec"><strong>Recommendation:</strong> Consider adding more texture to why ordinary people might reasonably conclude algorithms are &#39;deliberately designed to radicalize&#39; given the pattern of tech companies denying what their own internal documents showed. The gap between public statements and internal knowledge makes intentionality attributions psychologically understandable, even when technically inaccurate.</div>
       </div>
+      
     </li>
     <li class="finding-item">
       <div class="finding-header">
+        
         <span class="finding-category">Manipulation</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">The Bridge Builder does not manufacture false common ground. The cited polling data (Pew, More in Common) is real and...</span>
@@ -793,9 +828,11 @@
         <div class="finding-description">The Bridge Builder does not manufacture false common ground. The cited polling data (Pew, More in Common) is real and the bipartisan legislative examples (KOSA, DSA) are accurate. The common ground identified is genuine, not fabricated.</div>
         <div class="finding-rec"><strong>Recommendation:</strong> No action needed. The common ground is real and well-evidenced. This is an affirmative finding confirming the Bridge Builder meets the anti-weaponization charter requirements.</div>
       </div>
+      
     </li>
     <li class="finding-item">
       <div class="finding-header">
+        
         <span class="finding-category">Quality</span>
         <span class="finding-severity-medium">MEDIUM</span>
         <span class="finding-description">The TTP classification has a unique analytical challenge: it must classify manipulation techniques operating at two...</span>
@@ -805,6 +842,7 @@
         <div class="finding-description">The TTP classification has a unique analytical challenge: it must classify manipulation techniques operating at two levels simultaneously (the real algorithmic manipulation AND the conspiracy amplification of the claim itself). The dual-level analysis is present but could be more formally structured to avoid conflating the two layers.</div>
         <div class="finding-rec"><strong>Recommendation:</strong> Consider restructuring TTP classification with explicit Layer 1 (documented algorithmic manipulation) and Layer 2 (conspiracy amplification of the claim) labels for each TTP match, to prevent readers from confusing which manipulation is being described.</div>
       </div>
+      
     </li></ul>
   </div>
 

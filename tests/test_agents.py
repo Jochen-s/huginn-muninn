@@ -1,5 +1,6 @@
 """Tests for Method 2 agents."""
 import json
+from pathlib import Path
 from unittest.mock import MagicMock
 
 import pytest
@@ -967,6 +968,77 @@ class TestAuditorAgent:
         normalized = " ".join(prompt.split())
         assert "DISTINCT from fact-checking" in normalized
         assert "frame_capture_risk" in prompt
+
+
+class TestAuditorAsksForEcf:
+    """The package Auditor asked for the five ECF ratings in prose but its JSON
+    template had no field for them, so no packaged run ever returned a
+    confidence_profile (found 2026-10-25; the gallery runner's prompt had it)."""
+
+    INPUT = {"original_claim": "c", "decomposition": {}, "origins": {}, "intelligence": {},
+             "ttps": {}, "bridge": {}}
+
+    def _prompt(self):
+        return AuditorAgent(MagicMock(spec=OllamaClient)).build_prompt(self.INPUT)
+
+    def test_json_template_has_a_confidence_profile_field(self):
+        assert '"confidence_profile": {' in self._prompt()
+
+    def test_template_lists_all_five_dimensions(self):
+        template = self._prompt().split("Respond in JSON", 1)[1]
+        for dim in ("evidence_quality", "source_reliability", "claim_testability",
+                    "expert_consensus", "internal_coherence"):
+            assert f'"{dim}"' in template
+
+    def test_returned_profile_reaches_the_output(self):
+        client = MagicMock(spec=OllamaClient)
+        reply = json.loads(MOCK_AUDITOR_PASS)
+        reply["confidence_profile"] = {"evidence_quality": 0.2, "source_reliability": 0.3,
+                                       "claim_testability": 0.8, "expert_consensus": 0.9,
+                                       "internal_coherence": 0.4}
+        client.generate.return_value = json.dumps(reply)
+        out = AuditorAgent(client).run(self.INPUT)
+        assert out["confidence_profile"]["claim_testability"] == 0.8
+
+
+class TestEcfRatesTheClaim:
+    """ECF scores rate the claim as stated (operator decision 2026-11-10). The
+    old prompt said "rate the analysis as a whole", so a well-documented
+    debunk of chemtrails scored HIGH (X-10, HS-01)."""
+
+    INPUT = TestAuditorAsksForEcf.INPUT
+    RUNNER = Path(__file__).resolve().parent / "run_scenario_claude.py"
+
+    def _prompt(self):
+        return AuditorAgent(MagicMock(spec=OllamaClient)).build_prompt(self.INPUT)
+
+    def test_auditor_rates_the_claim_as_stated(self):
+        assert "Rate the claim as stated" in self._prompt()
+
+    def test_auditor_no_longer_rates_the_analysis(self):
+        assert "analysis as a whole" not in self._prompt()
+
+    def test_auditor_says_evidence_against_lowers_the_scores(self):
+        assert "evidence AGAINST the claim" in self._prompt()
+
+    def test_auditor_anchors_expert_consensus_on_support_for_the_claim(self):
+        assert "Experts reject it almost unanimously" in self._prompt()
+
+    def test_gallery_runner_rates_the_claim_as_stated(self):
+        assert "Rate the claim as stated" in self.RUNNER.read_text(encoding="utf-8")
+
+    def test_gallery_runner_no_longer_rates_the_analysis(self):
+        assert "analysis as a whole" not in self.RUNNER.read_text(encoding="utf-8")
+
+    @staticmethod
+    def _ecf_block(text):
+        text = text.replace("\r\n", "\n")
+        start = text.index("EVIDENCE CERTAINTY FRAMEWORK (ECF):")
+        return text[start:text.index("Do not invent precision.", start)]
+
+    def test_both_prompts_carry_the_same_ecf_text(self):
+        runner = self._ecf_block(self.RUNNER.read_text(encoding="utf-8"))
+        assert self._ecf_block(self._prompt()) == runner
 
 
 class TestAuditorReservedVerdict:

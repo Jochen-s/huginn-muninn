@@ -40,7 +40,7 @@ testpaths = ["tests"]
 # plain `pytest` entry point (as in CI) does not put the repo root on sys.path.
 pythonpath = ["."]
 markers = [
-    "e2e: end-to-end tests requiring a running Ollama instance (deselect with '-m not e2e')",
+    "e2e: end-to-end tests on a real model, Claude Fable 5.2 via the claude CLI by default (deselect with '-m not e2e')",
 ]
 
 # Deliberately separate from the "dev" extra above: this PEP 735 group is

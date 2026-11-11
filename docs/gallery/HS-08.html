@@ -427,6 +427,23 @@
     margin-top: 4px;
   }
   .finding-rec strong { color: #2C3E50; }
+  .finding-number {
+    display: inline-block; min-width: 1.6em; text-align: center;
+    font-size: 0.75rem; font-weight: 700; color: var(--gray);
+    border: 1px solid var(--border); border-radius: 10px;
+  }
+  .finding-quote {
+    margin: 6px 0 0; padding: 4px 10px;
+    border-left: 3px solid var(--border);
+    font-size: 0.85rem; color: #2C3E50; font-style: italic;
+  }
+  .auditor-notes { margin-top: 8px; display: flex; flex-direction: column; gap: 4px; }
+  .auditor-note {
+    display: block; padding: 6px 10px; border-left: 3px solid var(--amber);
+    background: var(--bg); border-radius: 0 6px 6px 0;
+    font-size: 0.8rem; color: #2C3E50; text-decoration: none;
+  }
+  .auditor-note:hover { text-decoration: underline; }
 
   /* Scenario navigation */
   .scenario-nav {
@@ -654,12 +671,11 @@
   
     <div class="section">
       <h2>Evidence Certainty Framework</h2>
-      <p class="intro-note">Multi-dimensional confidence assessment inspired by GRADE methodology. <a href="confidence-methodology.html" class="methodology-link">[?]</a></p>
+      <p class="intro-note">How well the claim as stated is supported, on five separate scores. Strong evidence against the claim gives low Evidence Quality and Expert Consensus scores. Inspired by GRADE methodology. These scores were re-rated on 2026-11-10 with claude-opus-5-5; the rest of this analysis is from the original run. <a href="confidence-methodology.html" class="methodology-link">[?]</a></p>
       <table class="metrics-table">
         <thead><tr><th>Dimension</th><th>Score</th></tr></thead>
         <tbody>
-          <tr><td>Evidence Quality <span class="dim-weight">(30%)</span></td><td>74%</td></tr><tr><td>Source Reliability <span class="dim-weight">(20%)</span></td><td>82%</td></tr><tr><td>Claim Testability <span class="dim-weight">(15%)</span></td><td>58%</td></tr><tr><td>Expert Consensus <span class="dim-weight">(20%)</span></td><td>91%</td></tr><tr><td>Internal Coherence <span class="dim-weight">(15%)</span></td><td>66%</td></tr>
-          <tr style="font-weight:600;border-top:2px solid var(--border)"><td>Composite (N/A)</td><td>0%</td></tr>
+          <tr><td>Evidence Quality <span class="dim-weight">(30%)</span></td><td>10%</td></tr><tr><td>Source Reliability <span class="dim-weight">(20%)</span></td><td>20%</td></tr><tr><td>Claim Testability <span class="dim-weight">(15%)</span></td><td>45%</td></tr><tr><td>Expert Consensus <span class="dim-weight">(20%)</span></td><td>3%</td></tr><tr><td>Internal Coherence <span class="dim-weight">(15%)</span></td><td>30%</td></tr>
         </tbody>
       </table>
     </div>
@@ -677,6 +693,7 @@
         <h2>Scientific Consensus / Mainstream Explanation</h2>
         <p class="intro-note">The established scientific or institutional explanation for this phenomenon.</p>
         <div class="prose"><p>Looking at the evidence as it currently stands across multiple independent data sources, the picture is genuinely striking on the preparedness side and genuinely incompatible with the strongest planning conclusion on the coordination side. Event 201 was a publicly announced, publicly recorded tabletop exercise hosted by Johns Hopkins Center for Health Security on October 18, 2019 at the Pierre Hotel in New York, co-sponsored by the Bill and Melinda Gates Foundation and the World Economic Forum, that simulated a hypothetical Coronavirus Associated Pulmonary Syndrome pandemic precisely because public-health and biosecurity experts had been warning for years that this exact pathogen class represented the most likely civilization-scale threat. The exercise was preceded by Atlantic Storm (2005), Dark Winter (2001), Clade X (May 2018), and Crimson Contagion (January-August 2019 HHS exercise that explicitly found the United States unprepared for a respiratory pandemic), demonstrating that preparedness exercises were systematic and ongoing rather than Event 201-specific. The Moderna mRNA-1273 candidate was designed by NIH Vaccine Research Center researchers Barney Graham and Kizzmekia Corbett together with Moderna on approximately January 13, 2020, two days after Zhang Yongzhen published the SARS-CoV-2 genome on January 11, 2020, using prior MERS spike-protein prefusion-stabilization structural work from the same group; the candidate entered Phase 1 on March 16, 2020 approximately 66 days later and first received Emergency Use Authorization on December 11, 2020 for Pfizer-BioNTech and December 18, 2020 for Moderna. This speed was possible because the mRNA platform had been under active development since the foundational KarikÃ³-Weissman work published in Immunity (2005) and Molecular Therapy (2008), at Moderna since its 2010 founding, and at BioNTech since its 2008 founding, with multiple mRNA candidates for influenza, Zika, and MERS already in clinical or preclinical stages by 2019; it was platform readiness applied to a new antigen target, not a pre-existing finished product. CEPI was launched at Davos in January 2017 by the Gates Foundation, the Wellcome Trust, and the governments of Norway, India, Japan, and Germany with the explicit, openly published mission of accelerating vaccine development for emerging pathogens; its founding documents are public. The Great Reset is a publicly published WEF book from July 2020 by Schwab and Malleret whose policy agenda is openly debatable as policy across the political spectrum. The lab-leak hypothesis is currently considered plausible by the US Department of Energy (low confidence) and FBI (moderate confidence) and merits continued investigation, including of EcoHealth Alliance NIH grant disclosure practices. None of this evidence is hidden, and all of it is consistent with a preparedness apparatus that did what preparedness apparatuses are funded to do, made significant communication and policy mistakes, and exists in continued tension with legitimate accountability questions. What the same evidence base measurably cannot support is the strongest planning claim: finished SARS-CoV-2-specific vaccines existed before the outbreak (which would entail deployment beginning in late 2019 or January 2020 rather than the observed December 2020 first authorization), thousands of independent researchers across competing political systems including the United States, China, Russia, the European Union, Iran, and Israel coordinated silence about a deliberately engineered event without any credible documentary leak across six years of intense scrutiny and clear whistleblower incentives, and openly published preparedness exercise documentation should be reinterpreted as evidence of concealment whose openness somehow proves audacity rather than disproves covertness.</p></div>
+        
       </div>
 
   <div class="section">
@@ -913,34 +930,40 @@
     <h2>Inferential Gap</h2>
     <p class="intro-note">Where the evidence ends and the leap begins.</p>
     <div class="prose"><p>[object Object]</p></div>
+    
   </div>
 
   <div class="section">
     <h2>Common Ground</h2>
     <div class="prose"><p>When the framing is set aside, the area of genuine shared ground between people who believe COVID was planned and people who believe it was a natural emergency badly handled is much larger than either side usually concedes. Both groups acknowledge that Event 201 happened in October 2019 at the Pierre Hotel in New York, was co-sponsored by Johns Hopkins Center for Health Security, the Bill and Melinda Gates Foundation, and the World Economic Forum, and is publicly documented in transcripts and recordings still available today. Both agree mRNA platforms had been in active development for years before SARS-CoV-2 was identified, traceable through the KarikÃ³-Weissman pseudouridine work published in 2005 in Immunity through Moderna&#39;s 2010 founding and BioNTech&#39;s 2008 founding through pre-pandemic candidates for MERS, Zika, and influenza. Both agree CEPI was launched at Davos in January 2017 specifically to accelerate vaccine development for emerging pathogens, three years before the pandemic began. Both agree the WEF published Schwab and Malleret&#39;s &#39;COVID-19: The Great Reset&#39; in July 2020 and that its policy agenda is a legitimate subject of public debate regardless of conclusions about pandemic origin. Both agree EcoHealth Alliance received NIH funding for coronavirus research conducted in collaboration with the Wuhan Institute of Virology and that NIH disclosure on the precise nature of that research has been incomplete. Both agree the lab-leak hypothesis was prematurely dismissed by parts of the institutional public-health establishment in 2020 and that this dismissal corroded trust in legitimate institutional voice. Both agree pandemic-era policy involved unprecedented coordination among governments, philanthropies, and international bodies under conditions of profound uncertainty. The actual disagreement is much narrower than the rhetorical war suggests: whether all of this constitutes evidence of a singular planned event whose execution involved finished vaccines ready before the virus circulated, or whether it constitutes evidence of a preparedness apparatus and policy network that was visibly building itself for years before the pandemic, behaved as one would expect such an apparatus to behave when an emergency arrived, and made consequential mistakes that deserve continued accountability without the further conclusion that the emergency itself was deliberately manufactured.</p></div>
+    
   </div>
 
   <div class="section">
     <h2>Narrative Deconstruction</h2>
     <div class="prose"><p>This claim follows a documented escalation pathway that begins on real ground and ends somewhere the evidence cannot support. The entry point is concrete and defensible: &#39;Event 201 timing is striking, and pre-pandemic preparedness was extensive.&#39; That observation is correct and worth examining seriously. The second step is also reasonable: &#39;Pandemic-preparedness exercises and platform readiness made rapid response possible, and pre-existing mRNA research enabled the 66-day genome-to-Phase-1 timeline for mRNA-1273.&#39; This is what the public record actually shows. The third step is where the inferential leap occurs: &#39;They planned the whole thing, and finished vaccines existed before the virus.&#39; This requires reading every act of preparedness as evidence of intent rather than foresight, every act of cooperation as evidence of collusion, every publicly known fact as evidence of audacious concealment because it was not hidden, and every prior warning as proof of prior planning. The terminal step (New World Order, global tyranny, depopulation, transhumanism, satanic cabal) requires abandoning the constraints of evidence entirely and adopting an unfalsifiable frame in which any counter-evidence becomes further proof of the plan. The architecture of this pathway is what makes it so effective: each step is locally plausible to someone who has just accepted the previous one, even though the start and end positions differ radically in their evidentiary requirements and their policy implications. The bridge figures in this ecosystem (RFK Jr., Malone, Willis, Martin, Fuellmich) live primarily at the third step; the audience often slides from the second to the fourth without noticing the inferential cliff between them.</p></div>
+    
   </div>
 
   
     <div class="section">
       <h2>Feasibility Assessment</h2>
       <div class="prose"><p>For the strongest version of the claim (the pandemic was deliberately planned and executed by a coordinated group with vaccines ready before the virus spread) to hold, several conditions would need to obtain simultaneously. Every national government on Earth, including those that openly opposed each other geopolitically (United States, China, Russia, the European Union, Iran, Israel, North Korea, Cuba, Venezuela), would need to be either active participants or duped by the same plan, with no defection across six years despite intense political incentives for any rival state to expose Western perfidy or vice versa. Thousands of independent scientists, regulators, lab technicians, biosecurity researchers, and intelligence analysts across competing jurisdictions and political systems would need to maintain perfect silence despite strong whistleblower incentives, professional rivalries, active investigative-journalism markets (ProPublica, BMJ Investigations, US Right to Know, Substack ecosystem), and the existence of well-funded organizations (Children&#39;s Health Defense, ICAN) actively soliciting and publicizing dissent and offering legal protection. Finished SARS-CoV-2-specific vaccines existing before the outbreak would imply deployment beginning in late 2019 or January 2020 rather than the observed first Emergency Use Authorization on December 11, 2020, which is an empirical falsifier the planning narrative does not address. No credible insider, despite three subsequent presidential administrations including one openly hostile to the prior pandemic establishment (Trump 2025), the defunding and restructuring of preparedness institutions under HHS Secretary RFK Jr., NIH Director Bhattacharya, and FDA Commissioner Makary, and continuous lab-leak hypothesis re-litigation through the House Select Subcommittee, has produced documentary evidence of the plan. The publicly archived nature of Event 201 transcripts, CEPI founding documents, NIH grant records available through FOIA, and the WEF Great Reset book would need to be reinterpreted as evidence of concealment, which inverts the usual relationship between openness and secrecy. The weaker version of the claim (pandemic-preparedness governance had real opacity and accountability failures, gain-of-function research funding and NIH disclosure deserve continued investigation, mandate policy was imposed past the evidence on transmission-blocking, the lab-leak hypothesis was prematurely dismissed, and pandemic-era institutional responses included serious failures of trust that the public was right to notice) requires none of those impossible conditions and is well-supported by available evidence.</p></div>
+      
     </div>
 
   
     <div class="section">
       <h2>Commercial Interests</h2>
       <div class="prose"><p>On the preparedness side, vaccine manufacturers earned over 100 billion USD in COVID-19 vaccine revenue during the pandemic (Pfizer reported approximately 36.8 billion USD from Comirnaty in 2021 alone, Moderna approximately 18 billion USD), pandemic-preparedness institutions including Johns Hopkins CHS and CEPI secured continued funding and visibility, and the Gates Foundation and adjacent philanthropies consolidated their role as global-health agenda-setters with renewed institutional standing. On the planning-narrative side, an entire media economy has grown around the claim: the Plandemic documentary franchise (three films from 2020 through 2023), Children&#39;s Health Defense revenue growth from approximately 1.3 million USD in 2018 to 23 million USD plus in 2022, the Great Reset book and adjacent products by Glenn Beck and others, the speaking and Substack and conference economy around Malone, Kirsch, Dowd, Wolf, Brand, and RFK Jr., the supplement and alternative-health markets that exceed 50 billion USD annually, and the conference circuit including Better Way Conference and adjacent events featuring David Martin and the Fuellmich-adjacent ecosystem. Both sides have substantial financial stakes in their narratives. Neither set of motives proves either claim true or false, but both are relevant when evaluating sourcing and weight of testimony, and both should be disclosed when participants are appealing to authority.</p></div>
+      
     </div>
 
   
     <div class="section">
       <h2>Perception Gap</h2>
       <div class="prose"><p>Believers in the claim often assume that anyone who pushes back must be either institutionally captured, naive about elite coordination, or willfully blind to obvious patterns; in reality, most thoughtful pushback acknowledges that Event 201 happened and was strikingly timed, that mRNA platforms were genuinely ready, that CEPI was funded for this purpose, that the Great Reset is a real WEF agenda whose contents deserve open political debate, that gain-of-function funding and NIH disclosure have real accountability questions, and that the lab-leak hypothesis was prematurely dismissed by parts of the institutional establishment in a way that corroded trust. Critics of the claim often assume believers are conspiracy-minded, gullible, anti-science, or politically motivated; in reality, many believers are responding to genuine pandemic-era institutional failures, opaque funding flows, mandate policy that went beyond the evidence on transmission-blocking after Omicron, vaccine-injury compensation systems that have been inadequate and slow, and a credibility crisis the institutions themselves helped create through delayed candid acknowledgment of the myocarditis signal in young males, premature lab-leak dismissal, and uniform messaging that erased demographic variation in risk-benefit. The space between perceived and actual positions on both sides is unusually wide for this scenario, and that gap is exactly where motivated content creators on both sides harvest attention and money.</p></div>
+      
     </div>
 
   <div class="section">
@@ -950,14 +973,17 @@
     <div class="dialogue-round round-1">
       <div class="round-label">Round 1: Perspective-Getting</div>
       <div class="dialogue-bubble"><p>I want to start by saying that the observations underneath this claim are real and they are worth taking seriously together. Event 201 happened in October 2019 at the Pierre Hotel in New York at Johns Hopkins Center for Health Security, co-sponsored by the Gates Foundation and the World Economic Forum, and it simulated a hypothetical novel coronavirus pandemic. The timing is striking and the proximity to the actual outbreak two months later is striking. The mRNA platforms that produced the vaccines in record time really had been in development for years; Moderna&#39;s mRNA-1273 entered Phase 1 on March 16, 2020, only about 66 days after the genome was published, and that speed is genuinely remarkable. CEPI was funded in 2017 specifically to accelerate vaccine development for emerging pathogens, three years before the pandemic began. The Great Reset is a real publication by the WEF in July 2020 with a real policy agenda that deserves open political debate. There are real, unresolved accountability questions about EcoHealth Alliance gain-of-function funding, NIH disclosure practices, and how the lab-leak hypothesis was initially dismissed by parts of the institutional public-health establishment in 2020. Anyone holding this claim is holding a kernel of something true: pandemic preparedness was extensive, platform readiness was extensive, institutional opacity was real, and the official response made significant mistakes that the public was right to notice. If you are reading this and you lost trust in institutions during the pandemic because you watched them say things that turned out not to survive contact with evidence (transmission-blocking, lab-leak dismissal, mandate proportionality), or because you watched a family member experience an adverse event and could not get a straight answer about whether vaccination and event were connected, you are standing somewhere that I think deserves serious engagement, not dismissal. Before we go any further, I would like to understand what part of this worries you most. Is it the institutional opacity around gain-of-function funding, the suspicion that the preparedness exercises were too prescient to be coincidence, the experience of mandate overreach in your own life, the question of whether you were lied to about vaccine safety or efficacy, or something else entirely?</p></div>
+      
     </div>
     <div class="dialogue-round round-2">
       <div class="round-label">Round 2: Guided Examination</div>
       <div class="dialogue-bubble"><p>Here is a pattern I think is worth sitting with together, because it does not require either of us to give up what we already know. The mRNA platforms really had been in development for decades, and that is the part of the timeline that strikes me as worth understanding more carefully. Katalin KarikÃ³ and Drew Weissman published the foundational pseudouridine work that made mRNA vaccines feasible in Immunity in 2005, fifteen years before COVID-19. Moderna was founded in 2010 specifically as an mRNA-therapeutics company; BioNTech was founded in 2008. By 2019, both companies had mRNA candidates for influenza, MERS, Zika, and several other targets in clinical or preclinical stages. When the SARS-CoV-2 genome was published on January 11, 2020, the NIH Vaccine Research Center team of Barney Graham and Kizzmekia Corbett, working together with Moderna, had already completed prefusion-stabilized spike protein structural work on MERS and SARS-CoV-1 from years of prior research. They used that template to design a SARS-CoV-2 spike sequence within approximately 48 hours and selected the mRNA-1273 candidate on or around January 13, 2020. The platform existed; the SARS-CoV-2-specific product did not. This distinction is what biotechnology researchers call platform-versus-product, and it is the routine workflow for any rapid-response vaccine effort. Here is the part I would invite us to sit with: when a real signal (mRNA platforms had been ready for years) gets picked up and amplified through a particular ecosystem, the platform-versus-product distinction vanishes (mRNA was ready becomes COVID vaccines were ready), the actual deployment timeline vanishes (December 11, 2020 first authorization becomes &#39;they had it before the virus&#39;), and the routine biotechnology workflow becomes evidence of conspiracy. Alongside those simplified messages you will often find a book (The Real Anthony Fauci, The Great Reset, Plague of Corruption), a documentary (Plandemic 1, 2, 3), a Substack subscription (Robert Malone, Steve Kirsch), a supplement, or a conference ticket (Better Way Conference) being sold. That does not mean your concern is wrong; it means the version of the story that has reached you may have been simplified by people whose income depends on the simplification. The same is true on the institutional side: when public-health authorities and platforms bundled peer-reviewed lab-leak hypothesis with depopulation content under the single &#39;misinformation&#39; label in 2020-2021, that was the institutional version of the same technique, and it cost the institutions the credibility space that the planning narrative now occupies. Both directions deserve scrutiny.</p></div>
+      
     </div>
     <div class="dialogue-round round-3">
       <div class="round-label">Round 3: Integration</div>
       <div class="dialogue-bubble"><p>Here is what I keep coming back to, and I would really like to know how you see it. There are actually two questions bundled into this claim, and keeping them separate changes what is possible between us. Question one is empirical: do the documented preparedness exercises, the documented platform readiness, the documented institutional opacity, and the documented mistakes in pandemic response support a conclusion that the pandemic itself was deliberately planned and executed with finished vaccines already available before the virus circulated? The honest answer based on the available evidence is no, but for reasons worth naming explicitly so we can disagree about them precisely if we still do. The strongest version of the claim requires either accepting that platform-readiness equals finished-product-readiness despite the 66-day genome-to-Phase-1 timeline and the December 2020 first-authorization deployment date, or accepting that thousands of independent researchers across competing geopolitical systems including the United States, China, Russia, the European Union, Iran, and Israel maintained perfect silence about a deliberately engineered pandemic across six years of intense investigative-journalism scrutiny and three subsequent administrations including one openly hostile to the prior pandemic establishment, or accepting that openly published documents (Event 201 transcripts, CEPI charter, the Great Reset book) are evidence of concealment whose openness somehow proves audacity rather than disproves covertness. Each of those moves is available to the planning narrative, and each makes the claim unfalsifiable in a way that I think is worth noticing together. Question two is ethical and policy-relevant: even if the strongest planning claim is not supported by the evidence, was the way the pandemic was governed compatible with the principles of informed consent, transparent governance, proportional state authority, and democratic accountability that liberal-democratic societies claim to honor? The answer there is genuinely contested in serious ways. Mandate proportionality after Omicron is contested. EcoHealth Alliance funding disclosure is contested. The early lab-leak dismissal is now generally acknowledged to have been a mistake. The pediatric-booster cost-benefit ratio is contested in serious peer-reviewed channels. So here is the question I want to ask you, and I am genuinely asking, not rhetorically. Given that pandemic preparedness, platform readiness, and international coordination really did exist before the pandemic and behaved as one would expect a preparedness apparatus to behave when an emergency arrived, and given that the institutional response also included real failures of transparency, disclosure, and proportionality that deserve continued accountability, what would distinguish in your mind the world where a preparedness apparatus did exactly what it was funded to do (including making serious mistakes) from a world where the same apparatus deliberately engineered the emergency it was funded to respond to, and what kind of evidence would actually let us tell those two worlds apart?</p></div>
+      
     </div>
   </div>
 
@@ -965,6 +991,7 @@
   <div class="section">
     <h2>Reframe</h2>
     <blockquote class="reframe-block">What we share, across this disagreement, is a refusal to accept that institutions making consequential decisions about our bodies, our economies, and our children&#39;s lives get to operate without accountability, transparency, or honest acknowledgment of what they got wrong. Together, we can press for full disclosure of gain-of-function research funding and EcoHealth Alliance grants including the precise nature of work conducted in collaboration with the Wuhan Institute of Virology; for honest re-litigation of the lab-leak hypothesis including its accidental-release and engineered-release variants treated as distinct claims with distinct evidentiary requirements; for proportional and evidence-based pandemic policy that does not impose state authority past what the transmission-blocking and severity-reduction evidence supports; for adequate compensation of those harmed by mandates or by vaccine adverse events through programs that actually function rather than the CICP and VICP structures that have failed many applicants; for pandemic-preparedness governance that is itself subject to the democratic scrutiny it currently lacks; and for institutional humility about the limits of population-scale uniform messaging in the presence of demographic variability in risk and benefit. None of those goals requires choosing between erasing the people who suffered from COVID-19 itself and erasing the people who were harmed by pandemic response, and none requires committing to a story about coordinated planning that the evidence cannot support and that if we hold it will steer us toward defunding the very preparedness apparatus we will need for the next event.</blockquote>
+    
   </div>
 
   
@@ -1002,6 +1029,7 @@
     <ul class="findings-list">
     <li class="finding-item">
       <div class="finding-header">
+        
         <span class="finding-category">Accuracy</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">Moderna mRNA-1273 design timeline is presented as approximately January 13, 2020 (two days after genome publication...</span>
@@ -1011,9 +1039,11 @@
         <div class="finding-description">Moderna mRNA-1273 design timeline is presented as approximately January 13, 2020 (two days after genome publication January 11, 2020); the precise design-selection date is documented as on or around January 13 with the final sequence locked shortly after, and Phase 1 enrollment beginning March 16, 2020. The 66-day genome-to-Phase-1 figure is accurate. Subsequent manufacturing through February 2020 is also documented.</div>
         <div class="finding-rec"><strong>Recommendation:</strong> Retain the precise dates and explicitly note distinction between design selection, sequence locking, manufacturing initiation, and Phase 1 enrollment in any downstream summary.</div>
       </div>
+      
     </li>
     <li class="finding-item">
       <div class="finding-header">
+        
         <span class="finding-category">Accuracy</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">Plandemic first-7-day view count is cited as estimated 8 to 15 million cross-platform views before takedowns. The lower...</span>
@@ -1023,9 +1053,11 @@
         <div class="finding-description">Plandemic first-7-day view count is cited as estimated 8 to 15 million cross-platform views before takedowns. The lower bound is conservative; some BuzzFeed News and academic estimates reach higher figures. The range is appropriately acknowledged.</div>
         <div class="finding-rec"><strong>Recommendation:</strong> Retain the range rather than single figure in future iterations.</div>
       </div>
+      
     </li>
     <li class="finding-item">
       <div class="finding-header">
+        
         <span class="finding-category">Completeness</span>
         <span class="finding-severity-medium">MEDIUM</span>
         <span class="finding-description">Crimson Contagion (HHS exercise conducted January through August 2019, finding the United States unprepared for a...</span>
@@ -1035,9 +1067,11 @@
         <div class="finding-description">Crimson Contagion (HHS exercise conducted January through August 2019, finding the United States unprepared for a respiratory pandemic) is engaged in the consensus_explanation and origins but deserves additional emphasis as the most direct counter-frame to Event 201 cherry-picking. Crimson Contagion&#39;s existence demonstrates preparedness exercises were systematic and ongoing rather than Event 201-specific, and its findings (US unprepared) directly contradict the planning narrative.</div>
         <div class="finding-rec"><strong>Recommendation:</strong> Future iterations should give Crimson Contagion equal narrative prominence to Event 201 in opening framing of the bridge.</div>
       </div>
+      
     </li>
     <li class="finding-item">
       <div class="finding-header">
+        
         <span class="finding-category">Completeness</span>
         <span class="finding-severity-medium">MEDIUM</span>
         <span class="finding-description">Lab-leak hypothesis is engaged with the three-scenario distinction (natural zoonosis, research-related accidental...</span>
@@ -1047,9 +1081,11 @@
         <div class="finding-description">Lab-leak hypothesis is engaged with the three-scenario distinction (natural zoonosis, research-related accidental release, intentional engineered release as bioweapon) made explicit in the origins mutations and inferential_gap, but readers may still conflate scenarios two and three. The accidental-release scenario is plausible and worth investigating; the intentional-release-as-bioweapon scenario requires substantially stronger evidence than is currently available.</div>
         <div class="finding-rec"><strong>Recommendation:</strong> Future iterations should distinguish the three scenarios in the prebunking_note with explicit labels and evidentiary requirements.</div>
       </div>
+      
     </li>
     <li class="finding-item">
       <div class="finding-header">
+        
         <span class="finding-category">Completeness</span>
         <span class="finding-severity-medium">MEDIUM</span>
         <span class="finding-description">Global South perspectives on pandemic governance and vaccine access are largely absent from the actor map and bridge....</span>
@@ -1059,9 +1095,11 @@
         <div class="finding-description">Global South perspectives on pandemic governance and vaccine access are largely absent from the actor map and bridge. The planning narrative is heavily Western-Anglophone, and the inverse equity critique (low-income countries received doses late and at lower coverage despite contributing platform-research infrastructure including AstraZeneca-Oxford and South African genomic surveillance through NICD and KRISP) deserves engagement to avoid hemispheric bias. COVAX shortfalls and patent-waiver disputes warrant their own thread.</div>
         <div class="finding-rec"><strong>Recommendation:</strong> Future iterations should add LMIC voices including the African Vaccine Manufacturing Initiative, the Africa CDC, the Indian Serum Institute, and the patent-waiver coalition (South Africa, India) as additional actors with distinct critique not reducible to the Western planning narrative.</div>
       </div>
+      
     </li>
     <li class="finding-item">
       <div class="finding-header">
+        
         <span class="finding-category">framing</span>
         <span class="finding-severity-medium">MEDIUM</span>
         <span class="finding-description">Socratic Round 3 ends with a substantive open question and meets the OARS protocol; its construction could imply that...</span>
@@ -1071,9 +1109,11 @@
         <div class="finding-description">Socratic Round 3 ends with a substantive open question and meets the OARS protocol; its construction could imply that the burden of proof should be symmetric between the two worlds it asks the reader to distinguish, when in fact the burden falls more heavily on the planning claim due to its extraordinary coordination requirements. The framing partly compensates by listing the moves the planning narrative requires, but readers may still feel invited into false symmetry.</div>
         <div class="finding-rec"><strong>Recommendation:</strong> Future iterations should frame the closing question more explicitly as &#39;what kind of evidence would tip you&#39; acknowledging the asymmetry in prior plausibility.</div>
       </div>
+      
     </li>
     <li class="finding-item">
       <div class="finding-header">
+        
         <span class="finding-category">framing</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">Communication posture is flagged appropriately as relational_first_with_explicit_validation_of_preparedness_kernel;...</span>
@@ -1083,9 +1123,11 @@
         <div class="finding-description">Communication posture is flagged appropriately as relational_first_with_explicit_validation_of_preparedness_kernel; pattern_density_warning is set true; bilateral TTP attribution is honored including T0080 (Dismiss Criticism) and T0040 (Suppress Inconvenient Evidence) on the institutional side alongside skeptic-side techniques. Consider whether the GT-series cognitive-warfare patterns (Pattern Density Saturation, Foreknowledge Inference Frame) need additional methodological documentation.</div>
         <div class="finding-rec"><strong>Recommendation:</strong> Future iterations should document GT-series confidence-calibration approach explicitly and consider adding additional GT-series codes for the platform-versus-product conflation and cooperation-as-collusion patterns specifically.</div>
       </div>
+      
     </li>
     <li class="finding-item">
       <div class="finding-header">
+        
         <span class="finding-category">methodology</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">DISARM confidence scores are presented to 0.01 precision without explicit calibration method documentation. The...</span>
@@ -1095,9 +1137,11 @@
         <div class="finding-description">DISARM confidence scores are presented to 0.01 precision without explicit calibration method documentation. The variance across techniques (0.62 to 0.95) suggests intuitive rather than empirical calibration. GT-series confidence scores similarly lack explicit calibration documentation.</div>
         <div class="finding-rec"><strong>Recommendation:</strong> Document calibration approach in next iteration or round to nearest 0.05; consider citing source materials for confidence anchoring.</div>
       </div>
+      
     </li>
     <li class="finding-item">
       <div class="finding-header">
+        
         <span class="finding-category">Bias</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">TTP attribution is approximately 80 percent planned-pandemic-narrative-side and 20 percent institutional-side (T0080...</span>
@@ -1107,9 +1151,11 @@
         <div class="finding-description">TTP attribution is approximately 80 percent planned-pandemic-narrative-side and 20 percent institutional-side (T0080 Dismiss Criticism, T0040 Suppress Inconvenient Evidence partial attribution). This is consistent with the empirical distribution of manipulation in the public discourse on this scenario but should be made explicit so readers can interrogate the ratio.</div>
         <div class="finding-rec"><strong>Recommendation:</strong> Add explicit side-count tally in future iterations: skeptic-attributed, institution-attributed, both-attributed.</div>
       </div>
+      
     </li>
     <li class="finding-item">
       <div class="finding-header">
+        
         <span class="finding-category">ethics</span>
         <span class="finding-severity-medium">MEDIUM</span>
         <span class="finding-description">The Socratic dialogue Round 1 leads with strong validation of the preparedness kernel and institutional-opacity...</span>
@@ -1119,9 +1165,11 @@
         <div class="finding-description">The Socratic dialogue Round 1 leads with strong validation of the preparedness kernel and institutional-opacity concerns, which is the correct frame for OARS protocol given the kernel-of-truth profile. However, readers who lost family members to COVID-19 itself (and who experience this narrative as posthumous dishonor of their loved ones whose deaths are framed as part of a planned event rather than as caused by a virus) may need explicit acknowledgment that taking the kernel seriously does not require equivocating about the reality of the disease or the deaths it caused.</div>
         <div class="finding-rec"><strong>Recommendation:</strong> Future iterations should add explicit acknowledgment of COVID-19 mortality as real and significant (approximately 7 million reported deaths globally with WHO excess-mortality estimates reaching 14 to 18 million) in the opening Socratic round.</div>
       </div>
+      
     </li>
     <li class="finding-item">
       <div class="finding-header">
+        
         <span class="finding-category">ethics</span>
         <span class="finding-severity-medium">MEDIUM</span>
         <span class="finding-description">The 2025 institutional reconstitution under RFK Jr. at HHS, Bhattacharya at NIH, and Makary at FDA is acknowledged in...</span>
@@ -1131,9 +1179,11 @@
         <div class="finding-description">The 2025 institutional reconstitution under RFK Jr. at HHS, Bhattacharya at NIH, and Makary at FDA is acknowledged in the narrative_summary and moral_foundations but its implications for the analytical framework are not fully developed. The fact that skeptical voices now hold formal authority over the very preparedness institutions previously framed as conspirators creates a moment where the analytical task shifts from exposing manipulation to assessing the policy consequences of the planning narrative now informing institutional decisions including the potential defunding of preparedness infrastructure.</div>
         <div class="finding-rec"><strong>Recommendation:</strong> Future iterations should engage the 2025 institutional reconstitution as a substantive analytical pivot rather than as background context.</div>
       </div>
+      
     </li>
     <li class="finding-item">
       <div class="finding-header">
+        
         <span class="finding-category">Completeness</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">The KarikÃ³-Weissman Nobel Prize (Physiology or Medicine, October 2023) is not explicitly mentioned but would...</span>
@@ -1143,6 +1193,7 @@
         <div class="finding-description">The KarikÃ³-Weissman Nobel Prize (Physiology or Medicine, October 2023) is not explicitly mentioned but would strengthen the platform-readiness narrative by providing institutional scientific recognition of the foundational mRNA research lineage that the planning narrative routinely erases.</div>
         <div class="finding-rec"><strong>Recommendation:</strong> Add KarikÃ³-Weissman 2023 Nobel Prize as additional evidence of platform readiness in future iterations.</div>
       </div>
+      
     </li></ul>
   </div>
 

@@ -792,7 +792,8 @@ class BridgeOutput(BaseModel):
         the prompt instruction. Sets machine-readable c6_violation flag
         and logs warning. Degrade-don't-crash: does not raise."""
         if self.socratic_dialogue and len(self.socratic_dialogue) >= 3:
-            r3 = self.socratic_dialogue[-1].rstrip()
+            # A question wrapped in quotes or brackets ends in ?' or ?" (Opus, 2026-10-25).
+            r3 = self.socratic_dialogue[-1].rstrip(" \t\r\n'\"‘’“”»)]")
             if not r3.endswith("?"):
                 _log.warning(
                     "Charter C6 violation: Round 3 does not end with a question"
@@ -907,11 +908,55 @@ class AuditVerdict(str, Enum):
     UNAUDITED = "unaudited"
 
 
+MAX_LOCATIONS = 3
+MAX_QUOTE_CHARS = 400
+
+
+def _clean_locations(v):
+    """Keep well-formed location entries and coerce their text fields. A
+    malformed entry is dropped instead of failing the whole audit: locations
+    only place a finding on the page, and a finding without one stays
+    unlocated, which the reader can see. At most three entries are kept, and
+    a quote longer than MAX_QUOTE_CHARS is dropped, never cut, so the audit
+    cannot copy a whole field."""
+    if isinstance(v, dict):
+        v = [v]
+    if not isinstance(v, list):
+        return []
+    out = []
+    for loc in v[:MAX_LOCATIONS]:
+        if not isinstance(loc, dict):
+            continue
+        section, quote = loc.get("section"), loc.get("quote")
+        paths = loc.get("paths")
+        quote = quote if isinstance(quote, str) and len(quote) <= MAX_QUOTE_CHARS else ""
+        out.append({
+            "section": section if isinstance(section, str) else "",
+            "quote": quote,
+            "paths": [p for p in paths if isinstance(p, str)] if isinstance(paths, list) else [],
+        })
+    return out
+
+
+class FindingLocation(BaseModel):
+    """Where a finding applies: the Auditor names the section and quotes the
+    passage; `paths` is filled by huginn_muninn.locate, never by the model."""
+    section: str = ""
+    quote: str = ""
+    paths: list[str] = Field(default_factory=list)
+
+
 class AuditFinding(BaseModel):
     category: Annotated[Literal["bias", "accuracy", "completeness", "manipulation", "quality", "cognitive_warfare", "frame_capture"], BeforeValidator(_first_pipe_value)]
     severity: Annotated[Literal["low", "medium", "high", "critical"], BeforeValidator(_first_pipe_value)]
     description: str
     recommendation: str
+    # Design C (2026-11-10): the passages this finding is about. `located`
+    # is True only when huginn_muninn.locate found at least one quote.
+    locations: Annotated[list[FindingLocation], BeforeValidator(_clean_locations)] = Field(default_factory=list)
+    # Derived: AnalysisReport recomputes it, so any incoming value is only a
+    # placeholder and a non-boolean must not fail the audit.
+    located: Annotated[bool, BeforeValidator(lambda v: v is True)] = False
 
 
 class AuditorOutput(BaseModel):
@@ -1021,6 +1066,26 @@ class AnalysisReport(BaseModel):
             object.__setattr__(
                 self, "bridge", BridgeOutput(**absent_bridge(reason, needs="withheld")),
             )
+        return self
+
+    @model_validator(mode="after")
+    def locate_findings_in_report(self) -> "AnalysisReport":
+        """Finding locations are derived from this report's own text, never
+        trusted from the producer (design C review, 2026-11-10). Runs after
+        the veto validator: a quote from a withheld Bridge is dropped with its
+        location, so the veto also stops the copied text."""
+        from huginn_muninn.locate import locate_quote, normalise_section
+        sections = {k: getattr(self, k).model_dump(mode="json")
+                    for k in ("decomposition", "origins", "intelligence", "ttps", "bridge")}
+        for f in self.audit.findings:
+            kept = []
+            for loc in f.locations:
+                if self.bridge_withheld and normalise_section(loc.section) == "bridge":
+                    continue
+                loc.paths = locate_quote(sections, loc.section, loc.quote)
+                kept.append(loc)
+            f.locations = kept
+            f.located = any(loc.paths for loc in kept)
         return self
 
 

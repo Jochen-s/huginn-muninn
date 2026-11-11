@@ -427,6 +427,23 @@
     margin-top: 4px;
   }
   .finding-rec strong { color: #2C3E50; }
+  .finding-number {
+    display: inline-block; min-width: 1.6em; text-align: center;
+    font-size: 0.75rem; font-weight: 700; color: var(--gray);
+    border: 1px solid var(--border); border-radius: 10px;
+  }
+  .finding-quote {
+    margin: 6px 0 0; padding: 4px 10px;
+    border-left: 3px solid var(--border);
+    font-size: 0.85rem; color: #2C3E50; font-style: italic;
+  }
+  .auditor-notes { margin-top: 8px; display: flex; flex-direction: column; gap: 4px; }
+  .auditor-note {
+    display: block; padding: 6px 10px; border-left: 3px solid var(--amber);
+    background: var(--bg); border-radius: 0 6px 6px 0;
+    font-size: 0.8rem; color: #2C3E50; text-decoration: none;
+  }
+  .auditor-note:hover { text-decoration: underline; }
 
   /* Scenario navigation */
   .scenario-nav {
@@ -718,6 +735,7 @@
 <p>The American Psychological Association convened a broadly constituted task force in 1996 specifically to provide an authoritative scientific summary after the Bell Curve controversy. The report &#39;Intelligence: Knowns and Unknowns&#39; (Neisser et al., American Psychologist 1996) is the most credible single institutional statement on the question. Its conclusion regarding between-group differences: &#39;The cause of that differential is not known.&#39; The report affirmed high within-group heritability, the reality of score gaps, and the predictive validity of IQ tests, while explicitly refusing to endorse genetic causation of group differences. This is not political correctness -- it is a distinguished panel declining to assert what the evidence does not support.</p>
 <p>Nisbett, Aronson, Blair, Dickens, Flynn, Halpern, and Turkheimer&#39;s comprehensive review in American Psychologist (2012) is the most authoritative recent synthesis. Key findings: (1) the Black-white gap has narrowed substantially since the 1970s, consistent with environmental causation; (2) environmental interventions (early childhood education, reduced lead exposure, poverty reduction) produce measurable IQ gains; (3) adoption studies show large environmental effects on group-level scores; (4) genetic factors that explain within-group differences have not been shown to explain between-group differences; (5) the available evidence is most consistent with environmental causation. The review explicitly names the within-group / between-group heritability distinction as the key logical issue.</p>
 <p>Genome-wide association studies (GWAS) have identified polygenic scores for IQ using European population samples. When these scores are applied to African-ancestry populations, their predictive validity drops substantially. European-derived polygenic scores show substantially reduced predictive validity in African-ancestry populations, most consistent with population-specific LD structure and environmental confounding rather than shared causal genetic architecture, though this does not in itself definitively rule out all genetic contributions to group differences. The cross-ancestry transfer failure is not the pattern expected if the same genetic variants were driving IQ variation in both populations at comparable effect sizes, and it is most parsimoniously explained by population stratification and LD structure differences rather than shared causal architecture.</p></div>
+        
       </div>
 
   <div class="section">
@@ -906,6 +924,7 @@
 <p>Cofnas&#39;s burden-of-proof argument deserves direct engagement here. He argues that without a specific identified environmental mechanism explaining the entire gap, the genetic hypothesis should be the default. This is a substantive philosophical claim about where the null hypothesis lies. However, the standard scientific burden of proof places the positive causal claim as the one requiring positive evidence: to assert that specific genetic variants cause between-group IQ differences, one must identify those variants, demonstrate cross-ancestry PGS transfer, or establish candidate gene mechanisms. None of these have been produced. The environmental hypothesis, by contrast, already has identified mechanisms with empirical support: the Flynn Effect demonstrates massive environmental plasticity of the IQ phenotype; adoption studies show large score gains from environmental improvement; stereotype threat research identifies a specific, replicable psychological mechanism; lead exposure disparities are documented and quantified; and school funding, nutrition, and wealth gaps are measured and correlated with outcome gaps. The environmental hypothesis is not a residual &#39;we don&#39;t know, so maybe environment&#39;; it has a positive evidential case. The genetic hypothesis, by contrast, remains a conjecture without identified causal variants. The burden of proof rests where it belongs: on the party asserting specific genetic causation.</p>
 <p>The secondary leap is from &#39;some people criticize this research&#39; to &#39;this research is being suppressed&#39;. Jensen, Rushton, Lynn, Gottfredson, and Cofnas all published continuously in academic venues, held tenured positions, sold millions of books with major publishers, and appeared on major media platforms. Criticism, peer review rejection of methodologically inadequate papers, and social consequences for public statements are features of normal scientific functioning, not suppression. The &#39;suppression&#39; framing transforms standard academic scrutiny into evidence of persecution, which conveniently makes the claim unfalsifiable: any rebuttal becomes further evidence of suppression.</p>
 <p>The inferential gap is not accidental. It does specific rhetorical work: it allows the claim to appear grounded in uncontested facts (score gaps are real) while the contested part (genetic causation) is smuggled in as an implication. A reader who accepts the facts and does not know the within/between heritability distinction walks away believing the genetic conclusion is supported by the factual foundation. The smuggling is the technique.</p></div>
+    
   </div>
 
   <div class="section">
@@ -922,6 +941,7 @@
 <p>Within-group heritability of IQ is substantial (estimates range 0.50-0.80 in adults)</p>
 <p>This is accepted in both the APA 1996 report and hereditarian literature. The APA task force affirmed high within-group heritability. The critical disagreement is that within-group heritability cannot be extrapolated to between-group differences -- a point Jensen himself acknowledged in 1969 before making the inference anyway.</p>
 <p>The actual scientific disagreement is narrow and precise: whether between-group IQ score differences are primarily caused by genetic factors or primarily by environmental, historical, and socioeconomic factors. This is an empirical question that has not been resolved by the available evidence. The APA 1996 task force concluded: &#39;The cause of that differential is not known.&#39; That conclusion -- honest acknowledgment of genuine uncertainty -- is where the evidence currently sits.</p></div>
+    
   </div>
 
   <div class="section">
@@ -944,6 +964,7 @@
 <p>Contemporary distribution layer. Monetizes persecution narrative directly. Produces continuous content independent of epistemic merit. Deplatforming events increase subscriber counts.</p>
 <p>Subscriber income. Community identity as &#39;brave truth-tellers&#39;. Career differentiation through contrarian positioning.</p>
 <p>A substantial proportion of people who encounter this claim are not part of the funding network. They are ordinary people who have encountered the &#39;forbidden knowledge&#39; framing through podcast or Substack exposure and are genuinely curious. They are the downstream audience the network is designed to reach. They deserve a direct, honest answer -- not dismissal, and not amplification of the false framing.</p></div>
+    
   </div>
 
   
@@ -958,6 +979,7 @@
 <p>Linda Gottfredson published the 1994 WSJ statement with 52 signatories and has published in mainstream journals continuously.</p>
 <p>What is described as suppression is: (a) critical peer review rejecting papers with methodological inadequacies, (b) professional reputational consequences for public statements (Watson 2007: &#39;Africans are genetically less intelligent&#39;), and (c) social controversy. These are features of normal scientific and public discourse.</p>
 <p>The strongest documented case of ideological funding distorting race science is the Pioneer Fund itself, not mainstream academia. The fund was founded with explicit eugenic and white-separatist goals in 1937 and funded the hereditarian network for six decades with ideologically committed resources. The claim that academia is ideologically distorting science in this domain applies with greater documentary evidence to the funding apparatus behind the claim than to the mainstream institutions the claim accuses.</p></div>
+      
     </div>
 
   
@@ -994,6 +1016,7 @@
 <p>Controversial content -&gt; engagement metrics -&gt; advertising revenue / Spotify deals / Patreon -&gt; incentive to repeat</p>
 <p>Before accepting a belief, it is worth asking: who profits from me holding this belief? In this case, the beneficiaries include a eugenics endowment, conservative think tanks opposing welfare and affirmative action, alt-right media organizations, Substack creators whose income grows with persecution narratives, and commercial podcast platforms that profit from controversy. None of these beneficiaries need the belief to be true. They need it to be believed.</p>
 <p>This mapping traces the funding and distribution infrastructure, where commercial and political motives are documented. Individual researchers within this network, including some who hold the hereditarian position based on evidence they find genuinely compelling, should be distinguished from the institutional incentive structures that amplify and monetize their work.</p></div>
+      
     </div>
 
   
@@ -1003,6 +1026,7 @@
 <p>A small network of ideologically funded researchers with documented connections to eugenics organizations has spent sixty years trying to establish a claim that the evidence does not support, using publication venues that mimic science without its quality controls, and framing legitimate scientific criticism as political persecution.</p>
 <p>The hereditarian perception misses the documented funding history and the Pioneer Fund&#39;s ideological origins. The mainstream perception sometimes dismisses sincere questioners who are not part of the network and who deserve a direct, honest engagement with the evidence rather than a conversation-stopping accusation of racism. Both perceptions have become tribal markers rather than epistemic tools.</p>
 <p>What actually causes the documented achievement gaps, and what interventions would genuinely help? This is the question that gets buried under the genetics debate. Both sides claim to care about the answer. Getting to that shared ground requires naming the manipulation that has kept the debate stuck.</p></div>
+      
     </div>
 
   <div class="section">
@@ -1012,14 +1036,17 @@
     <div class="dialogue-round round-1">
       <div class="round-label">Round 1: Perspective-Getting</div>
       <div class="dialogue-bubble"><p>I hear you valuing honest, uncensored science, and I think that is genuinely important. You are looking at IQ score data and seeing patterns that seem to be systematically ignored. That frustration with institutions telling you what you are allowed to think about is real, and shared by people across the political spectrum. The score gaps you are pointing to are documented. The APA, Brookings, and multiple meta-analyses all confirm they exist. You are not imagining them.</p></div>
+      
     </div>
     <div class="dialogue-round round-2">
       <div class="round-label">Round 2: Guided Examination</div>
       <div class="dialogue-bubble"><p>Have you come across the Flynn Effect in what you have been reading? It is one of the most replicated findings in the IQ literature -- scores rose roughly 30 points over the 20th century across every tested population. That is a larger shift than the between-group gap, and it happened in about three generations. I am curious what you make of it, because how you read the Flynn Effect changes a lot about how the rest of the evidence fits together.</p></div>
+      
     </div>
     <div class="dialogue-round round-3">
       <div class="round-label">Round 3: Integration</div>
       <div class="dialogue-bubble"><p>There is a pattern worth knowing about called Cherry Picking, where someone shows you real data but leaves out the context that would change your conclusion. The IQ gaps are real, but the Flynn Effect tells us the IQ phenotype is highly responsive to environmental change -- too fast for genetic change, which operates on timescales of thousands of years, not decades. If environment can move scores by 30 points in 80 years, that has direct implications for interpreting a 15-point gap between groups who have lived in vastly different environments for centuries. Both sides of this debate share a genuine desire to understand why educational outcomes differ and what we can do about it. The interventions with the strongest evidence -- early childhood programs, reduced lead exposure, better nutrition, reduced poverty -- are ones both sides could support if we follow the data rather than the framing. What would it look like to focus our energy there?</p></div>
+      
     </div>
   </div>
 
@@ -1029,6 +1056,7 @@
     <blockquote class="reframe-block">Everyone who takes this question seriously wants the same thing at the deepest level: they want people to succeed or fail based on what they actually do and learn, not based on circumstances of birth. The disagreement is about which circumstances matter most and which are changeable. The evidence strongly suggests that environmental circumstances are highly changeable -- and that the primary obstacle to acting on that evidence has been a sixty-year campaign, funded by a eugenics endowment, to make biological determinism seem like the scientifically courageous position.
 
 If the documented achievement gaps between racial groups in the United States are primarily caused by environmental and historical factors -- lead exposure, school quality differences, wealth gaps compounding over generations, stereotype threat, epigenetic effects of chronic stress -- then what would it take to close them? And why has so much institutional energy gone into the genetic hypothesis rather than the environmental interventions that adoption studies and Flynn Effect data suggest would actually work?</blockquote>
+    
   </div>
 
   
@@ -1047,6 +1075,7 @@ None of these findings rise to the level requiring a veto or a fail verdict. The
     <ul class="findings-list">
     <li class="finding-item">
       <div class="finding-header">
+        
         <span class="finding-category">Accuracy</span>
         <span class="finding-severity-medium">MEDIUM</span>
         <span class="finding-description">The Gottfredson Wall Street Journal statement date is cited inconsistently across files. The intelligence.json and...</span>
@@ -1056,9 +1085,11 @@ None of these findings rise to the level requiring a veto or a fail verdict. The
         <div class="finding-description">The Gottfredson Wall Street Journal statement date is cited inconsistently across files. The intelligence.json and bridge.json files describe it as a &#39;1994&#39; statement; the origins file references it as both &#39;1994&#39; and &#39;2003&#39; in different sub-claims (SC-01-03 propagation path says &#39;WSJ op-ed (1994)&#39;; SC-01-04 earliest_source names &#39;Gottfredson WSJ 2003&#39;). These are actually two different documents: Gottfredson organized the 1994 statement (&#39;Mainstream Science on Intelligence&#39;, Wall Street Journal, Dec 13 1994) and co-authored a 2003 restatement. Conflating them or mislabeling either weakens the evidentiary chain, because the original is the one most frequently cited as consensus evidence for genetic causation. The analysis does not clearly distinguish between the two.</div>
         <div class="finding-rec"><strong>Recommendation:</strong> Verify which Gottfredson statement each citation refers to and label them distinctly (1994 original vs. 2003 follow-up). The factual record should not have internally inconsistent dates for the same claimed document.</div>
       </div>
+      
     </li>
     <li class="finding-item">
       <div class="finding-header">
+        
         <span class="finding-category">Accuracy</span>
         <span class="finding-severity-medium">MEDIUM</span>
         <span class="finding-description">Jensen&#39;s credibility score of 0.25 and the framing of his work are broadly defensible, but one specific accuracy claim...</span>
@@ -1068,9 +1099,11 @@ None of these findings rise to the level requiring a veto or a fail verdict. The
         <div class="finding-description">Jensen&#39;s credibility score of 0.25 and the framing of his work are broadly defensible, but one specific accuracy claim is overstated: the analysis states Jensen&#39;s 1969 paper &#39;was not peer-reviewed by standard process&#39;. This is asserted as fact in the intelligence.json actor record. Harvard Educational Review was student-edited, which is unconventional for a research article of this scope, but the claim as stated (&#39;not peer-reviewed&#39;) is stronger than what the source record supports. Tucker (2002) is cited as the basis for Pioneer Fund funding but does not appear to be cited as the source for the peer-review claim. If this is unverified, it should be flagged as such rather than stated as established.</div>
         <div class="finding-rec"><strong>Recommendation:</strong> Either cite the specific source documenting HER&#39;s review process for the Jensen paper, or qualify the claim as &#39;published in a student-edited journal without standard peer review&#39; and note the evidence basis.</div>
       </div>
+      
     </li>
     <li class="finding-item">
       <div class="finding-header">
+        
         <span class="finding-category">Accuracy</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">The analysis states GWAS polygenic scores for IQ &#39;do not transfer predictively to African populations&#39;, presenting this...</span>
@@ -1080,9 +1113,11 @@ None of these findings rise to the level requiring a veto or a fail verdict. The
         <div class="finding-description">The analysis states GWAS polygenic scores for IQ &#39;do not transfer predictively to African populations&#39;, presenting this as a clean finding against the genetic hypothesis. This is directionally correct but overstated. The lower cross-ancestry transferability of European-derived PGS is real and documented, but it reflects a combination of factors: population stratification, different LD patterns, different allele frequencies, and potentially different causal variants. It is consistent with but does not definitively rule out the genetic hypothesis for group differences -- it primarily shows the current PGS tools are population-specific. The analysis treats this as stronger evidence of environmental causation than it technically is.</div>
         <div class="finding-rec"><strong>Recommendation:</strong> Qualify the GWAS finding: &#39;European-derived polygenic scores show substantially reduced predictive validity in African-ancestry populations; this is most consistent with population-specific LD structure and environmental confounding rather than shared causal genetic architecture, but does not in itself rule out genetic contributions to group differences.&#39;</div>
       </div>
+      
     </li>
     <li class="finding-item">
       <div class="finding-header">
+        
         <span class="finding-category">Bias</span>
         <span class="finding-severity-medium">MEDIUM</span>
         <span class="finding-description">The treatment of Nathan Cofnas is notably heavier than it needs to be given his actual epistemic position. Cofnas is...</span>
@@ -1092,9 +1127,11 @@ None of these findings rise to the level requiring a veto or a fail verdict. The
         <div class="finding-description">The treatment of Nathan Cofnas is notably heavier than it needs to be given his actual epistemic position. Cofnas is assigned credibility 0.28, which is defensible. However, his Substack monetization is explicitly cited as a motivation in a way that implies commercial interest undermines his academic work. His peer-reviewed publications (Biology &amp; Philosophy, Philosophical Psychology) are legitimate venues. The analysis correctly notes he is distinct from the Rushton/Lynn tier, but the consistent pairing of his academic arguments with his Substack income risks a mild ad hominem pattern: conflating the quality of his peer-reviewed arguments with his business model. His philosophical &#39;default hypothesis&#39; framing deserves direct rebuttal on its merits (which the bridge.json does provide) rather than primarily being contextualized by subscriber counts.</div>
         <div class="finding-rec"><strong>Recommendation:</strong> In the techniques_revealed and TTP sections, distinguish more clearly between the epistemic quality of Cofnas&#39;s peer-reviewed arguments (which deserve direct engagement) and the broader Substack ecosystem&#39;s monetization of persecution narratives. The &#39;default hypothesis&#39; framing is worth rebutting philosophically -- the bridge.json does this well in the inferential_gap section, but the intelligence.json framing leans too heavily on commercial motive.</div>
       </div>
+      
     </li>
     <li class="finding-item">
       <div class="finding-header">
+        
         <span class="finding-category">Bias</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">The analysis includes &#39;Silicon Valley Rationalist and Libertarian Community&#39; as an actor with a &#39;funds&#39; relationship to...</span>
@@ -1104,9 +1141,11 @@ None of these findings rise to the level requiring a veto or a fail verdict. The
         <div class="finding-description">The analysis includes &#39;Silicon Valley Rationalist and Libertarian Community&#39; as an actor with a &#39;funds&#39; relationship to the Substack ecosystem at confidence 0.55. The evidence note itself says &#39;Thiel-specific funding links to hereditarian content are not fully documented in the source material; this is partially inferred.&#39; A confidence-0.55 funding relationship with an explicitly flagged speculative basis should either be upgraded to an &#39;amplifies&#39; relationship (which the evidence would support) or clearly labeled as speculative inference rather than documented funding. Presenting this as a &#39;funds&#39; relation at 0.55 risks creating a misleading impression of a documented financial network that does not actually exist in the record.</div>
         <div class="finding-rec"><strong>Recommendation:</strong> Change the relation_type from &#39;funds&#39; to &#39;amplifies&#39; for the Silicon Valley -&gt; Substack link, or add a &#39;speculative&#39; flag to the relation record consistent with how the actor evidence section hedges it.</div>
       </div>
+      
     </li>
     <li class="finding-item">
       <div class="finding-header">
+        
         <span class="finding-category">Completeness</span>
         <span class="finding-severity-medium">MEDIUM</span>
         <span class="finding-description">The analysis correctly acknowledges within-group heritability as real and high (0.50-0.80 in adults), which is an...</span>
@@ -1116,9 +1155,11 @@ None of these findings rise to the level requiring a veto or a fail verdict. The
         <div class="finding-description">The analysis correctly acknowledges within-group heritability as real and high (0.50-0.80 in adults), which is an important concession to the hereditarian position. However, the hereditarian side&#39;s strongest current argument -- Cofnas&#39;s &#39;default hypothesis&#39; framing, which argues that without a specific environmental mechanism explaining the gap, the genetic hypothesis should be the null -- is addressed in the bridge.json&#39;s inferential_gap section but is not substantively engaged in the TTP analysis or the origins file. The TTP file identifies this framing as &#39;T0004 Competing Narrative&#39; rather than engaging it as a philosophical argument about burden of proof, which is where its actual force lies. A sophisticated reader familiar with Cofnas&#39;s published work would note this.</div>
         <div class="finding-rec"><strong>Recommendation:</strong> Add a direct engagement with the burden-of-proof argument in the origins or bridge file: explain why the standard scientific burden of proof places the genetic hypothesis as the one requiring positive evidence (specific causal variants, cross-ancestry PGS transfer, candidate gene mechanisms), not the environmental hypothesis. The bridge.json&#39;s &#39;exact inferential leap&#39; section partially does this but does not name Cofnas&#39;s specific framing.</div>
       </div>
+      
     </li>
     <li class="finding-item">
       <div class="finding-header">
+        
         <span class="finding-category">Completeness</span>
         <span class="finding-severity-medium">MEDIUM</span>
         <span class="finding-description">The counter-evidence section documents the Flynn Effect and adoption studies well. However, the Minnesota Transracial...</span>
@@ -1128,9 +1169,11 @@ None of these findings rise to the level requiring a veto or a fail verdict. The
         <div class="finding-description">The counter-evidence section documents the Flynn Effect and adoption studies well. However, the Minnesota Transracial Adoption Study follow-up (Weinberg, Scarr, Waldman 1992) is mentioned only in passing with a methodological caveat. This is the most-cited hereditarian counter-evidence to the adoption argument. The analysis notes &#39;high attrition and adolescent identity development&#39; but does not engage the specific numbers (the Black adoptees&#39; scores did regress toward the Black mean in the follow-up). A reader who knows the 1992 follow-up will feel this important piece of counter-counter-evidence is underweighted. The analysis should either engage it more fully or explicitly acknowledge its significance to the debate.</div>
         <div class="finding-rec"><strong>Recommendation:</strong> Expand the adoption study section to directly address the Weinberg et al. 1992 follow-up results: acknowledge the regression finding, note the methodological limits (attrition rate, sample size, timing), and explain why the early childhood results remain the stronger evidence. Do not appear to hide a finding that sophisticated readers will know.</div>
       </div>
+      
     </li>
     <li class="finding-item">
       <div class="finding-header">
+        
         <span class="finding-category">Completeness</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">The analysis does not engage the behavioral genetics finding that heritability of IQ increases substantially with age...</span>
@@ -1140,9 +1183,11 @@ None of these findings rise to the level requiring a veto or a fail verdict. The
         <div class="finding-description">The analysis does not engage the behavioral genetics finding that heritability of IQ increases substantially with age and socioeconomic advantage (Turkheimer et al. 2003): in impoverished environments, heritability of IQ is low; in affluent environments it is high. This finding is directly relevant to the group differences debate because it predicts that measured group heritability will be suppressed by the environmental disadvantages that are more prevalent in lower-SES groups -- meaning high within-group heritability in white middle-class samples says even less about causes of between-group gaps than the standard analysis suggests. This strengthens the environmental case further and is a legitimate extension of what the analysis presents.</div>
         <div class="finding-rec"><strong>Recommendation:</strong> Add a brief note in the consensus_explanation section or the within_vs_between_heritability subsection citing Turkheimer et al. 2003 and its implication: heritability estimates from advantaged white samples cannot be generalized even within that group, let alone across groups with different environmental distributions.</div>
       </div>
+      
     </li>
     <li class="finding-item">
       <div class="finding-header">
+        
         <span class="finding-category">Manipulation</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">The &#39;who benefits&#39; commercial_motives section in bridge.json is largely well-executed, but the closing question --...</span>
@@ -1152,9 +1197,11 @@ None of these findings rise to the level requiring a veto or a fail verdict. The
         <div class="finding-description">The &#39;who benefits&#39; commercial_motives section in bridge.json is largely well-executed, but the closing question -- &#39;None of these beneficiaries need the belief to be true. They need it to be believed.&#39; -- while rhetorically effective, comes close to implying that no one holds the genetic hypothesis in good faith. The analysis does acknowledge sincere questioners separately, and the bridge.json&#39;s Socratic dialogue handles them with appropriate dignity. But the commercial_motives section&#39;s framing could, in isolation, be read as implying the entire hereditarian academic tradition is cynically motivated rather than being a mix of ideologically-funded bad actors, genuinely mistaken researchers, and legitimate edge-case scientific inquiry. This framing risk is low but worth noting given the &#39;who benefits&#39; section&#39;s prominent placement.</div>
         <div class="finding-rec"><strong>Recommendation:</strong> Add a brief clarifying sentence in the commercial_motives section distinguishing between the funding and distribution infrastructure (where commercial motives are documented) and individual researchers (some of whom hold the position based on evidence they find genuinely compelling, even if that evidence is evaluated as insufficient by the mainstream). This protects the analysis from appearing to make a blanket bad-faith accusation.</div>
       </div>
+      
     </li>
     <li class="finding-item">
       <div class="finding-header">
+        
         <span class="finding-category">Quality</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">The Socratic dialogue in bridge.json follows the Costello protocol structurally (validate concern, name technique with...</span>
@@ -1164,9 +1211,11 @@ None of these findings rise to the level requiring a veto or a fail verdict. The
         <div class="finding-description">The Socratic dialogue in bridge.json follows the Costello protocol structurally (validate concern, name technique with verifiable counter-evidence, bridge to shared goals). The three rounds are appropriately sequenced. However, Round 2 names &#39;Cherry Picking&#39; as the technique but then immediately provides the Flynn Effect counter-evidence in the same round, which may feel confrontational to a questioner who has not yet acknowledged the framing. The Costello protocol works best when technique-naming and evidence-provision are calibrated to the interlocutor&#39;s readiness. Providing corrective evidence before the interlocutor has signaled interest in updating risks defensive reactions. The round&#39;s question at the end (&#39;Does that pattern change how you are thinking?&#39;) partially mitigates this by staying curious.</div>
         <div class="finding-rec"><strong>Recommendation:</strong> Consider splitting Round 2 into two beats: first, ask a Socratic question that invites the interlocutor to grapple with the Flynn Effect on their own terms (e.g., &#39;Have you come across the Flynn Effect in what you have been reading?&#39;) before providing the counter-evidence. This lowers the confrontational temperature without sacrificing the epistemic content.</div>
       </div>
+      
     </li>
     <li class="finding-item">
       <div class="finding-header">
+        
         <span class="finding-category">Quality</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">The decomposition.json classifies sub-claim SC-01-04 (&#39;The genetic explanation constitutes a scientific finding&#39;) as...</span>
@@ -1176,6 +1225,7 @@ None of these findings rise to the level requiring a veto or a fail verdict. The
         <div class="finding-description">The decomposition.json classifies sub-claim SC-01-04 (&#39;The genetic explanation constitutes a scientific finding&#39;) as &#39;verifiable: false&#39;. This is a classification error: the question of whether a claim constitutes a scientific finding is itself an empirical and methodological question that is verifiable through examination of the evidentiary record. The correct classification would be &#39;verifiable: true&#39; with status &#39;not_established&#39; (consistent with how SC-01-03 is handled). The &#39;verifiable: false&#39; classification may cause downstream processing to treat this sub-claim differently from the other empirical sub-claims.</div>
         <div class="finding-rec"><strong>Recommendation:</strong> Change decomposition.json SC-01-04 &#39;verifiable&#39; from false to true, consistent with its type=&#39;opinion&#39; but also consistent with the fact that whether something meets the threshold for &#39;scientific finding&#39; is an assessable empirical question. The &#39;unverified_opinion&#39; status in origins.json is appropriate; the decomposition classification should align.</div>
       </div>
+      
     </li></ul>
   </div>
 

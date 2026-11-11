@@ -427,6 +427,23 @@
     margin-top: 4px;
   }
   .finding-rec strong { color: #2C3E50; }
+  .finding-number {
+    display: inline-block; min-width: 1.6em; text-align: center;
+    font-size: 0.75rem; font-weight: 700; color: var(--gray);
+    border: 1px solid var(--border); border-radius: 10px;
+  }
+  .finding-quote {
+    margin: 6px 0 0; padding: 4px 10px;
+    border-left: 3px solid var(--border);
+    font-size: 0.85rem; color: #2C3E50; font-style: italic;
+  }
+  .auditor-notes { margin-top: 8px; display: flex; flex-direction: column; gap: 4px; }
+  .auditor-note {
+    display: block; padding: 6px 10px; border-left: 3px solid var(--amber);
+    background: var(--bg); border-radius: 0 6px 6px 0;
+    font-size: 0.8rem; color: #2C3E50; text-decoration: none;
+  }
+  .auditor-note:hover { text-decoration: underline; }
 
   /* Scenario navigation */
   .scenario-nav {
@@ -654,12 +671,11 @@
   
     <div class="section">
       <h2>Evidence Certainty Framework</h2>
-      <p class="intro-note">Multi-dimensional confidence assessment inspired by GRADE methodology. <a href="confidence-methodology.html" class="methodology-link">[?]</a></p>
+      <p class="intro-note">How well the claim as stated is supported, on five separate scores. Strong evidence against the claim gives low Evidence Quality and Expert Consensus scores. Inspired by GRADE methodology. These scores were re-rated on 2026-11-10 with claude-opus-5-5; the rest of this analysis is from the original run. <a href="confidence-methodology.html" class="methodology-link">[?]</a></p>
       <table class="metrics-table">
         <thead><tr><th>Dimension</th><th>Score</th></tr></thead>
         <tbody>
-          <tr><td>Evidence Quality <span class="dim-weight">(30%)</span></td><td>30%</td></tr><tr><td>Source Reliability <span class="dim-weight">(20%)</span></td><td>25%</td></tr><tr><td>Claim Testability <span class="dim-weight">(15%)</span></td><td>48%</td></tr><tr><td>Expert Consensus <span class="dim-weight">(20%)</span></td><td>70%</td></tr><tr><td>Internal Coherence <span class="dim-weight">(15%)</span></td><td>24%</td></tr>
-          <tr style="font-weight:600;border-top:2px solid var(--border)"><td>Composite (N/A)</td><td>0%</td></tr>
+          <tr><td>Evidence Quality <span class="dim-weight">(30%)</span></td><td>10%</td></tr><tr><td>Source Reliability <span class="dim-weight">(20%)</span></td><td>15%</td></tr><tr><td>Claim Testability <span class="dim-weight">(15%)</span></td><td>25%</td></tr><tr><td>Expert Consensus <span class="dim-weight">(20%)</span></td><td>5%</td></tr><tr><td>Internal Coherence <span class="dim-weight">(15%)</span></td><td>30%</td></tr>
         </tbody>
       </table>
     </div>
@@ -731,6 +747,7 @@
 <p>HISTORICAL PARALLELS: The closest historical analogue is the Jim Crow racial hierarchy in the American South. Madison Grant, the original author of the lineage, was writing inside that system and for it. The function of the racial hierarchy was to give economically precarious white Southerners a status hierarchy as compensation for material conditions that the political economy of the South was not going to address. The mechanism is durable because it works on the psychology of relative status, not on the absolute conditions of the people it deceives. The same architecture, transposed across a hundred and ten years and an ocean, reappears in contemporary Dutch replacement-adjacent rhetoric. The Dutch variant is distinctive in routing the rhetoric through defense of liberal-tolerant values rather than through explicit ethnic hierarchy, but the structural function (convert economic and policy frustration into out-group hostility) is identical.</p>
 <p>BIPARTISAN POLICY FAILURE: A serious response to the conditions voters describe requires acknowledging that successive Dutch cabinets across the political spectrum (under VVD, CDA, PvdA, D66, ChristenUnie) failed at housing supply, healthcare workforce planning, pension reform, integration policy coherence, and democratic accountability across roughly two decades. The toeslagenaffaire is the most concentrated expression of this failure, and PVV&#39;s electoral consolidation in 2023 is in significant part the result of it. The vacuum is not produced by immigration; it is produced by political and policy failure, and the replacement frame fills the vacuum with a villain that does not appear in the audit trail.</p>
 <p>WHAT ALL OF THIS IMPLIES: A serious response to the conditions voters are describing requires addressing housing supply (the Volkshuisvesting tradition that the Netherlands abandoned and is now haltingly rebuilding), healthcare workforce planning, pension viability, integration policy coherence across federal and municipal levels, toeslagenaffaire restitution and structural reform, and democratic accountability to communities that have felt unheard. None of these solutions require, and most of them are obstructed by, the replacement framing.</p></div>
+        
       </div>
 
   <div class="section">
@@ -911,6 +928,7 @@
     <h2>Inferential Gap</h2>
     <p class="intro-note">Where the evidence ends and the leap begins.</p>
     <div class="prose"><p>The evidence base supports the observation that demographic change is occurring and that policy has been incoherent across successive Dutch cabinets. The evidence base does not support, and cannot support, the claim that the change is the deliberate execution of a coordinated plan by a complicit elite, nor the claim that PVV is uniquely truthful in articulating what ordinary citizens see. The leap from incoherence to plan, from emergent outcome to engineered project, from policy failure to demographic conspiracy, and from one political vehicle among several to the only truthful voice is the inferential gap. It cannot be closed by more demographic data, because demographic data only describes outcomes, not intentions. It cannot be closed by leaked documents, because no credible documentary evidence has been identified in the reviewed record, including Dutch cabinet papers, parliamentary archives, AIVD reports, EU communications, or the academic literature. The gap is closed in the listener&#39;s mind by a structural intuition (this looks like a plan because it has consequences) that the rhetoric is engineered to trigger, not by evidence that the rhetoric supplies.</p></div>
+    
   </div>
 
   <div class="section">
@@ -918,6 +936,7 @@
     <div class="prose"><p>People who hold the replacement claim and people who reject it share more common ground than the public debate suggests. Both agree that something is genuinely changing in the Netherlands and that the change has been faster than political institutions have been honest about. Both agree that the Dutch housing crisis is among the most severe in Europe, with shortages quantified by Capital Value and ABF Research in the hundreds of thousands of units and waiting lists for social housing exceeding ten years in many municipalities. Both agree that integration policy in the Netherlands has been incoherent across federal cabinets for at least two decades, with predictable consequences in specific neighborhoods. Both agree that the toeslagenaffaire was a catastrophic failure of the Dutch state, that successive Rutte cabinets responded inadequately, and that the families harmed deserved better than they received. Both agree that political elites have not been straight with voters about the trade-offs involved in any plausible migration policy. Both agree that simply branding voters as racist neither persuades nor heals.</p>
 <p>The disagreement is narrower than it appears. It is not about whether change is happening; it is about why, who is responsible, and what kind of response is honest. The replacement frame says the change is deliberate, the responsibility lies with a complicit elite executing a plan, and the response must be radical restriction and de-Islamization. The evidence-based account says the change is the emergent outcome of aging, low native fertility, labor market demand, family reunification, asylum obligations under the Refugee Convention, postcolonial migration legacies, and intra-EU mobility, and that the response must be coherent policy on housing, integration, education, labor markets, and democratic accountability. Neither account makes the change disappear. The first replaces a hard policy problem with a moral villain. The second keeps the problem hard and asks the political system to actually solve it.</p>
 <p>Both sides, at the level of individual voters in a Dutch kitchen, want the same things: a country where their children can afford a home, where the language and traditions they grew up with continue to have public space, where neighbors of different backgrounds can build a shared life, and where political leaders tell the truth about trade-offs. Naming this shared ground is not a rhetorical move; it is a precondition for the conversation continuing at all.</p></div>
+    
   </div>
 
   <div class="section">
@@ -928,24 +947,28 @@
 <p>LEVEL THREE, UNSUPPORTED: The intentionality claim. The assertion that demographic change is the deliberate, coordinated execution of an elite plan to replace the Dutch people and erode their culture is not supported by any documentary, archival, or institutional evidence. The closest the rhetoric comes to a citation is the 2001 UN Population Division Replacement Migration report, which the report itself explicitly states is not a policy advocacy document but a demographic modeling exercise. The framing requires the implausible joint assumption that successive Dutch cabinets across the political spectrum (Lubbers, Kok, Balkenende, Rutte I-IV, Schoof) are simultaneously competent enough to execute a multi-decade demographic conspiracy and incompetent enough to fail at housing, healthcare, toeslagenaffaire prevention, fiscal management, and pension reform. The contradiction is internal to the claim.</p>
 <p>The second claim in the original statement, that Wilders and PVV are uniquely truthful in articulating what ordinary Dutch citizens see, is also analytically separable. PVV is one identifiable political vehicle within a comparative populist radical right family that Mudde and others have documented across Europe. It articulates concerns that other parties have indeed under-addressed; it does not articulate uniquely true concerns. The framing that only one party tells the truth is a structural feature of populist politics globally, not evidence about the Dutch case specifically.</p>
 <p>The deconstruction is not a dismissal. The voter who feels the change is feeling something real. The neighbor whose name appears as the replacing population is also a Dutch voter, often two and three generations in. The honest conversation is about how a society manages change without producing scapegoats, not whether the change exists.</p></div>
+    
   </div>
 
   
     <div class="section">
       <h2>Feasibility Assessment</h2>
       <div class="prose"><p>Considered as an operational plan, the replacement claim faces severe feasibility problems in the Dutch context. It would require coordinated action across multiple Rutte cabinets composed of shifting coalitions of VVD, CDA, PvdA, D66, and ChristenUnie, and their predecessor Kok and Balkenende cabinets, plus all twenty-seven EU member states acting in concert, all without leaks despite robust Dutch whistleblower protections, an active Tweede Kamer opposition (including PVV and FvD from inside the parliament for nearly two decades), the Algemene Rekenkamer, Ombudsman, parliamentary inquiries (the toeslagenaffaire parliamentary inquiry shows the system does produce institutional self-criticism even when slowly), freedom of information regimes, journalistic investigation by Dutch quality press, and academic analysis. It would require the same governments that demonstrably failed at preventing the toeslagenaffaire, that have spent years failing to resolve the housing crisis, and that cannot adequately staff hospitals and care homes, to nonetheless execute a silent multi-decade demographic engineering project with operational discipline. The simpler explanation that policy is incoherent, that demographic outcomes are emergent, and that migration is driven by aging, labor demand, postcolonial obligations, and humanitarian commitments under existing law fits the evidence without requiring any of these implausible joint assumptions. The conspiracy version of the claim is operationally infeasible. The structural version (capital and elites benefit from migration policy choices that disadvantage native-born workers, with the labor migration regime serving employers) is partially defensible inside a different analytical frame but does not require the language of replacement to be made and does not support the de-Islamization conclusions drawn from it.</p></div>
+      
     </div>
 
   
     <div class="section">
       <h2>Commercial Interests</h2>
       <div class="prose"><p>Multiple commercial and political incentives sustain the replacement-adjacent narrative independent of its evidentiary merit. Political actors gain electoral support, parliamentary salaries, public funding, and media platforms by mobilizing the framing; PVV in particular has transformed from a 2006 splinter into the largest party in the Tweede Kamer after the November 2023 election, with the financial infrastructure that comes with that scale and the senior coalition position in the Schoof cabinet. FvD, despite its post-2020 splintering, retains parliamentary infrastructure. Media outlets that platform the rhetoric capture audience share in a competitive attention market; outrage content reliably outperforms careful analysis on the engagement metrics that govern modern broadcasting and social media economies. Dutch-language YouTube channels, Substacks, Telegram groups, and X accounts build personal brands as identitarian commentators, with monetized subscriptions, merchandise, and speaking circuits. Book sales for replacement-adjacent authors are durable across decades; Camus, Cliteur, and successors have continuing markets. Foreign state-aligned channels, Russian and otherwise, amplify the framing for strategic purposes that have nothing to do with Dutch welfare but everything to do with weakening EU and Dutch political cohesion. None of this commercial structure proves the framing is wrong; it does establish that the framing is sustained by a financial ecosystem that benefits from its continuation regardless of evidence. The structural asymmetry matters: there is no comparable commercial ecosystem rewarding careful demographic analysis. Heran&#39;s work does not generate viral clips, CBS herkomst documentation does not produce merchandise, and SCP reports do not anchor a media career.</p></div>
+      
     </div>
 
   
     <div class="section">
       <h2>Perception Gap</h2>
       <div class="prose"><p>The perception gap on this topic is among the widest in contemporary Dutch politics. The voter who shares replacement-adjacent material believes they are defending an obvious truth that political and media elites are forbidden to admit. They perceive critics as Randstad metropolitan elites who do not live in the affected neighborhoods, who use accusations of racism to silence ordinary concerns, who refused to take the toeslagenaffaire seriously until forced to, and who dismissed Wilders for two decades only to be confronted with the November 2023 result. They perceive academic demographers as ideologically motivated to downplay change and journalists as part of the system that conceals it. They perceive PVV as the only political vehicle willing to say what they think. The voter who rejects the claim sees a recycled racist conspiracy theory routed through a liberal-tolerant respectability hedge, a public discourse poisoned by far-right vocabulary, neighbors and colleagues being dehumanized, and a political vehicle whose 2017 program reveals what its 2023 framing softened. They perceive replacement believers as either racist or naive. Both perceptions miss the architecture beneath the disagreement. The believer often does not perceive that their legitimate concerns about housing, healthcare, the toeslagenaffaire, and integration are being instrumentalized by a political operation whose framing has been refined across a century and which functions to protect from accountability the structural decisions that actually produced their conditions. The critic often does not perceive that dismissing the believer&#39;s concern validates the populist claim that elites do not listen, and that the most effective response is not to assert the believer is wrong about everything but to name the architecture and offer a better explanation for the conditions they correctly observe. The corrosive feature of this perception gap is that both sides have part of the truth, and the operation that produced the replacement frame benefits from each side perceiving the other as the entirety of the problem.</p></div>
+      
     </div>
 
   <div class="section">
@@ -955,14 +978,17 @@
     <div class="dialogue-round round-1">
       <div class="round-label">Round 1: Perspective-Getting</div>
       <div class="dialogue-bubble"><p>Round 1 (OARS, validate the emotion, never the claim): I hear you, and I want to take this seriously rather than dismiss it. You are watching your country change. You see streets in Rotterdam-South or Schilderswijk that look different than they did when you grew up. You waited months for a huisarts appointment when your mother would have walked in. Your daughter cannot afford to rent a flat anywhere within an hour of where you raised her. Your pension is a question rather than an answer. The toeslagenaffaire showed you that the state can destroy thousands of families and take years to admit it. You feel like nobody in The Hague was actually listening to you for two decades and the November 2023 election was your way of saying that. When you raise these things in polite company you get called names instead of getting answers. That is a real experience and the frustration that produces is legitimate. I am not going to tell you that you are imagining it. I am not going to tell you that you are racist for noticing. Change is happening, the pace of change has outrun the political system&#39;s willingness to have an honest conversation about integration, and the everyday consequences are showing up in your kitchen. Before I say anything else, I want you to know that I see that and I am not going to pretend nothing is changing. Can you tell me which specific thing is hurting most right now? Is it the housing, the huisarts, the pension, the toeslagenaffaire, the feeling that your village or your district is not yours anymore, or the feeling that nobody is listening?</p></div>
+      
     </div>
     <div class="dialogue-round round-2">
       <div class="round-label">Round 2: Guided Examination</div>
       <div class="dialogue-bubble"><p>Round 2 (Guided examination, introduce evidence): Thank you for telling me. I want to share something with you, and I am not doing it to argue you out of what you feel. I am doing it because I think you deserve a better explanation than the one you are being given. There is a technique called scapegoating. It works like this: take a real problem with several causes, point at one visible group as the cause, and quietly leave the actual causes alone. The problem is real, so the anger is real, but the anger is being aimed at the wrong target. Look at what we just talked about. Housing in the Netherlands. The shortage runs into the hundreds of thousands of units; researchers at ABF and Capital Value have documented it for years. Why? Successive cabinets, from Rutte I through Rutte IV, dismantled the Volkshuisvesting tradition that built the Dutch social housing stock. Investors bought up family housing. Construction did not keep pace with household formation for more than a decade. Immigration is one factor on the demand side, but it is much smaller than the supply failure on the other side. The housing economists who study this find that the primary drivers of high rents are insufficient construction, zoning restrictions, marketization, and investment demand, not immigration. Removing one demand group does not fix a supply problem. Huisartsenzorg. The waiting lists are getting longer because we are not training enough huisartsen, not because immigrants are using clinics; in fact, a significant share of healthcare workers in Dutch hospitals and care homes, from cleaners to specialists, are people who came here from somewhere else. Pensions. The pension math is hard because the Dutch working-age population is shrinking through aging, not through immigration; immigration is partly what keeps the math from getting worse faster. The toeslagenaffaire. The state destroyed thousands of families through automated enforcement that targeted Dutch citizens, with Moroccan-Dutch, Turkish-Dutch, and Surinamese-Dutch families disproportionately affected, while successive cabinets refused to admit the scale for years. That was not done by immigrants. That was done by ministers and a tax authority pretending the system was working. Now look at who has been telling you for almost two decades that immigration is the cause of all of this. PVV. The same party. The vocabulary, when traced back, is borrowed from a French writer named Renaud Camus, who took the architecture from a 1916 American book by Madison Grant that Hitler admired. The Christchurch attacker, who titled his manifesto after Camus&#39;s book, named this exact framing as his reason. I am not saying you are him. I am saying the framing has a lineage, and the lineage is documented, and the people at the top of it know what they are doing even when the people sharing the clips on Facebook do not. The PVV 2017 program proposed banning the Quran, closing mosques, and closing Islamic schools; the 2023 framing softened the public language to get into a coalition, but the 2017 program was never withdrawn. The most uncomfortable question I want to ask you is this. If immigration were the main cause of your housing, healthcare, pension, and toeslagenaffaire problems, you would expect those problems to be smaller in Dutch villages with very little immigration. Look at the Drenthe, Friesland, and Zeeland villages with hardly any non-Western residents. The housing is failing there too. The huisartsen are leaving there too. The pensions are at risk there too. The toeslagenaffaire hit families there too. The factor that is the same everywhere is the policy choices, not the neighbors. Does that pattern fit the explanation you have been given?</p></div>
+      
     </div>
     <div class="dialogue-round round-3">
       <div class="round-label">Round 3: Integration</div>
       <div class="dialogue-bubble"><p>Round 3 (Integration, Charter C6 compliant - ends with genuine question): I want to close with what I think we actually agree on, because I suspect it is more than the politicians on either side want us to notice. We agree that something is changing in the Netherlands and that the political system has not been honest about it. We agree that successive cabinets, across the political spectrum, failed at housing, at huisartsenzorg, at pensions, at integration policy, and most catastrophically at the toeslagenaffaire. We agree that being told you are racist for raising any of this is dismissive and counterproductive. We agree that you have a right to your language, your traditions, and your community continuing to have a public place. None of that is up for negotiation. Now consider this: your Moroccan-Dutch neighbor on the third floor. Her grandfather came to the Netherlands in the 1960s because the mines and factories needed workers. She speaks Dutch, she pays belastingen, her son is in your daughter&#39;s school in Rotterdam. When you look at her actual life, what does she want? An affordable home, a school that works, a huisarts she can see, a pension she can count on, a country where her son is allowed to be Dutch without having to prove it every day, and a state that does not destroy her family through toeslagenaffaire enforcement. That is the same list as yours. The political operation that has been telling you she is the threat has been very good at making you forget that the two of you are standing in the same queue at the same gemeente housing office, frustrated with the same minister, affected by the same policy failures. The people building this framing across a hundred years have always needed people like you and people like her to look at each other instead of at them. If you could set aside the framing for a moment and look at the person next to you in that queue, what do you think the two of you might be able to demand together that neither of you can win alone?</p></div>
+      
     </div>
   </div>
 
@@ -970,6 +996,7 @@
   <div class="section">
     <h2>Reframe</h2>
     <blockquote class="reframe-block">You and the Moroccan-Dutch neighbor you are afraid is replacing you both want the same thing: an affordable home, a school that works, a huisarts you can actually see, a pension you can count on, a country where your children belong and your language continues, and a government that is honest about trade-offs and does not destroy thousands of families through toeslagenaffaire enforcement; everything else is the architecture that someone built across a hundred years to keep you from noticing that.</blockquote>
+    
   </div>
 
   
@@ -1007,6 +1034,7 @@
     <ul class="findings-list">
     <li class="finding-item">
       <div class="finding-header">
+        
         <span class="finding-category">Accuracy</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">Key factual claims are well-sourced: CBS and SCP data on aging and sub-replacement fertility, the PVV 2017 one-page...</span>
@@ -1016,9 +1044,11 @@
         <div class="finding-description">Key factual claims are well-sourced: CBS and SCP data on aging and sub-replacement fertility, the PVV 2017 one-page program and 2023 platform, the November 2023 election result (PVV 37 seats), the May 2024 hoofdlijnenakkoord between PVV, VVD, NSC, and BBB, the July 2024 Schoof cabinet installation, the 2002 Fortuyn assassination by Volkert van der Graaf, the 2004 van Gogh murder by Mohammed Bouyeri, the 2014 minder Marokkanen conviction, the Christchurch manifesto title and casualty count, the Camus 2011 publication date, the Madison Grant 1916 publication date, and the Tucker Carlson Fox News segment volume (over 400 between 2016 and 2021 per a New York Times analysis).</div>
         <div class="finding-rec"><strong>Recommendation:</strong> Pin specific SCP integration report editions and specific CBS herkomst documentation by year for fact-check robustness. The exact PVV 2023 seat count is reported as 37; verify against final Kiesraad numbers in a future revision.</div>
       </div>
+      
     </li>
     <li class="finding-item">
       <div class="finding-header">
+        
         <span class="finding-category">Completeness</span>
         <span class="finding-severity-medium">MEDIUM</span>
         <span class="finding-description">The community_experiential perspective of Moroccan-Dutch, Turkish-Dutch, Surinamese-Dutch, Indonesian-Dutch, and...</span>
@@ -1028,9 +1058,11 @@
         <div class="finding-description">The community_experiential perspective of Moroccan-Dutch, Turkish-Dutch, Surinamese-Dutch, Indonesian-Dutch, and Antillean-Dutch residents is acknowledged in the origins section, the consensus_explanation, and the Socratic dialogue. The Indonesian-Dutch postcolonial precedent (post-1949 repatriation) is named as an important historical Dutch precedent for incorporating large migrant cohorts but could be more central to the consensus argument.</div>
         <div class="finding-rec"><strong>Recommendation:</strong> Expand the postcolonial migration paragraph in consensus_explanation with named ethnographic and historical scholarship and direct community-organization framings.</div>
       </div>
+      
     </li>
     <li class="finding-item">
       <div class="finding-header">
+        
         <span class="finding-category">Bias</span>
         <span class="finding-severity-medium">MEDIUM</span>
         <span class="finding-description">The analysis is, defensibly, more sympathetic to the position that rejects the conspiracy framing than to the position...</span>
@@ -1040,9 +1072,11 @@
         <div class="finding-description">The analysis is, defensibly, more sympathetic to the position that rejects the conspiracy framing than to the position that holds it. This reflects the evidence base (intentionality is not supported) but could be perceived by PVV voters as hostile analysis disguised as objectivity. The Socratic dialogue mitigates this in Round 1 with explicit OARS-style validation including direct acknowledgment of the toeslagenaffaire.</div>
         <div class="finding-rec"><strong>Recommendation:</strong> Consider adding municipal-level CBS ward-level data in a future revision showing some Dutch communities experienced very rapid demographic change in compressed time horizons, which aggregate national averages obscure. This is a legitimate driver of the felt experience.</div>
       </div>
+      
     </li>
     <li class="finding-item">
       <div class="finding-header">
+        
         <span class="finding-category">Manipulation</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">The techniques_revealed section implements the Asymmetric Weight Principle correctly. Replacement actors&#39; techniques...</span>
@@ -1052,9 +1086,11 @@
         <div class="finding-description">The techniques_revealed section implements the Asymmetric Weight Principle correctly. Replacement actors&#39; techniques are classified as systematic with detailed multi-decade evidence and historical precedent. The Dutch-specific Founding Martyrology technique is added to capture the distinctive Fortuyn-van Gogh dynamic.</div>
         <div class="finding-rec"><strong>Recommendation:</strong> No fix needed.</div>
       </div>
+      
     </li>
     <li class="finding-item">
       <div class="finding-header">
+        
         <span class="finding-category">Completeness</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">The bipartisan policy failure dimension is foregrounded (VVD, CDA, PvdA, D66, ChristenUnie all named as having governed...</span>
@@ -1064,9 +1100,11 @@
         <div class="finding-description">The bipartisan policy failure dimension is foregrounded (VVD, CDA, PvdA, D66, ChristenUnie all named as having governed during the period of policy failure) so the framing is not perceived as a partisan attack on the right. The toeslagenaffaire is given proper weight as a confirmatory experience that hollowed institutional trust.</div>
         <div class="finding-rec"><strong>Recommendation:</strong> No fix needed.</div>
       </div>
+      
     </li>
     <li class="finding-item">
       <div class="finding-header">
+        
         <span class="finding-category">Quality</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">The Socratic dialogue successfully implements OARS protocol in Round 1, named-technique guided examination in Round 2...</span>
@@ -1076,9 +1114,11 @@
         <div class="finding-description">The Socratic dialogue successfully implements OARS protocol in Round 1, named-technique guided examination in Round 2 (with explicit toeslagenaffaire integration), and integration with concrete agency in Round 3. The Dutch specifics (Rotterdam-South, Schilderswijk, huisarts, gemeente, Volkshuisvesting, toeslagenaffaire, the Moroccan-Dutch neighbor with a grandfather who came in the 1960s) anchor the dialogue in lived context.</div>
         <div class="finding-rec"><strong>Recommendation:</strong> No fix needed.</div>
       </div>
+      
     </li>
     <li class="finding-item">
       <div class="finding-header">
+        
         <span class="finding-category">Completeness</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">The PVV-specific claim in the original statement (that Wilders and PVV are uniquely truthful) is analytically separated...</span>
@@ -1088,9 +1128,11 @@
         <div class="finding-description">The PVV-specific claim in the original statement (that Wilders and PVV are uniquely truthful) is analytically separated and addressed in narrative_deconstruction. The framing that only one party tells the truth is correctly identified as a structural feature of populist politics globally rather than evidence about the Dutch case specifically.</div>
         <div class="finding-rec"><strong>Recommendation:</strong> No fix needed.</div>
       </div>
+      
     </li>
     <li class="finding-item">
       <div class="finding-header">
+        
         <span class="finding-category">Quality</span>
         <span class="finding-severity-low">LOW</span>
         <span class="finding-description">v5 pipeline redesign compliance: Round 3 ends with a genuine question (C6 charter), convergence_strength set to MEDIUM...</span>
@@ -1100,6 +1142,7 @@
         <div class="finding-description">v5 pipeline redesign compliance: Round 3 ends with a genuine question (C6 charter), convergence_strength set to MEDIUM with explicit reasoning that no documented joint campaign across all four blocs is presented in the reviewed record (C3 evidence requirement), and all actor credibility fields use structural descriptions (C1).</div>
         <div class="finding-rec"><strong>Recommendation:</strong> No fix needed. Pipeline redesign working as intended.</div>
       </div>
+      
     </li></ul>
   </div>
 

@@ -200,7 +200,6 @@ def _add_scenario(G: nx.DiGraph, r: dict, sid: str) -> None:
     """Add a scenario node to the graph."""
     bridge = r.get("bridge", {})
     gap = _compute_false_polarization_gap(bridge)
-    cp = r.get("confidence_profile") or {}
     G.add_node(f"scenario:{sid}", **{
         "node_type": "scenario",
         "label": sid,
@@ -211,8 +210,6 @@ def _add_scenario(G: nx.DiGraph, r: dict, sid: str) -> None:
         "confidence": r.get("overall_confidence", 0),
         "complexity": r.get("decomposition", {}).get("complexity", ""),
         "false_polarization_gap": gap,
-        "ecf_level": cp.get("ecf_level", "N/A"),
-        "ecf_composite": cp.get("composite", "N/A"),
         "overall_confidence": r.get("overall_confidence", "N/A"),
     })
 

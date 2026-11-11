@@ -5,6 +5,21 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased]
 
+### Added
+
+- **Auditor findings point at the passages they are about**: rating run X-10 showed that the Auditor's findings never reached the text they criticise; a reader saw the analysis and, separately, a list of problems with it. The Auditor now quotes up to three passages per finding and names their section. A check with no model call confirms that each quote occurs in that section and records where, so a renderer can show the finding next to the passage. A quote that cannot be found leaves the finding unlocated; a location is never guessed. Locations are recomputed from the report's own text on every validation, quotes from a withheld Bridge are dropped on a veto, and the API drops quotes from suppressed fields. In a pre-registered replay on 12 X-10 claims (X-11) all 215 quotes were found, 77 of 77 medium and higher findings were located, and the Auditor took a median 28 s longer. The gallery marks each quoted passage with "The automated Auditor questions this passage" and links it to the finding, and says above the findings that no person has checked them. It quotes only text the page shows; for the claim breakdown, origin tracing, actor analysis and technique classification it names the section instead. The CLI prints each passage under its finding, and the judge view prints the note under the field (`--no-location-notes` turns it off for blind comparisons across Auditor versions). All three check each quote against the text again before showing it. Current gallery results predate this change and show no locations.
+
+### Changed
+
+- **The five evidence scores (ECF) now rate the claim as stated**: the methodology page said each claim is assessed, while both Auditor prompts said "rate the analysis as a whole". Models mixed the two readings within one profile, so in rating run x10 a well-documented debunk of the chemtrails claim scored evidence quality 0.8 and expert consensus 0.95. Both prompts now carry anchored definitions (for example expert consensus 0 means experts reject the claim almost unanimously), and strong evidence against a claim lowers evidence quality and expert consensus. The gallery shows a profile only once it has been re-scored with the new prompt, with a note saying when and with which model. All ten gallery profiles were re-scored on 2026-11-10 with claude-opus-5-5; the rest of each analysis is from its original run.
+- **The gallery shows the five scores without a composite or level**: a single word such as LOW next to a claim reads like a verdict (Charter commitments 5 and 6). The package still computes both. This also removes a display bug: the 10 gallery pages with a profile printed "Composite (N/A) 0%", because those results carry no composite.
+- **End-to-end tests run on Claude Fable 5.2 by default**: they call `claude-fable-5-2` through the `claude` CLI instead of a local Ollama model. `HUGINN_E2E_PROVIDER=ollama` and `HUGINN_E2E_MODEL` choose another model; a missing provider skips the tests. On Claude, a degraded report fails the test unless an Auditor veto caused it.
+
+### Fixed
+
+- **Method 2 now returns the five-dimension evidence profile (ECF)**: the Adversarial Auditor was asked to rate evidence quality, source reliability, claim testability, expert consensus and internal coherence, but its JSON reply template had no field for them. So no analysis run from the package ever carried a `confidence_profile`, although the methodology page describes one. The gallery was not affected: its results come from the scenario runner (`tests/run_scenario_claude.py`), whose Auditor prompt had the field. Found while preparing the blinded ECF agreement study (X-08); the template now matches the runner's.
+- **Charter C6 check no longer flags a question in quotes**: the Bridge Builder sometimes wraps Round 3 in quotation marks, so a closing question ended in `?'` or `?"` and was logged as a C6 violation. Trailing quotes and brackets are now ignored. In 48 saved rating runs the old check flagged 6 rounds, all false; the fixed check flags none.
+
 ## [0.18.0] - 2026-10-25
 
 ### Fixed

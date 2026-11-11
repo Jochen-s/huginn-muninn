@@ -34,12 +34,6 @@ class TestActorDeduplication:
         source = BUILD_GRAPH.read_text(encoding="utf-8")
         assert "def _normalize_actor_name" in source
 
-    def test_build_graph_ecf_attributes(self):
-        """Scenario nodes should include ECF attributes."""
-        source = BUILD_GRAPH.read_text(encoding="utf-8")
-        assert "ecf_level" in source
-        assert "ecf_composite" in source
-
 
 class TestGraphPageRendering:
     """build.js graph page has improved controls."""

@@ -28,9 +28,11 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "src"))
 
 from huginn_muninn.llm import ClaudeCodeClient, extract_json_from_response  # noqa: E402
+from huginn_muninn.locate import SECTIONS, locate_quote, normalise_section  # noqa: E402
 
 CRITERIA = ["accuracy", "evidence", "fairness", "bridge", "insight"]
-DROP_KEYS = {"method", "confidence_profile", "cnqs", "claim", "original_claim"}
+# escalation: Method 1's internal routing score, not reader-facing.
+DROP_KEYS = {"method", "confidence_profile", "cnqs", "claim", "original_claim", "escalation"}
 
 RUBRIC = """You are rating two analyses of the same claim, produced by an automated
 fact-checking and bridge-building pipeline. The pipeline's goal: decompose the
@@ -61,43 +63,119 @@ Reply with only this JSON object:
 """
 
 
-def render(value, depth: int = 0) -> list[str]:
-    """Fixed-template markdown rendering of an analysis value."""
+METHODS_RUBRIC = """You are rating two analyses of the same claim. They may come from different
+methods and have a different structure, so judge what a reader gets from each,
+not which format has more parts. The goal of both: help a reader judge the
+claim accurately, and help people on both sides find common ground without
+condescension.
+
+Judge each criterion and pick A, B or tie:
+- accuracy: factual correctness. Fabricated sources, dates, people or quotes
+  count heavily against an analysis. A wrong verdict or conclusion counts
+  against it.
+- evidence: are the sources specific, real, checkable and fairly weighted?
+- fairness: respectful, non-condescending tone; takes the believer's concerns
+  seriously; no controlling language ("the truth is", "you were misled").
+- bridge: would its common-ground material actually help a believer and a
+  skeptic talk to each other?
+- insight: does it find the kernel of truth, the real motives and the
+  techniques at work, beyond generic statements?
+
+Do NOT prefer an analysis because it is longer, has more sections or lists
+more items. Extra material counts only when it is accurate and relevant to a
+reader; padding and repetition count against it. A "degraded" status means a
+stage failed; judge the content that is present.
+
+Reply with only this JSON object:
+{"accuracy": "A|B|tie", "evidence": "A|B|tie", "fairness": "A|B|tie",
+ "bridge": "A|B|tie", "insight": "A|B|tie", "overall": "A|B|tie",
+ "confidence": "low|medium|high", "reason": "<two or three sentences>"}
+"""
+RUBRICS = {"pipeline": RUBRIC, "methods": METHODS_RUBRIC}
+
+
+def render(value, depth: int = 0, path: str = "", notes: dict | None = None) -> list[str]:
+    """Fixed-template markdown rendering of an analysis value. `notes` maps a
+    field path to Auditor findings about it; they print under that field."""
     pad = "  " * depth
+    notes = notes or {}
     lines: list[str] = []
+
+    def note(p: str) -> list[str]:
+        return [f"{pad}  > Auditor finding ({sev}) about this passage: {desc}" for sev, desc in notes.get(p, [])]
+
     if isinstance(value, dict):
         for k, v in value.items():
             if k in DROP_KEYS or v in (None, "", [], {}):
                 continue
+            sub = f"{path}.{k}" if path else k
             if isinstance(v, (dict, list)):
                 lines.append(f"{pad}- {k}:")
-                lines += render(v, depth + 1)
+                lines += render(v, depth + 1, sub, notes)
             else:
                 lines.append(f"{pad}- {k}: {v}")
+                lines += note(sub)
     elif isinstance(value, list):
-        for item in value:
+        for i, item in enumerate(value):
+            sub = f"{path}[{i}]"
             if isinstance(item, (dict, list)):
                 lines.append(f"{pad}-")
-                lines += render(item, depth + 1)
+                lines += render(item, depth + 1, sub, notes)
             else:
                 lines.append(f"{pad}- {item}")
+                lines += note(sub)
     else:
         lines.append(f"{pad}{value}")
     return lines
 
 
-def render_analysis(record: dict) -> str:
+def finding_notes(r: dict) -> dict:
+    """Field path -> [(severity, description)] for each located finding,
+    re-checked against this result's own text; a veto drops Bridge notes."""
+    withheld = r.get("bridge_withheld") or (r.get("audit") or {}).get("veto")
+    sections = {k: r.get(k) for k in SECTIONS}
+    out: dict = {}
+    for f in (r.get("audit") or {}).get("findings") or []:
+        if not isinstance(f, dict):
+            continue
+        for loc in f.get("locations") or []:
+            if not isinstance(loc, dict):
+                continue
+            if withheld and normalise_section(loc.get("section")) == "bridge":
+                continue
+            for p in locate_quote(sections, loc.get("section"), loc.get("quote")):
+                entry = (f.get("severity", "?"), f.get("description", ""))
+                if entry not in out.setdefault(p, []):
+                    out[p].append(entry)
+    return out
+
+
+def _audit_without_locations(audit: dict) -> dict:
+    """The audit as the judge reads it: a finding's quotes appear only as the
+    re-checked note under the passage, never as raw Auditor text."""
+    findings = [{k: v for k, v in f.items() if k not in ("locations", "located")} if isinstance(f, dict) else f
+                for f in audit.get("findings") or []]
+    return {**audit, "findings": findings}
+
+
+def render_analysis(record: dict, notes: bool = True) -> str:
+    """notes=False renders results with locations the way results without
+    them render, so arms with and without design C cannot be told apart."""
     if record.get("error") or not record.get("result"):
         return "The pipeline produced no analysis (run failed)."
     r = record["result"]
+    if "decomposition" not in r and "verdict" in r:  # Method 1 (two-pass check)
+        return "\n".join(["Status: complete", f"Overall confidence: {r.get('confidence', 0):.2f}", ""] + render(r))
     out = []
     status = "degraded: " + (r.get("degraded_reason") or "") if r.get("degraded") else "complete"
     out.append(f"Status: {status}")
     out.append(f"Overall confidence: {r.get('overall_confidence', 0):.2f}")
+    located = finding_notes(r) if notes else {}
     for section in ["decomposition", "origins", "intelligence", "ttps", "bridge", "audit"]:
         if r.get(section):
+            value = _audit_without_locations(r[section]) if section == "audit" else r[section]
             out.append(f"\n### {section}")
-            out += render(r[section])
+            out += render(value, path=section, notes=located)
     return "\n".join(out)
 
 
@@ -119,16 +197,18 @@ def prepare(a) -> None:
             first, second = (m1, m2) if rng.random() < 0.5 else (m2, m1)
             for left, right in [(first, second), (second, first)]:
                 entries.append({"scenario": sid, "claim": recs[left]["claim"], "A": left, "B": right,
-                                "text_a": render_analysis(recs[left]), "text_b": render_analysis(recs[right])})
+                                "text_a": render_analysis(recs[left], notes=not getattr(a, "no_location_notes", False)),
+                                "text_b": render_analysis(recs[right], notes=not getattr(a, "no_location_notes", False))})
     rng.shuffle(entries)
     key = {}
     for i, e in enumerate(entries, 1):
         item = f"p{i:03d}"
         key[item] = {"scenario": e["scenario"], "A": e["A"], "B": e["B"]}
-        body = (f"{RUBRIC}\nClaim: {e['claim']}\n\n## Analysis A\n\n{e['text_a']}\n\n"
+        body = (f"{RUBRICS[a.rubric]}\nClaim: {e['claim']}\n\n## Analysis A\n\n{e['text_a']}\n\n"
                 f"## Analysis B\n\n{e['text_b']}\n")
         (blind / "items" / f"{item}.md").write_text(body, encoding="utf-8")
     (base / "key.json").write_text(json.dumps(key, indent=2), encoding="utf-8")
+    (blind / "render.json").write_text(json.dumps({"location_notes": not getattr(a, "no_location_notes", False)}), encoding="utf-8")
     print(f"{len(entries)} items for {len(ids)} scenarios x {len(models)} models")
 
 
@@ -210,6 +290,14 @@ def report(a) -> None:
             t = tally[(pair, c)]
             lines.append(f"| {pair[0]} vs {pair[1]} | {c} | {t[pair[0]]} | {t[pair[1]]} | {t['tie']} |")
         lines.append("")
+    models = sorted({m for meta in key.values() for m in (meta["A"], meta["B"])})
+    lines += ["## Time per claim (median seconds)", ""]
+    for m in models:
+        secs = sorted(json.loads(f.read_text(encoding="utf-8")).get("elapsed_seconds") or 0
+                      for f in (base / m).glob("*.json"))
+        if secs:
+            lines.append(f"- {m}: {secs[len(secs) // 2]:.0f} (n={len(secs)})")
+    lines.append("")
     if len(judges) >= 2:
         j1, j2 = judges[:2]
         shared = [k for k in per_judge_outcomes[j1] if k in per_judge_outcomes[j2] and k[2] == "overall"]
@@ -230,6 +318,10 @@ def main() -> None:
     p.add_argument("--workers", type=int, default=3)
     p.add_argument("--limit", type=int, help="judge only the first N items")
     p.add_argument("--seed", type=int, default=20261025)
+    p.add_argument("--rubric", choices=sorted(RUBRICS), default="pipeline",
+                   help="methods: format-neutral rubric for Method 1 vs Method 2 (X-10)")
+    p.add_argument("--no-location-notes", action="store_true",
+                   help="prepare: hide located-finding notes, for blind comparisons across Auditor versions")
     a = p.parse_args()
     {"prepare": prepare, "judge": judge, "report": report}[a.step](a)
 
