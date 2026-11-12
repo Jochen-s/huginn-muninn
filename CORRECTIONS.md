@@ -23,6 +23,7 @@ Each report is checked against the evidence. If it holds, the content is correct
 
 | Published | What was wrong | What changed |
 |---|---|---|
+| (next release, found 2026-11-12) | The 2020 election page (EV-02) said Jim Hoft, founder of The Gateway Pundit, was indicted in Arizona's fake electors case. He was not: the April 2024 indictment names 18 defendants and he is not among them. The error came from the model's analysis and was found when the automated Auditor was re-run on the page. | The sentence is removed. The rest of that passage is unchanged. |
 | (next release, found 2026-11-10) | The methodology page says the five evidence scores assess each claim, but the Auditor prompts asked the model to rate the analysis as a whole. The published scores mix both readings. | Both prompts now rate the claim as stated, with anchored definitions; all ten gallery profiles were re-scored on 2026-11-10. A test checks the wording. |
 | (next release, found 2026-11-10) | Ten gallery pages showed "Composite (N/A) 0%" under the evidence scores, which reads as a zero score. | The gallery no longer shows a composite or level, only the five scores. |
 | (next release, found 2026-10-25) | The methodology page describes a five-dimension evidence profile for each analysed claim. Analyses run from the package never produced it: the Auditor's reply template had no field for it. Gallery results were not affected. | The Auditor's reply template now includes the profile; a test checks for it. |
