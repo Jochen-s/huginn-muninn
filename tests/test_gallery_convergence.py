@@ -53,7 +53,16 @@ class TestBuildJsHasConvergenceRendering:
 class TestScenarioJsonsHaveFixtureData:
     """Injected scenarios should have convergence_matrix in intelligence."""
 
-    SCENARIOS = ["HS-01", "GP-01", "SC-01"]
+    # SC-01 left the list on 2026-11-13: its injected matrix belonged to an
+    # unrelated encryption scenario and was removed from the result.
+    SCENARIOS = ["HS-01", "GP-01"]
+
+    def test_sc01_has_no_stray_matrix(self):
+        f = self._latest_file("SC-01")
+        if f is None:
+            pytest.skip("SC-01 result not in this checkout")
+        d = json.loads(f.read_text(encoding="utf-8"))
+        assert "convergence_matrix" not in d.get("intelligence", {})
 
     def _latest_file(self, prefix):
         import re

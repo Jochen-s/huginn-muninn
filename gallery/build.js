@@ -712,10 +712,11 @@ function renderEpistemicProvenance(data) {
   return `<tr><td>Epistemic traditions</td><td>${items}</td></tr>`;
 }
 
-function renderGapDetectionWarning(data) {
+function renderGapDetectionWarning(data, notes) {
   const gap = data?.origins?.epistemic_diversity_gap;
   if (!gap) return '';
-  return `<div class="gap-warning"><strong>Epistemic diversity gap:</strong> ${esc(gap)}</div>`;
+  return `<div class="gap-warning"><strong>Epistemic diversity gap:</strong> ${esc(gap)}</div>`
+    + renderNotes(notes, 'origins.epistemic_diversity_gap');
 }
 
 function renderBridgeWithheld(data) {
@@ -731,24 +732,26 @@ function renderBridgeWithheld(data) {
 `;
 }
 
-function renderUniversalNeeds(needs) {
+function renderUniversalNeeds(needs, notes) {
   if (!needs || needs.length === 0) return '<p class="intro-note">No universal needs data available.</p>';
-  const items = needs.map(n => {
-    // Needs are often "Name: explanation" format
-    const colonIdx = String(n).indexOf(':');
-    if (colonIdx > 0 && colonIdx < 40) {
-      const name = n.slice(0, colonIdx).trim();
-      const desc = n.slice(colonIdx + 1).trim();
-      return `<div class="need-item"><span class="need-name">${esc(name)}:</span>${esc(desc)}</div>`;
-    }
-    return `<div class="need-item">${esc(n)}</div>`;
-  });
+  const items = needs.map((n, i) => renderNeed(n) + renderNotes(notes, `bridge.universal_needs[${i}]`));
   return `<div class="needs-list">${items.join('')}</div>`;
 }
 
-function renderTechniques(techniques) {
+function renderNeed(n) {
+  // Needs are often "Name: explanation" format
+  const colonIdx = String(n).indexOf(':');
+  if (colonIdx > 0 && colonIdx < 40) {
+    const name = n.slice(0, colonIdx).trim();
+    const desc = n.slice(colonIdx + 1).trim();
+    return `<div class="need-item"><span class="need-name">${esc(name)}:</span>${esc(desc)}</div>`;
+  }
+  return `<div class="need-item">${esc(n)}</div>`;
+}
+
+function renderTechniques(techniques, notes) {
   if (!techniques || techniques.length === 0) return '';
-  return techniques.map(t => `
+  return techniques.map((t, i) => `
     <div class="technique-card">
       <div class="technique-header">
         <span class="technique-name">${esc(t.technique || t.name || 'Technique')}</span>
@@ -775,7 +778,7 @@ function renderTechniques(techniques) {
           <div class="technique-label">Historical precedent</div>
           <div class="technique-text">${esc(t.historical_precedent)}</div>
         </div>` : ''}
-      </div>
+      </div>${renderNotesUnder(notes, `bridge.techniques_revealed[${i}]`)}
     </div>`).join('');
 }
 
@@ -800,6 +803,21 @@ function normText(s) {
   return String(s).normalize('NFKC')
     .replace(/[\u2018\u2019]/g, "'").replace(/[\u201C\u201D]/g, '"')
     .replace(/\s+/g, ' ').trim();
+}
+
+// The Auditor reads the analysis as json.dumps output passed through
+// sanitize_for_prompt, so a quote can carry &quot;, \u00e8 or \" where the
+// text has the plain character. Same two steps as locate.py
+// _undo_prompt_encoding; the quote is kept as given if the escapes do not decode.
+function undoPromptEncoding(q) {
+  const s = q.replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+  if (!s.includes('\\')) return s;
+  try {
+    const out = JSON.parse('"' + s.replace(/(?<!\\)"/g, '\\"') + '"');
+    return typeof out === 'string' ? out : s;
+  } catch (e) {
+    return s;
+  }
 }
 
 function valueAtPath(data, path) {
@@ -837,20 +855,28 @@ function verifiedPassages(data, f) {
   const locs = (f && Array.isArray(f.locations)) ? f.locations : [];
   for (const loc of locs) {
     if (!loc || typeof loc !== 'object' || typeof loc.quote !== 'string' || loc.quote.length > MAX_QUOTE_CHARS) continue;
-    const quote = normText(loc.quote);
-    if (quote.length < 12 || quote.split(' ').length < 4) continue;
+    const forms = [...new Set([loc.quote, undoPromptEncoding(loc.quote)])]
+      .map(raw => ({ raw, norm: normText(raw) }))
+      .filter(x => x.norm.length >= 12 && x.norm.split(' ').length >= 4);
+    if (forms.length === 0) continue;
     for (const path of (Array.isArray(loc.paths) ? loc.paths : [])) {
       if (typeof path !== 'string' || !VALID_PATH.test(path)) continue;
       const root = path.split(/[.[]/)[0];
       if (!LOCATE_SECTIONS.includes(root) || (withheld && root === 'bridge')) continue;
       const text = valueAtPath(data, path);
-      if (typeof text !== 'string' || !normText(text).includes(quote)) continue;
-      if (!SHOWN_PATH.test(path)) { hidden.add(SECTION_LABELS[root]); continue; }
-      shown.push({ path, quote: loc.quote, first: !seenQuote.has(quote) });
-      seenQuote.add(quote);
+      const form = typeof text === 'string' && forms.find(x => normText(text).includes(x.norm));
+      if (!form) continue;
+      if (!SHOWN_PATH.test(path) || unprintedName(data, path)) { hidden.add(SECTION_LABELS[root]); continue; }
+      shown.push({ path, quote: form.raw, first: !seenQuote.has(form.norm) });
+      seenQuote.add(form.norm);
     }
   }
   return { shown, hidden: [...hidden] };
+}
+
+// A technique card prints `name` only when it has no `technique`.
+function unprintedName(data, path) {
+  return /\.name$/.test(path) && Boolean(valueAtPath(data, path.replace(/\.name$/, '.technique')));
 }
 
 function noteIndex(data) {
@@ -862,6 +888,17 @@ function noteIndex(data) {
     }
   });
   return byPath;
+}
+
+// Notes for every path inside one item, such as the fields of a technique card.
+function renderNotesUnder(notes, prefix) {
+  const merged = [];
+  for (const [path, list] of Object.entries(notes || {})) {
+    if (path !== prefix && !path.startsWith(prefix + '.') && !path.startsWith(prefix + '[')) continue;
+    for (const x of list) if (!merged.some(y => y.n === x.n)) merged.push(x);
+  }
+  merged.sort((a, b) => a.n - b.n);
+  return renderNotes({ [prefix]: merged }, prefix);
 }
 
 function renderNotes(notes, path) {
@@ -903,7 +940,7 @@ function renderFindings(findings, data) {
     </li>`).join('') + `</ul>`;
 }
 
-function renderScopedDiagnostics(bridge) {
+function renderScopedDiagnostics(bridge, notes) {
   const posture = bridge.communication_posture || 'direct_correction';
   const densityWarning = bridge.pattern_density_warning || false;
   const vacuum = bridge.vacuum_filled_by || '';
@@ -932,7 +969,7 @@ function renderScopedDiagnostics(bridge) {
     ? `<div class="diagnostic-card">
         <h4>Credibility Gap</h4>
         <p class="diagnostic-note">Narrative pattern description; no specific publisher or outlet identified.</p>
-        <p>${esc(vacuumText)}</p>
+        <p>${esc(vacuumText)}</p>${renderNotes(notes, 'bridge.vacuum_filled_by')}
       </div>`
     : '';
 
@@ -940,7 +977,7 @@ function renderScopedDiagnostics(bridge) {
   const prebunkHtml = prebunkText
     ? `<div class="diagnostic-card">
         <h4>Prebunking Note</h4>
-        <p>${esc(prebunkText)}</p>
+        <p>${esc(prebunkText)}</p>${renderNotes(notes, 'bridge.prebunking_note')}
       </div>`
     : '';
 
@@ -1044,7 +1081,7 @@ function buildScenarioPage(scenario, allScenarios) {
   const techniquesSection = bridge.techniques_revealed && bridge.techniques_revealed.length > 0
     ? `<div class="section">
         <h2>Name the Trick</h2>
-        ${renderTechniques(bridge.techniques_revealed)}
+        ${renderTechniques(bridge.techniques_revealed, notes)}
       </div>`
     : '';
 
@@ -1072,7 +1109,7 @@ function buildScenarioPage(scenario, allScenarios) {
   <div class="section">
     <h2>Universal Needs</h2>
     <p class="intro-note">The legitimate human needs this claim speaks to, regardless of whether the claim is accurate.</p>
-    ${renderUniversalNeeds(bridge.universal_needs)}
+    ${renderUniversalNeeds(bridge.universal_needs, notes)}
   </div>
 
   ${consensusSection}
@@ -1118,7 +1155,7 @@ function buildScenarioPage(scenario, allScenarios) {
     ${renderNotes(notes, 'bridge.reframe')}
   </div>` : ''}
 
-  ${renderScopedDiagnostics(bridge)}`;
+  ${renderScopedDiagnostics(bridge, notes)}`;
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -1178,7 +1215,7 @@ function buildScenarioPage(scenario, allScenarios) {
   </div>
 
   ${renderConfidenceProfile(data)}
-  ${renderGapDetectionWarning(data)}
+  ${renderGapDetectionWarning(data, notes)}
 
   ${renderConvergenceMatrix(data)}${bridgeSections}
 
@@ -2058,7 +2095,7 @@ function buildGraphPage() {
     } else if (d.node_type === 'mutation') {
       h += detailField('Mutation type', d.mutation_type);
       h += detailField('Original', d.original);
-      h += detailField('Mutated', d.mutated);
+      h += detailField('Distorted version (false or misleading as it spread)', d.mutated);
     } else if (d.node_type === 'temporal_era') {
       h += detailField('Date range', d.date_range);
       h += detailField('Dominant framing', d.dominant_framing);

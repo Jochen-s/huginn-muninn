@@ -1083,7 +1083,7 @@
     } else if (d.node_type === 'mutation') {
       h += detailField('Mutation type', d.mutation_type);
       h += detailField('Original', d.original);
-      h += detailField('Mutated', d.mutated);
+      h += detailField('Distorted version (false or misleading as it spread)', d.mutated);
     } else if (d.node_type === 'temporal_era') {
       h += detailField('Date range', d.date_range);
       h += detailField('Dominant framing', d.dominant_framing);
