@@ -50,12 +50,23 @@ class TestBuildJsHasConvergenceRendering:
         assert "if (!cm || !cm.groups || cm.groups.length === 0) return ''" in js
 
 
-class TestScenarioJsonsHaveFixtureData:
-    """Injected scenarios should have convergence_matrix in intelligence."""
+class TestNoSyntheticMatrixInResults:
+    """The fixture matrices are synthetic. Sprint 8 (2026-05-14) injected them
+    into SC-01, HS-01 and GP-01, and the gallery printed them as analysis.
+    SC-01's was removed on 2026-11-13, HS-01's and GP-01's on 2026-11-17."""
 
-    # SC-01 left the list on 2026-11-13: its injected matrix belonged to an
-    # unrelated encryption scenario and was removed from the result.
-    SCENARIOS = ["HS-01", "GP-01"]
+    def test_no_result_carries_a_fixture_matrix(self):
+        samples = json.loads(FIXTURES.read_text())["scenarios"].values()
+        hits = []
+        for p in sorted((ROOT / "tests" / "results").glob("*.json")):
+            try:
+                d = json.loads(p.read_text(encoding="utf-8"))
+            except (UnicodeDecodeError, json.JSONDecodeError):
+                continue
+            cm = (d.get("intelligence") or {}).get("convergence_matrix") if isinstance(d, dict) else None
+            if cm and any(cm == s for s in samples):
+                hits.append(p.name)
+        assert hits == []
 
     def test_sc01_has_no_stray_matrix(self):
         f = self._latest_file("SC-01")
@@ -80,15 +91,12 @@ class TestScenarioJsonsHaveFixtureData:
                 best = p
         return best
 
-    def test_injected_scenarios_have_convergence_matrix(self):
-        missing = [sid for sid in self.SCENARIOS if self._latest_file(sid) is None]
-        if missing:
+    def test_pipeline_matrix_still_present(self):
+        """Positive control: the matrices the pipeline made (GP-07 to GP-10)
+        stay, so the check above has something real to pass over."""
+        f = self._latest_file("GP-07")
+        if f is None:
             # The public repo ships only SC-01; the full corpus is private.
-            pytest.skip(f"scenario results not in this checkout: {', '.join(missing)}")
-        for sid in self.SCENARIOS:
-            f = self._latest_file(sid)
-            assert f is not None, f"No result file for {sid}"
-            d = json.loads(f.read_text())
-            cm = d.get("intelligence", {}).get("convergence_matrix")
-            assert cm is not None, f"{sid} missing convergence_matrix in intelligence"
-            assert len(cm.get("groups", [])) >= 1, f"{sid} has no groups"
+            pytest.skip("GP-07 result not in this checkout")
+        cm = json.loads(f.read_text(encoding="utf-8")).get("intelligence", {}).get("convergence_matrix")
+        assert cm and len(cm.get("groups", [])) >= 2
