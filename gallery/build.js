@@ -595,6 +595,10 @@ function buildIndex(scenarios, essays) {
       The goal is not to dismiss people who hold these beliefs, but to understand them well
       enough to build bridges across the divide.
     </p>
+    <p class="intro">
+      Some analyses were corrected or changed by hand after the pipeline ran. Those pages say so
+      above their audit, and <a href="https://github.com/Jochen-s/huginn-muninn/blob/main/CORRECTIONS.md">CORRECTIONS.md</a> describes the changes.
+    </p>
   </div>
 </header>
 
@@ -676,7 +680,7 @@ function renderConfidenceProfile(data) {
   return `
     <div class="section">
       <h2>Evidence Certainty Framework${uniformWarning}</h2>
-      <p class="intro-note">How well the claim as stated is supported, on five separate scores. Strong evidence against the claim gives low Evidence Quality and Expert Consensus scores. Inspired by GRADE methodology. These scores were re-rated on ${esc(prov.rescored || '')} with ${esc(prov.model || '')}; the rest of this analysis is from the original run. <a href="confidence-methodology.html" class="methodology-link">[?]</a></p>
+      <p class="intro-note">How well the claim as stated is supported, on five separate scores. Strong evidence against the claim gives low Evidence Quality and Expert Consensus scores. Inspired by GRADE methodology. These scores were re-rated on ${esc(prov.rescored || '')} with ${esc(prov.model || '')}; no other section was re-rated. <a href="confidence-methodology.html" class="methodology-link">[?]</a></p>
       <table class="metrics-table">
         <thead><tr><th>Dimension</th><th>Score</th></tr></thead>
         <tbody>
@@ -906,6 +910,33 @@ function renderNotes(notes, path) {
   if (!list || list.length === 0) return '';
   return `<div class="auditor-notes">` + list.map(({ n, f }) => `
     <a class="auditor-note" href="#finding-${n}"><span class="${severityClass(f.severity)}">The automated Auditor questions this passage (finding ${n}, ${esc(String(f.severity || ''))})</span></a>`).join('') + `</div>`;
+}
+
+// Pages whose analysis was changed after the audit printed on them ran.
+// Must name exactly the scenarios CORRECTIONS.md names (test_gallery_provenance).
+const EDITED_AFTER_AUDIT = new Set([
+  'EN-01', 'EN-02', 'EV-02', 'EV-03', 'EV-04', 'GP-01', 'GP-02', 'GP-03', 'GP-04',
+  'GP-06', 'GP-07', 'GP-08', 'GP-09', 'GP-10', 'HS-01', 'HS-03', 'HS-04', 'HS-05',
+  'HS-06', 'HS-07', 'HS-09', 'HS-10', 'HS-11', 'MD-01', 'SC-01', 'TC-01',
+]);
+const CORRECTIONS_URL = 'https://github.com/Jochen-s/huginn-muninn/blob/main/CORRECTIONS.md';
+
+// SC-01 and GP-07 get their own wording: there the printed audit describes an
+// earlier text. GP-08 to GP-10 were changed, not only corrected, and whether
+// their audit saw every change is not recorded.
+const EDITED_NOTICE = {
+  'SC-01': ['gap-warning', 'The audit below was written before this analysis was corrected by hand on 29 March 2026. Most of its findings describe problems in the earlier text that the correction fixed.'],
+  'GP-07': ['gap-warning', 'The audit below was written for the first version of this analysis. Versions 2 and 3 changed it by hand, and the audit has not reviewed those changes.'],
+  'GP-08': ['intro-note', 'Parts of this analysis were changed by hand after the pipeline ran, and it is not recorded whether the audit below saw every change.'],
+};
+EDITED_NOTICE['GP-09'] = EDITED_NOTICE['GP-08'];
+EDITED_NOTICE['GP-10'] = EDITED_NOTICE['GP-08'];
+const EDITED_DEFAULT = ['intro-note', 'Parts of this analysis were corrected by hand after the audit below was written, and that audit has not reviewed the corrected text.'];
+
+function renderEditedNotice(id) {
+  if (!EDITED_AFTER_AUDIT.has(id)) return '';
+  const [cls, text] = EDITED_NOTICE[id] || EDITED_DEFAULT;
+  return `<p class="${cls}">${esc(text)} <a href="${CORRECTIONS_URL}" target="_blank" rel="noopener">CORRECTIONS.md describes the changes.</a></p>`;
 }
 
 function renderFindings(findings, data) {
@@ -1221,6 +1252,7 @@ function buildScenarioPage(scenario, allScenarios) {
 
   <div class="section">
     <h2>Audit</h2>
+    ${renderEditedNotice(id)}
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
       <span>Verdict:</span>
       ${verdictBadge(audit.verdict)}
@@ -1539,6 +1571,7 @@ function buildMethodologyPage() {
       <li><strong>Complexity adjustment:</strong> Multi-actor claims with many moving parts get dampened because complexity breeds uncertainty. A simple factual claim starts from a higher base than a claim involving dozens of actors and nested causal chains.</li>
       <li><strong>Auditor adjustment:</strong> The Adversarial Auditor reviews the entire pipeline's work and adjusts the score up or down based on quality, completeness, and bias checks.</li>
     </ol>
+    <p>Some gallery analyses were corrected or changed by hand after the pipeline ran. The audit printed on those pages is the original one and has not reviewed the changes; the pages say so above the audit, and <a href="https://github.com/Jochen-s/huginn-muninn/blob/main/CORRECTIONS.md">CORRECTIONS.md</a> describes them.</p>
 
     <h2>The Five Dimensions (Evidence Certainty Framework)</h2>
     <p>Each claim is also assessed, as stated, across five dimensions. The scores describe how well the claim is supported, so strong evidence against a claim gives low Evidence Quality and Expert Consensus scores. The package weights them into a composite score:</p>
@@ -1736,6 +1769,8 @@ function buildGraphPage() {
 </nav>
 
 <main class="content" style="max-width:1100px;padding-top:32px;padding-bottom:64px;">
+
+  <p class="intro-note">Built from the stored analyses, including the hand edits described in <a href="https://github.com/Jochen-s/huginn-muninn/blob/main/CORRECTIONS.md">CORRECTIONS.md</a>. Some actors and links were added by hand after the pipeline ran.</p>
 
   <div class="graph-stats" id="graph-stats"></div>
 
@@ -2307,5 +2342,5 @@ if (require.main === module) {
   main();
 } else {
   // Loaded by tests: expose the renderers without building.
-  module.exports = { renderFindings, renderNotes, noteIndex, verifiedPassages, buildScenarioPage };
+  module.exports = { renderFindings, renderNotes, noteIndex, verifiedPassages, buildScenarioPage, EDITED_AFTER_AUDIT };
 }

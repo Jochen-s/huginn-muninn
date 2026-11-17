@@ -671,7 +671,7 @@
   
     <div class="section">
       <h2>Evidence Certainty Framework</h2>
-      <p class="intro-note">How well the claim as stated is supported, on five separate scores. Strong evidence against the claim gives low Evidence Quality and Expert Consensus scores. Inspired by GRADE methodology. These scores were re-rated on 2026-11-10 with claude-opus-5-5; the rest of this analysis is from the original run. <a href="confidence-methodology.html" class="methodology-link">[?]</a></p>
+      <p class="intro-note">How well the claim as stated is supported, on five separate scores. Strong evidence against the claim gives low Evidence Quality and Expert Consensus scores. Inspired by GRADE methodology. These scores were re-rated on 2026-11-10 with claude-opus-5-5; no other section was re-rated. <a href="confidence-methodology.html" class="methodology-link">[?]</a></p>
       <table class="metrics-table">
         <thead><tr><th>Dimension</th><th>Score</th></tr></thead>
         <tbody>
@@ -996,11 +996,12 @@
 
   <div class="section">
     <h2>Audit</h2>
+    <p class="intro-note">Parts of this analysis were changed by hand after the pipeline ran, and it is not recorded whether the audit below saw every change. <a href="https://github.com/Jochen-s/huginn-muninn/blob/main/CORRECTIONS.md" target="_blank" rel="noopener">CORRECTIONS.md describes the changes.</a></p>
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
       <span>Verdict:</span>
       <span class="badge badge-warnings">PASS WITH WARNINGS</span>
     </div>
-    <div class="audit-summary">This v1 analysis handles a high-difficulty scenario in which the underlying observation (demographic change in France including in specific banlieues) is real and partially shared across the political spectrum, while the framing layered on top of it (deliberate replacement plan executed by complicit elites, with RN as the only democratic response) is a documented French conspiracy architecture with a violent endpoint at Christchurch. The decomposition correctly separates the substantively true demographic claim, the partially true policy-incoherence claim, and the unsupported intentionality claim, and adds the France-specific colonial-relation question (SC-8). The origins trace the lineage from Drumont 1886 and Barres 1902 through Raspail 1973, Camus 2011, Generation Identitaire 2012-2021, Zemmour 2014 and Reconquete 2022, RN under Marine and Bardella, the Bollore mediasphere, and Christchurch 2019, with INED, INSEE, Heran, Tribalat, Simon, Noiriel, Taguieff, and the named French-postcolonial scholars as the evidentiary counterweight. The intelligence section captures the three-layer system (French intellectual lineage, French political operationalization including dediabolisation, French and transcontinental amplification) and the antagonistic convergence between laicite-republican, cultural-conservative-LR, France-peripherique-left, and ethnonationalist-right groups. The TTPs include DISARM techniques and four custom entries including Colonial-History Erasure, which captures the France-specific dimension. The bridge implements relational_first communication posture, OARS-protocol Socratic dialogue with explicit French anchoring (harkis, SONACOTRA, Renault Billancourt, Creuse-Cantal-Lozere counterfactual, Drumont parallel), Round 3 ending in a genuine question per Charter C6. The minus 0.04 confidence adjustment reflects correctable but real completeness gaps around deeper community_experiential centering and specific publication pinning. Confidence scores rate the conspiracy framing, not the demographic data itself. The 0.72 expert consensus reflects strong agreement among French demographers and historians that the intentionality claim is unsupported and that the colonial relation is constitutive.</div>
+    <div class="audit-summary">This v1 analysis handles a high-difficulty scenario in which the underlying observation (demographic change in France including in specific banlieues) is real and partially shared across the political spectrum, while the framing layered on top of it (deliberate replacement plan executed by complicit elites, with RN as the only democratic response) is a documented French conspiracy architecture with a violent endpoint at Christchurch. The decomposition correctly separates the substantively true demographic claim, the partially true policy-incoherence claim, and the unsupported intentionality claim, and adds the France-specific colonial-relation question (SC-8). The origins trace the lineage from Drumont 1886 and Barres 1902 through Raspail 1973, Camus 2011, Generation Identitaire 2012-2021, Zemmour 2014 and Reconquete 2022, RN under Marine and Bardella, the Bollore mediasphere, and Christchurch 2019, with INED, INSEE, Heran, Tribalat, Simon, Noiriel, Taguieff, and the named French-postcolonial scholars as the evidentiary counterweight. The intelligence section captures the three-layer system (French intellectual lineage, French political operationalization including dediabolisation, French and transcontinental amplification) and the antagonistic convergence between laicite-republican, cultural-conservative-LR, France-peripherique-left, and ethnonationalist-right groups. The TTPs include DISARM techniques and four custom entries including Colonial-History Erasure, which captures the France-specific dimension. The bridge implements relational_first communication posture, OARS-protocol Socratic dialogue with explicit French anchoring (harkis, SONACOTRA, Renault Billancourt, Creuse-Cantal-Lozere counterfactual, Drumont parallel). The minus 0.04 confidence adjustment reflects correctable but real completeness gaps around deeper community_experiential centering and specific publication pinning. Confidence scores rate the conspiracy framing, not the demographic data itself. The 0.72 expert consensus reflects strong agreement among French demographers and historians that the intentionality claim is unsupported and that the colonial relation is constitutive.</div>
     <ul class="findings-list">
     <li class="finding-item">
       <div class="finding-header">
@@ -1081,7 +1082,7 @@
       </div>
       
       <div class="finding-body">
-        <div class="finding-description">The Socratic dialogue implements OARS protocol in Round 1, named-technique guided examination in Round 2 with French-specific anchors (Drumont parallel, harkis, SONACOTRA, Renault Billancourt, numerus clausus, Creuse-Cantal-Lozere counterfactual), and integration with concrete agency in Round 3 ending with a genuine question (Charter C6 compliance). The colonial-recruitment question in Round 2 is the distinctive France-specific Socratic move that the Flemish scenario did not include.</div>
+        <div class="finding-description">The Socratic dialogue implements OARS protocol in Round 1, named-technique guided examination in Round 2 with French-specific anchors (Drumont parallel, harkis, SONACOTRA, Renault Billancourt, numerus clausus, Creuse-Cantal-Lozere counterfactual), and integration with concrete agency in Round 3 ending with a genuine question. The colonial-recruitment question in Round 2 is the distinctive France-specific Socratic move that the Flemish scenario did not include.</div>
         <div class="finding-rec"><strong>Recommendation:</strong> No fix needed.</div>
       </div>
       
@@ -1097,20 +1098,6 @@
       <div class="finding-body">
         <div class="finding-description">International comparative material is included for AfD, Orban, Salvini, Meloni, FPO, Tucker Carlson, and Tarrant, but the analysis could go deeper on how other French-speaking polities (Belgium-Wallonia, Switzerland-Romande, Quebec) have handled or instrumentalized replacement-adjacent rhetoric, especially given the cross-border circulation of identitaire material in francophone networks.</div>
         <div class="finding-rec"><strong>Recommendation:</strong> Optional expansion in a future revision. The French focus is correct for this scenario.</div>
-      </div>
-      
-    </li>
-    <li class="finding-item">
-      <div class="finding-header">
-        
-        <span class="finding-category">Quality</span>
-        <span class="finding-severity-low">LOW</span>
-        <span class="finding-description">v5 pipeline redesign compliance: Round 3 ends with a genuine question (C6), convergence_strength is MEDIUM (C3 -- the...</span>
-      </div>
-      
-      <div class="finding-body">
-        <div class="finding-description">v5 pipeline redesign compliance: Round 3 ends with a genuine question (C6), convergence_strength is MEDIUM (C3 -- the amplification_risk paragraph explicitly states the convergence is antagonistic rather than the result of joint operations, and notes documented coordination only at the institutional level of cross-party alignment on the 2023 immigration law, not as a high-confidence coordinated joint campaign across the four groups), actor credibility is given as structural string descriptions (C1, no numeric floats). All three pipeline redesign items validated.</div>
-        <div class="finding-rec"><strong>Recommendation:</strong> No fix needed. Pipeline redesign working as intended.</div>
       </div>
       
     </li></ul>

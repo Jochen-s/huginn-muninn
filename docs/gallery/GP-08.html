@@ -671,7 +671,7 @@
   
     <div class="section">
       <h2>Evidence Certainty Framework</h2>
-      <p class="intro-note">How well the claim as stated is supported, on five separate scores. Strong evidence against the claim gives low Evidence Quality and Expert Consensus scores. Inspired by GRADE methodology. These scores were re-rated on 2026-11-10 with claude-opus-5-5; the rest of this analysis is from the original run. <a href="confidence-methodology.html" class="methodology-link">[?]</a></p>
+      <p class="intro-note">How well the claim as stated is supported, on five separate scores. Strong evidence against the claim gives low Evidence Quality and Expert Consensus scores. Inspired by GRADE methodology. These scores were re-rated on 2026-11-10 with claude-opus-5-5; no other section was re-rated. <a href="confidence-methodology.html" class="methodology-link">[?]</a></p>
       <table class="metrics-table">
         <thead><tr><th>Dimension</th><th>Score</th></tr></thead>
         <tbody>
@@ -1026,11 +1026,12 @@
 
   <div class="section">
     <h2>Audit</h2>
+    <p class="intro-note">Parts of this analysis were changed by hand after the pipeline ran, and it is not recorded whether the audit below saw every change. <a href="https://github.com/Jochen-s/huginn-muninn/blob/main/CORRECTIONS.md" target="_blank" rel="noopener">CORRECTIONS.md describes the changes.</a></p>
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
       <span>Verdict:</span>
       <span class="badge badge-warnings">PASS WITH WARNINGS</span>
     </div>
-    <div class="audit-summary">This v1 analysis handles a high-difficulty scenario in which the underlying observation (demographic change in the Netherlands) is real and partially shared across the political spectrum, while the framing layered on top of it (deliberate replacement plan executed by complicit elites, with PVV as uniquely truthful voice) is a documented century-old conspiracy architecture routed through a Dutch-specific liberal-tolerant respectability hedge that originates with Pim Fortuyn. The decomposition correctly separates the substantively true demographic claim from the unsupported intentionality claim and the unsupported uniqueness claim about PVV. The origins trace the lineage from Madison Grant through Bat Ye&#39;or, Camus, Fortuyn, Generation Identity, Wilders/PVV, Baudet/FvD, Cliteur, Orban, AfD, and Tucker Carlson into the current Dutch moment defined by the November 2023 election victory and the May 2024 hoofdlijnenakkoord. The intelligence section captures the three-layer system (intellectual lineage, Dutch operationalization including the Fortuyn-van Gogh founding martyrology dynamic, transcontinental amplification) and the antagonistic convergence between four blocs (ethnonationalist right, centrist-conservative cultural-anxiety voters, anti-globalization economic left, rural-traditional cultural conservatives). The TTPs include DISARM techniques and four custom entries (demographic cherry-picking, fear amplification as distraction, scapegoat construction, motte-and-bailey) plus the Dutch-specific Founding Martyrology technique that captures the distinctive Fortuyn-van Gogh dynamic. The bridge implements relational_first communication posture, OARS-protocol Socratic dialogue with explicit Dutch anchoring including the toeslagenaffaire and Volkshuisvesting, and the Jim Crow historical parallel with the Dutch liberal-tolerant respectability variant explicitly named. Pipeline redesign compliance verified: Round 3 ends with genuine question, convergence_strength is MEDIUM with explicit reasoning rather than HIGH, all actor credibility fields are structural strings. The minus 0.04 confidence adjustment reflects correctable completeness gaps around postcolonial Indonesian-Dutch precedent and named-publication pinning. Confidence scores rate the conspiracy framing (the claim that demographic change is deliberately planned and that PVV alone tells the truth), not the demographic data itself. The 0.70 expert consensus reflects strong agreement among demographers and political scientists (including Mudde working specifically on PVV) that the intentionality and uniqueness claims are unsupported. The 0.25 internal coherence reflects the claim&#39;s self-contradictions, not the analysis quality.</div>
+    <div class="audit-summary">This v1 analysis handles a high-difficulty scenario in which the underlying observation (demographic change in the Netherlands) is real and partially shared across the political spectrum, while the framing layered on top of it (deliberate replacement plan executed by complicit elites, with PVV as uniquely truthful voice) is a documented century-old conspiracy architecture routed through a Dutch-specific liberal-tolerant respectability hedge that originates with Pim Fortuyn. The decomposition correctly separates the substantively true demographic claim from the unsupported intentionality claim and the unsupported uniqueness claim about PVV. The origins trace the lineage from Madison Grant through Bat Ye&#39;or, Camus, Fortuyn, Generation Identity, Wilders/PVV, Baudet/FvD, Cliteur, Orban, AfD, and Tucker Carlson into the current Dutch moment defined by the November 2023 election victory and the May 2024 hoofdlijnenakkoord. The intelligence section captures the three-layer system (intellectual lineage, Dutch operationalization including the Fortuyn-van Gogh founding martyrology dynamic, transcontinental amplification) and the antagonistic convergence between four blocs (ethnonationalist right, centrist-conservative cultural-anxiety voters, anti-globalization economic left, rural-traditional cultural conservatives). The TTPs include DISARM techniques and four custom entries (demographic cherry-picking, fear amplification as distraction, scapegoat construction, motte-and-bailey) plus the Dutch-specific Founding Martyrology technique that captures the distinctive Fortuyn-van Gogh dynamic. The bridge implements relational_first communication posture, OARS-protocol Socratic dialogue with explicit Dutch anchoring including the toeslagenaffaire and Volkshuisvesting, and the Jim Crow historical parallel with the Dutch liberal-tolerant respectability variant explicitly named. The minus 0.04 confidence adjustment reflects correctable completeness gaps around postcolonial Indonesian-Dutch precedent and named-publication pinning. Confidence scores rate the conspiracy framing (the claim that demographic change is deliberately planned and that PVV alone tells the truth), not the demographic data itself. The 0.70 expert consensus reflects strong agreement among demographers and political scientists (including Mudde working specifically on PVV) that the intentionality and uniqueness claims are unsupported. The 0.25 internal coherence reflects the claim&#39;s self-contradictions, not the analysis quality.</div>
     <ul class="findings-list">
     <li class="finding-item">
       <div class="finding-header">
@@ -1127,20 +1128,6 @@
       <div class="finding-body">
         <div class="finding-description">The PVV-specific claim in the original statement (that Wilders and PVV are uniquely truthful) is analytically separated and addressed in narrative_deconstruction. The framing that only one party tells the truth is correctly identified as a structural feature of populist politics globally rather than evidence about the Dutch case specifically.</div>
         <div class="finding-rec"><strong>Recommendation:</strong> No fix needed.</div>
-      </div>
-      
-    </li>
-    <li class="finding-item">
-      <div class="finding-header">
-        
-        <span class="finding-category">Quality</span>
-        <span class="finding-severity-low">LOW</span>
-        <span class="finding-description">v5 pipeline redesign compliance: Round 3 ends with a genuine question (C6 charter), convergence_strength set to MEDIUM...</span>
-      </div>
-      
-      <div class="finding-body">
-        <div class="finding-description">v5 pipeline redesign compliance: Round 3 ends with a genuine question (C6 charter), convergence_strength set to MEDIUM with explicit reasoning that no documented joint campaign across all four blocs is presented in the reviewed record (C3 evidence requirement), and all actor credibility fields use structural descriptions (C1).</div>
-        <div class="finding-rec"><strong>Recommendation:</strong> No fix needed. Pipeline redesign working as intended.</div>
       </div>
       
     </li></ul>
